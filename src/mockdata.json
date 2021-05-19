@@ -1,0 +1,46 @@
+{
+  "header": {
+    "data": [
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" },
+      { "title": "clothing", "slug": "clothing" }
+    ]
+  },
+  "footer": {
+    "data": [
+      {
+        "title": "Return Policy",
+        "slug": "return-policy"
+      },
+      {
+        "title": "Shipping",
+        "slug": "return-policy"
+      },
+      {
+        "title": "Track Your Order",
+        "slug": "return-policy"
+      },
+      {
+        "title": "Return Form",
+        "slug": "return-policy"
+      },
+      {
+        "title": "Customer Service",
+        "slug": "return-policy"
+      },
+      {
+        "title": "FAQ's",
+        "slug": "return-policy"
+      }
+    ]
+  }
+}

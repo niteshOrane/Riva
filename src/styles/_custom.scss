@@ -1,0 +1,169 @@
+// colors
+.color-primary{
+    color: $color-primary;
+}
+.color-white{
+    color: #ffffff;
+}
+.bg-primary{
+    background-color: $color-primary;
+}
+.bg-light-pink{
+    background-color: $light-pink;
+}
+.bg-black{
+    background-color: $black-color;
+}
+
+
+
+.max-width-1750{
+    max-width: 1750px;
+}
+.max-width-1600{
+    max-width: 1600px;
+}
+.w-100{
+    width: 100%;
+}
+.h-100{
+    height: 100%;
+}
+
+.mp-0{
+    margin: 0;
+    padding: 0;
+}
+.m-0{
+    margin: 0;
+}
+.p-0{
+    padding: 0;
+}
+.p-12{
+    padding: 12px;
+}
+.mx-auto{
+    margin-left: auto;
+    margin-right: auto;
+}
+.px-auto{
+    padding-left: auto;
+    padding-right: auto;
+}
+
+// grid
+.d-grid{
+    display: grid;
+}
+
+
+// flex box
+.d-flex-all-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// if you are using bootstrap.. remove the styling bel
+.d-flex{
+    display: flex;
+}
+.flex-wrap{
+    flex-wrap: wrap;
+}
+.no-wrap{
+    flex-wrap: nowrap;
+}
+.justify-content-center{
+    justify-content: center;   
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.justify-content-end{
+    justify-content: flex-end;
+} 
+.justify-content-start{
+    justify-content: flex-start;
+} 
+
+.align-items-center{
+    align-items: center;
+}
+.align-items-end{
+    align-items: flex-end;
+}
+.align-items-start{
+    align-items: flex-start;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.f1{
+    flex: 1;
+}
+.f2{
+    flex: 2;
+}
+.align-self-end{
+    align-self: flex-end;
+}
+
+
+
+
+
+
+
+
+
+
+
+// navbar 
+nav.nav{
+    padding: 23px 0;
+}
+.nav-list{
+    padding-right: 12px;
+}
+.nav-li{
+    display: flex;
+    align-items: center;   
+} 
+.nav-li a:hover span{
+    color: black !important;
+}
+.nav-li a span:nth-child(2){
+line-height: 1.4;
+}
+
+
+.logo-strong{
+    margin-left: 75px;
+}
+// nav circles
+.circleBg-primary {
+    background-color: $color-primary;
+    color: #ffffff;
+}
+.circleBg-lightBlack{
+    background-color: $light-black;
+    color: #ffffff;
+}
+
+
+
+
+// random stuff
+.c-pointer{
+    cursor: pointer;
+}
+.d-block{
+    display: block;
+}
+.gap-12{
+    gap: 12px;
+}

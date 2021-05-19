@@ -1,0 +1,11 @@
+.link{
+    margin: 0 10px;
+}
+.megaLink{
+    color: $color-white;
+}
+.megaLink span:nth-child(1){
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.57
+}

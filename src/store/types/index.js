@@ -1,0 +1,4 @@
+export const LOADER = 'LOADER';
+export const FETCH_HEADER_SUCCESS = 'FETCH_HEADER_SUCCESS';
+export const FETCH_FOOTER_SUCCESS = "FETCH_FOOTER_SUCCESS";
+export const ERROR = 'ERROR';
