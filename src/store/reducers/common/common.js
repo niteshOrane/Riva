@@ -3,8 +3,14 @@ import * as DATA_TYPES from '../../types';
 const initialState = {
   header: [],
   footer: [],
+  topBrands: [],
   loading: false,
   error: null,
+  footerCMS: [],
+  currentLocation: null,
+  currency: 'OMR',
+  category:[],
+  selectedCategoryItem:{}
 };
 
 export default function common(state = initialState, action) {
@@ -13,7 +19,6 @@ export default function common(state = initialState, action) {
       return {
         ...state,
         loading: action.payload,
-        error: null,
       };
 
     case DATA_TYPES.ERROR:
@@ -36,6 +41,35 @@ export default function common(state = initialState, action) {
         footer: action.payload.data,
       };
 
+    case DATA_TYPES.FETCH_TOPBRANDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        topBrands: action.payload.data,
+      };
+
+    case DATA_TYPES.CURRENT_LOCATION:
+      return {
+        ...state,
+        currentLocation: action.payload.data,
+      };
+
+    case DATA_TYPES.CURRENCY:
+      return {
+        ...state,
+        currency: action.payload.data,
+      };
+    case DATA_TYPES.CATEGORY:
+      return {
+      ...state,
+      category: action.payload.data,
+      };
+    case DATA_TYPES.SELECTED_CATEGORY:
+      return {
+        ...state,
+        loading: false,
+        selectedCategoryItem: action.payload,
+      };
     default:
       return state;
   }

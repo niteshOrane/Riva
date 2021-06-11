@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import store, { persistor } from './store';
 import App from './App';
+import NetworkInterceptor from './services/interceptors/interceptor';
 import * as serviceWorker from './serviceWorker';
 
 const rootElement = document.getElementById('root');
 
+NetworkInterceptor.setupInterceptors(store);
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <App />
+      </Router>
+    </PersistGate>
   </Provider>,
   rootElement
 );

@@ -1,0 +1,65 @@
+.container {
+  width: 100%;
+  .bgGrey {
+    background-color: #f5f7f9;
+    padding: 12px;
+    .title {
+      margin: 10px 0;
+      border-bottom: 1px solid #ddd;
+      h2 {
+        padding: 10px 0;
+        font-size: 1.2rem;
+      }
+    }
+
+    .greandTotal {
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+    .checkoutBtn {
+      text-align: center;
+      margin: 22px 0;
+      button {
+        background-color: $color-primary;
+        color: $color-white;
+        padding: 12px 20px;
+        display: block;
+        width: 100%;
+        border: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        &:hover {
+          background-color: $color-primary-hover;
+        }
+      }
+    }
+  }
+
+  .contactCard {
+    position: relative;
+    margin-top: 50px;
+    border: 1px solid $color-grey;
+    padding: 30px 12px 12px;
+    text-align: center;
+    .contactIcon {
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      box-shadow: 0 0 12px #ddd;
+      border-radius: 50%;
+      height: 45px;
+      width: 45px;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    span:nth-child(2) {
+      font-size: 14px;
+      margin-left: 3px;
+    }
+  }
+}

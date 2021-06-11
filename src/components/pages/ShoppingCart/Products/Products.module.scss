@@ -1,0 +1,109 @@
+.products {
+  flex-basis: 70%;
+  flex-shrink: 0;
+  padding: 0 15px;
+
+  .header {
+    background-color: #f5f7f9;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .headerTitle {
+      flex-basis: 70%;
+      flex-shrink: 0;
+      h2 {
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
+    }
+    .headerDetails {
+      flex-basis: 30%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 1rem;
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+
+  .productList {
+    margin-top: 20px;
+    .product {
+      border: 2px solid $color-grey;
+      margin: 12px 0;
+      .productDetails {
+        width: 100%;
+        display: flex;
+        .nameClrSize {
+          padding-left: 12px;
+          width: 60%;
+          .name {
+            margin: 12px 0;
+          }
+          .clrSize {
+            margin-top: 40px;
+            div {
+              span:nth-child(1) {
+                width: 50%;
+              }
+            }
+          }
+        }
+      }
+      .productPricing {
+        width: 40%;
+        margin-left: auto;
+        .counter {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid $color-grey;
+          padding: 8px;
+          flex: 1;
+          text-align: center;
+          span {
+            margin: 0 4px;
+          }
+        }
+      }
+      .loyaltyPoints {
+        margin-top: 30px;
+      }
+      .footer {
+        padding-top: 12px;
+        margin-left: 12px;
+        border-top: 1px solid $color-grey;
+        .footerContent {
+          display: flex;
+          align-items: center;
+          div {
+            margin: 0 10px;
+            span:nth-child(1) {
+              margin-top: -4px;
+              margin-right: 4px;
+            }
+            &:hover {
+              span:nth-child(2) {
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .continueBtn {
+    background-color: $color-black;
+    padding: 12px 20px;
+    margin: 20px 0;
+    display: inline-block;
+
+    color: $color-white;
+  }
+}

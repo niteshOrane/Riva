@@ -1,18 +1,42 @@
 {
   "header": {
     "data": [
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" },
-      { "title": "clothing", "slug": "clothing" }
+      {
+        "title": "clothing",
+        "slug": "clothing"
+      },
+      {
+        "title": "SHOP BY OCCASION",
+        "slug": "clothing"
+      },
+      {
+        "title": "HIJAB",
+        "slug": "clothing"
+      },
+      {
+        "title": "SHOES",
+        "slug": "clothing"
+      },
+      {
+        "title": "ACCESSORIES & BAGS",
+        "slug": "clothing"
+      },
+      {
+        "title": "BRANDS",
+        "slug": "clothing"
+      },
+      {
+        "title": "MODEST",
+        "slug": "clothing"
+      },
+      {
+        "title": "OUTLET",
+        "slug": "clothing"
+      },
+      {
+        "title": "LifeStyle",
+        "slug": "clothing"
+      }
     ]
   },
   "footer": {
@@ -42,5 +66,401 @@
         "slug": "return-policy"
       }
     ]
-  }
+  },
+  "topBrands": {
+    "data": [
+      {
+        "title": "Contrast Paisley Printed Pleated Skirt",
+        "price": "$108.45",
+        "discountedPrice": "$79.35",
+        "image": "image1"
+      },
+      {
+        "title": "Mini Denim Skirt",
+        "price": "$118.45",
+        "discountedPrice": "$49.35",
+        "image": "image2"
+      },
+      {
+        "title": "Pine Printed Jersey T-Shirt",
+        "price": "$158.45",
+        "discountedPrice": "$79.35",
+        "image": "image3"
+      },
+      {
+        "title": "Clear Crystal Embellished Pleated Sleeve Outerwear",
+        "price": "$107.45",
+        "discountedPrice": "$99.35",
+        "image": "image4"
+      },
+      {
+        "title": "Basic Long Pencil Skirt",
+        "price": "$1038.5",
+        "discountedPrice": "$579.35",
+        "image": "image5"
+      },
+      {
+        "title": "Pleated Skirt With Flar",
+        "price": "$1038.45",
+        "discountedPrice": "$759.35",
+        "image": "image6"
+      },
+      {
+        "title": "Contrast Paisley Printe",
+        "price": "$108.45",
+        "discountedPrice": "$79.35",
+        "image": "image7"
+      },
+      {
+        "title": "Clear Crystal Embellis",
+        "price": "$108.45",
+        "discountedPrice": "$79.35",
+        "image": "image8"
+      }
+    ]
+  },
+  "body": {
+    "product": {
+      "images": [
+        "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROa5QtP_2xkg2FqnphafhfKp-kFYxDAKrezQ&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHr8UQSUjt9txzCQ1jy284EKPyyeuQuVfy548Q8GvjtgfKanGYflQvIXJCbd5gmdk5D1s&usqp=CAU"
+      ]
+    },
+    "productList": [
+      {
+        "id": 1,
+        "src": "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "name": "Printed Open Skirt",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 2,
+        "src": "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "name": "Tailored Jeans",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 3,
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHr8UQSUjt9txzCQ1jy284EKPyyeuQuVfy548Q8GvjtgfKanGYflQvIXJCbd5gmdk5D1s&usqp=CAU",
+        "name": "Printed Open Skirt",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 4,
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHr8UQSUjt9txzCQ1jy284EKPyyeuQuVfy548Q8GvjtgfKanGYflQvIXJCbd5gmdk5D1s&usqp=CAU",
+        "name": "Tailored Jeans",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 5,
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROa5QtP_2xkg2FqnphafhfKp-kFYxDAKrezQ&usqp=CAU",
+        "name": "Printed Open Skirt",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 6,
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZVdfh3SE7MvWM4h3gRc7dcrK0XF_MNCAJGQ&usqp=CAU",
+        "name": "Tailored Jeans",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 7,
+        "src": "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "name": "Tailored Jeans",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 8,
+        "src": "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "name": "Printed Open Skirt",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "id": 9,
+        "src": "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2299060/2018/7/30/7584b116-2a2c-4fb1-881c-af58cc484b181532944603854-Tokyo-Talkies-Women-Black-Printed-Maxi-Dress-4791532944603727-1.jpg",
+        "name": "Tailored Jeans",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      }
+    ],
+    "extraordinarySlider": [
+      {
+        "src": "assets/images/extraordinary1.png",
+        "name": "Gold Tone Beaded Cuff Bracelet",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary2.png",
+        "name": "Different Shape Hair Barrette",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary3.png",
+        "name": "Mixed Pendant Cord Necklace",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary4.png",
+        "name": "Timeless Elegance Ring",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary3.png",
+        "name": "Mixed Pendant Cord Necklace",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary4.png",
+        "name": "Timeless Elegance Ring",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary1.png",
+        "name": "Gold Tone Beaded Cuff Bracelet",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      },
+      {
+        "src": "assets/images/extraordinary2.png",
+        "name": "Different Shape Hair Barrette",
+        "wasPrice": 19.99,
+        "nowPrice": 19.99
+      }
+    ],
+    "instaProducts": [
+      {
+        "id": 9,
+        "src": "assets/images/insta1.png",
+        "name": "Tailored Jeans"
+      },
+      {
+        "id": 9,
+        "src": "assets/images/insta2.png",
+        "name": "Tailored Jeans"
+      },
+      {
+        "id": 9,
+        "src": "assets/images/insta3.png",
+        "name": "Tailored Jeans"
+      },
+      {
+        "id": 9,
+        "src": "assets/images/insta4.png",
+        "name": "Tailored Jeans"
+      },
+      {
+        "id": 9,
+        "src": "assets/images/insta5.png",
+        "name": "Tailored Jeans"
+      }
+    ],
+    "recentlyViewed": [
+      {
+        "id": 1,
+        "src": "assets/images/recentGirl.png",
+        "title": "Contrast Paisley Printed Pleated Skirt",
+        "price": "75.90"
+      },
+      {
+        "id": 2,
+        "src": "assets/images/recentGirl.png",
+        "title": "Mini Denim Skirt",
+        "price": "75.90"
+      },
+      {
+        "id": 3,
+        "src": "assets/images/recentGirl.png",
+        "title": "Pine Printed Jersey T-Shirt",
+        "price": "75.90"
+      },
+      {
+        "id": 4,
+        "src": "assets/images/recentGirl.png",
+        "title": "Clear Crystal Embellished Pleated Sleeve Outerwear",
+        "price": "75.90"
+      },
+      {
+        "id": 5,
+        "src": "assets/images/recentGirl.png",
+        "title": "Pleated Skirt With Flare",
+        "price": "75.90"
+      },
+      {
+        "id": 6,
+        "src": "assets/images/recentGirl.png",
+        "title": "Pleated Skirt With Flare",
+        "price": "75.90"
+      },
+      {
+        "id": 6,
+        "src": "assets/images/recentGirl.png",
+        "title": "Pleated Skirt With Flare",
+        "price": "75.90"
+      },
+      {
+        "id": 8,
+        "src": "assets/images/recentGirl.png",
+        "title": "Contrast Paisley Printed Pleated Skirt",
+        "price": "75.90"
+      }
+    ],
+    "additionalProductDetails": {
+      "Description": [
+        {
+          "title": "Materials",
+          "text": "95% Viscose, 5% Elastane"
+        },
+        {
+          "title": "Color",
+          "text": "250 White"
+        },
+        {
+          "title": "Model Measurements",
+          "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+        },
+        {
+          "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+        }
+      ],
+      "Composition and Care": [],
+      "Shipping": [
+        {
+          "title": "Country",
+          "text": "India / USA"
+        },
+        {
+          "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+        }
+      ],
+      "Reviews": []
+    },
+    "howToWear": [
+      {
+        "src": "/assets/images/HowToWear1.png"
+      },
+      {
+        "src": "/assets/images/HowToWear2.png"
+      },
+      {
+        "src": "/assets/images/HowToWear3.png"
+      }
+    ],
+    "shopTheWholeOutfit": {
+      "mainCard": {
+        "src": "/assets/images/wholeOutfitMain.png",
+        "name": "Pine Printed Jersey T-Shirt",
+        "sku": "101104-21009-798",
+        "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials."
+      },
+      "smallcards": [
+        {
+          "name": "Printed Open Skirt",
+          "src": "/assets/images/VerticalProductCard1.png",
+          "was": 19.99,
+          "now": 19.99,
+          "size": "XL"
+        },
+        {
+          "name": "Printed Open Skirt",
+          "src": "/assets/images/VerticalProductCard2.png",
+          "was": 19.99,
+          "now": 19.99,
+          "size": "XL"
+        },
+        {
+          "name": "Printed Open Skirt",
+          "src": "/assets/images/VerticalProductCard3.png",
+          "was": 19.99,
+          "now": 19.99,
+          "size": "XL"
+        }
+      ],
+      "discount": {
+        "totalProducts": 3,
+        "selectedProducts": 2,
+        "discounts": [
+          {"name": "Outfit discount 5%", "amount": 4.20}
+        ],
+        "total": 8.80
+      }
+    }
+  },
+  "categorySlider": [
+    {
+      "src": "assets/images/sunGlass.png",
+      "text": "SUNGLASSES"
+    },
+    {
+      "src": "assets/images/hatGlov.png",
+      "text": "HATS & GLOVES"
+    },
+    {
+      "src": "assets/images/sunGlass.png",
+      "text": "SUNGLASSES"
+    },
+    {
+      "src": "assets/images/hatGlov.png",
+      "text": "HATS & GLOVES"
+    },
+    {
+      "src": "assets/images/sunGlass.png",
+      "text": "SUNGLASSES"
+    },
+    {
+      "src": "assets/images/hatGlov.png",
+      "text": "HATS & GLOVES"
+    },
+    {
+      "src": "assets/images/hatGlov.png",
+      "text": "HATS & GLOVES"
+    },
+    {
+      "src": "assets/images/sunGlass.png",
+      "text": "SUNGLASSES"
+    },
+    {
+      "src": "assets/images/hatGlov.png",
+      "text": "HATS & GLOVES"
+    }
+  ],
+  "cardsData": [
+    {
+      "image": "assets/images/glsGirl.png",
+      "title": "EID GLAM",
+      "description": "Indulge in accessories from Gucci and beyond for a look finished to perfection"
+    },
+    {
+      "image": "assets/images/crdGirl2.png",
+      "title": "CLEAN & GREEN",
+      "description": "Indulge in accessories from Gucci and beyond for a look finished to perfection"
+    },
+    {
+      "image": "assets/images/crdGirl3.png",
+      "title": "BUKHOOR BLENDS",
+      "description": "Indulge in accessories from Gucci and beyond for a look finished to perfection"
+    }
+  ],
+  "mainSlider": [
+    {
+      "src": "assets/images/collections.png"
+    },
+    {
+      "src": "assets/images/collections.png"
+    }
+  ]
 }

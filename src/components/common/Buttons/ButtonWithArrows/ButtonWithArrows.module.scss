@@ -1,0 +1,39 @@
+.btn {
+  width: 130px;
+  position: relative;
+  height: 38px;
+  display: block;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  .before {
+    position: absolute;
+    top: -4px;
+    left: -6px;
+    transition: all 0.3s ease;
+    transform: rotate(45deg);
+  }
+  .next {
+    position: absolute;
+    right: -4px;
+    bottom: -8px;
+    transform: rotate(38deg);
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    .next {
+      right: -14px;
+      bottom: -18px;
+      opacity: 0;
+    }
+  }
+  &:hover {
+    .before {
+      top: -14px;
+      left: -16px;
+      opacity: 0;
+    }
+  }
+}

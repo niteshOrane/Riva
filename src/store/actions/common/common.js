@@ -1,21 +1,16 @@
+import { fetchHeaderSuccess, fetchFooterSuccess, fetchTopBrands, fetchHeaderCategory, fetchCurrentLocation } from '.';
 import {
-  loader,
-  errorHandler,
-  fetchHeaderSuccess,
-  fetchFooterSuccess,
-} from ".";
-import { getHeader, getFooter } from "../../../services/layout/Layout.service";
+  getHeader,
+  getFooter,
+  getTopBrands,
+  getCurrentLocation,
+  getHeaderCategory
+} from '../../../services/layout/Layout.service';
 
-export const fetchHeader = () => async (dispatch) => {
-  dispatch(loader(true));
-  try {
-    const header = await getHeader();
-    const footer = await getFooter();
-    dispatch(fetchHeaderSuccess(header.data));
-    dispatch(fetchFooterSuccess(footer.data));
-  } catch (error) {
-    dispatch(errorHandler(error));
-  } finally {
-    dispatch(loader(false));
-  }
+export const fetchCommonData = () => async (dispatch) => {
+  getHeader().then((header) => dispatch(fetchHeaderSuccess(header.data)));
+  getFooter().then((footer) => dispatch(fetchFooterSuccess(footer.data)));
+  getTopBrands().then((topBrands) => dispatch(fetchTopBrands(topBrands.data)));
+  getCurrentLocation().then((location) => { dispatch(fetchCurrentLocation(location)) });
+  getHeaderCategory().then((category) => { dispatch(fetchHeaderCategory(category.data)) });
 };

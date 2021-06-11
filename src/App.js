@@ -1,24 +1,36 @@
-import React from "react";
-import Landing from "./pages/Landing/Landing";
-import { connect } from "react-redux";
-import { fetchHeader } from "./store/actions/common/common";
-import MainLayout from "./Layouts/MainLayout";
-import "./App.scss";
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchCommonData } from './store/actions/common/common';
+import Loader from './components/common/Loader';
+import AlertComponent from './components/common/Alert';
+import AppRoutes from './routes';
+import './App.scss';
 
 class AppRoot extends React.Component {
   componentDidMount() {
-    const { fetchHeader } = this.props;
-    fetchHeader();
+    const { fetchCommonData: fetch } = this.props;
+    fetch();
+  }
+
+  handleError(err) {
+    const properties = {
+      title: err?.statusText,
+      message: err?.message ?? '',
+      secondaryActionText: 'OK',
+      visible: true,
+    };
+    return <AlertComponent {...properties} />;
   }
 
   render() {
-    const { loading } = this.props;
-  
-    if (loading) return "Loading";
+    const { loading, error } = this.props;
+
+    if (loading) return <Loader />;
     return (
-      <MainLayout>
-        <Landing />
-      </MainLayout>
+      <>
+        <AppRoutes {...this.props} />
+        {error && this.handleError(error)}
+      </>
     );
   }
 }
@@ -28,4 +40,4 @@ const mapStateToProps = (state) => ({
   error: state.common.error,
 });
 
-export default connect(mapStateToProps, { fetchHeader })(AppRoot);
+export default connect(mapStateToProps, { fetchCommonData })(AppRoot);

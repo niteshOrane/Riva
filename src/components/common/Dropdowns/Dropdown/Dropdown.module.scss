@@ -1,0 +1,41 @@
+// parent dropdown
+.dpParent {
+  padding: 0 12px 0 7px;
+  overflow-y: auto;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 12px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.dpHeader {
+  border-bottom: 1px solid #ddd;
+}
+
+// child dropdown
+.dropdown {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}

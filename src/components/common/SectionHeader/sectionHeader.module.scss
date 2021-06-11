@@ -1,0 +1,24 @@
+.backgroundImage{
+    background-image: url("../../../shared/images/sectionHeaderBg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sectionHeader{
+    display: inline-block;
+}
+
+.textStyleRoboto{
+    font-size: 24px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.92;
+    letter-spacing: normal;
+    color: #161616;
+}
+
+.textStyleDancing{
+    font-family: 'Dancing Script';
+    font-size: 35px;
+}

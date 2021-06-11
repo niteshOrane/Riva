@@ -1,0 +1,92 @@
+.filtersContainer {
+  margin: 70px auto 0;
+  width: 90vw;
+  min-height: 540px;
+  .filterBy {
+    margin: 20px 0;
+    font-weight: normal;
+  }
+  .filtersGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    // display: flex;
+    // gap: 12px;
+    // flex-direction: column;
+    max-height: 500px;
+    // flex-wrap: wrap;
+    .mt10Px {
+      margin-top: 10px;
+    }
+  }
+}
+
+// COMPONENTS
+
+// CHECKBOX
+.checkBoxContainer {
+  margin-top: 4px;
+}
+
+// TAGS
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 0 7px;
+  border-radius: 4px;
+  margin: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  span {
+    padding: 3px;
+  }
+  span:nth-child(2) {
+    font-size: 12px;
+  }
+  &:hover {
+    border-color: rgb(255, 162, 162);
+  }
+}
+
+// LIST
+.listContainer {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  span:nth-child(1) {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #000;
+    border-radius: 8px;
+  }
+  span:nth-child(2) {
+    margin-left: 12px;
+  }
+}
+
+// RANGE SLIDER
+.sliderParent {
+  margin-top: 12px;
+  padding: 0 12px;
+  #rangBtns {
+    margin-top: 20px;
+  }
+  .rangePriceBtn {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    padding: 7px;
+  }
+  .rangeFilterBtn {
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 7px 12px;
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}

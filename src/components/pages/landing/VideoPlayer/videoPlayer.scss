@@ -1,0 +1,8 @@
+.video-play-button {
+  background-image: url('../../../../shared/images/videoPlayerPlay.png');
+  height: 100px;
+  width: 100px;
+  &:hover {
+    transform: scale(1.05);
+  }
+}

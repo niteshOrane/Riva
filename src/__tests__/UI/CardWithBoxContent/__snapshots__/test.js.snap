@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card With img, title and description | UI 1`] = `
+<div
+  className="position-relative"
+>
+  <div>
+    <img
+      alt="EID GLAM"
+      src="assets/images/glsGirl.png"
+      width="100%"
+    />
+  </div>
+  <div
+    className="cardBoxContent"
+  >
+    <h3
+      className="text-center"
+    >
+      EID GLAM
+    </h3>
+    <p
+      className="text-center description"
+    >
+      Indulge in accessories from Gucci and beyond for a look finished to perfection
+    </p>
+    <button
+      className="bg-black color-white mx-auto  btn"
+    >
+      <span>
+        Shop Now
+      </span>
+      <div
+        className="before"
+      >
+        <span
+          className="material-icons-outlined"
+        >
+          navigate_before
+        </span>
+      </div>
+      <div
+        className="next"
+      >
+        <span
+          className="material-icons-outlined"
+        >
+          navigate_next
+        </span>
+      </div>
+    </button>
+  </div>
+</div>
+`;

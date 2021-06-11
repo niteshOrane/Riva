@@ -1,0 +1,30 @@
+.container {
+  border-bottom: double #eae7e7;
+  .link {
+    margin: 0 10px;
+  }
+  .megaLink {
+    color: $color-black;
+  }
+  .megaLink {
+    padding: 10px 5px;
+    span {
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.47;
+      letter-spacing: normal;
+      text-align: left;
+      transition: all 0.3s ease-in-out;
+      border-bottom: 1px solid transparent;
+      color: #000000;
+    }
+    &:hover {
+      span {
+        border-color: $color-black;
+      }
+    }
+  }
+}

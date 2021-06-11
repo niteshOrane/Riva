@@ -1,0 +1,1002 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "category": "clothing",
+            "name": "Printed Open Skirt",
+            "wasPrice": 19.99,
+            "nowPrice": 19.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product1.png",
+                "/assets/images/db_product1.png",
+                "/assets/images/db_product1.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "category": "clothing",
+            "name": "Tailored Jeans",
+            "wasPrice": 29.99,
+            "nowPrice": 29.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product2.png",
+                "/assets/images/db_product2.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Street",
+                "Fashion"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "category": "clothing",
+            "name": "Mini Denim Skirt",
+            "wasPrice": 39.99,
+            "nowPrice": 39.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product3.png",
+                "/assets/images/db_product3.png",
+                "/assets/images/db_product3.png",
+                "/assets/images/db_product3.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "category": "clothing",
+            "name": "Basic Long Pencil Skirt",
+            "wasPrice": 49.99,
+            "nowPrice": 49.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product4.png",
+                "/assets/images/db_product4.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "category": "clothing",
+            "name": "Contrast Paisley Printed Pleated Skirt",
+            "wasPrice": 59.99,
+            "nowPrice": 59.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product5.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "category": "clothing",
+            "name": "Pleated Skirt With Flare",
+            "wasPrice": 69.99,
+            "nowPrice": 69.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product6.png",
+                "/assets/images/db_product6.png",
+                "/assets/images/db_product6.png",
+                "/assets/images/db_product6.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "category": "clothing",
+            "name": "Tailored Jeans",
+            "wasPrice": 79.99,
+            "nowPrice": 79.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product7.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "category": "clothing",
+            "name": "Printed Open Skirt",
+            "wasPrice": 89.99,
+            "nowPrice": 89.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product8.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "category": "clothing",
+            "name": "Tailored Jeans",
+            "wasPrice": 99.99,
+            "nowPrice": 99.99,
+            "description": "Dress made of a cotton and linen blend. Straight elastic neckline and thin straps. Contrast embriodery detials.",
+            "rating": 3,
+            "images": [
+                "/assets/images/db_product9.png",
+                "/assets/images/db_product9.png",
+                "/assets/images/db_product9.png"
+            ],
+            "availability": "In Stock",
+            "colors": [
+                "#e45850",
+                "#23a7f3",
+                "#f58c30"
+            ],
+            "size": [
+                "S",
+                "M",
+                "L",
+                "XL",
+                "2XL"
+            ],
+            "tags": [
+                "Loopbook",
+                "Fashion",
+                "Collection"
+            ],
+            "sku": "101104-21009-798",
+            "stats": {
+                "popular": 240,
+                "inDemand": 80
+            },
+            "additionalProductDetails": {
+                "Description": [
+                    {
+                        "title": "Materials",
+                        "text": "95% Viscose, 5% Elastane"
+                    },
+                    {
+                        "title": "Color",
+                        "text": "250 White"
+                    },
+                    {
+                        "title": "Model Measurements",
+                        "text": "Height- 176\", Bust- 33\", Waist- 24\", Hips- 36\""
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Composition and Care": [],
+                "Shipping": [
+                    {
+                        "title": "Country",
+                        "text": "India / USA"
+                    },
+                    {
+                        "text": "We work alongside our suppliers, workers, unions and international bodies to develop a supply chain that respects and promotes human rights, contributing to the United Nations Sustainable Development Goals."
+                    }
+                ],
+                "Reviews": []
+            },
+            "howToWear": [
+                {
+                    "src": "/assets/images/HowToWear1.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear2.png"
+                },
+                {
+                    "src": "/assets/images/HowToWear3.png"
+                }
+            ],
+            "wholeOutfit": {
+                "totalProducts": 3,
+                "selectedProducts": 2,
+                "discounts": [
+                    {
+                        "name": "Outfit discount 5%",
+                        "amount": 4.20
+                    }
+                ],
+                "totalAmount": 8.80,
+                "relatedProducts": [
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard1.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Printed Open Skirt",
+                        "src": "/assets/images/VerticalProductCard2.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    },
+                    {
+                        "name": "Braided Double Strap Sandals",
+                        "src": "/assets/images/VerticalProductCard3.png",
+                        "was": 19.99,
+                        "now": 19.99,
+                        "size": "XL"
+                    }
+                ]
+            }
+        }
+    ]
+}

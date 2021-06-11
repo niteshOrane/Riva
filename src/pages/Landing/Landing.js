@@ -1,33 +1,55 @@
-import React from "react";
+import React from 'react';
+import useLanding from './LandingHooks';
+import HeroGrid from '../../components/pages/landing/Hero-grid/HeroGrid';
+import Slider from '../../components/common/Sliders/Slider';
+import ExtraordinaryEssentials from '../../components/pages/landing/ExtraordinaryEssentials';
+import BestSellingProducts from '../../components/pages/landing/BestSellingProducts/BestSellingProducts';
+import {
+  body,
+  categorySlider,
+  cardsData,
+  mainSlider,
+} from '../../mockdata.json';
+import TopBrand from '../../components/pages/landing/RecentlyViewSection/TopBrand';
+import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
+import CardLayout from '../../components/pages/landing/CardLayout';
+import VideoPlayer from '../../components/pages/landing/VideoPlayer/VideoPlayer';
+import Instagram from '../../components/pages/landing/Instagram/Instagram';
+
 function Landing() {
+  const {middleBanner} = useLanding();
+
   return (
-    (
-    <div>
-      
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam deleniti
-     
-      iusto nobis cupiditate reiciendis placeat nam error delectus. Iste
-
-           explicabo aspernatur laboriosam hic expedita culpa ullam, libero
-
-           asperiores, inventore neque distinctio possimus facere. Maiores recusandae
-     
-      dolores esse voluptate numquam at totam nam, exercitationem non dolore eum
-   
-        vel porro neque deserunt repudiandae nostrum veritatis illo hic eveniet
-
-           vitae ipsa? Cupiditate autem, officiis odio rerum similique a. Laboriosam
-
-           sint impedit et praesentium quisquam facere quis laudantium pariatur
-
-           sapiente nesciunt vel ut quidem animi quos eos expedita ab iure tenetur
-     
-      dignissimos, deserunt modi voluptates ipsum suscipit! Aspernatur explicabo
-     
-      reprehenderit culpa nemo commodi ex!
-    
-    </div>
-  )
+    <>
+      <div>
+        <HeroGrid />
+        <Slider
+          className="categoriesSlider"
+          items={categorySlider}
+          bgImageUrl="./assets/images/categSlider-bg.png"
+          bgImage
+          slidesToShow={6}
+          header={['Shop By', 'Category']}
+          render={(item) => (
+            <div className="text-center d-flex-all-center flex-column">
+              <div>
+                <img src={item.src} width="100%" alt="" />
+              </div>
+              <div>
+                <span>{item.text}</span>
+              </div>
+            </div>
+          )}
+        />
+        <BestSellingProducts products={body.productList} />
+        <VideoPlayer />
+        <CardLayout data={cardsData} />
+        <ExtraordinaryEssentials products={body.extraordinarySlider} />
+        <OneImageBanner img={middleBanner || './assets/images/springSummerBanner.png'}/>
+        <TopBrand />
+        <Instagram products={body.instaProducts} />
+      </div>
+    </>
   );
 }
 
