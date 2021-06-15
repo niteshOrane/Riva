@@ -6,7 +6,7 @@ const useCMSContent = ({identifier}) => {
     useEffect(() => {
         const config = {
             method: 'get',
-            url: `http://65.0.141.49/rest/V1/webapi/getcmspage?storeId=24&cmsIdentifier=${identifier}`,
+            url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getcmspage?storeId=24&cmsIdentifier=${identifier}`,
             silent: true
         };
         axios(config)

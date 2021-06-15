@@ -25,76 +25,9 @@ const Product = (props) => {
     dispatch(addToRecentlyViewed(selectedProduct.id));
   }, [])
 
-  const previous = () => refContainer.current.slickPrev();
-  const next = () => refContainer.current.slickNext();
-
   return (
     <div>
-      <OneImageBanner img="/assets/images/15PercentSaleBanner.png" />
-      <div className="product-page gap-12 d-flex p-12">
-        <div className="preview">
-          {selectedProduct.images.map((src) => {
-            return (
-              <div className="img">
-                <img src={src} width="100%" alt="" />
-              </div>
-            );
-          })}
-          <div className="d-flex-all-center justify-content-between">
-            <div onClick={previous} className="btn d-flex-all-center">
-              <span class="material-icons-outlined">keyboard_arrow_up</span>
-            </div>
-            <div onClick={next} className="btn d-flex-all-center">
-              <span class="material-icons-outlined">keyboard_arrow_down</span>
-            </div>
-          </div>
-        </div>
-        <div className="slider">
-          <Slider
-            className="basicSlider"
-            items={selectedProduct.images}
-            slidesToShow={1}
-            render={(item) => (
-              <div className="slide text-center d-flex-all-center flex-column">
-                <img src={item} width="100%" alt="" />
-                <div className="action-container-top-right">
-                  <div>
-                    <span className="material-icons-outlined font-light-black">
-                      favorite_border
-                    </span>
-                  </div>
-                </div>
-                <div className="action-container-top-left">
-                  <div>ON SALE</div>
-                </div>
-                <div className="action-container-bottom-right">
-                  <div>
-                    <span class="material-icons-outlined font-light-black">
-                      open_with
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-            ref={refContainer}
-          />
-          <div className="d-flex-all-center gap-12 my-10px">
-            <div>Share:</div>
-            <div className="share d-flex-all-center">
-              <WhatsApp />
-            </div>
-            <div className="share d-flex-all-center">
-              <Instagram />
-            </div>
-            <div className="share d-flex-all-center">
-              <Facebook />
-            </div>
-          </div>
-        </div>
-        <div className="details">
-          <ProductDetails product={selectedProduct} />
-        </div>
-      </div>
+      <ProductDetails product={selectedProduct} />
       <AdditionalProductDetails sections={body.additionalProductDetails} />
       <HowToWearThis cards={body.howToWear} />
       <div>

@@ -21,7 +21,7 @@ export const getCurrentLocation = async () => {
 export const getHeader = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/rest/V1/webapi/getheader',
+    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/getheader',
     silent: true
   };
   const response = await axios(config);
@@ -30,7 +30,7 @@ export const getHeader = async () => {
 export const getHeaderCategory = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/rest/V1/webapi/getnavigation',
+    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/getnavigation',
     silent: true
   };
   const response = await axios(config);
@@ -40,7 +40,7 @@ export const getHeaderCategory = async () => {
 export const getFooter = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/rest/V1/webapi/footercms?storeId=24',
+    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/footercms?storeId=24',
   };
   const response = await axios(config);
   return response;

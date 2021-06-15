@@ -7,7 +7,7 @@ const useProducts = ({categoryId}) => {
     useEffect(() => {
         const config = {
             method: 'get',
-            url: `http://65.0.141.49/rest/V1/webapi/categoryproducts?categoryId=${categoryId}&storeId=24&start=0&limit=12`,
+            url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/categoryproducts?categoryId=${categoryId}&storeId=24&start=0&limit=12`,
             silent: true
         };
 

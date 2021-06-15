@@ -7,7 +7,7 @@ const useLanding = () => {
     const getBanners = (sliderId) => {
         const config = {
             method: 'get',
-            url: `http://65.0.141.49/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=1`,
+            url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=1`,
             silent: true
         };
         return axios(config)

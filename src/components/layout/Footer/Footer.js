@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import style from "./footer.module.scss";
 
 function Footer() {
@@ -17,12 +18,16 @@ function Footer() {
               <ul className={style.ul}>
                 {section.data.map((link, i) => (
                   <li key={i} className={`d-flex align-items-center ${style.link}`}>
-                    <a className={`w-100 ${style.footerLink}`} href={link.href}>
+                    <Link
+                      to={link.href.split('/').pop()}
+                      className={`w-100 ${style.footerLink}`}
+                      href={link.href.split('/').pop()}
+                    >
                       <span className="material-icons-outlined">
                         arrow_right_alt
                       </span>
                       <span>{link.name}</span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
