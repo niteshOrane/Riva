@@ -1,14 +1,25 @@
+import React, { useRef, useState, useEffect } from 'react';
 import TopBrandCard from './TopBrandCard';
-import React, { useRef } from 'react';
-import { body } from '../../../../mockdata.json';
 import Slider from '../../../common/Sliders/Slider';
 import ArrowButton from '../../../common/Buttons/Arrow';
+import { getProducts } from '../../../../services/layout/Layout.service';
 import style from './TopBrandCard.module.scss';
 const TopBrandsSlider = () => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
+
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    const res = await getProducts('2045', 10);
+    setProducts(res.data || []);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div>
@@ -27,13 +38,21 @@ const TopBrandsSlider = () => {
         </div>
       </div>
       <div className="my-20px">
-        <Slider
-          items={body.recentlyViewed}
-          ref={refContainer}
-          slidesToShow={2}
-          rows={2}
-          render={(item) => <TopBrandCard item={item} />}
-        />
+        {products.length < 3 ? (
+          <div className="d-flex">
+            {products?.map((item) => (
+              <TopBrandCard item={item} />
+            ))}
+          </div>
+        ) : (
+          <Slider
+            items={products}
+            ref={refContainer}
+            slidesToShow={2}
+            rows={2}
+            render={(item) => <TopBrandCard item={item} />}
+          />
+        )}
       </div>
     </div>
   );

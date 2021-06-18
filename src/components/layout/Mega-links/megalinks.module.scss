@@ -5,9 +5,11 @@
   }
   .megaLink {
     color: $color-black;
+    cursor: pointer;
   }
   .megaLink {
     padding: 10px 5px;
+    cursor: pointer;
     span {
       font-family: Roboto;
       font-size: 15px;
@@ -25,6 +27,51 @@
       span {
         border-color: $color-black;
       }
+    }
+  }
+
+  .megaContainer {
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+
+    box-shadow: -1px 796px 0px 778px rgba(0, 0, 0, 0.5);
+  }
+  .allProductsCard {
+    width: 290px;
+    .allProductsTitle {
+      border-bottom: 1px solid #000000;
+    }
+    .allProductsTitles {
+      max-width: 450px;
+      flex-wrap: wrap;
+      height: 200px;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0 30px;
+      margin-top: 20px;
+      .pLink {
+        margin: 2px 0;
+        transition: all 0.3s ease;
+        &:hover {
+          color: black !important;
+        }
+      }
+    }
+  }
+  .show {
+    transition: all 0.4s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .megaImg {
+    img {
+      max-width: 380px;
+      max-height: 380px;
+      object-fit: contain;
     }
   }
 }

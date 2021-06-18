@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Dancing+Script&display=swap&family=Jost');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Dancing+Script&display=swap&family=Jost");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp");
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 // ul, li{
@@ -17,6 +17,9 @@ a,
 a:hover,
 a:focus {
   text-decoration: none;
+}
+a {
+  color: inherit;
 }
 p,
 h1,
@@ -30,7 +33,7 @@ h6 {
 }
 
 .logo-image {
-  max-width: 184px;
+  max-width: 10rem;
   object-fit: contain;
 }
 .loading {

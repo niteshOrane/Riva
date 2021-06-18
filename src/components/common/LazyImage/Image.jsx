@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const LazyImage = (props) => {
-  const { src, width, height, alt, customeStyle, classname } = props;
+  const { src, width, height, alt, customeStyle, classname, defaultImage } = props;
   const [error, setError] = useState(false);
 
   const onImageError = () => {
@@ -14,7 +14,7 @@ const LazyImage = (props) => {
       src={
         !error
           ? src
-          : 'https://via.placeholder.com/295x295?text=Image+Not+Available'
+          : defaultImage ? defaultImage : 'https://via.placeholder.com/295x295?text=Image+Not+Available'
       }
       onError={onImageError}
       width={width}

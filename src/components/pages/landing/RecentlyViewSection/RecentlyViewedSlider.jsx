@@ -1,33 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import TopBrandCard from './TopBrandCard';
-import Slider from '../../../common/Sliders/Slider';
-import ArrowButton from '../../../common/Buttons/Arrow';
-import style from './TopBrandCard.module.scss';
-import { products } from '../../../../db.json';
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import TopBrandCard from "./TopBrandCard";
+import Slider from "../../../common/Sliders/Slider";
+import ArrowButton from "../../../common/Buttons/Arrow";
+import style from "./TopBrandCard.module.scss";
+import { products } from "../../../../db.json";
 
 const RecentlyViewedSlider = () => {
   const refContainer = useRef();
-  const { data: items = [] } = useSelector(state => state.stats);
+  const { data: items = [] } = useSelector((state) => state.stats);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
-
+  console.log(recentlyViewed);
   useEffect(() => {
     if (items.length) {
-      const filteredProducts = items.map(id => products.find(product => product.id == id));
-      const recentlyViewedProducts = filteredProducts.map(item => {
+      const filteredProducts = items.map((id) =>
+        products.find((product) => product.id == id)
+      );
+      const recentlyViewedProducts = filteredProducts.map((item) => {
         return {
           id: item.id,
           src: item.images[0],
           title: item.name,
-          price: item.wasPrice
-        }
+          price: item.wasPrice,
+        };
       });
       setRecentlyViewed(recentlyViewedProducts);
     }
-  }, [items])
+  }, [items]);
 
-  const previous = () => refContainer.current.slickPrev();
-  const next = () => refContainer.current.slickNext();
+  const previous = () => refContainer.current?.slickPrev();
+  const next = () => refContainer.current?.slickNext();
 
   return (
     <div>
@@ -45,14 +47,22 @@ const RecentlyViewedSlider = () => {
           </div>
         </div>
       </div>
-      <div className="my-20px">
-        <Slider
-          items={recentlyViewed}
-          ref={refContainer}
-          rows={2}
-          slidesToShow={2}
-          render={(item) => <TopBrandCard item={item} />}
-        />
+      <div className="my-20px ">
+        {recentlyViewed.length < 3 ? (
+          <div className="d-flex">
+            {recentlyViewed?.map((item) => (
+              <TopBrandCard item={item} />
+            ))}
+          </div>
+        ) : (
+          <Slider
+            items={recentlyViewed}
+            ref={refContainer}
+            rows={2}
+            slidesToShow={2}
+            render={(item) => <TopBrandCard item={item} />}
+          />
+        )}
       </div>
     </div>
   );

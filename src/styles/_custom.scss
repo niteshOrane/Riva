@@ -56,6 +56,10 @@
 .m-0 {
   margin: 0;
 }
+.mt-12px {
+  margin-top: 12px;
+}
+
 .p-0 {
   padding: 0;
 }
@@ -91,6 +95,10 @@
 .mx-75px {
   margin-left: 75px;
   margin-right: 75px;
+}
+.px-75px {
+  padding-left: 75px;
+  padding-right: 75px;
 }
 
 .px-auto {
@@ -261,14 +269,14 @@ nav.nav {
   .slick-prev::before,
   .slick-next:before {
     font-family: sans-serif !important;
-    background-color: #000000;
+    background-color: #ffffff;
     width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
-    font-size: 3rem;
+    color: #000000;
+    font-size: 4rem;
   }
   .slick-prev::before {
     content: "‹" !important;
@@ -297,13 +305,13 @@ nav.nav {
   .slick-prev::before,
   .slick-next:before {
     font-family: sans-serif !important;
-    background-color: #000000;
     width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
+    color: #000000;
+    font-size: 4rem;
     font-size: 3rem;
   }
   .slick-prev::before {
@@ -332,12 +340,61 @@ nav.nav {
   }
 }
 
+// grey arrows for slider
+.simpleGreyArrow {
+  .slick-track {
+    display: flex;
+  }
+  .slick-prev::before,
+  .slick-next:before {
+    font-family: sans-serif !important;
+
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5e5e5e;
+    font-size: 3rem;
+  }
+  .slick-prev::before {
+    content: url("https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/5e74da4a-c1a9-4797-a712-7a9e382cfab4.svg") !important;
+    transform: rotate(180deg);
+  }
+  .slick-next:before {
+    content: url("https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/5e74da4a-c1a9-4797-a712-7a9e382cfab4.svg") !important;
+  }
+  .slick-prev,
+  .slick-next {
+    display: flex;
+    width: 50px;
+    height: 50px;
+  }
+  .slick-prev {
+    left: 2% !important;
+  }
+  .slick-next {
+    right: 2% !important;
+  }
+}
+
 // random stuff
+
+.opacity-7 {
+  opacity: 0.7;
+}
+
 .c-pointer {
   cursor: pointer;
 }
 .d-block {
   display: block;
+}
+.d-none {
+  display: none;
+}
+.d-inline-block {
+  display: inline-block;
 }
 .gap-12 {
   gap: 12px;

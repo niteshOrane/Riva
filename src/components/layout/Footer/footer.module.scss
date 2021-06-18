@@ -123,16 +123,30 @@ $footer-grey-color: #737373;
     }
   }
 
-  .toTopBtn{
+  .toTopBtn {
     position: relative;
 
-    span{
+    span {
       position: absolute;
       bottom: 200px;
       right: 32px;
       height: 40px;
       width: 40px;
       background: #000000;
+    }
+  }
+  .copyRightText {
+    margin-left: 22px;
+    color: #737373;
+  }
+  .copyRightSec {
+    margin-top: 20px;
+    border-top: 1px solid #3f3f3f;
+    padding: 30px 0;
+    .weAcceptImage {
+      max-width: 407px;
+      margin-right: 2.5em;
+      margin-left: 18px;
     }
   }
 }

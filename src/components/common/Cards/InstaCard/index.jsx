@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Image from '../../LazyImage/Image';
-import './InstaCard.module.scss';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Image from "../../LazyImage/Image";
+import "./InstaCard.module.scss";
 
 const InstaCard = ({ product }) => {
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState("");
 
   const { id, src, name, wasPrice, nowPrice } = product;
   return (

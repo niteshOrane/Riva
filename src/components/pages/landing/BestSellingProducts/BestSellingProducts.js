@@ -1,15 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import ProductCard from '../../../common/Cards/ProductCard';
 import SectionHeader from '../../../common/SectionHeader/SectionHeader';
 import ArrowButton from '../../../common/Buttons/Arrow';
 import Slider from '../../../common/Sliders/Slider';
+import { getProducts } from '../../../../services/layout/Layout.service';
 import styles from './bestSellingProducts.module.scss';
 
-const BestSellingProducts = ({ products }) => {
+const BestSellingProducts = () => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
+
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    const res = await getProducts('2045', 10);
+    setProducts(res.data || []);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div

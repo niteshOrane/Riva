@@ -109,8 +109,8 @@ function Filters() {
 
     return (
       <>
-        <button type="button" onClick={openDrawer}>
-          Click me
+        <button className={style.btn} type="button" onClick={openDrawer}>
+          Filter
         </button>
         <Drawer anchor={drawerPosition} onClose={closeDrawer} open={open}>
           <div className={style.filtersContainer}>

@@ -1,48 +1,54 @@
 .card {
-    display: grid;
-    justify-content: center;
+  display: grid;
+  justify-content: center;
 
-    img {
-        position: relative;
-        width: 373.3px;
-        height: 285px;
-        object-fit: contain;
-        background: #ddd;
+  img {
+    position: relative;
+    object-fit: contain;
+    max-height: 453px;
+    background: #ddd;
+  }
+
+  .btn {
+    width: 373.5px;
+    height: 41px;
+    padding: 4px;
+    cursor: pointer;
+    background-color: $color-black;
+
+    .name {
+      width: 314px;
+      height: 33px;
+      margin: 0 13.2px 0 0;
+      padding: 7px;
+      text-align: center;
+      background-color: #ffffff;
+
+      span {
+        font-family: Roboto;
+        font-size: 17px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.02;
+        letter-spacing: normal;
+        color: #000000;
+      }
     }
 
-    .btn {
-        width: 373.5px;
-        height: 41px;
-        padding: 4px;
-        cursor: pointer;
-        background-color: #fe6f61;
-
-        .name{
-            width: 314px;
-            height: 33px;
-            margin: 0 13.2px 0 0;
-            padding: 7px;
-            text-align: center;
-            background-color: #ffffff;
-
-            span {
-                font-family: Roboto;
-                font-size: 17px;
-                font-weight: normal;
-                font-stretch: normal;
-                font-style: normal;
-                line-height: 1.02;
-                letter-spacing: normal;
-                color: #000000;
-            }
-        }
-
-        .icon{
-            width: 24.6px;
-            height: 24.6px;
-            margin: 5px;
-            object-fit: contain;
-            color: #ffffff;
-        }
+    .icon {
+      width: 24.6px;
+      height: 24.6px;
+      margin: 5px;
+      object-fit: contain;
+      color: #ffffff;
     }
+  }
+}
+
+.blackCard {
+  background-color: black !important;
+  span {
+    color: #fff !important;
+  }
 }

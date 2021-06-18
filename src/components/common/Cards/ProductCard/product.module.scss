@@ -4,11 +4,11 @@
   // height: 400px;
   width: 100%;
   margin: 10px 0px 10px 0px;
-  text-align: center;
   font-family: arial;
   position: relative;
   display: inline-block;
   background-color: #ffffff;
+
   &:hover {
     box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
   }
@@ -28,7 +28,6 @@
     font-style: normal;
     line-height: 1.47;
     letter-spacing: normal;
-    text-align: center;
     color: #161616;
     cursor: pointer;
     margin-top: 5px;

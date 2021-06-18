@@ -56,6 +56,10 @@ const Slider = React.forwardRef((props, ref) => {
       </div>
     );
   }
+
+  if (items.length < slidesToShow)
+    carouselOptions['slidesToShow'] = items.length;
+
   return (
     <div
       style={

@@ -1,35 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { getBanners } from '../../../../services/layout/Layout.service';
 
 const useHeroGrid = () => {
-    const [btfLeft, setBtfLeft] = useState([]);
-    const [btfRight, setBtfRight] = useState([]);
+  const [btfLeft, setBtfLeft] = useState([]);
+  const [btfRight, setBtfRight] = useState([]);
 
-    const getBanners = (sliderId) => {
-        const config = {
-            method: 'get',
-            url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=1`,
-            silent: true
-        };
-        return axios(config)
-    }
+  useEffect(() => {
+    getBanners(7)
+      .then((response) => setBtfLeft(response.data))
+      .catch((error) => console.log(error));
 
-    useEffect(() => {
-        getBanners(7)
-            .then(response => setBtfLeft(response.data))
-            .catch(error => console.log(error));
+    getBanners(8)
+      .then((response) => setBtfRight(response.data))
+      .catch((error) => console.log(error));
 
-        getBanners(8)
-            .then(response => setBtfRight(response.data))
-            .catch(error => console.log(error));
+    // http://65.0.141.49/media/mageplaza/bannerslider/banner/image/
+  }, []);
 
-        // http://65.0.141.49/media/mageplaza/bannerslider/banner/image/
-    }, []);
-
-    return {
-        btfLeft,
-        btfRight
-    }
-}
+  return {
+    btfLeft,
+    btfRight,
+  };
+};
 
 export default useHeroGrid;

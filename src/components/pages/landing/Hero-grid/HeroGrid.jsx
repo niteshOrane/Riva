@@ -1,45 +1,61 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useHeroGrid from './HeroGridHooks';
 import { selectedCategory } from '../../../../store/actions/common';
+import Image from '../../../common/LazyImage/Image';
 
-import ButtonWithArrows from "../../../common/Buttons/ButtonWithArrows/ButtonWithArrows";
-import style from "./HeroGrid.module.scss";
-import Circle from "../../../layout/Navbar/Circle";
-import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
+import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
+import style from './HeroGrid.module.scss';
+import Circle from '../../../layout/Navbar/Circle';
+import SlideBanner from '../../../pages/landing/Banners/SlideBanner';
+
+const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
 
 const HeroGrid = () => {
-  const {btfLeft, btfRight} = useHeroGrid();
+  const { btfLeft, btfRight } = useHeroGrid();
   const links = useSelector((state) => state.common.category)[0];
-  const [defaultCategory, setCategory] = useState("1241");//woman
+  const [defaultCategory, setCategory] = useState('1241'); //woman
   const dispatch = useDispatch();
-  const onCategorySelect = (id)=>{
+  const onCategorySelect = (id) => {
     setCategory(id);
-    const items = links?.children_data?.filter(e=>e?.id === id) ?? [];
-    if(items.length){
-      dispatch(selectedCategory(items[0]?.children_data, id))
+    const items = links?.children_data?.filter((e) => e?.id === id) ?? [];
+    if (items.length) {
+      dispatch(selectedCategory(items[0]?.children_data, id));
     }
-  }
+  };
 
-  useEffect(()=>{
-    const items = links?.children_data?.filter(e=>e?.id===defaultCategory)??[];
-    if(items.length){
-      dispatch(selectedCategory(items[0]?.children_data, defaultCategory))
+  console.log(btfRight);
+
+  useEffect(() => {
+    const items =
+      links?.children_data?.filter((e) => e?.id === defaultCategory) ?? [];
+    if (items.length) {
+      dispatch(selectedCategory(items[0]?.children_data, defaultCategory));
     }
-  }, [links,defaultCategory])
- 
+  }, [links, defaultCategory]);
+
   return (
     <div className={`${style.grid} max-width-1600`}>
       <div className={style.col1}>
-      {links?.children_data?.map(item=> item.is_active == 1 && <div className={style.circleContainer} >
-        <Circle id={item?.id}  
-        onClick={()=>{onCategorySelect(item?.id)}} bg={`${defaultCategory===item?.id?'skin':'black'}`}>
-          {item?.name}</Circle> </div>
+        {links?.children_data?.map(
+          (item) =>
+            item.is_active == 1 && (
+              <div className={style.circleContainer}>
+                <Circle
+                  id={item?.id}
+                  onClick={() => {
+                    onCategorySelect(item?.id);
+                  }}
+                  bg={`${defaultCategory === item?.id ? 'skin' : 'black'}`}
+                >
+                  {item?.name}
+                </Circle>{' '}
+              </div>
+            )
         )}
-        
       </div>
       <div className={style.col2}>
-        <SlideBanner banners={btfLeft}/>
+        <SlideBanner banners={btfLeft} />
       </div>
       <div className={`d-grid ${style.gap25}`}>
         <div className="position-relative">
@@ -50,7 +66,12 @@ const HeroGrid = () => {
             </div>
           </a>
           <div className="position-relative">
-            <img src="./assets/images/trendGirl.png" width="100%" alt="" />
+            <img
+              src={`${baseUrl}${btfRight?.[0]?.image}`}
+              width="100%"
+              alt=""
+              customeStyle={{ maxheight: 250 }}
+            />
           </div>
         </div>
         <div className={style.col2Grid}>
@@ -69,15 +90,23 @@ const HeroGrid = () => {
                 <ButtonWithArrows btnClass="mx-auto" text="Shop Now" />
               </div>
             </a>
-            <img src="./assets/images/wantedGirl.png" width="100%" alt="" />
+            <Image
+              src={`${baseUrl}${btfRight?.[1]?.image}`}
+              width="100%"
+              alt=""
+            />
           </div>
 
           <div className="position-relative">
-            <img src="./assets/images/fashionGirl.png" width="100%" alt="" />
+            <Image
+              src={`${baseUrl}${btfRight?.[2]?.image}`}
+              width="100%"
+              alt=""
+            />
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 export default HeroGrid;

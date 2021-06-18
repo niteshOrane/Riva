@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import CopyRightSection from "./CopyRightSection/CopyRightSection";
 import style from "./footer.module.scss";
 
 function Footer() {
@@ -11,29 +12,30 @@ function Footer() {
   return (
     <footer className={`max-width-1750 mx-auto ${style.footer}`}>
       <div className={style.footerGrid}>
-        {
-          footer?.footer_links?.map(section => (
-            <div className={style.footerCol}>
-              <h4 className={style.title}>{section.section.toUpperCase()}</h4>
-              <ul className={style.ul}>
-                {section.data.map((link, i) => (
-                  <li key={i} className={`d-flex align-items-center ${style.link}`}>
-                    <Link
-                      to={link.href.split('/').pop()}
-                      className={`w-100 ${style.footerLink}`}
-                      href={link.href.split('/').pop()}
-                    >
-                      <span className="material-icons-outlined">
-                        arrow_right_alt
-                      </span>
-                      <span>{link.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
+        {footer?.footer_links?.map((section) => (
+          <div className={style.footerCol}>
+            <h4 className={style.title}>{section.section.toUpperCase()}</h4>
+            <ul className={style.ul}>
+              {section.data.map((link, i) => (
+                <li
+                  key={i}
+                  className={`d-flex align-items-center ${style.link}`}
+                >
+                  <Link
+                    to={link.href.split("/").pop()}
+                    className={`w-100 ${style.footerLink}`}
+                    href={link.href.split("/").pop()}
+                  >
+                    <span className="material-icons-outlined">
+                      arrow_right_alt
+                    </span>
+                    <span>{link.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
         <div className={style.footerCol}>
           <h4 className={style.title}>STAY IN TOUCH</h4>
           <div>
@@ -104,15 +106,29 @@ function Footer() {
           <div className={style.lm}>
             <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
-              <img src="/assets/images/appleStore.png" width="106px" height="34px" alt="" />
+              <img
+                src="/assets/images/appleStore.png"
+                width="106px"
+                height="34px"
+                alt=""
+              />
             </div>
             <div>
-              <img src="/assets/images/googleStore.png" width="120px" height="34px" alt="" />
+              <img
+                src="/assets/images/googleStore.png"
+                width="120px"
+                height="34px"
+                alt=""
+              />
             </div>
           </div>
         </div>
       </div>
-      <div className={`${style.toTopBtn} c-pointer`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <CopyRightSection />
+      <div
+        className={`${style.toTopBtn} c-pointer`}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
         <span className="material-icons-outlined font-white d-flex-all-center">
           keyboard_arrow_up
         </span>

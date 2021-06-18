@@ -1,22 +1,34 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../../../common/Cards/ProductCard';
 import SectionHeader from '../../../common/SectionHeader/SectionHeader';
 import ArrowButton from '../../../common/Buttons/Arrow';
 import Slider from 'react-slick';
+import { getProducts } from '../../../../services/layout/Layout.service';
 import './styles.scss';
 
-const ProductList = ({ products }) => {
+const ProductList = () => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
 
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    const res = await getProducts('2045', 10);
+    setProducts(res.data || []);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const settings = {
     arrows: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: products.length < 4 ? products.length : 4,
     slidesToScroll: 4,
     initialSlide: 0,
   };
