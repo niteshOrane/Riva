@@ -9,7 +9,7 @@ const useLanding = () => {
       .then((response) => response.data[0].image)
       .then((banner) =>
         SetMiddleBanner(
-          `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/${banner}`
+          `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${banner}`
         )
       )
       .catch((error) => console.log(error));
