@@ -1,7 +1,7 @@
 .topBarcontainer {
   height: 37px;
   .topBarRight {
-    margin-left: 95px;
+    margin-left: 88px;
     display: flex;
     align-items: center;
     @include mobile {
@@ -9,6 +9,18 @@
     }
     @include tablet {
       background-color: blue;
+    }
+
+    :global {
+      .d-flex {
+        width: 180px;
+        justify-content: space-between;
+        button {
+          span {
+            font-size: 1.1rem;
+          }
+        }
+      }
     }
   }
   .topBarMsg {
@@ -18,7 +30,8 @@
   .topBarLeft {
     padding-right: 75px;
     padding-left: 12px;
-    background-color: $color-skin;
+    background-color: transparent;
+    color: white;
   }
   .flag {
     padding: 12px 5px;
@@ -26,11 +39,15 @@
 
   .select {
     border: none;
-    background-color: $color-skin;
+    background-color: transparent;
+    color: white;
     border-radius: 0px;
     font-size: 14px;
     padding: 0px 5px;
     margin-right: 5px;
-    width: 10rem;
+    width: 65px;
+    .option {
+      color: black;
+    }
   }
 }

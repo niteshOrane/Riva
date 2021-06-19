@@ -9,8 +9,8 @@ const initialState = {
   footerCMS: [],
   currentLocation: null,
   currency: 'OMR',
-  category:[],
-  selectedCategoryItem:{}
+  category: [],
+  selectedCategoryItem: {},
 };
 
 export default function common(state = initialState, action) {
@@ -61,8 +61,8 @@ export default function common(state = initialState, action) {
       };
     case DATA_TYPES.CATEGORY:
       return {
-      ...state,
-      category: action.payload.data,
+        ...state,
+        category: action.payload.data,
       };
     case DATA_TYPES.SELECTED_CATEGORY:
       return {

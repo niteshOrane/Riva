@@ -1,17 +1,15 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import './videoPlayer.scss';
-import { LandingVideoPlayerBG } from '../../../../shared/images';
-import useVideoPlayer from './VideoPlayerHooks';
+import {URL} from "../../../../util";
 
-const VideoPlayer = () => {
-  const {video} = useVideoPlayer();
+const VideoPlayer = ({videoBanner}) => {
 
   return (
     <ReactPlayer
       className="react-player my-20px"
       controls={true}
-      light={LandingVideoPlayerBG}
+      light={`${URL.baseUrl}/${videoBanner?.[0]?.image}`}
       muted={true}
       playing={true}
       playIcon={<div className="video-play-button"></div>}

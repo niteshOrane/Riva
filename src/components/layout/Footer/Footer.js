@@ -36,7 +36,7 @@ function Footer() {
             </ul>
           </div>
         ))}
-        <div className={style.footerCol}>
+        <div className={`${style.footerCol} ${style.maxWidth80}`}>
           <h4 className={style.title}>STAY IN TOUCH</h4>
           <div>
             <p className={style.thirdMsg}>
@@ -58,7 +58,7 @@ function Footer() {
             <button type="button">SUBSCRIBE</button>
           </div>
         </div>
-        <div className={style.footerCol}>
+        <div className={`${style.footerCol} ${style.lastCol}`}>
           <h4 className={style.title}>STAY CONNECTED</h4>
           <ul className="d-flex align-items-center justify-content-between">
             <div className={style.icon}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useHeroGrid from './HeroGridHooks';
+
 import { selectedCategory } from '../../../../store/actions/common';
 import Image from '../../../common/LazyImage/Image';
 
@@ -11,8 +11,7 @@ import SlideBanner from '../../../pages/landing/Banners/SlideBanner';
 
 const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
 
-const HeroGrid = () => {
-  const { btfLeft, btfRight } = useHeroGrid();
+const HeroGrid = ({ btfLeft, btfRight }) => {
   const links = useSelector((state) => state.common.category)[0];
   const [defaultCategory, setCategory] = useState('1241'); //woman
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ const HeroGrid = () => {
   }, [links, defaultCategory]);
 
   return (
-    <div className={`${style.grid} max-width-1600`}>
+    <div className={`${style.grid} max-width-1600 mx-auto`}>
       <div className={style.col1}>
         {links?.children_data?.map(
           (item) =>
@@ -55,57 +54,26 @@ const HeroGrid = () => {
         )}
       </div>
       <div className={style.col2}>
-        <SlideBanner banners={btfLeft} />
+        {btfLeft.length > 0 ? <SlideBanner banners={btfLeft} /> : null}
       </div>
-      <div className={`d-grid ${style.gap25}`}>
-        <div className="position-relative">
-          <a href="/" className={`${style.overlay} ${style.overlay2}`}>
-            <div className={style.trendyTxt}>
-              <h2>Trendy Look</h2>
-              <h2 className={style.redBgTxt}>For Every Day</h2>
+      {btfRight.length > 0 ? (
+        <div className={`d-grid ${style.gap25}`}>
+          <div className="position-relative">
+            <div className="position-relative">
+              <Image src={`${btfRight?.[0]?.image}`} width="100%" alt="" />
             </div>
-          </a>
-          <div className="position-relative">
-            <img
-              src={`${baseUrl}${btfRight?.[0]?.image}`}
-              width="100%"
-              alt=""
-              customeStyle={{ maxheight: 250 }}
-            />
           </div>
-        </div>
-        <div className={style.col2Grid}>
-          <div className="position-relative">
-            <a href="/" className={`${style.overlay} ${style.overlay3}`}>
-              <div className={`${style.sliderTxt} text-center `}>
-                <h2 className="color-white">MOST WANTED</h2>
-                <div>
-                  <img
-                    src="./assets/images/wave-border.png"
-                    width="100px"
-                    alt="Wanted"
-                  />
-                </div>
-                <p className={style.yellowTxt}>MID-SEASON SLAE</p>
-                <ButtonWithArrows btnClass="mx-auto" text="Shop Now" />
-              </div>
-            </a>
-            <Image
-              src={`${baseUrl}${btfRight?.[1]?.image}`}
-              width="100%"
-              alt=""
-            />
-          </div>
+          <div className={style.col2Grid}>
+            <div className={style.col2GridImgs}>
+              <Image src={`${btfRight?.[1]?.image}`} width="100%" alt="" />
+            </div>
 
-          <div className="position-relative">
-            <Image
-              src={`${baseUrl}${btfRight?.[2]?.image}`}
-              width="100%"
-              alt=""
-            />
+            <div className={style.col2GridImgs}>
+              <Image src={`${btfRight?.[2]?.image}`} width="100%" alt="" />
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 import Image from '../../LazyImage/Image';
 import styles from './product.module.scss';
 
-const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
+import { URL } from '../../../../util';
 
 const ProductCard = ({ product }) => {
   const { id, image, name, price } = product;
+
+  const srcImage =
+    image.indexOf('http') > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <div key={id} className={styles.productCard}>
       <div className={styles.imageContainer}>
-        <Image src={image} />
+        <Image src={srcImage} defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"  />
       </div>
+      {product.sale && <div className={styles.sale}>Sale</div>}
       <div className={styles.actionContainer}>
         <div>
           <span className="material-icons-outlined font-light-black">

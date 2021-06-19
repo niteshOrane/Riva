@@ -8,6 +8,7 @@
   position: relative;
   display: inline-block;
   background-color: #ffffff;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
@@ -67,6 +68,20 @@
       letter-spacing: normal;
       color: #d12003;
     }
+  }
+
+  .sale {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 60px;
+    height: 59px;
+    background-color: #000000;
+    color: white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .actionContainer {

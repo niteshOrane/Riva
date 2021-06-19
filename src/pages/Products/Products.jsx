@@ -1,62 +1,42 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import useProducts from "./useProducts";
-import Filters from "../../components/pages/products/Filters";
-import ProductCard from "../../components/common/Cards/ProductCard";
-import Slider from "../../components/common/Sliders/Slider";
-import { body } from "../../mockdata.json";
-import Image from "../../components/common/LazyImage/Image";
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import useProducts from './useProducts';
+import Filters from '../../components/pages/products/Filters';
+import ProductCard from '../../components/common/Cards/ProductCard';
+import Slider from '../../components/common/Sliders/Slider';
+import { body } from '../../mockdata.json';
+import Image from '../../components/common/LazyImage/Image';
 
-import styles from "./products.module.scss";
-
-const baseUrl = `https://www.rivafashion.com/media/catalog/product/`;
+import styles from './products.module.scss';
 
 function Products(props) {
   const { products, loading, filters } = useProducts({
     categoryId: props.match.params.categoryId,
   });
   const refContainer = useRef();
-  
+
   return (
     <div>
-      <div className="container-90 max-width-1600 mx-auto">
+      <div className="container-90 max-width-1600 mx-88px mr-75px">
+        <div className={styles.essentials}>
+           Essentials
+        </div>
         <div className={styles.header}>
           <span className="color-grey">
-            {products.length ? <>Showing {products.length} Results</> : ""}
+            {products.length ? <>Showing {products.length} Results</> : ''}
           </span>
+
           <Filters />
         </div>
       </div>
-      {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
+      {loading && <h3 style={{ textAlign: 'center' }}>loading...</h3>}
       {!loading && !products.length && (
-        <h3 style={{ textAlign: "center" }}>No Product found!</h3>
+        <h3 style={{ textAlign: 'center' }}>No Product found!</h3>
       )}
       <div className={`${styles.productsPage}`}>
         {products?.map((product) => (
-          <Link
-            className={`d-inline-block ${styles.productCard} ${
-              product.isSingle ? styles.singleCard : ""
-            }`}
-            to="/product/1"
-          >
-            <div>
-              <div>
-                <Image
-                  src={`${baseUrl}${product?.src}`}
-                  width="100%"
-                  alt={product?.name}
-                />
-              </div>
-              <div className={styles.cardFooter}>
-                <p className={styles.title}>{product?.name}</p>
-                <div className={styles.prices}>
-                  <s className="color-grey font-size-normal">
-                    {product?.wasPrice}
-                  </s>
-                  <strong>{product?.nowPrice}</strong>
-                </div>
-              </div>
-            </div>
+          <Link to={`/product/${product?.id}`}>
+            <ProductCard product={product} />
           </Link>
         ))}
       </div>
@@ -66,7 +46,7 @@ function Products(props) {
       <div className="container-90 max-width-1600 mx-auto">
         <Slider
           className="basicSlider"
-          items={body.productList}
+          items={products}
           slidesToShow={4}
           arrows={true}
           ref={refContainer}

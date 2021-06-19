@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./Products.module.scss";
+
 const Products = ({ products }) => {
   return (
     <div className={style.products}>

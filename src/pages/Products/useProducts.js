@@ -18,16 +18,19 @@ const useProducts = ({ categoryId }) => {
 
     axios(config)
       .then((response) => {
-        console.log(response.data.items);
         const products = response?.data?.items?.map((product) => {
           return {
             id: product.id,
-            src: product?.custom_attributes.find(
+            image: product?.custom_attributes.find(
               (attr) => attr.attribute_code === 'image'
             )?.value,
             name: product.name,
-            wasPrice: product.price + 50,
-            nowPrice: product.price,
+
+            price: product.price,
+            sale:
+              product?.custom_attributes.find(
+                (attr) => attr.attribute_code === 'show_sale_badge'
+              )?.value === '1',
           };
         });
         setProducts(products);

@@ -62,7 +62,7 @@ export default {
     Axios.interceptors.response.use(
       (response) => {
         const { data = {} } = response;
-         hideLoader(store);
+        hideLoader(store);
         if (data.status >= 400) {
           const err = prepareErrorObject(data);
           handleError(store, err);
@@ -71,7 +71,7 @@ export default {
       },
       (error) => {
         const err = prepareErrorObject(error);
-        handleError(store, err);
+        // handleError(store, err);
         hideLoader(store);
         return Promise.reject(error ? error['response'] : null);
       }

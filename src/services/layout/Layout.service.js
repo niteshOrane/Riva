@@ -60,6 +60,15 @@ export const getProducts = (categoryId, limit) => {
   return axios(config);
 };
 
+export const getPromoCategories = () => {
+  const config = {
+    method: 'get',
+    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getpromotionalcategories/`,
+    silent: true,
+  };
+  return axios(config);
+};
+
 export const searchProducts = (categoryId, limit) => {
   const config = {
     method: 'get',

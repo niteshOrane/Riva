@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import useLanding from './LandingHooks';
-import { useSelector, useDispatch } from 'react-redux';
+import {URL} from '../../util'
 import HeroGrid from '../../components/pages/landing/Hero-grid/HeroGrid';
 import Slider from '../../components/common/Sliders/Slider';
 import ExtraordinaryEssentials from '../../components/pages/landing/ExtraordinaryEssentials';
 import BestSellingProducts from '../../components/pages/landing/BestSellingProducts/BestSellingProducts';
 import {
   body,
-  categorySlider,
   cardsData,
-  mainSlider,
 } from '../../mockdata.json';
 import Image from "../../components/common/LazyImage/Image";
 import TopBrand from '../../components/pages/landing/RecentlyViewSection/TopBrand';
@@ -17,10 +16,13 @@ import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanne
 import CardLayout from '../../components/pages/landing/CardLayout';
 import VideoPlayer from '../../components/pages/landing/VideoPlayer/VideoPlayer';
 import Instagram from '../../components/pages/landing/Instagram/Instagram';
-const baseUrl = `https://www.rivafashion.com/media/catalog/product/`;
+import useHeroGrid from '../../components/pages/landing/Hero-grid/HeroGridHooks';
+
+
 
 function Landing() {
   const {middleBanner} = useLanding();
+  const { btfLeft, btfRight , videoBanner} = useHeroGrid();
   const selectedCategoryItem = useSelector((state) => state.common.selectedCategoryItem);
   const [selectedCategory, setSelectedCategory] = useState([]);
   useEffect(() => {
@@ -32,7 +34,7 @@ function Landing() {
   return (
     <>
       <div>
-        <HeroGrid />
+        <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
         <Slider
           className="categoriesSlider"
           items={selectedCategory}
@@ -44,7 +46,7 @@ function Landing() {
             <div className="text-center d-flex-all-center flex-column">
               <div>
               <Image
-                  src={`${baseUrl}${item?.image}`}
+                  src={`${URL.baseUrl}${item?.image}`}
                   width="100%"
                   alt={item?.name}
                   defaultImage={'assets/images/sunGlass.png'}
@@ -57,7 +59,7 @@ function Landing() {
           )}
         />
         <BestSellingProducts products={body.productList} />
-        <VideoPlayer />
+        <VideoPlayer videoBanner={videoBanner}/>
         <CardLayout data={cardsData} />
         <ExtraordinaryEssentials products={body.extraordinarySlider} />
         <OneImageBanner img={middleBanner || './assets/images/springSummerBanner.png'}/>

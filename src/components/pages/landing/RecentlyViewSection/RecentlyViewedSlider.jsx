@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import TopBrandCard from "./TopBrandCard";
-import Slider from "../../../common/Sliders/Slider";
-import ArrowButton from "../../../common/Buttons/Arrow";
-import style from "./TopBrandCard.module.scss";
-import { products } from "../../../../db.json";
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import TopBrandCard from './TopBrandCard';
+import Slider from '../../../common/Sliders/Slider';
+import ArrowButton from '../../../common/Buttons/Arrow';
+import style from './TopBrandCard.module.scss';
+import { products } from '../../../../db.json';
 
 const RecentlyViewedSlider = () => {
   const refContainer = useRef();

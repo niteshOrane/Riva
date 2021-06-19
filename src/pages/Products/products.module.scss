@@ -18,7 +18,20 @@
     flex-basis: 100%;
   }
 }
-
+.essentials{
+  margin: 30px 59px 18px 5px;
+  height: 43px;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  font-family: Jost;
+  font-size: 30px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.67;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+}
 .productsPage {
   margin: 50px;
   padding-bottom: 20px;
@@ -37,6 +50,7 @@
   .productCard {
     margin: 0 auto;
     width: 100%;
+    position: relative;
     .cardFooter {
       padding: 12px;
       .title {
@@ -47,6 +61,43 @@
         display: flex;
         align-items: center;
         gap: 0 20px;
+      }
+    }
+    .sale {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 60px;
+      height: 59px;
+      background-color: #000000;
+      color: white;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .actionContainer {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      background-color: transparent;
+
+      div {
+        margin: 5px 5px 0px 0px;
+        box-shadow: 0.3px 3px 2px 0 rgba(148, 144, 144, 0.33);
+        background-color: #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      span {
+        padding: 5px;
+        font-size: 15px;
       }
     }
   }

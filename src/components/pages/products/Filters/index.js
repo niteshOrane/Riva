@@ -109,8 +109,30 @@ function Filters() {
 
     return (
       <>
-        <button className={style.btn} type="button" onClick={openDrawer}>
-          Filter
+        <button
+          className="no-border bg-transparent c-pointer"
+          type="button"
+          onClick={openDrawer}
+        >
+          <div className={style.filterTextwrapper}>
+            <span className={style.filterText}>Filter </span>
+            <img
+              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/a8e77c1a-7c54-4098-bf97-816226eea3f0.svg"
+              width="20px"
+              alt="filter"
+            />
+            <div className={style.filterDots}>
+              <div className={style.greyDots}>
+                <span></span>
+                <span></span>
+              </div>
+              <div className={style.blackDots}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
         </button>
         <Drawer anchor={drawerPosition} onClose={closeDrawer} open={open}>
           <div className={style.filtersContainer}>

@@ -1,9 +1,30 @@
-.btn {
-  background-color: transparent;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
+.filterText {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+.filterTextwrapper {
+  margin-right: 15px;
+  display: flex;
+}
+.filterDots {
+  margin-left: 12px;
+  display: flex;
+  span {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    margin: 3px;
+  }
+  .greyDots {
+    span {
+      background-color: grey;
+    }
+  }
+  .blackDots {
+    span {
+      background-color: black;
+    }
+  }
 }
 
 .filtersContainer {

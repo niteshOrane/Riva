@@ -38,7 +38,7 @@ $footer-grey-color: #737373;
         margin-top: 12px;
         input {
           padding: 12px;
-          width: 77%;
+          width: 100%;
           background: #292828;
           border: 1px solid $footer-grey-color;
           color: $footer-grey-color;
@@ -121,6 +121,12 @@ $footer-grey-color: #737373;
         max-width: 90%;
       }
     }
+    .maxWidth80 {
+      max-width: 80%;
+    }
+    .lastCol {
+      padding-left: 20px;
+    }
   }
 
   .toTopBtn {
@@ -142,7 +148,7 @@ $footer-grey-color: #737373;
   .copyRightSec {
     margin-top: 20px;
     border-top: 1px solid #3f3f3f;
-    padding: 30px 0;
+    padding: 16px 0 22.8px;
     .weAcceptImage {
       max-width: 407px;
       margin-right: 2.5em;

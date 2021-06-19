@@ -16,7 +16,7 @@ const SlideBanner = ({ banners = [] }) => {
             className={`${style.slide} text-center d-flex-all-center flex-column`}
           >
             <Image
-              src={`http://65.0.141.49/media/mageplaza/bannerslider/banner/image/${item.image}`}
+              src={item.image}
               width="100%"
               alt=""
             />
