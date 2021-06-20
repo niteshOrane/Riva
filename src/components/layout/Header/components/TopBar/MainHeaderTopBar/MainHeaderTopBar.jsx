@@ -32,7 +32,7 @@ const MainHeaderTopBar = () => {
           </a>
         </p>
       </div>
-      <div>
+      <div className={style.topBarMsgWrapper}>
         <h4 className={`${style.topBarMsg} font-white`}>
           NEW IN: <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
           COLLECTION

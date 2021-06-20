@@ -4,6 +4,7 @@
     margin-left: 94px;
     display: flex;
     align-items: center;
+    max-width: 15vw;
     @include mobile {
       background-color: red;
     }
@@ -14,11 +15,16 @@
   .topBarMsg {
     line-height: 22px;
     font-size: 14px;
-    margin: 13px 269px 10px 309px;
+    margin: 0px auto;
+    text-align: center;
+  }
+  .topBarMsgWrapper{
+    text-align: center;
   }
   .topBarLeft {
     background-color: $color-skin;
     padding: 12px 114px 10.6px 10px;
+    max-width: 20vw;
   }
   .flag {
     padding: 12px 5px;
