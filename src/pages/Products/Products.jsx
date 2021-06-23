@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useProducts from './useProducts';
 import Filters from '../../components/pages/products/Filters';
 import ProductCard from '../../components/common/Cards/ProductCard';
+import * as icons from '../../components/common/Icons/Icons';
 import Slider from '../../components/common/Sliders/Slider';
 import { body } from '../../mockdata.json';
 import Image from '../../components/common/LazyImage/Image';
@@ -18,13 +19,25 @@ function Products(props) {
   return (
     <div>
       <div className="container-90 max-width-1600 mx-88px mr-75px">
-        <div className={styles.essentials}>
-           Essentials
-        </div>
+        <div className={styles.essentials}>Essentials</div>
         <div className={styles.header}>
-          <span className="color-grey">
-            {products.length ? <>Showing {products.length} Results</> : ''}
-          </span>
+          <div className="d-flex align-items-center">
+            <span className="color-grey">
+              {products.length ? (
+                <>
+                  Showing {products.length - 4}-{products.length} out of 344
+                </>
+              ) : (
+                ''
+              )}
+            </span>
+            <div className={styles.sortByText}>
+              <span>SORT BY:</span>
+              <span>
+                <icons.AngleDown />
+              </span>
+            </div>
+          </div>
 
           <Filters />
         </div>
@@ -35,7 +48,7 @@ function Products(props) {
       )}
       <div className={`${styles.productsPage}`}>
         {products?.map((product) => (
-          <Link to={`/product/${product?.id}`}>
+          <Link to={`/product/${product?.sku}`}>
             <ProductCard product={product} />
           </Link>
         ))}

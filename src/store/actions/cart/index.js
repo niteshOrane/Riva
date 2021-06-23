@@ -7,17 +7,17 @@ export const addToCart = (data) => ({
 
 export const removeFromCart = (data) => ({
   type: DATA_TYPES.REMOVE_FROM_CART,
-  payload: { data },
+  payload: { ...data },
 });
 
 export const incrementItemQuantity = (data) => ({
   type: DATA_TYPES.INCREMENT_ITEM_QUANTITY,
-  payload: { data },
+  payload: { ...data },
 });
 
 export const decrementItemQuantity = (data) => ({
   type: DATA_TYPES.DECREMENT_ITEM_QUANTITY,
-  payload: { data },
+  payload: { ...data },
 });
 
 export const resetCart = (data) => ({
@@ -26,5 +26,5 @@ export const resetCart = (data) => ({
 
 export const toggleCart = (data = true) => ({
   type: DATA_TYPES.TOGGLE_CART,
-  payload: { data }
+  payload: { data },
 });

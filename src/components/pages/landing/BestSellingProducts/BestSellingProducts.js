@@ -6,6 +6,12 @@ import Slider from '../../../common/Sliders/Slider';
 import { getProducts } from '../../../../services/layout/Layout.service';
 import styles from './bestSellingProducts.module.scss';
 
+const category_ids = {
+  featured: '2044',
+  best_selling: '2045',
+  all: '',
+};
+
 const BestSellingProducts = () => {
   const refContainer = useRef();
 
@@ -13,15 +19,21 @@ const BestSellingProducts = () => {
   const next = () => refContainer.current.slickNext();
 
   const [products, setProducts] = useState([]);
+  const [categoryId, setcategoryId] = useState(category_ids.featured);
 
-  const fetchProducts = async () => {
-    const res = await getProducts('2045', 10);
+  const changeCategory = (slug) => {
+    setcategoryId(slug);
+  };
+
+  const fetchProducts = async (id) => {
+    if (!id) return;
+    const res = await getProducts(id, 10);
     setProducts(res.data || []);
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProducts(categoryId);
+  }, [categoryId]);
 
   return (
     <div
@@ -32,25 +44,50 @@ const BestSellingProducts = () => {
         <div className="d-flex align-items-center">
           <ul className="nav-list d-flex align-items-center">
             <li className="nav-li">
-              <a href="/" className="d-flex align-items-center">
-                <span className="align-self-end font-light-black">
-                  Wishlist
+              <span
+                className="d-flex align-items-center"
+                onClick={() => changeCategory(category_ids.all)}
+              >
+                <span
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.all ? 'color-text-primary' : ''
+                  }`}
+                >
+                  All
                 </span>
-              </a>
+              </span>
             </li>
             <li className="nav-li">
-              <a href="/" className="d-flex align-items-center">
-                <span className="align-self-end font-light-black color-text-primary">
+              <span
+                className="d-flex align-items-center"
+                onClick={() => changeCategory(category_ids.best_selling)}
+              >
+                <span
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.best_selling
+                      ? 'color-text-primary'
+                      : ''
+                  }`}
+                >
                   Best Selling Products
                 </span>
-              </a>
+              </span>
             </li>
             <li className="nav-li">
-              <a href="/" className="d-flex align-items-center">
-                <span className="align-self-end font-light-black">
+              <span
+                className="d-flex align-items-center"
+                onClick={() => changeCategory(category_ids.featured)}
+              >
+                <span
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.featured
+                      ? 'color-text-primary'
+                      : ''
+                  }`}
+                >
                   Featured Products
                 </span>
-              </a>
+              </span>
             </li>
           </ul>
           <div onClick={previous} className={styles.arrowButton}>

@@ -27,13 +27,13 @@ const MainHeaderTopBar = () => {
           phone
         </span>
         <p>
-          <a className="font-white" href="tel:+971 800 7482">
+          <a className="font-white white-space-nowrap" href="tel:+971 800 7482">
             &nbsp;{phone}
           </a>
         </p>
       </div>
       <div className={style.topBarMsgWrapper}>
-        <h4 className={`${style.topBarMsg} font-white`}>
+        <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
           NEW IN: <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
           COLLECTION
         </h4>
@@ -51,13 +51,15 @@ const MainHeaderTopBar = () => {
             onChange={handleCurrencyChange}
           >
             {header?.map(({ currency, language }) => (
-              <option value={currency}>{`${currency} - ${language}`}</option>
+              <option
+                style={{ background: "#fff" }}
+                value={currency}
+              >{`${currency} - ${language}`}</option>
             ))}
           </select>
           |&nbsp;
-          <span>  العربية</span>
+          <span> العربية</span>
         </div>
-      
       </div>
     </div>
   );

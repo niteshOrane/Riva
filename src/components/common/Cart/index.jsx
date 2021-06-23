@@ -3,26 +3,27 @@ import { Drawer } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
-import { toggleCart } from '../../../store/actions/cart';
+import { toggleCart, removeFromCart } from '../../../store/actions/cart';
 import style from './style.module.scss';
 
-const Cart = ({ closeAddToCartSidebar }) => {
+const Cart = () => {
   const { data: items = [], isOpen = false } = useSelector(
     (state) => state.cart
   );
 
   const dispatch = useDispatch();
 
+  const handleClose = () => {
+    dispatch(toggleCart());
+  };
+
   return (
     <div key="cartlist">
-      <Drawer anchor="right" onClose={closeAddToCartSidebar} open={isOpen}>
+      <Drawer anchor="right" onClose={handleClose} open={isOpen}>
         <div className={style.sidebarContainer}>
           <div className="d-flex align-items-end justify-content-between p-12">
             <h3 className={style.addedMsg}>Added To Cart (2)</h3>
-            <BlackCloseBtn
-              handleClose={() => dispatch(toggleCart())}
-              drawerPosition="right"
-            />
+            <BlackCloseBtn handleClose={handleClose} drawerPosition="right" />
           </div>
           <div className={style.sideMsg}>
             <div className="d-flex align-items-center bg-grey p-12">
@@ -66,7 +67,9 @@ const Cart = ({ closeAddToCartSidebar }) => {
                           </div>
                           <div>
                             <span>
-                              <span className="material-icons-outlined">edit</span>
+                              <span className="material-icons-outlined">
+                                edit
+                              </span>
                             </span>
                           </div>
                         </div>
@@ -76,8 +79,13 @@ const Cart = ({ closeAddToCartSidebar }) => {
                             <span className="color-grey">{item.quantity}</span>
                           </div>
                           <div>
-                            <span>
-                              <span className="material-icons-outlined">close</span>
+                            <span
+                              onClick={() => dispatch(removeFromCart(item))}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <span className="material-icons-outlined">
+                                close
+                              </span>
                             </span>
                           </div>
                         </div>
@@ -90,7 +98,9 @@ const Cart = ({ closeAddToCartSidebar }) => {
             <div className={style.freeDeliverOffer}>
               <div className="d-flex justify-content-between align-items-center gap-12">
                 <div>
-                  <span className="material-icons-outlined">local_shipping</span>
+                  <span className="material-icons-outlined">
+                    local_shipping
+                  </span>
                 </div>
                 <p>
                   <span className="color-primary">Spend %18.20</span> to quality
@@ -113,11 +123,17 @@ const Cart = ({ closeAddToCartSidebar }) => {
               <h4 className="color-grey">*Before taxes</h4>
             </div>
             <div className={style.processBtns}>
-              <button type="button" className="bg-black color-white p-12 w-100 d-block">
+              <button
+                type="button"
+                className="bg-black color-white p-12 w-100 d-block"
+              >
                 GO TO CHECKOUT
               </button>
               <Link to="/shopping-cart" href="/shopping-cart">
-                <button type="button" className="bg-primary color-white p-12 w-100 d-block">
+                <button
+                  type="button"
+                  className="bg-primary color-white p-12 w-100 d-block"
+                >
                   SEE SHOPPING CART
                 </button>
               </Link>

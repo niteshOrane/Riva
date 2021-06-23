@@ -10,21 +10,10 @@ const RecentlyViewedSlider = () => {
   const refContainer = useRef();
   const { data: items = [] } = useSelector((state) => state.stats);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
-  console.log(recentlyViewed);
+
   useEffect(() => {
     if (items.length) {
-      const filteredProducts = items.map((id) =>
-        products.find((product) => product.id == id)
-      );
-      const recentlyViewedProducts = filteredProducts.map((item) => {
-        return {
-          id: item.id,
-          src: item.images[0],
-          title: item.name,
-          price: item.wasPrice,
-        };
-      });
-      setRecentlyViewed(recentlyViewedProducts);
+      setRecentlyViewed(items);
     }
   }, [items]);
 

@@ -1,0 +1,31 @@
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    svg {
+      fill: #f7591a;
+    }
+  }
+}
+
+.card {
+  padding: 12px;
+
+  .title {
+    font-family: Jost;
+    font-size: 1.625rem;
+    margin-top: 12px;
+  }
+  .nameFontsize {
+    font-family: Jost;
+    font-size: 1.25rem;
+  }
+  .dropdown {
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin: 12px 0;
+  }
+}

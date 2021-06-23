@@ -1,13 +1,12 @@
-import React from "react";
-import styles from "./productGoWithCard.module.scss";
+import React from 'react';
+import styles from './productGoWithCard.module.scss';
 
 const ProductGoWithCard = ({ product, i }) => {
-  console.log(i);
   return (
     <div className={styles.card}>
       <img src={product.src} width="100%" />
       <div className={`${styles.btn} d-flex`}>
-        <div className={`${styles.name} ${i === 1 ? styles.blackCard : ""}`}>
+        <div className={`${styles.name} ${i === 1 ? styles.blackCard : ''}`}>
           <span>SHOP THIS LOOK</span>
         </div>
         <div className={styles.icon}>

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectedCategory } from '../../../../store/actions/common';
-import Image from '../../../common/LazyImage/Image';
+import { selectedCategory } from "../../../../store/actions/common";
+import Image from "../../../common/LazyImage/Image";
 
-import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
-import style from './HeroGrid.module.scss';
-import Circle from '../../../layout/Navbar/Circle';
-import SlideBanner from '../../../pages/landing/Banners/SlideBanner';
+import ButtonWithArrows from "../../../common/Buttons/ButtonWithArrows/ButtonWithArrows";
+import style from "./HeroGrid.module.scss";
+import Circle from "../../../layout/Navbar/Circle";
+import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
 
 const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
 
 const HeroGrid = ({ btfLeft, btfRight }) => {
   const links = useSelector((state) => state.common.category)[0];
-  const [defaultCategory, setCategory] = useState('1241'); //woman
+  const [defaultCategory, setCategory] = useState("1241"); //woman
   const dispatch = useDispatch();
   const onCategorySelect = (id) => {
     setCategory(id);
@@ -23,7 +23,7 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
     }
   };
 
-  console.log(btfRight);
+  console.log("btfRight", btfRight);
 
   useEffect(() => {
     const items =
@@ -45,10 +45,10 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
                   onClick={() => {
                     onCategorySelect(item?.id);
                   }}
-                  bg={`${defaultCategory === item?.id ? 'skin' : 'black'}`}
+                  bg={`${defaultCategory === item?.id ? "skin" : "black"}`}
                 >
                   {item?.name}
-                </Circle>{' '}
+                </Circle>{" "}
               </div>
             )
         )}

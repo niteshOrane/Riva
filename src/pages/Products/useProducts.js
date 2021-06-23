@@ -20,6 +20,7 @@ const useProducts = ({ categoryId }) => {
       .then((response) => {
         const products = response?.data?.items?.map((product) => {
           return {
+            ...product,
             id: product.id,
             image: product?.custom_attributes.find(
               (attr) => attr.attribute_code === 'image'
@@ -38,7 +39,6 @@ const useProducts = ({ categoryId }) => {
         setloading(false);
       })
       .catch((error) => {
-        console.log(error);
         setloading(false);
       });
   }, [categoryId]);

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import NavLinks from "./NavLinks";
 import Search from "../../pages/products/Search";
-import styles from "./navbar.module.scss"
+import styles from "./navbar.module.scss";
 
-const NavbarMain = () => {
+const NavbarMain = ({ openSignUpCard }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearchChange = (e) => {
@@ -11,7 +11,9 @@ const NavbarMain = () => {
   };
 
   return (
-    <nav className={`${styles.container} d-flex align-items-center justify-content-between`}>
+    <nav
+      className={`${styles.container} d-flex align-items-center justify-content-between`}
+    >
       <Search handleChange={handleSearchChange} value={searchValue} />
       <strong className="logo-strong d-block">
         <a className="d-block" href="/">
@@ -23,7 +25,7 @@ const NavbarMain = () => {
           />
         </a>
       </strong>
-      <NavLinks />
+      <NavLinks openSignUpCard={openSignUpCard} />
     </nav>
   );
 };

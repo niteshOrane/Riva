@@ -33,11 +33,12 @@
 }
 
 .product-list-container .arrow-button {
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-content: stretch;
   align-items: center;
   cursor: pointer;
   background-color: black;
-  color: white;
+  color: #d0cfcf;
 }

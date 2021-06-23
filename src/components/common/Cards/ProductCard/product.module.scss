@@ -4,6 +4,7 @@
   // height: 400px;
   width: 100%;
   margin: 10px 0px 10px 0px;
+  padding: 4px;
   font-family: arial;
   position: relative;
   display: inline-block;
@@ -22,12 +23,10 @@
   }
 
   .productName {
-    height: 18px;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.47;
     letter-spacing: normal;
     color: #161616;
     cursor: pointer;
@@ -93,7 +92,7 @@
     background-color: transparent;
 
     div {
-      margin: 5px 5px 0px 0px;
+      margin: 12px 5px 0px 0px;
       box-shadow: 0.3px 3px 2px 0 rgba(148, 144, 144, 0.33);
       background-color: #ffffff;
       border-radius: 50%;
@@ -109,27 +108,42 @@
     }
   }
 }
-
-.color {
-  height: 13px;
-  display: inline-block;
-  width: 13px;
-  margin: 2px;
-  background-color: #b28965;
-  border-radius: 50%;
-  // box-shadow: 0px 0px 0px 1px #ffffff inset;
-  &:hover {
-    transform: scale(1.25);
-    filter: brightness(80%);
+.productColors {
+  display: flex;
+  align-items: center;
+  .colorContainer {
+    display: flex;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      border-color: black;
+    }
+    .color {
+      height: 13px;
+      display: inline-block;
+      width: 13px;
+      margin: 2px;
+      background-color: #b28965;
+      border-radius: 50%;
+      // box-shadow: 0px 0px 0px 1px #ffffff inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        filter: brightness(80%);
+      }
+      &_red {
+        background-color: #e45850;
+      }
+      &_blue {
+        background-color: #23a7f3;
+      }
+      &_oranage {
+        background-color: #f58c30;
+      }
+      cursor: pointer;
+    }
   }
-  &_red {
-    background-color: #e45850;
-  }
-  &_blue {
-    background-color: #23a7f3;
-  }
-  &_oranage {
-    background-color: #f58c30;
-  }
-  cursor: pointer;
 }

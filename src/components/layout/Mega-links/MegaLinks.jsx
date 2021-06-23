@@ -13,7 +13,6 @@ const MegaLinks = ({ links }) => {
     setShowMegaMenue(link);
   };
 
-  console.log({ links });
   return (<>
     <div className={`${style.container} d-flex-all-center flex-wrap px-75px position-relative`}
     >
@@ -64,6 +63,9 @@ const MegaLinks = ({ links }) => {
                 </div>
                 <div className={style.megaImg}>
                   <Image src={link.image} width="100%" alt="change me" />
+				<button className="bg-black my-12px no-border p-12 color-white">
+                  Shop Now
+                </button>
                 </div>
               </div>
             </div>

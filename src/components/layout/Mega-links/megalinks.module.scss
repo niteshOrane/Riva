@@ -1,5 +1,7 @@
 .container {
- .link {
+  height: 40px;
+  align-items: flex-start;
+  .link {
     margin: 0 10px;
   }
   .megaLink {
@@ -30,7 +32,7 @@
   }
 
   .megaContainer {
-    top: 100%;
+    top: 70%;
     left: 0;
     background-color: #fff;
     width: 100%;
@@ -41,18 +43,18 @@
   }
 
   .allProductsCard {
-    width: 290px;
+    width: 50%;
     .allProductsTitleLine {
       margin-top: 9.5px;
       border: solid 1px #707070;
     }
-   
+
     .allProductsTitles {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: 450px;
-      gap: 0 30px;
       margin-top: 20px;
+      max-height: 300px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
       .pLink {
         margin: 2px 0;
         transition: all 0.3s ease;
@@ -76,23 +78,23 @@
   }
 }
 
-.titleDoubleLine{
+.titleDoubleLine {
   height: 1px;
   margin: 13px 100px 2px 89px;
-  border: solid .1px #e1dfdf;
+  border: solid 0.1px #e1dfdf;
 }
-.titleDoubleLine_Second{
+.titleDoubleLine_Second {
   height: 1px;
   margin: 1px 100px 3px 89px;
-  border: solid .1px #e1dfdf;
+  border: solid 0.1px #e1dfdf;
 }
-.titleDoubleLineFilter{
+.titleDoubleLineFilter {
   height: 1px;
   margin: 13px 0px 2px 0px;
-  border: solid .1px #e1dfdf;
+  border: solid 0.1px #e1dfdf;
 }
-.titleDoubleLine_SecondFilter{
+.titleDoubleLine_SecondFilter {
   height: 1px;
   margin: 1px 0px 16px 0px;
-  border: solid .1px #e1dfdf;
+  border: solid 0.1px #e1dfdf;
 }

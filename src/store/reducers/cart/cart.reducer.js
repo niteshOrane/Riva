@@ -5,10 +5,26 @@ const initialState = {
   isOpen: false,
 };
 
-export default function cart(state = initialState, action) {
+const handleAddToCart = (state, itemToBeAdded) => {
+  let cart = [...state.data];
+  const exists = cart.find((c) => c.id === itemToBeAdded.id);
+
+  if (exists) {
+    cart = cart.map((c) =>
+      c.id === itemToBeAdded.id
+        ? { ...c, quantity: c.quantity + itemToBeAdded.quantity }
+        : c
+    );
+    return { ...state, data: cart };
+  }
+
+  return { ...state, data: [...cart, itemToBeAdded] };
+};
+
+export default function Cart(state = initialState, action) {
   switch (action.type) {
     case DATA_TYPES.ADD_TO_CART:
-      return { ...state, data: [...state.data, action.payload], isOpen: true };
+      return { ...handleAddToCart(state, action.payload), isOpen: true };
 
     case DATA_TYPES.REMOVE_FROM_CART:
       return {

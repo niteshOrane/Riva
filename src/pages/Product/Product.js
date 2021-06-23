@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { WhatsApp, Instagram, Facebook } from '@material-ui/icons';
 import { addToRecentlyViewed } from '../../store/actions/stats';
@@ -7,7 +7,7 @@ import ProductDetails from '../../components/pages/product/ProductDetails/Produc
 import AdditionalProductDetails from '../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails';
 import HowToWearThis from '../../components/pages/product/HowToWearThis/HowToWearThis';
 import DescriptionComposition from '../../components/pages/product/DescriptionComposition/DescriptionComposition';
-import SectionHeader from '../../components/common/SectionHeader/SectionHeader';
+import { getProduct } from '../../services/product/product.service';
 import ProductCard from '../../components/common/Cards/ProductCard';
 import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
 import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
@@ -16,21 +16,49 @@ import styles from './product.module.scss';
 
 import { products } from '../../db.json';
 import ImageCard from '../../components/common/Cards/ImageCard/ImageCard';
-console.log('tesrting', productDetailsSimleCard);
+
 const Product = (props) => {
+  const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
-  const selectedProductId = props.match.params.categoryId;
-  const selectedProduct =
-    products.find((product) => product.id == selectedProductId) || products[0];
+  const selectedProductId = match.params.categoryId;
+
+  const [product, setproduct] = useState({});
+  const [loading, setloading] = useState(true);
+
+  const init = async (sku) => {
+    setloading(true);
+    try {
+      const res = await getProduct(sku);
+
+      const p = {
+        ...res.data,
+        image: res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === 'image'
+        )?.value,
+        name: res.data.name,
+        price: res.data.price,
+        sale:
+          res.data?.custom_attributes.find(
+            (attr) => attr.attribute_code === 'show_sale_badge'
+          )?.value === '1',
+      };
+      setproduct(p);
+      dispatch(addToRecentlyViewed(p));
+    } catch (err) {
+      setproduct({});
+    }
+    setloading(false);
+  };
 
   useEffect(() => {
-    dispatch(addToRecentlyViewed(selectedProduct.id));
-  }, []);
+    init(selectedProductId);
+  }, [selectedProductId]);
 
+  if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
   return (
     <div>
-      <ProductDetails product={selectedProduct} />
+      <ProductDetails product={product} />
       <Slider
         className={`simpleGreyArrow ${styles.simpleCardGap}`}
         items={productDetailsSimleCard}

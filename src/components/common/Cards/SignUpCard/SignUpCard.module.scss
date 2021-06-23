@@ -1,0 +1,114 @@
+.popupBody {
+  padding: 12px;
+  min-height: 300px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  .close {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+      svg {
+        fill: #f7591a;
+      }
+    }
+  }
+  .form {
+    .inpTitle {
+      margin-bottom: 3px;
+      font-weight: 500;
+    }
+    .star {
+      color: #f7591a;
+    }
+    .inpContainer {
+      border: 1px solid black;
+      padding: 6px;
+
+      input {
+        border: none;
+        height: 31px;
+        width: 100%;
+        font-size: 1.1rem;
+        padding-left: 7px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .signUpBtn {
+      margin: 12px auto;
+      display: block;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #000;
+      text-align: center;
+      padding: 12px 30px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      &:hover {
+        background-color: #000;
+        color: white;
+      }
+    }
+    .or {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+      &::after {
+        content: "";
+        border: 1px solid #ddd;
+        position: absolute;
+        width: 46%;
+        z-index: 0;
+        left: 54%;
+        top: 50%;
+      }
+      &::before {
+        content: "";
+        border: 1px solid #ddd;
+        left: 0;
+        position: absolute;
+        right: 0;
+        width: 46%;
+        top: 50%;
+        z-index: 0;
+      }
+    }
+
+    .btn {
+      width: 100%;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      margin: 9px 0;
+      border: none;
+      max-height: 40px;
+      height: 40px;
+      transition: all 0.3s ease;
+      &:hover {
+        opacity: 0.91;
+      }
+
+      p {
+        margin: 0 auto;
+        font-size: 1rem;
+        padding-right: 24px;
+      }
+    }
+    .appleBtn {
+      background: #1e1e1e;
+    }
+    .fbBtn {
+      background-color: #5a6fa5;
+    }
+    .googleBtn {
+      background-color: #fe4b69;
+    }
+    .passInstruction {
+      margin-top: 4px;
+    }
+  }
+}
