@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStore } from '../../../../../../store/actions/common';
 import style from './ProductsHeaderTopBar.module.scss';
 import { selectedCategory } from '../../../../../../store/actions/common';
+import storeData from '../../../../../../store/index';
 
 const ProductsHeaderTopBar = () => {
   const links = useSelector((state) => state.common.category)[0];
   const [defaultCategory, setCategory] = useState('1241'); //woman
   const dispatch = useDispatch();
+  const [languageItem, setLanguageItem] = useState(' العربية');
+  const [storeDropDown, setStoreDropDown] = useState([]);
   const onCategorySelect = (id) => {
     setCategory(id);
     const items = links?.children_data?.filter((e) => e?.id === id) ?? [];
@@ -23,7 +26,12 @@ const ProductsHeaderTopBar = () => {
       dispatch(selectedCategory(items[0]?.children_data, defaultCategory));
     }
   }, [links, defaultCategory]);
-
+  useEffect(() => {
+    let data = storeData?.getState()?.common.store;
+    setLanguageItem(data.language)
+    setStoreDropDown(header.filter(e => e.language !== data.language))
+    setPhone(data.phone || '+971 800 7482');
+  }, [])
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
   const header = useSelector((state) => state.common.header);
@@ -87,21 +95,21 @@ const ProductsHeaderTopBar = () => {
             value={JSON.stringify(store)}
             onChange={handleCurrencyChange}
           >
-            {header?.map((head) => {
-              const { currency, language } = head;
+            {storeDropDown?.map((head) => {
+              const { currency, store_name } = head;
               return (
                 <option
-                  style={{ background: '#fff' }}
+                  style={{ background: '#fff', color:'#000' }}
                   value={JSON.stringify(head)}
                 >
-                  {`${currency} - ${language}`}
+                 {`${store_name} - ${currency}`}
                 </option>
               );
             })}
           </select>
           |&nbsp;
         </div>
-        العربية
+        {languageItem}
       </div>
     </div>
   );
