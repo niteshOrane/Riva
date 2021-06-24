@@ -11,7 +11,11 @@ const TempLink = ({ children, product }) => {
       </Link>
     );
 
-  return <div className={style.card}>{children}</div>;
+  return (
+    <a href={product.uri} className={style.card}>
+      {children}
+    </a>
+  );
 };
 
 const TopBrandCard = ({ item }) => (
@@ -22,7 +26,7 @@ const TopBrandCard = ({ item }) => (
       </div>
       <div className={style.cardText}>
         <p className={`two-lines-text ${style.title}`}>
-          {item.title || item.name || ''}
+          {item.title || item.name || item.src || ''}
         </p>
         <div className="d-flex align-items-center">
           <s className={style.crosedPrice}>{item.price + 50 || ''}</s>

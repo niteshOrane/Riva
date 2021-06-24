@@ -1,5 +1,6 @@
 import axios from 'axios';
 import mockdata from '../../mockdata.json';
+import { getStoreId } from '../../util';
 
 export const getTopBrands = async () =>
   new Promise((resolve) => {
@@ -7,12 +8,14 @@ export const getTopBrands = async () =>
       resolve(mockdata['topBrands']);
     }, 1000);
   });
-  const requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-  };
-export const getCurrentLocation =  async () => fetch("https://ipapi.co/json/", 
-  requestOptions).then(response => response.json());
+const requestOptions = {
+  method: 'GET',
+  redirect: 'follow',
+};
+export const getCurrentLocation = async () =>
+  fetch('https://ipapi.co/json/', requestOptions).then((response) =>
+    response.json()
+  );
 
 export const getHeader = async () => {
   const config = {
@@ -26,7 +29,7 @@ export const getHeader = async () => {
 export const getHeaderCategory = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/getnavigation',
+    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getnavigation?storeId=${getStoreId()}`,
     silent: true,
   };
   const response = await axios(config);
@@ -36,7 +39,7 @@ export const getHeaderCategory = async () => {
 export const getFooter = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/footercms?storeId=24',
+    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/footercms?storeId=${getStoreId()}`,
   };
   const response = await axios(config);
   return response;
@@ -45,7 +48,7 @@ export const getFooter = async () => {
 export const getBanners = (sliderId) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=1`,
+    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -54,7 +57,7 @@ export const getBanners = (sliderId) => {
 export const getProducts = (categoryId, limit) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/categoryproducts?categoryId=${categoryId}&storeId=1&start=0&limit=${limit}`,
+    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/categoryproducts?categoryId=${categoryId}&storeId=${getStoreId()}&start=0&limit=${limit}`,
     silent: true,
   };
   return axios(config);

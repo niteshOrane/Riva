@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import Image from "../../../common/LazyImage/Image";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import styles from "./productDetails.module.scss";
-import { addToCart } from "../../../../store/actions/cart";
-import SizeCard from "./components/SizeCard/SizeCard";
-import SizeGuide from "./components/SizeGuide/SizeGuide";
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import Image from '../../../common/LazyImage/Image';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import styles from './productDetails.module.scss';
+import { addToCart } from '../../../../store/actions/cart';
+import SizeCard from './components/SizeCard/SizeCard';
+import SizeGuide from './components/SizeGuide/SizeGuide';
 const ProductDetails = ({ product }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
@@ -19,9 +19,9 @@ const ProductDetails = ({ product }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: "White",
+        color: 'White',
         quantity: 1,
-        size: "XL",
+        size: 'XL',
         price: product.price,
       })
     );
@@ -39,9 +39,14 @@ const ProductDetails = ({ product }) => {
       <div className={`${styles.product} gap-12 my-10px`}>
         <div className={styles.mainImage}>
           <div
-            className={`${styles.slide} text-center d-flex-all-center flex-column`}
+            className={`${styles.slide} h-100 text-center d-flex-all-center flex-column`}
           >
-            <Image src={product?.image} width="100%" alt="" />
+            <Image
+              src={product?.image}
+              classname="object-fit-fill h-100"
+              width="100%"
+              alt=""
+            />
             <div className={styles.actionContainerTopRight}>
               <div>
                 <span className="material-icons-outlined font-light-black">
@@ -67,8 +72,8 @@ const ProductDetails = ({ product }) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
@@ -219,17 +224,9 @@ const ProductDetails = ({ product }) => {
                   <div
                     className={`${styles.demand} d-flex gap-12 align-items-center`}
                   >
-                    <div className={styles.icon}>
-                      <span className="material-icons-outlined font-light-black">
-                        shopping_bag
-                      </span>
-                    </div>
-                    <div>
-                      <div className={styles.title}>IN DEMAND</div>
-                      <div className={styles.text}>
-                        Bought {product?.stats?.inDemand}+ times in last few
-                        days
-                      </div>
+                    <div className="d-flex align-items-center">
+                      <div className={styles.title}>Availability: </div>
+                      &nbsp;<div className={styles.text}>In stock</div>
                     </div>
                   </div>
                 </div>
@@ -237,7 +234,8 @@ const ProductDetails = ({ product }) => {
                 <div className="d-flex align-items-center my-50px">
                   <div className={styles.addToCart}>
                     <button
-                      onClick={addToCardHandler}
+                      type="button"
+                      onClick={() => addToCardHandler()}
                       className="d-flex-all-center"
                     >
                       <span className="material-icons-outlined">
@@ -256,19 +254,19 @@ const ProductDetails = ({ product }) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: "Delivery & returns",
-                      icon: "/assets/images/delivery.png",
+                      name: 'Delivery & returns',
+                      icon: '/assets/images/delivery.png',
                     },
                     {
-                      name: "Search in store",
-                      icon: "/assets/images/shop.png",
+                      name: 'Search in store',
+                      icon: '/assets/images/shop.png',
                     },
                     {
-                      name: "Product details",
-                      icon: "/assets/images/tshirt.png",
+                      name: 'Product details',
+                      icon: '/assets/images/tshirt.png',
                     },
-                    { name: "Review", icon: "/assets/images/review.png" },
-                    { name: "Share", icon: "/assets/images/share.png" },
+                    { name: 'Review', icon: '/assets/images/review.png' },
+                    { name: 'Share', icon: '/assets/images/share.png' },
                   ].map((item) => {
                     return (
                       <div className="d-flex align-items-center gap-12 my-10px">

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { selectedCategory } from "../../../../store/actions/common";
-import Image from "../../../common/LazyImage/Image";
+import { selectedCategory } from '../../../../store/actions/common';
+import Image from '../../../common/LazyImage/Image';
 
-import ButtonWithArrows from "../../../common/Buttons/ButtonWithArrows/ButtonWithArrows";
-import style from "./HeroGrid.module.scss";
-import Circle from "../../../layout/Navbar/Circle";
-import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
+import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
+import style from './HeroGrid.module.scss';
+import Circle from '../../../layout/Navbar/Circle';
+import SlideBanner from '../../../pages/landing/Banners/SlideBanner';
 
 const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
 
 const HeroGrid = ({ btfLeft, btfRight }) => {
   const links = useSelector((state) => state.common.category)[0];
-  const [defaultCategory, setCategory] = useState("1241"); //woman
+  const [defaultCategory, setCategory] = useState('1241'); //woman
   const dispatch = useDispatch();
   const onCategorySelect = (id) => {
     setCategory(id);
@@ -22,8 +22,6 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
       dispatch(selectedCategory(items[0]?.children_data, id));
     }
   };
-
-  console.log("btfRight", btfRight);
 
   useEffect(() => {
     const items =
@@ -45,10 +43,10 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
                   onClick={() => {
                     onCategorySelect(item?.id);
                   }}
-                  bg={`${defaultCategory === item?.id ? "skin" : "black"}`}
+                  bg={`${defaultCategory === item?.id ? 'skin' : 'black'}`}
                 >
                   {item?.name}
-                </Circle>{" "}
+                </Circle>{' '}
               </div>
             )
         )}
@@ -59,15 +57,19 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
       {btfRight.length > 0 ? (
         <div className={`d-grid ${style.gap25}`}>
           <div className="position-relative">
-            <div className="position-relative">
-              <Image src={`${btfRight?.[0]?.image}`} width="100%" alt="" />
+            <div className="position-relative h-100">
+              <Image
+                src={`${btfRight?.[0]?.image}`}
+                classname={style.imgHeight}
+                width="100%"
+                alt=""
+              />
             </div>
           </div>
           <div className={style.col2Grid}>
             <div className={style.col2GridImgs}>
               <Image src={`${btfRight?.[1]?.image}`} width="100%" alt="" />
             </div>
-
             <div className={style.col2GridImgs}>
               <Image src={`${btfRight?.[2]?.image}`} width="100%" alt="" />
             </div>

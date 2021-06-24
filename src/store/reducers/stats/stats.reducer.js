@@ -5,12 +5,7 @@ const initialState = {
 };
 
 const handleAddRecentlyView = (data, payload) => {
-  const exists = data.find((d) => d.id === payload.id);
-
-  if (exists) {
-    data = data.filter((c) => c.id !== payload.id);
-    return { data };
-  }
+  data = data.filter((d) => d.id !== payload.id);
 
   return { data: [...data, payload] };
 };

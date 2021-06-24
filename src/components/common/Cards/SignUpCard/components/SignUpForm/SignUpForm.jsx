@@ -7,7 +7,7 @@ const SignUpForm = ({ handleSubmit }) => {
 
   return (
     <form className={styles.form}>
-      <div className="mt-12px">
+      <div className={styles.container}>
         <p className="mt-12px">
           First Name & Last Name <span className={styles.star}>*</span>
         </p>
@@ -16,7 +16,7 @@ const SignUpForm = ({ handleSubmit }) => {
           <input type="text" name="name" id="name" />
         </div>
       </div>
-      <div className="mt-12px">
+      <div className={styles.container}>
         <p className={styles.inpTitle}>
           Email <span className={styles.star}>*</span>
         </p>
@@ -25,7 +25,7 @@ const SignUpForm = ({ handleSubmit }) => {
           <input type="email" name="email" id="email" />
         </div>
       </div>
-      <div className="mt-12px">
+      <div className={styles.container}>
         <p className={styles.inpTitle}>
           Mobile Number <span className={styles.star}>*</span>
         </p>
@@ -34,7 +34,7 @@ const SignUpForm = ({ handleSubmit }) => {
           <input type="number" name="phone" id="phone" />
         </div>
       </div>
-      <div className="mt-12px">
+      <div className={styles.container}>
         <p className={styles.inpTitle}>
           Set a Password <span className={styles.star}>*</span>
         </p>
@@ -73,26 +73,26 @@ const SignUpForm = ({ handleSubmit }) => {
           <button
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
           >
-            <span class={styles.apple}>
+            <span class={styles.btnIcon}>
               <icons.Apple />
             </span>
-            <p className="text-center">Connect with Apple</p>
+            <p >Connect with Apple</p>
           </button>
           <button
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
-            <span class={styles.fb}>
+            <span class={styles.btnIcon}>
               <icons.Facebook />
             </span>
-            <p className="text-center">Connect with Apple</p>
+            <p >Connect with Facebook</p>
           </button>
           <button
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
           >
-            <span class={`material-icons-outlined ${styles.google}`}>
+            <span class={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
             </span>
-            <p className="text-center">Connect with Apple</p>
+            <p >Connect with Google</p>
           </button>
         </div>
       </div>

@@ -6,7 +6,10 @@ import MainLayout from '../Layouts/MainLayout';
 const Landing = React.lazy(() => import('../pages/Landing/Landing'));
 const Product = React.lazy(() => import('../pages/Product/Product'));
 const Products = React.lazy(() => import('../pages/Products/Products'));
-const ShoppingCart = React.lazy(() => import('../pages/ShoppingCart/ShoppingCart'));
+const WishList = React.lazy(() => import('../pages/WishList/WishList'));
+const ShoppingCart = React.lazy(() =>
+  import('../pages/ShoppingCart/ShoppingCart')
+);
 const CMSContent = React.lazy(() => import('../pages/CMSContent/CMSContent'));
 
 class AppRoutes extends Component {
@@ -43,6 +46,14 @@ class AppRoutes extends Component {
         component: ShoppingCart,
         exact: true,
         name: 'Shopping Cart',
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: '/wishlist',
+        component: WishList,
+        exact: true,
+        name: 'Wishlist',
         layout: MainLayout,
         index: 0,
       },

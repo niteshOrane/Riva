@@ -5,11 +5,19 @@ import Loader from './components/common/Loader';
 import AlertComponent from './components/common/Alert';
 import AppRoutes from './routes';
 import './App.scss';
+import { deepEqual, hardReload } from './util';
 
 class AppRoot extends React.Component {
   componentDidMount() {
     const { fetchCommonData: fetch } = this.props;
     fetch();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { store } = this.props;
+
+    if (deepEqual(store, prevProps.store)) return;
+    hardReload();
   }
 
   handleError(err) {
@@ -38,6 +46,7 @@ class AppRoot extends React.Component {
 const mapStateToProps = (state) => ({
   loading: state.common.loading,
   error: state.common.error,
+  store: state.common.store,
 });
 
 export default connect(mapStateToProps, { fetchCommonData })(AppRoot);

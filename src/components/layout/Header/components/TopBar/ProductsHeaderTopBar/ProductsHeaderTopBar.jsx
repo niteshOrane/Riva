@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrency } from "../../../../../../store/actions/common";
-import style from "./ProductsHeaderTopBar.module.scss";
-import { selectedCategory } from "../../../../../../store/actions/common";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStore } from '../../../../../../store/actions/common';
+import style from './ProductsHeaderTopBar.module.scss';
+import { selectedCategory } from '../../../../../../store/actions/common';
 
 const ProductsHeaderTopBar = () => {
   const links = useSelector((state) => state.common.category)[0];
-  const [defaultCategory, setCategory] = useState("1241"); //woman
+  const [defaultCategory, setCategory] = useState('1241'); //woman
   const dispatch = useDispatch();
   const onCategorySelect = (id) => {
     setCategory(id);
@@ -25,17 +25,23 @@ const ProductsHeaderTopBar = () => {
   }, [links, defaultCategory]);
 
   const currentLocation = useSelector((state) => state.common.currentLocation);
-  const currencyList = useSelector((state) => state.common.currency);
+  const store = useSelector((state) => state.common.store);
   const header = useSelector((state) => state.common.header);
   const foundStore =
     header?.find(({ country_id }) => country_id == currentLocation) || {};
-  const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");
+  const [phone, setPhone] = useState(foundStore.phone || '+971 800 7482');
 
   const handleCurrencyChange = (event) => {
     const foundStore =
       header.find(({ currency }) => currency == event.target.value) || {};
-    setPhone(foundStore.phone || "+971 800 7482");
-    dispatch(setCurrency(event.target.value));
+    setPhone(foundStore.phone || '+971 800 7482');
+    dispatch(
+      setStore(
+        typeof event.target.value === 'string'
+          ? JSON.parse(event.target.value)
+          : event.target.value
+      )
+    );
   };
 
   return (
@@ -57,7 +63,7 @@ const ProductsHeaderTopBar = () => {
                   >
                     <span
                       className={`color-white c-pointer ${
-                        defaultCategory === item?.id ? "underline" : ""
+                        defaultCategory === item?.id ? 'underline' : ''
                       }`}
                     >
                       {item?.name}
@@ -78,15 +84,20 @@ const ProductsHeaderTopBar = () => {
           </div>
           <select
             className={style.select}
-            value={currencyList}
+            value={JSON.stringify(store)}
             onChange={handleCurrencyChange}
           >
-            {header?.map(({ currency, language }) => (
-              <option
-                className={style.option}
-                value={currency}
-              >{`${currency} - ${language}`}</option>
-            ))}
+            {header?.map((head) => {
+              const { currency, language } = head;
+              return (
+                <option
+                  style={{ background: '#fff' }}
+                  value={JSON.stringify(head)}
+                >
+                  {`${currency} - ${language}`}
+                </option>
+              );
+            })}
           </select>
           |&nbsp;
         </div>

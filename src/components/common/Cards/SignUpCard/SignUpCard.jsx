@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
+ import Dialog from "@material-ui/core/Dialog";
 import * as icons from "../../Icons/Icons";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import OtpForm from "./components/OtpForm/OtpForm";
@@ -25,9 +24,9 @@ const SignUpCard = ({ open, handleClose }) => {
         >
           <icons.Close />
         </button>
-        <DialogTitle className="text-center" id="simple-dialog-title">
+        <h2 className={styles.title}>
           SIGN UP
-        </DialogTitle>
+        </h2>
         <p className="text-center">Create your account on RIVA</p>
         {showSignUpForm ? (
           <SignUpForm handleSubmit={handleSubmit} />

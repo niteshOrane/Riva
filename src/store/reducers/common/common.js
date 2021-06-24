@@ -1,4 +1,5 @@
 import * as DATA_TYPES from '../../types';
+import { defaultStore } from '../../../util/index';
 
 const initialState = {
   header: [],
@@ -8,7 +9,7 @@ const initialState = {
   error: null,
   footerCMS: [],
   currentLocation: null,
-  currency: 'OMR',
+  store: defaultStore,
   category: [],
   selectedCategoryItem: {},
 };
@@ -54,10 +55,10 @@ export default function common(state = initialState, action) {
         currentLocation: action.payload.data,
       };
 
-    case DATA_TYPES.CURRENCY:
+    case DATA_TYPES.STORE:
       return {
         ...state,
-        currency: action.payload.data,
+        store: action.payload.data,
       };
     case DATA_TYPES.CATEGORY:
       return {

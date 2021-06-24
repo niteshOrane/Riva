@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./navbar.module.scss";
-const Circle = ({ bg, children, onClick, id }) => {
+const Circle = ({ bg, children, onClick, id, ...props }) => {
   return <div onClick = {()=>{onClick(id)}}  className={`circleBg-${bg} ${style.circle} d-flex-all-center`}>{children}</div>;
 };
 

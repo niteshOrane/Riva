@@ -30,8 +30,8 @@ export const fetchCurrentLocation = (data) => ({
   payload: { data },
 });
 
-export const setCurrency = (data) => ({
-  type: DATA_TYPES.CURRENCY,
+export const setStore = (data) => ({
+  type: DATA_TYPES.STORE,
   payload: { data },
 });
 
@@ -41,5 +41,5 @@ export const fetchHeaderCategory = (data) => ({
 });
 export const selectedCategory = (data) => ({
   type: DATA_TYPES.SELECTED_CATEGORY,
-  payload: {data},
+  payload: { data },
 });

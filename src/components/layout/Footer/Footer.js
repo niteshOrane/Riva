@@ -61,24 +61,35 @@ function Footer() {
         <div className={`${style.footerCol} ${style.lastCol}`}>
           <h4 className={style.title}>STAY CONNECTED</h4>
           <ul className="d-flex align-items-center justify-content-between">
+          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" >
+           
             <div className={style.icon}>
               <span className="material-icons-outlined">
                 notifications_none
               </span>
             </div>
-            <div className={style.icon} title="Facebook">
-              <span className="material-icons-outlined">facebook</span>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" >
+            <div className={style.icon} title="Facebook" >
+            <span className="material-icons-round">
+              facebook
+            </span>
             </div>
+            </a>
+            <a href="https://www.instagram.com/accounts/login/" target="_blank" rel="noreferrer" >
             <div className={style.icon} title="Instagram">
               <span className="material-icons-outlined">
                 notifications_none
               </span>
             </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=NEFD-K10uHQ" target="_blank" rel="noreferrer" >
             <div className={style.icon}>
               <span className="material-icons-outlined">
                 notifications_none
               </span>
             </div>
+            </a>
           </ul>
 
           <div className={style.m}>
@@ -106,20 +117,24 @@ function Footer() {
           <div className={style.lm}>
             <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
+              <a href="https://apps.apple.com/us/app/apple-store/id375380948" target="_blank" rel="noreferrer" >
               <img
                 src="/assets/images/appleStore.png"
                 width="106px"
                 height="34px"
                 alt=""
               />
+              </a>
             </div>
             <div>
+            <a href="https://play.google.com/store" target="_blank" rel="noreferrer" >
               <img
                 src="/assets/images/googleStore.png"
                 width="120px"
                 height="34px"
                 alt=""
               />
+              </a>
             </div>
           </div>
         </div>

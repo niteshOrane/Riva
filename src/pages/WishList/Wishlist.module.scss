@@ -1,0 +1,17 @@
+.circlesContainer{
+    margin-left: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    div{
+        cursor: pointer;
+    }
+}
+.cardsContainer{
+    padding-left: 40px;
+    width: 100%;
+    .title{
+        margin-bottom: 12px;
+        font-size: 1.8rem;
+    }
+}
