@@ -5,15 +5,16 @@ import { toggleCart } from "../../../store/actions/cart";
 const NavLinks = ({ openSignUpCard }) => {
   const { data = [] } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
   return (
     <ul className="nav-list d-flex align-items-center gap-12">
       <li className="nav-li">
-        <a href="#" className="d-flex align-items-center gap-12">
+        <span className="d-flex align-items-center gap-12">
           <span className="material-icons-outlined font-light-black">
             favorite_border
           </span>
           <span className="align-self-end font-light-black">Wishlist</span>{" "}
-        </a>
+        </span>
       </li>
       <li className="nav-li">
         <a

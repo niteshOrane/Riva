@@ -74,6 +74,11 @@ $footer-grey-color: #737373;
         border-radius: 50%;
         cursor: pointer;
         transition: hover 0.5s ease-in-out;
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         &:hover {
           span {
             animation: juggle 0.4s linear;
@@ -149,9 +154,10 @@ $footer-grey-color: #737373;
     margin-top: 20px;
     border-top: 1px solid #3f3f3f;
     padding: 16px 0 22.8px;
+    margin-left: 75px !important;
+    width: 88%;
     .weAcceptImage {
       max-width: 407px;
-      margin-right: 2.5em;
       margin-left: 18px;
     }
   }

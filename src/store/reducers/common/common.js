@@ -12,6 +12,10 @@ const initialState = {
   store: defaultStore,
   category: [],
   selectedCategoryItem: {},
+  quickView: {
+    isOpen: false,
+    data: null,
+  },
 };
 
 export default function common(state = initialState, action) {
@@ -70,6 +74,14 @@ export default function common(state = initialState, action) {
         ...state,
         loading: false,
         selectedCategoryItem: action.payload,
+      };
+    case DATA_TYPES.TOGGLE_QUICKVIEW:
+      return {
+        ...state,
+        quickView: {
+          isOpen: !state.quickView.isOpen,
+          data: action.payload.data,
+        },
       };
     default:
       return state;

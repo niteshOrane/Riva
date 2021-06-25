@@ -1,0 +1,49 @@
+.dropdown-toggle::after {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+  }
+   .dropdown {
+    text-align: left;
+    font-family: ToyotaType;
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    color: #212121;
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+    .dropdown-item{
+        display: flex;
+        padding: .25rem .5rem;
+    }
+    .dropdown-menu {
+      max-height: 100px;
+      overflow-x: hidden;
+      min-width: 6rem;
+    }
+    .btn-light {
+      background-color: #e6d19a  !important;
+      color: #000;
+      border: none;
+    }
+    .btn-light:focus,
+    .btn-light.focus {
+      background-color: #e6d19a  !important;
+      color: #000;
+      border-color: none;
+    }
+  }
+  .show {
+    .dropdown-toggle {
+      background-color: transparent;
+      font-weight: 700;
+      cursor: pointer;
+      border-color:transparent;
+    }
+    .btn-light.dropdown-toggle{
+       border-color: transparent;
+    }
+  }

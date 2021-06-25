@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import styles from "./SizeCard.module.scss";
 import * as icons from "../../../../../common/Icons/Icons";
 const SizeCard = ({ handleClose, open }) => {
+  const [selectedUnit, setSelectedUnit] = useState("CM");
+  const [height, setHeight] = useState({
+    range: 0,
+  });
+  const [weight, setWeight] = useState({
+    range: 0,
+  });
+
+  const changeUnit = (unit) => {
+    setSelectedUnit(unit);
+    setHeight({
+      range: 0,
+    });
+    setWeight({
+      range: 0,
+    });
+  };
+
+  const handleHeightChange = (e) => {
+    setHeight({
+      ...height,
+      range: e.target.value,
+    });
+  };
+  const handleWeightChange = (e) => {
+    setWeight({
+      ...weight,
+      range: e.target.value,
+    });
+  };
   return (
     <Dialog
       aria-labelledby="simple-dialog-title"
@@ -41,16 +71,34 @@ const SizeCard = ({ handleClose, open }) => {
                   <div className={styles.mearUnits}>
                     <button
                       type="button"
+                      onClick={() => changeUnit("CM")}
                       className="bg-transparent no-border c-pointer"
                     >
-                      <span className="font-weight-500 underline">CM</span>
+                      <span
+                        className={
+                          selectedUnit === "CM"
+                            ? "font-weight-500 underline"
+                            : ""
+                        }
+                      >
+                        CM
+                      </span>
                     </button>
                     <span className="color-grey">|</span>
                     <button
+                      onClick={() => changeUnit("IN")}
                       className="bg-transparent no-border c-pointer"
                       type="button"
                     >
-                      <span>IN</span>
+                      <span
+                        className={
+                          selectedUnit === "IN"
+                            ? "font-weight-500 underline"
+                            : ""
+                        }
+                      >
+                        IN
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -60,13 +108,41 @@ const SizeCard = ({ handleClose, open }) => {
                 <div className={styles.mearSliders}>
                   <div className="mt-12px d-flex align-items-center justify-content-between">
                     <p>Height</p>
-                    <div className={styles.slider}></div>
-                    <p className={styles.smallFonts}>0 CM</p>
+                    <div className={styles.slider}>
+                      <input
+                        type="range"
+                        name="range"
+                        id="range"
+                        onChange={handleHeightChange}
+                        value={height.range}
+                        // min="0"
+                        // max="100"
+                      />
+                    </div>
+                    <p
+                      className={`${styles.smallFonts} ${styles.unitToChange}`}
+                    >
+                      {height.range} {selectedUnit}
+                    </p>
                   </div>
                   <div className="mt-12px d-flex align-items-center justify-content-between">
                     <p>Weight</p>
-                    <div className={styles.slider}></div>
-                    <p className={styles.smallFonts}>0 CM</p>
+                    <div className={styles.slider}>
+                      <input
+                        type="range"
+                        name="range"
+                        id="range"
+                        onChange={handleWeightChange}
+                        value={weight.range}
+                        // min="0"
+                        // max="100"
+                      />
+                    </div>
+                    <p
+                      className={`${styles.smallFonts} ${styles.unitToChange}`}
+                    >
+                      {weight.range} {selectedUnit}
+                    </p>
                   </div>
                 </div>
               </div>

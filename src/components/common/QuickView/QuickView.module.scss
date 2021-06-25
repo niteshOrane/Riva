@@ -1,0 +1,378 @@
+.MuiDialog-paperWidthSm{
+    max-width: auto !important;
+}  
+        .details{
+            display: flex;
+            padding: 12px;
+            .img{
+                margin-right: 20px;
+                img{
+                    max-width: 200px;
+                }
+            }
+
+            
+    .bestSeller {
+        width: 72px;
+        height: 19px;
+        font-family: Jost;
+        font-size: 13px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.69;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000000;
+      }
+  
+      .name {
+        font-family: Jost;
+        font-size: 28px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 0.85;
+        letter-spacing: normal;
+        text-align: left;
+        margin-top: 6px;
+        margin-bottom: 7px;
+        color: #000000;
+      }
+  
+      .stars {
+        margin-top: 5px;
+      }
+  
+      .rating {
+        width: 58px;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        color: #000000;
+        margin-top: 5px;
+        margin-left: 14px;
+      }
+  
+      .price {
+        margin-top: 20px;
+        .was {
+          font-family: Jost;
+          font-size: 20px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.1;
+          letter-spacing: normal;
+          text-align: left;
+          color: #5c5959;
+          text-decoration: line-through;
+          margin-right: 25px;
+        }
+  
+        .now {
+          font-family: Jost;
+          font-size: 22px;
+          font-weight: 500;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1;
+          letter-spacing: normal;
+          text-align: left;
+          color: #000000;
+          margin-left: 25px;
+        }
+  
+        .loyalty {
+          font-family: Jost;
+          font-size: 14px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.57;
+          letter-spacing: normal;
+          text-align: left;
+          color: #000000;
+          margin-left: auto;
+        }
+      }
+  
+      .color {
+        font-family: Jost;
+        font-size: 18px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.22;
+        letter-spacing: normal;
+        text-align: left;
+        margin-top: 15px;
+        margin-bottom: 15px;
+  
+        .title {
+          font-weight: 500;
+          color: #161616;
+        }
+  
+        .text {
+          color: #8f8c8c;
+        }
+  
+        .options {
+          margin-left: 27px;
+          .option {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            margin: 2px;
+            background-color: #b28965;
+            border-radius: 50%;
+            // box-shadow: 0px 0px 0px 1px #ffffff inset;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+              transform: scale(1.25);
+              filter: brightness(80%);
+            }
+            &_red {
+              background-color: #e45850;
+            }
+            &_blue {
+              background-color: #23a7f3;
+            }
+            &_oranage {
+              background-color: #f58c30;
+            }
+            cursor: pointer;
+          }
+        }
+      }
+  
+      .size {
+        margin-top: 15px;
+        margin-bottom: 23px;
+        .title {
+          font-size: 14px;
+          font-weight: 800;
+          color: #161616;
+        }
+  
+        .options {
+          .option {
+            border: solid 1px #c8c0c0;
+            font-size: 14.5px;
+            font-family: Roboto;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.83;
+            letter-spacing: normal;
+            color: #323131;
+            height: 28px;
+            width: 44px;
+            cursor: pointer;
+            &:hover {
+              background-color: #f5f5f5;
+            }
+          }
+        }
+      }
+  
+      .outOfStock {
+        margin-top: 22px;
+  
+        .icon {
+          width: 23.4px;
+          height: 23.4px;
+          background-color: #000000;
+          border-radius: 50%;
+          span {
+            color: white;
+            font-size: 14px;
+          }
+        }
+  
+      }
+      .text {
+        font-family: Jost;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.57;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000000;
+      }
+  
+      .sizeHelp {
+        font-family: Jost;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.37;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000000;
+        margin-top: 21px;
+        margin-bottom: 17px;
+      }
+  
+      .sku {
+        margin-top: 5px;
+        font-family: Jost;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        text-align: left;
+        margin-left: auto;
+  
+        .title {
+          font-weight: 500;
+          color: #161616;
+        }
+  
+        .text {
+          color: #8f8c8c;
+        }
+      }
+      
+        .stats {
+          margin: 17px 0px 17px 0px;
+  
+          .icon {
+            display: flex;
+            width: 35px;
+            height: 35px;
+            background-color: #f3f3f3;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+          }
+  
+          .title {
+            font-family: Jost;
+            font-size: 15px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.47;
+            letter-spacing: normal;
+            text-align: left;
+            color: #000000;
+          }
+  
+          .text {
+            font-family: Jost;
+            font-size: 12px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.83;
+            letter-spacing: normal;
+            text-align: left;
+            color: #000000;
+          }
+        }
+    
+  
+      .actions {
+        .quantity {
+          font-family: Jost;
+          font-size: 16px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.37;
+          letter-spacing: normal;
+          text-align: left;
+          color: #161616;
+  
+          .title {
+            margin-right: 18px;
+          }
+  
+          .counter {
+            width: 170px;
+            height: 35px;
+            padding: 7.1px 17px 3.9px 15px;
+            border: solid 1px #dfdddd;
+            background-color: #ffffff;
+          }
+        }
+  
+        .availabilty {
+          margin-top: 5px;
+          font-family: Jost;
+          font-size: 14px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          letter-spacing: normal;
+          text-align: left;
+          margin-left: auto;
+  
+          .title {
+            font-weight: 500;
+            color: #161616;
+          }
+  
+          .text {
+            color: #8f8c8c;
+          }
+        }
+  
+        .addToCart {
+          width: 100%;
+          button {
+            width: 100%;
+            height: 41px;
+            padding: 11px 56.7px 10px 71.5px;
+            background-color: #000000;
+            font-family: Jost;
+            font-size: 17px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.35;
+            letter-spacing: normal;
+            text-align: left;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+          }
+        }
+  
+        .wishlist {
+          width: 55px;
+        }
+  
+        .other {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          font-family: Jost;
+          font-size: 16px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.44;
+          letter-spacing: normal;
+          text-align: left;
+          color: #151515;
+  
+          .icon {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+          }
+        }
+      }
+    
+        }

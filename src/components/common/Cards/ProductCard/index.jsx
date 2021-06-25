@@ -1,13 +1,40 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Image from '../../LazyImage/Image';
+import { toggleWishlist } from '../../../../store/actions/wishlist';
+import { toggleQuickView } from '../../../../store/actions/common';
+import { addToCart } from '../../../../store/actions/cart';
+import { URL } from '../../../../util';
 import styles from './product.module.scss';
 
-import { URL } from '../../../../util';
-
-const ProductCard = ({ product, handleQuickView }) => {
+const ProductCard = ({ product }) => {
   const { id, image, name, price, sku = '' } = product;
+
+  const wishList = useSelector((state) => state.wishList);
+  const dispatch = useDispatch();
+
+  const handleWishList = () => {
+    dispatch(toggleWishlist(product));
+  };
+
+  const handleQuickView = () => {
+    dispatch(toggleQuickView(product));
+  };
+
+  const addToCardHandler = () =>
+    dispatch(
+      addToCart({
+        ...product,
+        id: `${product.id}`,
+        name: product.name,
+        src: product.image,
+        color: 'White',
+        quantity: 1,
+        size: 'XL',
+        price: product.price,
+      })
+    );
 
   const srcImage =
     image.indexOf('http') > -1 ? image : `${URL.baseUrlProduct}/${image}`;
@@ -27,7 +54,7 @@ const ProductCard = ({ product, handleQuickView }) => {
           <button
             type="button"
             className="no-border bg-transparent"
-            onClick={handleQuickView}
+            onClick={handleWishList}
           >
             <span className="material-icons-outlined font-light-black">
               favorite_border
@@ -46,9 +73,15 @@ const ProductCard = ({ product, handleQuickView }) => {
           </button>
         </div>
         <div>
-          <span className="material-icons-outlined font-light-black">
-            shopping_cart
-          </span>
+          <button
+            type="button"
+            className="no-border bg-transparent"
+            onClick={addToCardHandler}
+          >
+            <span className="material-icons-outlined font-light-black">
+              shopping_cart
+            </span>
+          </button>
         </div>
       </div>
       <Link to={`/product/${sku}`}>

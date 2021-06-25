@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import Image from '../../../common/LazyImage/Image';
-import Star from '@material-ui/icons/StarBorderOutlined';
-import styles from './productDetails.module.scss';
-import { addToCart } from '../../../../store/actions/cart';
-import SizeCard from './components/SizeCard/SizeCard';
-import SizeGuide from './components/SizeGuide/SizeGuide';
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import Image from "../../../common/LazyImage/Image";
+import Star from "@material-ui/icons/StarBorderOutlined";
+import styles from "./productDetails.module.scss";
+import { addToCart } from "../../../../store/actions/cart";
+import SizeCard from "./components/SizeCard/SizeCard";
+import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
+import SizeGuide from "./components/SizeGuide/SizeGuide";
 const ProductDetails = ({ product }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
@@ -19,9 +20,9 @@ const ProductDetails = ({ product }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: 'White',
+        color: "White",
         quantity: 1,
-        size: 'XL',
+        size: "XL",
         price: product.price,
       })
     );
@@ -47,6 +48,7 @@ const ProductDetails = ({ product }) => {
               width="100%"
               alt=""
             />
+            <ImageDropdown />
             <div className={styles.actionContainerTopRight}>
               <div>
                 <span className="material-icons-outlined font-light-black">
@@ -57,13 +59,13 @@ const ProductDetails = ({ product }) => {
             <div className={styles.actionContainerTopLeft}>
               <div>ON SALE</div>
             </div>
-            <div className={styles.actionContainerBottomRight}>
+            {/* <div className={styles.actionContainerBottomRight}>
               <div>
                 <span class="material-icons-outlined font-light-black">
                   open_with
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={styles.details}>
@@ -72,8 +74,8 @@ const ProductDetails = ({ product }) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
-                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
@@ -254,19 +256,19 @@ const ProductDetails = ({ product }) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: 'Delivery & returns',
-                      icon: '/assets/images/delivery.png',
+                      name: "Delivery & returns",
+                      icon: "/assets/images/delivery.png",
                     },
                     {
-                      name: 'Search in store',
-                      icon: '/assets/images/shop.png',
+                      name: "Search in store",
+                      icon: "/assets/images/shop.png",
                     },
                     {
-                      name: 'Product details',
-                      icon: '/assets/images/tshirt.png',
+                      name: "Product details",
+                      icon: "/assets/images/tshirt.png",
                     },
-                    { name: 'Review', icon: '/assets/images/review.png' },
-                    { name: 'Share', icon: '/assets/images/share.png' },
+                    { name: "Review", icon: "/assets/images/review.png" },
+                    { name: "Share", icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
                       <div className="d-flex align-items-center gap-12 my-10px">

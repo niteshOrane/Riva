@@ -7,22 +7,18 @@ import * as icons from '../../components/common/Icons/Icons';
 import Slider from '../../components/common/Sliders/Slider';
 import { body } from '../../mockdata.json';
 import Image from '../../components/common/LazyImage/Image';
-import QuickView from '../../components/pages/products/QuickView/QuickView';
 import styles from './products.module.scss';
 
 function Products(props) {
-  const [quickViewOpen, setQuickViewOpen] = useState(false);
   const { products, loading, filters } = useProducts({
     categoryId: props.match.params.categoryId,
   });
+  const handleQuickView=()=>{
+    
+  }
   const refContainer = useRef();
-  const handleQuickView = () => setQuickViewOpen(true);
   return (
     <div>
-      <QuickView
-        open={quickViewOpen}
-        handleClose={() => setQuickViewOpen(false)}
-      />
       <div className="container-90 max-width-1600 mx-88px mr-75px">
         <div className={styles.essentials}>Essentials</div>
         <div className={styles.header}>

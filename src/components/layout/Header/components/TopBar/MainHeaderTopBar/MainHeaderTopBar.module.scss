@@ -39,4 +39,36 @@
     margin-right: 5px;
     max-width: 100px;
   }
+  .curImage{  
+    width: 20.8px;
+    height: 15.6px;
+    margin: 0 13.4px 12.6px 0;
+    object-fit: contain;
+  }
+  .curName{
+    margin-left:10px ;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+  }
+  .curSelected{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+  }
+  .curSelectedImage{
+    width: 20.8px;
+    height: 15.6px;
+    object-fit: contain;
+  }
 }

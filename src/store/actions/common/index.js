@@ -1,4 +1,4 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 
 export const loader = (state) => ({
   type: DATA_TYPES.LOADER,
@@ -39,7 +39,13 @@ export const fetchHeaderCategory = (data) => ({
   type: DATA_TYPES.CATEGORY,
   payload: { data },
 });
+
 export const selectedCategory = (data) => ({
   type: DATA_TYPES.SELECTED_CATEGORY,
+  payload: { data },
+});
+
+export const toggleQuickView = (data) => ({
+  type: DATA_TYPES.TOGGLE_QUICKVIEW,
   payload: { data },
 });

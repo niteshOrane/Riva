@@ -6,14 +6,14 @@ import MainHeaderTopBar from "../components/TopBar/MainHeaderTopBar/MainHeaderTo
 import { header } from "../../../../mockdata.json";
 import styles from "./MainHeader.module.scss";
 
-function MainHeader({ openSignUpCard }) {
+function MainHeader({ openSignUpCard, mainHeader }) {
   // const links = useSelector((state) => state.common.header);
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
   );
   return (
     <header className={styles.sticky} id="header">
-      <MainHeaderTopBar />
+      <MainHeaderTopBar mainHeader={mainHeader}/>
       <NavbarMain openSignUpCard={openSignUpCard} />
       <MegaLinks links={selectedCategoryItem?.data} />
     </header>

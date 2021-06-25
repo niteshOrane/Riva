@@ -12,7 +12,7 @@ const SignUpForm = ({ handleSubmit }) => {
           First Name & Last Name <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span class="material-icons-outlined">account_circle</span>
+          <span className="material-icons-outlined">account_circle</span>
           <input type="text" name="name" id="name" />
         </div>
       </div>
@@ -21,7 +21,7 @@ const SignUpForm = ({ handleSubmit }) => {
           Email <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span class="material-icons-outlined">email</span>
+          <span className="material-icons-outlined">email</span>
           <input type="email" name="email" id="email" />
         </div>
       </div>
@@ -30,7 +30,7 @@ const SignUpForm = ({ handleSubmit }) => {
           Mobile Number <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span class="material-icons-outlined">call</span>
+          <span className="material-icons-outlined">call</span>
           <input type="number" name="phone" id="phone" />
         </div>
       </div>
@@ -39,7 +39,7 @@ const SignUpForm = ({ handleSubmit }) => {
           Set a Password <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span class="material-icons-outlined">lock</span>{" "}
+          <span className="material-icons-outlined">lock</span>{" "}
           <input
             type={showPass ? "password" : "text"}
             name="password"
@@ -50,7 +50,7 @@ const SignUpForm = ({ handleSubmit }) => {
             className="no-border bg-transparent c-pointer"
             onClick={() => setShowPass(!showPass)}
           >
-            <span class="material-icons-outlined">
+            <span className="material-icons-outlined">
               {showPass ? "visibility_off" : "visibility"}
             </span>{" "}
           </button>
@@ -70,26 +70,26 @@ const SignUpForm = ({ handleSubmit }) => {
         <p className={styles.or}>OR</p>
 
         <div>
-          <button
+          <button type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
           >
-            <span class={styles.btnIcon}>
+            <span className={styles.btnIcon}>
               <icons.Apple />
             </span>
             <p >Connect with Apple</p>
           </button>
-          <button
+          <button type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
-            <span class={styles.btnIcon}>
+            <span className={styles.btnIcon}>
               <icons.Facebook />
             </span>
             <p >Connect with Facebook</p>
           </button>
-          <button
+          <button type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
           >
-            <span class={`material-icons-outlined ${styles.btnIcon}`}>
+            <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
             </span>
             <p >Connect with Google</p>
