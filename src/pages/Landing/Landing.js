@@ -53,7 +53,6 @@ function Landing() {
                   src={`${URL.baseUrl}${item?.image}`}
                   width="100%"
                   alt={item?.name}
-                  defaultImage={"assets/images/sunGlass.png"}
                 />
               </div>
               <div>
