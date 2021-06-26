@@ -13,69 +13,78 @@ const MegaLinks = ({ links }) => {
     setShowMegaMenue(link);
   };
 
-  return (<>
-    <div className={`${style.container} d-flex-all-center flex-wrap px-75px position-relative`}
-    >
-      {links &&
-        links?.map((link, i) => (
-          <div
-            key={i}
-            className={style.link}
-            onMouseOver={() => handleMouseOver(link.url_key)}
-            onMouseLeave={() => setShowMegaMenue(null)}
-          >
-            <Link
-              to={`/products/${link.url_key}/${link.id}`}
-              className={`${style.megaLink} p-12 d-block`}
-            >
-              <span onClick={() => setShowMegaMenue(null)}>
-                {link.name.toUpperCase()}
-              </span>
-            </Link>
-
+  return (
+    <>
+      <div
+        className={`${style.container} d-flex-all-center  px-75px position-relative`}
+      >
+        {links &&
+          links?.map((link, i) => (
             <div
-              className={`${style.megaContainer} ${showMegaMenue === link.url_key ? style.show : ''
-                } position-absolute px-75px pl-100px`}
+              key={i}
+              className={style.link}
+              onMouseOver={() => handleMouseOver(link.url_key)}
+              onMouseLeave={() => setShowMegaMenue(null)}
             >
-              <div className={style.titleDoubleLineFilter} />
-              <div className={style.titleDoubleLine_SecondFilter} />
-              <div className="d-flex justify-content-between text-left">
-                <div className={style.allProductsCard}>
-                  <div>All Products</div>
-                  <div className={style.allProductsTitleLine} />
-                  <div className={`d-flex justify-content-between ${style.allProductsTitles}`}>
-                    {links
-                      ?.find((l) => l.url_key === showMegaMenue)
-                      ?.children_data?.map((child) => (
-                        <Link
-                          to={`/products/${child.url_key}/${child.id}`}
-                          className={`${style.megaLink} p-12 d-block`}
-                        >
-                          <p
-                            className={`${style.pLink} color-grey`}
-                            onClick={() => setShowMegaMenue(null)}
+              <Link
+                to={`/products/${link.url_key}/${link.id}`}
+                className={`${style.megaLink} p-12 d-block`}
+              >
+                <span
+                  className="white-space-nowrap"
+                  onClick={() => setShowMegaMenue(null)}
+                >
+                  {link.name.toUpperCase()}
+                </span>
+              </Link>
+
+              <div
+                className={`${style.megaContainer} ${
+                  showMegaMenue === link.url_key ? style.show : ''
+                } position-absolute px-75px pl-100px`}
+              >
+                <div className={style.titleDoubleLineFilter} />
+                <div className={style.titleDoubleLine_SecondFilter} />
+                <div className="d-flex justify-content-between text-left">
+                  <div className={style.allProductsCard}>
+                    <div>All Products</div>
+                    <div className={style.allProductsTitleLine} />
+                    <div
+                      className={`d-flex justify-content-between ${style.allProductsTitles}`}
+                    >
+                      {links
+                        ?.find((l) => l.url_key === showMegaMenue)
+                        ?.children_data?.map((child) => (
+                          <Link
+                            to={`/products/${child.url_key}/${child.id}`}
+                            className={`${style.megaLink} p-12 d-block`}
                           >
-                            {child.name}
-                          </p>
-                        </Link>
-                      ))}
+                            <p
+                              className={`${style.pLink} color-grey`}
+                              onClick={() => setShowMegaMenue(null)}
+                            >
+                              {child.name}
+                            </p>
+                          </Link>
+                        ))}
+                    </div>
                   </div>
-                </div>
-                <div className={style.megaImg}>
-                  <Image src={link.image} width="100%" alt="change me" />
-				<button className="bg-black my-12px no-border p-12 color-white">
-                  Shop Now
-                </button>
+                  <div className={style.megaImg}>
+                    <Image src={link.image} width="100%" alt="change me" />
+                    <Link to={`/products/${link.url_key}/${link.id}`} className={`${style.megaLink} p-12 d-block`}>
+                    <button type="button" className="bg-black my-12px no-border p-12 color-white"  onClick={() => setShowMegaMenue(null)}>
+                      Shop Now
+                    </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-
-    </div>
-    <div className={style.titleDoubleLine} />
-    <div className={style.titleDoubleLine_Second} />
-  </>
+          ))}
+      </div>
+      <div className={style.titleDoubleLine} />
+      <div className={style.titleDoubleLine_Second} />
+    </>
   );
 };
 

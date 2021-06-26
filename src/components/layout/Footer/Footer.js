@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import CopyRightSection from "./CopyRightSection/CopyRightSection";
-import * as icons from "../../common/Icons/Icons";
-import style from "./footer.module.scss";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import CopyRightSection from './CopyRightSection/CopyRightSection';
+import * as icons from '../../common/Icons/Icons';
+import style from './footer.module.scss';
 
 function Footer() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const handleChange = (e) => setValue(e.target.value);
   const footer = useSelector((state) => state.common.footer);
 
@@ -23,9 +23,8 @@ function Footer() {
                   className={`d-flex align-items-center ${style.link}`}
                 >
                   <Link
-                    to={link.href.split("/").pop()}
+                    to={`/${link.href.split('/').pop()}`}
                     className={`w-100 ${style.footerLink}`}
-                    href={link.href.split("/").pop()}
                   >
                     <span className="material-icons-outlined">
                       arrow_right_alt
@@ -168,7 +167,7 @@ function Footer() {
       <CopyRightSection />
       <div
         className={`${style.toTopBtn} c-pointer`}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <span className="material-icons-outlined font-white d-flex-all-center">
           keyboard_arrow_up

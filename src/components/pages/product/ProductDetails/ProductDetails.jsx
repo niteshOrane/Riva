@@ -1,12 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import Image from "../../../common/LazyImage/Image";
 import Star from "@material-ui/icons/StarBorderOutlined";
+import Image from "../../../common/LazyImage/Image";
 import styles from "./productDetails.module.scss";
 import { addToCart } from "../../../../store/actions/cart";
 import SizeCard from "./components/SizeCard/SizeCard";
 import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
 import SizeGuide from "./components/SizeGuide/SizeGuide";
+
 const ProductDetails = ({ product }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
@@ -61,7 +62,7 @@ const ProductDetails = ({ product }) => {
             </div>
             {/* <div className={styles.actionContainerBottomRight}>
               <div>
-                <span class="material-icons-outlined font-light-black">
+                <span className="material-icons-outlined font-light-black">
                   open_with
                 </span>
               </div>
@@ -97,11 +98,9 @@ const ProductDetails = ({ product }) => {
               <div className={styles.title}>Color:&nbsp;</div>
               <div className={styles.text}>Black</div>
               <div className={`${styles.options} d-flex-all-center`}>
-                <div className={`${styles.option} ${styles.option_red}`}></div>
-                <div
-                  className={`${styles.option} ${styles.option_oranage}`}
-                ></div>
-                <div className={`${styles.option} ${styles.option_blue}`}></div>
+                <div className={`${styles.option} ${styles.option_red}`} />
+                <div className={`${styles.option} ${styles.option_oranage}`} />
+                <div className={`${styles.option} ${styles.option_blue}`} />
               </div>
             </div>
             <div className={`${styles.size} gap-12 d-flex align-items-center`}>
@@ -132,7 +131,7 @@ const ProductDetails = ({ product }) => {
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12 d-flex align-items-center">
                 <li className="nav-li">
-                  <a href="#" className="d-flex align-items-center">
+                  <a href="/" className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       straighten
                     </span>
@@ -149,7 +148,7 @@ const ProductDetails = ({ product }) => {
                   </a>
                 </li>
                 <li className="nav-li">
-                  <a href="#" className="d-flex align-items-center">
+                  <a href="/" className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       search
                     </span>
@@ -273,7 +272,7 @@ const ProductDetails = ({ product }) => {
                     return (
                       <div className="d-flex align-items-center gap-12 my-10px">
                         <div className={styles.icon}>
-                          <img src={item.icon} />
+                          <img src={item.icon} alt={item.name} />
                         </div>
                         <div>{item.name}</div>
                       </div>

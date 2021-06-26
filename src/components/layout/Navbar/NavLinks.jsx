@@ -1,6 +1,7 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleCart } from "../../../store/actions/cart";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toggleCart } from '../../../store/actions/cart';
 
 const NavLinks = ({ openSignUpCard }) => {
   const { data = [] } = useSelector((state) => state.cart);
@@ -9,12 +10,12 @@ const NavLinks = ({ openSignUpCard }) => {
   return (
     <ul className="nav-list d-flex align-items-center gap-12">
       <li className="nav-li">
-        <span className="d-flex align-items-center gap-12">
+        <Link className="d-flex align-items-center gap-12" to="/wishlist">
           <span className="material-icons-outlined font-light-black">
             favorite_border
           </span>
-          <span className="align-self-end font-light-black">Wishlist</span>{" "}
-        </span>
+          <span className="align-self-end font-light-black">Wishlist</span>{' '}
+        </Link>
       </li>
       <li className="nav-li">
         <a
@@ -25,7 +26,7 @@ const NavLinks = ({ openSignUpCard }) => {
           <span className="material-icons-outlined font-light-black">
             person
           </span>
-          <span className="align-self-end font-light-black">Account</span>{" "}
+          <span className="align-self-end font-light-black">Account</span>{' '}
         </a>
       </li>
       <li className="nav-li">
@@ -38,7 +39,7 @@ const NavLinks = ({ openSignUpCard }) => {
           </span>
           <span className="align-self-end font-light-black">
             Cart ({data?.length || 0})
-          </span>{" "}
+          </span>{' '}
         </a>
       </li>
     </ul>

@@ -59,11 +59,11 @@ const Products = ({ products }) => {
                           ${product.price}
                         </strong>
                         <div className={style.counter}>
-                          <span class="c-pointer material-icons-outlined">
+                          <span className="c-pointer material-icons-outlined">
                             remove
                           </span>
                           <span>{product.quantity}</span>
-                          <span class="c-pointer material-icons-outlined">
+                          <span className="c-pointer material-icons-outlined">
                             add
                           </span>
                         </div>
@@ -79,17 +79,17 @@ const Products = ({ products }) => {
                   <div className={style.footer}>
                     <div className={style.footerContent}>
                       <div className="font-light-black c-pointer d-flex">
-                        <span class="material-icons-outlined">
+                        <span className="material-icons-outlined">
                           favorite_border
                         </span>
                         <span className="underline">Move to Wishlist</span>
                       </div>
                       <div className="font-light-black c-pointer d-flex">
-                        <span class="material-icons-outlined">edit</span>
+                        <span className="material-icons-outlined">edit</span>
                         <span className="underline">Edit</span>
                       </div>
                       <div className="font-light-black c-pointer d-flex">
-                        <span class="material-icons-outlined">close</span>
+                        <span className="material-icons-outlined">close</span>
                         <span className="underline">Move to Wishlist</span>
                       </div>
                     </div>

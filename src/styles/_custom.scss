@@ -12,7 +12,7 @@
   color: #ffffff;
 }
 .color-black {
-  color: #000000;
+  color: #181617;
 }
 .color-grey {
   color: $text-grey;
@@ -156,7 +156,7 @@
   justify-content: center;
 }
 
-// if you are using bootstrap.. remove the styling bel
+// if you are using bootstrap.. remove the styling below
 .d-flex {
   display: flex;
 }
@@ -343,7 +343,7 @@ nav.nav {
   .slick-prev::before,
   .slick-next:before {
     font-family: sans-serif !important;
-    background-color: #000000;
+    background-color: #181617;
     width: 50px;
     height: 50px;
     display: flex;
@@ -385,7 +385,7 @@ nav.nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000000;
+    color: #181617;
     font-size: 4rem;
     font-size: 3rem;
   }

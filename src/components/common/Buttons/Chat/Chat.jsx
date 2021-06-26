@@ -4,7 +4,7 @@ import styles from './Chat.module.scss';
 const Chat = () => {
     return (
         <div className={`${styles.chatBtn} d-flex-all-center c-pointer`} >
-            <span class="material-icons-outlined">
+            <span className="material-icons-outlined">
                 question_answer
             </span>
         </div>

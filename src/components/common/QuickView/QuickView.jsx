@@ -1,8 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleQuickView } from '../../../store/actions/common';
 import Star from '@material-ui/icons/StarBorderOutlined';
 import Dialog from '@material-ui/core/Dialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { showSnackbar, toggleQuickView } from '../../../store/actions/common';
+import { addToCart, toggleCart } from '../../../store/actions/cart';
+
+import Image from '../LazyImage/Image';
+
 import styles from './QuickView.module.scss';
 import * as icons from '../Icons/Icons';
 
@@ -18,6 +22,23 @@ function QuickView() {
   const dispatch = useDispatch();
 
   const handleClose = () => {
+    dispatch(toggleQuickView(null));
+  };
+
+  const addToCardHandler = () => {
+    dispatch(
+      addToCart({
+        ...data,
+        id: `${data?.id}`,
+        name: data?.name,
+        src: data?.image,
+        color: 'White',
+        quantity: 1,
+        size: 'XL',
+        price: data?.price,
+      })
+    );
+    dispatch(showSnackbar('Added to cart', 'success'));
     dispatch(toggleQuickView(null));
   };
 
@@ -39,14 +60,17 @@ function QuickView() {
 
       <div className={styles.details}>
         <div className={styles.img}>
-          <img
-            src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/a9576483-1e21-4340-9719-1b8891611cf4.png"
+          <Image
+            src={data?.image}
+            classname="object-fit-fill h-100"
+            width="100%"
             alt=""
+            customeStyle={{ objectFit: 'cover' }}
           />
         </div>
         <form>
           <div className={styles.bestSeller}>BEST SELLER</div>
-          <div className={styles.name}>Pine Printed Jersey T-Shirt</div>
+          <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
               <Star style={{ fill: '#FFD700', fontSize: 16 }} />
@@ -58,12 +82,12 @@ function QuickView() {
             <div className={`${styles.rating} d-flex-all-center`}>4 rating</div>
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
-              <div className={styles.text}>101104-21009-798</div>
+              <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
           <div className={`${styles.price} d-flex`}>
-            <div className={styles.was}>Was $108.57</div>
-            <div className={styles.now}>Now $75.90</div>
+            <div className={styles.was}>Was ${data?.price}</div>
+            <div className={styles.now}>Now ${data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
@@ -82,7 +106,14 @@ function QuickView() {
             <div
               className={`${styles.options} gap-12 d-flex align-items-center`}
             >
-              1
+              {data?.size?.length &&
+                data?.size?.map((size) => {
+                  return (
+                    <div className={`${styles.option} d-flex-all-center`}>
+                      {size}
+                    </div>
+                  );
+                })}
             </div>
           </div>
           <div
@@ -181,7 +212,8 @@ function QuickView() {
             <div className="d-flex w-100 align-items-center ">
               <div className={styles.addToCart}>
                 <button
-                  //   onClick={addToCardHandler}
+                  type="button"
+                  onClick={addToCardHandler}
                   className="w-100 d-flex-all-center bg-black color-white p-12"
                 >
                   <span className="material-icons-outlined">shopping_cart</span>

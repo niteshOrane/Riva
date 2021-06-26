@@ -1,21 +1,19 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import useProducts from './useProducts';
-import Filters from '../../components/pages/products/Filters';
-import ProductCard from '../../components/common/Cards/ProductCard';
-import * as icons from '../../components/common/Icons/Icons';
-import Slider from '../../components/common/Sliders/Slider';
-import { body } from '../../mockdata.json';
-import Image from '../../components/common/LazyImage/Image';
-import styles from './products.module.scss';
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import useProducts from "./useProducts";
+import Filters from "../../components/pages/products/Filters";
+import ProductCard from "../../components/common/Cards/ProductCard";
+import * as icons from "../../components/common/Icons/Icons";
+import Slider from "../../components/common/Sliders/Slider";
+import { body } from "../../mockdata.json";
+import Image from "../../components/common/LazyImage/Image";
+import styles from "./products.module.scss";
 
 function Products(props) {
   const { products, loading, filters } = useProducts({
     categoryId: props.match.params.categoryId,
   });
-  const handleQuickView=()=>{
-    
-  }
+  const handleQuickView = () => {};
   const refContainer = useRef();
   return (
     <div>
@@ -29,7 +27,7 @@ function Products(props) {
                   Showing {products.length - 4}-{products.length} out of 344
                 </>
               ) : (
-                ''
+                ""
               )}
             </span>
             <div className={styles.sortByText}>
@@ -43,13 +41,13 @@ function Products(props) {
           <Filters />
         </div>
       </div>
-      {loading && <h3 style={{ textAlign: 'center' }}>loading...</h3>}
+      {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
       {!loading && !products.length && (
-        <h3 style={{ textAlign: 'center' }}>No Product found!</h3>
+        <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div className={`${styles.productsPage}`}>
         {products?.map((product, i) => (
-          <div className={i === 0 || i === 5 ? styles.fullWidthCard : ''}>
+          <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
             <ProductCard handleQuickView={handleQuickView} product={product} />
           </div>
         ))}
@@ -73,12 +71,14 @@ function Products(props) {
             <img
               src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/9231a77e-7404-4860-83b9-c4c1e9552e8d.png"
               alt=""
+              width="100%"
             />
           </div>
           <div className={styles.bannerImg}>
             <img
               src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/9231a77e-7404-4860-83b9-c4c1e9552e8d.png"
               alt=""
+              width="100%"
             />
           </div>
         </div>

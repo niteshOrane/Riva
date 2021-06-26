@@ -6,7 +6,7 @@ const ImageDropdown = () => {
       <div className="d-flex align-items-center">
         <span>How to Ware it</span>
         <span className={styles.icon}>
-          <span class="material-icons-outlined">arrow_right</span>
+          <span className="material-icons-outlined">arrow_right</span>
         </span>
       </div>
     </div>

@@ -18,12 +18,12 @@
     margin: 0px auto;
     text-align: center;
   }
-  .topBarMsgWrapper{
+  .topBarMsgWrapper {
     text-align: center;
   }
   .topBarLeft {
     background-color: $color-skin;
-    padding: 12px 114px 10.6px 10px;
+    padding: 12px 0px 10.6px 10px;
     max-width: 20vw;
   }
   .flag {
@@ -31,31 +31,71 @@
   }
 
   .select {
-    border: none;
+    border: 0px !important;
+    outline: 0px !important;
     background-color: $color-skin;
     border-radius: 0px;
     font-size: 14px;
     padding: 0px 5px;
     margin-right: 5px;
     max-width: 100px;
+    option {
+      background: #fff;
+    }
   }
-  .curImage{  
-    width: 20.8px;
-    height: 15.6px;
-    margin: 0 13.4px 12.6px 0;
-    object-fit: contain;
+  .dropdownBody {
+    position: absolute;
+    background-color: #fff;
+    top: 100%;
+    width: 100px;
+    box-shadow: 0 0 12px #ece6e6;
+    z-index: 1;
+    padding-bottom: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    .dropdownItem {
+      padding-left: 7px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      display: flex;
+      align-items: center;
+      &:hover {
+        background: #ddd;
+      }
+      .curImage {
+        width: 20.8px;
+        height: 15.6px;
+        object-fit: contain;
+      }
+      .curName {
+        font-size: 13px;
+        font-weight: 700;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        text-align: left;
+        color: #181617;
+        padding-left: 25px;
+      }
+    }
   }
-  .curName{
-    margin-left:10px ;
-    font-size: 13px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #000000;
+  .showDD {
+    transition: all 0.4s ease;
+    visibility: visible;
+    opacity: 1;
   }
-  .curSelected{
+
+  .angleIcon {
+    margin: 0 9px;
+    margin-right: 0;
+  }
+  .langItem {
+    font-size: 14px;
+    width: 100px;
+    font-weight: 700;
+  }
+  .curSelected {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 300;
@@ -64,9 +104,9 @@
     line-height: 1.57;
     letter-spacing: normal;
     text-align: left;
-    color: #000000;
+    color: #181617;
   }
-  .curSelectedImage{
+  .curSelectedImage {
     width: 20.8px;
     height: 15.6px;
     object-fit: contain;

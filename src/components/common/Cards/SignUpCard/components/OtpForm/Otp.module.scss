@@ -20,7 +20,7 @@
 
 .otpDots {
   padding: 4px;
-  border: 2px solid #000;
+  border: 2px solid #181617;
   display: flex;
   align-items: center;
   margin: 0 12px;
@@ -34,7 +34,7 @@
   }
 }
 .verifyBtn {
-  border: 1px solid #000;
+  border: 1px solid #181617;
   padding: 12px 20px;
   background-color: #fff;
   display: block;
@@ -42,7 +42,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
-    background-color: #000;
+    background-color: #181617;
     color: #fff;
   }
 }

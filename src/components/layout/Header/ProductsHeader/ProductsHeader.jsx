@@ -15,10 +15,10 @@ function ProductsHeader() {
       <div className="text-right">
         <ProductsHeaderIcons />
         <div className="d-flex justify-content-between px-88px pr-50px position-relative">
-          <strong class="d-block">
-            <Link class="d-block" to="/">
+          <strong className="d-block" style={{ marginRight: "4px" }}>
+            <Link className="d-block" to="/">
               <img
-                class="logo-image"
+                className="logo-image"
                 src="/assets/images/logo.png"
                 width="100%"
                 alt="RAVI"

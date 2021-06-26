@@ -10,7 +10,7 @@ const ProductGoWithCard = ({ product, i }) => {
           <span>SHOP THIS LOOK</span>
         </div>
         <div className={styles.icon}>
-          <span class="material-icons-outlined">east</span>
+          <span className="material-icons-outlined">east</span>
         </div>
       </div>
     </div>

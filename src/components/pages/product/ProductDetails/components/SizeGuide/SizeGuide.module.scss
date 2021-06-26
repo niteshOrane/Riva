@@ -23,9 +23,88 @@
     font-family: Jost;
     font-size: 1.25rem;
   }
+
+  .img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .arrows {
+      position: absolute;
+      width: auto;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .arrow {
+        text-align: center;
+        .unit {
+          display: inline-block;
+          padding: 2px;
+          color: black;
+          background-color: #fff;
+        }
+        .arrowLine {
+          margin-top: 5px;
+          background: #fff;
+          height: 3px;
+          width: 173px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          &::after {
+            content: "";
+            margin-left: -4px;
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-left: 5px solid #fff;
+            border-bottom: 5px solid transparent;
+          }
+          &::before {
+            content: "";
+            display: inline-block;
+            margin-right: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-right: 5px solid #fff;
+            border-bottom: 5px solid transparent;
+          }
+        }
+      }
+    }
+  }
+
   .dropdown {
+    width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     margin: 12px 0;
+    cursor: pointer;
+    position: relative;
+
+    .dropdownBody {
+      position: absolute;
+      background: #fff;
+      top: 102%;
+      box-shadow: 0 0 12px #ddd;
+      width: 100%;
+      left: 0;
+      display: none;
+      .item {
+        padding: 12px;
+
+        &:hover {
+          background: #ddd;
+        }
+      }
+    }
+    .show {
+      display: block;
+    }
   }
 }

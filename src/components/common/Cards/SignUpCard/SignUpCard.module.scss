@@ -52,13 +52,13 @@
       display: block;
       border: 1px solid #ddd;
       background-color: #fff;
-      color: #000;
+      color: #181617;
       text-align: center;
       padding: 12px 30px;
       transition: all 0.4s ease;
       cursor: pointer;
       &:hover {
-        background-color: #000;
+        background-color: #181617;
         color: white;
       }
     }
@@ -107,7 +107,7 @@
     .appleBtn {
       background: #272727;
       .btnIcon{
-        background-color: #000000;
+        background-color: #181617;
       }
     }
     .fbBtn {

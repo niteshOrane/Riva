@@ -33,7 +33,7 @@
   min-height: 540px;
   .filterBy {
     margin: 20px 0;
-    font-weight: normal;
+    font-weight: 700;
   }
   .filtersGrid {
     width: 100%;
@@ -87,7 +87,7 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #000;
+    background-color: #181617;
     border-radius: 8px;
   }
   span:nth-child(2) {
@@ -114,7 +114,7 @@
     transition: all 0.3s ease;
     padding: 7px 12px;
     &:hover {
-      background-color: #000;
+      background-color: #181617;
       color: #fff;
     }
   }

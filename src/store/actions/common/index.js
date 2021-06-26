@@ -1,4 +1,4 @@
-import * as DATA_TYPES from "../../types";
+import * as DATA_TYPES from '../../types';
 
 export const loader = (state) => ({
   type: DATA_TYPES.LOADER,
@@ -48,4 +48,9 @@ export const selectedCategory = (data) => ({
 export const toggleQuickView = (data) => ({
   type: DATA_TYPES.TOGGLE_QUICKVIEW,
   payload: { data },
+});
+
+export const showSnackbar = (message = null, severity = '', open = true) => ({
+  type: DATA_TYPES.SNACKBAR,
+  payload: { message, severity, open },
 });

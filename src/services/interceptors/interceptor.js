@@ -71,7 +71,7 @@ export default {
       },
       (error) => {
         const err = prepareErrorObject(error);
-        // handleError(store, err);
+        handleError(store, err);
         hideLoader(store);
         return Promise.reject(error ? error['response'] : null);
       }

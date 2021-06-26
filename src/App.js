@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCommonData } from './store/actions/common/common';
+import { getWishlist } from './store/actions/wishlist';
 import Loader from './components/common/Loader';
+import SnackBar from './components/common/Snakbar';
 import AlertComponent from './components/common/Alert';
 import AppRoutes from './routes';
 import './App.scss';
@@ -9,8 +11,9 @@ import { deepEqual, hardReload } from './util';
 
 class AppRoot extends React.Component {
   componentDidMount() {
-    const { fetchCommonData: fetch } = this.props;
+    const { fetchCommonData: fetch, getWishlist: wishlistInit } = this.props;
     fetch();
+    wishlistInit();
   }
 
   componentDidUpdate(prevProps) {
@@ -38,6 +41,7 @@ class AppRoot extends React.Component {
       <>
         <AppRoutes {...this.props} />
         {error && this.handleError(error)}
+        <SnackBar />
       </>
     );
   }
@@ -49,4 +53,6 @@ const mapStateToProps = (state) => ({
   store: state.common.store,
 });
 
-export default connect(mapStateToProps, { fetchCommonData })(AppRoot);
+export default connect(mapStateToProps, { fetchCommonData, getWishlist })(
+  AppRoot
+);

@@ -79,8 +79,18 @@ export default function common(state = initialState, action) {
       return {
         ...state,
         quickView: {
-          isOpen: !state.quickView.isOpen,
+          isOpen: !state.quickView?.isOpen,
           data: action.payload.data,
+        },
+      };
+
+    case DATA_TYPES.SNACKBAR:
+      return {
+        ...state,
+        snackbar: {
+          error: action.payload?.message ?? null,
+          severity: action.payload?.severity ?? '',
+          open: action.payload?.open,
         },
       };
     default:

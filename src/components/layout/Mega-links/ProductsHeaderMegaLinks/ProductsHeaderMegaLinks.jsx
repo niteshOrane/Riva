@@ -7,7 +7,7 @@ import Image from "../../../common/LazyImage/Image";
 const ProductsHeaderMegaLinks = ({ links }) => {
   const [showMegaMenue, setShowMegaMenue] = useState(null);
   return (
-    <div className={`${style.container} d-flex-all-center flex-wrap`}>
+    <div className={`${style.container} d-flex-all-center`}>
       {links &&
         links?.map((link, i) => (
           <div
@@ -21,13 +21,15 @@ const ProductsHeaderMegaLinks = ({ links }) => {
               className={`${style.megaLink} p-12 d-block`}
               href={link.url_key}
             >
-              <span onClick={() => setShowMegaMenue(null)}>
+              <span
+                className="white-space-nowrap"
+                onClick={() => setShowMegaMenue(null)}
+              >
                 {link.name.toUpperCase()}
               </span>
               <div
-                className={`${style.megaContainer} ${
-                  showMegaMenue === link.url_key ? style.show : ""
-                } position-absolute px-75px pl-100px`}
+                className={`${style.megaContainer} ${showMegaMenue === link.url_key ? style.show : ""
+                  } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />
                 <div className={style.titleDoubleLine_SecondFilter} />
@@ -56,9 +58,12 @@ const ProductsHeaderMegaLinks = ({ links }) => {
                   <div className={style.megaImg}>
                     <Image src={link.image} width="100%" alt="change me" />
                     <div className="text-left">
-                      <button className="bg-black my-12px no-border p-12 color-white">
-                        Shop Now
-                      </button>
+                      <Link to={`/products/${link.url_key}/${link.id}`} className={`${style.megaLink} p-12 d-block`}>
+                        <button type="button" className="bg-black my-12px no-border p-12 color-white"
+                          onClick={() => setShowMegaMenue(null)}>
+                          Shop Now
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

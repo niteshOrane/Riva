@@ -2,6 +2,7 @@ import React from "react";
 import ButtonWithArrows from "../../Buttons/ButtonWithArrows/ButtonWithArrows";
 import Image from "../../LazyImage/Image";
 import style from "./style.module.scss";
+
 const CardWithBoxContent = ({ item }) => {
   return (
     <div className="position-relative">

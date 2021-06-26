@@ -14,6 +14,22 @@ const wishlist = (state = INITIAL_STATE, action) => {
         isOpen: !state.isOpen,
         modalData: action.payload.data,
       };
+    case DATA_TYPES.GET_WISHLIST:
+      return {
+        ...state,
+        data: [...action.payload.data],
+      };
+    case DATA_TYPES.ADD_WISHLIST:
+      return {
+        ...state,
+        data: [...state.data, action.payload.data],
+      };
+    case DATA_TYPES.REMOVE_WISHLIST:
+      return {
+        ...state,
+        data:
+          state?.data?.filter((d) => d.id !== action.payload?.data?.id) || [],
+      };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getWishlist = (customerid = 30) => {
+export const getWishlistItems = (customerid = 30) => {
   const config = {
     method: 'post',
     url: `http://65.0.141.49/shop/index.php/rest/V1/wishlistDetail`,
@@ -10,7 +10,7 @@ export const getWishlist = (customerid = 30) => {
   return axios(config);
 };
 
-export const addWishListItem = (customerid = 30, productid) => {
+export const addWishListItem = (productid, customerid = 30) => {
   const config = {
     method: 'post',
     url: `http://65.0.141.49/shop/index.php/rest/V1/addwishlist`,
@@ -20,7 +20,7 @@ export const addWishListItem = (customerid = 30, productid) => {
   return axios(config);
 };
 
-export const removeWishlistItem = (customerid = 30, productid) => {
+export const removeWishlistItem = (productid, customerid = 30) => {
   const config = {
     method: 'post',
     url: `http://65.0.141.49/shop/index.php/rest/V1/wishlistRemove`,

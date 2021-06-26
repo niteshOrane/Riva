@@ -9,12 +9,11 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
-    "react-bootstrap": "^1.6.1",
     "react-dom": "^16.10.2",
     "react-minimal-pie-chart": "^8.2.0",
     "react-player": "^2.9.0",
