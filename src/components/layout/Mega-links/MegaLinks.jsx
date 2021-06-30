@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Image from '../../common/LazyImage/Image';
-import style from './megalinks.module.scss';
-import { header } from '../../../mockdata.json';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Image from "../../common/LazyImage/Image";
+import style from "./megalinks.module.scss";
+import { header } from "../../../mockdata.json";
 
 const MegaLinks = ({ links }) => {
   const [showMegaMenue, setShowMegaMenue] = useState(null);
@@ -28,7 +28,7 @@ const MegaLinks = ({ links }) => {
             >
               <Link
                 to={`/products/${link.url_key}/${link.id}`}
-                className={`${style.megaLink} p-12 d-block`}
+                className={`${style.megaLink} p-12px d-block`}
               >
                 <span
                   className="white-space-nowrap"
@@ -40,7 +40,7 @@ const MegaLinks = ({ links }) => {
 
               <div
                 className={`${style.megaContainer} ${
-                  showMegaMenue === link.url_key ? style.show : ''
+                  showMegaMenue === link.url_key ? style.show : ""
                 } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />
@@ -57,7 +57,7 @@ const MegaLinks = ({ links }) => {
                         ?.children_data?.map((child) => (
                           <Link
                             to={`/products/${child.url_key}/${child.id}`}
-                            className={`${style.megaLink} p-12 d-block`}
+                            className={`${style.megaLink} p-12px d-block`}
                           >
                             <p
                               className={`${style.pLink} color-grey`}
@@ -71,10 +71,17 @@ const MegaLinks = ({ links }) => {
                   </div>
                   <div className={style.megaImg}>
                     <Image src={link.image} width="100%" alt="change me" />
-                    <Link to={`/products/${link.url_key}/${link.id}`} className={`${style.megaLink} p-12 d-block`}>
-                    <button type="button" className="bg-black my-12px no-border p-12 color-white"  onClick={() => setShowMegaMenue(null)}>
-                      Shop Now
-                    </button>
+                    <Link
+                      to={`/products/${link.url_key}/${link.id}`}
+                      className={`${style.megaLink} p-12px d-block`}
+                    >
+                      <button
+                        type="button"
+                        className="bg-black my-12px no-border p-12px color-white"
+                        onClick={() => setShowMegaMenue(null)}
+                      >
+                        Shop Now
+                      </button>
                     </Link>
                   </div>
                 </div>

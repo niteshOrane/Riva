@@ -1,20 +1,21 @@
-import React from 'react';
-import Image from '../../../common/LazyImage/Image';
-import * as icons from '../../../common/Icons/Icons';
+import React from "react";
+import Image from "../../../common/LazyImage/Image";
+import * as icons from "../../../common/Icons/Icons";
 
 const closeStyle = {
-  right: '3px',
-  top: '3px',
+  right: "12px",
+  top: "12px",
 };
 const cardStyle = {
-  position: 'relative',
-  flexBasis: '30%',
+  position: "relative",
+  flexBasis: "30%",
 };
 function Card({ src, name, priceWas, priceIs, remove }) {
   return (
     <div style={cardStyle}>
       <button
         type="button"
+        title="Remove"
         style={closeStyle}
         onClick={remove}
         className="closeBtn no-border bg-transparent position-absolute"

@@ -48,7 +48,7 @@ const SizeCard = ({ handleClose, open }) => {
         >
           <icons.Close />
         </button>
-        <div className="my-12px p-12">
+        <div className="my-12px p-12px">
           <div className="d-flex">
             <div className={styles.img}>
               <img

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getStoreId } from '../../util';
+import API_URL from '../../enviroments';
 
 const useCMSContent = ({ identifier }) => {
   const [content, setContent] = useState('');
@@ -8,7 +9,7 @@ const useCMSContent = ({ identifier }) => {
     window.scrollTo(0, 0);
     const config = {
       method: 'get',
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getcmspage?storeId=${getStoreId()}&cmsIdentifier=${identifier}`,
+      url: `${API_URL}/webapi/getcmspage?storeId=${getStoreId()}&cmsIdentifier=${identifier}`,
       silent: true,
     };
     axios(config)

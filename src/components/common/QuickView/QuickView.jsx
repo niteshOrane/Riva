@@ -1,17 +1,17 @@
-import React from 'react';
-import Star from '@material-ui/icons/StarBorderOutlined';
-import Dialog from '@material-ui/core/Dialog';
-import { useSelector, useDispatch } from 'react-redux';
-import { showSnackbar, toggleQuickView } from '../../../store/actions/common';
-import { addToCart, toggleCart } from '../../../store/actions/cart';
+import React from "react";
+import Star from "@material-ui/icons/StarBorderOutlined";
+import Dialog from "@material-ui/core/Dialog";
+import { useSelector, useDispatch } from "react-redux";
+import { showSnackbar, toggleQuickView } from "../../../store/actions/common";
+import { addToCart, toggleCart } from "../../../store/actions/cart";
 
-import Image from '../LazyImage/Image';
+import Image from "../LazyImage/Image";
 
-import styles from './QuickView.module.scss';
-import * as icons from '../Icons/Icons';
+import styles from "./QuickView.module.scss";
+import * as icons from "../Icons/Icons";
 
 const closeStyle = {
-  position: 'absolute',
+  position: "absolute",
   top: 4,
   right: 4,
 };
@@ -20,6 +20,13 @@ function QuickView() {
     (state) => state.common.quickView || {}
   );
   const dispatch = useDispatch();
+  const {
+    origpriceWithoutCurrency = 0,
+    priceWithoutCurrency = 0,
+    price,
+    visibility = 0,
+    custom_attributes,
+  } = data ?? {};
 
   const handleClose = () => {
     dispatch(toggleQuickView(null));
@@ -32,13 +39,15 @@ function QuickView() {
         id: `${data?.id}`,
         name: data?.name,
         src: data?.image,
-        color: 'White',
+        color: custom_attributes?.find((e) => e?.attribute_code === "color")
+          ?.value,
         quantity: 1,
-        size: 'XL',
-        price: data?.price,
+        size: custom_attributes?.find((e) => e?.attribute_code === "size")
+          ?.value,
+        price,
       })
     );
-    dispatch(showSnackbar('Added to cart', 'success'));
+    dispatch(showSnackbar("Added to cart", "success"));
     dispatch(toggleQuickView(null));
   };
 
@@ -65,7 +74,7 @@ function QuickView() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: 'cover' }}
+            customeStyle={{ objectFit: "cover" }}
           />
         </div>
         <form>
@@ -73,32 +82,31 @@ function QuickView() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
             </div>
-            <div className={`${styles.rating} d-flex-all-center`}>4 rating</div>
+            <div className={`${styles.rating} d-flex-all-center`}>
+              {visibility} rating
+            </div>
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
           <div className={`${styles.price} d-flex`}>
-            <div className={styles.was}>Was ${data?.price}</div>
-            <div className={styles.now}>Now ${data?.price}</div>
+            <div className={styles.now}>Now ${price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>
             <div className={styles.text}>Black</div>
             <div className={`${styles.options} d-flex-all-center`}>
-              <div className={`${styles.option} ${styles.option_red}`}></div>
-              <div
-                className={`${styles.option} ${styles.option_oranage}`}
-              ></div>
-              <div className={`${styles.option} ${styles.option_blue}`}></div>
+              <div className={`${styles.option} ${styles.option_red}`} />
+              <div className={`${styles.option} ${styles.option_oranage}`} />
+              <div className={`${styles.option} ${styles.option_blue}`} />
             </div>
           </div>
           <div className={`${styles.size} gap-12 d-flex align-items-center`}>
@@ -214,7 +222,7 @@ function QuickView() {
                 <button
                   type="button"
                   onClick={addToCardHandler}
-                  className="w-100 d-flex-all-center bg-black color-white p-12"
+                  className="w-100 d-flex-all-center bg-black color-white p-12px"
                 >
                   <span className="material-icons-outlined">shopping_cart</span>
                   &nbsp;ADD TO CART

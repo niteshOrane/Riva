@@ -1,16 +1,22 @@
-import React, { Component, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Loader from '../components/common/Loader';
-import MainLayout from '../Layouts/MainLayout';
+import React, { Component, Suspense } from "react";
+import { Route, Switch } from "react-router-dom";
+import Loader from "../components/common/Loader";
+import MainLayout from "../Layouts/MainLayout";
 
-const Landing = React.lazy(() => import('../pages/Landing/Landing'));
-const Product = React.lazy(() => import('../pages/Product/Product'));
-const Products = React.lazy(() => import('../pages/Products/Products'));
-const WishList = React.lazy(() => import('../pages/WishList/WishList'));
-const ShoppingCart = React.lazy(() =>
-  import('../pages/ShoppingCart/ShoppingCart')
+const Landing = React.lazy(() => import("../pages/Landing/Landing"));
+const Product = React.lazy(() => import("../pages/Product/Product"));
+const Products = React.lazy(() => import("../pages/Products/Products"));
+const WishList = React.lazy(() => import("../pages/WishList/WishList"));
+const DeliveryAddress = React.lazy(() =>
+  import("../pages/Delivery-address/DeliveryAddress")
 );
-const CMSContent = React.lazy(() => import('../pages/CMSContent/CMSContent'));
+const OrderConfirmed = React.lazy(() =>
+  import("../pages/OrderConfirmed/OrderConfirmed")
+);
+const ShoppingCart = React.lazy(() =>
+  import("../pages/ShoppingCart/ShoppingCart")
+);
+const CMSContent = React.lazy(() => import("../pages/CMSContent/CMSContent"));
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -18,50 +24,66 @@ class AppRoutes extends Component {
     this.state = {};
     this.openRoutes = [
       {
-        path: '/',
+        path: "/",
         component: Landing,
         exact: true,
-        name: 'Landing page',
+        name: "Landing page",
         layout: MainLayout,
         index: 0,
       },
       {
-        path: '/product/:categoryId',
+        path: "/product/:categoryId",
         component: Product,
         exact: true,
-        name: 'Product page',
+        name: "Product page",
         layout: MainLayout,
         index: 0,
       },
       {
-        path: '/products/:category/:categoryId',
+        path: "/products/:category/:categoryId",
         component: Products,
         exact: true,
-        name: 'Products Listing page',
+        name: "Products Listing page",
         layout: MainLayout,
         index: 0,
       },
       {
-        path: '/shopping-cart',
+        path: "/shopping-cart",
         component: ShoppingCart,
         exact: true,
-        name: 'Shopping Cart',
+        name: "Shopping Cart",
         layout: MainLayout,
         index: 0,
       },
       {
-        path: '/wishlist',
+        path: "/wishlist",
         component: WishList,
         exact: true,
-        name: 'Wishlist',
+        name: "Wishlist",
         layout: MainLayout,
         index: 0,
       },
       {
-        path: '/:identifier',
+        path: "/order-confirmed",
+        component: OrderConfirmed,
+        exact: true,
+        name: "OrderConfirmed",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/delivery-address",
+        component: DeliveryAddress,
+        exact: true,
+        name: "DeliveryAddress",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/:identifier",
         component: CMSContent,
         exact: true,
-        name: 'CMS Content',
+        name: "CMS Content",
         layout: MainLayout,
         index: 0,
       },

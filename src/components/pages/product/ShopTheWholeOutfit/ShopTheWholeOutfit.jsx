@@ -61,7 +61,7 @@ const ShopTheWholeoutfit = ({ data }) => {
           </div>
           {data.discount.discounts.map((discount) => (
             <div
-              className={`${styles.discount} d-flex p-12 justify-content-between`}
+              className={`${styles.discount} d-flex p-12px justify-content-between`}
             >
               <div className={styles.name}>{discount.name}</div>
               <div className={styles.total}>USD {discount.amount}</div>
@@ -69,7 +69,7 @@ const ShopTheWholeoutfit = ({ data }) => {
           ))}
           <hr />
           <div
-            className={`${styles.discount} d-flex p-12 justify-content-between`}
+            className={`${styles.discount} d-flex p-12px justify-content-between`}
           >
             <div className={styles.name}>
               {data.discount.selectedProducts} items | Subtotal

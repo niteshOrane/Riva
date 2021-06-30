@@ -2,7 +2,7 @@ import React from "react";
 import style from "./ButtonWithArrows.module.scss";
 const ButtonWithArrows = ({ type, btnClass, onclick, text }) => {
   return (
-    <button
+    <button title={text}
       className={`${btnClass}  ${style.btn}`}
       type={type}
       onClick={onclick}

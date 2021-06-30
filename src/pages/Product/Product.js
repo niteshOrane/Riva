@@ -7,7 +7,10 @@ import ProductDetails from '../../components/pages/product/ProductDetails/Produc
 import AdditionalProductDetails from '../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails';
 import HowToWearThis from '../../components/pages/product/HowToWearThis/HowToWearThis';
 import DescriptionComposition from '../../components/pages/product/DescriptionComposition/DescriptionComposition';
-import { getProduct } from '../../services/product/product.service';
+import {
+  getAttributes,
+  getProduct,
+} from '../../services/product/product.service';
 import ProductCard from '../../components/common/Cards/ProductCard';
 import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
 import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
@@ -31,6 +34,16 @@ const Product = (props) => {
     try {
       const res = await getProduct(sku);
 
+      const color = res.data?.custom_attributes?.find(
+        (e) => e?.attribute_code === 'color'
+      )?.value;
+      const size = res.data?.custom_attributes?.find(
+        (e) => e?.attribute_code === 'size'
+      )?.value;
+
+      const colorAttr = await getAttributes('92');
+      const sizeAttr = await getAttributes('213');
+
       const p = {
         ...res.data,
         image: res.data?.custom_attributes.find(
@@ -42,7 +55,11 @@ const Product = (props) => {
           res.data?.custom_attributes.find(
             (attr) => attr.attribute_code === 'show_sale_badge'
           )?.value === '1',
+        colors: colorAttr?.data?.filter((c) => c.value === color) || [],
+        size: sizeAttr?.data?.filter((s) => s.value === size) || [],
       };
+      console.log({ p }, 'dsafsaf');
+
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
     } catch (err) {

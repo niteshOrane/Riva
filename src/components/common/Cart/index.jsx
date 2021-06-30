@@ -1,10 +1,10 @@
-import React from 'react';
-import { Drawer } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
-import { toggleCart, removeFromCart } from '../../../store/actions/cart';
-import style from './style.module.scss';
+import React from "react";
+import { Drawer } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import BlackCloseBtn from "../Buttons/BlackCloseBtn/BlackCloseBtn";
+import { toggleCart, removeFromCart } from "../../../store/actions/cart";
+import style from "./style.module.scss";
 
 const Cart = () => {
   const { data: items = [], isOpen = false } = useSelector(
@@ -21,12 +21,12 @@ const Cart = () => {
     <div key="cartlist">
       <Drawer anchor="right" onClose={handleClose} open={isOpen}>
         <div className={style.sidebarContainer}>
-          <div className="d-flex align-items-end justify-content-between p-12">
+          <div className="d-flex align-items-end justify-content-between p-12px">
             <h3 className={style.addedMsg}>Added To Cart (2)</h3>
             <BlackCloseBtn handleClose={handleClose} drawerPosition="right" />
           </div>
           <div className={style.sideMsg}>
-            <div className="d-flex align-items-center bg-grey p-12">
+            <div className="d-flex align-items-center bg-grey p-12px">
               <span className="color-black material-icons-outlined">done</span>
               <span className="font-weight-600">
                 THIS ITEM HAS BEEN ADDED TO YOUR CART
@@ -81,7 +81,7 @@ const Cart = () => {
                           <div>
                             <span
                               onClick={() => dispatch(removeFromCart(item))}
-                              style={{ cursor: 'pointer' }}
+                              style={{ cursor: "pointer" }}
                             >
                               <span className="material-icons-outlined">
                                 close
@@ -113,26 +113,26 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <div className="text-right p-12">
+            <div className="text-right p-12px">
               <h4>
-                <strong>Total</strong>{' '}
+                <strong>Total</strong>{" "}
                 <strong className="color-primary">$43.43</strong>
               </h4>
             </div>
-            <div className="text-left p-12">
+            <div className="text-left p-12px">
               <h4 className="color-grey">*Before taxes</h4>
             </div>
             <div className={style.processBtns}>
               <button
                 type="button"
-                className="bg-black color-white p-12 w-100 d-block"
+                className="bg-black color-white p-12px w-100 d-block"
               >
                 GO TO CHECKOUT
               </button>
               <Link to="/shopping-cart" href="/shopping-cart">
                 <button
                   type="button"
-                  className="bg-primary color-white p-12 w-100 d-block"
+                  className="bg-primary color-white p-12px w-100 d-block"
                 >
                   SEE SHOPPING CART
                 </button>

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import { selectedCategory } from '../../../../store/actions/common';
 import Image from '../../../common/LazyImage/Image';
 
-import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
 import style from './HeroGrid.module.scss';
 import Circle from '../../../layout/Navbar/Circle';
 import SlideBanner from '../../../pages/landing/Banners/SlideBanner';
 
-const baseUrl = `http://65.0.141.49/media/mageplaza/bannerslider/banner/image/`;
 
 const HeroGrid = ({ btfLeft, btfRight }) => {
   const links = useSelector((state) => state.common.category)[0];
@@ -58,20 +56,26 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
         <div className={`d-grid ${style.gap25}`}>
           <div className="position-relative">
             <div className="position-relative h-100">
-              <Image
-                src={`${btfRight?.[0]?.image}`}
-                classname={style.imgHeight}
-                width="100%"
-                alt=""
-              />
+              <Link to={`/${btfRight?.[0]?.url_banner ?? ''}`}>
+                <Image
+                  src={btfRight?.[0]?.image}
+                  classname={style.imgHeight}
+                  width="100%"
+                  alt=""
+                />
+              </Link>
             </div>
           </div>
           <div className={style.col2Grid}>
             <div className={style.col2GridImgs}>
-              <Image src={`${btfRight?.[1]?.image}`} width="100%" alt="" />
+              <Link to={`/${btfRight?.[1]?.url_banner ?? ''}`}>
+                <Image src={`${btfRight?.[1]?.image}`} width="100%" alt="" />
+              </Link>
             </div>
             <div className={style.col2GridImgs}>
-              <Image src={`${btfRight?.[2]?.image}`} width="100%" alt="" />
+              <Link to={`/${btfRight?.[2]?.url_banner ?? ''}`}>
+                <Image src={`${btfRight?.[2]?.image}`} width="100%" alt="" />
+              </Link>
             </div>
           </div>
         </div>

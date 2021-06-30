@@ -1,4 +1,5 @@
 import React from "react";
+import LetUsHear from "../../../common/Cards/LetUsHear/LetUsHear";
 import style from "./Summary.module.scss";
 const Summary = () => {
   return (
@@ -21,13 +22,13 @@ const Summary = () => {
         <div className={style.checkoutBtn}>
           <button type="button">SECURE CHECKOUT</button>
         </div>
-        <div className="gap-12 bg-white d-flex align-items-center p-12">
+        <div className="gap-12 bg-white d-flex align-items-center p-12px">
           <span>icon</span>
           <span className="font-light-black">
             We offer easy returns up to 14 days. Terms & Conditions apply
           </span>
         </div>
-        <div className="gap-12 bg-white d-flex align-items-center p-12">
+        <div className="gap-12 bg-white d-flex align-items-center p-12px">
           <span>icon</span>
           <p>
             <strong className="d-block">100% SECURE DATA ENCRYPTIN</strong>
@@ -37,23 +38,7 @@ const Summary = () => {
           </p>
         </div>
       </div>
-      <div className={style.contactCard}>
-        <div className={style.contactIcon}>
-          <span className="material-icons-outlined">add</span>
-        </div>
-        <h4 className={style.contactCardTitle}>Let us hear from you at</h4>
-        <p>
-          <strong>
-            <a className="color-black" href="tel: +971 800 7482">
-              +971 800 7482
-            </a>
-          </strong>
-          <span className="font-light-black">
-            we are available to serve you 24 hours all week long & always happy
-            to help you.
-          </span>
-        </p>
-      </div>
+      <LetUsHear />
     </div>
   );
 };

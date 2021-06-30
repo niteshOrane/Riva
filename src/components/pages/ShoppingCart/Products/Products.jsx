@@ -18,7 +18,7 @@ const Products = ({ products }) => {
       <div className={style.productList}>
         {products.map((product) => (
           <div key={product.id} className={style.product}>
-            <div className="d-flex justify-content-between p-12">
+            <div className="d-flex justify-content-between p-12px">
               <div className={style.productDetails}>
                 <div className={style.productImg}>
                   <img

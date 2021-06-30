@@ -1,9 +1,10 @@
 import axios from 'axios';
+import API_URL from '../../enviroments/index';
 
 export const getWishlistItems = (customerid = 30) => {
   const config = {
     method: 'post',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/wishlistDetail`,
+    url: `${API_URL}/wishlistDetail`,
     silent: true,
     data: { customerid },
   };
@@ -13,7 +14,7 @@ export const getWishlistItems = (customerid = 30) => {
 export const addWishListItem = (productid, customerid = 30) => {
   const config = {
     method: 'post',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/addwishlist`,
+    url: `${API_URL}/addwishlist`,
     silent: true,
     data: { customerid, productid },
   };
@@ -23,7 +24,7 @@ export const addWishListItem = (productid, customerid = 30) => {
 export const removeWishlistItem = (productid, customerid = 30) => {
   const config = {
     method: 'post',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/wishlistRemove`,
+    url: `${API_URL}/wishlistRemove`,
     silent: true,
     data: { customerid, productid },
   };

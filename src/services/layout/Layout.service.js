@@ -1,6 +1,7 @@
 import axios from 'axios';
 import mockdata from '../../mockdata.json';
 import { getStoreId } from '../../util';
+import API_URL from '../../enviroments/index';
 
 export const getTopBrands = async () =>
   new Promise((resolve) => {
@@ -8,19 +9,21 @@ export const getTopBrands = async () =>
       resolve(mockdata['topBrands']);
     }, 1000);
   });
-const requestOptions = {
-  method: 'GET',
-  redirect: 'follow',
-};
-export const getCurrentLocation = async () =>
-  fetch('https://ipapi.co/json/', requestOptions).then((response) =>
+
+export const getCurrentLocation = async () => {
+  const requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+  };
+  return fetch('https://ipapi.co/json/', requestOptions).then((response) =>
     response.json()
   );
+};
 
 export const getHeader = async () => {
   const config = {
     method: 'get',
-    url: 'http://65.0.141.49/shop/index.php/rest/V1/webapi/getheader',
+    url: `${API_URL}/webapi/getheader`,
     silent: true,
   };
   const response = await axios(config);
@@ -29,7 +32,7 @@ export const getHeader = async () => {
 export const getHeaderCategory = async () => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getnavigation?storeId=${getStoreId()}`,
+    url: `${API_URL}/webapi/getnavigation?storeId=${getStoreId()}`,
     silent: true,
   };
   const response = await axios(config);
@@ -39,7 +42,7 @@ export const getHeaderCategory = async () => {
 export const getFooter = async () => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/footercms?storeId=${getStoreId()}`,
+    url: `${API_URL}/webapi/footercms?storeId=${getStoreId()}`,
   };
   const response = await axios(config);
   return response;
@@ -48,7 +51,7 @@ export const getFooter = async () => {
 export const getBanners = (sliderId) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getbanners?sliderId=${sliderId}&storeId=${getStoreId()}`,
+    url: `${API_URL}/webapi/getbanners?sliderId=${sliderId}&storeId=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -57,7 +60,7 @@ export const getBanners = (sliderId) => {
 export const getProducts = (categoryId, limit) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/categoryproducts?categoryId=${categoryId}&storeId=${getStoreId()}&start=0&limit=${limit}`,
+    url: `${API_URL}/webapi/categoryproducts?categoryId=${categoryId}&storeId=${getStoreId()}&start=0&limit=${limit}`,
     silent: true,
   };
   return axios(config);
@@ -66,7 +69,7 @@ export const getProducts = (categoryId, limit) => {
 export const getPromoCategories = () => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/getpromotionalcategories/`,
+    url: `${API_URL}/webapi/getpromotionalcategories/`,
     silent: true,
   };
   return axios(config);
@@ -75,7 +78,7 @@ export const getPromoCategories = () => {
 export const searchProducts = (categoryId, limit) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/V1/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=1241&store_id=1`,
+    url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=1241&store_id=1`,
     silent: true,
   };
   return axios(config);

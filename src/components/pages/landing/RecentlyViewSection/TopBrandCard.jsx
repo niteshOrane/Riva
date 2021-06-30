@@ -18,23 +18,26 @@ const TempLink = ({ children, product }) => {
   );
 };
 
-const TopBrandCard = ({ item }) => (
-  <TempLink product={item}>
-    <div className={`d-flex align-items-cetner ${style.cardBody}`}>
-      <div className={style.cardImg}>
-        <Image src={item.image || item.src} width="100%" alt="" />
-      </div>
-      <div className={style.cardText}>
-        <p className={`two-lines-text ${style.title}`}>
-          {item.title || item.name || item.src || ''}
-        </p>
-        <div className="d-flex align-items-center">
-          <s className={style.crosedPrice}>{item.price + 50 || ''}</s>
-          <p className={`${style.price} color-primary`}>{item.price || ''}</p>
+const TopBrandCard = ({ item }) => {
+  const { origprice=0, origpriceWithoutCurrency, priceWithoutCurrency, price } = item;
+  return (
+    <TempLink product={item}>
+      <div className={`d-flex align-items-cetner ${style.cardBody}`}>
+        <div className={style.cardImg}>
+          <Image src={item.image || item.src} width="100%" alt="" />
+        </div>
+        <div className={style.cardText}>
+          <p className={`two-lines-text ${style.title}`}>
+            {item.title || item.name || item.src || ''}
+          </p>
+          <div className="d-flex align-items-center">
+            {origpriceWithoutCurrency > priceWithoutCurrency ? <s className={style.crosedPrice}>Was {origprice || ''}</s> : null}
+            <p className={`${style.price} color-primary`}>{price || ''}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </TempLink>
-);
+    </TempLink>
+  )
+}
 
 export default TopBrandCard;

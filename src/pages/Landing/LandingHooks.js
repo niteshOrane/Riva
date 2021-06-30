@@ -6,15 +6,15 @@ const useLanding = () => {
 
   useEffect(() => {
     getBanners(11)
-      .then((response) => response.data[0].image)
+      .then((response) => response.data)
       .then((banner) =>
         SetMiddleBanner(
-          `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${banner}`
+          banner
         )
       )
       .catch((error) => console.log(error));
   }, []);
-
+  console.log('middleBanner', middleBanner)
   return {
     middleBanner,
   };

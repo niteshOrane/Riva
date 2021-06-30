@@ -6,7 +6,7 @@ const VerticalProductCard = ({ product }) => {
 
     return <div className={`${styles.horizontalProductCard} d-flex gap-12`}>
         <div>
-            <img src={src} />
+            <img src={src} alt={name}/>
         </div>
         <div>
             <div className={styles.name}>{name}</div>
@@ -19,8 +19,8 @@ const VerticalProductCard = ({ product }) => {
                     <span className={styles.title}>Size:</span><span className={styles.text}>{size}</span>
                 </div>
                 <div className={`${styles.options} gap-12 d-flex align-items-center`}>
-                    {['S', 'M', 'L', 'XL', '2XL'].map((size) => {
-                        return <div className={styles.option}>{size}</div>
+                    {['S', 'M', 'L', 'XL', '2XL'].map((sizeValue) => {
+                        return <div className={styles.option}>{sizeValue}</div>
                     })}
                 </div>
                 <div className={`${styles.otherOptions} d-flex`}>

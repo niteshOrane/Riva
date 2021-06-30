@@ -19,8 +19,13 @@ const TempLink = ({ children, product }) => {
 };
 
 const ProductCard = ({ product }) => {
-  const { id, image, name, price, sku = '' } = product;
-
+  const { custom_attributes, id, image, name, price = 0 } = product;
+  let { origprice = 0, origpriceWithoutCurrency, priceWithoutCurrency } = product;
+  if (custom_attributes) {
+    origpriceWithoutCurrency = custom_attributes?.find(e => e?.attribute_code === "special_price")?.value;
+    origprice = origpriceWithoutCurrency;
+    priceWithoutCurrency = price;
+  }
   const wishList = useSelector((state) => state.wishlist.data);
   const dispatch = useDispatch();
 
@@ -39,9 +44,9 @@ const ProductCard = ({ product }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: 'White',
+        color: custom_attributes?.find(e => e?.attribute_code === "color")?.value,
         quantity: 1,
-        size: 'XL',
+        size: custom_attributes?.find(e => e?.attribute_code === "size")?.value,
         price: product.price,
       })
     );
@@ -106,8 +111,8 @@ const ProductCard = ({ product }) => {
           {name}
         </div>
         <div className={styles.productPrice}>
-          <div className={styles.was}>Was {price + 50}$</div>
-          <div className={styles.now}>Now {price}$</div>
+          {origpriceWithoutCurrency > priceWithoutCurrency ? <div className={styles.was}>Was {origprice || ''}</div> : null}
+          <div className={styles.now}>{origpriceWithoutCurrency > priceWithoutCurrency ? 'Now' : ''} {price}</div>
         </div>
         <div className={styles.productColors}>
           <div className={styles.colorContainer}>

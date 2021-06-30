@@ -1,0 +1,79 @@
+.greyText {
+  color: #666464;
+}
+.smallText {
+  font-size: 14px;
+}
+
+.title {
+  font-size: 18px;
+}
+.applyCoupon {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  input {
+    border: none;
+    padding: 12px;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+  .applyBtn {
+    background-color: #000;
+    color: #fff;
+    padding: 12px;
+    border: none;
+  }
+}
+
+.loyaltyCash {
+  padding: 12px;
+  background-color: #fff;
+  strong {
+    margin-left: 12px;
+  }
+  p {
+    margin-top: 5px;
+    text-align: center;
+  }
+}
+
+.choseShipping {
+  display: flex;
+  margin-top: 12px;
+  h5 {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+  label {
+    cursor: pointer;
+  }
+  input {
+    margin: 0 12px;
+  }
+}
+
+#calculatinRow {
+  border-bottom: 1px solid #ddd;
+  padding: 5px 0;
+  margin-top: 3px;
+}
+.inp {
+  margin-right: 12px;
+}
+.placeOrderBtn {
+  background-color: $color-black;
+  padding: 12px;
+  display: inline-block;
+  width: 100%;
+  border: none;
+  color: #fff;
+  margin: 20px 0;
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    opacity: 0.8;
+  }
+}

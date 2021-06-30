@@ -1,0 +1,37 @@
+.sidebar {
+  margin-right: 40px;
+  height: 100%;
+  max-width: 300px;
+  width: 100%;
+  background-color: #efefef;
+  .header {
+    color: #fff;
+    background-color: #181617;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    h2 {
+      font-weight: 700;
+      font-family: Roboto;
+      font-size: 18px;
+      padding-left: 5px;
+    }
+    button {
+      background-color: #fff;
+      color: #181617;
+      padding: 9px;
+      border-radius: 20px;
+      margin-left: auto;
+      border: none;
+    }
+  }
+  .sidebarBody {
+    #sec {
+      border-bottom: 1px solid #ddd;
+      padding: 12px;
+      .title {
+        margin-left: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+  padding: 20px;
+  .congrats {
+    font-size: 1.4rem;
+    margin: 12px 0;
+    margin-bottom: 6px;
+  }
+  p:nth-child(2) {
+    font-size: 14px;
+  }
+  .greyText {
+    color: #9e9a9a;
+    font-weight: normal;
+    margin-bottom: 4px;
+  }
+}

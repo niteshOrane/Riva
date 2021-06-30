@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_URL from '../../enviroments';
 
 const useProducts = ({ categoryId }) => {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const useProducts = ({ categoryId }) => {
     setfilters({});
     const config = {
       method: 'get',
-      url: `http://65.0.141.49/shop/index.php/rest/V1/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=1`,
+      url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=1`,
       silent: true,
     };
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setStore } from '../../../../../../store/actions/common';
-import style from './MainHeaderTopBar.module.scss';
-import storeData from '../../../../../../store/index';
-import { useEffect } from 'react';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setStore } from "../../../../../../store/actions/common";
+import style from "./MainHeaderTopBar.module.scss";
+import storeData from "../../../../../../store/index";
+import { useEffect } from "react";
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
@@ -12,33 +12,45 @@ const MainHeaderTopBar = ({ mainHeader }) => {
   const header = useSelector((state) => state.common.header);
   const foundStore =
     header?.find(({ country_id }) => country_id === currentLocation) || {};
-  const [phone, setPhone] = useState(foundStore.phone || '+971 800 7482');
-  const [languageItem, setLanguageItem] = useState(' العربية');
+  const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");
+  const [languageItem, setLanguageItem] = useState(" العربية");
   const [storeDropDown, setStoreDropDown] = useState([]);
   const dispatch = useDispatch();
   if (!store) dispatch(setStore(foundStore));
 
   const handleCurrencyChange = (event, head) => {
-    setPhone(head.phone || '+971 800 7482');
+    setPhone(head.phone || "+971 800 7482");
 
-    let lanTochange = '';
-    head.language === 'Arabic'
-      ? (lanTochange = 'العربية')
+    let lanTochange = "";
+    head.language === "Arabic"
+      ? (lanTochange = "العربية")
       : (lanTochange = head?.language);
     setLanguageItem(lanTochange);
     dispatch(setStore(head));
   };
+
   const handleLanguageChange = (event, language) => {
-    setLanguageItem(language);
+    let lanTochange = "";
+    language === "Arabic"
+    ? (lanTochange = "العربية")
+    : (lanTochange = language);
+    setLanguageItem(lanTochange);
+    dispatch(
+      setStore({
+        ...store,
+        language: language === "English" ? "English" : "Arabic",
+      })
+    );
   };
+
   useEffect(() => {
-    let lanTochange = '';
+    let lanTochange = "";
     const data = storeData?.getState()?.common.store;
-    data.language === 'Arabic'
-      ? (lanTochange = 'العربية')
+    data.language === "Arabic"
+      ? (lanTochange = "العربية")
       : (lanTochange = data?.language);
     setLanguageItem(lanTochange);
-    setPhone(data.phone || '+971 800 7482');
+    setPhone(data.phone || "+971 800 7482");
     if (!store) dispatch(setStore(foundStore));
     setStoreDropDown(header.filter((e) => e.language !== data.language));
   }, [header]);
@@ -59,7 +71,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
       </div>
       <div className={style.topBarMsgWrapper}>
         <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
-          NEW IN: <span className="color-text-primary">SPRING-SUMMER 2021</span>{' '}
+          NEW IN: <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
           COLLECTION
         </h4>
       </div>
@@ -70,20 +82,22 @@ const MainHeaderTopBar = ({ mainHeader }) => {
           <div
             onClick={() => setShowDropdown(!showDropdown)}
             className="position-relative d-flex align-items-center justify-content-center"
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           >
             <div className={`${style.flag} d-flex`}>
               <img
                 className={style.curSelectedImage}
-                src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${store?.currency
-                  }.png`}
+                src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${
+                  store?.currency
+                }.png`}
                 alt={store?.currency}
               />
             </div>
             <div className={style.curSelected}>{store?.currency}</div>
             <div
-              className={`${style.dropdownBody} ${showDropdown ? style.showDD : ""
-                }`}
+              className={`${style.dropdownBody} ${
+                showDropdown ? style.showDD : ""
+              }`}
             >
               <div className={style.currencyDropdown}>
                 {storeDropDown?.map((head) => {
@@ -98,8 +112,9 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                       <img
                         width="24"
                         className={style.curImage}
-                        src={`${mainHeader ? "" : "/"
-                          }assets/images/countryIcons/${currency}.png`}
+                        src={`${
+                          mainHeader ? "" : "/"
+                        }assets/images/countryIcons/${currency}.png`}
                         height="24"
                         alt={currency}
                       />
@@ -136,17 +151,12 @@ const MainHeaderTopBar = ({ mainHeader }) => {
             className="position-relative d-flex align-items-center justify-content-center"
             style={{ width: "100px" }}
           >
-            <div className={`${style.flag} d-flex`}>
-              <img
-                className={style.curSelectedImage}
-                src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${languageItem}.png`}
-                alt={store?.currency}
-              />
-            </div>
+            <div className={`${style.flag} d-flex`}></div>
             <div className={style.curSelected}>{languageItem}</div>
             <div
-              className={`${style.dropdownBody} ${showLanguageShowDropdown ? style.showDD : ""
-                }`}
+              className={`${style.dropdownBody} ${
+                showLanguageShowDropdown ? style.showDD : ""
+              }`}
             >
               <div className={style.currencyDropdown}>
                 {["English", "العربية"]?.map((head) => {
@@ -157,14 +167,6 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                         handleLanguageChange(e, head);
                       }}
                     >
-                      <img
-                        width="24"
-                        className={style.curImage}
-                        src={`${mainHeader ? "" : "/"
-                          }assets/images/countryIcons/${head}.png`}
-                        height="24"
-                        alt={head}
-                      />
                       <div className={style.curName}>{head}</div>
                     </div>
                   );
