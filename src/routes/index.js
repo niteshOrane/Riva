@@ -13,6 +13,10 @@ const DeliveryAddress = React.lazy(() =>
 const OrderConfirmed = React.lazy(() =>
   import("../pages/OrderConfirmed/OrderConfirmed")
 );
+const Delivered = React.lazy(() => import("../pages/Delivered/Delivered"));
+const CartPayment = React.lazy(() =>
+  import("../pages/Cart-Payment/CartPayment")
+);
 const ShoppingCart = React.lazy(() =>
   import("../pages/ShoppingCart/ShoppingCart")
 );
@@ -72,10 +76,26 @@ class AppRoutes extends Component {
         index: 0,
       },
       {
+        path: "/cart-payment",
+        component: CartPayment,
+        exact: true,
+        name: "CartPayment",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
         path: "/delivery-address",
         component: DeliveryAddress,
         exact: true,
         name: "DeliveryAddress",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/delivered",
+        component: Delivered,
+        exact: true,
+        name: "Delivered",
         layout: MainLayout,
         index: 0,
       },

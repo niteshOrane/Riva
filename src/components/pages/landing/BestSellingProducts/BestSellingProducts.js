@@ -18,6 +18,7 @@ const BestSellingProducts = () => {
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
 
+  const [dataSet, setdataSet] = useState({ 2044: [], 2045: [], '': [] });
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
 
@@ -26,14 +27,26 @@ const BestSellingProducts = () => {
   };
 
   const fetchProducts = async (id) => {
-    if (!id) return;
+    if (!id) return [];
     const res = await getProducts(id, 10);
-    setProducts(res.data || []);
+    return res?.data || [];
   };
 
   useEffect(() => {
-    fetchProducts(categoryId);
-  }, [categoryId]);
+    (async () => {
+      const featured = await fetchProducts(category_ids.featured);
+      const best_selling = await fetchProducts(category_ids.best_selling);
+      setdataSet({
+        2044: [...featured],
+        2045: [...best_selling],
+        '': [...featured, ...best_selling],
+      });
+    })();
+  }, []);
+
+  useEffect(() => {
+    setProducts(dataSet[categoryId]);
+  }, [dataSet, categoryId]);
 
   return (
     <div

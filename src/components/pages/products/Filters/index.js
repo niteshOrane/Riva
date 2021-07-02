@@ -20,15 +20,18 @@ const Colors = ({ colors }) => (
   <div className="d-flex align-items-center flex-wrap gap-12">
     {colors.map((color, i) => (
       <div
-        className="border-radius-50 c-pointer"
+        className="position-relative border-radius-50 c-pointer"
         key={i}
+        id={style.color}
         style={{
           backgroundColor: `#${color}`,
           width: "30px",
           height: "30px",
           border: "1px solid #ddd",
         }}
-      />
+      >
+        <span class={style.tooltiptext}>{color}</span>
+      </div>
     ))}
   </div>
 );
@@ -91,7 +94,6 @@ function Filters() {
           return <Info info={item} />;
         case "tags":
           return <Tags tags={item} />;
-
         default:
           return item;
       }
@@ -100,9 +102,11 @@ function Filters() {
     const menu = (items, depth) => (
       <>
         <Dropdown depth={depth} item={items}>
-          {items?.children?.map((item) =>
-            item?.children ? menu(item, depth + 1) : renderComponent(item)
-          )}
+          <>
+            {items?.children?.map((item) =>
+              item?.children ? menu(item, depth + 1) : renderComponent(item)
+            )}
+          </>
         </Dropdown>
       </>
     );

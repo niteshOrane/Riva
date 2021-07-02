@@ -119,3 +119,37 @@
     }
   }
 }
+
+// COLORS STYLING
+#color {
+  .tooltiptext {
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 1;
+    display: none;
+    bottom: 123%;
+    transform: translate(-19px, -2px);
+    width: 65px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+    }
+  }
+  &:hover {
+    .tooltiptext {
+      display: inline-block;
+    }
+  }
+}

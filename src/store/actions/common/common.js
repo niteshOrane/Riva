@@ -4,6 +4,7 @@ import {
   fetchTopBrands,
   fetchHeaderCategory,
   fetchCurrentLocation,
+  setAttributes,
 } from '.';
 import {
   getHeader,
@@ -12,6 +13,7 @@ import {
   getCurrentLocation,
   getHeaderCategory,
 } from '../../../services/layout/Layout.service';
+import { getAttributes } from '../../../services/product/product.service';
 
 export const fetchCommonData = () => async (dispatch) => {
   getHeader().then((header) => dispatch(fetchHeaderSuccess(header.data)));
@@ -22,5 +24,13 @@ export const fetchCommonData = () => async (dispatch) => {
   );
   getHeaderCategory().then((category) =>
     dispatch(fetchHeaderCategory(category.data))
+  );
+  Promise.all([getAttributes('92'), getAttributes('213')]).then((attributes) =>
+    dispatch(
+      setAttributes({
+        color: attributes?.[0]?.data || [],
+        size: attributes?.[1]?.data || [],
+      })
+    )
   );
 };

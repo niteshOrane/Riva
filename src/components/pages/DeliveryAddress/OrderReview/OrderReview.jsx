@@ -61,7 +61,7 @@ function OrderReview() {
         </p>
       </div>
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
-      <div className={styles.choseShipping}>
+      <div className={styles.chooseShipping}>
         <div>
           <input checked type="radio" name="shipping" id="standard" />
         </div>
@@ -70,7 +70,7 @@ function OrderReview() {
           <span className={styles.greyText}>$5.99 - Standard Shipping</span>
         </label>
       </div>
-      <div className={styles.choseShipping}>
+      <div className={styles.chooseShipping}>
         <div>
           <input type="radio" name="shipping" id="twoDays" />
         </div>

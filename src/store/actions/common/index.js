@@ -50,6 +50,11 @@ export const toggleQuickView = (data) => ({
   payload: { data },
 });
 
+export const setAttributes = (data) => ({
+  type: DATA_TYPES.SET_ATTRIBUTES,
+  payload: { data },
+});
+
 export const showSnackbar = (message = null, severity = '', open = true) => ({
   type: DATA_TYPES.SNACKBAR,
   payload: { message, severity, open },

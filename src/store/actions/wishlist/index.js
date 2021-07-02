@@ -38,7 +38,9 @@ export const addWishlist = (item) => async (dispatch) => {
 
   if (res.data.success === 1) {
     dispatch(addWishlist_action(item));
-    dispatch(showSnackbar('Item add to wishlist', 'success'));
+    dispatch(
+      showSnackbar(res.data?.data || 'Item added to wishlist', 'success')
+    );
   } else
     dispatch(
       showSnackbar(
@@ -53,7 +55,9 @@ export const removeWishlist = (item) => async (dispatch) => {
 
   if (res.data.success === 1) {
     dispatch(removeWishlist_action(item));
-    dispatch(showSnackbar('Item removed from wishlist', 'success'));
+    dispatch(
+      showSnackbar(res.data?.data || 'Item removed from wishlist', 'success')
+    );
   } else
     dispatch(
       showSnackbar(

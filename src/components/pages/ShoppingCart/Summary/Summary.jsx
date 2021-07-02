@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import LetUsHear from "../../../common/Cards/LetUsHear/LetUsHear";
 import style from "./Summary.module.scss";
 const Summary = () => {
@@ -20,7 +21,7 @@ const Summary = () => {
         </div>
 
         <div className={style.checkoutBtn}>
-          <button type="button">SECURE CHECKOUT</button>
+        <Link to='/cart-payment'><button type="button">SECURE CHECKOUT</button></Link>
         </div>
         <div className="gap-12 bg-white d-flex align-items-center p-12px">
           <span>icon</span>

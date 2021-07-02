@@ -8,11 +8,21 @@
   font-family: arial;
   position: relative;
   display: inline-block;
-  background-color: #ffffff;
+  background-color: #f4f3f3;
   cursor: pointer;
 
   &:hover {
     box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
+  }
+
+  .outOfStock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 12px;
+    background-color: #ffffff;
+    z-index: 1;
   }
 
   .imageContainer img {
@@ -24,6 +34,7 @@
 
   .productName {
     font-size: 15px;
+    padding: 0 12px;
     font-weight: 600;
     font-stretch: normal;
     font-style: normal;
@@ -35,6 +46,7 @@
 
   .productPrice {
     font-size: 10px;
+    padding: 0 8px;
     font-weight: 500;
     margin-top: 5px;
     justify-content: center;
@@ -111,6 +123,8 @@
 .productColors {
   display: flex;
   align-items: center;
+  padding: 0 8px;
+
   .colorContainer {
     display: flex;
     border: 1px solid transparent;
@@ -131,7 +145,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      position: relative;
+      .tooltiptext {
+        visibility: hidden;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 10px;
+        white-space: nowrap;
+        position: absolute;
+        z-index: 1;
+        bottom: 170%;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: black transparent transparent transparent;
+        }
+      }
       &:hover {
+        .tooltiptext {
+          visibility: visible;
+        }
         filter: brightness(80%);
       }
       &_red {
@@ -143,7 +185,6 @@
       &_oranage {
         background-color: #f58c30;
       }
-      cursor: pointer;
     }
   }
 }

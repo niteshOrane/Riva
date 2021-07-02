@@ -1,18 +1,18 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import Dialog from "@material-ui/core/Dialog";
-import * as icons from "../Icons/Icons";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import Dialog from '@material-ui/core/Dialog';
+import * as icons from '../Icons/Icons';
 import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
-} from "../../../store/actions/wishlist/index";
-import Image from "../LazyImage/Image";
-import styles from "./Wishlist.module.scss";
+} from '../../../store/actions/wishlist/index';
+import Image from '../LazyImage/Image';
+import styles from './Wishlist.module.scss';
 
 const closeStyle = {
-  position: "absolute",
+  position: 'absolute',
   top: 4,
   right: 4,
 };
@@ -30,11 +30,11 @@ function Wishlist() {
 
   const handleWishlist = () => {
     if (wishlist.find((w) => data.id === w.id)) dispatch(removeWishlist(data));
-    dispatch(addWishlist(data));
+    else dispatch(addWishlist(data));
     handleClose();
   };
 
-  const isAddedToWishlist = !!wishlist.find((w) => w.id === data?.id);
+  const isAddedToWishlist = !!wishlist.find((w) => w.id == data?.id);
   const {
     origprice,
     origpriceWithoutCurrency = 0,
@@ -67,7 +67,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: "cover" }}
+            customeStyle={{ objectFit: 'cover' }}
           />
         </div>
         <form>
@@ -75,8 +75,8 @@ function Wishlist() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -89,21 +89,16 @@ function Wishlist() {
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ""}</div>
+              <div className={styles.was}>Was {origprice || ''}</div>
             ) : null}
             <div className={styles.now}>Now ${data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>
-            <div className={styles.text}>Black</div>
-            <div className={`${styles.options} d-flex-all-center`}>
-              <div className={`${styles.option} ${styles.option_red}`}></div>
-              <div
-                className={`${styles.option} ${styles.option_oranage}`}
-              ></div>
-              <div className={`${styles.option} ${styles.option_blue}`}></div>
-            </div>
+            {data?.colors?.map((c) => (
+              <div className={styles.text}>{c.label} </div>
+            ))}
           </div>
           <div className={`${styles.size} gap-12 d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
@@ -114,7 +109,7 @@ function Wishlist() {
                 data?.size?.map((size) => {
                   return (
                     <div className={`${styles.option} d-flex-all-center`}>
-                      {size}
+                      {size.label}
                     </div>
                   );
                 })}
@@ -223,10 +218,10 @@ function Wishlist() {
                   <span className="material-icons-outlined">
                     favorite_border
                   </span>
-                  &nbsp;{" "}
+                  &nbsp;{' '}
                   {isAddedToWishlist
-                    ? "REMOVE FROM WISHLIST"
-                    : "ADD TO WISHLIST"}
+                    ? 'REMOVE FROM WISHLIST'
+                    : 'ADD TO WISHLIST'}
                 </button>
               </div>
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import style from "./Dropdown.module.scss";
 
 const SimpleDropdown = ({ depth, children, item }) => {
-  const [open, setOpen] = useState(item.children?.length || item.color?.length);
+  const [open, setOpen] = useState(
+    item?.children?.length || item.color?.length
+  );
 
   const handleClose = () => {
     setOpen(!open);
@@ -22,6 +24,7 @@ const SimpleDropdown = ({ depth, children, item }) => {
           <span className="material-icons">{open ? "remove" : "add"}</span>
         )}
       </div>
+
       <div>{open && children}</div>
     </div>
   );

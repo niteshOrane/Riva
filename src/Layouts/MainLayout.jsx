@@ -20,7 +20,7 @@ const MainLayout = ({ children }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const paths = ["/delivery-address"];
+  const paths = ["/delivery-address", "cart-payment"];
   useEffect(() => {
     paths.forEach((path) => {
       if (window?.location.pathname.includes(path)) {

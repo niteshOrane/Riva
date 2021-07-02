@@ -16,6 +16,7 @@ const initialState = {
     isOpen: false,
     data: null,
   },
+  attributes: { color: [], size: [] },
 };
 
 export default function common(state = initialState, action) {
@@ -81,6 +82,13 @@ export default function common(state = initialState, action) {
         quickView: {
           isOpen: !state.quickView?.isOpen,
           data: action.payload.data,
+        },
+      };
+    case DATA_TYPES.SET_ATTRIBUTES:
+      return {
+        ...state,
+        attributes: {
+          ...action.payload.data,
         },
       };
 

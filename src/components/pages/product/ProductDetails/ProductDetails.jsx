@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Star from '@material-ui/icons/StarBorderOutlined';
 import Image from '../../../common/LazyImage/Image';
 import styles from './productDetails.module.scss';
@@ -7,6 +7,7 @@ import { addToCart } from '../../../../store/actions/cart';
 import SizeCard from './components/SizeCard/SizeCard';
 import ImageDropdown from './components/ImageDropdown/ImageDropdown';
 import SizeGuide from './components/SizeGuide/SizeGuide';
+import { toggleWishlist } from '../../../../store/actions/wishlist';
 
 const ProductDetails = ({ product }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
@@ -25,6 +26,7 @@ const ProductDetails = ({ product }) => {
     priceWithoutCurrency = price;
   }
   const dispatch = useDispatch();
+  const { data: wishlist = [] } = useSelector((state) => state.wishlist);
 
   const addToCardHandler = () =>
     dispatch(
@@ -41,6 +43,12 @@ const ProductDetails = ({ product }) => {
         price: product.price,
       })
     );
+
+  const handleWishList = () => {
+    dispatch(toggleWishlist(product));
+  };
+
+  const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
 
   return (
     <>
@@ -266,9 +274,15 @@ const ProductDetails = ({ product }) => {
                       &nbsp;ADD TO CART
                     </button>
                   </div>
-                  <div className={`${styles.wishlist} d-flex-all-center`}>
-                    <span className="material-icons-outlined font-light-black">
-                      favorite_border
+                  <div
+                    className={`${styles.wishlist} d-flex-all-center`}
+                    onClick={handleWishList}
+                  >
+                    <span
+                      className="material-icons-outlined"
+                      style={{ color: isAddedToWishlist ? 'red' : 'black' }}
+                    >
+                      {isAddedToWishlist ? 'favorite' : 'favorite_border'}
                     </span>
                   </div>
                 </div>

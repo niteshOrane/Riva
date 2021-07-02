@@ -18,15 +18,26 @@ const TempLink = ({ children, product }) => {
   return <a href={product.uri}>{children}</a>;
 };
 
-const ProductCard = ({ product }) => {
-  const { custom_attributes, id, image, name, price = 0 } = product;
-  let { origprice = 0, origpriceWithoutCurrency, priceWithoutCurrency } = product;
+const ProductCard = ({ product, index, isProduct = false }) => {
+  const { custom_attributes, id, image, name } = product;
+  let {
+    origprice = 0,
+    origpriceWithoutCurrency,
+    priceWithoutCurrency,
+    price = 0
+  } = product;
   if (custom_attributes) {
-    origpriceWithoutCurrency = custom_attributes?.find(e => e?.attribute_code === "special_price")?.value;
-    origprice = origpriceWithoutCurrency;
+    origpriceWithoutCurrency = custom_attributes?.find(
+      (e) => e?.attribute_code === 'special_price'
+    )?.value;
+    origprice = `$${origpriceWithoutCurrency}`;
     priceWithoutCurrency = price;
+    price = `$${price}`;
   }
   const wishList = useSelector((state) => state.wishlist.data);
+  const { size = [], color = [] } = useSelector(
+    (state) => state?.common?.attributes || {}
+  );
   const dispatch = useDispatch();
 
   const handleWishList = () => {
@@ -44,9 +55,11 @@ const ProductCard = ({ product }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: custom_attributes?.find(e => e?.attribute_code === "color")?.value,
+        color: custom_attributes?.find((e) => e?.attribute_code === 'color')
+          ?.value,
         quantity: 1,
-        size: custom_attributes?.find(e => e?.attribute_code === "size")?.value,
+        size: custom_attributes?.find((e) => e?.attribute_code === 'size')
+          ?.value,
         price: product.price,
       })
     );
@@ -59,6 +72,7 @@ const ProductCard = ({ product }) => {
     image.indexOf('http') > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <div key={id} className={styles.productCard}>
+      {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
       <div className={styles.imageContainer}>
         <TempLink product={product}>
           <Image
@@ -107,22 +121,45 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <TempLink product={product}>
-        <div className={`${styles.productName} two-lines-text`} title={name}>
+        <div className={`${styles.productName} two-lines-text ${!isProduct ? 'text-center' : ''}`} title={name}>
           {name}
         </div>
-        <div className={styles.productPrice}>
-          {origpriceWithoutCurrency > priceWithoutCurrency ? <div className={styles.was}>Was {origprice || ''}</div> : null}
-          <div className={styles.now}>{origpriceWithoutCurrency > priceWithoutCurrency ? 'Now' : ''} {price}</div>
+        <div className={`${styles.productPrice} ${!isProduct ? 'text-center' : ''}`} >
+          {origpriceWithoutCurrency > priceWithoutCurrency ? (
+            <div className={styles.was}>Was {origprice || ''}</div>
+          ) : null}
+          <div className={styles.now}>
+            {origpriceWithoutCurrency > priceWithoutCurrency ? 'Now' : ''}{' '}
+            {price}
+          </div>
         </div>
-        <div className={styles.productColors}>
-          <div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_red}`} />
+        <div className={`${styles.productColors} ${!isProduct ? 'text-center justify-content-center' : ''}`}>
+          <div>
+            {color
+              ?.filter(
+                (c) =>
+                  c?.value ===
+                  custom_attributes?.find((e) => e?.attribute_code === 'color')
+                    ?.value || ''
+              )
+              ?.map((c) => (
+                <div className={styles.text}>{c.label} </div>
+              ))}
           </div>
           <div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_oranage}`} />
+            <div className={`${styles.color} ${styles.color_red}`}>
+              <span className={styles.tooltiptext}>Red</span>
+            </div>
           </div>
           <div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_blue}`} />
+            <div className={`${styles.color} ${styles.color_oranage}`}>
+              <span className={styles.tooltiptext}>Orange</span>
+            </div>
+          </div>
+          <div className={styles.colorContainer}>
+            <div className={`${styles.color} ${styles.color_blue}`}>
+              <span className={styles.tooltiptext}>Blue</span>
+            </div>
           </div>
         </div>
       </TempLink>

@@ -23,11 +23,12 @@ const useProducts = ({ categoryId }) => {
           return {
             ...product,
             id: product.id,
-            image: product?.custom_attributes.find(
+            image:   product?.media_gallery_entries.find(
+              (attr) => attr.position === 0
+            )?.file|| product?.custom_attributes.find(
               (attr) => attr.attribute_code === 'image'
             )?.value,
             name: product.name,
-
             price: product.price,
             sale:
               product?.custom_attributes.find(

@@ -156,6 +156,25 @@ export const Loyalty = ({ className }) => {
     </svg>
   );
 };
+export const Undo = ({ className }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12.416"
+      height="15.132"
+      viewBox="0 0 12.416 15.132"
+    >
+      <g>
+        <g>
+          <path
+            d="M50.833 2.716V0l-3.88 3.88 3.88 3.88V4.268a4.656 4.656 0 1 1-4.656 4.656h-1.552a6.208 6.208 0 1 0 6.208-6.208z"
+            transform="translate(-44.625) translate(44.625) translate(-44.625)"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
 export const Secure = ({ className }) => {
   return (
     <svg
@@ -444,6 +463,22 @@ export const HeadPhones = ({ className }) => {
           </g>
         </g>
       </g>
+    </svg>
+  );
+};
+export const Star = ({ className }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="13.006"
+      height="13.008"
+      viewBox="0 0 13.006 13.008"
+    >
+      <path
+        fill="#ecba5c"
+        d="M1015.5 379.992l2.143 4.088 4.36.881-3.035 3.407.551 4.632-4.019-1.983-4.016 1.983.551-4.632-3.035-3.408 4.36-.881 2.144-4.088"
+        transform="translate(-1009.001 -379.992)"
+      />
     </svg>
   );
 };

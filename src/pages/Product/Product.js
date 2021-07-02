@@ -1,29 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { WhatsApp, Instagram, Facebook } from '@material-ui/icons';
-import { addToRecentlyViewed } from '../../store/actions/stats';
-import Slider from '../../components/common/Sliders/Slider';
-import ProductDetails from '../../components/pages/product/ProductDetails/ProductDetails';
-import AdditionalProductDetails from '../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails';
-import HowToWearThis from '../../components/pages/product/HowToWearThis/HowToWearThis';
-import DescriptionComposition from '../../components/pages/product/DescriptionComposition/DescriptionComposition';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { WhatsApp, Instagram, Facebook } from "@material-ui/icons";
+import { addToRecentlyViewed } from "../../store/actions/stats";
+import Slider from "../../components/common/Sliders/Slider";
+import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
+import AdditionalProductDetails from "../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails";
+import HowToWearThis from "../../components/pages/product/HowToWearThis/HowToWearThis";
+import DescriptionComposition from "../../components/pages/product/DescriptionComposition/DescriptionComposition";
 import {
   getAttributes,
   getProduct,
-} from '../../services/product/product.service';
-import ProductCard from '../../components/common/Cards/ProductCard';
-import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
-import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
-import { body, productDetailsSimleCard } from '../../mockdata.json';
-import styles from './product.module.scss';
+} from "../../services/product/product.service";
+import ProductCard from "../../components/common/Cards/ProductCard";
+import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
+import OneImageBanner from "../../components/pages/landing/Banners/OneImageBanner";
+import { body, productDetailsSimleCard } from "../../mockdata.json";
+import styles from "./product.module.scss";
 
-import { products } from '../../db.json';
-import ImageCard from '../../components/common/Cards/ImageCard/ImageCard';
+import { products } from "../../db.json";
+import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 
 const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
+  const { size = [], color = [] } = useSelector(
+    (state) => state?.common?.attributes || {}
+  );
   const selectedProductId = match.params.categoryId;
 
   const [product, setproduct] = useState({});
@@ -34,31 +37,27 @@ const Product = (props) => {
     try {
       const res = await getProduct(sku);
 
-      const color = res.data?.custom_attributes?.find(
-        (e) => e?.attribute_code === 'color'
+      const color_attr = res.data?.custom_attributes?.find(
+        (e) => e?.attribute_code === "color"
       )?.value;
-      const size = res.data?.custom_attributes?.find(
-        (e) => e?.attribute_code === 'size'
+      const size_attr = res.data?.custom_attributes?.find(
+        (e) => e?.attribute_code === "size"
       )?.value;
-
-      const colorAttr = await getAttributes('92');
-      const sizeAttr = await getAttributes('213');
 
       const p = {
         ...res.data,
         image: res.data?.custom_attributes.find(
-          (attr) => attr.attribute_code === 'image'
+          (attr) => attr.attribute_code === "image"
         )?.value,
         name: res.data.name,
         price: res.data.price,
         sale:
           res.data?.custom_attributes.find(
-            (attr) => attr.attribute_code === 'show_sale_badge'
-          )?.value === '1',
-        colors: colorAttr?.data?.filter((c) => c.value === color) || [],
-        size: sizeAttr?.data?.filter((s) => s.value === size) || [],
+            (attr) => attr.attribute_code === "show_sale_badge"
+          )?.value === "1",
+        colors: color?.filter((c) => c.value === color_attr) || [],
+        size: size?.filter((s) => s.value === size_attr) || [],
       };
-      console.log({ p }, 'dsafsaf');
 
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -72,7 +71,7 @@ const Product = (props) => {
     init(selectedProductId);
   }, [selectedProductId]);
 
-  if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
+  if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
   return (
     <div>
       <ProductDetails product={product} />
@@ -104,10 +103,10 @@ const Product = (props) => {
       </div>
 
       <ShopTheWholeOutfit data={body.shopTheWholeOutfit} />
-      <div className="d-flex-all-center gap-12 mx-50px gap-12">
-        <OneImageBanner img="./assets/images/sunglassDiscountBanner.png" />
+      {/* <div className="d-flex-all-center gap-12 mx-50px gap-12">
+        <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />
-      </div>
+      </div> */}
     </div>
   );
 };

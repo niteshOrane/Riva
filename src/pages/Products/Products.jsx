@@ -13,7 +13,7 @@ function Products(props) {
   const { products, loading, filters } = useProducts({
     categoryId: props.match.params.categoryId,
   });
-  const handleQuickView = () => {};
+  const handleQuickView = () => { };
   const refContainer = useRef();
   return (
     <div>
@@ -46,11 +46,18 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div className={`${styles.productsPage}`}>
-        {products?.map((product, i) => (
-          <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
-            <ProductCard handleQuickView={handleQuickView} product={product} />
-          </div>
-        ))}
+        {products?.map((product, i) => {
+          
+          return (
+            <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
+            <ProductCard
+              index={i}
+              handleQuickView={handleQuickView}
+              product={product}
+              isProduct={true} 
+            />
+          </div>         
+        )})}
       </div>
       <div>
         <h4 className={styles.sliderTitle}>Recommendation For You</h4>
@@ -62,7 +69,7 @@ function Products(props) {
           slidesToShow={4}
           arrows={true}
           ref={refContainer}
-          render={(item) => <ProductCard product={item} />}
+          render={(item, index) => <ProductCard product={item} index={index} isProduct={true} />}
         />
       </div>
       <div className="container-90 max-width-1600 mx-auto">
