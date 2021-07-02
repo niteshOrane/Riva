@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import styles from "./Sidebar.module.scss";
 import * as icons from "../../../common/Icons/Icons";
 function Sidebar() {
@@ -11,7 +12,11 @@ function Sidebar() {
       <div className={styles.sidebarBody}>
         <div className="d-flex align-items-center" id={styles.sec}>
           <icons.Heart />
-          <p className={styles.title}>My Wishlist</p>
+          <Link to='/wishlist'> <h2 className={styles.title}>My Wishlist</h2></Link>
+        </div>
+        <div className="d-flex align-items-center" id={styles.sec}>
+          <icons.Loyalty />
+          <Link to='/order-confirmed'> <h2 className={styles.title}>Order Confirmed</h2></Link>
         </div>
       </div>
     </div>

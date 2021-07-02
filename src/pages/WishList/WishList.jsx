@@ -25,7 +25,6 @@ function WishList() {
           <Sidebar />
           <div className={styles.cardsContainer}>
             <h2 className={styles.title}>My Wishlist</h2>
-
             <div className="d-flex gap-12 f1" style={{ flexWrap: "wrap" }}>
               {wishlist?.map((product) => (
                 <Card
