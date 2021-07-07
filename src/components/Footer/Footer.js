@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
 import style from "./footer.module.scss";
+
 function Footer() {
   const [value, setValue] = useState("");
   const handleChange = (e) => {

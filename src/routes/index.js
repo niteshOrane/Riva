@@ -20,6 +20,8 @@ const CartPayment = React.lazy(() =>
 const ShoppingCart = React.lazy(() =>
   import("../pages/ShoppingCart/ShoppingCart")
 );
+
+const ProfileInformation = React.lazy(() => import("../pages/profile-information/ProfileInformation"))
 const CMSContent = React.lazy(() => import("../pages/CMSContent/CMSContent"));
 
 class AppRoutes extends Component {
@@ -30,6 +32,14 @@ class AppRoutes extends Component {
       {
         path: "/",
         component: Landing,
+        exact: true,
+        name: "Landing page",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/profile-information",
+        component: ProfileInformation,
         exact: true,
         name: "Landing page",
         layout: MainLayout,

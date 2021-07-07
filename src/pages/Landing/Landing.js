@@ -34,7 +34,6 @@ function Landing() {
 
     setSelectedCategory(items);
   }, [selectedCategoryItem]);
-
   return (
     <>
       <div>

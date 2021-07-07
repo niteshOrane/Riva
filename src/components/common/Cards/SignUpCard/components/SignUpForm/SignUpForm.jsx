@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { GoogleLogin } from "react-google-login";
+import FacebookLogin from 'react-facebook-login';
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
 
 const SignUpForm = ({ handleSubmit }) => {
   const [showPass, setShowPass] = useState(false);
+
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
 
   return (
     <form className={styles.form}>
@@ -70,29 +76,44 @@ const SignUpForm = ({ handleSubmit }) => {
         <p className={styles.or}>OR</p>
 
         <div>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
           >
             <span className={styles.btnIcon}>
               <icons.Apple />
             </span>
-            <p >Connect with Apple</p>
+            <p>Connect with Apple</p>
           </button>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
-            <span className={styles.btnIcon}>
-              <icons.Facebook />
-            </span>
-            <p >Connect with Facebook</p>
+            <FacebookLogin
+              appId="3898973050213783"
+              autoLoad
+              fields="name,email,picture"
+              cssClass = {`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn} facebook-auth-login`}
+              // onClick={componentClicked}
+              callback={responseFacebook}
+              icon="fa-facebook"
+            />
+            , ,
           </button>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
           >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
+            {/* <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
-            </span>
-            <p >Connect with Google</p>
+            </span> */}
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Login with Google"
+              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+              onSuccess={(responseGoogle) => console.log(responseGoogle)}
+              onFailure={(responseGoogle) => console.log(responseGoogle)}
+            />
           </button>
         </div>
       </div>

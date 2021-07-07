@@ -18,6 +18,10 @@ function Sidebar() {
           <icons.Loyalty />
           <Link to='/order-confirmed'> <h2 className={styles.title}>Order Confirmed</h2></Link>
         </div>
+        <div className="d-flex align-items-center" id={styles.sec}>
+          <icons.Loyalty />
+          <Link to='/profile-information'> <h2 className={styles.title}>Profile Information</h2></Link>
+        </div>
       </div>
     </div>
   );
