@@ -61,7 +61,7 @@ function Sidebar() {
           <div className={styles.children}>
             <p className={styles.title}>Accounts</p>
 
-            <Link to="/" className={styles.child}>
+            <Link to="/profile-information" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Profile Informtion
             </Link>

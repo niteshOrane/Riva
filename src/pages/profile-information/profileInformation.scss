@@ -1,6 +1,6 @@
 .user-sign-in-form {
   width: 10rem;
-  margin-top: 3rem;
+  margin-top:1rem;
 }
 .user-sign-in-form {
   div {
@@ -14,6 +14,7 @@
   }
   section {
     display: flex;
+  
     justify-content: space-between;
   }
   label{
@@ -22,23 +23,38 @@
 }
 
 .registration-form-wrapper{
-    border: 1px solid black; 
+    // border: 1px solid black; 
     width: 35rem;
-    margin: auto;
-    padding: 1rem 1rem;
+    // margin: auto;
+    // padding: 1rem 1rem;
 }
 .registration-submit-btn-wrapper{
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 1rem 1rem;
+    margin: 1rem 0rem;
 }
 .registration-btn {
     width: 6rem;
     height: 2rem;
     padding: 3px 3px;
-    margin: auto;
     background-color: black;
     border: none;
     color:#fff
+}
+.cat-circle {
+  margin-left: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  float: left;
+  margin-left: -65px;
+  div {
+    cursor: pointer;
+  }
+}
+.inner-form-wrapper{
+  border: 1px solid black;
+  width: 35rem;
+  padding: 1rem 1rem;
 }
