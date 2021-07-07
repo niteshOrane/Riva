@@ -1,16 +1,26 @@
-.imgHeight{
+.imgHeight {
   height: 92%;
 }
+
+.circlesContainer {
+  margin-left: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  float: left;
+  margin-left: -65px;
+  div {
+    cursor: pointer;
+  }
+}
 .grid {
-  margin: 30px 75px 30px 10px;
-  display: grid;
-  grid-template-columns: 1fr 8fr 8fr;
+  padding-left: 4px;
   .col1 {
     margin-left: 10px;
     cursor: pointer;
   }
   .col2 {
-    max-width: 44vw;
+    width: 50%;
     margin-right: 30px;
   }
   .col2Grid {
@@ -24,9 +34,6 @@
         height: 100%;
       }
     }
-  }
-  .gap25 {
-    margin-right: 100px;
   }
 
   .circleContainer {

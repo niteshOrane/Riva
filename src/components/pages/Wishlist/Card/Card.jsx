@@ -1,31 +1,25 @@
 import React from "react";
 import Image from "../../../common/LazyImage/Image";
 import * as icons from "../../../common/Icons/Icons";
+import styles from "./Card.module.scss";
 
-const closeStyle = {
-  right: "12px",
-  top: "12px",
-};
-const cardStyle = {
-  position: "relative",
-  flexBasis: "30%",
-};
 function Card({ src, name, priceWas, priceIs, remove }) {
   return (
-    <div style={cardStyle}>
+    <div className={styles.cardStyle}>
       <button
         type="button"
         title="Remove"
-        style={closeStyle}
         onClick={remove}
-        className="closeBtn no-border bg-transparent position-absolute"
+        className={`${styles.closeStyle} closeBtn no-border bg-transparent position-absolute`}
       >
         <icons.Close />
       </button>
-      <div>
-        <Image src={src} width="100%" />
+      <div className={styles.imgContainer_P}>
+        <div className={styles.imgContainer}>
+          <Image src={src} width="100%" />
+        </div>
       </div>
-      <div>
+      <div className="my-12px">
         <p className="font-size-600">{name}</p>
       </div>
       <div className="d-flex align-items-center gap-12">

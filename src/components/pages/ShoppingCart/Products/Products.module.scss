@@ -2,6 +2,7 @@
   flex-basis: 70%;
   flex-shrink: 0;
   padding: 0 15px;
+  padding-left: 0;
 
   .header {
     background-color: #f5f7f9;
@@ -44,6 +45,7 @@
           width: 60%;
           .name {
             margin: 12px 0;
+            font-weight: 500;
           }
           .clrSize {
             margin-top: 40px;

@@ -22,3 +22,6 @@ export const GET_WISHLIST = 'GET_WISHLIST';
 export const ADD_WISHLIST = 'ADD_WISHLIST';
 export const REMOVE_WISHLIST = 'REMOVE_WISHLIST';
 export const SET_ATTRIBUTES = 'SET_ATTRIBUTES';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';

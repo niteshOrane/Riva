@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import CopyRightSection from './CopyRightSection/CopyRightSection';
-import * as icons from '../../common/Icons/Icons';
-import style from './footer.module.scss';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CopyRightSection from "./CopyRightSection/CopyRightSection";
+import * as icons from "../../common/Icons/Icons";
+import style from "./footer.module.scss";
+import { showSnackbar } from "../../../store/actions/common";
+import { getStoreId } from "../../../util";
+import storeData from "../../../store/index";
+
+import { addSubscribeList } from "../../../store/actions/subscription/index";
 
 function Footer() {
-  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+  const [phone, setPhone] = useState("+971 800 7482");
+  const [value, setValue] = useState("");
   const handleChange = (e) => setValue(e.target.value);
   const footer = useSelector((state) => state.common.footer);
+  const handleOnSubmit = (e) => {
+    if (value) {
+      dispatch(addSubscribeList({ email: value, store_id: getStoreId() }));
+      setValue("");
+    } else {
+      dispatch(showSnackbar("Please enter email to Subscribe", "error"));
+    }
+  };
+  useEffect(() => {
+    const data = storeData?.getState()?.common.store;
+    setPhone(data.phone || "+971 800 7482");
+  }, [storeData]);
 
   return (
     <footer className={`max-width-1750 mx-auto ${style.footer}`}>
@@ -23,7 +42,7 @@ function Footer() {
                   className={`d-flex align-items-center ${style.link}`}
                 >
                   <Link
-                    to={`/${link.href.split('/').pop()}`}
+                    to={`/${link.href.split("/").pop()}`}
                     className={`w-100 ${style.footerLink}`}
                   >
                     <span className="material-icons-outlined">
@@ -55,7 +74,9 @@ function Footer() {
             />
           </div>
           <div className={style.sub}>
-            <button type="button">SUBSCRIBE</button>
+            <button onClick={(e) => handleOnSubmit(e)} type="button">
+              SUBSCRIBE
+            </button>
           </div>
         </div>
         <div className={`${style.footerCol} ${style.lastCol}`}>
@@ -68,7 +89,7 @@ function Footer() {
             >
               <div className={style.icon}>
                 <span>
-                  <icons.Notification />
+                  <icons.FooterNotification />
                 </span>
               </div>
             </a>
@@ -111,8 +132,8 @@ function Footer() {
             <span className="material-icons-outlined">settings_phone</span>
             <div>
               <span className={style.clrGrey}>Customer care:&nbsp;</span>
-              <a href="tel: +971 800 7482" className="color-white">
-                +971 800 7482
+              <a href={`tel: ${phone}`} className="color-white">
+                {phone}
               </a>
             </div>
           </div>
@@ -125,8 +146,8 @@ function Footer() {
               <span className={style.clrGrey}>
                 WhatsApp Customer Care:&nbsp;
               </span>
-              <a href="tel: +971 800 7482" className="color-white">
-                +965 22216688
+              <a href={`tel: ${phone}`} className="color-white">
+                {phone}
               </a>
             </div>
           </div>
@@ -167,7 +188,7 @@ function Footer() {
       <CopyRightSection />
       <div
         className={`${style.toTopBtn} c-pointer`}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         <span className="material-icons-outlined font-white d-flex-all-center">
           keyboard_arrow_up

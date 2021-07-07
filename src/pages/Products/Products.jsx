@@ -17,7 +17,7 @@ function Products(props) {
   const refContainer = useRef();
   return (
     <div>
-      <div className="container-90 max-width-1600 mx-88px mr-75px">
+      <div className="container-90 max-width-1600">
         <div className={styles.essentials}>Essentials</div>
         <div className={styles.header}>
           <div className="d-flex align-items-center">
@@ -33,7 +33,12 @@ function Products(props) {
             <div className={styles.sortByText}>
               <span>SORT BY:</span>
               <span>
-                <icons.AngleDown />
+                <select>
+                  <option style={{ background: '#fff' }} value={'Relevance'}>Relevance</option>
+                  <option style={{ background: '#fff' }} value={'Lowest price'}>Lowest price</option>
+                  <option style={{ background: '#fff' }} value={'Highest price'}>Highest price</option>
+                  <option style={{ background: '#fff' }} value={'Most Popular'}>Most Popular</option>
+                </select>
               </span>
             </div>
           </div>
@@ -45,19 +50,19 @@ function Products(props) {
       {!loading && !products.length && (
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
-      <div className={`${styles.productsPage}`}>
-        {products?.map((product, i) => {
-          
-          return (
-            <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
+      <div
+        className={`${styles.productsPage} container-90 max-width-1600 mx-auto`}
+      >
+        {products?.map((product, i) => (
+          <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
             <ProductCard
               index={i}
               handleQuickView={handleQuickView}
               product={product}
-              isProduct={true} 
+              isProduct={true}
             />
-          </div>         
-        )})}
+          </div>
+        ))}
       </div>
       <div>
         <h4 className={styles.sliderTitle}>Recommendation For You</h4>
@@ -69,7 +74,9 @@ function Products(props) {
           slidesToShow={4}
           arrows={true}
           ref={refContainer}
-          render={(item, index) => <ProductCard product={item} index={index} isProduct={true} />}
+          render={(item, index) => (
+            <ProductCard product={item} index={index} isProduct={true} />
+          )}
         />
       </div>
       <div className="container-90 max-width-1600 mx-auto">

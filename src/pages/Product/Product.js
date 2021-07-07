@@ -75,23 +75,26 @@ const Product = (props) => {
   return (
     <div>
       <ProductDetails product={product} />
-      <Slider
-        className={`simpleGreyArrow ${styles.simpleCardGap}`}
-        items={productDetailsSimleCard}
-        slidesToShow={3}
-        render={(item) => <ImageCard product={item} />}
-      />
+      <div className="max-width-1750 mx-auto">
+        <Slider
+          className={`simpleGreyArrow ${styles.simpleCardGap}`}
+          items={productDetailsSimleCard}
+          slidesToShow={3}
+          render={(item) => <ImageCard product={item} />}
+        />
+      </div>
       <DescriptionComposition product={body.DescriptionComposition} />
       {/* <AdditionalProductDetails sections={body.additionalProductDetails} /> */}
-
-      <HowToWearThis cards={body.howToWear} />
-
-      <div>
-        <h4 className="section-title text-center my-20px">
-          Complete Your Look
-        </h4>
+      <div className="container-90 max-width-1750 mx-auto">
+        <HowToWearThis cards={body.howToWear} />
       </div>
-      <div className="container-90 max-width-1600 mx-auto my-20px">
+
+      <div className="max-width-1750 mx-auto my-20px">
+        <div>
+          <h4 className="section-title text-center my-20px">
+            Complete Your Look
+          </h4>
+        </div>
         <Slider
           className="simpleGreyArrow"
           items={body.completeLook}
@@ -101,8 +104,9 @@ const Product = (props) => {
           render={(item) => <ProductCard product={item} />}
         />
       </div>
-
-      <ShopTheWholeOutfit data={body.shopTheWholeOutfit} />
+      <div className="container-90 max-width-1750 mx-auto my-20px">
+        <ShopTheWholeOutfit data={body.shopTheWholeOutfit} />
+      </div>
       {/* <div className="d-flex-all-center gap-12 mx-50px gap-12">
         <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />

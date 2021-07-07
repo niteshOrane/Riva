@@ -39,30 +39,37 @@ function Landing() {
     <>
       <div>
         <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
-        <Slider
-          className="categoriesSlider"
-          items={selectedCategory}
-          bgImageUrl="./assets/images/categSlider-bg.png"
-          bgImage
-          slidesToShow={6}
-          header={["Shop By", "Category"]}
-          render={(item) => (
-            <Link to={`/products/${item?.url_key}/${item?.parent_id}`} className="catsSliderItem text-center d-flex-all-center flex-column">
-              <div className="catSliderImgsSpace">
-                <Image
-                  src={`${URL.baseUrl}${item?.image}`}
-                  width="100%"
-                  alt={item?.name}
-                />
-              </div>
-              <div>
-                <span className="my-12px d-inline-block">{item.name}</span>
-              </div>
-            </Link>
-          )}
-        />
+        <div className="container-with-circles">
+          <Slider
+            className="categoriesSlider"
+            items={selectedCategory}
+            bgImageUrl="./assets/images/categSlider-bg.png"
+            bgImage
+            slidesToShow={6}
+            header={["Shop By", "Category"]}
+            render={(item) => (
+              <Link
+                to={`/products/${item?.url_key}/${item?.parent_id}`}
+                className="catsSliderItem text-center d-flex-all-center flex-column"
+              >
+                <div className="catSliderImgsSpace">
+                  <Image
+                    src={`${URL.baseUrl}${item?.image}`}
+                    width="100%"
+                    alt={item?.name}
+                  />
+                </div>
+                <div>
+                  <span className="my-12px d-inline-block">{item.name}</span>
+                </div>
+              </Link>
+            )}
+          />
+        </div>
         <BestSellingProducts products={body.productList} />
-        <VideoPlayer videoBanner={videoBanner} />
+        <div className="max-width-1750 mx-auto">
+          <VideoPlayer videoBanner={videoBanner} />
+        </div>
         <CardLayout data={cardsData} />
         <ExtraordinaryEssentials products={body.extraordinarySlider} />
         <OneImageBanner

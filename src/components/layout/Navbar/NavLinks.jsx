@@ -5,6 +5,7 @@ import { toggleCart } from '../../../store/actions/cart';
 
 const NavLinks = ({ openSignUpCard }) => {
   const { data = [] } = useSelector((state) => state.cart);
+  const wishlist = useSelector((state) => state.wishlist.data);
   const dispatch = useDispatch();
 
   return (
@@ -14,7 +15,7 @@ const NavLinks = ({ openSignUpCard }) => {
           <span className="material-icons-outlined font-light-black">
             favorite_border
           </span>
-          <span className="align-self-end font-light-black">Wishlist</span>{' '}
+          <span className="align-self-end font-light-black">Wishlist ({wishlist.length ?? 0})</span>{' '}
         </Link>
       </li>
       <li className="nav-li">

@@ -1,19 +1,65 @@
-import React, { useState } from "react";
-import styles from "../../SignUpCard.module.scss";
-import * as icons from "../../../../Icons/Icons";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { showSnackbar } from '../../../../../../store/actions/common';
+
+import styles from '../../SignUpCard.module.scss';
+import * as icons from '../../../../Icons/Icons';
+import { createCustomer } from '../../../../../../services/auth/auth.service';
 
 const SignUpForm = ({ handleSubmit }) => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: '',
+  });
+
+  const handleChange = (e) => {
+    console.log(e.target.name);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const { email, password, name } = formData;
+
+  const userCreateHandler = async (e) => {
+    e.preventDefault();
+    if (!email || !password || !name)
+      return dispatch(showSnackbar('All fields are required', 'warning'));
+
+    const customer = new FormData();
+
+    customer.append('email', email);
+    customer.append('firstname', name?.split(' ')?.[0] || '');
+    customer.append('lastname', name?.split(' ')?.[1] || '');
+    customer.append('password', password);
+
+    const res = await createCustomer(customer);
+
+    if (res.status === 200) {
+      handleSubmit();
+      return dispatch(showSnackbar(res?.data?.data, 'success'));
+    }
+    return dispatch(showSnackbar('Something went wrong', 'error'));
+  };
+
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={userCreateHandler}>
       <div className={styles.container}>
         <p className="mt-12px">
           First Name & Last Name <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">account_circle</span>
-          <input type="text" name="name" id="name" />
+          <input
+            required
+            value={name}
+            type="text"
+            name="name"
+            id="name"
+            onChange={handleChange}
+          />
         </div>
       </div>
       <div className={styles.container}>
@@ -22,7 +68,14 @@ const SignUpForm = ({ handleSubmit }) => {
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">email</span>
-          <input type="email" name="email" id="email" />
+          <input
+            required
+            value={email}
+            type="email"
+            name="email"
+            id="email"
+            onChange={handleChange}
+          />
         </div>
       </div>
       <div className={styles.container}>
@@ -31,7 +84,12 @@ const SignUpForm = ({ handleSubmit }) => {
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">call</span>
-          <input type="number" name="phone" id="phone" />
+          <input
+            type="number"
+            name="phone"
+            id="phone"
+            onChange={handleChange}
+          />
         </div>
       </div>
       <div className={styles.container}>
@@ -39,11 +97,14 @@ const SignUpForm = ({ handleSubmit }) => {
           Set a Password <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span className="material-icons-outlined">lock</span>{" "}
+          <span className="material-icons-outlined">lock</span>{' '}
           <input
-            type={showPass ? "password" : "text"}
+            required
+            value={password}
+            type={showPass ? 'password' : 'text'}
             name="password"
             id="password"
+            onChange={handleChange}
           />
           <button
             type="button"
@@ -51,8 +112,8 @@ const SignUpForm = ({ handleSubmit }) => {
             onClick={() => setShowPass(!showPass)}
           >
             <span className="material-icons-outlined">
-              {showPass ? "visibility_off" : "visibility"}
-            </span>{" "}
+              {showPass ? 'visibility_off' : 'visibility'}
+            </span>{' '}
           </button>
         </div>
         <p className={styles.passInstruction}>
@@ -60,39 +121,37 @@ const SignUpForm = ({ handleSubmit }) => {
           Lowercase & 1 Number character.
         </p>
 
-        <button
-          onClick={handleSubmit}
-          type="submit"
-          className={styles.signUpBtn}
-        >
-          SIGN UP
-        </button>
+        <input value="SIGN UP" type="submit" className={styles.signUpBtn} />
+
         <p className={styles.or}>OR</p>
 
         <div>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
           >
             <span className={styles.btnIcon}>
               <icons.Apple />
             </span>
-            <p >Connect with Apple</p>
+            <p>Connect with Apple</p>
           </button>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
             <span className={styles.btnIcon}>
               <icons.Facebook />
             </span>
-            <p >Connect with Facebook</p>
+            <p>Connect with Facebook</p>
           </button>
-          <button type="button"
+          <button
+            type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
             </span>
-            <p >Connect with Google</p>
+            <p>Connect with Google</p>
           </button>
         </div>
       </div>

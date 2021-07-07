@@ -17,14 +17,15 @@ function WishList() {
 
   return (
     <div className="d-flex my-20px">
-      <div className={styles.circlesContainer}>
-        <CategoriesCircles />
-      </div>
-      <div className="container-90 max-width-1600 mx-auto">
+      <div className="container-with-circles">
+        <div className={styles.circlesContainer}>
+          <CategoriesCircles />
+        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className={styles.cardsContainer}>
             <h2 className={styles.title}>My Wishlist</h2>
+
             <div className="d-flex gap-12 f1" style={{ flexWrap: "wrap" }}>
               {wishlist?.map((product) => (
                 <Card

@@ -22,7 +22,8 @@
       transition: all 0.3s ease-in-out;
       border-bottom: 1px solid transparent;
       color: #181617;
-      font-family: Helvetica,"Helvetica Neue",Arial,"Lucida Grande",sans-serif;
+      font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande",
+        sans-serif;
       font-weight: 700;
       text-transform: uppercase;
     }
@@ -45,7 +46,10 @@
     width: 100%;
     opacity: 0;
     visibility: hidden;
-
+    max-width: 1750px;
+    margin: 0 auto !important;
+    left: 50%;
+    transform: translate(-50%, 0%);
     box-shadow: -1px 796px 0px 778px rgba(0, 0, 0, 0.5);
   }
 
@@ -87,12 +91,12 @@
 
 .titleDoubleLine {
   height: 1px;
-  margin: 13px 100px 2px 89px;
+  margin: 13px 0 2px 0;
   border: solid 0.1px #e1dfdf;
 }
 .titleDoubleLine_Second {
   height: 1px;
-  margin: 1px 100px 3px 89px;
+  margin: 1px 0 3px 0;
   border: solid 0.1px #e1dfdf;
 }
 .titleDoubleLineFilter {
