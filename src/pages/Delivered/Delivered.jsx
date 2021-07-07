@@ -1,8 +1,8 @@
 import React from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
-import DeliveredItems from "../../components/pages/Dashboard/DeliveredItems/DeliveredItems";
-
+import DeliveredOrders from "../../components/pages/Dashboard/DeliveredOrders/DeliveredOrders";
+import styles from "./Delivered.module.scss";
 const randomProducts = [
   {
     image:
@@ -39,14 +39,16 @@ const randomProducts = [
 function Delivered() {
   return (
     <div className="d-flex py-20px">
-      <CategoriesCircles />
-      <div className="container-90 max-width-1600 mx-auto">
+      <div className="container-with-circles">
+        <div className={styles.circlesContainer}>
+          <CategoriesCircles />
+        </div>
         <div className="d-flex h-100">
           <Sidebar />
-          <div>
+          <div className="w-100">
             <h2 className="font-weight-normal">Delivered</h2>
 
-            <DeliveredItems products={randomProducts} />
+            <DeliveredOrders products={randomProducts} />
           </div>
         </div>
       </div>

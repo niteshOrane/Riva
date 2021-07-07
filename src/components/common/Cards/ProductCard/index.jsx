@@ -1,15 +1,15 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Image from '../../LazyImage/Image';
-import { toggleWishlist } from '../../../../store/actions/wishlist';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Image from "../../LazyImage/Image";
+import { toggleWishlist } from "../../../../store/actions/wishlist";
 import {
   toggleQuickView,
   showSnackbar,
-} from '../../../../store/actions/common';
-import { addToCart } from '../../../../store/actions/cart';
-import { URL } from '../../../../util';
-import styles from './product.module.scss';
+} from "../../../../store/actions/common";
+import { addToCart } from "../../../../store/actions/cart";
+import { URL } from "../../../../util";
+import styles from "./product.module.scss";
 
 const TempLink = ({ children, product }) => {
   if (product.sku)
@@ -24,11 +24,11 @@ const ProductCard = ({ product, index, isProduct = false }) => {
     origprice = 0,
     origpriceWithoutCurrency,
     priceWithoutCurrency,
-    price = 0
+    price = 0,
   } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
-      (e) => e?.attribute_code === 'special_price'
+      (e) => e?.attribute_code === "special_price"
     )?.value;
     origprice = `$${origpriceWithoutCurrency}`;
     priceWithoutCurrency = price;
@@ -55,30 +55,35 @@ const ProductCard = ({ product, index, isProduct = false }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: custom_attributes?.find((e) => e?.attribute_code === 'color')
+        color: custom_attributes?.find((e) => e?.attribute_code === "color")
           ?.value,
         quantity: 1,
-        size: custom_attributes?.find((e) => e?.attribute_code === 'size')
+        size: custom_attributes?.find((e) => e?.attribute_code === "size")
           ?.value,
         price: product.price,
       })
     );
-    dispatch(showSnackbar('Added to cart', 'success'));
+    dispatch(showSnackbar("Added to cart", "success"));
   };
 
   const isAddedToWishlist = !!wishList.find((w) => w.id === product.id);
 
   const srcImage =
-    image.indexOf('http') > -1 ? image : `${URL.baseUrlProduct}/${image}`;
+    image.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <div key={id} className={styles.productCard}>
       {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
       <div className={styles.imageContainer}>
         <TempLink product={product}>
-          <Image
-            src={srcImage}
-            defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-          />
+          <div className={styles.imgContainer_P}>
+            <div className={styles.imgContainer}>
+              <Image
+                src={srcImage}
+                defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                width="100%"
+              />
+            </div>
+          </div>
         </TempLink>
       </div>
       {product.sale && <div className={styles.sale}>Sale</div>}
@@ -86,21 +91,21 @@ const ProductCard = ({ product, index, isProduct = false }) => {
         <div>
           <button
             type="button"
-            className="no-border bg-transparent"
+            className="no-border bg-transparent c-pointer"
             onClick={handleWishList}
           >
             <span
               className="material-icons-outlined"
-              style={{ color: isAddedToWishlist ? 'red' : 'black' }}
+              style={{ color: isAddedToWishlist ? "red" : "black" }}
             >
-              {isAddedToWishlist ? 'favorite' : 'favorite_border'}
+              {isAddedToWishlist ? "favorite" : "favorite_border"}
             </span>
           </button>
         </div>
         <div>
           <button
             type="button"
-            className="no-border bg-transparent"
+            className="no-border bg-transparent c-pointer"
             onClick={handleQuickView}
           >
             <span className="material-icons-outlined font-light-black">
@@ -111,7 +116,7 @@ const ProductCard = ({ product, index, isProduct = false }) => {
         <div>
           <button
             type="button"
-            className="no-border bg-transparent"
+            className="no-border bg-transparent c-pointer"
             onClick={addToCardHandler}
           >
             <span className="material-icons-outlined font-light-black">
@@ -121,26 +126,40 @@ const ProductCard = ({ product, index, isProduct = false }) => {
         </div>
       </div>
       <TempLink product={product}>
-        <div className={`${styles.productName} two-lines-text ${!isProduct ? 'text-center' : ''}`} title={name}>
+        <div
+          className={`${styles.productName} two-lines-text ${
+            !isProduct ? "text-center " : "d-flex"
+          }`}
+          title={name}
+        >
           {name}
         </div>
-        <div className={`${styles.productPrice} ${!isProduct ? 'text-center' : ''}`} >
+        <div
+          className={`${styles.productPrice} ${
+            !isProduct ? "text-center" : ""
+          }`}
+        >
           {origpriceWithoutCurrency > priceWithoutCurrency ? (
-            <div className={styles.was}>Was {origprice || ''}</div>
+            <div className={styles.was}>Was {origprice || ""}</div>
           ) : null}
           <div className={styles.now}>
-            {origpriceWithoutCurrency > priceWithoutCurrency ? 'Now' : ''}{' '}
+            {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
             {price}
           </div>
         </div>
-        <div className={`${styles.productColors} ${!isProduct ? 'text-center justify-content-center' : ''}`}>
+        <div
+          className={`${styles.productColors} ${
+            !isProduct ? "text-center justify-content-center" : ""
+          }`}
+        >
           <div>
             {color
               ?.filter(
                 (c) =>
                   c?.value ===
-                  custom_attributes?.find((e) => e?.attribute_code === 'color')
-                    ?.value || ''
+                    custom_attributes?.find(
+                      (e) => e?.attribute_code === "color"
+                    )?.value || ""
               )
               ?.map((c) => (
                 <div className={styles.text}>{c.label} </div>

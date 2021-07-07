@@ -1,19 +1,19 @@
-import React, { useRef } from 'react';
-import InstaCard from '../../../common/Cards/InstaCard';
-import style from './Instagram.module.scss';
+import React, { useRef } from "react";
+import InstaCard from "../../../common/Cards/InstaCard";
+import style from "./Instagram.module.scss";
 
 const Instagram = ({ products }) => {
   return (
-    <div className="container-90 max-width-1600 mx-auto my-20px">
+    <div className="container-with-circles my-20px">
       <div className="">
         <div>
           <p className="d-flex-all-center my-20px">
-            {' '}
+            {" "}
             <img
               src="./assets/images/insta.png"
               width="25px"
               height="25px"
-            />{' '}
+            />{" "}
             <span className={style.seenTxt}>As Seen on Instagram</span>
           </p>
         </div>

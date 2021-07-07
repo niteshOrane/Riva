@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  float: left;
+  margin-left: -65px;
   div {
     cursor: pointer;
   }

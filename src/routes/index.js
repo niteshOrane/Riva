@@ -2,18 +2,29 @@ import React, { Component, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
 const WishList = React.lazy(() => import("../pages/WishList/WishList"));
+
 const DeliveryAddress = React.lazy(() =>
   import("../pages/Delivery-address/DeliveryAddress")
+);
+const CancelledOrders = React.lazy(() =>
+  import("../pages/CancelledOrders/CancelledOrders")
+);
+const ChangePassword = React.lazy(() =>
+  import("../pages/ChangePassword/ChangePassword")
 );
 const OrderConfirmed = React.lazy(() =>
   import("../pages/OrderConfirmed/OrderConfirmed")
 );
 const Delivered = React.lazy(() => import("../pages/Delivered/Delivered"));
+const TrackOrders = React.lazy(() =>
+  import("../pages/TrackOrders/TrackOrders")
+);
 const CartPayment = React.lazy(() =>
   import("../pages/Cart-Payment/CartPayment")
 );
@@ -94,6 +105,14 @@ class AppRoutes extends Component {
         index: 0,
       },
       {
+        path: "/track-orders",
+        component: TrackOrders,
+        exact: true,
+        name: "TrackOrders",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
         path: "/delivery-address",
         component: DeliveryAddress,
         exact: true,
@@ -106,6 +125,30 @@ class AppRoutes extends Component {
         component: Delivered,
         exact: true,
         name: "Delivered",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/cancelled-orders",
+        component: CancelledOrders,
+        exact: true,
+        name: "CancelledOrders",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/dashboard",
+        component: Dashboard,
+        exact: true,
+        name: "Dashboard",
+        layout: MainLayout,
+        index: 0,
+      },
+      {
+        path: "/change-password",
+        component: ChangePassword,
+        exact: true,
+        name: "ChangePassword",
         layout: MainLayout,
         index: 0,
       },

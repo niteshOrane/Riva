@@ -39,7 +39,8 @@
   color: #181617;
 }
 .productsPage {
-  margin: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
   display: grid;
@@ -104,6 +105,12 @@
       span {
         padding: 5px;
         font-size: 15px;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        &:hover {
+          border-color: #000;
+        }
       }
     }
   }

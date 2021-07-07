@@ -18,8 +18,10 @@ const randomProduct = {
 function OrderConfirmed() {
   return (
     <div className="d-flex py-20px">
-      <CategoriesCircles />
-      <div className="container-90 max-width-1600 mx-auto">
+      <div className="container-with-circles">
+        <div className={styles.circlesContainer}>
+          <CategoriesCircles />
+        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className={styles.contentConatiner}>

@@ -39,9 +39,8 @@ const MegaLinks = ({ links }) => {
               </Link>
 
               <div
-                className={`${style.megaContainer} ${
-                  showMegaMenue === link.url_key ? style.show : ""
-                } position-absolute px-75px pl-100px`}
+                className={`${style.megaContainer} ${showMegaMenue === link.url_key ? style.show : ""
+                  } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />
                 <div className={style.titleDoubleLine_SecondFilter} />
@@ -55,17 +54,32 @@ const MegaLinks = ({ links }) => {
                       {links
                         ?.find((l) => l.url_key === showMegaMenue)
                         ?.children_data?.map((child) => (
-                          <Link
+
+                          <> <Link
                             to={`/products/${child.url_key}/${child.id}`}
                             className={`${style.megaLink} p-12px d-block`}
                           >
                             <p
-                              className={`${style.pLink} color-grey`}
+                              className={`${style.pLink} ${child.children_data.length > 0 ? 'color-black font-weight-700' : 'color-gray'}`}
                               onClick={() => setShowMegaMenue(null)}
                             >
                               {child.name}
                             </p>
                           </Link>
+                            {child.children_data?.map((childitem) => (
+                              <Link
+                                to={`/products/${childitem.url_key}/${child.id}/${childitem.id}`}
+                                className={`${style.megaLink} p-12px d-block`}
+                              >
+                                <p
+                                  className={`${style.pLink} color-grey`}
+                                  onClick={() => setShowMegaMenue(null)}
+                                >
+                                  {child.name}
+                                </p>
+                              </Link>
+                            ))}
+                          </>
                         ))}
                     </div>
                   </div>
@@ -89,8 +103,10 @@ const MegaLinks = ({ links }) => {
             </div>
           ))}
       </div>
-      <div className={style.titleDoubleLine} />
-      <div className={style.titleDoubleLine_Second} />
+      <div className="container-with-circles">
+        <div className={style.titleDoubleLine} />
+        <div className={style.titleDoubleLine_Second} />
+      </div>
     </>
   );
 };

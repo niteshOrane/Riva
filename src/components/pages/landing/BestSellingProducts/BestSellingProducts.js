@@ -1,15 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react';
-import ProductCard from '../../../common/Cards/ProductCard';
-import SectionHeader from '../../../common/SectionHeader/SectionHeader';
-import ArrowButton from '../../../common/Buttons/Arrow';
-import Slider from '../../../common/Sliders/Slider';
-import { getProducts } from '../../../../services/layout/Layout.service';
-import styles from './bestSellingProducts.module.scss';
+import React, { useRef, useEffect, useState } from "react";
+import ProductCard from "../../../common/Cards/ProductCard";
+import SectionHeader from "../../../common/SectionHeader/SectionHeader";
+import ArrowButton from "../../../common/Buttons/Arrow";
+import Slider from "../../../common/Sliders/Slider";
+import { getProducts } from "../../../../services/layout/Layout.service";
+import styles from "./bestSellingProducts.module.scss";
 
 const category_ids = {
-  featured: '2044',
-  best_selling: '2045',
-  all: '',
+  featured: "2044",
+  best_selling: "2045",
+  all: "",
 };
 
 const BestSellingProducts = () => {
@@ -18,7 +18,7 @@ const BestSellingProducts = () => {
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
 
-  const [dataSet, setdataSet] = useState({ 2044: [], 2045: [], '': [] });
+  const [dataSet, setdataSet] = useState({ 2044: [], 2045: [], "": [] });
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
 
@@ -39,7 +39,7 @@ const BestSellingProducts = () => {
       setdataSet({
         2044: [...featured],
         2045: [...best_selling],
-        '': [...featured, ...best_selling],
+        "": [...featured, ...best_selling],
       });
     })();
   }, []);
@@ -50,7 +50,7 @@ const BestSellingProducts = () => {
 
   return (
     <div
-      className={`container-90 max-width-1600 mx-auto ${styles.bestSellingProductsContainer}`}
+      className={`container-with-circles ${styles.bestSellingProductsContainer}`}
     >
       <div className="d-flex align-items-center justify-content-between my-20px">
         <SectionHeader roboto="Best Selling" dancing="Products" />
@@ -63,7 +63,7 @@ const BestSellingProducts = () => {
               >
                 <span
                   className={`align-self-end font-light-black ${
-                    categoryId === category_ids.all ? 'color-text-primary' : ''
+                    categoryId === category_ids.all ? "color-text-primary" : ""
                   }`}
                 >
                   All
@@ -78,8 +78,8 @@ const BestSellingProducts = () => {
                 <span
                   className={`align-self-end font-light-black ${
                     categoryId === category_ids.best_selling
-                      ? 'color-text-primary'
-                      : ''
+                      ? "color-text-primary"
+                      : ""
                   }`}
                 >
                   Best Selling Products
@@ -94,8 +94,8 @@ const BestSellingProducts = () => {
                 <span
                   className={`align-self-end font-light-black ${
                     categoryId === category_ids.featured
-                      ? 'color-text-primary'
-                      : ''
+                      ? "color-text-primary"
+                      : ""
                   }`}
                 >
                   Featured Products

@@ -32,8 +32,8 @@ const MainHeaderTopBar = ({ mainHeader }) => {
   const handleLanguageChange = (event, language) => {
     let lanTochange = "";
     language === "Arabic"
-    ? (lanTochange = "العربية")
-    : (lanTochange = language);
+      ? (lanTochange = "العربية")
+      : (lanTochange = language);
     setLanguageItem(lanTochange);
     dispatch(
       setStore({
@@ -56,142 +56,148 @@ const MainHeaderTopBar = ({ mainHeader }) => {
   }, [header]);
 
   return (
-    <div
-      className={`d-flex align-items-center justify-content-between bg-black ${style.topBarcontainer}`}
-    >
-      <div className={style.topBarRight}>
-        <span className="font-size-normal material-icons-outlined font-white">
-          phone
-        </span>
-        <p>
-          <a className="font-white white-space-nowrap" href="tel:+971 800 7482">
-            &nbsp;{phone}
-          </a>
-        </p>
-      </div>
-      <div className={style.topBarMsgWrapper}>
-        <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
-          NEW IN: <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
-          COLLECTION
-        </h4>
-      </div>
+    <div className="bg-black">
       <div
-        className={`${style.topBarLeft} font-black h-100 d-flex align-items-center`}
+        className={`d-flex align-items-center justify-content-between max-width-1750 mx-auto ${style.topBarcontainer}`}
       >
-        <div className="d-flex-all-center c-pointer">
-          <div
-            onClick={() => setShowDropdown(!showDropdown)}
-            className="position-relative d-flex align-items-center justify-content-center"
-            style={{ width: "100px" }}
-          >
-            <div className={`${style.flag} d-flex`}>
-              <img
-                className={style.curSelectedImage}
-                src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${
-                  store?.currency
-                }.png`}
-                alt={store?.currency}
-              />
-            </div>
-            <div className={style.curSelected}>{store?.currency}</div>
-            <div
-              className={`${style.dropdownBody} ${
-                showDropdown ? style.showDD : ""
-              }`}
+        <div className={style.topBarRight}>
+          <span className="font-size-normal material-icons-outlined font-white">
+            phone
+          </span>
+          <p>
+            <a
+              className="font-white white-space-nowrap"
+              href="tel:+971 800 7482"
             >
-              <div className={style.currencyDropdown}>
-                {storeDropDown?.map((head) => {
-                  const { currency } = head;
-                  return (
-                    <div
-                      className={style.dropdownItem}
-                      onClick={(e) => {
-                        handleCurrencyChange(e, head);
-                      }}
-                    >
-                      <img
-                        width="24"
-                        className={style.curImage}
-                        src={`${
-                          mainHeader ? "" : "/"
-                        }assets/images/countryIcons/${currency}.png`}
-                        height="24"
-                        alt={currency}
-                      />
-                      <div className={style.curName}>{currency}</div>
-                    </div>
-                  );
-                })}
+              &nbsp;{phone}
+            </a>
+          </p>
+        </div>
+        <div className={style.topBarMsgWrapper}>
+          <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
+            NEW IN:{" "}
+            <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
+            COLLECTION
+          </h4>
+        </div>
+        <div
+          className={`${style.topBarLeft} font-black h-100 d-flex align-items-center`}
+        >
+          <div className="d-flex-all-center c-pointer">
+            <div
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="position-relative d-flex align-items-center justify-content-center"
+              style={{ width: "100px" }}
+            >
+              <div className={`${style.flag} d-flex`}>
+                <img
+                  className={style.curSelectedImage}
+                  src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${
+                    store?.currency
+                  }.png`}
+                  alt={store?.currency}
+                />
+              </div>
+              <div className={style.curSelected}>{store?.currency}</div>
+              <div
+                className={`${style.dropdownBody} ${
+                  showDropdown ? style.showDD : ""
+                }`}
+              >
+                <div className={style.currencyDropdown}>
+                  {storeDropDown?.map((head) => {
+                    const { currency } = head;
+                    return (
+                      <div
+                        className={style.dropdownItem}
+                        onClick={(e) => {
+                          handleCurrencyChange(e, head);
+                        }}
+                      >
+                        <img
+                          width="24"
+                          className={style.curImage}
+                          src={`${
+                            mainHeader ? "" : "/"
+                          }assets/images/countryIcons/${currency}.png`}
+                          height="24"
+                          alt={currency}
+                        />
+                        <div className={style.curName}>{currency}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className={style.angleIcon}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11.591"
+                  height="6.049"
+                  viewBox="0 0 11.591 6.049"
+                >
+                  <g>
+                    <path
+                      fill="#f44336"
+                      d="M117.759.2a.252.252 0 0 0-.356.356l5.364 5.364-5.367 5.368a.252.252 0 1 0 .35.362l.006-.006L123.3 6.1a.252.252 0 0 0 0-.356z"
+                      transform="translate(11.591 -117.325) rotate(90) translate(0 -0.131)"
+                    />
+                    <path
+                      d="M117.7 11.588a.252.252 0 0 1-.178-.43l5.364-5.364L117.521.43a.252.252 0 0 1 .357-.357l5.542 5.542a.252.252 0 0 1 0 .356l-5.542 5.542a.252.252 0 0 1-.178.075z"
+                      transform="translate(11.591 -117.325) rotate(90) translate(-0.119 0)"
+                    />
+                  </g>
+                </svg>
               </div>
             </div>
-            <div className={style.angleIcon}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="11.591"
-                height="6.049"
-                viewBox="0 0 11.591 6.049"
-              >
-                <g>
-                  <path
-                    fill="#f44336"
-                    d="M117.759.2a.252.252 0 0 0-.356.356l5.364 5.364-5.367 5.368a.252.252 0 1 0 .35.362l.006-.006L123.3 6.1a.252.252 0 0 0 0-.356z"
-                    transform="translate(11.591 -117.325) rotate(90) translate(0 -0.131)"
-                  />
-                  <path
-                    d="M117.7 11.588a.252.252 0 0 1-.178-.43l5.364-5.364L117.521.43a.252.252 0 0 1 .357-.357l5.542 5.542a.252.252 0 0 1 0 .356l-5.542 5.542a.252.252 0 0 1-.178.075z"
-                    transform="translate(11.591 -117.325) rotate(90) translate(-0.119 0)"
-                  />
-                </g>
-              </svg>
-            </div>
-          </div>
-          |&nbsp;&nbsp;
-          <div
-            onClick={() => setLanguageShowDropdown(!showLanguageShowDropdown)}
-            className="position-relative d-flex align-items-center justify-content-center"
-            style={{ width: "100px" }}
-          >
-            <div className={`${style.flag} d-flex`}></div>
-            <div className={style.curSelected}>{languageItem}</div>
+            |&nbsp;&nbsp;
             <div
-              className={`${style.dropdownBody} ${
-                showLanguageShowDropdown ? style.showDD : ""
-              }`}
+              onClick={() => setLanguageShowDropdown(!showLanguageShowDropdown)}
+              className="position-relative d-flex align-items-center justify-content-center"
+              style={{ width: "100px" }}
             >
-              <div className={style.currencyDropdown}>
-                {["English", "العربية"]?.map((head) => {
-                  return (
-                    <div
-                      className={style.dropdownItem}
-                      onClick={(e) => {
-                        handleLanguageChange(e, head);
-                      }}
-                    >
-                      <div className={style.curName}>{head}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className={style.angleIcon}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="11.591"
-                height="6.049"
-                viewBox="0 0 11.591 6.049"
+              <div className={`${style.flag} d-flex`}></div>
+              <div className={style.curSelected}>{languageItem}</div>
+              <div
+                className={`${style.dropdownBody} ${
+                  showLanguageShowDropdown ? style.showDD : ""
+                }`}
               >
-                <g>
-                  <path
-                    fill="#f44336"
-                    d="M117.759.2a.252.252 0 0 0-.356.356l5.364 5.364-5.367 5.368a.252.252 0 1 0 .35.362l.006-.006L123.3 6.1a.252.252 0 0 0 0-.356z"
-                    transform="translate(11.591 -117.325) rotate(90) translate(0 -0.131)"
-                  />
-                  <path
-                    d="M117.7 11.588a.252.252 0 0 1-.178-.43l5.364-5.364L117.521.43a.252.252 0 0 1 .357-.357l5.542 5.542a.252.252 0 0 1 0 .356l-5.542 5.542a.252.252 0 0 1-.178.075z"
-                    transform="translate(11.591 -117.325) rotate(90) translate(-0.119 0)"
-                  />
-                </g>
-              </svg>
+                <div className={style.currencyDropdown}>
+                  {["English", "العربية"]?.map((head) => {
+                    return (
+                      <div
+                        className={style.dropdownItem}
+                        onClick={(e) => {
+                          handleLanguageChange(e, head);
+                        }}
+                      >
+                        <div className={style.curName}>{head}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className={style.angleIcon}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11.591"
+                  height="6.049"
+                  viewBox="0 0 11.591 6.049"
+                >
+                  <g>
+                    <path
+                      fill="#f44336"
+                      d="M117.759.2a.252.252 0 0 0-.356.356l5.364 5.364-5.367 5.368a.252.252 0 1 0 .35.362l.006-.006L123.3 6.1a.252.252 0 0 0 0-.356z"
+                      transform="translate(11.591 -117.325) rotate(90) translate(0 -0.131)"
+                    />
+                    <path
+                      d="M117.7 11.588a.252.252 0 0 1-.178-.43l5.364-5.364L117.521.43a.252.252 0 0 1 .357-.357l5.542 5.542a.252.252 0 0 1 0 .356l-5.542 5.542a.252.252 0 0 1-.178.075z"
+                      transform="translate(11.591 -117.325) rotate(90) translate(-0.119 0)"
+                    />
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
