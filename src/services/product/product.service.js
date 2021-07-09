@@ -1,6 +1,8 @@
 import axios from 'axios';
 import API_URL from '../../enviroments/index';
 
+const urlPath = 'http://65.0.141.49/shop/index.php';
+
 export const getProduct = (sku) => {
   const config = {
     method: 'get',
@@ -13,7 +15,7 @@ export const getProduct = (sku) => {
 export const getAttributes = (id) => {
   const config = {
     method: 'get',
-    url: `${process.env.REACT_APP_BASE_URL}/rest/all/V1/products/attributes/${id}/options`,
+    url: `${urlPath}/rest/all/V1/products/attributes/${id}/options`,
     silent: true,
   };
   return axios(config);
@@ -22,7 +24,7 @@ export const getAttributes = (id) => {
 export const getCompositioncare = (id) => {
   const config = {
     method: 'post',
-    url: `${process.env.REACT_APP_BASE_URL}/rest/V1/compositioncare`,
+    url: `${urlPath}/rest/V1/compositioncare`,
     data:{productid:id},
     silent: true,
   };
