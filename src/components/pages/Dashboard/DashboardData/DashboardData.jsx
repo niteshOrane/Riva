@@ -1,8 +1,11 @@
-import React from "react";
-import * as icons from "../../../common/Icons/Icons";
-import { Link } from "react-router-dom";
-import styles from "./DashboardData.module.scss";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as icons from '../../../common/Icons/Icons';
+import styles from './DashboardData.module.scss';
+
 const DashboardData = () => {
+  const customer = useSelector((state) => state.auth.customer);
   return (
     <div>
       <div className={styles.header}>
@@ -17,7 +20,7 @@ const DashboardData = () => {
             </div>
             <div>
               <span>
-                Hello, <b>Mike Robertso</b>
+                Hello, <b>{customer.username ?? 'unknown'} </b>
               </span>
             </div>
           </div>

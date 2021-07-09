@@ -61,7 +61,7 @@ const ProductDetails = ({ product }) => {
         handleClose={() => setGuideCardOpen(false)}
       />
       <div
-        className={`${styles.product} gap-12 my-10px max-width-1750 mx-auto`}
+        className={`${styles.product} gap-12px my-10px max-width-1750 mx-auto`}
       >
         <div className={styles.mainImage}>
           <div
@@ -132,10 +132,12 @@ const ProductDetails = ({ product }) => {
                 <div className={`${styles.option} ${styles.option_blue}`} />
               </div> */}
             </div>
-            <div className={`${styles.size} gap-12 d-flex align-items-center`}>
+            <div
+              className={`${styles.size} gap-12px d-flex align-items-center`}
+            >
               <div className={styles.title}>Size:</div>
               <div
-                className={`${styles.options} gap-12 d-flex align-items-center`}
+                className={`${styles.options} gap-12px d-flex align-items-center`}
               >
                 {product?.size?.length
                   ? product?.size?.map((size) => {
@@ -150,7 +152,7 @@ const ProductDetails = ({ product }) => {
               </div>
             </div>
             <div
-              className={`${styles.outOfStock} d-flex align-items-center gap-12`}
+              className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
             >
               <div className={`${styles.icon} d-flex-all-center`}>
                 <span className="material-icons">mail</span>
@@ -160,7 +162,7 @@ const ProductDetails = ({ product }) => {
               </div>
             </div>
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-              <ul className="nav-list gap-12 d-flex align-items-center">
+              <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li">
                   <a href="/" className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
@@ -200,7 +202,7 @@ const ProductDetails = ({ product }) => {
             <div className={styles.w80}>
               <div className={`${styles.stats} d-flex justify-content-between`}>
                 <div
-                  className={`${styles.visibility} d-flex gap-12 align-items-center`}
+                  className={`${styles.visibility} d-flex gap-12px align-items-center`}
                 >
                   <div className={styles.icon}>
                     <span className="material-icons-outlined font-light-black">
@@ -215,7 +217,7 @@ const ProductDetails = ({ product }) => {
                   </div>
                 </div>
                 <div
-                  className={`${styles.demand} d-flex gap-12 align-items-center`}
+                  className={`${styles.demand} d-flex gap-12px align-items-center`}
                 >
                   <div className={styles.icon}>
                     <span className="material-icons-outlined font-light-black">
@@ -254,7 +256,7 @@ const ProductDetails = ({ product }) => {
                     </div>
                   </div>
                   <div
-                    className={`${styles.demand} d-flex gap-12 align-items-center`}
+                    className={`${styles.demand} d-flex gap-12px align-items-center`}
                   >
                     <div className="d-flex align-items-center">
                       <div className={styles.title}>Availability: </div>
@@ -307,7 +309,7 @@ const ProductDetails = ({ product }) => {
                     { name: "Share", icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
-                      <div className="d-flex align-items-center gap-12 my-10px">
+                      <div className="d-flex align-items-center gap-12px my-10px">
                         <div className={styles.icon}>
                           <img src={item.icon} alt={item.name} />
                         </div>

@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./ChangePasswordForm.module.scss";
+import React from 'react';
+import styles from './ChangePasswordForm.module.scss';
 const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
   return (
     <div>
@@ -30,7 +30,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
         </div>
         <div className={styles.inputContainer}>
           <p>
-            Retype New Password*<span class={styles.star}>*</span>
+            Retype New Password<span class={styles.star}>*</span>
           </p>
           <input
             onChange={handleChange}
@@ -42,7 +42,8 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
         </div>
         <div className={styles.inputContainer}>
           <p>
-            Enter OTP *<span class={styles.star}>*</span>
+            Enter OTP
+            {/* <span class={styles.star}>*</span> */}
           </p>
           <input
             onChange={handleChange}
@@ -54,7 +55,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
         </div>
       </form>
       <div className="my-12px">
-        <strong>Note:</strong>{" "}
+        <strong>Note:</strong>{' '}
         <span className={`greyText ${styles.smallText}`}>
           Password must be at least 8 characters long with 1 Uppercase, 1
           Lowercase & 1 Numeric character.

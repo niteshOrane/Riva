@@ -22,7 +22,7 @@ function Card({ src, name, priceWas, priceIs, remove }) {
       <div className="my-12px">
         <p className="font-size-600">{name}</p>
       </div>
-      <div className="d-flex align-items-center gap-12">
+      <div className="d-flex align-items-center gap-12px">
         <s className="color-grey">was ${priceWas}</s>&nbsp; &nbsp;
         <span>Now ${priceIs}</span>
       </div>

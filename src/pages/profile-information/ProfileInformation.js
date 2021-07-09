@@ -5,6 +5,7 @@ import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import ProfileInfoForm from "./ProfileInfoForm";
 
 function ProfileInformation() {
+  
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">

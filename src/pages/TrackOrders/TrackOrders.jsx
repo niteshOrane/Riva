@@ -1,8 +1,7 @@
 import React from "react";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import TrackOrderDetails from "../../components/pages/Dashboard/TrackOrders/TrackOrderDetails/TrackOrderDetails";
-import styles from "./TrackOrders.module.scss";
+import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
 
 const randomOrder = {
   orderId: "R0374915036",
@@ -15,8 +14,8 @@ const randomOrder = {
 
 function TrackOrders() {
   return (
-    <div className="container-with-circles my-50px">
-      <div className={styles.circlesContainer}>
+    <div className="container-with-circles my-20px">
+      <div className="circlesContainer">
         <CategoriesCircles />
       </div>
       <div className="d-flex h-100">

@@ -109,10 +109,10 @@ function QuickView() {
               <div className={`${styles.option} ${styles.option_blue}`} />
             </div>
           </div>
-          <div className={`${styles.size} gap-12 d-flex align-items-center`}>
+          <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
             <div
-              className={`${styles.options} gap-12 d-flex align-items-center`}
+              className={`${styles.options} gap-12px d-flex align-items-center`}
             >
               {data?.size?.length &&
                 data?.size?.map((size) => {
@@ -125,7 +125,7 @@ function QuickView() {
             </div>
           </div>
           <div
-            className={`${styles.outOfStock} d-flex align-items-center gap-12`}
+            className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
           >
             <div className={`${styles.icon} d-flex-all-center`}>
               <span className="material-icons">mail</span>
@@ -135,7 +135,7 @@ function QuickView() {
             </div>
           </div>
           <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-            <ul className="nav-list gap-12 d-flex align-items-center">
+            <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <a href="#" className="d-flex align-items-center">
                   <span className="material-icons-outlined font-light-black">
@@ -175,7 +175,7 @@ function QuickView() {
 
           <div className={`${styles.stats} d-flex justify-content-between`}>
             <div
-              className={`${styles.visibility} d-flex gap-12 align-items-center`}
+              className={`${styles.visibility} d-flex gap-12px align-items-center`}
             >
               <div className={styles.icon}>
                 <span className="material-icons-outlined font-light-black">
@@ -208,7 +208,7 @@ function QuickView() {
                 </div>
               </div>
               <div
-                className={`${styles.demand} d-flex gap-12 align-items-center`}
+                className={`${styles.demand} d-flex gap-12px align-items-center`}
               >
                 <div className="d-flex align-items-center">
                   <div className={styles.title}>Availability: </div>

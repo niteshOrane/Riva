@@ -43,7 +43,7 @@ const Tab2Content = () => {
             <icons.Cvv />
           </div>
         </div>
-        <div className="my-20px d-flex align-items-center gap-12">
+        <div className="my-20px d-flex align-items-center gap-12px">
           <input
             onChange={() => setSaveCardDetails(!saveCardDetails)}
             checked={saveCardDetails}

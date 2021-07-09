@@ -5,7 +5,7 @@ const AdditionalProductDetails = ({ sections }) => {
   const [selectedSection, setSelectedSection] = useState(defaultSectionName);
 
   return (
-    <div className={`${styles.additionalDetails} gap-12`}>
+    <div className={`${styles.additionalDetails} gap-12px`}>
       <div className={styles.chooseSectionContainer}>
         {Object.keys(sections).map((sectionName) => {
           return (

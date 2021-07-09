@@ -44,7 +44,6 @@
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 12px;
   min-height: 90vh;
   @include tablet {
@@ -115,12 +114,25 @@
     }
   }
 
-  .fullWidthCard {
+  .fullWidthCardInTwoCol {
     grid-column-start: 1;
     grid-column-end: 3;
     width: 50%;
     margin: 0 auto;
   }
+  .fullWidthCardInThreeCol {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+.twoColumnsLayOut {
+  grid-template-columns: repeat(2, 1fr);
+}
+.threeColumnsLayOut {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .sliderTitle {

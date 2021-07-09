@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useProducts from "./useProducts";
+import useOnScreen from "./useOnScreen";
 import Filters from "../../components/pages/products/Filters";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import * as icons from "../../components/common/Icons/Icons";
@@ -8,13 +9,54 @@ import Slider from "../../components/common/Sliders/Slider";
 import { body } from "../../mockdata.json";
 import Image from "../../components/common/LazyImage/Image";
 import styles from "./products.module.scss";
+import { useEffect } from "react";
 
 function Products(props) {
-  const { products, loading, filters } = useProducts({
-    categoryId: props.match.params.categoryId,
-  });
   const handleQuickView = () => { };
   const refContainer = useRef();
+  const refContainerLoad = useRef();
+  const onScreen = useOnScreen(refContainerLoad);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [sortField, setSortField] = useState("visibility");
+  const [sortDirection, setSortDirection] = useState("desc");
+  const [pageColumns, setPageColumns] = useState(2);
+  const { products, loading, totalCount } = useProducts({
+    categoryId: props.match.params.categoryId,
+    currentPage,
+    pageSize,
+    sortDirection,
+    sortField,
+    onScreen
+  });
+
+  const handleSortChange = (event) => {
+    setSortField(event.target.value.split("-")?.[0]);
+    setSortDirection(event.target.value.split("-")?.[1]);
+    setCurrentPage(1);
+  };
+
+
+  useEffect(() => {
+    if (onScreen && !loading && totalCount > products.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  }, [onScreen]);
+
+  const handleThreeColumns = () => setPageColumns(3);
+  const handleTwoColumns = () => setPageColumns(2);
+
+  const getClassOfBigCard = (index) => {
+    if (index === 0 || index === 5) {
+      if (pageColumns === 3) {
+        return styles.fullWidthCardInThreeCol;
+      } else {
+        return styles.fullWidthCardInTwoCol;
+      }
+    }
+  };
+
   return (
     <div>
       <div className="container-90 max-width-1600">
@@ -24,7 +66,8 @@ function Products(props) {
             <span className="color-grey">
               {products.length ? (
                 <>
-                  Showing {products.length - 4}-{products.length} out of 344
+                  Showing {1}-{products.length} out of{" "}
+                  {totalCount}
                 </>
               ) : (
                 ""
@@ -33,17 +76,45 @@ function Products(props) {
             <div className={styles.sortByText}>
               <span>SORT BY:</span>
               <span>
-                <select>
-                  <option style={{ background: '#fff' }} value={'Relevance'}>Relevance</option>
-                  <option style={{ background: '#fff' }} value={'Lowest price'}>Lowest price</option>
-                  <option style={{ background: '#fff' }} value={'Highest price'}>Highest price</option>
-                  <option style={{ background: '#fff' }} value={'Most Popular'}>Most Popular</option>
+                <select onChange={handleSortChange}>
+                  <option
+                    style={{ background: "#fff" }}
+                    value="visibility-desc"
+                    id="desc"
+                  >
+                    Relevance
+                  </option>
+                  <option
+                    style={{ background: "#fff" }}
+                    value="price-asc"
+                    id="asc"
+                  >
+                    Lowest price
+                  </option>
+                  <option
+                    style={{ background: "#fff" }}
+                    value="price-desc"
+                    id="desc"
+                  >
+                    Highest price
+                  </option>
+                  <option
+                    style={{ background: "#fff" }}
+                    value="created_at-desc"
+                    id="desc"
+                  >
+                    Most Popular
+                  </option>
                 </select>
               </span>
             </div>
           </div>
 
-          <Filters />
+          <Filters
+            handleThreeColumns={handleThreeColumns}
+            handleTwoColumns={handleTwoColumns}
+            pageColumns={pageColumns}
+          />
         </div>
       </div>
       {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
@@ -51,19 +122,28 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          } container-90 max-width-1600 mx-auto`}
       >
         {products?.map((product, i) => (
-          <div className={i === 0 || i === 5 ? styles.fullWidthCard : ""}>
+          <div className={getClassOfBigCard(i)}>
             <ProductCard
               index={i}
+              pageColumns={pageColumns}
               handleQuickView={handleQuickView}
               product={product}
-              isProduct={true}
+              isProduct={Boolean(true)}
             />
           </div>
         ))}
+        <div ref={refContainerLoad} />
       </div>
+      <center>
+        {" "}
+        {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
+      </center>
       <div>
         <h4 className={styles.sliderTitle}>Recommendation For You</h4>
       </div>
@@ -72,10 +152,10 @@ function Products(props) {
           className="basicSlider"
           items={products}
           slidesToShow={4}
-          arrows={true}
+          arrows={Boolean(true)}
           ref={refContainer}
           render={(item, index) => (
-            <ProductCard product={item} index={index} isProduct={true} />
+            <ProductCard product={item} index={index} isProduct={Boolean(true)} />
           )}
         />
       </div>

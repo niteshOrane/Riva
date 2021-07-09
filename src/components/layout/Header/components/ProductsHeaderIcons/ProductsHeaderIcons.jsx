@@ -19,23 +19,23 @@ const ProductsHeaderIcons = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <ul className="nav-list d-flex align-items-center mx-75px justify-content-end my-10px gap-12">
+      <ul className="nav-list d-flex align-items-center mx-75px justify-content-end my-10px gap-12px">
         <li className="nav-li">
-          <a href="#" className="d-flex align-items-center gap-12">
+          <a href="#" className="d-flex align-items-center gap-12px">
             <span className="material-icons-outlined font-light-black">
               search
             </span>
           </a>
         </li>
         <li className="nav-li">
-          <a href="#" className="d-flex align-items-center gap-12">
+          <a href="#" className="d-flex align-items-center gap-12px">
             <span className="material-icons-outlined font-light-black">
               favorite_border
             </span>
           </a>
         </li>
         <li className="nav-li">
-          <a href="#" className="d-flex align-items-center gap-12">
+          <a href="#" className="d-flex align-items-center gap-12px">
             <span className="material-icons-outlined font-light-black">
               person
             </span>
@@ -43,7 +43,7 @@ const ProductsHeaderIcons = () => {
         </li>
         <li className="nav-li">
           <a
-            className="d-flex align-items-center gap-12 position-relative c-pointer"
+            className="d-flex align-items-center gap-12px position-relative c-pointer"
             onClick={() => dispatch(toggleCart())}
           >
             <span className="material-icons-outlined font-light-black">

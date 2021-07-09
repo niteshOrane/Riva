@@ -13,7 +13,17 @@ export const getProduct = (sku) => {
 export const getAttributes = (id) => {
   const config = {
     method: 'get',
-    url: `http://65.0.141.49/shop/index.php/rest/all/V1/products/attributes/${id}/options`,
+    url: `${process.env.REACT_APP_BASE_URL}/rest/all/V1/products/attributes/${id}/options`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const getCompositioncare = (id) => {
+  const config = {
+    method: 'post',
+    url: `${process.env.REACT_APP_BASE_URL}/rest/V1/compositioncare`,
+    data:{productid:id},
     silent: true,
   };
   return axios(config);

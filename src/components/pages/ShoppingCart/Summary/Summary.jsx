@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import LetUsHear from "../../../common/Cards/LetUsHear/LetUsHear";
 import style from "./Summary.module.scss";
 const Summary = () => {
@@ -21,15 +21,17 @@ const Summary = () => {
         </div>
 
         <div className={style.checkoutBtn}>
-        <Link to='/cart-payment'><button type="button">SECURE CHECKOUT</button></Link>
+          <Link to="/cart-payment">
+            <button type="button">SECURE CHECKOUT</button>
+          </Link>
         </div>
-        <div className="gap-12 bg-white d-flex align-items-center p-12px">
+        <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>
           <span className="font-light-black">
             We offer easy returns up to 14 days. Terms & Conditions apply
           </span>
         </div>
-        <div className="gap-12 bg-white d-flex align-items-center p-12px">
+        <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>
           <p>
             <strong className="d-block">100% SECURE DATA ENCRYPTIN</strong>

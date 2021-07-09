@@ -59,3 +59,13 @@ export const showSnackbar = (message = null, severity = '', open = true) => ({
   type: DATA_TYPES.SNACKBAR,
   payload: { message, severity, open },
 });
+
+export const toggleSignUpCard = ({
+  isOpen = true,
+  isLogin = true,
+  isOtp = false,
+  ...rest
+}) => ({
+  type: DATA_TYPES.TOGGLE_SIGNUP_CARD,
+  payload: { isOpen, isLogin, isOtp, ...rest },
+});

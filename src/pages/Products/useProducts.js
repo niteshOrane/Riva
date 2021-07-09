@@ -1,25 +1,35 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_URL from '../../enviroments';
+import { getStoreId } from '../../util';
 
-const useProducts = ({ categoryId }) => {
+const useProducts = ({ categoryId, 
+  currentPage=1,
+  pageSize=10, 
+  sortField = 'price', 
+  sortDirection = 'asc', onScreen}) => {
   const [products, setProducts] = useState([]);
   const [filters, setfilters] = useState({});
+
   const [loading, setloading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     setloading(true);
-    setProducts([]);
+    let currentPageGet =currentPage;
     setfilters({});
+    if(!onScreen){
+      setProducts([]);
+      currentPageGet=1;
+    }
     const config = {
       method: 'get',
-      url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=1`,
+      url:`${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&store_id=${getStoreId()}`,
       silent: true,
     };
-
     axios(config)
       .then((response) => {
-        const products = response?.data?.items?.map((product) => {
+        const productsList = response?.data?.items?.map((product) => {
           return {
             ...product,
             id: product.id,
@@ -36,19 +46,27 @@ const useProducts = ({ categoryId }) => {
               )?.value === '1',
           };
         });
-        setProducts(products);
+        
+        setTotalCount(response?.data?.total_count);
+        if(onScreen){
+        setProducts([...products, ...productsList]);
+        }
+        else{
+          setProducts(productsList);
+        }
         setfilters(response?.data?.search_criteria);
         setloading(false);
       })
       .catch((error) => {
         setloading(false);
       });
-  }, [categoryId]);
+  }, [categoryId, currentPage, pageSize, sortField, sortDirection]);
 
   return {
     products,
     filters,
     loading,
+    totalCount
   };
 };
 

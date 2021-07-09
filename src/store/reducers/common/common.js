@@ -17,6 +17,7 @@ const initialState = {
     data: null,
   },
   attributes: { color: [], size: [] },
+  signUpCard: { isOpen: false, isLogin: false, isOtp: false },
 };
 
 export default function common(state = initialState, action) {
@@ -99,6 +100,13 @@ export default function common(state = initialState, action) {
           error: action.payload?.message ?? null,
           severity: action.payload?.severity ?? '',
           open: action.payload?.open,
+        },
+      };
+    case DATA_TYPES.TOGGLE_SIGNUP_CARD:
+      return {
+        ...state,
+        signUpCard: {
+          ...action.payload,
         },
       };
     default:

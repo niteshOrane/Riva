@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import style from "./Dropdown.module.scss";
 
 const SimpleDropdown = ({ depth, children, item }) => {
-  console.log("dropdown",item)
   const [open, setOpen] = useState(
     item?.children?.length || item.color?.length
   );

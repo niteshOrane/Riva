@@ -18,7 +18,7 @@ const TempLink = ({ children, product }) => {
   return <a href={product.uri}>{children}</a>;
 };
 
-const ProductCard = ({ product, index, isProduct = false }) => {
+const ProductCard = ({ product, index, isProduct = false, pageColumns=2 }) => {
   const { custom_attributes, id, image, name } = product;
   let {
     origprice = 0,
@@ -69,7 +69,7 @@ const ProductCard = ({ product, index, isProduct = false }) => {
   const isAddedToWishlist = !!wishList.find((w) => w.id === product.id);
 
   const srcImage =
-    image.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
+    image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <div key={id} className={styles.productCard}>
       {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
@@ -165,7 +165,7 @@ const ProductCard = ({ product, index, isProduct = false }) => {
                 <div className={styles.text}>{c.label} </div>
               ))}
           </div>
-          <div className={styles.colorContainer}>
+          {/*<div className={styles.colorContainer}>
             <div className={`${styles.color} ${styles.color_red}`}>
               <span className={styles.tooltiptext}>Red</span>
             </div>
@@ -180,6 +180,7 @@ const ProductCard = ({ product, index, isProduct = false }) => {
               <span className={styles.tooltiptext}>Blue</span>
             </div>
           </div>
+              */}
         </div>
       </TempLink>
     </div>

@@ -1,18 +1,18 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Star from '@material-ui/icons/StarBorderOutlined';
-import Dialog from '@material-ui/core/Dialog';
-import * as icons from '../Icons/Icons';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Star from "@material-ui/icons/StarBorderOutlined";
+import Dialog from "@material-ui/core/Dialog";
+import * as icons from "../Icons/Icons";
 import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
-} from '../../../store/actions/wishlist/index';
-import Image from '../LazyImage/Image';
-import styles from './Wishlist.module.scss';
+} from "../../../store/actions/wishlist/index";
+import Image from "../LazyImage/Image";
+import styles from "./Wishlist.module.scss";
 
 const closeStyle = {
-  position: 'absolute',
+  position: "absolute",
   top: 4,
   right: 4,
 };
@@ -67,7 +67,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: 'cover' }}
+            customeStyle={{ objectFit: "cover" }}
           />
         </div>
         <form>
@@ -75,8 +75,8 @@ function Wishlist() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -89,7 +89,7 @@ function Wishlist() {
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ''}</div>
+              <div className={styles.was}>Was {origprice || ""}</div>
             ) : null}
             <div className={styles.now}>Now ${data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -100,10 +100,10 @@ function Wishlist() {
               <div className={styles.text}>{c.label} </div>
             ))}
           </div>
-          <div className={`${styles.size} gap-12 d-flex align-items-center`}>
+          <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
             <div
-              className={`${styles.options} gap-12 d-flex align-items-center`}
+              className={`${styles.options} gap-12px d-flex align-items-center`}
             >
               {data?.size?.length &&
                 data?.size?.map((size) => {
@@ -116,7 +116,7 @@ function Wishlist() {
             </div>
           </div>
           <div
-            className={`${styles.outOfStock} d-flex align-items-center gap-12`}
+            className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
           >
             <div className={`${styles.icon} d-flex-all-center`}>
               <span className="material-icons">mail</span>
@@ -126,7 +126,7 @@ function Wishlist() {
             </div>
           </div>
           <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-            <ul className="nav-list gap-12 d-flex align-items-center">
+            <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <a href="#" className="d-flex align-items-center">
                   <span className="material-icons-outlined font-light-black">
@@ -166,7 +166,7 @@ function Wishlist() {
 
           <div className={`${styles.stats} d-flex justify-content-between`}>
             <div
-              className={`${styles.visibility} d-flex gap-12 align-items-center`}
+              className={`${styles.visibility} d-flex gap-12px align-items-center`}
             >
               <div className={styles.icon}>
                 <span className="material-icons-outlined font-light-black">
@@ -199,7 +199,7 @@ function Wishlist() {
                 </div>
               </div>
               <div
-                className={`${styles.demand} d-flex gap-12 align-items-center`}
+                className={`${styles.demand} d-flex gap-12px align-items-center`}
               >
                 <div className="d-flex align-items-center">
                   <div className={styles.title}>Availability: </div>
@@ -218,10 +218,10 @@ function Wishlist() {
                   <span className="material-icons-outlined">
                     favorite_border
                   </span>
-                  &nbsp;{' '}
+                  &nbsp;{" "}
                   {isAddedToWishlist
-                    ? 'REMOVE FROM WISHLIST'
-                    : 'ADD TO WISHLIST'}
+                    ? "REMOVE FROM WISHLIST"
+                    : "ADD TO WISHLIST"}
                 </button>
               </div>
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>

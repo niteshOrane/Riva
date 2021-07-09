@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import "./profileInformation.scss";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -7,11 +8,13 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
 function ProfileInfoForm() {
+  const customer = useSelector((state) => state.auth.customer);
+
   const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    number: "",
+    firstName: customer?.username,
+    lastName: customer?.username,
+    email: customer?.email,
+    number: customer?.username,
     gender: "",
     dob: "",
   });
@@ -31,21 +34,21 @@ function ProfileInfoForm() {
             <section>
               <div className>
                 <label>First Name</label>
-                <input name="firstName" onChange={handleChange} />
+                <input value={values?.firstName} name="firstName" onChange={handleChange} />
               </div>
               <div style={{ marginLeft: "2rem" }}>
                 <label>Last Name</label>
-                <input name="lastName" onChange={handleChange} />
+                <input name="lastName" value={values?.lastName} onChange={handleChange} />
               </div>
             </section>
             <section>
               <div className>
                 <label>Email</label>
-                <input name="email" onChange={handleChange} />
+                <input name="email" value={values?.email} onChange={handleChange} />
               </div>
               <div style={{ marginLeft: "2rem" }}>
                 <label>Mobile Number</label>
-                <input name="number" onChange={handleChange} />
+                <input name="number" value={values?.number}  onChange={handleChange} />
               </div>
             </section>
             <section>
