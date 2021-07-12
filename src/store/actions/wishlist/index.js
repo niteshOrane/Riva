@@ -3,6 +3,7 @@ import {
   getWishlistItems,
   removeWishlistItem,
 } from '../../../services/wishlist/wishlist.service';
+import { getCustId } from '../../../util';
 import * as DATA_TYPES from '../../types';
 import { showSnackbar } from '../common';
 
@@ -26,7 +27,10 @@ export const removeWishlist_action = (data) => ({
 });
 
 export const getWishlist = () => async (dispatch) => {
-  const res = await getWishlistItems();
+  const id = getCustId();
+  if (!id) return;
+
+  const res = await getWishlistItems(id);
 
   if (res.data.success === 1) {
     dispatch(getWishlist_action(res.data.data));
@@ -34,7 +38,7 @@ export const getWishlist = () => async (dispatch) => {
 };
 
 export const addWishlist = (item) => async (dispatch) => {
-  const res = await addWishListItem(item.id);
+  const res = await addWishListItem(item.id, getCustId());
 
   if (res.data.success === 1) {
     dispatch(addWishlist_action(item));
@@ -51,7 +55,7 @@ export const addWishlist = (item) => async (dispatch) => {
 };
 
 export const removeWishlist = (item) => async (dispatch) => {
-  const res = await removeWishlistItem(item.id);
+  const res = await removeWishlistItem(item.id, getCustId());
 
   if (res.data.success === 1) {
     dispatch(removeWishlist_action(item));

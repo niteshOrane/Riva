@@ -9,10 +9,11 @@ const INITIAL_STATE = {
 };
 
 const auth = (state = INITIAL_STATE, action) => {
+  console.log(action);
   switch (action.type) {
     case DATA_TYPES.LOGIN_SUCCESS:
       return {
-        ...state.customer,
+        ...state,
         isAuthenticated: true,
         customer: action.payload.customer,
         token: action.payload.token,
@@ -21,11 +22,20 @@ const auth = (state = INITIAL_STATE, action) => {
     case DATA_TYPES.LOGIN_FAILURE:
     case DATA_TYPES.LOGOUT:
       return {
-        ...state.customer,
+        ...state,
         isAuthenticated: false,
         customer: null,
         token: null,
         loading: false,
+      };
+
+    case DATA_TYPES.SET_CUSTOMER:
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          ...action.payload,
+        },
       };
     default:
       return state;

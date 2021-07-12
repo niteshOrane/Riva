@@ -26,3 +26,4 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 export const TOGGLE_SIGNUP_CARD = 'TOGGLE_SIGNUP_CARD';
+export const SET_CUSTOMER = 'SET_CUSTOMER';

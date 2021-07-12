@@ -1,18 +1,19 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import Dialog from "@material-ui/core/Dialog";
-import * as icons from "../Icons/Icons";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import Dialog from '@material-ui/core/Dialog';
+import * as icons from '../Icons/Icons';
 import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
-} from "../../../store/actions/wishlist/index";
-import Image from "../LazyImage/Image";
-import styles from "./Wishlist.module.scss";
+} from '../../../store/actions/wishlist/index';
+import Image from '../LazyImage/Image';
+import styles from './Wishlist.module.scss';
+import { toggleSignUpCard } from '../../../store/actions/common';
 
 const closeStyle = {
-  position: "absolute",
+  position: 'absolute',
   top: 4,
   right: 4,
 };
@@ -22,6 +23,7 @@ function Wishlist() {
     modalData: data = {},
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -29,7 +31,11 @@ function Wishlist() {
   };
 
   const handleWishlist = () => {
-    if (wishlist.find((w) => data.id === w.id)) dispatch(removeWishlist(data));
+    if (!auth.isAuthenticated)
+      return dispatch(
+        toggleSignUpCard({ redirectTo: window.location.pathname })
+      );
+    if (wishlist.find((w) => data.id == w.id)) dispatch(removeWishlist(data));
     else dispatch(addWishlist(data));
     handleClose();
   };
@@ -67,7 +73,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: "cover" }}
+            customeStyle={{ objectFit: 'cover' }}
           />
         </div>
         <form>
@@ -75,8 +81,8 @@ function Wishlist() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -89,7 +95,7 @@ function Wishlist() {
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ""}</div>
+              <div className={styles.was}>Was {origprice || ''}</div>
             ) : null}
             <div className={styles.now}>Now ${data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -218,10 +224,10 @@ function Wishlist() {
                   <span className="material-icons-outlined">
                     favorite_border
                   </span>
-                  &nbsp;{" "}
+                  &nbsp;{' '}
                   {isAddedToWishlist
-                    ? "REMOVE FROM WISHLIST"
-                    : "ADD TO WISHLIST"}
+                    ? 'REMOVE FROM WISHLIST'
+                    : 'ADD TO WISHLIST'}
                 </button>
               </div>
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>

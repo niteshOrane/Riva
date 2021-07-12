@@ -25,7 +25,7 @@ export const getCompositioncare = (id) => {
   const config = {
     method: 'post',
     url: `${urlPath}/rest/V1/compositioncare`,
-    data:{productid:id},
+    data: { productid: id },
     silent: true,
   };
   return axios(config);

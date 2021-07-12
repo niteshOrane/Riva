@@ -1,30 +1,51 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import "./profileInformation.scss";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import './profileInformation.scss';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import { profileUpdate } from '../../services/dashboard/dashboard.service';
+import { showSnackbar } from '../../store/actions/common';
+import { setCustomer } from '../../store/actions/auth';
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState({
-    firstName: customer?.username,
-    lastName: customer?.username,
+    firstName: customer?.firstName,
+    lastName: customer?.lastName,
     email: customer?.email,
     number: customer?.username,
-    gender: "",
-    dob: "",
+    gender: '',
+    dob: '',
   });
   const handleChange = (event) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
+    const cust = new FormData();
+
+    cust.append('customerid', customer.customerID);
+    cust.append('firstname', values.firstName);
+    cust.append('email', values.email);
+    cust.append('lastname', values.lastname);
+
+    const res = await profileUpdate(cust);
+
+    if (res.status === 200) {
+      dispatch(
+        setCustomer({
+          ...values,
+        })
+      );
+      return dispatch(showSnackbar(res?.data?.data, 'success'));
+    }
+    return dispatch(showSnackbar('Something went wrong', 'error'));
   };
   return (
     <>
@@ -34,21 +55,37 @@ function ProfileInfoForm() {
             <section>
               <div className>
                 <label>First Name</label>
-                <input value={values?.firstName} name="firstName" onChange={handleChange} />
+                <input
+                  value={values?.firstName}
+                  name="firstName"
+                  onChange={handleChange}
+                />
               </div>
-              <div style={{ marginLeft: "2rem" }}>
+              <div style={{ marginLeft: '2rem' }}>
                 <label>Last Name</label>
-                <input name="lastName" value={values?.lastName} onChange={handleChange} />
+                <input
+                  name="lastName"
+                  value={values?.lastName}
+                  onChange={handleChange}
+                />
               </div>
             </section>
             <section>
               <div className>
                 <label>Email</label>
-                <input name="email" value={values?.email} onChange={handleChange} />
+                <input
+                  name="email"
+                  value={values?.email}
+                  onChange={handleChange}
+                />
               </div>
-              <div style={{ marginLeft: "2rem" }}>
+              <div style={{ marginLeft: '2rem' }}>
                 <label>Mobile Number</label>
-                <input name="number" value={values?.number}  onChange={handleChange} />
+                <input
+                  name="number"
+                  value={values?.number}
+                  onChange={handleChange}
+                />
               </div>
             </section>
             <section>

@@ -1,9 +1,12 @@
-import React from "react";
-import Image from "../../../common/LazyImage/Image";
-import * as icons from "../../../common/Icons/Icons";
-import styles from "./Card.module.scss";
+import React from 'react';
+import Image from '../../../common/LazyImage/Image';
+import * as icons from '../../../common/Icons/Icons';
+import styles from './Card.module.scss';
+import { URL } from '../../../../util';
 
 function Card({ src, name, priceWas, priceIs, remove }) {
+  const srcImage =
+    src?.indexOf('http') > -1 ? src : `${URL.baseUrlProduct}/${src}`;
   return (
     <div className={styles.cardStyle}>
       <button
@@ -16,7 +19,7 @@ function Card({ src, name, priceWas, priceIs, remove }) {
       </button>
       <div className={styles.imgContainer_P}>
         <div className={styles.imgContainer}>
-          <Image src={src} width="100%" />
+          <Image src={srcImage} width="100%" />
         </div>
       </div>
       <div className="my-12px">
