@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
-import FacebookLogin from 'react-facebook-login';
-import { useDispatch } from 'react-redux';
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { useDispatch } from "react-redux";
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
 
-import { showSnackbar } from '../../../../../../store/actions/common';
-import { createCustomer } from '../../../../../../services/auth/auth.service';
+import { showSnackbar } from "../../../../../../store/actions/common";
+import { createCustomer } from "../../../../../../services/auth/auth.service";
 
 const SignUpForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: '',
+    email: "",
+    password: "",
+    name: "",
   });
 
   const handleChange = (e) => {
@@ -26,28 +26,70 @@ const SignUpForm = ({ handleSubmit }) => {
   const userCreateHandler = async (e) => {
     e.preventDefault();
     if (!email || !password || !name)
-      return dispatch(showSnackbar('All fields are required', 'warning'));
+      return dispatch(showSnackbar("All fields are required", "warning"));
 
     const customer = new FormData();
 
-    customer.append('email', email);
-    customer.append('firstname', name?.split(' ')?.[0] || '');
-    customer.append('lastname', name?.split(' ')?.[1] || '');
-    customer.append('password', password);
+    customer.append("email", email);
+    customer.append("firstname", name?.split(" ")?.[0] || "");
+    customer.append("lastname", name?.split(" ")?.[1] || "");
+    customer.append("password", password);
 
     const res = await createCustomer(customer);
 
     if (res.status === 200) {
       handleSubmit();
-      return dispatch(showSnackbar(res?.data?.data, 'success'));
+      return dispatch(showSnackbar(res?.data?.data, "success"));
     }
-    return dispatch(showSnackbar('Something went wrong', 'error'));
+    return dispatch(showSnackbar("Something went wrong", "error"));
   };
 
   const [showPass, setShowPass] = useState(false);
 
-  const responseFacebook = (response) => {
-    console.log(response);
+  const responseFacebook = async (response) => {
+    console.log(response)
+    if (response) {
+      const firstName = response?.name?.split(" ")[0];
+      const lastName = response?.name?.split(" ")[1];
+      const email = response?.email;
+      const customer = new FormData();
+      customer.append("email", email);
+      customer.append("firstname", firstName || "");
+      customer.append("lastname", lastName || "");
+      customer.append("resource", "facebook");
+      const res = await createCustomer(customer);
+
+      if (res.status === 200) {
+        handleSubmit();
+        return dispatch(showSnackbar(res?.data?.data, "success"));
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  };
+
+  const responseGoogle = async (response) => {
+    console.log(response)
+    if (response.profileObj) {
+      const firstName = response?.profileObj?.givenName;
+      const lastName = response?.profileObj?.familyName;
+      const email = response?.profileObj?.email;
+      const customer = new FormData();
+      customer.append("email", email);
+      customer.append("firstname", firstName || "");
+      customer.append("lastname", lastName || "");
+      customer.append("resource", "google");
+      const res = await createCustomer(customer);
+
+      if (res.status === 200) {
+        handleSubmit();
+        return dispatch(showSnackbar(res?.data?.data, "success"));
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
   };
 
   return (
@@ -103,11 +145,11 @@ const SignUpForm = ({ handleSubmit }) => {
           Set a Password <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span className="material-icons-outlined">lock</span>{' '}
+          <span className="material-icons-outlined">lock</span>{" "}
           <input
             required
             value={password}
-            type={showPass ? 'password' : 'text'}
+            type={showPass ? "password" : "text"}
             name="password"
             id="password"
             onChange={handleChange}
@@ -118,8 +160,8 @@ const SignUpForm = ({ handleSubmit }) => {
             onClick={() => setShowPass(!showPass)}
           >
             <span className="material-icons-outlined">
-              {showPass ? 'visibility_off' : 'visibility'}
-            </span>{' '}
+              {showPass ? "visibility_off" : "visibility"}
+            </span>{" "}
           </button>
         </div>
         <p className={styles.passInstruction}>
@@ -145,30 +187,43 @@ const SignUpForm = ({ handleSubmit }) => {
             type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
+            <span className={`material-icons-outlined ${styles.btnIcon}`}>
+              <icons.Facebook />
+            </span>
             <FacebookLogin
               appId="3898973050213783"
-              autoLoad
               fields="name,email,picture"
-              cssClass = {`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn} facebook-auth-login`}
+              // cssClass=  {styles.facebookAuthBtn}
+              render={(renderProps) => (
+                <p onClick={renderProps.onClick}>Connect with Facebook</p>
+              )}
               // onClick={componentClicked}
+              textButton="Connect with Facebook"
               callback={responseFacebook}
-              icon="fa-facebook"
             />
-            , ,
           </button>
           <button
             type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
           >
-            {/* <span className={`material-icons-outlined ${styles.btnIcon}`}>
+            <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
-            </span> */}
+            </span>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              buttonText="Login with Google"
+              buttonText="Connect with Google"
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  className={styles.googleAuthBtn}
+                >
+                  Connect with Google
+                </button>
+              )}
               className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
-              onSuccess={(responseGoogle) => console.log(responseGoogle)}
-              onFailure={(responseGoogle) => console.log(responseGoogle)}
+              onSuccess={(response) => responseGoogle(response)}
+              // onFailure={(responseGoogle) => console.log(responseGoogle)}
             />
           </button>
         </div>
