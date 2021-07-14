@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 import * as icons from "../../../common/Icons/Icons";
 import Products from "./components/Products/Products";
 import styles from "./OrderReview.module.scss";
@@ -28,27 +28,56 @@ const randomProducts = [
 ];
 
 function OrderReview() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [news, setNews] = React.useState(true);
   const [couponCode, setCouponCode] = useState("");
-  const [couponDiscount,setCouponDiscount] = useState()
-  const customerid = 321092
+  const [couponDiscount, setCouponDiscount] = useState(null);
+  const [discount,setDiscount] = useState(null)
+  const customerid = 321092;
 
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
       const coupon = new FormData();
-      coupon.append("customerid",customerid);
-      coupon.append("couponcode",couponCode);
+      coupon.append("customerid", customerid);
+      coupon.append("couponcode", couponCode);
       const config = {
-        method: 'post',
-        url: `http://65.0.141.49/shop/index.php/rest/V1/applyCoupon`,
+        method: "post",
+        url: `${process.env.REACT_APP_DEV}/applyCoupon`,
         silent: true,
         data: coupon,
       };
       const res = await axios(config);
-      if(res){
-        dispatch(showSnackbar("Coupon Applied successfully", "success"))
+      if (res.data.success === 200) {
+        dispatch(showSnackbar(res.data.message, "success"));
+        setCouponDiscount(true);
+        setDiscount(res.data.data.discount)
+      }else if(res.data.success===201){
+        dispatch(showSnackbar(res.data.message, "success"));
+        setCouponDiscount(true)
+      }
+    }
+  };
+
+
+
+  const handleRemoveCoupon = async (e) => {
+    e.preventDefault();
+    if (customerid) {
+      const removeCoupon = new FormData();
+      removeCoupon.append("customerid", customerid);
+      const config = {
+        method: "post",
+        url: `${process.env.REACT_APP_DEV}/removeCoupon`,
+        silent: true,
+        data: removeCoupon,
+      };
+      const res = await axios(config);
+      if (res.status === 200) {
+        dispatch(showSnackbar("Coupon removed successfully", "success"));
+        setCouponDiscount(false);
+        setCouponCode("")
+        setDiscount(null)
       }
     }
   };
@@ -75,6 +104,7 @@ function OrderReview() {
           name="coupon"
           onChange={(event) => setCouponCode(event.target.value)}
           type="text"
+          value={couponCode}
         />
         <button
           type="button"
@@ -83,6 +113,16 @@ function OrderReview() {
         >
           APPLY
         </button>
+        {couponDiscount && (
+          <button
+            type="button"
+            onClick={handleRemoveCoupon}
+            className={styles.applyBtn}
+            style={{ marginLeft: "0.5rem" }}
+          >
+            REMOVE
+          </button>
+        )}
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">
@@ -143,7 +183,7 @@ function OrderReview() {
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${82.5}</strong>
+        <strong>${discount ? (82.5-discount) :82.5}</strong>
       </div>
       <div className="d-flex align-items-center mt-12px">
         <input
