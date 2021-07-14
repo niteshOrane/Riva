@@ -96,7 +96,7 @@ const Cart = () => {
               ))}
             </div>
             <div className={style.freeDeliverOffer}>
-              <div className="d-flex justify-content-between align-items-center gap-12">
+              <div className="d-flex justify-content-between align-items-center gap-12px">
                 <div>
                   <span className="material-icons-outlined">
                     local_shipping

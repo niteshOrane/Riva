@@ -1,0 +1,29 @@
+.card {
+  padding: 12px;
+  box-shadow: 2.4px 4.4px 13px 0 #d8d4d4ad;
+  margin: 23px 0;
+  border-left: 3px solid #000;
+  .checkIcon {
+    background: #000;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
+  #closeBtn {
+    transition: 0.3s ease-in-out;
+    &:hover {
+      svg {
+        fill: #f7591a;
+      }
+    }
+  }
+}

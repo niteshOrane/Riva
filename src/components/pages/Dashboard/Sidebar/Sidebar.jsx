@@ -1,9 +1,13 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 import * as icons from "../../../common/Icons/Icons";
+import { logoutUser } from '../../../../services/auth/auth.service';
+import { logout } from '../../../../store/actions/auth';
 
 function Sidebar() {
+  const dispatch = useDispatch();
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
@@ -20,9 +24,7 @@ function Sidebar() {
         <div className="d-flex" id={styles.sec}>
           <icons.MyOrders />
           <div className={styles.children}>
-            <Link to="/" className={styles.title}>
-              My Orders
-            </Link>
+            <p className={styles.title}>My Orders</p>
 
             <Link to="/" className={styles.child}>
               <icons.AngleRight />
@@ -31,6 +33,14 @@ function Sidebar() {
             <Link to="/delivered" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Delivered
+            </Link>
+            <Link to="/track-orders" className={styles.child}>
+              <icons.AngleRight />
+              &nbsp; Track Orders
+            </Link>
+            <Link to="/track-your-order" className={styles.child}>
+              <icons.AngleRight />
+              &nbsp; Track Your Order
             </Link>
             <Link to="/cancelled-orders" className={styles.child}>
               <icons.AngleRight />
@@ -60,10 +70,9 @@ function Sidebar() {
           <icons.Accounts />
           <div className={styles.children}>
             <p className={styles.title}>Accounts</p>
-
             <Link to="/profile-information" className={styles.child}>
               <icons.AngleRight />
-              &nbsp; Profile Informtion
+              &nbsp; Profile information
             </Link>
             <Link to="/" className={styles.child}>
               <icons.AngleRight />
@@ -77,7 +86,7 @@ function Sidebar() {
               <icons.AngleRight />
               &nbsp; My Reviews
             </Link>
-            <Link to="/" className={styles.child}>
+            <Link to="/my-subscription" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Manage Subscription
             </Link>
@@ -88,7 +97,7 @@ function Sidebar() {
           <div className={styles.children}>
             <p className={styles.title}>Payments</p>
 
-            <Link to="/" className={styles.child}>
+            <Link to="/saved-cards" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Saved Cards
             </Link>
@@ -98,16 +107,15 @@ function Sidebar() {
           <icons.MyStuf />
           <div className={styles.children}>
             <p className={styles.title}>My Stuff</p>
-
             <Link to="/" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Loyalty Points
             </Link>
-            <Link to="/" className={styles.child}>
+            <Link to="/coupons" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Coupons
             </Link>
-            <Link to="/" className={styles.child}>
+            <Link to="/refer-&-earn" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Refer & Earn Credit
             </Link>
@@ -115,25 +123,25 @@ function Sidebar() {
         </div>
         <div className="d-flex align-items-center" id={styles.sec}>
           <icons.Notification />
-          <Link to="/wishlist">
+          <Link to="/notify-me">
             {" "}
             <p className={styles.title}>Notify Me</p>
           </Link>
         </div>
         <div className="d-flex align-items-center" id={styles.sec}>
           <icons.Logout />
-          <Link to="/">
-            {" "}
-            <p className={styles.title}>Logout</p>
-          </Link>
+          <span onClick={
+              () => {
+                dispatch(logout());
+                logoutUser();
+              }
+            }
+            className="d-flex align-items-center gap-12 c-pointer"
+          > <p className={styles.title}>Logout</p></span>
         </div>
-        <div className="d-flex align-items-center" id={styles.sec}>
-          <icons.Loyalty />
-          <Link to='/profile-information'> <h2 className={styles.title}>Profile Information</h2></Link>
         </div>
       </div>
-    </div>
-  );
+      );
 }
 
-export default Sidebar;
+      export default Sidebar;

@@ -20,7 +20,7 @@ const Instagram = ({ products }) => {
       </div>
       <div
         id={style.p_mrgn}
-        className="d-flex align-items-center justify-content-between gap-12"
+        className="d-flex align-items-center justify-content-between gap-12px"
       >
         {products.map((product, index) => {
           return (

@@ -1,7 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import * as icons from "../../../common/Icons/Icons";
 import Products from "./components/Products/Products";
 import styles from "./OrderReview.module.scss";
+import { showSnackbar } from "../../../../store/actions/common";
 
 const randomProducts = [
   {
@@ -25,7 +28,30 @@ const randomProducts = [
 ];
 
 function OrderReview() {
+  const dispatch = useDispatch()
   const [news, setNews] = React.useState(true);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount,setCouponDiscount] = useState()
+  const customerid = 321092
+
+  const handleApplyCoupon = async (e) => {
+    e.preventDefault();
+    if (customerid && couponCode !== "") {
+      const coupon = new FormData();
+      coupon.append("customerid",customerid);
+      coupon.append("couponcode",couponCode);
+      const config = {
+        method: 'post',
+        url: `http://65.0.141.49/shop/index.php/rest/V1/applyCoupon`,
+        silent: true,
+        data: coupon,
+      };
+      const res = await axios(config);
+      if(res){
+        dispatch(showSnackbar("Coupon Applied successfully", "success"))
+      }
+    }
+  };
 
   return (
     <div>
@@ -45,8 +71,18 @@ function OrderReview() {
         </span>
       </div>
       <div className={styles.applyCoupon}>
-        <input type="text" />
-        <button className={styles.applyBtn}>APPLY</button>
+        <input
+          name="coupon"
+          onChange={(event) => setCouponCode(event.target.value)}
+          type="text"
+        />
+        <button
+          type="button"
+          onClick={handleApplyCoupon}
+          className={styles.applyBtn}
+        >
+          APPLY
+        </button>
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">

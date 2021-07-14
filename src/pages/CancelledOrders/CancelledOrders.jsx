@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import styles from "./CancelledOrders.module.scss";
-import CancelledOrdersCards from "../../components/pages/Dashboard/CancelledOrdersCards/CancelledOrdersCards";
+import CancelledOrdersCards from "../../components/pages/Dashboard/MyOrders/CancelledOrdersCards/CancelledOrdersCards";
 const randomProducts = [
   {
     image:

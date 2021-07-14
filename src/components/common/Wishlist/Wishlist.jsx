@@ -10,6 +10,7 @@ import {
 } from '../../../store/actions/wishlist/index';
 import Image from '../LazyImage/Image';
 import styles from './Wishlist.module.scss';
+import { toggleSignUpCard } from '../../../store/actions/common';
 
 const closeStyle = {
   position: 'absolute',
@@ -22,6 +23,7 @@ function Wishlist() {
     modalData: data = {},
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -29,7 +31,11 @@ function Wishlist() {
   };
 
   const handleWishlist = () => {
-    if (wishlist.find((w) => data.id === w.id)) dispatch(removeWishlist(data));
+    if (!auth.isAuthenticated)
+      return dispatch(
+        toggleSignUpCard({ redirectTo: window.location.pathname })
+      );
+    if (wishlist.find((w) => data.id == w.id)) dispatch(removeWishlist(data));
     else dispatch(addWishlist(data));
     handleClose();
   };
@@ -100,10 +106,10 @@ function Wishlist() {
               <div className={styles.text}>{c.label} </div>
             ))}
           </div>
-          <div className={`${styles.size} gap-12 d-flex align-items-center`}>
+          <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
             <div
-              className={`${styles.options} gap-12 d-flex align-items-center`}
+              className={`${styles.options} gap-12px d-flex align-items-center`}
             >
               {data?.size?.length &&
                 data?.size?.map((size) => {
@@ -116,7 +122,7 @@ function Wishlist() {
             </div>
           </div>
           <div
-            className={`${styles.outOfStock} d-flex align-items-center gap-12`}
+            className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
           >
             <div className={`${styles.icon} d-flex-all-center`}>
               <span className="material-icons">mail</span>
@@ -126,7 +132,7 @@ function Wishlist() {
             </div>
           </div>
           <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-            <ul className="nav-list gap-12 d-flex align-items-center">
+            <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <a href="#" className="d-flex align-items-center">
                   <span className="material-icons-outlined font-light-black">
@@ -166,7 +172,7 @@ function Wishlist() {
 
           <div className={`${styles.stats} d-flex justify-content-between`}>
             <div
-              className={`${styles.visibility} d-flex gap-12 align-items-center`}
+              className={`${styles.visibility} d-flex gap-12px align-items-center`}
             >
               <div className={styles.icon}>
                 <span className="material-icons-outlined font-light-black">
@@ -199,7 +205,7 @@ function Wishlist() {
                 </div>
               </div>
               <div
-                className={`${styles.demand} d-flex gap-12 align-items-center`}
+                className={`${styles.demand} d-flex gap-12px align-items-center`}
               >
                 <div className="d-flex align-items-center">
                   <div className={styles.title}>Availability: </div>

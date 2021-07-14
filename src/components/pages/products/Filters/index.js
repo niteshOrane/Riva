@@ -17,7 +17,7 @@ const List = ({ item }) => (
 );
 
 const Colors = ({ colors }) => (
-  <div className="d-flex align-items-center flex-wrap gap-12">
+  <div className="d-flex align-items-center flex-wrap gap-12px">
     {colors.map((color, i) => (
       <div
         className="position-relative border-radius-50 c-pointer"
@@ -56,7 +56,7 @@ const Tags = ({ tags }) => (
   </div>
 );
 
-function Filters() {
+function Filters({ handleThreeColumns, handleTwoColumns, pageColumns }) {
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
 
@@ -113,27 +113,27 @@ function Filters() {
 
     return (
       <>
-        <button
-          className="no-border bg-transparent c-pointer"
-          type="button"
-          onClick={openDrawer}
-        >
+        <button className="no-border bg-transparent c-pointer" type="button">
           <div className={style.filterTextwrapper}>
-            <span className={style.filterText}>Filter </span>
-            <img
-              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/a8e77c1a-7c54-4098-bf97-816226eea3f0.svg"
-              width="20px"
-              alt="filter"
-            />
-            <div className={style.filterDots}>
-              <div className={style.greyDots}>
-                <span></span>
-                <span></span>
+            <span onClick={openDrawer}>
+              <div className={style.filterTextwrapper}>
+                <span className={style.filterText}>Filter </span>
+                <img
+                  src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/a8e77c1a-7c54-4098-bf97-816226eea3f0.svg"
+                  width="20px"
+                  alt="filter"
+                />
               </div>
-              <div className={style.blackDots}>
-                <span></span>
-                <span></span>
-                <span></span>
+            </span>
+            <div className={style.filterDots}>
+              <div onClick={handleTwoColumns} className={`${pageColumns===2?style.blackDots:''} ${style.greyDots}`}>
+                <span />
+                <span />
+              </div>
+              <div onClick={handleThreeColumns} className={`${pageColumns===3?style.blackDots:''} ${style.greyDots}`}>
+                <span />
+                <span />
+                <span />
               </div>
             </div>
           </div>

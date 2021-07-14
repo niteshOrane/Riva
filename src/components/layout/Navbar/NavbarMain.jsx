@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import NavLinks from "./NavLinks";
-import Search from "../../pages/products/Search";
-import styles from "./navbar.module.scss";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import NavLinks from './NavLinks';
+import Search from '../../pages/products/Search';
+import styles from './navbar.module.scss';
 
-const NavbarMain = ({ openSignUpCard }) => {
-  const [searchValue, setSearchValue] = useState("");
+const NavbarMain = () => {
+  const [searchValue, setSearchValue] = useState('');
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -26,7 +26,7 @@ const NavbarMain = ({ openSignUpCard }) => {
           />
         </Link>
       </strong>
-      <NavLinks openSignUpCard={openSignUpCard} />
+      <NavLinks />
     </nav>
   );
 };

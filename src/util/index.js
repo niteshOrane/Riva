@@ -4,7 +4,7 @@ import store from '../store/index';
 
 export const URL = {
   baseUrl: `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image`,
-  baseUrlProduct: `https://www.rivafashion.com/media/catalog/product/`,
+  baseUrlProduct: `http://65.0.141.49/shop/media/catalog/product/`, //https://www.rivafashion.com/media/catalog/product
 };
 
 export const defaultStore = {
@@ -28,6 +28,8 @@ export const defaultStore = {
 
 export const getStoreId = () =>
   store?.getState()?.common?.store?.store_id || '1';
+
+export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
 
 export const deepEqual = (x, y) => {
   // eslint-disable-next-line one-var

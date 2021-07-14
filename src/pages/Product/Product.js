@@ -10,6 +10,7 @@ import DescriptionComposition from "../../components/pages/product/DescriptionCo
 import {
   getAttributes,
   getProduct,
+  getCompositioncare
 } from "../../services/product/product.service";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
@@ -30,13 +31,14 @@ const Product = (props) => {
   const selectedProductId = match.params.categoryId;
 
   const [product, setproduct] = useState({});
+  const [compositioncare, setCompositioncare] = useState({});
   const [loading, setloading] = useState(true);
 
   const init = async (sku) => {
     setloading(true);
     try {
       const res = await getProduct(sku);
-
+      const rescompositioncare = await getCompositioncare(res?.data?.id);
       const color_attr = res.data?.custom_attributes?.find(
         (e) => e?.attribute_code === "color"
       )?.value;
@@ -55,10 +57,13 @@ const Product = (props) => {
           res.data?.custom_attributes.find(
             (attr) => attr.attribute_code === "show_sale_badge"
           )?.value === "1",
+        description:  res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "description"
+        )?.value,
         colors: color?.filter((c) => c.value === color_attr) || [],
         size: size?.filter((s) => s.value === size_attr) || [],
       };
-
+      setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
     } catch (err) {
@@ -83,7 +88,9 @@ const Product = (props) => {
           render={(item) => <ImageCard product={item} />}
         />
       </div>
-      <DescriptionComposition product={body.DescriptionComposition} />
+      <DescriptionComposition product={body.DescriptionComposition}
+      prodDiscr={product}
+      compositioncare={compositioncare?.data}/>
       {/* <AdditionalProductDetails sections={body.additionalProductDetails} /> */}
       <div className="container-90 max-width-1750 mx-auto">
         <HowToWearThis cards={body.howToWear} />
@@ -107,7 +114,7 @@ const Product = (props) => {
       <div className="container-90 max-width-1750 mx-auto my-20px">
         <ShopTheWholeOutfit data={body.shopTheWholeOutfit} />
       </div>
-      {/* <div className="d-flex-all-center gap-12 mx-50px gap-12">
+      {/* <div className="d-flex-all-center gap-12px mx-50px gap-12px">
         <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />
       </div> */}

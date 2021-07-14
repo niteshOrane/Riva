@@ -1,7 +1,7 @@
 import axios from 'axios';
 import API_URL from '../../enviroments/index';
 
-export const getWishlistItems = (customerid = 30) => {
+export const getWishlistItems = (customerid) => {
   const config = {
     method: 'post',
     url: `${API_URL}/wishlistDetail`,
@@ -11,7 +11,7 @@ export const getWishlistItems = (customerid = 30) => {
   return axios(config);
 };
 
-export const addWishListItem = (productid, customerid = 30) => {
+export const addWishListItem = (productid, customerid) => {
   const config = {
     method: 'post',
     url: `${API_URL}/addwishlist`,
@@ -21,7 +21,7 @@ export const addWishListItem = (productid, customerid = 30) => {
   return axios(config);
 };
 
-export const removeWishlistItem = (productid, customerid = 30) => {
+export const removeWishlistItem = (productid, customerid) => {
   const config = {
     method: 'post',
     url: `${API_URL}/wishlistRemove`,
