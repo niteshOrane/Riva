@@ -9,10 +9,12 @@ function OutOfStock({ productId }) {
   const [emailAddress, setEmailAddress] = useState("");
 
   const handleSubmit = async (e) => {
-      console.log(e)
     e.preventDefault()
     if (emailAddress === "") {
       return dispatch(showSnackbar("Please enter email", "error"));
+    }
+    if(!emailAddress.includes('@')){
+        return dispatch(showSnackbar("Invalid Email","error"))
     }
     const subscribe = new FormData();
     subscribe.append("productId", productId);
