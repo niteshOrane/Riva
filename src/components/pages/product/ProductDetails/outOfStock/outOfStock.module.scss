@@ -1,0 +1,26 @@
+.inp {
+  margin-top: 12px;
+  input {
+    padding: 12px;
+    width: 87%;
+    background: #292828;
+    border: 1px solid grey;
+    color: grey;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.sub {
+  margin-top: 12px;
+  button {
+    border: none;
+    background-color: #373636;
+    padding: 12px;
+    color: grey;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+}
