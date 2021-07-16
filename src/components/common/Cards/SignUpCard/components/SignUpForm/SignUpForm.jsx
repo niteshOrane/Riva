@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useDispatch } from "react-redux";
 import {
   showSnackbar,
@@ -60,6 +62,52 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const [showPass, setShowPass] = useState(false);
+
+  const responseFacebook = async (response) => {
+    console.log(response)
+    if (response) {
+      const firstName = response?.name?.split(" ")[0];
+      const lastName = response?.name?.split(" ")[1];
+      const email = response?.email;
+      const customer = new FormData();
+      customer.append("email", email);
+      customer.append("firstname", firstName || "");
+      customer.append("lastname", lastName || "");
+      customer.append("resource", "facebook");
+      const res = await createCustomer(customer);
+
+      if (res.status === 200) {
+        handleSubmit();
+        return dispatch(showSnackbar(res?.data?.data, "success"));
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  };
+
+  const responseGoogle = async (response) => {
+    console.log(response)
+    if (response.profileObj) {
+      const firstName = response?.profileObj?.givenName;
+      const lastName = response?.profileObj?.familyName;
+      const email = response?.profileObj?.email;
+      const customer = new FormData();
+      customer.append("email", email);
+      customer.append("firstname", firstName || "");
+      customer.append("lastname", lastName || "");
+      customer.append("resource", "google");
+      const res = await createCustomer(customer);
+
+      if (res.status === 200) {
+        handleSubmit();
+        return dispatch(showSnackbar(res?.data?.data, "success"));
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  };
 
   return (
     <form className={styles.form} onSubmit={userCreateHandler}>
@@ -164,10 +212,20 @@ const SignUpForm = ({ handleSubmit }) => {
             type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
-            <span className={styles.btnIcon}>
+            <span className={`material-icons-outlined ${styles.btnIcon}`}>
               <icons.Facebook />
             </span>
-            <p>Connect with Facebook</p>
+            <FacebookLogin
+              appId="3898973050213783"
+              fields="name,email,picture"
+              // cssClass=  {styles.facebookAuthBtn}
+              render={(renderProps) => (
+                <p onClick={renderProps.onClick}>Connect with Facebook</p>
+              )}
+              // onClick={componentClicked}
+              textButton="Connect with Facebook"
+              callback={responseFacebook}
+            />
           </button>
           <button
             type="button"
@@ -176,7 +234,22 @@ const SignUpForm = ({ handleSubmit }) => {
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
             </span>
-            <p>Connect with Google</p>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Connect with Google"
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  className={styles.googleAuthBtn}
+                >
+                  Connect with Google
+                </button>
+              )}
+              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+              onSuccess={(response) => responseGoogle(response)}
+              // onFailure={(responseGoogle) => console.log(responseGoogle)}
+            />
           </button>
         </div>
       </div>

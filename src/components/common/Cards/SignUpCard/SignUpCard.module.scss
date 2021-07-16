@@ -137,3 +137,25 @@
     }
   }
 }
+
+.googleAuthBtn{
+  height: 40px;
+  background: transparent;
+  width: 72%;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.facebookAuthBtn{
+  height: 40px;
+  background: transparent;
+  width: 100%;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 3.4rem;
+}
