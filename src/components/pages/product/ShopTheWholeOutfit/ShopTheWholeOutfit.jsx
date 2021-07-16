@@ -1,26 +1,43 @@
-import React from "react";
-import styles from "./shopTheWholeOutfit.module.scss";
-import HorizontalProductCard from "../../../common/Cards/ProductCard/HorizontalProductCard";
-import { PieChart } from "react-minimal-pie-chart";
+import React, { useState } from 'react';
+import { PieChart } from 'react-minimal-pie-chart';
+import Checkbox from '@material-ui/core/Checkbox';
+import HorizontalProductCard from '../../../common/Cards/ProductCard/HorizontalProductCard';
+import Image from '../../../common/LazyImage/Image';
+import styles from './shopTheWholeOutfit.module.scss';
 
-const ShopTheWholeoutfit = ({ data }) => {
+const ShopTheWholeoutfit = ({ mainProd, data }) => {
+  const [selected, setSelected] = useState([]);
+
+  const handleSelected = (checked, product) => {
+    if (checked) setSelected(selected.filter((c) => c.id !== product.id));
+    else setSelected((s) => [...s, product]);
+  };
+
   return (
     <div className={styles.wholeOutfit}>
       <div className={styles.header}>Shop the Whole Outfit</div>
       <div className={styles.sections}>
         <div className={styles.primaryProduct}>
           <div>
-            <img src={data.mainCard.src} />
+            <Image src={mainProd.image} type="product-details" width="400px" />
           </div>
-          <div className={styles.name}>{data.mainCard.name}</div>
+          <div className={styles.name}>{mainProd.name}</div>
           <div className={styles.sku}>
-            <span className="color-black">SKU:</span> {data.mainCard.sku}
+            <span className="color-black">SKU:</span> {mainProd.sku}
           </div>
           {/* <div className={styles.description}>{data.mainCard.description}</div> */}
         </div>
         <div>
-          {data.smallcards.map((product) => (
-            <div>
+          {data.map((product) => (
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -10, left: -10 }}>
+                {' '}
+                <Checkbox
+                  checked={selected.find((s) => s.id === product.id)}
+                  color="default"
+                  onClick={(e) => handleSelected(!e.target.checked, product)}
+                />{' '}
+              </div>
               <HorizontalProductCard product={product} />
               <hr className="my-10px" />
             </div>
@@ -35,31 +52,26 @@ const ShopTheWholeoutfit = ({ data }) => {
               <PieChart
                 data={[
                   {
-                    title: "One",
-                    value: data.discount.selectedProducts,
-                    color: "black",
+                    title: 'One',
+                    value: selected.length,
+                    color: 'black',
                   },
                   {
-                    title: "Two",
-                    value:
-                      data.discount.totalProducts -
-                      data.discount.selectedProducts,
-                    color: "#b2aeae",
+                    title: 'Two',
+                    value: data.length - selected.length,
+                    color: '#b2aeae',
                   },
                 ]}
                 lineWidth={5}
-                label={() =>
-                  `${data.discount.selectedProducts}/${data.discount.totalProducts}`
-                }
+                label={() => `${selected.length}/${data.length}`}
                 labelPosition={0}
               />
             </div>
             <div className={styles.selectedCount}>
-              {data.discount.selectedProducts} out of{" "}
-              {data.discount.totalProducts} products selected
+              {selected.length} out of {data.length} products selected
             </div>
           </div>
-          {data.discount.discounts.map((discount) => (
+          {data?.discount?.discounts?.map((discount) => (
             <div
               className={`${styles.discount} d-flex p-12px justify-content-between`}
             >
@@ -72,14 +84,15 @@ const ShopTheWholeoutfit = ({ data }) => {
             className={`${styles.discount} d-flex p-12px justify-content-between`}
           >
             <div className={styles.name}>
-              {data.discount.selectedProducts} items | Subtotal
+              {selected.length} items | Subtotal
             </div>
-            <div className={styles.total}>USD {data.discount.total}</div>
+            <div className={styles.total}>
+              USD {selected.reduce((t, s) => s.priceWithoutCurrency + t, 0)}
+            </div>
           </div>
           <div className={styles.addToCart}>
             <span className={styles.text}>
-              Add {data.discount.totalProducts} of {data.discount.totalProducts}{" "}
-              items to cart
+              Add {selected.length} of {data.length} items to cart
             </span>
           </div>
         </div>

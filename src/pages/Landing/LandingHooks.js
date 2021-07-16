@@ -7,14 +7,10 @@ const useLanding = () => {
   useEffect(() => {
     getBanners(11)
       .then((response) => response.data)
-      .then((banner) =>
-        SetMiddleBanner(
-          banner
-        )
-      )
+      .then((banner) => SetMiddleBanner(banner))
       .catch((error) => console.log(error));
   }, []);
-  console.log('middleBanner', middleBanner)
+
   return {
     middleBanner,
   };

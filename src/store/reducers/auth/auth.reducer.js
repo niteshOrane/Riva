@@ -9,7 +9,6 @@ const INITIAL_STATE = {
 };
 
 const auth = (state = INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case DATA_TYPES.LOGIN_SUCCESS:
       return {

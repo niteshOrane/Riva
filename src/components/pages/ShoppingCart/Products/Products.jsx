@@ -1,7 +1,18 @@
-import React from "react";
-import style from "./Products.module.scss";
+import React from 'react';
+import { extractColorSize } from '../../../../util';
+import style from './Products.module.scss';
 
 const Products = ({ products }) => {
+  const getColorSize = (options) => {
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === '92' ? 'Color' : 'Size',
+        values: [{ value_index: o.option_value }],
+      }))
+    );
+
+    return { colors, size };
+  };
   return (
     <div className={style.products}>
       <div className={style.header}>
@@ -36,13 +47,21 @@ const Products = ({ products }) => {
                         <div className="d-flex align-items-center my-10px">
                           <span>Color:</span>
                           <span className="font-light-black">
-                            {product.color}
+                            {product?.color?.label ||
+                              getColorSize(
+                                product?.product_option?.extension_attributes
+                                  ?.configurable_item_options || []
+                              ).colors?.[0]?.label}
                           </span>
                         </div>
                         <div className="d-flex align-items-center my-10px">
                           <span>Size:</span>
                           <span className="font-light-black">
-                            {product.size}
+                            {product?.size?.label ||
+                              getColorSize(
+                                product?.product_option?.extension_attributes
+                                  ?.configurable_item_options || []
+                              ).size?.[0]?.label}
                           </span>
                         </div>
                         <div className="d-flex align-items-center my-10px">
@@ -62,13 +81,13 @@ const Products = ({ products }) => {
                           <span className="c-pointer material-icons-outlined">
                             remove
                           </span>
-                          <span>{product.quantity}</span>
+                          <span>{product.qty}</span>
                           <span className="c-pointer material-icons-outlined">
                             add
                           </span>
                         </div>
                         <strong className="f1 text-center  color-primary">
-                          ${product.price * product.quantity}
+                          ${product.price * product.qty}
                         </strong>
                       </div>
                       <div className={`text-right ${style.loyaltyPoints}`}>

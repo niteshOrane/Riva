@@ -15,12 +15,12 @@ function ProfileInfoForm() {
   const dispatch = useDispatch();
 
   const [values, setValues] = useState({
-    firstName: customer?.firstName,
-    lastName: customer?.lastName,
+    firstName: customer?.firstname,
+    lastName: customer?.lastname,
     email: customer?.email,
     number: customer?.username,
-    gender: '',
-    dob: '',
+    gender: customer.gender,
+    dob: customer.dob,
   });
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -34,6 +34,8 @@ function ProfileInfoForm() {
     cust.append('firstname', values.firstName);
     cust.append('email', values.email);
     cust.append('lastname', values.lastname);
+    cust.append('dob', values.dob);
+    cust.append('gender', values.gender);
 
     const res = await profileUpdate(cust);
 
@@ -95,7 +97,10 @@ function ProfileInfoForm() {
                   row
                   aria-label="position"
                   name="position"
-                  defaultValue="top"
+                  value={values.gender}
+                  onChange={(e) =>
+                    setValues({ ...values, gender: e.target.value })
+                  }
                 >
                   <section>
                     <FormControlLabel
@@ -103,7 +108,6 @@ function ProfileInfoForm() {
                       control={<Radio color="primary" />}
                       label="Male"
                       labelPlacement="start"
-                      onChange={handleChange}
                       name="gender"
                     />
                     <FormControlLabel
@@ -111,7 +115,6 @@ function ProfileInfoForm() {
                       control={<Radio color="primary" />}
                       label="Female"
                       labelPlacement="start"
-                      onChange={handleChange}
                       name="gender"
                     />
                   </section>
@@ -121,7 +124,12 @@ function ProfileInfoForm() {
             <section>
               <div>
                 <label>Date of Birth</label>
-                <input name="dob" onChange={handleChange} type="date" />
+                <input
+                  value={values.dob}
+                  name="dob"
+                  onChange={handleChange}
+                  type="date"
+                />
               </div>
             </section>
           </article>

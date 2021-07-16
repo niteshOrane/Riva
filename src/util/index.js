@@ -31,6 +31,8 @@ export const getStoreId = () =>
 
 export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
 
+export const getCartId = () => store?.getState()?.cart?.cart_id;
+
 export const deepEqual = (x, y) => {
   // eslint-disable-next-line one-var
   const ok = Object.keys,
@@ -48,3 +50,22 @@ export const hardReload = () =>
   setTimeout(() => {
     history.go();
   }, 0);
+
+export const extractColorSize = (attributes = []) => {
+  const { size = [], color = [] } = store.getState()?.common?.attributes || {};
+
+  const color_attr =
+    attributes?.find((e) => e?.label === 'Color')?.values || [];
+  const size_attr = attributes?.find((e) => e?.label === 'Size')?.values || [];
+
+  return {
+    colors:
+      color?.filter(
+        (c) => !!color_attr?.find((cr) => cr.value_index == c.value)
+      ) || [],
+    size:
+      size?.filter(
+        (s) => !!size_attr?.find((sr) => sr.value_index == s.value)
+      ) || [],
+  };
+};

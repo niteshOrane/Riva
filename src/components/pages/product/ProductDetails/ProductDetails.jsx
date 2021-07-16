@@ -9,7 +9,7 @@ import ImageDropdown from './components/ImageDropdown/ImageDropdown';
 import SizeGuide from './components/SizeGuide/SizeGuide';
 import { toggleWishlist } from '../../../../store/actions/wishlist';
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, setColorSize }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   let {
@@ -35,12 +35,9 @@ const ProductDetails = ({ product }) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: custom_attributes.find((attr) => attr.attribute_code === 'color')
-          ?.value,
-        quantity: 1,
-        size: custom_attributes.find((attr) => attr.attribute_code === 'size')
-          ?.value,
+        qty: 1,
         price: product.price,
+        ...product.selected,
       })
     );
 
@@ -72,6 +69,7 @@ const ProductDetails = ({ product }) => {
               classname="object-fit-fill h-100"
               width="100%"
               alt=""
+              type="product-details"
             />
             <ImageDropdown />
             <div className={styles.actionContainerTopRight}>
@@ -126,7 +124,21 @@ const ProductDetails = ({ product }) => {
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>Color:&nbsp;</div>
               {product?.colors?.map((c) => (
-                <div className={styles.text}>{c.label} </div>
+                <div
+                  onClick={() =>
+                    setColorSize({ ...product?.selected, color: c })
+                  }
+                  className={styles.text}
+                  style={{
+                    transform:
+                      product.selected.color.value === c.value
+                        ? 'scale(1.2)'
+                        : 'scale(1)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {c.label}{' '}
+                </div>
               ))}
 
               {/* <div className={`${styles.options} d-flex-all-center`}>
@@ -142,16 +154,24 @@ const ProductDetails = ({ product }) => {
               <div
                 className={`${styles.options} gap-12px d-flex align-items-center`}
               >
-                {product?.size?.length
-                  ? product?.size?.map((size) => {
-                      return (
-                        <div className={`${styles.option} d-flex-all-center`}>
-                          {size.label}
-                        </div>
-                      );
-                    })
-                  : custom_attributes?.find((e) => e?.attribute_code === 'size')
-                      ?.value}
+                {product?.size?.map((size) => {
+                  return (
+                    <div
+                      onClick={() =>
+                        setColorSize({ ...product?.selected, size })
+                      }
+                      className={`${styles.option} d-flex-all-center`}
+                      style={{
+                        transform:
+                          product.selected.size.value === size.value
+                            ? 'scale(1.2)'
+                            : 'scale(1)',
+                      }}
+                    >
+                      {size.label}
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div
@@ -239,9 +259,9 @@ const ProductDetails = ({ product }) => {
               <div className={styles.actions}>
                 <div className="d-flex align-items-center justify-content-between my-20px">
                   <div
-                    className={`${styles.quantity} d-flex align-items-center justify-content-between`}
+                    className={`${styles.qty} d-flex align-items-center justify-content-between`}
                   >
-                    <div className={styles.title}>Quantity:</div>
+                    <div className={styles.title}>qty:</div>
                     <div
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >

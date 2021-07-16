@@ -1,21 +1,26 @@
-import React from "react";
-import styles from "./DescriptionComposition.module.scss";
+import React from 'react';
+import styles from './DescriptionComposition.module.scss';
+
 const DescriptionComposition = ({ product, compositioncare, prodDiscr }) => {
-  console.log('compositioncare', compositioncare)
   return (
     <div className={styles.container}>
       <div className={styles.row}>
         <div className={styles.col}>
           <p className={styles.title}>Description</p>
           <div className="opacity-7">
-            <p>Model size: {prodDiscr.size}</p>
+            <p>Model size: {prodDiscr?.selected?.size?.label}</p>
             <p>Model height: {product.modelHeight}</p>
-            <p>Colour: {prodDiscr.color}</p>
-            <div className={styles.text} dangerouslySetInnerHTML={{ __html: prodDiscr.description }}/>
+            <p>Colour: {prodDiscr?.selected?.color?.label}</p>
+            <div
+              className={styles.text}
+              dangerouslySetInnerHTML={{ __html: prodDiscr.description }}
+            />
           </div>
         </div>
         <div className={styles.col}>
-          <p className={styles.title}>{compositioncare?.data?.[0]?.composition_label|| 'Composition'}</p>
+          <p className={styles.title}>
+            {compositioncare?.data?.[0]?.composition_label || 'Composition'}
+          </p>
           <strong className="my-10px d-inline-block">Outer</strong>
           <div className="my-10">
             <p className="opacity-7">{product.polyester}% polyester</p>

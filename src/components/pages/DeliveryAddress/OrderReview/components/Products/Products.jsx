@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./Products.module.scss";
+import React from 'react';
+import styles from './Products.module.scss';
 function Products({ products }) {
   return (
     <div className={styles.container}>
@@ -36,7 +36,7 @@ function Products({ products }) {
             </div>
           </div>
           <div className={styles.col2}>
-            <strong>{product?.quantity}</strong>
+            <strong>{product?.qty}</strong>
           </div>
           <div className={styles.col3}>
             <strong>${product?.subTotal}</strong>

@@ -1,10 +1,11 @@
-import React from "react";
-import { Drawer } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import BlackCloseBtn from "../Buttons/BlackCloseBtn/BlackCloseBtn";
-import { toggleCart, removeFromCart } from "../../../store/actions/cart";
-import style from "./style.module.scss";
+import React from 'react';
+import { Drawer } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
+import { toggleCart, removeFromCart } from '../../../store/actions/cart';
+import style from './style.module.scss';
+import { extractColorSize } from '../../../util';
 
 const Cart = () => {
   const { data: items = [], isOpen = false } = useSelector(
@@ -17,6 +18,17 @@ const Cart = () => {
     dispatch(toggleCart());
   };
 
+  const getColorSize = (options) => {
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === '92' ? 'Color' : 'Size',
+        values: [{ value_index: o.option_value }],
+      }))
+    );
+
+    return { colors, size };
+  };
+
   return (
     <div key="cartlist">
       <Drawer anchor="right" onClose={handleClose} open={isOpen}>
@@ -26,16 +38,16 @@ const Cart = () => {
             <BlackCloseBtn handleClose={handleClose} drawerPosition="right" />
           </div>
           <div className={style.sideMsg}>
-            <div className="d-flex align-items-center bg-grey p-12px">
+            {/* <div className="d-flex align-items-center bg-grey p-12px">
               <span className="color-black material-icons-outlined">done</span>
               <span className="font-weight-600">
                 THIS ITEM HAS BEEN ADDED TO YOUR CART
               </span>
-            </div>
+            </div> */}
           </div>
           <div className={style.sideBody}>
             <div className={style.items}>
-              {items.map((item, index) => (
+              {items?.map((item, index) => (
                 <div className={style.sideItem} key={`cart_inner_${index}`}>
                   <div id={style.bdrBtm} className="d-flex align-items-center">
                     <div className={style.itemImg}>
@@ -52,7 +64,13 @@ const Cart = () => {
                         <div className="d-flex align-items-center justify-content-between">
                           <div>
                             <span className="font-weight-600">Color: </span>
-                            <span className="color-grey">{item.color}</span>
+                            <span className="color-grey">
+                              {item?.color?.label ||
+                                getColorSize(
+                                  item?.product_option?.extension_attributes
+                                    ?.configurable_item_options || []
+                                ).colors?.[0]?.label}
+                            </span>
                           </div>
                           <div>
                             <span className="font-weight-600 color-primary">
@@ -63,7 +81,13 @@ const Cart = () => {
                         <div className="d-flex align-items-center justify-content-between">
                           <div>
                             <span className="font-weight-600">Size: </span>
-                            <span className="color-grey">{item.size}</span>
+                            <span className="color-grey">
+                              {item?.size?.label ||
+                                getColorSize(
+                                  item?.product_option?.extension_attributes
+                                    ?.configurable_item_options || []
+                                ).size?.[0]?.label}
+                            </span>
                           </div>
                           <div>
                             <span>
@@ -76,12 +100,12 @@ const Cart = () => {
                         <div className="d-flex align-items-center justify-content-between">
                           <div>
                             <span className="font-weight-600">Qty: </span>
-                            <span className="color-grey">{item.quantity}</span>
+                            <span className="color-grey">{item.qty}</span>
                           </div>
                           <div>
                             <span
                               onClick={() => dispatch(removeFromCart(item))}
-                              style={{ cursor: "pointer" }}
+                              style={{ cursor: 'pointer' }}
                             >
                               <span className="material-icons-outlined">
                                 close
@@ -115,8 +139,14 @@ const Cart = () => {
             </div>
             <div className="text-right p-12px">
               <h4>
-                <strong>Total</strong>{" "}
-                <strong className="color-primary">$43.43</strong>
+                <strong>Total</strong>{' '}
+                <strong className="color-primary">
+                  $
+                  {items.reduce(
+                    (total, item) => total + item.price * item.qty,
+                    0
+                  ) || 0}
+                </strong>
               </h4>
             </div>
             <div className="text-left p-12px">

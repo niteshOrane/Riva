@@ -1,5 +1,6 @@
 import axios from 'axios';
 import API_URL from '../../enviroments/index';
+import { getStoreId } from '../../util';
 
 const urlPath = 'http://65.0.141.49/shop/index.php';
 
@@ -26,6 +27,15 @@ export const getCompositioncare = (id) => {
     method: 'post',
     url: `${urlPath}/rest/V1/compositioncare`,
     data: { productid: id },
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const getHowToWear = (id) => {
+  const config = {
+    method: 'get',
+    url: `${API_URL}/webapi/howtowear?productId=${id}&storeId=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
