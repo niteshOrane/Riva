@@ -4,7 +4,28 @@ import { getStoreId } from '../../util';
 
 const urlPath = 'http://65.0.141.49/shop/index.php';
 
-export const getProduct = (sku) => {
+export const getProductColor = (id) => {
+  const colorAttr = new FormData();
+  colorAttr.append("productId", id);
+  const config = {
+    method: 'post',
+    url: `${urlPath}/rest/V1/colorproduct`,
+    data: colorAttr,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const getProductMedia = (sku) => {
+  const config = {
+    method: 'get',
+    url: `${urlPath}/rest/V1/products/${sku}/media`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const getProduct= (sku) => {
   const config = {
     method: 'get',
     url: `${API_URL}/products/${sku}`,

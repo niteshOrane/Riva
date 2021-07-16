@@ -12,6 +12,8 @@ import {
   getProduct,
   getCompositioncare,
   getHowToWear,
+  getProductMedia,
+  getProductColor
 } from '../../services/product/product.service';
 import ProductCard from '../../components/common/Cards/ProductCard';
 import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
@@ -34,6 +36,8 @@ const Product = (props) => {
   const [compositioncare, setCompositioncare] = useState({});
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
+  const [mediaImage, setMediaImage] = useState([]);
+  const [colorImage, setColorImage] = useState([]);
 
   const setUpHowToWear = async (id) => {
     const res = await getHowToWear(id);
@@ -75,7 +79,11 @@ const Product = (props) => {
           size: size?.[0] || {},
         },
       };
-
+      const productMediaImage = await getProductMedia(sku);
+      const productColorImage = await getProductColor(res?.data?.id);
+      setMediaImage(productMediaImage);
+      setColorImage(productColorImage);
+      
       setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -92,11 +100,11 @@ const Product = (props) => {
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-
+  
   if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
   return (
     <div>
-      <ProductDetails product={product} setColorSize={setColorSize} />
+      <ProductDetails product={product} setColorSize={setColorSize} mediaImage={mediaImage} colorImage={mediaImage}/>
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}

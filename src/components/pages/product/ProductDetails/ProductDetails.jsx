@@ -9,7 +9,8 @@ import ImageDropdown from './components/ImageDropdown/ImageDropdown';
 import SizeGuide from './components/SizeGuide/SizeGuide';
 import { toggleWishlist } from '../../../../store/actions/wishlist';
 
-const ProductDetails = ({ product, setColorSize }) => {
+const ProductDetails = (props) => {
+  const { product, setColorSize, mediaImage, colorImage }= props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   let {
