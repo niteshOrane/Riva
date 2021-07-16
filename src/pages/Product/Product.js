@@ -10,7 +10,6 @@ import DescriptionComposition from "../../components/pages/product/DescriptionCo
 import {
   getAttributes,
   getProduct,
-  getColor,
   getCompositioncare,
   getHowToWear,
 } from "../../services/product/product.service";
@@ -23,6 +22,7 @@ import styles from "./product.module.scss";
 import { products } from "../../db.json";
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
+import axios from "axios";
 
 const Product = (props) => {
   const { match } = props;
@@ -88,7 +88,6 @@ const Product = (props) => {
     setloading(false);
   };
 
-
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
@@ -96,7 +95,13 @@ const Product = (props) => {
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-
+  // useEffect(() => {
+  //   if(product.id){
+  //     const sliderImg = new FormData();
+  //     sliderImg.append("productId",product.id)
+  //     axios.get(`http://65.0.141.49/shop/index.php/rest/V1/products/137108-19012-005/media`).then(res => console.log(res))
+  //   }
+  // },[product.id])
   if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
   return (
     <div>

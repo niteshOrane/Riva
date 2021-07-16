@@ -17,16 +17,16 @@ const ProductDetails = ({ product, setColorSize }) => {
   const [outOfStock, setOutOfStock] = useState(true);
   const [colorAttributes, setColorAttributes] = useState(null);
   const [productQuantity, setProductQuantity] = useState(1);
-  useEffect(() => {
-    if (product) {
-      const colorAttr = new FormData();
-      colorAttr.append("productId", product.id);
-      // axios
-      //   .post(`${process.env.REACT_APP_DEV}/colorproduct`, colorAttr)
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (product) {
+  //     const colorAttr = new FormData();
+  //     colorAttr.append("productId", product.id);
+  //     axios
+  //       .post(`${process.env.REACT_APP_DEV}/colorproduct`, colorAttr)
+  //       .then((res) => console.log(res))
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [product.id]);
   let {
     origprice = 0,
     origpriceWithoutCurrency = 0,
@@ -291,6 +291,7 @@ const ProductDetails = ({ product, setColorSize }) => {
                         <span
                           onClick={handleDecrementProduct}
                           className="material-icons-outlined font-light-black"
+                          style ={{cursor:"pointer"}}
                         >
                           remove
                         </span>
@@ -300,6 +301,7 @@ const ProductDetails = ({ product, setColorSize }) => {
                         <span
                           onClick={handleIncrementProduct}
                           className="material-icons-outlined font-light-black"
+                          style ={{cursor:"pointer"}}
                         >
                           add
                         </span>
