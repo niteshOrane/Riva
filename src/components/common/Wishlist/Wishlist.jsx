@@ -40,8 +40,10 @@ function Wishlist() {
       dispatch(removeWishlist(data));
       dispatch(getWishlist());
     }
-    else { dispatch(addWishlist(data)); 
-      dispatch(getWishlist());}
+    else { 
+      dispatch(addWishlist(data)); 
+      dispatch(getWishlist());
+    }
     handleClose();
   };
 
