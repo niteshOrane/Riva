@@ -18,13 +18,21 @@
   button {
     border: none;
     background-color: #373636;
-    padding: 12px;
+    width: 5rem;
+    height: 2.8rem;
     color: grey;
     font-size: 1.1rem;
     cursor: pointer;
+    @media screen and (max-width:950px) {
+      padding: 0.1rem;
+    }
   }
 }
 
 .outOfstockForm{
   display: flex;
+  @media screen and (max-width:950px) {
+    display: flex;
+    flex-direction: column;
+  }
 }

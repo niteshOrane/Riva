@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Image from "../../../common/LazyImage/Image";
@@ -9,11 +9,24 @@ import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
 import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
+import axios from "axios";
 
 const ProductDetails = ({ product, setColorSize }) => {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [outOfStock, setOutOfStock] = useState(true);
+  const [colorAttributes, setColorAttributes] = useState(null);
+  const [productQuantity, setProductQuantity] = useState(1);
+  useEffect(() => {
+    if (product) {
+      const colorAttr = new FormData();
+      colorAttr.append("productId", product.id);
+      // axios
+      //   .post(`${process.env.REACT_APP_DEV}/colorproduct`, colorAttr)
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
+    }
+  }, []);
   let {
     origprice = 0,
     origpriceWithoutCurrency = 0,
@@ -30,6 +43,13 @@ const ProductDetails = ({ product, setColorSize }) => {
   const dispatch = useDispatch();
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
 
+  const handleIncrementProduct = () => {
+    setProductQuantity((prevState) => prevState + 1);
+  };
+  const handleDecrementProduct = () => {
+    if (productQuantity === 1) return;
+    setProductQuantity((prevState) => prevState - 1);
+  };
   const addToCardHandler = () =>
     dispatch(
       addToCart({
@@ -268,13 +288,19 @@ const ProductDetails = ({ product, setColorSize }) => {
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >
                       <div>
-                        <span className="material-icons-outlined font-light-black">
+                        <span
+                          onClick={handleDecrementProduct}
+                          className="material-icons-outlined font-light-black"
+                        >
                           remove
                         </span>
                       </div>
-                      <div>1</div>
+                      <div>{productQuantity}</div>
                       <div>
-                        <span className="material-icons-outlined font-light-black">
+                        <span
+                          onClick={handleIncrementProduct}
+                          className="material-icons-outlined font-light-black"
+                        >
                           add
                         </span>
                       </div>

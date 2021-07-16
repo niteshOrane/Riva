@@ -9,7 +9,9 @@
 body {
   font-family: "Roboto", sans-serif;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 // ul, li{
 //     list-style: none;
 // }
