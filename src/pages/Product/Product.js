@@ -104,7 +104,7 @@ const Product = (props) => {
   if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
   return (
     <div>
-      <ProductDetails product={product} setColorSize={setColorSize} mediaImage={mediaImage} colorImage={mediaImage}/>
+      <ProductDetails product={product} setColorSize={setColorSize} mediaImage={mediaImage} colorImage={colorImage}/>
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
