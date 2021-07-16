@@ -82,8 +82,8 @@ const Product = (props) => {
       };
       const productMediaImage = await getProductMedia(sku);
       const productColorImage = await getProductColor(res?.data?.id);
-      setMediaImage(productMediaImage);
-      setColorImage(productColorImage);
+      setMediaImage(productMediaImage?.data);
+      setColorImage(productColorImage?.data);
       
       setCompositioncare(rescompositioncare);
       setproduct(p);
@@ -109,9 +109,9 @@ const Product = (props) => {
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
-          items={productDetailsSimleCard}
+          items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={item} />}
+          render={(item) => <ImageCard product={{src:item?.file}} />}
         />
       </div>
       <DescriptionComposition

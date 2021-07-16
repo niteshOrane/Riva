@@ -34,7 +34,7 @@ const Cart = () => {
       <Drawer anchor="right" onClose={handleClose} open={isOpen}>
         <div className={style.sidebarContainer}>
           <div className="d-flex align-items-end justify-content-between p-12px">
-            <h3 className={style.addedMsg}>Added To Cart (2)</h3>
+            <h3 className={style.addedMsg}>Added To Cart ({items.length})</h3>
             <BlackCloseBtn handleClose={handleClose} drawerPosition="right" />
           </div>
           <div className={style.sideMsg}>
@@ -89,13 +89,13 @@ const Cart = () => {
                                 ).size?.[0]?.label}
                             </span>
                           </div>
-                          <div>
+                          {/* <div>
                             <span>
                               <span className="material-icons-outlined">
                                 edit
                               </span>
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="d-flex align-items-center justify-content-between">
                           <div>
@@ -153,12 +153,14 @@ const Cart = () => {
               <h4 className="color-grey">*Before taxes</h4>
             </div>
             <div className={style.processBtns}>
-              <button
-                type="button"
-                className="bg-black color-white p-12px w-100 d-block"
-              >
-                GO TO CHECKOUT
-              </button>
+              <Link to="/cart-payment">
+                <button
+                  type="button"
+                  className="bg-black color-white p-12px w-100 d-block"
+                >
+                  GO TO CHECKOUT
+                </button>
+              </Link>
               <Link to="/shopping-cart" href="/shopping-cart">
                 <button
                   type="button"

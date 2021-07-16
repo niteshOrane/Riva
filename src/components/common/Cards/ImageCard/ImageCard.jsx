@@ -1,13 +1,16 @@
 import React from "react";
 
+import Image from "../../LazyImage/Image";
+
 const ImageCard = ({ product }) => {
   return (
     <div>
-      <img
+      <Image
         src={product.src}
         width="100%"
         className="object-fit-contain"
         alt="change me"
+        type="product-details"
       />
     </div>
   );

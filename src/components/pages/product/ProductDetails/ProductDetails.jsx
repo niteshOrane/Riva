@@ -1,34 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import Image from "../../../common/LazyImage/Image";
-import styles from "./productDetails.module.scss";
-import { addToCart } from "../../../../store/actions/cart";
-import SizeCard from "./components/SizeCard/SizeCard";
-import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
-import SizeGuide from "./components/SizeGuide/SizeGuide";
-import { toggleWishlist } from "../../../../store/actions/wishlist";
-import OutOfStock from "./outOfStock/OutOfStock";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import Image from '../../../common/LazyImage/Image';
+import styles from './productDetails.module.scss';
+import { addToCart } from '../../../../store/actions/cart';
+import SizeCard from './components/SizeCard/SizeCard';
+import ImageDropdown from './components/ImageDropdown/ImageDropdown';
+import SizeGuide from './components/SizeGuide/SizeGuide';
+import { toggleWishlist } from '../../../../store/actions/wishlist';
+import OutOfStock from './outOfStock/OutOfStock';
+import axios from 'axios';
 
 const ProductDetails = (props) => {
-  const { product, setColorSize, mediaImage, colorImage }= props;
+  const { product, setColorSize, mediaImage, colorImage } = props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
-  const [outOfStock, setOutOfStock] = useState(true);
-  const [colorAttributes, setColorAttributes] = useState(null);
+  const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
-  console.log(mediaImage,colorImage)
-  // useEffect(() => {
-  //   if (product) {
-  //     const colorAttr = new FormData();
-  //     colorAttr.append("productId", product.id);
-  //     axios
-  //       .post(`${process.env.REACT_APP_DEV}/colorproduct`, colorAttr)
-  //       .then((res) => console.log(res))
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [product.id]);
+
   let {
     origprice = 0,
     origpriceWithoutCurrency = 0,
@@ -37,7 +26,7 @@ const ProductDetails = (props) => {
   const { price, visibility = 0, custom_attributes } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
-      (e) => e?.attribute_code === "special_price"
+      (e) => e?.attribute_code === 'special_price'
     )?.value;
     origprice = origpriceWithoutCurrency;
     priceWithoutCurrency = price;
@@ -52,6 +41,7 @@ const ProductDetails = (props) => {
     if (productQuantity === 1) return;
     setProductQuantity((prevState) => prevState - 1);
   };
+
   const addToCardHandler = () =>
     dispatch(
       addToCart({
@@ -59,7 +49,7 @@ const ProductDetails = (props) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        qty: 1,
+        qty: productQuantity,
         price: product.price,
         ...product.selected,
       })
@@ -100,9 +90,9 @@ const ProductDetails = (props) => {
               <div onClick={handleWishList}>
                 <span
                   className="material-icons-outlined font-light-black"
-                  style={{ color: isAddedToWishlist ? "red" : "black" }}
+                  style={{ color: isAddedToWishlist ? 'red' : 'black' }}
                 >
-                  {isAddedToWishlist ? "favorite" : "favorite_border"}
+                  {isAddedToWishlist ? 'favorite' : 'favorite_border'}
                 </span>
               </div>
             </div>
@@ -124,8 +114,8 @@ const ProductDetails = (props) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+                <Star style={{ fill: '#FFD700', fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
                 <Star style={{ fontSize: 16 }} />
@@ -140,7 +130,7 @@ const ProductDetails = (props) => {
             </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
-                <div className={styles.was}>Was ${origprice || ""}</div>
+                <div className={styles.was}>Was ${origprice || ''}</div>
               ) : null}
               <div className={styles.now}>Now ${price}</div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -156,12 +146,12 @@ const ProductDetails = (props) => {
                   style={{
                     transform:
                       product.selected.color.value === c.value
-                        ? "scale(1.2)"
-                        : "scale(1)",
-                    cursor: "pointer",
+                        ? 'scale(1.2)'
+                        : 'scale(1)',
+                    cursor: 'pointer',
                   }}
                 >
-                  {c.label}{" "}
+                  {c.label}{' '}
                 </div>
               ))}
 
@@ -188,8 +178,8 @@ const ProductDetails = (props) => {
                       style={{
                         transform:
                           product.selected.size.value === size.value
-                            ? "scale(1.2)"
-                            : "scale(1)",
+                            ? 'scale(1.2)'
+                            : 'scale(1)',
                       }}
                     >
                       {size.label}
@@ -211,7 +201,7 @@ const ProductDetails = (props) => {
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li">
-                  <a href="/" className="d-flex align-items-center">
+                  <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       straighten
                     </span>
@@ -225,10 +215,10 @@ const ProductDetails = (props) => {
                         Size Guide
                       </span>
                     </button>
-                  </a>
+                  </span>
                 </li>
                 <li className="nav-li">
-                  <a href="/" className="d-flex align-items-center">
+                  <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       search
                     </span>
@@ -242,7 +232,7 @@ const ProductDetails = (props) => {
                         Find your size
                       </span>
                     </button>
-                  </a>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -293,7 +283,7 @@ const ProductDetails = (props) => {
                         <span
                           onClick={handleDecrementProduct}
                           className="material-icons-outlined font-light-black"
-                          style ={{cursor:"pointer"}}
+                          style={{ cursor: 'pointer' }}
                         >
                           remove
                         </span>
@@ -303,7 +293,7 @@ const ProductDetails = (props) => {
                         <span
                           onClick={handleIncrementProduct}
                           className="material-icons-outlined font-light-black"
-                          style ={{cursor:"pointer"}}
+                          style={{ cursor: 'pointer' }}
                         >
                           add
                         </span>
@@ -317,7 +307,7 @@ const ProductDetails = (props) => {
                       <div className={styles.title}>Availability: </div>
                       &nbsp;
                       <div className={styles.text}>
-                        {outOfStock ? "Out Of Stock" : "In Stock"}
+                        {outOfStock ? 'Out Of Stock' : 'In Stock'}
                       </div>
                     </div>
                   </div>
@@ -346,9 +336,9 @@ const ProductDetails = (props) => {
                   >
                     <span
                       className="material-icons-outlined"
-                      style={{ color: isAddedToWishlist ? "red" : "black" }}
+                      style={{ color: isAddedToWishlist ? 'red' : 'black' }}
                     >
-                      {isAddedToWishlist ? "favorite" : "favorite_border"}
+                      {isAddedToWishlist ? 'favorite' : 'favorite_border'}
                     </span>
                   </div>
                 </div>
@@ -356,19 +346,19 @@ const ProductDetails = (props) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: "Delivery & returns",
-                      icon: "/assets/images/delivery.png",
+                      name: 'Delivery & returns',
+                      icon: '/assets/images/delivery.png',
                     },
                     {
-                      name: "Search in store",
-                      icon: "/assets/images/shop.png",
+                      name: 'Search in store',
+                      icon: '/assets/images/shop.png',
                     },
                     {
-                      name: "Product details",
-                      icon: "/assets/images/tshirt.png",
+                      name: 'Product details',
+                      icon: '/assets/images/tshirt.png',
                     },
-                    { name: "Review", icon: "/assets/images/review.png" },
-                    { name: "Share", icon: "/assets/images/share.png" },
+                    { name: 'Review', icon: '/assets/images/review.png' },
+                    { name: 'Share', icon: '/assets/images/share.png' },
                   ].map((item) => {
                     return (
                       <div className="d-flex align-items-center gap-12px my-10px">

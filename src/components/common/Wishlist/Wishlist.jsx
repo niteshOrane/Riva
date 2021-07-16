@@ -42,7 +42,6 @@ function Wishlist() {
     }
     else { 
       dispatch(addWishlist(data)); 
-      dispatch(getWishlist());
     }
     handleClose();
   };
