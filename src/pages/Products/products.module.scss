@@ -44,6 +44,7 @@
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
   display: grid;
+  grid-auto-flow: dense;
   grid-gap: 12px;
   min-height: 90vh;
   @include tablet {

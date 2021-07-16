@@ -32,7 +32,7 @@ function OutOfStock({ productId }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className = {style.outOfstockForm} onSubmit={handleSubmit}>
         <div className={style.inp}>
           <input
             onChange={(e) => setEmailAddress(e.target.value)}

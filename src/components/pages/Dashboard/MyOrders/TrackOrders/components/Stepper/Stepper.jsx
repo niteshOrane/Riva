@@ -1,57 +1,57 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import * as icons from "../../../../../../common/Icons/Icons";
-import StepConnector from "@material-ui/core/StepConnector";
-import styles from "./Stepper.module.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import * as icons from '../../../../../../common/Icons/Icons';
+import StepConnector from '@material-ui/core/StepConnector';
+import styles from './Stepper.module.scss';
 const ColorlibConnector = withStyles({
   alternativeLabel: {
-    top: "50%",
-    left: "-100%",
-    right: "0",
+    top: '50%',
+    left: '-100%',
+    right: '0',
   },
   active: {
-    "& $line": {
-      background: "#000",
+    '& $line': {
+      background: '#000',
     },
   },
   completed: {
-    "& $line": {
-      background: "#000",
+    '& $line': {
+      background: '#000',
     },
   },
   line: {
     height: 5,
     border: 0,
-    backgroundColor: "#eaeaf0",
+    backgroundColor: '#eaeaf0',
     borderRadius: 1,
   },
 })(StepConnector);
 
 const useColorlibStepIconStyles = makeStyles({
   root: {
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
     zIndex: 1,
-    color: "#fff",
+    color: '#fff',
     width: 50,
     height: 50,
-    display: "flex",
-    borderRadius: "50%",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   active: {
-    background: "#000",
-    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
+    background: '#000',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
   },
   completed: {
-    background: "#000",
+    background: '#000',
   },
   test: {
-    background: "red",
+    background: 'red',
   },
 });
 
@@ -90,10 +90,10 @@ ColorlibStepIcon.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: '100%',
   },
   steperBody: {
-    padding: "0",
+    padding: '0',
   },
   button: {
     marginRight: theme.spacing(1),
@@ -107,20 +107,20 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     {
-      name: "Ordered",
-      text: "Thu, 13th May",
+      name: 'Ordered',
+      text: 'Thu, 13th May',
     },
     {
-      name: "Packed",
-      text: "Fri, 14th May",
+      name: 'Packed',
+      text: 'Fri, 14th May',
     },
     {
-      name: "Shipped",
-      text: "Fri, 14th May",
+      name: 'Shipped',
+      text: 'Fri, 14th May',
     },
     {
-      name: "Delivered",
-      text: "Expeted by Mon, 17th",
+      name: 'Delivered',
+      text: 'Expeted by Mon, 17th',
     },
   ];
 }
@@ -169,10 +169,9 @@ export default function OrderStepper() {
           <Step className="text-center" key={label}>
             <div className="my-12px">{label.name}</div>
             <StepLabel StepIconComponent={ColorlibStepIcon}>
-              {console.log(i)}
               <p
                 className={`font-weight-600  ${
-                  i === 3 ? "color-black" : "greyText"
+                  i === 3 ? 'color-black' : 'greyText'
                 }`}
               >
                 {label.text}

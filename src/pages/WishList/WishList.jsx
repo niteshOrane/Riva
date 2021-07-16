@@ -11,8 +11,6 @@ function WishList() {
 
   const dispatch = useDispatch();
 
-  console.log(wishlist);
-
   const removeFromWishlist = (data) => {
     dispatch(removeWishlist(data));
   };

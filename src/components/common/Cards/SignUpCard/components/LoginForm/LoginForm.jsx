@@ -71,8 +71,6 @@ const LoginForm = ({ handleSubmit }) => {
 
     const res = await loginCustomer(customer);
 
-    console.log(redirectTo);
-
     if (res.status === 200) {
       if (res?.data?.success) {
         handleSubmit();
@@ -86,21 +84,20 @@ const LoginForm = ({ handleSubmit }) => {
             'success'
           )
         );
-      
-      }
-      else{
+      } else {
         dispatch(
           showSnackbar(
             typeof res?.data?.data === 'string'
               ? res?.data?.data
-              : 'Login Success',
-            'success'
+              : res.data.message || 'Login failure',
+            'error'
           )
         );
       }
+      console.log(res?.data?.data !== 'string', redirectTo);
       return typeof res?.data?.data !== 'string'
-      ? history.push(redirectTo ?? '/dashboard')
-      : null;
+        ? history.push(redirectTo || '/dashboard')
+        : null;
     }
     return dispatch(showSnackbar('Something went wrong', 'error'));
   };

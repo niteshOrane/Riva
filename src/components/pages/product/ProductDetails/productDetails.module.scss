@@ -363,7 +363,7 @@
     }
 
     .actions {
-      .quantity {
+      .qty {
         font-family: Jost;
         font-size: 16px;
         font-weight: 700;
@@ -431,6 +431,7 @@
 
       .wishlist {
         width: 55px;
+        cursor: pointer;
       }
 
       .other {

@@ -13,7 +13,6 @@ const NavLinks = () => {
   const wishlist = useSelector((state) => state.wishlist.data);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
   const openSignUpCard = (redirectTo) => {
     dispatch(toggleSignUpCard({ redirectTo }));
   };
@@ -33,7 +32,7 @@ const NavLinks = () => {
             favorite_border
           </span>
           <span className="align-self-end font-light-black">
-            Wishlist ({wishlist.length ?? 0})
+            Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
           </span>{' '}
         </span>
       </li>

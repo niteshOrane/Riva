@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Image from '../../LazyImage/Image';
@@ -8,7 +8,7 @@ import {
   showSnackbar,
 } from '../../../../store/actions/common';
 import { addToCart } from '../../../../store/actions/cart';
-import { URL } from '../../../../util';
+import { extractColorSize, URL } from '../../../../util';
 import styles from './product.module.scss';
 
 const TempLink = ({ children, product }) => {
@@ -40,9 +40,19 @@ const ProductCard = ({
     price = `$${price}`;
   }
   const wishList = useSelector((state) => state.wishlist.data);
-  const { size = [], color = [] } = useSelector(
-    (state) => state?.common?.attributes || {}
-  );
+
+  const [attributes, setattributes] = useState({ colors: [], size: [] });
+
+  useEffect(() => {
+    if (product?.extension_attributes?.configurable_product_options) {
+      const { colors, size } = extractColorSize(
+        product?.extension_attributes?.configurable_product_options || []
+      );
+
+      setattributes({ colors, size });
+    }
+  }, [product]);
+
   const dispatch = useDispatch();
 
   const handleWishList = () => {
@@ -60,15 +70,12 @@ const ProductCard = ({
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        color: custom_attributes?.find((e) => e?.attribute_code === 'color')
-          ?.value,
-        quantity: 1,
-        size: custom_attributes?.find((e) => e?.attribute_code === 'size')
-          ?.value,
+        color: attributes.colors?.[0] || {},
+        size: attributes.size?.[0] || {},
+        qty: 1,
         price: product.price,
       })
     );
-    dispatch(showSnackbar('Added to cart', 'success'));
   };
 
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
@@ -137,7 +144,7 @@ const ProductCard = ({
           }`}
           title={name}
         >
-          {name}
+          {name || 'not available'}
         </div>
         <div
           className={`${styles.productPrice} ${
@@ -158,34 +165,10 @@ const ProductCard = ({
           }`}
         >
           <div>
-            {color
-              ?.filter(
-                (c) =>
-                  c?.value ===
-                    custom_attributes?.find(
-                      (e) => e?.attribute_code === 'color'
-                    )?.value || ''
-              )
-              ?.map((c) => (
-                <div className={styles.text}>{c.label} </div>
-              ))}
+            {attributes.colors?.map((c) => (
+              <div className={styles.text}>{c.label} </div>
+            ))}
           </div>
-          {/*<div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_red}`}>
-              <span className={styles.tooltiptext}>Red</span>
-            </div>
-          </div>
-          <div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_oranage}`}>
-              <span className={styles.tooltiptext}>Orange</span>
-            </div>
-          </div>
-          <div className={styles.colorContainer}>
-            <div className={`${styles.color} ${styles.color_blue}`}>
-              <span className={styles.tooltiptext}>Blue</span>
-            </div>
-          </div>
-              */}
         </div>
       </TempLink>
     </div>

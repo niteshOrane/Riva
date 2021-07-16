@@ -1,86 +1,31 @@
-import axios from "axios";
-import React, { useState } from "react";
-import {useDispatch } from "react-redux";
-import * as icons from "../../../common/Icons/Icons";
-import Products from "./components/Products/Products";
-import styles from "./OrderReview.module.scss";
-import { showSnackbar } from "../../../../store/actions/common";
+import React from 'react';
+import * as icons from '../../../common/Icons/Icons';
+import Products from './components/Products/Products';
+import styles from './OrderReview.module.scss';
 
 const randomProducts = [
   {
     image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/63eb296e-bc16-4408-be8c-d891ed52494a.png",
-    name: "High Waist Slim Fit Trouser",
-    color: "White",
-    size: "XL",
-    quantity: "1",
-    subTotal: "43.50",
+      'https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/63eb296e-bc16-4408-be8c-d891ed52494a.png',
+    name: 'High Waist Slim Fit Trouser',
+    color: 'White',
+    size: 'XL',
+    qty: '1',
+    subTotal: '43.50',
   },
   {
     image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/7efe70bf-b931-49dc-8fda-c7de160eeb54.png",
-    name: "High Waist Slim Fit Trouser",
-    color: "White",
-    size: "XL",
-    quantity: "1",
-    subTotal: "43.50",
+      'https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/7efe70bf-b931-49dc-8fda-c7de160eeb54.png',
+    name: 'High Waist Slim Fit Trouser',
+    color: 'White',
+    size: 'XL',
+    qty: '1',
+    subTotal: '43.50',
   },
 ];
 
 function OrderReview() {
-  const dispatch = useDispatch();
   const [news, setNews] = React.useState(true);
-  const [couponCode, setCouponCode] = useState("");
-  const [couponDiscount, setCouponDiscount] = useState(null);
-  const [discount,setDiscount] = useState(null)
-  const customerid = 321092;
-
-  const handleApplyCoupon = async (e) => {
-    e.preventDefault();
-    if (customerid && couponCode !== "") {
-      const coupon = new FormData();
-      coupon.append("customerid", customerid);
-      coupon.append("couponcode", couponCode);
-      const config = {
-        method: "post",
-        url: `${process.env.REACT_APP_DEV}/applyCoupon`,
-        silent: true,
-        data: coupon,
-      };
-      const res = await axios(config);
-      if (res.data.success === 200) {
-        dispatch(showSnackbar(res.data.message, "success"));
-        setCouponDiscount(true);
-        setDiscount(res.data.data.discount)
-      }else if(res.data.success===201){
-        dispatch(showSnackbar(res.data.message, "success"));
-        setCouponDiscount(true)
-      }
-    }
-  };
-
-
-
-  const handleRemoveCoupon = async (e) => {
-    e.preventDefault();
-    if (customerid) {
-      const removeCoupon = new FormData();
-      removeCoupon.append("customerid", customerid);
-      const config = {
-        method: "post",
-        url: `${process.env.REACT_APP_DEV}/removeCoupon`,
-        silent: true,
-        data: removeCoupon,
-      };
-      const res = await axios(config);
-      if (res.status === 200) {
-        dispatch(showSnackbar("Coupon removed successfully", "success"));
-        setCouponDiscount(false);
-        setCouponCode("")
-        setDiscount(null)
-      }
-    }
-  };
 
   return (
     <div>
@@ -92,7 +37,7 @@ function OrderReview() {
         </div>
       </div>
       <div className="mt-20px d-flex align-items-center">
-        <span style={{ margin: "4px" }}>
+        <span style={{ margin: '4px' }}>
           <icons.CouponIcon />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
@@ -100,29 +45,8 @@ function OrderReview() {
         </span>
       </div>
       <div className={styles.applyCoupon}>
-        <input
-          name="coupon"
-          onChange={(event) => setCouponCode(event.target.value)}
-          type="text"
-          value={couponCode}
-        />
-        <button
-          type="button"
-          onClick={handleApplyCoupon}
-          className={styles.applyBtn}
-        >
-          APPLY
-        </button>
-        {couponDiscount && (
-          <button
-            type="button"
-            onClick={handleRemoveCoupon}
-            className={styles.applyBtn}
-            style={{ marginLeft: "0.5rem" }}
-          >
-            REMOVE
-          </button>
-        )}
+        <input type="text" />
+        <button className={styles.applyBtn}>APPLY</button>
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">
@@ -183,7 +107,7 @@ function OrderReview() {
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${discount ? (82.5-discount) :82.5}</strong>
+        <strong>${82.5}</strong>
       </div>
       <div className="d-flex align-items-center mt-12px">
         <input
@@ -207,7 +131,7 @@ function OrderReview() {
         />
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span style={{ marginRight: '12px' }}>
           <icons.Return />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
@@ -215,7 +139,7 @@ function OrderReview() {
         </span>
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span style={{ marginRight: '12px' }}>
           <icons.Secure />
         </span>
         <div>

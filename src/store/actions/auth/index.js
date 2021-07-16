@@ -1,4 +1,5 @@
 import * as DATA_TYPES from '../../types';
+import { getCart } from '../cart';
 import { getWishlist } from '../wishlist';
 
 export const loginSuccess = (data) => (dispatch) => {
@@ -7,6 +8,13 @@ export const loginSuccess = (data) => (dispatch) => {
     payload: { customer: data, token: 'temp_jwt_token' },
   });
   dispatch(getWishlist());
+  dispatch(
+    dispatch({
+      type: DATA_TYPES.SET_CART_ID,
+      payload: { cart_id: data.quoteid },
+    })
+  );
+  if (data.quoteid && data.quoteid !== '0') dispatch(getCart());
 };
 
 export const loginFailure = () => ({

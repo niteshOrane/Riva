@@ -1,17 +1,17 @@
-import React from "react";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import Dialog from "@material-ui/core/Dialog";
-import { useSelector, useDispatch } from "react-redux";
-import { showSnackbar, toggleQuickView } from "../../../store/actions/common";
-import { addToCart, toggleCart } from "../../../store/actions/cart";
+import React from 'react';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import Dialog from '@material-ui/core/Dialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { showSnackbar, toggleQuickView } from '../../../store/actions/common';
+import { addToCart, toggleCart } from '../../../store/actions/cart';
 
-import Image from "../LazyImage/Image";
+import Image from '../LazyImage/Image';
 
-import styles from "./QuickView.module.scss";
-import * as icons from "../Icons/Icons";
+import styles from './QuickView.module.scss';
+import * as icons from '../Icons/Icons';
 
 const closeStyle = {
-  position: "absolute",
+  position: 'absolute',
   top: 4,
   right: 4,
 };
@@ -39,15 +39,15 @@ function QuickView() {
         id: `${data?.id}`,
         name: data?.name,
         src: data?.image,
-        color: custom_attributes?.find((e) => e?.attribute_code === "color")
+        color: custom_attributes?.find((e) => e?.attribute_code === 'color')
           ?.value,
-        quantity: 1,
-        size: custom_attributes?.find((e) => e?.attribute_code === "size")
+        qty: 1,
+        size: custom_attributes?.find((e) => e?.attribute_code === 'size')
           ?.value,
         price,
       })
     );
-    dispatch(showSnackbar("Added to cart", "success"));
+
     dispatch(toggleQuickView(null));
   };
 
@@ -74,7 +74,7 @@ function QuickView() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: "cover" }}
+            customeStyle={{ objectFit: 'cover' }}
           />
         </div>
         <form>
@@ -82,8 +82,8 @@ function QuickView() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -188,9 +188,9 @@ function QuickView() {
           <div className={styles.actions}>
             <div className="d-flex align-items-center justify-content-between flex-wrap my-20px">
               <div
-                className={`${styles.quantity} d-flex align-items-center justify-content-between`}
+                className={`${styles.qty} d-flex align-items-center justify-content-between`}
               >
-                <div className={styles.title}>Quantity:</div>
+                <div className={styles.title}>qty:</div>
                 <div
                   className={`${styles.counter} d-flex align-items-center justify-content-between`}
                 >

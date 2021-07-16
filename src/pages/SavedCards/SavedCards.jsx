@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
-import NewCard from "../../components/pages/Dashboard/Payments/NewCard/NewCard";
-import ManageSavedCard from "../../components/pages/Dashboard/Payments/ManageSavedCard/ManageSavedCard";
+import React, { useState } from 'react';
+import Sidebar from '../../components/pages/Dashboard/Sidebar/Sidebar';
+import CategoriesCircles from '../../components/common/CategoriesCircles/CategoriesCircles';
+import NewCard from '../../components/pages/Dashboard/Payments/NewCard/NewCard';
+import ManageSavedCard from '../../components/pages/Dashboard/Payments/ManageSavedCard/ManageSavedCard';
 function SavedCards() {
   const [addingNewCard, setAddingNewCard] = useState(false);
   const [values, setValues] = useState({
-    cardNumber: "",
-    nameOnCard: "",
+    cardNumber: '',
+    nameOnCard: '',
   });
   const handleChange = (e) => {
     const value = e.target.value;
@@ -20,7 +20,6 @@ function SavedCards() {
   const handleAddCard = () => setAddingNewCard(true);
   const handleSaveCard = () => setAddingNewCard(false);
 
-  console.log(addingNewCard);
   return (
     <div className="d-flex my-20px">
       <div className="container-with-circles">

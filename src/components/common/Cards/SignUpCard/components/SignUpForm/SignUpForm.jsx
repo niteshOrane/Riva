@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  showSnackbar,
+  toggleSignUpCard,
+} from "../../../../../../store/actions/common";
+
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
-
-import { showSnackbar } from "../../../../../../store/actions/common";
 import { createCustomer } from "../../../../../../services/auth/auth.service";
 
 const SignUpForm = ({ handleSubmit }) => {
@@ -17,15 +18,29 @@ const SignUpForm = ({ handleSubmit }) => {
   });
 
   const handleChange = (e) => {
-    console.log(e.target.name);
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const setshowLoginForm = () => {
+    dispatch(toggleSignUpCard({}));
   };
 
   const { email, password, name } = formData;
 
   const userCreateHandler = async (e) => {
     e.preventDefault();
-    if (!email || !password || !name)
+
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+
+    if (!re.test(password))
+      return dispatch(
+        showSnackbar(
+          "Password must be at least 8 characters long with 1 Uppercase, 1 Lowercase & 1 Number character.",
+          "error"
+        )
+      );
+
+    if (!email || !name)
       return dispatch(showSnackbar("All fields are required", "warning"));
 
     const customer = new FormData();
@@ -45,52 +60,6 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const [showPass, setShowPass] = useState(false);
-
-  const responseFacebook = async (response) => {
-    console.log(response)
-    if (response) {
-      const firstName = response?.name?.split(" ")[0];
-      const lastName = response?.name?.split(" ")[1];
-      const email = response?.email;
-      const customer = new FormData();
-      customer.append("email", email);
-      customer.append("firstname", firstName || "");
-      customer.append("lastname", lastName || "");
-      customer.append("resource", "facebook");
-      const res = await createCustomer(customer);
-
-      if (res.status === 200) {
-        handleSubmit();
-        return dispatch(showSnackbar(res?.data?.data, "success"));
-      }
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    }
-  };
-
-  const responseGoogle = async (response) => {
-    console.log(response)
-    if (response.profileObj) {
-      const firstName = response?.profileObj?.givenName;
-      const lastName = response?.profileObj?.familyName;
-      const email = response?.profileObj?.email;
-      const customer = new FormData();
-      customer.append("email", email);
-      customer.append("firstname", firstName || "");
-      customer.append("lastname", lastName || "");
-      customer.append("resource", "google");
-      const res = await createCustomer(customer);
-
-      if (res.status === 200) {
-        handleSubmit();
-        return dispatch(showSnackbar(res?.data?.data, "success"));
-      }
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    }
-  };
 
   return (
     <form className={styles.form} onSubmit={userCreateHandler}>
@@ -149,7 +118,7 @@ const SignUpForm = ({ handleSubmit }) => {
           <input
             required
             value={password}
-            type={showPass ? "password" : "text"}
+            type={!showPass ? "password" : "text"}
             name="password"
             id="password"
             onChange={handleChange}
@@ -174,6 +143,14 @@ const SignUpForm = ({ handleSubmit }) => {
         <p className={styles.or}>OR</p>
 
         <div>
+          <a
+            type="button"
+            className={`d-flex align-items-center c-pointer`}
+            style={{ justifyContent: "center", textDecoration: "underline" }}
+            onClick={() => setshowLoginForm()}
+          >
+            <p>Login </p>
+          </a>
           <button
             type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
@@ -187,20 +164,10 @@ const SignUpForm = ({ handleSubmit }) => {
             type="button"
             className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
           >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
+            <span className={styles.btnIcon}>
               <icons.Facebook />
             </span>
-            <FacebookLogin
-              appId="3898973050213783"
-              fields="name,email,picture"
-              // cssClass=  {styles.facebookAuthBtn}
-              render={(renderProps) => (
-                <p onClick={renderProps.onClick}>Connect with Facebook</p>
-              )}
-              // onClick={componentClicked}
-              textButton="Connect with Facebook"
-              callback={responseFacebook}
-            />
+            <p>Connect with Facebook</p>
           </button>
           <button
             type="button"
@@ -209,22 +176,7 @@ const SignUpForm = ({ handleSubmit }) => {
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
             </span>
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-              buttonText="Connect with Google"
-              render={(renderProps) => (
-                <button
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  className={styles.googleAuthBtn}
-                >
-                  Connect with Google
-                </button>
-              )}
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
-              onSuccess={(response) => responseGoogle(response)}
-              // onFailure={(responseGoogle) => console.log(responseGoogle)}
-            />
+            <p>Connect with Google</p>
           </button>
         </div>
       </div>

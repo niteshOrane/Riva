@@ -7,6 +7,7 @@ import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
+  getWishlist
 } from '../../../store/actions/wishlist/index';
 import Image from '../LazyImage/Image';
 import styles from './Wishlist.module.scss';
@@ -35,8 +36,12 @@ function Wishlist() {
       return dispatch(
         toggleSignUpCard({ redirectTo: window.location.pathname })
       );
-    if (wishlist.find((w) => data.id == w.id)) dispatch(removeWishlist(data));
-    else dispatch(addWishlist(data));
+    if (wishlist.find((w) => data.id === w.id)) {
+      dispatch(removeWishlist(data));
+      dispatch(getWishlist());
+    }
+    else { dispatch(addWishlist(data)); 
+      dispatch(getWishlist());}
     handleClose();
   };
 
@@ -142,7 +147,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setGuideCardOpen(true)}
+                  //   onClick={() => setGuideCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Size Guide
@@ -159,7 +164,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setSizeCardOpen(true)}
+                  //   onClick={() => setSizeCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Find your size
@@ -185,9 +190,9 @@ function Wishlist() {
           <div className={styles.actions}>
             <div className="d-flex align-items-center justify-content-between flex-wrap my-20px">
               <div
-                className={`${styles.quantity} d-flex align-items-center justify-content-between`}
+                className={`${styles.qty} d-flex align-items-center justify-content-between`}
               >
-                <div className={styles.title}>Quantity:</div>
+                <div className={styles.title}>qty:</div>
                 <div
                   className={`${styles.counter} d-flex align-items-center justify-content-between`}
                 >
