@@ -11,12 +11,14 @@ import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
 import axios from "axios";
 
-const ProductDetails = ({ product, setColorSize }) => {
+const ProductDetails = (props) => {
+  const { product, setColorSize, mediaImage, colorImage }= props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [outOfStock, setOutOfStock] = useState(true);
   const [colorAttributes, setColorAttributes] = useState(null);
   const [productQuantity, setProductQuantity] = useState(1);
+  console.log(mediaImage,colorImage)
   // useEffect(() => {
   //   if (product) {
   //     const colorAttr = new FormData();

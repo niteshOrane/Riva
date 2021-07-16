@@ -12,12 +12,14 @@ import {
   getProduct,
   getCompositioncare,
   getHowToWear,
-} from "../../services/product/product.service";
-import ProductCard from "../../components/common/Cards/ProductCard";
-import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
-import OneImageBanner from "../../components/pages/landing/Banners/OneImageBanner";
-import { body, productDetailsSimleCard } from "../../mockdata.json";
-import styles from "./product.module.scss";
+  getProductMedia,
+  getProductColor
+} from '../../services/product/product.service';
+import ProductCard from '../../components/common/Cards/ProductCard';
+import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
+import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
+import { body, productDetailsSimleCard } from '../../mockdata.json';
+import styles from './product.module.scss';
 
 import { products } from "../../db.json";
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
@@ -35,6 +37,8 @@ const Product = (props) => {
   const [compositioncare, setCompositioncare] = useState({});
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
+  const [mediaImage, setMediaImage] = useState([]);
+  const [colorImage, setColorImage] = useState([]);
 
   const setUpHowToWear = async (id) => {
     const res = await getHowToWear(id);
@@ -76,9 +80,11 @@ const Product = (props) => {
           size: size?.[0] || {},
         },
       };
-  
-      // const response = await getColor(p.id)
-      // console.log(response)
+      const productMediaImage = await getProductMedia(sku);
+      const productColorImage = await getProductColor(res?.data?.id);
+      setMediaImage(productMediaImage);
+      setColorImage(productColorImage);
+      
       setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -95,17 +101,11 @@ const Product = (props) => {
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-  // useEffect(() => {
-  //   if(product.id){
-  //     const sliderImg = new FormData();
-  //     sliderImg.append("productId",product.id)
-  //     axios.get(`http://65.0.141.49/shop/index.php/rest/V1/products/137108-19012-005/media`).then(res => console.log(res))
-  //   }
-  // },[product.id])
-  if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
+  
+  if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
   return (
     <div>
-      <ProductDetails product={product} setColorSize={setColorSize} />
+      <ProductDetails product={product} setColorSize={setColorSize} mediaImage={mediaImage} colorImage={mediaImage}/>
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
