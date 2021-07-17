@@ -6,12 +6,13 @@ import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
 import { toggleCart, removeFromCart } from '../../../store/actions/cart';
 import style from './style.module.scss';
 import { extractColorSize } from '../../../util';
+import Image from "../LazyImage/Image";
+
 
 const Cart = () => {
   const { data: items = [], isOpen = false } = useSelector(
     (state) => state.cart
   );
-
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -51,7 +52,7 @@ const Cart = () => {
                 <div className={style.sideItem} key={`cart_inner_${index}`}>
                   <div id={style.bdrBtm} className="d-flex align-items-center">
                     <div className={style.itemImg}>
-                      <img src={item.src} width="100%" alt="" />
+                      <Image src={item.src} width="100%" alt={item.name}  type="product-details" />
                     </div>
                     <div className={style.itemDetails}>
                       <h3
