@@ -64,7 +64,7 @@ const SignUpForm = ({ handleSubmit }) => {
   const [showPass, setShowPass] = useState(false);
 
   const responseFacebook = async (response) => {
-    console.log(response)
+    console.log(response);
     if (response) {
       const firstName = response?.name?.split(" ")[0];
       const lastName = response?.name?.split(" ")[1];
@@ -87,7 +87,7 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const responseGoogle = async (response) => {
-    console.log(response)
+    console.log(response);
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
       const lastName = response?.profileObj?.familyName;
@@ -235,7 +235,7 @@ const SignUpForm = ({ handleSubmit }) => {
               phone_iphone
             </span>
             <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              clientId="488711396287-7q699f85tm36dha5c5mml1dkpg9eibrr.apps.googleusercontent.com"
               buttonText="Connect with Google"
               render={(renderProps) => (
                 <button

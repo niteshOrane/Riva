@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { WhatsApp, Instagram, Facebook } from '@material-ui/icons';
-import { addToRecentlyViewed } from '../../store/actions/stats';
-import Slider from '../../components/common/Sliders/Slider';
-import ProductDetails from '../../components/pages/product/ProductDetails/ProductDetails';
-import AdditionalProductDetails from '../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails';
-import HowToWearThis from '../../components/pages/product/HowToWearThis/HowToWearThis';
-import DescriptionComposition from '../../components/pages/product/DescriptionComposition/DescriptionComposition';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { WhatsApp, Instagram, Facebook } from "@material-ui/icons";
+import { addToRecentlyViewed } from "../../store/actions/stats";
+import Slider from "../../components/common/Sliders/Slider";
+import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
+import AdditionalProductDetails from "../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails";
+import HowToWearThis from "../../components/pages/product/HowToWearThis/HowToWearThis";
+import DescriptionComposition from "../../components/pages/product/DescriptionComposition/DescriptionComposition";
 import {
   getAttributes,
   getProduct,
   getCompositioncare,
   getHowToWear,
   getProductMedia,
-  getProductColor
-} from '../../services/product/product.service';
-import ProductCard from '../../components/common/Cards/ProductCard';
-import ShopTheWholeOutfit from '../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit';
-import OneImageBanner from '../../components/pages/landing/Banners/OneImageBanner';
-import { body, productDetailsSimleCard } from '../../mockdata.json';
-import styles from './product.module.scss';
+  getProductColor,
+} from "../../services/product/product.service";
+import ProductCard from "../../components/common/Cards/ProductCard";
+import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
+import OneImageBanner from "../../components/pages/landing/Banners/OneImageBanner";
+import { body, productDetailsSimleCard } from "../../mockdata.json";
+import styles from "./product.module.scss";
 
-import { products } from '../../db.json';
-import ImageCard from '../../components/common/Cards/ImageCard/ImageCard';
-import { extractColorSize } from '../../util';
+import { products } from "../../db.json";
+import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
+import { extractColorSize } from "../../util";
 
 const Product = (props) => {
   const { match } = props;
@@ -61,16 +61,16 @@ const Product = (props) => {
       const p = {
         ...res.data,
         image: res.data?.custom_attributes.find(
-          (attr) => attr.attribute_code === 'image'
+          (attr) => attr.attribute_code === "image"
         )?.value,
         name: res.data.name,
         price: res.data.price,
         sale:
           res.data?.custom_attributes.find(
-            (attr) => attr.attribute_code === 'show_sale_badge'
-          )?.value === '1',
+            (attr) => attr.attribute_code === "show_sale_badge"
+          )?.value === "1",
         description: res.data?.custom_attributes.find(
-          (attr) => attr.attribute_code === 'description'
+          (attr) => attr.attribute_code === "description"
         )?.value,
         colors,
         size,
@@ -83,7 +83,7 @@ const Product = (props) => {
       const productColorImage = await getProductColor(res?.data?.id);
       setMediaImage(productMediaImage);
       setColorImage(productColorImage);
-      
+
       setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -100,15 +100,19 @@ const Product = (props) => {
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-  
-  if (loading) return <h2 style={{ textAlign: 'center' }}>loading...</h2>;
+  if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
   return (
     <div>
-      <ProductDetails product={product} setColorSize={setColorSize} mediaImage={mediaImage} colorImage={colorImage}/>
+      <ProductDetails
+        product={product}
+        setColorSize={setColorSize}
+        mediaImage={mediaImage}
+        colorImage={colorImage}
+      />
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
-          items={productDetailsSimleCard}
+          items={products}
           slidesToShow={3}
           render={(item) => <ImageCard product={item} />}
         />

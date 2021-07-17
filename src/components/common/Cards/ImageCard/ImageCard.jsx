@@ -1,6 +1,7 @@
 import React from "react";
 
 const ImageCard = ({ product }) => {
+  console.log(product)
   return (
     <div>
       <img
