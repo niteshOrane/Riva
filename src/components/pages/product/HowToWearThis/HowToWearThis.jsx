@@ -8,7 +8,7 @@ const HowToWearThis = (props) => {
     <div className=" container-90 max-width-1600 mx-auto">
       <div className={styles.howToWearThis}>
         <div className={styles.sectionHeaderContainer}>
-          <h4 className="section-title">How to Wear It</h4>
+          <h4 className="section-title">How to Wear it</h4>
         </div>
         <div className={styles.cards}>
           {props.cards.map((card, i) => {

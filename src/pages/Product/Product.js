@@ -24,6 +24,7 @@ import styles from "./product.module.scss";
 import { products } from "../../db.json";
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
+import axios from "axios";
 
 const Product = (props) => {
   const { match } = props;
@@ -81,9 +82,9 @@ const Product = (props) => {
       };
       const productMediaImage = await getProductMedia(sku);
       const productColorImage = await getProductColor(res?.data?.id);
-      setMediaImage(productMediaImage);
-      setColorImage(productColorImage);
-
+      setMediaImage(productMediaImage?.data);
+      setColorImage(productColorImage?.data);
+      
       setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -112,9 +113,9 @@ const Product = (props) => {
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
-          items={products}
+          items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={item} />}
+          render={(item) => <ImageCard product={{src:item?.file}} />}
         />
       </div>
       <DescriptionComposition
@@ -127,7 +128,7 @@ const Product = (props) => {
         <HowToWearThis cards={body.howToWear} />
       </div> */}
 
-      <div className="max-width-1750 mx-auto my-20px">
+      <div id="complete-your-look" className="max-width-1750 mx-auto my-20px">
         <div>
           <h4 className="section-title text-center my-20px">
             Complete Your Look

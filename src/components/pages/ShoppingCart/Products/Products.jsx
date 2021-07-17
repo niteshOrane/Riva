@@ -1,8 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { extractColorSize } from '../../../../util';
+import { toggleWishlist } from '../../../../store/actions/wishlist';
 import style from './Products.module.scss';
+import Image from "../../../common/LazyImage/Image";
 
 const Products = ({ products }) => {
+  const dispatch = useDispatch();
+  const { data: wishlist = [] } = useSelector((state) => state.wishlist);
+
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -10,9 +17,13 @@ const Products = ({ products }) => {
         values: [{ value_index: o.option_value }],
       }))
     );
-
     return { colors, size };
   };
+
+  const handleWishList = (product) => {
+    dispatch(toggleWishlist(product));
+  };
+
   return (
     <div className={style.products}>
       <div className={style.header}>
@@ -32,12 +43,7 @@ const Products = ({ products }) => {
             <div className="d-flex justify-content-between p-12px">
               <div className={style.productDetails}>
                 <div className={style.productImg}>
-                  <img
-                    className="object-fit-contain"
-                    src={product.src}
-                    width="200px"
-                    alt=""
-                  />
+                  <Image src={product.src} width="200px" alt={product.name} type="product-details" />
                 </div>
                 <div className="w-100">
                   <div className="d-flex w-100">
@@ -97,20 +103,29 @@ const Products = ({ products }) => {
                   </div>
                   <div className={style.footer}>
                     <div className={style.footerContent}>
-                      <div className="font-light-black c-pointer d-flex">
+                      <div
+                        className="font-light-black c-pointer d-flex"
+                        onClick={() => handleWishList(product)}
+                        style={{
+                          color: wishlist.find((w) => w.id == product.id)
+                            ? 'red'
+                            : 'black',
+                        }}
+                      >
                         <span className="material-icons-outlined">
-                          favorite_border
+                          {wishlist.find((w) => w.id == product.id)
+                            ? 'favorite'
+                            : 'favorite_border'}
                         </span>
                         <span className="underline">Move to Wishlist</span>
                       </div>
-                      <div className="font-light-black c-pointer d-flex">
+                      <Link
+                        to={`/product/${product.sku}`}
+                        className="font-light-black c-pointer d-flex"
+                      >
                         <span className="material-icons-outlined">edit</span>
                         <span className="underline">Edit</span>
-                      </div>
-                      <div className="font-light-black c-pointer d-flex">
-                        <span className="material-icons-outlined">close</span>
-                        <span className="underline">Move to Wishlist</span>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>

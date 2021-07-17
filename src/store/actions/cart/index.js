@@ -5,6 +5,9 @@ import {
   getCartService,
   getProductIdBySku,
 } from '../../../services/cart/cart.service';
+import {
+  getProductMedia
+} from '../../../services/product/product.service';
 import { getCartId } from '../../../util';
 import { showSnackbar } from '../common';
 
@@ -16,11 +19,17 @@ export const getCart = () => async (dispatch) => {
 
     const productIds = await Promise.allSettled(productIdPromises);
 
+
+    const getProductMediaPromises = res.data.map((r) => getProductMedia(r.sku));
+
+    const productSrc = await Promise.allSettled(getProductMediaPromises);
+
     const products = res.data.map((r, i) => ({
       ...r,
       id: productIds?.[i]?.value?.data?.data?.product_id
         ? parseInt(productIds?.[i]?.value?.data?.data?.product_id)
         : '',
+        src:productSrc?.[i]?.value?.data?.[0]?.file||''
     }));
 
     if (res.data)

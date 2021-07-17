@@ -45,7 +45,6 @@ export const addWishlist = (item) => async (dispatch) => {
     dispatch(
       showSnackbar(res.data?.data || 'Item added to wishlist', 'success')
     );
-    dispatch(getWishlist());
   } else
     dispatch(
       showSnackbar(

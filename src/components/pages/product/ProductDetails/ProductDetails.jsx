@@ -8,23 +8,28 @@ import SizeCard from "./components/SizeCard/SizeCard";
 import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
 import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
+import OutOfStock from "./outOfStock/OutOfStock";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
-  const [colorList, setColorList] = useState([]);
+  const [productColorList, setProductColorList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
+  console.log(colorImg)
   useEffect(() => {
-    if (colorImage.data !== undefined) {
-      let temp = colorImage?.data.databind;
-      setColorList(temp);
+    if (colorImage.databind !== undefined) {
+      const temp = colorImage?.databind;
+      setProductColorList(temp);
+      setColorImg(colorImage?.databind[0]?.file || "");
     }
-    setColorImg(colorImage?.data?.databind[0].file)
   }, []);
   const colorImageAction = (data) => {
-    setColorImg(data.file);
+    setColorImg(data?.file);
   };
+  const [outOfStock, setOutOfStock] = useState(false);
+  const [productQuantity, setProductQuantity] = useState(1);
+
   let {
     origprice = 0,
     origpriceWithoutCurrency = 0,
@@ -41,6 +46,14 @@ const ProductDetails = (props) => {
   const dispatch = useDispatch();
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
 
+  const handleIncrementProduct = () => {
+    setProductQuantity((prevState) => prevState + 1);
+  };
+  const handleDecrementProduct = () => {
+    if (productQuantity === 1) return;
+    setProductQuantity((prevState) => prevState - 1);
+  };
+
   const addToCardHandler = () =>
     dispatch(
       addToCart({
@@ -48,7 +61,7 @@ const ProductDetails = (props) => {
         id: `${product.id}`,
         name: product.name,
         src: product.image,
-        qty: 1,
+        qty: productQuantity,
         price: product.price,
         ...product.selected,
       })
@@ -77,9 +90,9 @@ const ProductDetails = (props) => {
           <div
             className={`${styles.slide} h-100 text-center d-flex-all-center flex-column`}
           >
-            <Image
+            <img
               src={colorImg}
-              classname="object-fit-fill h-100"
+              className="object-fit-fill h-100"
               width="100%"
               alt=""
               type="product-details"
@@ -153,12 +166,12 @@ const ProductDetails = (props) => {
                   {c.label}{' '}
                 </div>
               ))} */}
-              {colorList.length > 0 &&
-                colorList.map((item) => (
+              {productColorList.length > 0 &&
+                productColorList.map((item) => (
                   <div>
                     <span
                       onClick={() => colorImageAction(item)}
-                      style={{ cursor: "pointer",marginLeft:"0.5rem" }}
+                      style={{ cursor: "pointer", marginLeft: "0.5rem" }}
                     >
                       {item.color}
                     </span>
@@ -211,7 +224,7 @@ const ProductDetails = (props) => {
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li">
-                  <a href="/" className="d-flex align-items-center">
+                  <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       straighten
                     </span>
@@ -225,10 +238,10 @@ const ProductDetails = (props) => {
                         Size Guide
                       </span>
                     </button>
-                  </a>
+                  </span>
                 </li>
                 <li className="nav-li">
-                  <a href="/" className="d-flex align-items-center">
+                  <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       search
                     </span>
@@ -242,7 +255,7 @@ const ProductDetails = (props) => {
                         Find your size
                       </span>
                     </button>
-                  </a>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -290,13 +303,21 @@ const ProductDetails = (props) => {
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >
                       <div>
-                        <span className="material-icons-outlined font-light-black">
+                        <span
+                          onClick={handleDecrementProduct}
+                          className="material-icons-outlined font-light-black"
+                          style={{ cursor: "pointer" }}
+                        >
                           remove
                         </span>
                       </div>
-                      <div>1</div>
+                      <div>{productQuantity}</div>
                       <div>
-                        <span className="material-icons-outlined font-light-black">
+                        <span
+                          onClick={handleIncrementProduct}
+                          className="material-icons-outlined font-light-black"
+                          style={{ cursor: "pointer" }}
+                        >
                           add
                         </span>
                       </div>
@@ -307,24 +328,31 @@ const ProductDetails = (props) => {
                   >
                     <div className="d-flex align-items-center">
                       <div className={styles.title}>Availability: </div>
-                      &nbsp;<div className={styles.text}>In stock</div>
+                      &nbsp;
+                      <div className={styles.text}>
+                        {outOfStock ? "Out Of Stock" : "In Stock"}
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="d-flex align-items-center my-50px">
-                  <div className={styles.addToCart}>
-                    <button
-                      type="button"
-                      onClick={() => addToCardHandler()}
-                      className="d-flex-all-center"
-                    >
-                      <span className="material-icons-outlined">
-                        shopping_cart
-                      </span>
-                      &nbsp;ADD TO CART
-                    </button>
-                  </div>
+                  {outOfStock ? (
+                    <OutOfStock productId={product.id} />
+                  ) : (
+                    <div className={styles.addToCart}>
+                      <button
+                        type="button"
+                        onClick={() => addToCardHandler()}
+                        className="d-flex-all-center"
+                      >
+                        <span className="material-icons-outlined">
+                          shopping_cart
+                        </span>
+                        &nbsp;ADD TO CART
+                      </button>
+                    </div>
+                  )}
                   <div
                     className={`${styles.wishlist} d-flex-all-center`}
                     onClick={handleWishList}

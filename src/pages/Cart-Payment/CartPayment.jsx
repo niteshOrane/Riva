@@ -1,11 +1,21 @@
-import React from "react";
-import PaymentTabs from "../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs";
-import * as icons from "../../components/common/Icons/Icons";
-import { Link } from "react-router-dom";
-import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
-import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
-import styles from "./CartPayment.module.scss";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PaymentTabs from '../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs';
+import * as icons from '../../components/common/Icons/Icons';
+import PriceDetails from '../../components/pages/Cart-Payment/PriceDetails/PriceDetails';
+import LetUsHear from '../../components/common/Cards/LetUsHear/LetUsHear';
+import styles from './CartPayment.module.scss';
+
+import { toggleCart } from '../../store/actions/cart';
+
 function CartPayment() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(toggleCart(false));
+  }, []);
+
   return (
     <div className="container-90 max-width-1600">
       <div className={styles.header}>

@@ -1,17 +1,17 @@
-import React, {useState} from "react";
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCart } from '../../store/actions/cart';
-import Products from "../../components/pages/ShoppingCart/Products/Products";
-import Summary from "../../components/pages/ShoppingCart/Summary/Summary";
-import style from "./ShoppingCart.module.scss";
+import Products from '../../components/pages/ShoppingCart/Products/Products';
+import Summary from '../../components/pages/ShoppingCart/Summary/Summary';
+import style from './ShoppingCart.module.scss';
 
 const ShoppingCart = () => {
-  const { data: items = [] } = useSelector(state => state.cart);
+  const { data: items = [] } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  useState(() => {
-    dispatch(toggleCart(false))
-  }, [])
+  useEffect(() => {
+    dispatch(toggleCart(false));
+  }, []);
 
   return (
     <div className="container-90 max-width-1600 mx-auto">

@@ -1,24 +1,25 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Star from '@material-ui/icons/StarBorderOutlined';
-import Dialog from '@material-ui/core/Dialog';
-import * as icons from '../Icons/Icons';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Star from "@material-ui/icons/StarBorderOutlined";
+import Dialog from "@material-ui/core/Dialog";
+import * as icons from "../Icons/Icons";
 import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
-  getWishlist
-} from '../../../store/actions/wishlist/index';
-import Image from '../LazyImage/Image';
-import styles from './Wishlist.module.scss';
-import { toggleSignUpCard } from '../../../store/actions/common';
+  getWishlist,
+} from "../../../store/actions/wishlist/index";
+import Image from "../LazyImage/Image";
+import styles from "./Wishlist.module.scss";
+import { toggleSignUpCard } from "../../../store/actions/common";
 
 const closeStyle = {
-  position: 'absolute',
+  position: "absolute",
   top: 4,
   right: 4,
 };
 function Wishlist() {
+  const [productQuantity, setProductQuantity] = React.useState(1);
   const {
     isOpen,
     modalData: data = {},
@@ -30,7 +31,13 @@ function Wishlist() {
   const handleClose = () => {
     dispatch(toggleWishlist(null));
   };
-
+  const handleIncrementProduct = () => {
+    setProductQuantity((prevState) => prevState + 1);
+  };
+  const handleDecrementProduct = () => {
+    if (productQuantity === 1) return;
+    setProductQuantity((prevState) => prevState - 1);
+  };
   const handleWishlist = () => {
     if (!auth.isAuthenticated)
       return dispatch(
@@ -39,10 +46,8 @@ function Wishlist() {
     if (wishlist.find((w) => data.id === w.id)) {
       dispatch(removeWishlist(data));
       dispatch(getWishlist());
-    }
-    else { 
-      dispatch(addWishlist(data)); 
-      dispatch(getWishlist());
+    } else {
+      dispatch(addWishlist(data));
     }
     handleClose();
   };
@@ -80,7 +85,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: 'cover' }}
+            customeStyle={{ objectFit: "cover" }}
           />
         </div>
         <form>
@@ -88,8 +93,8 @@ function Wishlist() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
-              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -102,7 +107,7 @@ function Wishlist() {
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ''}</div>
+              <div className={styles.was}>Was {origprice || ""}</div>
             ) : null}
             <div className={styles.now}>Now ${data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -149,7 +154,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                  //   onClick={() => setGuideCardOpen(true)}
+                    //   onClick={() => setGuideCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Size Guide
@@ -166,7 +171,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                  //   onClick={() => setSizeCardOpen(true)}
+                    //   onClick={() => setSizeCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Find your size
@@ -199,13 +204,21 @@ function Wishlist() {
                   className={`${styles.counter} d-flex align-items-center justify-content-between`}
                 >
                   <div>
-                    <span className="material-icons-outlined font-light-black">
+                    <span
+                      onClick={handleDecrementProduct}
+                      className="material-icons-outlined font-light-black"
+                      style = {{cursor:"pointer"}}
+                    >
                       remove
                     </span>
                   </div>
-                  <div>1</div>
+                  <div>{productQuantity}</div>
                   <div>
-                    <span className="material-icons-outlined font-light-black">
+                    <span
+                      onClick={handleIncrementProduct}
+                      className="material-icons-outlined font-light-black"
+                      style = {{cursor:"pointer"}}
+                    >
                       add
                     </span>
                   </div>
@@ -231,10 +244,10 @@ function Wishlist() {
                   <span className="material-icons-outlined">
                     favorite_border
                   </span>
-                  &nbsp;{' '}
+                  &nbsp;{" "}
                   {isAddedToWishlist
-                    ? 'REMOVE FROM WISHLIST'
-                    : 'ADD TO WISHLIST'}
+                    ? "REMOVE FROM WISHLIST"
+                    : "ADD TO WISHLIST"}
                 </button>
               </div>
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>
