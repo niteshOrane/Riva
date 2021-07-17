@@ -1,6 +1,18 @@
 import React from 'react';
 import styles from './Products.module.scss';
+import { extractColorSize } from '../../../../../../util';
+import Image from "../../../../../common/LazyImage/Image";
+
 function Products({ products }) {
+  const getColorSize = (options) => {
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === '92' ? 'Color' : 'Size',
+        values: [{ value_index: o.option_value }],
+      }))
+    );
+    return { colors, size };
+  };
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
@@ -20,17 +32,28 @@ function Products({ products }) {
           <div className={styles.col1}>
             <div className="d-flex">
               <div className={styles.image}>
-                <img src={product.image} alt={product?.name} />
+                <Image src={product.src} width="72px" height="110px" alt={product.name} type="product-details" />
               </div>
-              <div>
-                <h4 className="font-weight-normal">{product?.name}</h4>
+              <div className={styles.textArea}>
+                <span className="font-weight-normal">{product?.name}</span>
                 <div className={styles.colorSize}>
                   <span>Color: </span>
-                  <span className={styles.greyText}>{product?.color}</span>
+
+                  <span className={styles.greyText}>
+                    {product?.color?.label ||
+                      getColorSize(
+                        product?.product_option?.extension_attributes
+                          ?.configurable_item_options || []
+                      ).colors?.[0]?.label}</span>
                 </div>
                 <div className={styles.colorSize}>
                   <span>Size: </span>
-                  <span className={styles.greyText}>{product?.size}</span>
+                  <span className={styles.greyText}>
+                    {product?.size?.label ||
+                      getColorSize(
+                        product?.product_option?.extension_attributes
+                          ?.configurable_item_options || []
+                      ).size?.[0]?.label}</span>
                 </div>
               </div>
             </div>
@@ -39,7 +62,7 @@ function Products({ products }) {
             <strong>{product?.qty}</strong>
           </div>
           <div className={styles.col3}>
-            <strong>${product?.subTotal}</strong>
+            <strong>${product?.price * product?.qty}</strong>
           </div>
         </div>
       ))}

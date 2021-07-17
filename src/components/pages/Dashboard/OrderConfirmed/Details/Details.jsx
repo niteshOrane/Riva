@@ -39,8 +39,8 @@ function Details() {
         </div>
       </div>
       <Link
-        className="p-12px d-inline-block mt-12px bg-black color-white no-border"
-        to="/myorders"
+        className="p-12px d-inline-block mt-12px bg-black color-white no-border c-pointer"
+        to="/delivered"
       >
         GO TO MY ORDERS
       </Link>

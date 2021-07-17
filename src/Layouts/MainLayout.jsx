@@ -12,16 +12,14 @@ const MainLayout = ({ children }) => {
   const [mainHeader, setMainHeader] = useState(true);
   const store = useSelector((state) => state.common.store);
 
-  const paths = ['/delivery-address', 'cart-payment'];
+  const paths = ['/delivery-address', '/cart-payment'];
 
   useEffect(() => {
-    paths.forEach((path) => {
-      if (window?.location.pathname.includes(path)) {
-        setMainHeader(false);
-      } else {
-        setMainHeader(true);
-      }
-    });
+    if (paths.includes(window?.location.pathname)) {
+      setMainHeader(false);
+    } else {
+      setMainHeader(true);
+    }
   });
 
   return (

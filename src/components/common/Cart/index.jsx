@@ -3,7 +3,7 @@ import { Drawer } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
-import { toggleCart, removeFromCart } from '../../../store/actions/cart';
+import { toggleCart, removeFromCart, editItemQntCart } from '../../../store/actions/cart';
 import style from './style.module.scss';
 import { extractColorSize } from '../../../util';
 import Image from "../LazyImage/Image";
@@ -13,10 +13,23 @@ const Cart = () => {
   const { data: items = [], isOpen = false } = useSelector(
     (state) => state.cart
   );
+  const [editableIndex, setEditableIndex] = React.useState(null);
   const dispatch = useDispatch();
-
+  const handleIncrementProduct = (product) => {
+    product.qty = product.qty + 1;
+    dispatch(editItemQntCart(product));
+  };
+  const handleDecrementProduct = (product) => {
+    if (product.qty === 1) return;
+    product.qty = product.qty - 1;
+    dispatch(editItemQntCart(product));
+  };
   const handleClose = () => {
     dispatch(toggleCart());
+  };
+  const handleContinueShopping = () => {
+    dispatch(toggleCart());
+    window.location.href = "/";
   };
 
   const getColorSize = (options) => {
@@ -47,131 +60,149 @@ const Cart = () => {
             </div> */}
           </div>
           <div className={style.sideBody}>
-            <div className={style.items}>
-              {items?.map((item, index) => (
-                <div className={style.sideItem} key={`cart_inner_${index}`}>
-                  <div id={style.bdrBtm} className="d-flex align-items-center">
-                    <div className={style.itemImg}>
-                      <Image src={item.src} width="100%" alt={item.name}  type="product-details" />
-                    </div>
-                    <div className={style.itemDetails}>
-                      <h3
-                        title="Name"
-                        className={`${style.name} two-line-text`}
-                      >
-                        {item.name}
-                      </h3>
-                      <div className={style.colorPriceETC}>
-                        <div className="d-flex align-items-center justify-content-between">
-                          <div>
-                            <span className="font-weight-600">Color: </span>
-                            <span className="color-grey">
-                              {item?.color?.label ||
-                                getColorSize(
-                                  item?.product_option?.extension_attributes
-                                    ?.configurable_item_options || []
-                                ).colors?.[0]?.label}
-                            </span>
+            {items && items.length > 0 ? <>
+              <div className={style.items}>
+                {items?.map((item, index) => (
+                  <div className={style.sideItem} key={`cart_inner_${index}`}>
+                    <div id={style.bdrBtm} className="d-flex align-items-center">
+                      <div className={style.itemImg}>
+                        <Image src={item.src} width="100%" alt={item.name} type="product-details" />
+                      </div>
+                      <div className={style.itemDetails}>
+                        <h3
+                          title="Name"
+                          className={`${style.name} two-line-text`}
+                        >
+                          {item.name}
+                        </h3>
+                        <div className={style.colorPriceETC}>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Color: </span>
+                              <span className="color-grey">
+                                {item?.color?.label ||
+                                  getColorSize(
+                                    item?.product_option?.extension_attributes
+                                      ?.configurable_item_options || []
+                                  ).colors?.[0]?.label}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="font-weight-600 color-primary">
+                                ${item.price}
+                              </span>
+                            </div>
                           </div>
-                          <div>
-                            <span className="font-weight-600 color-primary">
-                              ${item.price}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between">
-                          <div>
-                            <span className="font-weight-600">Size: </span>
-                            <span className="color-grey">
-                              {item?.size?.label ||
-                                getColorSize(
-                                  item?.product_option?.extension_attributes
-                                    ?.configurable_item_options || []
-                                ).size?.[0]?.label}
-                            </span>
-                          </div>
-                          {/* <div>
-                            <span>
-                              <span className="material-icons-outlined">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Size: </span>
+                              <span className="color-grey">
+                                {item?.size?.label ||
+                                  getColorSize(
+                                    item?.product_option?.extension_attributes
+                                      ?.configurable_item_options || []
+                                  ).size?.[0]?.label}
+                              </span>
+                            </div>
+                            <div>
+                              {editableIndex == index ?
+                                <span onClick={() => { setEditableIndex(null) }} className="material-icons-outlined c-pointer">
+                                  close
+                                </span> : null
+                              }
+                              <span onClick={() => { setEditableIndex(index) }} className="material-icons-outlined c-pointer">
                                 edit
                               </span>
-                            </span>
-                          </div> */}
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between">
-                          <div>
-                            <span className="font-weight-600">Qty: </span>
-                            <span className="color-grey">{item.qty}</span>
+                            </div>
                           </div>
-                          <div>
-                            <span
-                              onClick={() => dispatch(removeFromCart(item))}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              <span className="material-icons-outlined">
-                                close
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Qty: </span>
+                              <span className="color-grey">{editableIndex == index ?
+                                <div className={style.counter}>
+                                  <span className="c-pointer material-icons-outlined" onClick={() => { handleDecrementProduct(item) }}>
+                                    remove
+                                  </span>
+                                  <span>{item.qty}</span>
+                                  <span className="c-pointer material-icons-outlined" onClick={() => { handleIncrementProduct(item) }}>
+                                    add
+                                  </span>
+                                </div>
+                                : item.qty}</span>
+                              
+                            </div>
+                            <div>
+                              <span
+                                onClick={() => dispatch(removeFromCart(item))}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <span className="material-icons-outlined">
+                                  close
+                                </span>
                               </span>
-                            </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className={style.freeDeliverOffer}>
-              <div className="d-flex justify-content-between align-items-center gap-12px">
-                <div>
-                  <span className="material-icons-outlined">
-                    local_shipping
-                  </span>
-                </div>
-                <p>
-                  <span className="color-primary">Spend %18.20</span> to quality
-                  for free standard delivery
-                </p>
-                <div
-                  className={`${style.exclamation} bg-grey border-radius-50 d-flex-all-center`}
-                >
-                  i
+                ))}
+              </div>
+              <div className={style.freeDeliverOffer}>
+                <div className="d-flex justify-content-between align-items-center gap-12px">
+                  <div>
+                    <span className="material-icons-outlined">
+                      local_shipping
+                    </span>
+                  </div>
+                  <p>
+                    <span className="color-primary">Spend %18.20</span> to quality
+                    for free standard delivery
+                  </p>
+                  <div
+                    className={`${style.exclamation} bg-grey border-radius-50 d-flex-all-center`}
+                  >
+                    i
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="text-right p-12px">
-              <h4>
-                <strong>Total</strong>{' '}
-                <strong className="color-primary">
-                  $
-                  {items.reduce(
-                    (total, item) => total + item.price * item.qty,
-                    0
-                  ) || 0}
-                </strong>
-              </h4>
-            </div>
-            <div className="text-left p-12px">
-              <h4 className="color-grey">*Before taxes</h4>
-            </div>
-            <div className={style.processBtns}>
-              <Link to="/cart-payment">
-                <button
-                  type="button"
-                  className="bg-black color-white p-12px w-100 d-block"
-                >
-                  GO TO CHECKOUT
-                </button>
-              </Link>
-              <Link to="/shopping-cart" href="/shopping-cart">
-                <button
-                  type="button"
-                  className="bg-primary color-white p-12px w-100 d-block"
-                >
-                  SEE SHOPPING CART
-                </button>
-              </Link>
-            </div>
-          </div>
+              <div className="text-right p-12px">
+                <h4>
+                  <strong>Total</strong>{' '}
+                  <strong className="color-primary">
+                    $
+                    {items.reduce(
+                      (total, item) => total + item.price * item.qty,
+                      0
+                    ) || 0}
+                  </strong>
+                </h4>
+              </div>
+              <div className="text-left p-12px">
+                <h4 className="color-grey">*Before taxes</h4>
+              </div>
+              <div className={style.processBtns}>
+                <Link to="/delivery-address">
+                  <button
+                    type="button"
+                    className="bg-black color-white p-12px w-100 d-block c-pointer"
+                  >
+                    GO TO CHECKOUT
+                  </button>
+                </Link>
+                <Link to="/shopping-cart" href="/shopping-cart">
+                  <button
+                    type="button"
+                    className="bg-primary color-white p-12px w-100 d-block c-pointer"
+                  >
+                    SEE SHOPPING CART
+                  </button>
+                </Link>
+              </div>
+            </>
+              : <div className="text-center"> SHOPPING CART IS EMPTY
+                You have no items in your shopping cart.
+                Click <a onClick={() => { handleContinueShopping() }} className="color-red c-pointer">here</a> to continue shopping.</div>}</div>
         </div>
       </Drawer>
     </div>

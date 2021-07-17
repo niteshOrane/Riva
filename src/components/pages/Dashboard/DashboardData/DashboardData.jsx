@@ -20,19 +20,19 @@ const DashboardData = () => {
             </div>
             <div>
               <span>
-                Hello, <b>{customer.username ?? 'unknown'} </b>
+                Hello, <b>{`${customer.firstname} ${customer.lastname}` ?? 'unknown'} </b>
               </span>
             </div>
           </div>
         </div>
-        <div>
-          <span className={styles.pencil}>
+        <Link to="/profile-information">
+          <span className={` underline-hovered c-pointer ${styles.pencil}`}>
             <icons.Pencil />
           </span>
           <button className="bg-transparent no-border underline underline-hovered c-pointer">
             Edit
           </button>
-        </div>
+        </Link>
       </div>
       <div className={styles.grid}>
         <Link className={styles.box} to="#">
