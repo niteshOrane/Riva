@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { extractColorSize } from '../../../../util';
 import { toggleWishlist } from '../../../../store/actions/wishlist';
 import style from './Products.module.scss';
+import Image from "../../../common/LazyImage/Image";
 
 const Products = ({ products }) => {
   const dispatch = useDispatch();
@@ -42,12 +43,7 @@ const Products = ({ products }) => {
             <div className="d-flex justify-content-between p-12px">
               <div className={style.productDetails}>
                 <div className={style.productImg}>
-                  <img
-                    className="object-fit-contain"
-                    src={product.src}
-                    width="200px"
-                    alt=""
-                  />
+                  <Image src={product.src} width="200px" alt={product.name} type="product-details" />
                 </div>
                 <div className="w-100">
                   <div className="d-flex w-100">
