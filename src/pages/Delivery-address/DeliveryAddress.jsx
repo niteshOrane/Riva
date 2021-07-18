@@ -29,10 +29,11 @@ function DeliveryAddress() {
 
             <strong>Select a Delivery Address</strong>
           </div>
-          <div className={styles.backBtn}>
-            <span class="material-icons-outlined">arrow_back_ios</span>
-            Back
-          </div>
+          <Link to="/shopping-cart">
+            <div className={styles.backBtn}>
+              <span class="material-icons-outlined">arrow_back_ios</span>
+              Back
+            </div></Link>
         </div>
       </div>
 
@@ -52,12 +53,16 @@ function DeliveryAddress() {
             </p>
           </div>
           <div className={styles.subBtns}>
-            <button className={styles.returnBtn}>
-              <span class="material-icons-outlined">arrow_back_ios</span>
+            <Link to="/shopping-cart">
+              <button className={styles.returnBtn}>
+                <span class="material-icons-outlined">arrow_back_ios</span>
 
-              <span>RETURN TO CART</span>
-            </button>
+                <span>RETURN TO CART</span>
+              </button>
+            </Link>
+            <Link to="/">
             <button className={styles.continueBtn}>CONTINUE SHOPPING</button>
+            </Link>
           </div>
         </div>
         <div>

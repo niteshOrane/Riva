@@ -15,8 +15,7 @@ const Summary = () => {
           <p className="font-light-black">SUBTOTAL</p>
           <span className="color-primary">
             $
-            {items.reduce((total, item) => total + item.price * item.qty, 0) ||
-              0}
+            {items.reduce((total, item) => total + item.price * item.qty, 0) ||0}
           </span>
         </div>
         <div
@@ -33,6 +32,16 @@ const Summary = () => {
         <div className={style.checkoutBtn}>
           <Link to="/cart-payment">
             <button type="button">SECURE CHECKOUT</button>
+          </Link>
+        </div>
+        <div>
+          <Link to="/delivery-address">
+            <button
+              type="button"
+              className="bg-black color-white p-12px w-100 d-block c-pointer"
+            >
+             Change Delivery Address
+            </button>
           </Link>
         </div>
         <div className="gap-12px bg-white d-flex align-items-center p-12px">

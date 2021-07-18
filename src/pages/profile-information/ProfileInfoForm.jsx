@@ -6,7 +6,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { profileUpdate } from '../../services/dashboard/dashboard.service';
+import { profileUpdate, getProfileUpdate } from '../../services/dashboard/dashboard.service';
 import { showSnackbar } from '../../store/actions/common';
 import { setCustomer } from '../../store/actions/auth';
 
@@ -15,10 +15,10 @@ function ProfileInfoForm() {
   const dispatch = useDispatch();
 
   const [values, setValues] = useState({
-    firstName: customer?.firstname,
-    lastName: customer?.lastname,
+    firstname: customer?.firstname,
+    lastname: customer?.lastname,
     email: customer?.email,
-    number: customer?.username,
+    number: customer?.mobile,
     gender: customer.gender,
     dob: customer.dob,
   });
@@ -31,7 +31,7 @@ function ProfileInfoForm() {
     const cust = new FormData();
 
     cust.append('customerid', customer.customerID);
-    cust.append('firstname', values.firstName);
+    cust.append('firstname', values.firstname);
     cust.append('email', values.email);
     cust.append('lastname', values.lastname);
     cust.append('dob', values.dob);
@@ -58,16 +58,16 @@ function ProfileInfoForm() {
               <div className>
                 <label>First Name</label>
                 <input
-                  value={values?.firstName}
-                  name="firstName"
+                  value={values?.firstname}
+                  name="firstname"
                   onChange={handleChange}
                 />
               </div>
               <div style={{ marginLeft: '2rem' }}>
                 <label>Last Name</label>
                 <input
-                  name="lastName"
-                  value={values?.lastName}
+                  name="lastname"
+                  value={values?.lastname}
                   onChange={handleChange}
                 />
               </div>
@@ -126,6 +126,7 @@ function ProfileInfoForm() {
                 <label>Date of Birth</label>
                 <input
                   value={values.dob}
+                  placeholder="Select DOB"
                   name="dob"
                   onChange={handleChange}
                   type="date"

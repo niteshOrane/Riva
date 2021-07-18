@@ -3,6 +3,7 @@ import {
   addToCartService,
   deleteCartItem,
   getCartService,
+  editCartService,
   getProductIdBySku,
 } from '../../../services/cart/cart.service';
 import {
@@ -73,7 +74,13 @@ export const removeFromCart = (data) => async (dispatch) => {
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
   else dispatch(showSnackbar('something went wrong', 'error'));
 };
+export const editItemQntCart = (data) => async (dispatch) => {
+  const res = await editCartService(data.item_id, data.qty);
 
+  if (res.status === 200 && res.data)
+  dispatch(getCart());
+  else dispatch(showSnackbar('something went wrong', 'error'));
+};
 export const incrementItemqty = (data) => ({
   type: DATA_TYPES.INCREMENT_ITEM,
   payload: { ...data },
