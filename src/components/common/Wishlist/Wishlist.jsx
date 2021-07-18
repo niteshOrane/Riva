@@ -43,9 +43,8 @@ function Wishlist() {
       return dispatch(
         toggleSignUpCard({ redirectTo: window.location.pathname })
       );
-    if (wishlist.find((w) => data.id === w.id)) {
+    if (wishlist.find((w) => data.id == w.id)) {
       dispatch(removeWishlist(data));
-      dispatch(getWishlist());
     } else {
       dispatch(addWishlist(data));
     }

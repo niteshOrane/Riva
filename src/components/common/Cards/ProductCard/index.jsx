@@ -72,6 +72,7 @@ const ProductCard = ({
     );
 
     const p = {
+      ...product,
       ...res.data,
       image: res.data?.custom_attributes.find(
         (attr) => attr.attribute_code === "image"
@@ -103,6 +104,7 @@ const ProductCard = ({
     );
 
     const p = {
+      ...product,
       ...res.data,
       image: res.data?.custom_attributes.find(
         (attr) => attr.attribute_code === "image"
