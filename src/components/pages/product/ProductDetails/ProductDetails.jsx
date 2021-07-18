@@ -26,6 +26,7 @@ const ProductDetails = (props) => {
   }, []);
   const colorImageAction = (data) => {
     setColorImg(data?.file);
+    setColorSize({ ...product?.selected, color: { label: data?.color, value: data?.option_id } })
   };
   const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
@@ -173,7 +174,7 @@ const ProductDetails = (props) => {
                       onClick={() => colorImageAction(item)}
                       style={{ cursor: "pointer", marginLeft: "0.5rem" }}
                     >
-                      {item.color}
+                      {item.color} |
                     </span>
                   </div>
                 ))}

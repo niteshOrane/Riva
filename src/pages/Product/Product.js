@@ -84,7 +84,7 @@ const Product = (props) => {
       const productColorImage = await getProductColor(res?.data?.id);
       setMediaImage(productMediaImage?.data);
       setColorImage(productColorImage?.data);
-      
+
       setCompositioncare(rescompositioncare);
       setproduct(p);
       dispatch(addToRecentlyViewed(p));
@@ -115,7 +115,7 @@ const Product = (props) => {
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={{src:item?.file}} />}
+          render={(item) => <ImageCard product={{ src: item?.file }} />}
         />
       </div>
       <DescriptionComposition
@@ -123,29 +123,28 @@ const Product = (props) => {
         prodDiscr={product}
         compositioncare={compositioncare?.data}
       />
-      {/* <AdditionalProductDetails sections={body.additionalProductDetails} /> */}
-      {/* <div className="container-90 max-width-1750 mx-auto">
-        <HowToWearThis cards={body.howToWear} />
-      </div> */}
-
-      <div id="complete-your-look" className="max-width-1750 mx-auto my-20px">
-        <div>
-          <h4 className="section-title text-center my-20px">
-            Complete Your Look
-          </h4>
+      {howToWear.length > 0 ?
+        < div id="complete-your-look" >
+          <div className="max-width-1750 mx-auto my-20px">
+            <div>
+              <h4 className="section-title text-center my-20px">
+                Complete Your Look
+              </h4>
+            </div>
+            <Slider
+              className="simpleGreyArrow"
+              items={howToWear}
+              slidesToShow={4}
+              arrows
+              ref={refContainer}
+              render={(item) => <ProductCard product={item} />}
+            />
+          </div>
+          <div className="container-90 max-width-1750 mx-auto my-20px">
+            <ShopTheWholeOutfit data={howToWear} mainProd={product} />
+          </div>
         </div>
-        <Slider
-          className="simpleGreyArrow"
-          items={howToWear}
-          slidesToShow={4}
-          arrows
-          ref={refContainer}
-          render={(item) => <ProductCard product={item} />}
-        />
-      </div>
-      <div className="container-90 max-width-1750 mx-auto my-20px">
-        <ShopTheWholeOutfit data={howToWear} mainProd={product} />
-      </div>
+        : null}
       {/* <div className="d-flex-all-center gap-12px mx-50px gap-12px">
         <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />
