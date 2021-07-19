@@ -56,7 +56,6 @@ function QuickView() {
     data.selected = attr;
     setSelectedProduct({ ...data, selected: attr.c });
   };
-  console.log("selected", selectedProduct);
 
   const addToCardHandler = () => {
     dispatch(
@@ -91,7 +90,6 @@ function QuickView() {
       setattributes({ colors, size });
     }
   }, [data]);
-  console.log(selectedProduct?.selected?.value);
   return (
     <Dialog
       fullWidth
