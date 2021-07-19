@@ -57,6 +57,7 @@ function QuickView() {
     data.selected = attr;
     setSelectedProduct(data);
   };
+  console.log(selectedProduct)
   const addToCardHandler = () => {
 
     dispatch(
