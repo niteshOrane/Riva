@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import * as icons from "../../components/common/Icons/Icons";
 import { Link } from "react-router-dom";
 import SelectDeliveryAddress from "../../components/pages/DeliveryAddress/SelectDeliveryAddress/SelectDeliveryAddress";
@@ -6,7 +7,16 @@ import DeliveryAddressForm from "../../components/pages/DeliveryAddress/Delivery
 import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/OrderReview";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
+import { getCustomerAddressList } from '../../store/actions/customerAddress';
+import { useEffect } from "react";
+import AddressItem from "../../components/pages/DeliveryAddress/AddressItem/AddressItem";
+
 function DeliveryAddress() {
+  const dispatch = useDispatch();
+  const customerAddressList = useSelector((state) => state.address?.data || []);
+  useEffect(() => {
+    dispatch(getCustomerAddressList());
+  }, [])
   return (
     <div className="container-90 max-width-1600">
       <div className={styles.header}>
@@ -39,11 +49,15 @@ function DeliveryAddress() {
 
       <div className={styles.container}>
         <div className={styles.columnLeft}>
-          <SelectDeliveryAddress />
-          <DeliveryAddressForm />
-
-       
-
+          <SelectDeliveryAddress addressItem={customerAddressList && customerAddressList.length > 0 ? customerAddressList[0] : {}} />
+          <div className={styles.addAddress}>
+            <p className={styles.title}>Add a new address</p>
+          </div>
+          {customerAddressList.map((addr, index) => {
+            return (<AddressItem addressItem={addr} index={index}></AddressItem>)
+          })}
+        
+          <DeliveryAddressForm customerData={customerAddressList} />
           <div className={styles.shippingMethod}>
             <h3 className="font-weight-normal">SHIPPING METHOD</h3>
             <p className={styles.greyText}>
@@ -59,7 +73,7 @@ function DeliveryAddress() {
               </button>
             </Link>
             <Link to="/">
-            <button className={styles.continueBtn}>CONTINUE SHOPPING</button>
+              <button className={styles.continueBtn}>CONTINUE SHOPPING</button>
             </Link>
           </div>
         </div>

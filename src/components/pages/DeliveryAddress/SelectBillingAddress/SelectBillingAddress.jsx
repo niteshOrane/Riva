@@ -2,8 +2,7 @@ import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./SelectDeliveryAddress.module.scss";
 
-function SelectDeliveryAddress({addressItem, customerAddressList}) {
-  console.log('customerAddressList', customerAddressList, addressItem)
+function SelectBillingAddress(addressItem) {
   return (
     <div>
       <p className={styles.title}>Select a Delivery Address</p>
@@ -17,18 +16,18 @@ function SelectDeliveryAddress({addressItem, customerAddressList}) {
           <h3 className="font-weight-normal">
             Delivery Address <icons.Check />
           </h3>
-          <h4 className="font-weight-normal">{addressItem?.name}</h4>
+          <h4 className="font-weight-normal">{addressItem?.name || 'Dheeraj'}</h4>
           <p className={styles.greyText}>
-            {addressItem?.address1}  {addressItem?.city} {addressItem?.state}
-          </p>
-          <p className={styles.greyText}>
-            {addressItem?.address2}  {addressItem?.phone}
+            {addressItem?.addesss || 'R-006, Pan Oasis Tower'}
           </p>
         </div>
         <button className={styles.changeBtn}>CHANGE</button>
+      </div>
+      <div className={styles.addAddress}>
+        <p className={styles.title}>Add a new address</p>
       </div>
     </div>
   );
 }
 
-export default SelectDeliveryAddress;
+export default SelectBillingAddress;

@@ -30,28 +30,27 @@ export const getCustomerAddressList = () => async (dispatch) => {
 
   const res = await getCustomerAddress(id);
 
-  if (res.data.success === 1) {
+  if (res.data.success) {
     dispatch(getAddress_action(res.data.data));
   } else dispatch(getAddress_action([]));
 };
 
-export const addNewAddress = (item) => async (dispatch) => {
-  const res = await addCustomerAddress(item);
-
-  if (res.data.success === 1) {
+export const addNewAddress = (res, item) => async (dispatch) => {
+  
+  if (res.data.success) {
     dispatch(addAddress_action(item));
     dispatch(
-      showSnackbar(res.data?.data || 'Item added to Address', 'success')
+      showSnackbar(res.data?.message || 'Item added to Address', 'success')
     );
   } else
     dispatch(
       showSnackbar(
-        res.data.data || res.data.message || 'failed to add item to Address',
+        res.data.message || 'failed to add item to Address',
         'error'
       )
     );
 };
 
 export const removeAddress = (item) => async (dispatch) => {
- 
+
 };
