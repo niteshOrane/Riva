@@ -16,7 +16,6 @@ const ProductDetails = (props) => {
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
-  console.log(colorImg)
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
