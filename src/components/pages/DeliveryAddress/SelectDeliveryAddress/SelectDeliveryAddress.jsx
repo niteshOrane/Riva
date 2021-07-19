@@ -21,7 +21,7 @@ function SelectDeliveryAddress() {
             Melba R Fox, 4900 Spirit Drive, Hastings, Florida - 32145, USA
           </p>
         </div>
-        <button className={styles.changeBtn}>CHANE</button>
+        <button className={styles.changeBtn}>CHANGE</button>
       </div>
       <div className={styles.addAddress}>
         <p className={styles.title}>Add a new address</p>
