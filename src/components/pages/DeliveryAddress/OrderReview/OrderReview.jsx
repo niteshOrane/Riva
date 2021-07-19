@@ -214,7 +214,9 @@ function OrderReview() {
           Sign up for Newsletter
         </span>
       </div>
-      <Link to="/cart-payment"><button className={styles.placeOrderBtn}>PLACE ORDER</button></Link>
+      <Link to="/cart-payment">
+        <button className={styles.placeOrderBtn}>PLACE ORDER</button>
+      </Link>
       <div className={`${styles.borderBottom} my-12px`}>
         <img
           src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/da0d5827-4617-454f-ab2f-e4e970ae73e3.png"

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PaymentTabs from '../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs';
 import * as icons from '../../components/common/Icons/Icons';
@@ -11,8 +11,21 @@ import { toggleCart } from '../../store/actions/cart';
 
 function CartPayment() {
   const dispatch = useDispatch();
+  const { data: items = [] } = useSelector((state) => state.cart);
+  const customer = useSelector((state) => state.auth.customer);
 
-  React.useEffect(() => {
+  const customerid = customer.customerID;
+  const [totalAmout, setTotalAmout] = useState(0);
+  const [totalDC, setTotalDC] = useState(50);
+  const [totalTax, setTotalTax] = useState(45);
+
+  useEffect(() => {
+    const amount = items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
+    setTotalAmout(amount);
+
+    items.totalDC = totalDC;
+    items.totalTax = totalTax;
+    items.amount = amount;
     dispatch(toggleCart(false));
   }, []);
 
@@ -46,7 +59,7 @@ function CartPayment() {
           <PaymentTabs />
         </div>
         <div className={styles.col2}>
-          <PriceDetails />
+          <PriceDetails cartItem={items} customerID={customerid} />
           <LetUsHear />
         </div>
       </div>

@@ -168,13 +168,13 @@ const ProductDetails = (props) => {
                 </div>
               ))} */}
               {productColorList.length > 0 &&
-                productColorList.map((item) => (
+                productColorList.map((item, index) => (
                   <div>
                     <span
                       onClick={() => colorImageAction(item)}
                       style={{ cursor: "pointer", marginLeft: "0.5rem" }}
                     >
-                      {item.color} |
+                      {item.color} {productColorList.length > index + 1 ? '|' : ''}
                     </span>
                   </div>
                 ))}

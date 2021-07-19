@@ -9,28 +9,44 @@ const VerticalProductCard = ({ product }) => {
     price: now,
     size = 'unavailable',
   } = product;
-
+  const colors = Object.keys(product?.options.filter(e => e.label === "Color")[0].values);
+  const sizes = Object.keys(product?.options.filter(e => e.label === "Size")[0].values);
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
         <img src={src} alt={name} />
       </div>
       <div>
-        <div className={styles.name}>{name || 'not available'}</div>
+        <div className={styles.name}>{name || ''}</div>
         <div className={styles.price}>
           <div className={styles.was}>Was {was}$</div>
           <div className={styles.now}>Now {now}$</div>
         </div>
         <div className={styles.size}>
           <div className="gap-12px d-flex align-items-center">
+            <span className={styles.title}>Color:</span>
+            {colors.map((color, index) => {
+              const colorItem = product?.options.filter(e => e.label === "Color")?.[0]?.values[color]?.label;
+              return (
+                <span className={styles.text}>{colorItem} {colors.length > index + 1 ? '|' : ''}</span>
+              )
+            })}
+          </div>
+          <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Size:</span>
-            <span className={styles.text}>{size}</span>
+            {sizes?.map((color) => {
+              return (
+                <span className={styles.text}>{product?.options.filter(e => e.label === "Size")[0].values[color].label}</span>
+              )
+            })}
           </div>
           <div
             className={`${styles.options} gap-12px d-flex align-items-center`}
           >
-            {['S', 'M', 'L', 'XL', '2XL'].map((sizeValue) => {
-              return <div className={styles.option}>{sizeValue}</div>;
+            {sizes?.map((color) => {
+              return (
+                <span className={styles.option}>{product?.options.filter(e => e.label === "Size")[0].values[color].label}</span>
+              )
             })}
           </div>
           <div className={`${styles.otherOptions} d-flex`}>
