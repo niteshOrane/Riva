@@ -42,9 +42,7 @@ function DeliveryAddress() {
           <SelectDeliveryAddress />
           <DeliveryAddressForm />
 
-          <div className="text-right">
-            <button className={styles.addAddressBtn}>ADD ADDRESS</button>
-          </div>
+       
 
           <div className={styles.shippingMethod}>
             <h3 className="font-weight-normal">SHIPPING METHOD</h3>

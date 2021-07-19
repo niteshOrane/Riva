@@ -127,7 +127,7 @@ function OrderReview() {
           <button
             type="button"
             onClick={handleRemoveCoupon}
-            className={styles.applyBtn}
+            className={`${styles.applyBtn} c-pointer`}
             style={{ marginLeft: "0.5rem" }}
           >
             REMOVE

@@ -2,6 +2,8 @@
   border: 1px solid;
   padding: 12px;
   margin-bottom: 30px;
+  
+  
   .inpContainer {
     margin: 14px 0;
     display: flex;
@@ -39,4 +41,12 @@
     margin-left: 12px;
     cursor: pointer;
   }
+}
+.addAddressBtn {
+  background-color: #000000;
+  color: #fff;
+  min-width: 204.2px;
+  height: 41px;
+  border: none;
+  cursor: pointer;
 }
