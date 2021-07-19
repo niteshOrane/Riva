@@ -1,21 +1,15 @@
 import React from "react";
 import * as icons from "../../../common/Icons/Icons";
-import styles from "./SelectDeliveryAddress.module.scss";
+import styles from "./AddressItem.module.scss";
 
-function SelectDeliveryAddress({addressItem, customerAddressList}) {
-  console.log('customerAddressList', customerAddressList, addressItem)
+function AddressItem({addressItem, index}) {
   return (
     <div>
-      <p className={styles.title}>Select a Delivery Address</p>
-      <p className={styles.greyText}>
-        Is the address you'd like to use displayed below? If so, click the
-        corresponding "Deliver to this address" button. Or you can{" "}
-        <strong className="color-black">enter a new delivery address. </strong>
-      </p>
+    
       <div className={styles.deliveryAddress}>
         <div>
           <h3 className="font-weight-normal">
-            Delivery Address <icons.Check />
+            Address {index}
           </h3>
           <h4 className="font-weight-normal">{addressItem?.name}</h4>
           <p className={styles.greyText}>
@@ -31,4 +25,4 @@ function SelectDeliveryAddress({addressItem, customerAddressList}) {
   );
 }
 
-export default SelectDeliveryAddress;
+export default AddressItem;

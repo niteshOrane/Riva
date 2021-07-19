@@ -1,7 +1,8 @@
 import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./PriceDetails.module.scss";
-const PriceDetails = () => {
+const PriceDetails = ({cartItem}) => {
+  
   return (
     <div className={styles.container}>
       <h4 className={styles.title}>PRICE DETAILS (2 Item)</h4>

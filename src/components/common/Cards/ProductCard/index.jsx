@@ -204,7 +204,7 @@ const ProductCard = ({
             }`}
           title={name}
         >
-          {name || 'not available'}
+          {name || ''}
         </div>
         <div
           className={`${styles.productPrice} ${!isProduct ? 'text-center' : ''
