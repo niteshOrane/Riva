@@ -9,6 +9,16 @@
       }
     }
   }
+  .counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $color-grey;
+    text-align: center;
+    span {
+      margin: 0 4px;
+    }
+  }
   .sideBody {
     .items {
       max-height: 400px;

@@ -10,3 +10,13 @@ export const profileUpdate = (formData) => {
   };
   return axios(config);
 };
+
+export const getProfileUpdate = (formData) => {
+  const config = {
+    method: 'post',
+    url: `${API_URL}/getProfiledetails`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};

@@ -26,6 +26,7 @@ function QuickView() {
   const [attributes, setattributes] = useState({ colors: [], size: [] });
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   const handleIncrementProduct = () => {
     setProductQuantity((prevState) => prevState + 1);
@@ -34,7 +35,9 @@ function QuickView() {
     if (productQuantity === 1) return;
     setProductQuantity((prevState) => prevState - 1);
   };
-
+  const colorImageAction = (colorItem) => {
+    setColorSize({ ...data?.selected, color: colorItem })
+  };
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
@@ -50,19 +53,20 @@ function QuickView() {
   const handleClose = () => {
     dispatch(toggleQuickView(null));
   };
-
+  const setColorSize = (attr) => {
+    data.selected = attr;
+    setSelectedProduct(data);
+  };
   const addToCardHandler = () => {
+
     dispatch(
       addToCart({
-        ...data,
+        ...selectedProduct,
         id: `${data?.id}`,
         name: data?.name,
         src: data?.image,
-        color: custom_attributes?.find((e) => e?.attribute_code === 'color')
-          ?.value,
         qty: productQuantity,
-        size: custom_attributes?.find((e) => e?.attribute_code === 'size')
-          ?.value,
+        ...selectedProduct?.selected,
         price,
       })
     );
@@ -75,6 +79,9 @@ function QuickView() {
       ? data?.image
       : `${URL.baseUrlProduct}${data?.image}`;
 
+  useEffect(() => {
+    setSelectedProduct(data);
+  }, [])
   useEffect(() => {
     if (data?.extension_attributes?.configurable_product_options) {
       const { colors, size } = extractColorSize(
@@ -145,7 +152,7 @@ function QuickView() {
           <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>
             {attributes.colors?.map((c) => (
-              <div className={styles.text}>{c.label} </div>
+              <div onClick={() => colorImageAction(c)} className={`c-pointer ${styles.text}`}>{c.label} </div>
             ))}
             {/* <div className={styles.text}>Black</div>
             <div className={`${styles.options} d-flex-all-center`}>
@@ -160,22 +167,32 @@ function QuickView() {
               className={`${styles.options} gap-12px d-flex align-items-center`}
             >
               {attributes.size?.map((c) => (
-                <div className={styles.text}>{c.label} </div>
+                <div className={`c-pointer ${styles.text} d-flex-all-center`}
+                  style={{
+                    transform:
+                      selectedProduct?.selected?.size?.value === c.value
+                        ? "scale(1.2)"
+                        : "scale(1)",
+                  }}
+                  onClick={() =>
+                    setColorSize({ ...selectedProduct?.selected, size: c })
+                  }>{c.label} </div>
               ))}
             </div>
           </div>
-          <div
-            className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
-          >
-            <div className={`${styles.icon} d-flex-all-center`}>
-              <span className="material-icons">mail</span>
-            </div>
-            {outOfStock ? (
+          {outOfStock ? (
+            <div
+              className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
+            >
+              <div className={`${styles.icon} d-flex-all-center`}>
+                <span className="material-icons">mail</span>
+              </div>
+
               <div className={styles.text}>
                 We will let you know when its in stock
               </div>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
           <div className={`${styles.sizeHelp} d-flex align-items-center`}>
             <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">

@@ -7,7 +7,6 @@
     border-bottom: 1px solid #ddd;
     padding-bottom: 4px;
   }
-
   .grid {
     display: grid;
     margin: 12px;
@@ -16,6 +15,20 @@
     padding-bottom: 7px;
     opacity: 0.8;
     .col1 {
+      .textArea{
+        width: 102px;
+        height: 35px;
+        margin: 0px 0px 11px 11px;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.29;
+        letter-spacing: normal;
+        text-align: left;
+        color: #343232;
+      }
       .image {
         padding-right: 12px;
         img {

@@ -9,6 +9,15 @@ import {
 } from '../../../../store/actions/common';
 import { addToCart } from '../../../../store/actions/cart';
 import { extractColorSize, URL } from '../../../../util';
+
+import {
+  getAttributes,
+  getProduct,
+  getCompositioncare,
+  getHowToWear,
+  getProductMedia,
+  getProductColor,
+} from "../../../../services/product/product.service";
 import styles from './product.module.scss';
 
 const TempLink = ({ children, product }) => {
@@ -55,12 +64,68 @@ const ProductCard = ({
 
   const dispatch = useDispatch();
 
-  const handleWishList = () => {
-    dispatch(toggleWishlist(product));
+  const handleWishList = async () => {
+    const res = await getProduct(product.sku);
+
+    const { colors, size } = extractColorSize(
+      res.data?.extension_attributes?.configurable_product_options || []
+    );
+
+    const p = {
+      ...product,
+      ...res.data,
+      image: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "image"
+      )?.value,
+      name: res.data.name,
+      price: res.data.price,
+      sale:
+        res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "show_sale_badge"
+        )?.value === "1",
+      description: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "description"
+      )?.value,
+      colors,
+      size,
+      selected: {
+        color: colors?.[0] || {},
+        size: size?.[0] || {},
+      },
+    };
+    dispatch(toggleWishlist(p));
   };
 
-  const handleQuickView = () => {
-    dispatch(toggleQuickView(product));
+  const handleQuickView = async () => {
+    const res = await getProduct(product.sku);
+
+    const { colors, size } = extractColorSize(
+      res.data?.extension_attributes?.configurable_product_options || []
+    );
+
+    const p = {
+      ...product,
+      ...res.data,
+      image: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "image"
+      )?.value,
+      name: res.data.name,
+      price: res.data.price,
+      sale:
+        res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "show_sale_badge"
+        )?.value === "1",
+      description: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "description"
+      )?.value,
+      colors,
+      size,
+      selected: {
+        color: colors?.[0] || {},
+        size: size?.[0] || {},
+      },
+    };
+    dispatch(toggleQuickView(p));
   };
 
   const addToCardHandler = () => {
@@ -126,30 +191,24 @@ const ProductCard = ({
           </button>
         </div>
         <div>
-          <button
-            type="button"
-            className="no-border bg-transparent c-pointer"
-            onClick={addToCardHandler}
-          >
+          <TempLink product={product}>
             <span className="material-icons-outlined font-light-black">
               shopping_cart
             </span>
-          </button>
+          </TempLink>
         </div>
       </div>
       <TempLink product={product}>
         <div
-          className={`${styles.productName} two-lines-text ${
-            !isProduct ? 'text-center ' : 'd-flex'
-          }`}
+          className={`${styles.productName} two-lines-text ${!isProduct ? 'text-center ' : 'd-flex'
+            }`}
           title={name}
         >
           {name || 'not available'}
         </div>
         <div
-          className={`${styles.productPrice} ${
-            !isProduct ? 'text-center' : ''
-          }`}
+          className={`${styles.productPrice} ${!isProduct ? 'text-center' : ''
+            }`}
         >
           {origpriceWithoutCurrency > priceWithoutCurrency ? (
             <div className={styles.was}>Was {origprice || ''}</div>
@@ -160,9 +219,9 @@ const ProductCard = ({
           </div>
         </div>
         <div
-          className={`${styles.productColors} ${
-            !isProduct ? 'text-center justify-content-center' : ''
-          }`}
+          className={`${styles.productColors} ${!isProduct ?
+            'text-center justify-content-center' : 'd-none'
+            }`}
         >
           <div>
             {attributes.colors?.map((c) => (

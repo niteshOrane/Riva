@@ -35,7 +35,7 @@ const randomProducts = [
   },
 ];
 
-function Delivered() {
+function Delivered({title='Delivered'}) {
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -45,7 +45,7 @@ function Delivered() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">Delivered</h2>
+            <h2 className="font-weight-normal">{title}</h2>
 
             <DeliveredOrders products={randomProducts} />
           </div>

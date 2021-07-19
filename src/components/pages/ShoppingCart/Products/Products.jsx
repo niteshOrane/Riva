@@ -5,11 +5,23 @@ import { extractColorSize } from '../../../../util';
 import { toggleWishlist } from '../../../../store/actions/wishlist';
 import style from './Products.module.scss';
 import Image from "../../../common/LazyImage/Image";
+import { editItemQntCart } from '../../../../store/actions/cart';
+
 
 const Products = ({ products }) => {
+  
   const dispatch = useDispatch();
+  
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
-
+  const handleIncrementProduct = (product) => {
+    product.qty = product.qty + 1;
+    dispatch(editItemQntCart(product));
+  };
+  const handleDecrementProduct = (product) => {
+    if (product.qty === 1) return;
+    product.qty = product.qty - 1;
+    dispatch(editItemQntCart(product));
+  };
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -84,11 +96,11 @@ const Products = ({ products }) => {
                           ${product.price}
                         </strong>
                         <div className={style.counter}>
-                          <span className="c-pointer material-icons-outlined">
+                          <span className="c-pointer material-icons-outlined" onClick={() => { handleDecrementProduct(product) }}>
                             remove
                           </span>
                           <span>{product.qty}</span>
-                          <span className="c-pointer material-icons-outlined">
+                          <span className="c-pointer material-icons-outlined" onClick={() => { handleIncrementProduct(product) }}>
                             add
                           </span>
                         </div>
@@ -134,9 +146,9 @@ const Products = ({ products }) => {
           </div>
         ))}
       </div>
-      <div className="text-right">
+      <div className="text-right c-pointer">
         <div className="text-right">
-          <a href="#" className={style.continueBtn}>
+          <a href="/" className={style.continueBtn}>
             Continue Shopping
           </a>
         </div>

@@ -43,9 +43,8 @@ function Wishlist() {
       return dispatch(
         toggleSignUpCard({ redirectTo: window.location.pathname })
       );
-    if (wishlist.find((w) => data.id === w.id)) {
+    if (wishlist.find((w) => data.id == w.id)) {
       dispatch(removeWishlist(data));
-      dispatch(getWishlist());
     } else {
       dispatch(addWishlist(data));
     }
@@ -61,6 +60,7 @@ function Wishlist() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
+  console.log('data', data)
 
   return (
     <Dialog
@@ -85,6 +85,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
+            type='product-details'
             customeStyle={{ objectFit: "cover" }}
           />
         </div>
@@ -109,7 +110,7 @@ function Wishlist() {
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
               <div className={styles.was}>Was {origprice || ""}</div>
             ) : null}
-            <div className={styles.now}>Now ${data?.price}</div>
+            <div className={styles.now}>Now {data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
@@ -154,7 +155,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setGuideCardOpen(true)}
+                  //   onClick={() => setGuideCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Size Guide
@@ -171,7 +172,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setSizeCardOpen(true)}
+                  //   onClick={() => setSizeCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Find your size
@@ -207,7 +208,7 @@ function Wishlist() {
                     <span
                       onClick={handleDecrementProduct}
                       className="material-icons-outlined font-light-black"
-                      style = {{cursor:"pointer"}}
+                      style={{ cursor: "pointer" }}
                     >
                       remove
                     </span>
@@ -217,7 +218,7 @@ function Wishlist() {
                     <span
                       onClick={handleIncrementProduct}
                       className="material-icons-outlined font-light-black"
-                      style = {{cursor:"pointer"}}
+                      style={{ cursor: "pointer" }}
                     >
                       add
                     </span>

@@ -36,7 +36,7 @@ function CartPayment() {
               </span>
             </Link>
 
-            <strong>Select a Delivery Address</strong>
+            <strong>Payment</strong>
           </div>
         </div>
       </div>

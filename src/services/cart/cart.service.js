@@ -5,11 +5,9 @@ import { getCustId, getCartId, getStoreId } from '../../util';
 export const addToCartService = (id, color, size, qty) => {
   const config = {
     method: 'post',
-    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
-      getCartId() || 0
-    }&productInfo[customer_id]=${
-      getCustId() || 0
-    }&productInfo[store_id]=${getStoreId()}`,
+    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${getCartId() || 0
+      }&productInfo[customer_id]=${getCustId() || 0
+      }&productInfo[store_id]=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -20,6 +18,21 @@ export const getCartService = () => {
     method: 'get',
     url: `${API_URL}/carts/${getCartId()}/items`,
     silent: true,
+  };
+  return axios(config);
+};
+
+export const editCartService = (id, qty) => {
+  const formData = new FormData();
+  formData.append('itemValue[item_id]', id);
+  formData.append('customerid', getCustId());
+  formData.append('itemValue[qty]', qty);
+  formData.append('itemValue[cart_id]', getCartId());
+  const config = {
+    method: 'post',
+    url: `${API_URL}/updateCart`,
+    silent: true,
+    data: formData,
   };
   return axios(config);
 };
