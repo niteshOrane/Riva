@@ -76,83 +76,86 @@ function Filters({
   useEffect(() => {
     filterList(1241);
   }, []);
-  let categoryList = filtersAttr?.find((v) => v.attr_code === "cat");
-  let priceList = filtersAttr?.find((p) => p.attr_code === "price")?.values;
-  let colorList = filtersAttr?.find((c) => c.attr_code === "color")?.values;
-  let sizeList = filtersAttr?.find((s) => s.attr_code === "size")?.values;
-  // console.log(categoryList,priceList,colorList)
-
-  const newList = [
-    filtersAttr?.map((a, idx) => {
-      return {
-        id: idx + 1,
-        title: a.attr_label,
-        isParent: true,
-        children: a?.values.map((v, index) => {
+  let categoryList = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "cat")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "cat")?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "cat")
+        ?.values.map((c, idx) => {
           return {
-            id: index + 1,
-            title: v.display,
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
             type: "checkbox",
           };
         }),
-      };
-      // return categoryList?.map((c, idx) => {
-      //   return {
-      //     id: idx,
-      //     title: c.attr_lebel,
-      //     isParent: true,
-      //     children: c?.values?.map((ch, index) => {
-      //       return {
-      //         id: index + 1,
-      //         title: ch.display,
-      //         type: "checkbox",
-      //       };
-      //     }),
-      //   };
-      // });
-      // priceList?.map((c, idx) => {
-      //   return {
-      //     id: idx,
-      //     title: c.attr_lebel,
-      //     isParent: true,
-      //     children: c?.values?.map((ch, index) => {
-      //       return {
-      //         id: index + 1,
-      //         title: ch.display,
-      //         type: "checkbox",
-      //       };
-      //     }),
-      //   };
-      // });
-      // sizeList?.map((c, idx) => {
-      //   return {
-      //     id: idx,
-      //     title: c.attr_lebel,
-      //     isParent: true,
-      //     children: c?.values?.map((ch, index) => {
-      //       return {
-      //         id: index + 1,
-      //         title: ch.display,
-      //         type: "checkbox",
-      //       };
-      //     }),
-      //   };
-      // });
-      // colorList?.map((c, idx) => {
-      //   return {
-      //     id: idx,
-      //     title: c.attr_lebel,
-      //     isParent: true,
-      //     children: c?.values?.map((ch, index) => {
-      //       return {
-      //         id: index + 1,
-      //         title: ch.display,
-      //         type: "checkbox",
-      //       };
-      //     }),
-      //   };
-      // });
-    }),
+    },
+  ];
+  let priceList = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "price")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "price")?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "price")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "range",
+          };
+        }),
+    },
+  ];
+  let colorList = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "color")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "color")?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "color")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "checkbox",
+          };
+        }),
+    },
+  ];
+  let sizeList = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "size")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "size")?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "size")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "checkbox",
+          };
+        }),
+    },
+  ];
+
+  const newList = [
+    // filtersAttr?.map((a, idx) => {
+    //   return {
+    //     id: idx + 1,
+    //     title: a.attr_label,
+    //     isParent: true,
+    //     children: a?.values.map((v, index) => {
+    //       return {
+    //         id: index + 1,
+    //         title: v.display,
+    //         type: "checkbox",
+    //       };
+    //     }),
+    //   };
+      categoryList,priceList,colorList,sizeList
   ];
   console.log(newList);
   const closeDrawer = () => {
