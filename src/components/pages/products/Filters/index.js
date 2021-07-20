@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import BlackCloseBtn from "../../../common/Buttons/BlackCloseBtn/BlackCloseBtn";
 import Dropdown from "../../../common/Dropdowns/Dropdown/Dropdown";
@@ -7,12 +7,13 @@ import CheckBoxComponent from "./CheckBoxComponent";
 import { data } from "./RandomData";
 import RangeSlider from "./RangeSlider";
 import style from "./filters.module.scss";
+import { getFiltersList } from "../../../../services/product/product.service";
 
 // SMALL COMPONENTS
 const List = ({ item }) => (
-  <div key={item.id} className={style.listContainer}>
+  <div key={item} className={style.listContainer}>
     <span />
-    <span>{item.title}</span>
+    <span>{item.title} hello</span>
   </div>
 );
 
@@ -56,12 +57,104 @@ const Tags = ({ tags }) => (
   </div>
 );
 
-function Filters({ handleThreeColumns, handleTwoColumns, pageColumns }) {
+function Filters({
+  handleThreeColumns,
+  handleTwoColumns,
+  pageColumns,
+  categoryId,
+}) {
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
+  const [filtersAttr, setFiltersAttr] = useState(null);
 
   const [open, setOpen] = useState(false);
 
+  const filterList = async (catId) => {
+    const list = await getFiltersList(catId);
+    setFiltersAttr(list?.data[0]?.filters);
+  };
+  useEffect(() => {
+    filterList(1241);
+  }, []);
+  let categoryList = filtersAttr?.find((v) => v.attr_code === "cat");
+  let priceList = filtersAttr?.find((p) => p.attr_code === "price")?.values;
+  let colorList = filtersAttr?.find((c) => c.attr_code === "color")?.values;
+  let sizeList = filtersAttr?.find((s) => s.attr_code === "size")?.values;
+  // console.log(categoryList,priceList,colorList)
+
+  const newList = [
+    filtersAttr?.map((a, idx) => {
+      return {
+        id: idx + 1,
+        title: a.attr_label,
+        isParent: true,
+        children: a?.values.map((v, index) => {
+          return {
+            id: index + 1,
+            title: v.display,
+            type: "checkbox",
+          };
+        }),
+      };
+      // return categoryList?.map((c, idx) => {
+      //   return {
+      //     id: idx,
+      //     title: c.attr_lebel,
+      //     isParent: true,
+      //     children: c?.values?.map((ch, index) => {
+      //       return {
+      //         id: index + 1,
+      //         title: ch.display,
+      //         type: "checkbox",
+      //       };
+      //     }),
+      //   };
+      // });
+      // priceList?.map((c, idx) => {
+      //   return {
+      //     id: idx,
+      //     title: c.attr_lebel,
+      //     isParent: true,
+      //     children: c?.values?.map((ch, index) => {
+      //       return {
+      //         id: index + 1,
+      //         title: ch.display,
+      //         type: "checkbox",
+      //       };
+      //     }),
+      //   };
+      // });
+      // sizeList?.map((c, idx) => {
+      //   return {
+      //     id: idx,
+      //     title: c.attr_lebel,
+      //     isParent: true,
+      //     children: c?.values?.map((ch, index) => {
+      //       return {
+      //         id: index + 1,
+      //         title: ch.display,
+      //         type: "checkbox",
+      //       };
+      //     }),
+      //   };
+      // });
+      // colorList?.map((c, idx) => {
+      //   return {
+      //     id: idx,
+      //     title: c.attr_lebel,
+      //     isParent: true,
+      //     children: c?.values?.map((ch, index) => {
+      //       return {
+      //         id: index + 1,
+      //         title: ch.display,
+      //         type: "checkbox",
+      //       };
+      //     }),
+      //   };
+      // });
+    }),
+  ];
+  console.log(newList);
   const closeDrawer = () => {
     setOpen(false);
   };
@@ -126,11 +219,21 @@ function Filters({ handleThreeColumns, handleTwoColumns, pageColumns }) {
               </div>
             </span>
             <div className={style.filterDots}>
-              <div onClick={handleTwoColumns} className={`${pageColumns===2?style.blackDots:''} ${style.greyDots}`}>
+              <div
+                onClick={handleTwoColumns}
+                className={`${pageColumns === 2 ? style.blackDots : ""} ${
+                  style.greyDots
+                }`}
+              >
                 <span />
                 <span />
               </div>
-              <div onClick={handleThreeColumns} className={`${pageColumns===3?style.blackDots:''} ${style.greyDots}`}>
+              <div
+                onClick={handleThreeColumns}
+                className={`${pageColumns === 3 ? style.blackDots : ""} ${
+                  style.greyDots
+                }`}
+              >
                 <span />
                 <span />
                 <span />
@@ -147,9 +250,10 @@ function Filters({ handleThreeColumns, handleTwoColumns, pageColumns }) {
             />
             {/* <Search handleChange={handleSearchChange} value={searchValue} /> */}
             <div className={style.filtersGrid}>
-              {data.map(($item, i) => (
-                <div key={i}>{$item.map((item) => menu(item, 0))}</div>
-              ))}
+              {newList?.map(($item, i) => {
+                // console.log($item);
+                return <div key={i}>{$item?.map((item) => menu(item, 0))}</div>;
+              })}
             </div>
           </div>
         </Drawer>

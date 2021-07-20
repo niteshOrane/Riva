@@ -12,7 +12,7 @@ import styles from "./products.module.scss";
 import { useEffect } from "react";
 
 function Products(props) {
-  const handleQuickView = () => { };
+  const handleQuickView = () => {};
   const refContainer = useRef();
   const refContainerLoad = useRef();
   const onScreen = useOnScreen(refContainerLoad);
@@ -28,7 +28,7 @@ function Products(props) {
     pageSize,
     sortDirection,
     sortField,
-    onScreen
+    onScreen,
   });
 
   const handleSortChange = (event) => {
@@ -36,7 +36,6 @@ function Products(props) {
     setSortDirection(event.target.value.split("-")?.[1]);
     setCurrentPage(1);
   };
-
 
   useEffect(() => {
     if (onScreen && !loading && totalCount > products.length) {
@@ -66,8 +65,7 @@ function Products(props) {
             <span className="color-grey">
               {products.length ? (
                 <>
-                  Showing {1}-{products.length} out of{" "}
-                  {totalCount}
+                  Showing {1}-{products.length} out of {totalCount}
                 </>
               ) : (
                 ""
@@ -114,6 +112,7 @@ function Products(props) {
             handleThreeColumns={handleThreeColumns}
             handleTwoColumns={handleTwoColumns}
             pageColumns={pageColumns}
+            categoryId={props.match.params.categoryId}
           />
         </div>
       </div>
@@ -122,10 +121,11 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        } container-90 max-width-1600 mx-auto`}
       >
         {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -155,7 +155,11 @@ function Products(props) {
           arrows={Boolean(true)}
           ref={refContainer}
           render={(item, index) => (
-            <ProductCard product={item} index={index} isProduct={Boolean(true)} />
+            <ProductCard
+              product={item}
+              index={index}
+              isProduct={Boolean(true)}
+            />
           )}
         />
       </div>

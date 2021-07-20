@@ -97,7 +97,6 @@ const Product = (props) => {
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
-  console.log(product,"here")
 
   useEffect(() => {
     init(selectedProductId);
