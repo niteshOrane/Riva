@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import styles from "./SizeCard.module.scss";
 import * as icons from "../../../../../common/Icons/Icons";
-const SizeCard = ({ handleClose, open }) => {
+const SizeCard = ({ handleClose, open, imageSelected }) => {
   const [selectedUnit, setSelectedUnit] = useState("CM");
   const [height, setHeight] = useState({
     range: 0,
@@ -52,7 +52,7 @@ const SizeCard = ({ handleClose, open }) => {
           <div className="d-flex">
             <div className={styles.img}>
               <img
-                src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/f7c18f6a-acb3-4c3a-9327-b311374829e9.png"
+                src={imageSelected}
                 width="100%"
                 alt=""
               />

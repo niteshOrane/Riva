@@ -20,7 +20,6 @@ const closeStyle = {
 };
 function Wishlist() {
   const [productQuantity, setProductQuantity] = React.useState(1);
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const {
     isOpen,
     modalData: data = {},
@@ -28,13 +27,7 @@ function Wishlist() {
   } = useSelector((state) => state.wishlist);
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    setSelectedProduct(data);
-  }, []);
-  const setColorSize = (attr) => {
-    data.selected = attr;
-    setSelectedProduct({ ...data, selected: attr.size });
-  };
+
   const handleClose = () => {
     dispatch(toggleWishlist(null));
   };
@@ -67,6 +60,7 @@ function Wishlist() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
+  console.log('data', data)
 
   return (
     <Dialog
@@ -91,7 +85,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            type="product-details"
+            type='product-details'
             customeStyle={{ objectFit: "cover" }}
           />
         </div>
@@ -133,18 +127,7 @@ function Wishlist() {
               {data?.size?.length &&
                 data?.size?.map((size) => {
                   return (
-                    <div
-                      className={`c-pointer ${styles.text} d-flex-all-center ${styles.sizeBox}`}
-                      style={{
-                        transform:
-                          selectedProduct?.selected?.value === size.value
-                            ? "scale(1.2)"
-                            : "scale(1)",
-                      }}
-                      onClick={() =>
-                        setColorSize({ ...selectedProduct?.selected, size })
-                      }
-                    >
+                    <div className={`${styles.option} d-flex-all-center`}>
                       {size.label}
                     </div>
                   );
@@ -172,7 +155,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setGuideCardOpen(true)}
+                  //   onClick={() => setGuideCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Size Guide
@@ -189,7 +172,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setSizeCardOpen(true)}
+                  //   onClick={() => setSizeCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Find your size

@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { WhatsApp, Instagram, Facebook } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
 import { addToRecentlyViewed } from "../../store/actions/stats";
 import Slider from "../../components/common/Sliders/Slider";
 import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
-import AdditionalProductDetails from "../../components/pages/product/AdditionalProductDetails/AdditionalProductDetails";
-import HowToWearThis from "../../components/pages/product/HowToWearThis/HowToWearThis";
 import DescriptionComposition from "../../components/pages/product/DescriptionComposition/DescriptionComposition";
 import {
-  getAttributes,
   getProduct,
   getCompositioncare,
   getHowToWear,
@@ -17,14 +13,12 @@ import {
 } from "../../services/product/product.service";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
-import OneImageBanner from "../../components/pages/landing/Banners/OneImageBanner";
-import { body, productDetailsSimleCard } from "../../mockdata.json";
+
 import styles from "./product.module.scss";
 
-import { products } from "../../db.json";
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
-import axios from "axios";
+
 
 const Product = (props) => {
   const { match } = props;
@@ -115,7 +109,7 @@ const Product = (props) => {
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={{ src: item?.file }} />}
+          render={(item) => <ImageCard product={{ src: item?.file }} count={mediaImage.length} />}
         />
       </div>
       <DescriptionComposition

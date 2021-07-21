@@ -29,3 +29,7 @@ export const TOGGLE_SIGNUP_CARD = 'TOGGLE_SIGNUP_CARD';
 export const SET_CUSTOMER = 'SET_CUSTOMER';
 export const SET_CART_ID = 'SET_CART_ID';
 export const SET_BULK_CART = 'SET_BULK_CART';
+export const TOGGLE_ADDRESS = 'TOGGLE_ADDRESS';
+export const GET_ADDRESS = 'GET_ADDRESS';
+export const ADD_ADDRESS = 'ADD_ADDRESS';
+export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';

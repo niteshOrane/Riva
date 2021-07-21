@@ -21,16 +21,12 @@ export const getCart = () => async (dispatch) => {
     const productIds = await Promise.allSettled(productIdPromises);
 
 
-    const getProductMediaPromises = res.data.map((r) => getProductMedia(r.sku));
-
-    const productSrc = await Promise.allSettled(getProductMediaPromises);
-
     const products = res.data.map((r, i) => ({
       ...r,
       id: productIds?.[i]?.value?.data?.data?.product_id
         ? parseInt(productIds?.[i]?.value?.data?.data?.product_id)
         : '',
-        src:productSrc?.[i]?.value?.data?.[0]?.file||''
+      src: r?.extension_attributes?.image
     }));
 
     if (res.data)
@@ -49,7 +45,7 @@ export const addToCart = (data) => async (dispatch) => {
     data.qty
   );
 
-  const response =  {...res?.data?.[0]};
+  const response = { ...res?.data?.[0] };
 
   if (res.status === 200 && !response?.error) {
     dispatch({
@@ -61,7 +57,7 @@ export const addToCart = (data) => async (dispatch) => {
       payload: { cart_id: response.cart_id },
     });
     dispatch(showSnackbar('Added to cart', 'success'));
-  } 
+  }
   else dispatch(showSnackbar(response?.message || '', 'error'));
 
   dispatch(getCart());
@@ -78,7 +74,7 @@ export const editItemQntCart = (data) => async (dispatch) => {
   const res = await editCartService(data.item_id, data.qty);
 
   if (res.status === 200 && res.data)
-  dispatch(getCart());
+    dispatch(getCart());
   else dispatch(showSnackbar('something went wrong', 'error'));
 };
 export const incrementItemqty = (data) => ({

@@ -84,6 +84,9 @@ const LoginForm = ({ handleSubmit }) => {
             'success'
           )
         );
+        return typeof res?.data?.data !== 'string'
+          ? history.push(redirectTo || '/dashboard')
+          : null;
       } else {
         dispatch(
           showSnackbar(
@@ -94,12 +97,11 @@ const LoginForm = ({ handleSubmit }) => {
           )
         );
       }
-      console.log(res?.data?.data !== 'string', redirectTo);
-      return typeof res?.data?.data !== 'string'
-        ? history.push(redirectTo || '/dashboard')
-        : null;
+
     }
-    return dispatch(showSnackbar('Something went wrong', 'error'));
+    else {
+      return dispatch(showSnackbar('Something went wrong', 'error'));
+    }
   };
 
   const [showPass, setShowPass] = useState(false);
