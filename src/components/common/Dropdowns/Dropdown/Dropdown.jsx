@@ -10,10 +10,10 @@ const SimpleDropdown = ({ depth, children, item }) => {
     setOpen(!open);
   };
   return (
-    <div className={`${style.dropdown} ${item.isParent ? style.dpParent : ""}`}>
+    <div className={`${style.dropdown} ${item.isParent ? style.dpParent : ""} `}>
       <div
         onClick={handleClose}
-        className={`${style.header} ${item.isParent ? style.dpHeader : ""}`}
+        className={`${style.header} ${item.isParent ? style.dpHeader : ""} ${style.dropdownCollapse}`}
       >
         {item?.isParent ? <h4>{item.title}</h4> : <h5>{item.title}</h5>}
         {item?.isParent ? (

@@ -74,7 +74,7 @@ function Filters({
     setFiltersAttr(list?.data[0]?.filters);
   };
   useEffect(() => {
-    filterList(1241);
+    filterList(categoryId);
   }, []);
   let categoryList = [
     {
@@ -103,7 +103,7 @@ function Filters({
             id: idx + 1,
             title: c.display,
             isItem: false,
-            type: "range",
+            type: "checkbox",
           };
         }),
     },
@@ -140,24 +140,69 @@ function Filters({
         }),
     },
   ];
-
-  const newList = [
-    // filtersAttr?.map((a, idx) => {
-    //   return {
-    //     id: idx + 1,
-    //     title: a.attr_label,
-    //     isParent: true,
-    //     children: a?.values.map((v, index) => {
-    //       return {
-    //         id: index + 1,
-    //         title: v.display,
-    //         type: "checkbox",
-    //       };
-    //     }),
-    //   };
-      categoryList,priceList,colorList,sizeList
+  let discountPercentage = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "discount_percentage")
+        ?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "discount_percentage")
+        ?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "discount_percentage")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "checkbox",
+          };
+        }),
+    },
   ];
-  console.log(newList);
+
+  const manufacturer = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "manufacturer")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "manufacturer")
+        ?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "manufacturer")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "checkbox",
+          };
+        }),
+    },
+  ];
+  const colorSwatch = [
+    {
+      id: filtersAttr?.find((v) => v.attr_code === "color_swatch")?.attr_code,
+      title: filtersAttr?.find((v) => v.attr_code === "color_swatch")
+        ?.attr_label,
+      children: filtersAttr
+        ?.find((v) => v.attr_code === "color_swatch")
+        ?.values.map((c, idx) => {
+          return {
+            id: idx + 1,
+            title: c.display,
+            isItem: false,
+            type: "checkbox",
+          };
+        }),
+    },
+  ];
+  const newList = [
+    categoryList,
+    priceList,
+    colorList,
+    sizeList,
+    discountPercentage,
+    manufacturer,
+    colorSwatch,
+  ];
+  console.log(filtersAttr);
   const closeDrawer = () => {
     setOpen(false);
   };
@@ -199,9 +244,17 @@ function Filters({
       <>
         <Dropdown depth={depth} item={items}>
           <>
-            {items?.children?.map((item) =>
-              item?.children ? menu(item, depth + 1) : renderComponent(item)
-            )}
+            <div
+              style={
+                items?.children?.length > 10
+                  ? { height: "60rem", overflowY: "scroll",paddingRight:"1rem" }
+                  : null
+              }
+            >
+              {items?.children?.map((item) =>
+                item?.children ? menu(item, depth + 1) : renderComponent(item)
+              )}
+            </div>
           </>
         </Dropdown>
       </>
@@ -244,7 +297,7 @@ function Filters({
             </div>
           </div>
         </button>
-        <Drawer anchor={drawerPosition} onClose={closeDrawer} open={open}>
+        <Drawer style = {{overflow:"hidden"}} anchor={drawerPosition} onClose={closeDrawer} open={open}>
           <div className={style.filtersContainer}>
             <h2 className={style.filterBy}>Filter By</h2>
             <BlackCloseBtn

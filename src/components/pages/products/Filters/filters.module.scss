@@ -39,7 +39,7 @@
   .filtersGrid {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     // display: flex;
     // gap: 12px;
     // flex-direction: column;
@@ -153,4 +153,14 @@
       display: inline-block;
     }
   }
+}
+
+
+.dropdownCollapse{
+  padding-right: 2rem !important;
+}
+
+.filterListScroll{
+  height: "60rem" !important; 
+  overflow-y: "scroll" !important;
 }
