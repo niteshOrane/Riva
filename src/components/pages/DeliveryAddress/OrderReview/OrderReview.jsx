@@ -8,26 +8,7 @@ import styles from "./OrderReview.module.scss";
 import { showSnackbar } from "../../../../store/actions/common";
 import { toggleCart } from '../../../../store/actions/cart';
 
-const randomProducts = [
-  {
-    image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/63eb296e-bc16-4408-be8c-d891ed52494a.png",
-    name: "High Waist Slim Fit Trouser",
-    color: "White",
-    size: "XL",
-    quantity: "1",
-    subTotal: "43.50",
-  },
-  {
-    image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/7efe70bf-b931-49dc-8fda-c7de160eeb54.png",
-    name: "High Waist Slim Fit Trouser",
-    color: "White",
-    size: "XL",
-    quantity: "1",
-    subTotal: "43.50",
-  },
-];
+
 
 function OrderReview() {
   const { data: items = [] } = useSelector((state) => state.cart);

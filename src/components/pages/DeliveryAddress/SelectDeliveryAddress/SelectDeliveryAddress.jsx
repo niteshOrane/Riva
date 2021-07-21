@@ -2,8 +2,7 @@ import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./SelectDeliveryAddress.module.scss";
 
-function SelectDeliveryAddress({addressItem, customerAddressList}) {
-  console.log('customerAddressList', customerAddressList, addressItem)
+function SelectDeliveryAddress({addressItem}) {
   return (
     <div>
       <p className={styles.title}>Select a Delivery Address</p>
@@ -25,7 +24,6 @@ function SelectDeliveryAddress({addressItem, customerAddressList}) {
             {addressItem?.address2}  {addressItem?.phone}
           </p>
         </div>
-        <button className={styles.changeBtn}>CHANGE</button>
       </div>
     </div>
   );

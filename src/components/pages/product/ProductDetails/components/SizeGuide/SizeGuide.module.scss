@@ -29,7 +29,9 @@
     align-items: center;
     justify-content: center;
     position: relative;
-
+    img {
+      max-width: 300px;
+    }
     .arrows {
       position: absolute;
       width: auto;

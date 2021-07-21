@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Star from "@material-ui/icons/StarBorderOutlined";
-import Dialog from "@material-ui/core/Dialog";
-import { useSelector, useDispatch } from "react-redux";
-import { showSnackbar, toggleQuickView } from "../../../store/actions/common";
-import { addToCart, toggleCart } from "../../../store/actions/cart";
-import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
+import React, { useEffect, useState } from 'react';
+import Star from '@material-ui/icons/StarBorderOutlined';
+import Dialog from '@material-ui/core/Dialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { showSnackbar, toggleQuickView } from '../../../store/actions/common';
+import { addToCart, toggleCart } from '../../../store/actions/cart';
+import OutOfStock from '../../pages/product/ProductDetails/outOfStock/OutOfStock';
 
-import Image from "../LazyImage/Image";
+import Image from '../LazyImage/Image';
 
-import styles from "./QuickView.module.scss";
-import * as icons from "../Icons/Icons";
-import { extractColorSize, URL } from "../../../util";
-import SizeCard from "../../pages/product/ProductDetails/components/SizeCard/SizeCard";
-import SizeGuide from "../../pages/product/ProductDetails/components/SizeGuide/SizeGuide";
+import styles from './QuickView.module.scss';
+import * as icons from '../Icons/Icons';
+import { extractColorSize, URL } from '../../../util';
+import SizeCard from '../../pages/product/ProductDetails/components/SizeCard/SizeCard';
+import SizeGuide from '../../pages/product/ProductDetails/components/SizeGuide/SizeGuide';
 
 const closeStyle = {
-  position: "absolute",
+  position: 'absolute',
   top: 4,
   right: 4,
 };
@@ -26,7 +26,7 @@ function QuickView() {
   const [attributes, setattributes] = useState({ colors: [], size: [] });
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   const handleIncrementProduct = () => {
     setProductQuantity((prevState) => prevState + 1);
@@ -36,7 +36,7 @@ function QuickView() {
     setProductQuantity((prevState) => prevState - 1);
   };
   const colorImageAction = (colorItem) => {
-    setColorSize({ ...data?.selected, color: colorItem });
+    setColorSize({ ...data?.selected, color: colorItem })
   };
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
@@ -49,15 +49,17 @@ function QuickView() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
+
   const handleClose = () => {
     dispatch(toggleQuickView(null));
   };
   const setColorSize = (attr) => {
     data.selected = attr;
-    setSelectedProduct({ ...data, selected: attr.c });
+    setSelectedProduct(data);
   };
-
+  console.log(selectedProduct)
   const addToCardHandler = () => {
+
     dispatch(
       addToCart({
         ...selectedProduct,
@@ -74,13 +76,13 @@ function QuickView() {
   };
 
   const srcImage =
-    data?.image?.indexOf("http") > -1
+    data?.image?.indexOf('http') > -1
       ? data?.image
       : `${URL.baseUrlProduct}${data?.image}`;
 
   useEffect(() => {
     setSelectedProduct(data);
-  }, []);
+  }, [])
   useEffect(() => {
     if (data?.extension_attributes?.configurable_product_options) {
       const { colors, size } = extractColorSize(
@@ -90,6 +92,7 @@ function QuickView() {
       setattributes({ colors, size });
     }
   }, [data]);
+
   return (
     <Dialog
       fullWidth
@@ -98,10 +101,12 @@ function QuickView() {
       open={isOpen}
     >
       <SizeCard
+        imageSelected={srcImage}
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
       />
       <SizeGuide
+        imageSelected={srcImage}
         open={guideCardOpen}
         handleClose={() => setGuideCardOpen(false)}
       />
@@ -121,7 +126,7 @@ function QuickView() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            customeStyle={{ objectFit: "cover" }}
+            customeStyle={{ objectFit: 'cover' }}
           />
         </div>
         <form>
@@ -129,8 +134,8 @@ function QuickView() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
+              <Star style={{ fill: '#FFD700', fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
               <Star style={{ fontSize: 16 }} />
@@ -150,12 +155,7 @@ function QuickView() {
           <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>
             {attributes.colors?.map((c) => (
-              <div
-                onClick={() => colorImageAction(c)}
-                className={`c-pointer ${styles.text}`}
-              >
-                {c.label}{" "}
-              </div>
+              <div onClick={() => colorImageAction(c)} className={`c-pointer ${styles.text}`}>{c.label} </div>
             ))}
             {/* <div className={styles.text}>Black</div>
             <div className={`${styles.options} d-flex-all-center`}>
@@ -170,20 +170,16 @@ function QuickView() {
               className={`${styles.options} gap-12px d-flex align-items-center`}
             >
               {attributes.size?.map((c) => (
-                <div
-                  className={`c-pointer ${styles.text} d-flex-all-center ${styles.sizeBox}`}
+                <div className={`c-pointer ${styles.text} d-flex-all-center`}
                   style={{
                     transform:
-                      selectedProduct?.selected?.value === c.value
+                      selectedProduct?.selected?.size?.value === c.value
                         ? "scale(1.2)"
                         : "scale(1)",
                   }}
                   onClick={() =>
-                    setColorSize({ ...selectedProduct?.selected, c })
-                  }
-                >
-                  {c.label}
-                </div>
+                    setColorSize({ ...selectedProduct?.selected, size: c })
+                  }>{c.label} </div>
               ))}
             </div>
           </div>
@@ -262,8 +258,9 @@ function QuickView() {
                 >
                   <div>
                     <span
+                      style={{ cursor: 'pointer' }}
                       onClick={handleDecrementProduct}
-                      className={`material-icons-outlined font-light-black ${styles.quantityBtn}`}
+                      className="material-icons-outlined font-light-black"
                     >
                       remove
                     </span>
@@ -271,9 +268,9 @@ function QuickView() {
                   <div>{productQuantity}</div>
                   <div>
                     <span
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                       onClick={handleIncrementProduct}
-                      className={`material-icons-outlined font-light-black ${styles.quantityBtn}`}
+                      className="material-icons-outlined font-light-black"
                     >
                       add
                     </span>
@@ -287,7 +284,7 @@ function QuickView() {
                   <div className={styles.title}>Availability: </div>
                   &nbsp;
                   <div className={styles.text}>
-                    {outOfStock ? "Out Of Stock" : "In Stock"}
+                    {outOfStock ? 'Out Of Stock' : 'In Stock'}
                   </div>
                 </div>
               </div>

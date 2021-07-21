@@ -76,10 +76,12 @@ const ProductDetails = (props) => {
   return (
     <>
       <SizeCard
+        imageSelected={colorImg || product?.image}
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
       />
       <SizeGuide
+        imageSelected={colorImg || product?.image}
         open={guideCardOpen}
         handleClose={() => setGuideCardOpen(false)}
       />
@@ -90,11 +92,11 @@ const ProductDetails = (props) => {
           <div
             className={`${styles.slide} h-100 text-center d-flex-all-center flex-column`}
           >
-            <img
-              src={colorImg}
+            <Image
+              src={colorImg || product?.image}
               className="object-fit-fill h-100"
               width="100%"
-              alt=""
+              alt={product?.name}
               type="product-details"
             />
             <ImageDropdown />
@@ -168,13 +170,14 @@ const ProductDetails = (props) => {
               ))} */}
               {productColorList.length > 0 &&
                 productColorList.map((item, index) => (
-                  <div>
-                    <span
-                      onClick={() => colorImageAction(item)}
-                      style={{ cursor: "pointer", marginLeft: "0.5rem" }}
-                    >
-                      {item.color} {productColorList.length > index + 1 ? '|' : ''}
-                    </span>
+                  <div key={`color${index}`}
+                    className={`${styles.option} `} onClick={() => colorImageAction(item)} style={{
+                      transform:
+                        product.selected.color.value === item.option_id
+                          ? "scale(1)"
+                          : "scale(.9)",
+                    }}>
+                    {item.color.trim()} {productColorList.length > index + 1 ? '|' : ''}
                   </div>
                 ))}
 
@@ -223,7 +226,7 @@ const ProductDetails = (props) => {
             </div>
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
-                <li className="nav-li">
+                <li className="nav-li m-0">
                   <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       straighten

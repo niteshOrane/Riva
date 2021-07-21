@@ -2,13 +2,13 @@ import React from "react";
 
 import Image from "../../LazyImage/Image";
 
-const ImageCard = ({ product }) => {
+const ImageCard = ({ product, count }) => {
   console.log(product)
   return (
     <div>
       <Image
         src={product.src}
-        width="100%"
+        width={count > 1 ? '100%' : "auto"}
         className="object-fit-contain"
         alt="change me"
         type="product-details"

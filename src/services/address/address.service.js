@@ -27,3 +27,25 @@ export const addCustomerAddress = (formData) => {
   };
   return axios(config);
 };
+
+
+export const updateCustomerAddress = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/updateAddressBook`,
+    silent: true,
+    data: formData
+  };
+  return axios(config);
+};
+
+export const setDefaultAddressCustomer = (formData, isBilling = false) => {
+
+  const config = {
+    method: "post",
+    url: `${API_URL}/${isBilling ? 'setDefaultBillingAddress' : 'setDefaultShippingAddress'}`,
+    silent: true,
+    data: formData
+  };
+  return axios(config);
+};

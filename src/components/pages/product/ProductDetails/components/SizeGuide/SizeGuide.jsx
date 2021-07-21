@@ -3,7 +3,7 @@ import { Drawer } from "@material-ui/core";
 import * as icons from "../../../../../common/Icons/Icons";
 import styles from "./SizeGuide.module.scss";
 
-function SizeGuide({ handleClose, open }) {
+function SizeGuide({ handleClose, open, imageSelected }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const sizes = ["M", "L", "S"];
   const [selectedSize, setSelectedSize] = useState(sizes?.[0]);
@@ -27,15 +27,15 @@ function SizeGuide({ handleClose, open }) {
           <div className={styles.arrows}>
             <div className={styles.arrow}>
               <div className={styles.unit}>90 cm</div>
-              <div className={styles.arrowLine}></div>
+              <div className={styles.arrowLine}/>
             </div>
             <div className={styles.arrow}>
               <div className={styles.unit}>70 cm</div>
-              <div className={styles.arrowLine}></div>
+              <div className={styles.arrowLine}/>
             </div>
           </div>
           <img
-            src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/e80e3613-85cf-4fb2-bdb6-af340dd43462.png"
+            src={imageSelected}
             width="100%"
             alt=""
           />

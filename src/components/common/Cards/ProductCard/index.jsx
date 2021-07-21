@@ -11,12 +11,7 @@ import { addToCart } from '../../../../store/actions/cart';
 import { extractColorSize, URL } from '../../../../util';
 
 import {
-  getAttributes,
   getProduct,
-  getCompositioncare,
-  getHowToWear,
-  getProductMedia,
-  getProductColor,
 } from "../../../../services/product/product.service";
 import styles from './product.module.scss';
 
