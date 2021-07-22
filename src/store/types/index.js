@@ -33,3 +33,5 @@ export const TOGGLE_ADDRESS = 'TOGGLE_ADDRESS';
 export const GET_ADDRESS = 'GET_ADDRESS';
 export const ADD_ADDRESS = 'ADD_ADDRESS';
 export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';
+export const PAYMENT_MODE = 'PAYMENT_MODE';
+export const SHIPPING_METHOD = 'SHIPPING_METHOD';

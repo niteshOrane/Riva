@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const tabLinks = [
   { text: "CASH ON DELIVERY (CASH/CARD/UP)", icon: <tabIcons.Icon1 /> },
@@ -85,10 +87,14 @@ function a11yProps(index) {
   };
 }
 
-export default function PaymentTabs() {
+export default function PaymentTabs({ paymentMode }) {
   const [value, setValue] = React.useState(1);
+  console.log('paymentMode', paymentMode)
   const classes = useStyles();
-
+  const [paymentMethod, setPaymentMethod] = useState([])
+  useEffect(() => {
+    setPaymentMethod(paymentMode);
+  }, [])
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
@@ -105,16 +111,15 @@ export default function PaymentTabs() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
       >
-        {tabLinks.map((tab, i) => (
+        {paymentMethod?.map((tab, i) => (
           <Tab
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100">
-                <span className={classes.icon}>{tab.icon}</span>{" "}
-                <span className={classes.tbText}>{tab.text}</span>
+                <span className={classes.icon}>{tab?.icon || <tabIcons.Icon2 />}</span>{" "}
+                <span className={classes.tbText}>{tab.title}</span>
               </div>
             }
             {...a11yProps(i)}
@@ -123,25 +128,10 @@ export default function PaymentTabs() {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          cash on delivery
+        <Tab2Content />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Tab2Content />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          Item Seven
         </TabPanel>
       </div>
     </div>

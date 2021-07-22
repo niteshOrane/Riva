@@ -11,6 +11,8 @@ import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/Orde
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
 import { getCustomerAddressList, setCustomerAddresDefault } from '../../store/actions/customerAddress';
+
+import { getShippingMethodlist } from '../../store/actions/payment';
 import { useEffect } from "react";
 import AddressItem from "../../components/pages/DeliveryAddress/AddressItem/AddressItem";
 import {
@@ -32,6 +34,7 @@ function DeliveryAddress() {
   };
   const dispatch = useDispatch();
   const customerAddressList = useSelector((state) => state.address?.data || []);
+  const customerDeliverySpeed = useSelector((state) => state.payment?.deliverySpeed || []);
   const [dataList, setDataList] = useState([]);
   const defaultAddressIds = useSelector((state) => state.address?.defaultAddressIds || []);
   useEffect(() => {
@@ -43,6 +46,13 @@ function DeliveryAddress() {
   useEffect(() => {
     dispatch(getCustomerAddressList());
   }, [])
+
+  useEffect(() => {
+    dispatch(getShippingMethodlist(defaultAddressIds.Shippingid))
+  }, [defaultAddressIds])
+  useEffect(() => {
+    console.log('customerDeliverySpeed', customerDeliverySpeed)
+  }, [customerDeliverySpeed])
   const handleOnEdit = (record) => {
     setrecordToEdit(record);
     setShowList(false);
@@ -134,7 +144,7 @@ function DeliveryAddress() {
         </div>
         <div>
           <div className={styles.columnRight}>
-            <OrderReview />
+            <OrderReview deliverySpeed={customerDeliverySpeed} />
           </div>
           <div className="my-20px">
             <img
