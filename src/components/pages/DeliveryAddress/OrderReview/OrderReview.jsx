@@ -10,7 +10,7 @@ import { toggleCart } from '../../../../store/actions/cart';
 
 
 
-function OrderReview() {
+function OrderReview({ deliverySpeed }) {
   const { data: items = [] } = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function OrderReview() {
   const [totalAmout, setTotalAmout] = useState(0);
   const [totalDC, setTotalDC] = useState(50);
   const [totalTax, setTotalTax] = useState(45);
-
+  console.log('deliverySpeed0', deliverySpeed);
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -128,24 +128,18 @@ function OrderReview() {
         </p>
       </div>
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
-      <div className={styles.chooseShipping}>
-        <div>
-          <input checked type="radio" name="shipping" id="standard" />
-        </div>
-        <label htmlFor="standard">
-          <h5>Sunday, May 30</h5>
-          <span className={styles.greyText}>$5.99 - Standard Shipping</span>
-        </label>
-      </div>
-      <div className={styles.chooseShipping}>
-        <div>
-          <input type="radio" name="shipping" id="twoDays" />
-        </div>
-        <label htmlFor="twoDays">
-          <h5>Sunday, May 30</h5>
-          <span className={styles.greyText}>$5.99 - Standard Shipping</span>
-        </label>
-      </div>
+      {deliverySpeed.map(item => {
+        return (<div className={styles.chooseShipping}>
+          <div>
+            <input type="radio" name="shipping" id="twoDays" />
+          </div>
+          <label htmlFor="twoDays">
+            <h5>{item?.method_title}</h5>
+            <span className={styles.greyText}>${item.amount} - {item.carrier_title}</span>
+          </label>
+        </div>)
+      })}
+
       <Products products={items} />
       <div
         id={styles.calculatinRow}

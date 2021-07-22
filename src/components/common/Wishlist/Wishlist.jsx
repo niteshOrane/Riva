@@ -7,7 +7,6 @@ import {
   addWishlist,
   removeWishlist,
   toggleWishlist,
-  getWishlist,
 } from "../../../store/actions/wishlist/index";
 import Image from "../LazyImage/Image";
 import styles from "./Wishlist.module.scss";

@@ -5,6 +5,7 @@ import PaymentTabs from '../../components/pages/Cart-Payment/PaymentTabs/Payment
 import * as icons from '../../components/common/Icons/Icons';
 import PriceDetails from '../../components/pages/Cart-Payment/PriceDetails/PriceDetails';
 import LetUsHear from '../../components/common/Cards/LetUsHear/LetUsHear';
+import { getPaymentMethodlist, getShippingMethodlist } from '../../store/actions/payment';
 import styles from './CartPayment.module.scss';
 
 import { toggleCart } from '../../store/actions/cart';
@@ -13,7 +14,7 @@ function CartPayment() {
   const dispatch = useDispatch();
   const { data: items = [] } = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
-
+  const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
   const [totalDC, setTotalDC] = useState(50);
@@ -22,7 +23,7 @@ function CartPayment() {
   useEffect(() => {
     const amount = items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
     setTotalAmout(amount);
-
+    dispatch(getPaymentMethodlist());
     items.totalDC = totalDC;
     items.totalTax = totalTax;
     items.amount = amount;
@@ -56,7 +57,7 @@ function CartPayment() {
       <div className={styles.container}>
         <div className={styles.col1}>
           <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
-          <PaymentTabs />
+          <PaymentTabs paymentMode={paymentMode?.data}/>
         </div>
         <div className={styles.col2}>
           <PriceDetails cartItem={items} customerID={customerid} />
