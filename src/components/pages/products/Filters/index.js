@@ -46,16 +46,17 @@ const Info = ({ info }) => (
   </div>
 );
 
-const Tags = ({ tags }) => (
-  <div className="d-flex flex-wrap">
-    {tags.tags.map((tag, i) => (
-      <div key={i} className={style.tag}>
-        <span>{tag}</span>
+const Tags = (tag) => {
+  console.log(tag);
+  return (
+    <div className="d-flex flex-wrap">
+      <div key={tag.tags.id} className={style.tag}>
+        <span>{tag.tags.val.title}</span>
         <span className="material-icons-outlined">close</span>
       </div>
-    ))}
-  </div>
-);
+    </div>
+  );
+};
 
 function Filters({
   handleThreeColumns,
@@ -66,9 +67,16 @@ function Filters({
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
   const [filtersAttr, setFiltersAttr] = useState(null);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const [open, setOpen] = useState(false);
-
+  const handleRemoveTags = (tag) => {
+    console.log(tag)
+    let temp = [...selectedTags];
+    console.log(temp)
+    temp = temp.filter((li) => li.val.id !== tag.val.id);
+    setSelectedTags(temp);
+  };
   const filterList = async (catId) => {
     const list = await getFiltersList(catId);
     setFiltersAttr(list?.data[0]?.filters);
@@ -104,6 +112,8 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            label: filtersAttr?.find((v) => v.attr_code === "price")
+              ?.attr_label,
           };
         }),
     },
@@ -120,6 +130,8 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            label: filtersAttr?.find((v) => v.attr_code === "color")
+              ?.attr_label,
           };
         }),
     },
@@ -136,6 +148,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            label: filtersAttr?.find((v) => v.attr_code === "size")?.attr_label,
           };
         }),
     },
@@ -201,8 +214,8 @@ function Filters({
     discountPercentage,
     manufacturer,
     colorSwatch,
+    // selectedTags
   ];
-  console.log(filtersAttr);
   const closeDrawer = () => {
     setOpen(false);
   };
@@ -216,13 +229,17 @@ function Filters({
 
   const renderFilters = () => {
     const renderComponent = (item) => {
-      const handleCheckboxChange = () => {};
+      const handleCheckboxChange = (val) => {
+        setSelectedTags([...selectedTags, { checked: true, val }]);
+      };
+
       switch (item.type) {
         case "checkbox":
           return (
             <CheckBoxComponent
               item={item}
               handleCheckboxChange={handleCheckboxChange}
+              selectedTags={selectedTags}
             />
           );
         case "list":
@@ -247,7 +264,11 @@ function Filters({
             <div
               style={
                 items?.children?.length > 10
-                  ? { height: "60rem", overflowY: "scroll",paddingRight:"1rem" }
+                  ? {
+                      height: "60rem",
+                      overflowY: "scroll",
+                      paddingRight: "1rem",
+                    }
                   : null
               }
             >
@@ -274,6 +295,7 @@ function Filters({
                 />
               </div>
             </span>
+
             <div className={style.filterDots}>
               <div
                 onClick={handleTwoColumns}
@@ -297,7 +319,12 @@ function Filters({
             </div>
           </div>
         </button>
-        <Drawer style = {{overflow:"hidden"}} anchor={drawerPosition} onClose={closeDrawer} open={open}>
+        <Drawer
+          style={{ overflow: "hidden" }}
+          anchor={drawerPosition}
+          onClose={closeDrawer}
+          open={open}
+        >
           <div className={style.filtersContainer}>
             <h2 className={style.filterBy}>Filter By</h2>
             <BlackCloseBtn
@@ -305,6 +332,17 @@ function Filters({
               drawerPosition={drawerPosition}
             />
             {/* <Search handleChange={handleSearchChange} value={searchValue} /> */}
+            <div className={style.tagsFlex}>
+              {selectedTags.length > 0 &&
+                selectedTags?.map((tag) => (
+                  <div className="d-flex flex-wrap">
+                    <div key={tag.id} className={style.tag}>
+                      <span>{tag.val.title}</span>
+                      <span onClick = {() => handleRemoveTags(tag)} className="material-icons-outlined">close</span>
+                    </div>
+                  </div>
+                ))}
+            </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
                 // console.log($item);

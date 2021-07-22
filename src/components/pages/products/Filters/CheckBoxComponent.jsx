@@ -1,13 +1,14 @@
 import React from "react";
 import style from "./filters.module.scss";
-const CheckBoxComponent = ({ handleCheckboxChange, item }) => {
+const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
   return (
-    <div  className={`d-flex align-items-center ${style.checkBoxContainer}`}>
+    <div className={`d-flex align-items-center ${style.checkBoxContainer}`}>
       <input
         className="c-pointer"
         type="checkbox"
         id={item.id}
-        onChange={handleCheckboxChange}
+        onChange={() => handleCheckboxChange(item)}
+        checked={selectedTags.filter(li => li.val.label===item.label && li.val.id===item.id).length>0  ? true : false}
       />
       <label
         className="c-pointer w-100"

@@ -25,10 +25,10 @@ export const getProductMedia = (sku) => {
   return axios(config);
 };
 
-export const getFiltersList = (catId) => {
+export const getFiltersList = (catId,color='') => {
   const config = {
     method:'get',
-    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}`,
+    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${color?`&catgoryData[color]=${color}`:""}`,
     silent:true
   }
   return axios(config)
