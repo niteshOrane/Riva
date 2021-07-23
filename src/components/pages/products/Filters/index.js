@@ -47,7 +47,6 @@ const Info = ({ info }) => (
 );
 
 const Tags = (tag) => {
-  console.log(tag);
   return (
     <div className="d-flex flex-wrap">
       <div key={tag.tags.id} className={style.tag}>
@@ -70,11 +69,11 @@ function Filters({
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const handleRemoveTags = (tag) => {
-    console.log(tag)
+  const handleRemoveTags = async (tag) => {
     let temp = [...selectedTags];
-    console.log(temp)
     temp = temp.filter((li) => li.val.id !== tag.val.id);
+    // let list = await getFiltersList(categoryId,"","","")
+    // setFiltersAttr(list?.data[0]?.filters);
     setSelectedTags(temp);
   };
   const filterList = async (catId) => {
@@ -112,6 +111,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            value:c.value,
             label: filtersAttr?.find((v) => v.attr_code === "price")
               ?.attr_label,
           };
@@ -130,6 +130,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            value:c.value,
             label: filtersAttr?.find((v) => v.attr_code === "color")
               ?.attr_label,
           };
@@ -148,6 +149,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
+            value:c.value,
             label: filtersAttr?.find((v) => v.attr_code === "size")?.attr_label,
           };
         }),
@@ -226,11 +228,21 @@ function Filters({
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
-
+  const handleCheck = (entry) => {
+    selectedTags.some(
+      (li) =>
+        li?.val?.id === entry?.val?.id && li?.val?.label === entry?.val?.label
+    );
+  };
   const renderFilters = () => {
     const renderComponent = (item) => {
-      const handleCheckboxChange = (val) => {
-        setSelectedTags([...selectedTags, { checked: true, val }]);
+      const handleCheckboxChange =  async (val) => {
+        handleCheck(val)
+          ? ""
+          : setSelectedTags([...selectedTags, { checked: true, val }]);
+          // let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
+        const list = await getFiltersList(categoryId, val,val,val);
+        setFiltersAttr(list?.data[0]?.filters);
       };
 
       switch (item.type) {
@@ -265,9 +277,10 @@ function Filters({
               style={
                 items?.children?.length > 10
                   ? {
-                      height: "60rem",
+                      height: "25rem",
                       overflowY: "scroll",
                       paddingRight: "1rem",
+                      
                     }
                   : null
               }
@@ -338,7 +351,12 @@ function Filters({
                   <div className="d-flex flex-wrap">
                     <div key={tag.id} className={style.tag}>
                       <span>{tag.val.title}</span>
-                      <span onClick = {() => handleRemoveTags(tag)} className="material-icons-outlined">close</span>
+                      <span
+                        onClick={() => handleRemoveTags(tag)}
+                        className="material-icons-outlined"
+                      >
+                        close
+                      </span>
                     </div>
                   </div>
                 ))}

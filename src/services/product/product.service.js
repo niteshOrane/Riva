@@ -8,7 +8,7 @@ export const getProductColor = (id) => {
   const colorAttr = new FormData();
   colorAttr.append("productId", id);
   const config = {
-    method: 'post',
+    method: "post",
     url: `${urlPath}/rest/V1/colorproduct`,
     data: colorAttr,
     silent: true,
@@ -18,23 +18,30 @@ export const getProductColor = (id) => {
 
 export const getProductMedia = (sku) => {
   const config = {
-    method: 'get',
+    method: "get",
     url: `${urlPath}/rest/V1/products/${sku}/media`,
     silent: true,
   };
   return axios(config);
 };
 
-export const getFiltersList = (catId,color='') => {
+export const getFiltersList = (catId, color = "", size = "", price = "") => {
+  console.log(color, "service");
+  console.log(size, "service");
+  console.log(price, "service");
+  const filterData = color ? `&categoryData[color]=${color?.value}` : "";
+  const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
+  const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
+  console.log(priceData, "service");
   const config = {
-    method:'get',
-    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${color?`&catgoryData[color]=${color}`:""}`,
-    silent:true
-  }
-  return axios(config)
-}
+    method: "get",
+    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${sizeData}${priceData}`,
+    silent: true,
+  };
+  return axios(config);
+};
 
-export const getProduct= (sku) => {
+export const getProduct = (sku) => {
   const config = {
     method: "get",
     url: `${API_URL}/products/${sku}`,

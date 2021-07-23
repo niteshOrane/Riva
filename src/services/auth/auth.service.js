@@ -1,9 +1,9 @@
-import axios from 'axios';
-import API_URL from '../../enviroments/index';
+import axios from "axios";
+import API_URL from "../../enviroments/index";
 
 export const createCustomer = (formData) => {
   const config = {
-    method: 'post',
+    method: "post",
     url: `${API_URL}/customerRegister`,
     silent: true,
     data: formData,
@@ -11,9 +11,19 @@ export const createCustomer = (formData) => {
   return axios(config);
 };
 
+export const createCustomerSocial = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/socialLogin`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config)
+};
+
 export const loginCustomer = (formData) => {
   const config = {
-    method: 'post',
+    method: "post",
     url: `${API_URL}/customerLogin`,
     silent: true,
     data: formData,
@@ -23,7 +33,7 @@ export const loginCustomer = (formData) => {
 
 export const forgotPassword = (formData) => {
   const config = {
-    method: 'post',
+    method: "post",
     url: `${API_URL}/forgotPassword`,
     silent: true,
     data: formData,
@@ -32,7 +42,7 @@ export const forgotPassword = (formData) => {
 };
 export const changePassword = (formData) => {
   const config = {
-    method: 'post',
+    method: "post",
     url: `${API_URL}/changePassword`,
     silent: true,
     data: formData,
@@ -46,7 +56,7 @@ export const otpVerify = (formData) => {
 
 export const logoutUser = () => {
   function setlocation() {
-    window.location.href = '/';
+    window.location.href = "/";
   }
   setTimeout(() => setlocation(), 100);
 };

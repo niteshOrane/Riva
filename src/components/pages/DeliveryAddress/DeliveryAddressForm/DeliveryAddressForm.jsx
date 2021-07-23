@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./DeliveryAddressForm.module.scss";
 import { getCustId } from "../../../../util";
+import { showSnackbar } from "../../../../store/actions/common";
 import {
-  showSnackbar
-} from "../../../../store/actions/common";
+  addCustomerAddress,
+  updateCustomerAddress,
+} from "../../../../services/address/address.service";
 import {
-  addCustomerAddress, updateCustomerAddress
-} from '../../../../services/address/address.service';
-import { toggleAddresslist, addNewAddress } from '../../../../store/actions/customerAddress';
-
-
+  toggleAddresslist,
+  addNewAddress,
+} from "../../../../store/actions/customerAddress";
 
 function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const dispatch = useDispatch();
@@ -18,59 +18,59 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     firstName: "",
     lastName: "",
     pincode: "",
-    city: '',
-    state: '',
-    mobile: '',
-    street: '',
-    street1: '',
-    block: '',
-    houseName: '',
+    city: "",
+    state: "",
+    mobile: "",
+    street: "",
+    street1: "",
+    block: "",
+    houseName: "",
     defaultAddess: true,
-    id: 0
+    id: 0,
   });
   const clearAll = () => {
     setFormData({
       firstName: "",
       lastName: "",
       pincode: "",
-      city: '',
-      state: '',
-      mobile: '',
-      street: '',
-      street1: '',
-      block: '',
-      houseName: '',
-      defaultAddess: true
+      city: "",
+      state: "",
+      mobile: "",
+      street: "",
+      street1: "",
+      block: "",
+      houseName: "",
+      defaultAddess: true,
     });
     onAfterSaveEdit();
-  }
+  };
   const addAddress = (item, id) => async () => {
-
-    const res = await (id ? updateCustomerAddress(item) : addCustomerAddress(item));
+    const res = await (id
+      ? updateCustomerAddress(item)
+      : addCustomerAddress(item));
     if (res.data.success) {
       dispatch(addNewAddress(res, item));
       clearAll();
       onAfterSaveEdit();
-    }
-    else {
+    } else {
       dispatch(
         showSnackbar(
-          res.data.message || 'failed to add item to Address',
-          'error'
+          res.data.message || "failed to add item to Address",
+          "error"
         )
       );
     }
   };
   useEffect(() => {
-    formData.firstName = customerData?.name?.split(' ')?.[0];
-    formData.lastName = customerData?.name?.split(' ')?.[1];
+    formData.firstName = customerData?.name?.split(" ")?.[0];
+    formData.lastName = customerData?.name?.split(" ")?.[1];
     formData.mobile = customerData?.phone;
     formData.pincode = customerData?.postcode;
     formData.id = customerData?.id;
-    formData.block = customerData?.street?.split(' ')?.[0];
-    formData.houseName = customerData?.street?.split(' ')?.[1];
+    formData.block = customerData?.street?.split(" ")?.[0];
+    formData.houseName = customerData?.street?.split(" ")?.[1];
     setFormData({ ...formData, ...customerData });
-  }, [customerData])
+  }, [customerData]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -78,91 +78,57 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     firstName = "",
     lastName = "",
     pincode = "",
-    city = '',
-    state = '',
-    mobile = '',
-    street = '',
-    houseName = '',
-    block = '',
+    city = "",
+    state = "",
+    mobile = "",
+    street = "",
+    houseName = "",
+    block = "",
     defaultAddess,
     id,
-    email } = formData;
+    email,
+  } = formData;
 
   const addAddressHandler = () => {
     const form = new FormData();
 
     if (!firstName) {
-      return dispatch(
-        showSnackbar(
-          'First Name Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("First Name Require", "error"));
     }
     if (!lastName) {
-      return dispatch(
-        showSnackbar(
-          'Last Name Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("Last Name Require", "error"));
     }
     if (!city) {
-      return dispatch(
-        showSnackbar(
-          'City Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("City Require", "error"));
     }
     if (!state) {
-      return dispatch(
-        showSnackbar(
-          'State Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("State Require", "error"));
     }
     if (!pincode) {
-      return dispatch(
-        showSnackbar(
-          'pin code Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("pin code Require", "error"));
     }
 
     if (!block) {
-      return dispatch(
-        showSnackbar(
-          'street Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("street Require", "error"));
     }
 
     if (!houseName) {
-      return dispatch(
-        showSnackbar(
-          'houseName Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("houseName Require", "error"));
     }
     if (!street) {
-      return dispatch(
-        showSnackbar(
-          'houseName Require',
-          "error"
-        )
-      );
+      return dispatch(showSnackbar("Street is Required", "error"));
     }
     if (!mobile) {
+      return dispatch(showSnackbar("mobile Require", "error"));
+    }
+    if (mobile.length !== 10) {
       return dispatch(
-        showSnackbar(
-          'mobile Require',
-          "error"
-        )
+        showSnackbar("Mobile number must be 10 numbers long", "error")
+      );
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+      return dispatch(
+        showSnackbar("Invalid email", "error")
       );
     }
 
@@ -227,7 +193,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               State/Province<span className={styles.star}>*</span>
             </p>
-            <select className={`${styles.input} c-pointer`} name="state" onChange={handleChange}>
+            <select
+              className={`${styles.input} c-pointer`}
+              name="state"
+              onChange={handleChange}
+            >
               <option selected disabled>
                 Please select region, state or province
               </option>
@@ -256,7 +226,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               City<span className={styles.star}>*</span>
             </p>
-            <select className={`${styles.input} c-pointer`} name="city" onChange={handleChange}>
+            <select
+              className={`${styles.input} c-pointer`}
+              name="city"
+              onChange={handleChange}
+            >
               <option selected disabled>
                 Please Select City
               </option>
@@ -323,15 +297,33 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           </div>
         </div>
         <div className="d-flex align-items-center">
-          <input type="checkbox" checked={defaultAddess} name="defaultAddess" id="defaultAddess" onChange={handleChange} />
+          <input
+            type="checkbox"
+            checked={defaultAddess}
+            name="defaultAddess"
+            id="defaultAddess"
+            onChange={handleChange}
+          />
           <label htmlFor="default" className={styles.useDefaultText}>
             Use as my default address.
           </label>
         </div>
       </form>
       <div className="text-right c-pointer">
-        <button className={styles.addAddressBtn} type="button" onClick={addAddressHandler}>{id ? 'UPDATE' : 'ADD'} ADDRESS</button>
-        <button className={styles.clrAddressBtn} type="button" onClick={clearAll}>CLEAR</button>
+        <button
+          className={styles.addAddressBtn}
+          type="button"
+          onClick={addAddressHandler}
+        >
+          {id ? "UPDATE" : "ADD"} ADDRESS
+        </button>
+        <button
+          className={styles.clrAddressBtn}
+          type="button"
+          onClick={clearAll}
+        >
+          CLEAR
+        </button>
       </div>
     </>
   );

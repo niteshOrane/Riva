@@ -9,7 +9,7 @@ import {
 
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
-import { createCustomer } from "../../../../../../services/auth/auth.service";
+import { createCustomer,createCustomerSocial } from "../../../../../../services/auth/auth.service";
 
 const SignUpForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
@@ -64,16 +64,16 @@ const SignUpForm = ({ handleSubmit }) => {
   const [showPass, setShowPass] = useState(false);
 
   const responseFacebook = async (response) => {
-    console.log(response);
     if (response) {
       const firstName = response?.name?.split(" ")[0];
       const lastName = response?.name?.split(" ")[1];
-      const email = response?.email;
+      const userEmail = response?.email;
       const customer = new FormData();
-      customer.append("email", email);
+      customer.append("email", userEmail);
       customer.append("firstname", firstName || "");
       customer.append("lastname", lastName || "");
-      customer.append("resource", "facebook");
+      customer.append("password",  "hello@123");
+      customer.append('resource',"Facebook")
       const res = await createCustomer(customer);
 
       if (res.status === 200) {
@@ -87,18 +87,17 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const responseGoogle = async (response) => {
-    console.log(response);
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
       const lastName = response?.profileObj?.familyName;
-      const email = response?.profileObj?.email;
+      const userEmail = response?.profileObj?.email;
       const customer = new FormData();
-      customer.append("email", email);
-      customer.append("firstname", firstName || "");
+      customer.append("email", userEmail);
       customer.append("lastname", lastName || "");
-      customer.append("resource", "google");
-      const res = await createCustomer(customer);
-
+      customer.append("firstname", firstName || "");
+      customer.append("password",  "hello@123");
+      customer.append('resource',"Google")
+      const res = await createCustomerSocial(customer);
       if (res.status === 200) {
         handleSubmit();
         return dispatch(showSnackbar(res?.data?.data, "success"));
