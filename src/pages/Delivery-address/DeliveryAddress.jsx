@@ -65,7 +65,9 @@ function DeliveryAddress() {
     dispatch(getCustomerCartPayments());
   };
   useEffect(() => {
-    dispatch(getShippingMethodlist(defaultAddressIds.Shippingid));
+    if (defaultAddressIds.Shippingid) {
+      dispatch(getShippingMethodlist(defaultAddressIds.Shippingid));
+    }
   }, [defaultAddressIds]);
   useEffect(() => {
     console.log("customerDeliverySpeed", customerDeliverySpeed);
@@ -80,6 +82,7 @@ function DeliveryAddress() {
     const res = await deleteAddress(formData);
     if (res.status === 200) {
       dispatch(showSnackbar("Address Deleted Successfully", "success"));
+      dispatch(getCustomerAddressList());
     } else {
       dispatch(showSnackbar("Something went wrong", "error"));
     }

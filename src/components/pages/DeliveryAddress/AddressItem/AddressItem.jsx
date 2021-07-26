@@ -5,7 +5,7 @@ import Switch from '@material-ui/core/Switch';
 import styles from "./AddressItem.module.scss";
 
 function AddressItem(options) {
-  const { addressItem, index, onEdit, setDefaultAddress, state, handleChange,onDelete } = options;
+  const { addressItem, index, onEdit, setDefaultAddress, state, handleChange, onDelete } = options;
 
   return (
     <div>

@@ -12,7 +12,6 @@ export const getPaymentMode = () => {
   return axios(config);
 };
 export const getShippingMethod = (addressId) => {
-  //http://65.0.141.49/shop/index.php/rest/V1/carts/860901/estimate-shipping-methods-by-address-id
   const config = {
     method: "post",
     url: `${API_URL}/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,

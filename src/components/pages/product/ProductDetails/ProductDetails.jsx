@@ -39,7 +39,7 @@ const ProductDetails = (props) => {
     let color = product?.selected?.color?.label;
     let size = product?.selected?.size?.label;
     const res = await outOfStockCheck(id, color, size);
-    if (res.status === 200) {
+    if (res && res.status === 200) {
       if (res?.data?.data?.Stock) {
         return setOutOfStock(false);
       }

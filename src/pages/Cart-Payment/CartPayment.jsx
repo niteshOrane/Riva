@@ -5,7 +5,7 @@ import PaymentTabs from '../../components/pages/Cart-Payment/PaymentTabs/Payment
 import * as icons from '../../components/common/Icons/Icons';
 import PriceDetails from '../../components/pages/Cart-Payment/PriceDetails/PriceDetails';
 import LetUsHear from '../../components/common/Cards/LetUsHear/LetUsHear';
-import { getPaymentMethodlist, getShippingMethodlist } from '../../store/actions/payment';
+import { getPaymentMethodlist } from '../../store/actions/payment';
 import styles from './CartPayment.module.scss';
 
 import { toggleCart } from '../../store/actions/cart';
