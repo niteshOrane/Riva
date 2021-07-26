@@ -16,17 +16,12 @@ function CartPayment() {
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
-  const [totalAmout, setTotalAmout] = useState(0);
-  const [totalDC, setTotalDC] = useState(50);
-  const [totalTax, setTotalTax] = useState(45);
+ 
+  
+  const cartPaymentInfo = useSelector((state) => state.cart?.cartPaymentInfo || {});
 
   useEffect(() => {
-    const amount = items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
-    setTotalAmout(amount);
     dispatch(getPaymentMethodlist());
-    items.totalDC = totalDC;
-    items.totalTax = totalTax;
-    items.amount = amount;
     dispatch(toggleCart(false));
   }, []);
 
@@ -60,7 +55,7 @@ function CartPayment() {
           <PaymentTabs paymentMode={paymentMode?.data}/>
         </div>
         <div className={styles.col2}>
-          <PriceDetails cartItem={items} customerID={customerid} />
+          <PriceDetails cartItem={items} customerID={customerid} cartPaymentInfo={cartPaymentInfo} />
           <LetUsHear />
         </div>
       </div>

@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   isOpen: false,
   cart_id: 0,
+  cartPaymentInfo: {}
 };
 
 const handleAddToCart = (state, itemToBeAdded) => {
@@ -60,7 +61,11 @@ export default function Cart(state = initialState, action) {
 
     case DATA_TYPES.SET_BULK_CART:
       return { ...state, data: action.payload };
-
+    case DATA_TYPES.CART_INFO:
+      return {
+        ...state,
+        cartPaymentInfo: action.payload || {}
+      };
     default:
       return state;
   }

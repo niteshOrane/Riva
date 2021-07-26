@@ -13,6 +13,15 @@ export const addToCartService = (id, color, size, qty) => {
   return axios(config);
 };
 
+export const getCartPaymentInfo = () => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/carts/${getCartId()}/totals`,
+    silent: true
+  };
+  return axios(config);
+};
+
 export const getCartService = () => {
   const config = {
     method: 'get',

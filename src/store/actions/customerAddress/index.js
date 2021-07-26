@@ -1,5 +1,5 @@
 import {
-  addCustomerAddress, getCustomerAddress, setDefaultAddress
+  addCustomerAddress, getCustomerAddress, setDefaultAddress, getCartPaymentInfo
 } from '../../../services/address/address.service';
 import { getCustId } from '../../../util';
 import * as DATA_TYPES from '../../types';

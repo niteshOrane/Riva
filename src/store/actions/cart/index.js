@@ -5,12 +5,31 @@ import {
   getCartService,
   editCartService,
   getProductIdBySku,
+  getCartPaymentInfo
 } from '../../../services/cart/cart.service';
 import {
   getProductMedia
 } from '../../../services/product/product.service';
-import { getCartId } from '../../../util';
+import { getCartId, getCustId } from '../../../util';
 import { showSnackbar } from '../common';
+
+
+export const getCustomerCartPayments = () => async (dispatch) => {
+  const id = getCustId();
+  if (!id) return;
+
+  const res = await getCartPaymentInfo(id);
+
+  if (res.data && res.statusText=="OK") {
+    dispatch(getCartPaymentInfo_action(res.data));
+    console.log('res.data', res.data)
+  } else dispatch(getCartPaymentInfo_action([]));
+};
+
+export const getCartPaymentInfo_action = (data) => ({
+  type: DATA_TYPES.CART_INFO,
+  payload: { ...data },
+});
 
 export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
