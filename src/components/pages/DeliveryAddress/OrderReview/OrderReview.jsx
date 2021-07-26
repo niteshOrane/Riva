@@ -198,7 +198,7 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${discount ? ((totalDC + totalTax + totalAmout) + discount) : totalDC + totalTax + totalAmout}</strong>
+        <strong>${discount ? parseFloat((totalDC + totalTax + totalAmout) + discount).toFixed(2) : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}</strong>
       </div>
       <div className="d-flex align-items-center mt-12px">
         <input

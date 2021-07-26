@@ -15,7 +15,7 @@ const Summary = () => {
           <p className="font-light-black">SUBTOTAL</p>
           <span className="color-primary">
             $
-            {items.reduce((total, item) => total + item.price * item.qty, 0) ||0}
+            {items.reduce((total, item) => total + item.price * item.qty, 0) || 0}
           </span>
         </div>
         <div
@@ -24,7 +24,7 @@ const Summary = () => {
           <h4 className="font-weight-600">GRAND TOTAL</h4>
           <h4 className="font-weight-600 color-primary">
             $
-            {items.reduce((total, item) => total + item.price * item.qty, 0) ||
+            {parseFloat(items.reduce((total, item) => total + item.price * item.qty, 0)).toFixed(2) ||
               0}
           </h4>
         </div>
@@ -40,7 +40,7 @@ const Summary = () => {
               type="button"
               className="bg-black color-white p-12px w-100 d-block c-pointer"
             >
-             Change Delivery Address
+              Change Delivery Address
             </button>
           </Link>
         </div>

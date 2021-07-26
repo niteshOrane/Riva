@@ -32,14 +32,14 @@ const PriceDetails = ({ cartItem, cartPaymentInfo }) => {
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value).toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value).toFixed(2)}</strong>
       </div>
 
       <div className={`${styles.borderBottom} my-12px`}>
