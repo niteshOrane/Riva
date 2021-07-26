@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   modalData: {},
   data: [],
   defaultAddressIds: {},
-  isOpen: false,
+  isOpen: false
 };
 
 const address = (state = INITIAL_STATE, action) => {

@@ -11,6 +11,7 @@ import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/Orde
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
 import { getCustomerAddressList, setCustomerAddresDefault } from '../../store/actions/customerAddress';
+import { getCustomerCartPayments } from '../../store/actions/cart';
 
 import { getShippingMethodlist } from '../../store/actions/payment';
 import { useEffect } from "react";
@@ -37,6 +38,9 @@ function DeliveryAddress() {
   const customerDeliverySpeed = useSelector((state) => state.payment?.deliverySpeed || []);
   const [dataList, setDataList] = useState([]);
   const defaultAddressIds = useSelector((state) => state.address?.defaultAddressIds || []);
+  const cartPaymentInfo = useSelector((state) => state.cart?.cartPaymentInfo || {});
+
+  console.log('cartPaymentInfo', cartPaymentInfo)
   useEffect(() => {
     setDataList(customerAddressList);
   }, [customerAddressList])
@@ -45,8 +49,11 @@ function DeliveryAddress() {
   const [recordToEdit, setrecordToEdit] = useState(null);
   useEffect(() => {
     dispatch(getCustomerAddressList());
+    dispatch(getCustomerCartPayments());
   }, [])
-
+  const callBackAfterApplyCoupan = () => {
+    dispatch(getCustomerCartPayments());
+  }
   useEffect(() => {
     dispatch(getShippingMethodlist(defaultAddressIds.Shippingid))
   }, [defaultAddressIds])
@@ -144,7 +151,7 @@ function DeliveryAddress() {
         </div>
         <div>
           <div className={styles.columnRight}>
-            <OrderReview deliverySpeed={customerDeliverySpeed} />
+            <OrderReview cartPaymentInfo={cartPaymentInfo} deliverySpeed={customerDeliverySpeed} callBackAfterApplyCoupan={callBackAfterApplyCoupan} />
           </div>
           <div className="my-20px">
             <img
