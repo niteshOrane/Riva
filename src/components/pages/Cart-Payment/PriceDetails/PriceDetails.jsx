@@ -1,8 +1,8 @@
 import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./PriceDetails.module.scss";
-const PriceDetails = ({cartItem}) => {
-  
+const PriceDetails = ({ cartItem, cartPaymentInfo }) => {
+
   return (
     <div className={styles.container}>
       <h4 className={styles.title}>PRICE DETAILS (2 Item)</h4>
@@ -11,28 +11,35 @@ const PriceDetails = ({cartItem}) => {
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>SUBTOTAL</span>
-        <strong>${82.5}</strong>
+        <strong>${cartPaymentInfo?.subtotal}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${82.99}</strong>
+        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>${82.5}</strong>
+        <strong>${cartPaymentInfo?.tax_amount}</strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
+        <span className={styles.greyText}>Coupon Applied</span>
+        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${82.5}</strong>
+        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value}</strong>
       </div>
 
       <div className={`${styles.borderBottom} my-12px`}>
