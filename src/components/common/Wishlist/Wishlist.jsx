@@ -11,6 +11,8 @@ import {
 import Image from "../LazyImage/Image";
 import styles from "./Wishlist.module.scss";
 import { toggleSignUpCard } from "../../../store/actions/common";
+import { outOfStockCheck } from "../../../services/product/product.service";
+import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 
 const closeStyle = {
   position: "absolute",
@@ -25,6 +27,7 @@ function Wishlist() {
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
   const { auth } = useSelector((state) => state);
+  const [outOfStock, setOutOfStock] = React.useState(false);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -59,7 +62,23 @@ function Wishlist() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
-  console.log('data', data)
+  const getOutOfStock = async () => {
+    const id = data?.id;
+    const color = data?.selected?.color?.label;
+    const size = data?.selected?.size?.label;
+    const res = await outOfStockCheck(id, color, size);
+    if (res.status === 200) {
+      if (res?.data?.data?.Stock) {
+        return setOutOfStock(false);
+      }
+      if (res?.data?.data?.Stock === 0) {
+        return setOutOfStock(true);
+      }
+    }
+  };
+  React.useEffect(() => {
+    getOutOfStock();
+  }, [data]);
 
   return (
     <Dialog
@@ -84,7 +103,7 @@ function Wishlist() {
             classname="object-fit-fill h-100"
             width="100%"
             alt=""
-            type='product-details'
+            type="product-details"
             customeStyle={{ objectFit: "cover" }}
           />
         </div>
@@ -154,7 +173,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                  //   onClick={() => setGuideCardOpen(true)}
+                    //   onClick={() => setGuideCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Size Guide
@@ -171,7 +190,7 @@ function Wishlist() {
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
-                  //   onClick={() => setSizeCardOpen(true)}
+                    //   onClick={() => setSizeCardOpen(true)}
                   >
                     <span className="align-self-end font-light-black">
                       Find your size
@@ -235,21 +254,26 @@ function Wishlist() {
             </div>
 
             <div className="d-flex w-100 align-items-center ">
-              <div className={styles.addToCart}>
-                <button
-                  type="button"
-                  onClick={handleWishlist}
-                  className="w-100 d-flex-all-center bg-black color-white p-12px"
-                >
-                  <span className="material-icons-outlined">
-                    favorite_border
-                  </span>
-                  &nbsp;{" "}
-                  {isAddedToWishlist
-                    ? "REMOVE FROM WISHLIST"
-                    : "ADD TO WISHLIST"}
-                </button>
-              </div>
+              {outOfStock ? (
+                <OutOfStock />
+              ) : (
+                <div className={styles.addToCart}>
+                  <button
+                    type="button"
+                    onClick={handleWishlist}
+                    className="w-100 d-flex-all-center bg-black color-white p-12px"
+                  >
+                    <span className="material-icons-outlined">
+                      favorite_border
+                    </span>
+                    &nbsp;{" "}
+                    {isAddedToWishlist
+                      ? "REMOVE FROM WISHLIST"
+                      : "ADD TO WISHLIST"}
+                  </button>
+                </div>
+              )}
+
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>
                 <span className="material-icons-outlined font-light-black">
                   favorite_border

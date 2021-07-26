@@ -5,7 +5,7 @@ import Switch from '@material-ui/core/Switch';
 import styles from "./AddressItem.module.scss";
 
 function AddressItem(options) {
-  const { addressItem, index, onEdit, setDefaultAddress, state, handleChange } = options;
+  const { addressItem, index, onEdit, setDefaultAddress, state, handleChange,onDelete } = options;
 
   return (
     <div>
@@ -41,7 +41,7 @@ function AddressItem(options) {
           <button className={`c-pointer ${styles.changeBtn}`} type="button"
             onClick={() => { onEdit(addressItem) }}>CHANGE</button>
           <button className={`c-pointer ${styles.changeBtn}`} type="button"
-            onClick={() => { onEdit(addressItem) }}>DELETE ADDRESS</button>
+            onClick={() => { onDelete(addressItem) }}>DELETE ADDRESS</button>
         </div>
       </div>
     </div>

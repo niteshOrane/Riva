@@ -9,6 +9,7 @@ import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
 import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
+import { outOfStockCheck } from "../../../../services/product/product.service";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -25,10 +26,34 @@ const ProductDetails = (props) => {
   }, []);
   const colorImageAction = (data) => {
     setColorImg(data?.file);
-    setColorSize({ ...product?.selected, color: { label: data?.color, value: data?.option_id } })
+    setColorSize({
+      ...product?.selected,
+      color: { label: data?.color, value: data?.option_id },
+    });
   };
   const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
+
+  const getOutOfStock = async () => {
+    let id = product?.id;
+    let color = product?.selected?.color?.label;
+    let size = product?.selected?.size?.label;
+    const res = await outOfStockCheck(id, color, size);
+    if (res.status === 200) {
+      if (res?.data?.data?.Stock) {
+        return setOutOfStock(false);
+      }
+      if (res?.data?.data?.Stock === 0) {
+        return setOutOfStock(true);
+      }
+    }
+  };
+  useEffect(() => {
+    getOutOfStock();
+  }, []);
+  useEffect(() => {
+    getOutOfStock();
+  }, [product, colorImg]);
 
   let {
     origprice = 0,
@@ -170,14 +195,19 @@ const ProductDetails = (props) => {
               ))} */}
               {productColorList.length > 0 &&
                 productColorList.map((item, index) => (
-                  <div key={`color${index}`}
-                    className={`${styles.option} `} onClick={() => colorImageAction(item)} style={{
+                  <div
+                    key={`color${index}`}
+                    className={`${styles.option} `}
+                    onClick={() => colorImageAction(item)}
+                    style={{
                       transform:
                         product.selected.color.value === item.option_id
                           ? "scale(1)"
                           : "scale(.9)",
-                    }}>
-                    {item.color.trim()} {productColorList.length > index + 1 ? '|' : ''}
+                    }}
+                  >
+                    {item.color.trim()}{" "}
+                    {productColorList.length > index + 1 ? "|" : ""}
                   </div>
                 ))}
 
@@ -197,9 +227,9 @@ const ProductDetails = (props) => {
                 {product?.size?.map((size) => {
                   return (
                     <div
-                      onClick={() =>
-                        setColorSize({ ...product?.selected, size })
-                      }
+                      onClick={() => {
+                        setColorSize({ ...product?.selected, size });
+                      }}
                       className={`${styles.option} d-flex-all-center`}
                       style={{
                         transform:

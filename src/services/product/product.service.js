@@ -83,3 +83,14 @@ export const getHowToWear = (id) => {
   };
   return axios(config);
 };
+
+export const outOfStockCheck = (productId=63155,color = "", size = "") => {
+  const colorStock = color ? `&productinfo[1][Name]=Color&productinfo[1][Value]=${color}` : ""
+  const sizeStock = size ? `&productinfo[0][Name]=Size&productinfo[0][Value]=${size}`:""
+  const config = {
+    method: "post",
+    url: `${urlPath}/rest/V1/productalertstock/productStock?productId=${productId}${sizeStock}${colorStock}`,
+    silent: true,
+  };
+  return axios(config);
+};

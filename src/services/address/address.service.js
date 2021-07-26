@@ -7,28 +7,26 @@ export const getCustomerAddress = (customerid) => {
     method: "post",
     url: `${API_URL}/customerAddressBook`,
     silent: true,
-    data: customerData
+    data: customerData,
   };
   return axios(config);
 };
 export const addCustomerAddress = (formData) => {
-
   const config = {
     method: "post",
     url: `${API_URL}/addAddressBook`,
     silent: true,
-    data: formData
+    data: formData,
   };
   return axios(config);
 };
-
 
 export const updateCustomerAddress = (formData) => {
   const config = {
     method: "post",
     url: `${API_URL}/updateAddressBook`,
     silent: true,
-    data: formData
+    data: formData,
   };
   return axios(config);
 };
@@ -36,9 +34,21 @@ export const updateCustomerAddress = (formData) => {
 export const setDefaultAddressCustomer = (formData, isBilling = false) => {
   const config = {
     method: "post",
-    url: `${API_URL}/${isBilling ? 'setDefaultBillingAddress' : 'setDefaultShippingAddress'}`,
+    url: `${API_URL}/${
+      isBilling ? "setDefaultBillingAddress" : "setDefaultShippingAddress"
+    }`,
     silent: true,
-    data: formData
+    data: formData,
+  };
+  return axios(config);
+};
+
+export const deleteAddress = (formData) => {
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/deleteAddressBook`,
+    silent: true,
+    data: formData,
   };
   return axios(config);
 };
