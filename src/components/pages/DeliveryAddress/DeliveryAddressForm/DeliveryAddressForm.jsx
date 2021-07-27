@@ -6,6 +6,7 @@ import { showSnackbar } from "../../../../store/actions/common";
 import {
   addCustomerAddress,
   updateCustomerAddress,
+  getCountryList,
 } from "../../../../services/address/address.service";
 import {
   toggleAddresslist,
@@ -27,7 +28,32 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     houseName: "",
     defaultAddess: true,
     id: 0,
+    country: "",
   });
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const getAllCountryList = async () => {
+    const res = await getCountryList();
+    if (res.status === 200) {
+      if (res?.data) {
+        setCountryList(res?.data);
+        setFormData({ ...formData, country: res?.data[0]?.full_name_english });
+      }
+    }else{
+      dispatch(showSnackbar("FailedTo Load Country List","error"))
+    }
+  };
+  useEffect(() => {
+    getAllCountryList();
+  }, []);
+  useEffect(() => {
+    if (countryList && formData.country) {
+      const temp = countryList?.find(
+        (li) => li.full_name_english === formData.country
+      )?.available_regions;
+      setStateList(temp);
+    }
+  }, [formData.country]);
   const clearAll = () => {
     setFormData({
       firstName: "",
@@ -69,6 +95,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.id = customerData?.id;
     formData.block = customerData?.street?.split(" ")?.[0];
     formData.houseName = customerData?.street?.split(" ")?.[1];
+    formData.country = customerData?.country
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
   const handleChange = (e) => {
@@ -87,6 +114,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     defaultAddess,
     id,
     email,
+    country
   } = formData;
 
   const addAddressHandler = () => {
@@ -126,11 +154,6 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         showSnackbar("Mobile number must be 10 numbers long", "error")
       );
     }
-    if (!email.includes("@") || !email.includes(".")) {
-      return dispatch(
-        showSnackbar("Invalid email", "error")
-      );
-    }
 
     form.append("customerid", getCustId());
     if (id) {
@@ -143,6 +166,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("telephone", mobile);
     form.append("street", `${block} ${houseName}`);
     form.append("street1", street);
+    form.append("country",country)
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
   };
@@ -183,10 +207,15 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               Country<span className={styles.star}>*</span>
             </p>
-            <select name="country" className={`${styles.input} c-pointer`}>
-              <option selected>America</option>
-              <option>UAE</option>
-              <option>UK</option>
+            <select
+              name="country"
+              onChange={handleChange}
+              className={`${styles.input} c-pointer`}
+              value = {country}
+            >
+              {countryList?.map((li) => (
+                <option value = {li?.full_name_english} key={li.id}>{li?.full_name_english}</option>
+              ))}
             </select>
           </div>
           <div className="w-100">
@@ -197,12 +226,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               className={`${styles.input} c-pointer`}
               name="state"
               onChange={handleChange}
+              value = {state}
             >
-              <option selected disabled>
-                Please select region, state or province
-              </option>
-              <option>UAE</option>
-              <option>UK</option>
+              {stateList?.map((li) => (
+                <option value = {li?.name} key={li.id}>{li?.name}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -226,17 +254,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               City<span className={styles.star}>*</span>
             </p>
-            <select
-              className={`${styles.input} c-pointer`}
+            <input
+              type="text"
+              className={styles.input}
               name="city"
+              value={city}
+              id="city"
               onChange={handleChange}
-            >
-              <option selected disabled>
-                Please Select City
-              </option>
-              <option>UAE</option>
-              <option>UK</option>
-            </select>
+            />
           </div>
           <div className="w-100">
             <p className={styles.inpLable}>Block</p>

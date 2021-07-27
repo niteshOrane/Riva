@@ -217,6 +217,11 @@ function DeliveryAddress() {
               cartPaymentInfo={cartPaymentInfo}
               deliverySpeed={customerDeliverySpeed}
               callBackAfterApplyCoupan={callBackAfterApplyCoupan}
+              addressItem={
+                dataList && dataList.length > 0
+                  ? dataList?.find((e) => e.id === defaultAddressIds.Shippingid)
+                  : {}
+              }
             />
           </div>
           <div className="my-20px">

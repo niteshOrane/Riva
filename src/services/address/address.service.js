@@ -52,3 +52,34 @@ export const deleteAddress = (formData) => {
   };
   return axios(config);
 };
+
+export const deliveryCheck = (
+  id,
+  method,
+  price,
+  firstName,
+  lastName,
+  street,
+  city,
+  postcode,
+  phone,
+  country,
+  region
+) => {
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/webapi/setshippinginfo?quoteId=${id}&shippingInfo[method]=${method}&shippingInfo[amount]=${price}&shippingInfo[shipping_address][firstname]=${firstName}&shippingInfo[shipping_address][lastname]=${lastName}&shippingInfo[shipping_address][street]=${street}&shippingInfo[shipping_address][city]=${city}&shippingInfo[shipping_address][country_id]=${country}&shippingInfo[shipping_address][region]=${region}&shippingInfo[shipping_address][postcode]=${postcode}&shippingInfo[shipping_address][telephone]=${phone}&shippingInfo[shipping_address][region_id]=`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+// get country list
+export const getCountryList = () => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/directory/countries`,
+    silent: true,
+  };
+  return axios(config);
+};

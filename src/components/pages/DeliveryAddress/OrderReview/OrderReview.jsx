@@ -3,30 +3,34 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as icons from "../../../common/Icons/Icons";
 import Products from "./components/Products/Products";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 import styles from "./OrderReview.module.scss";
 import { showSnackbar } from "../../../../store/actions/common";
-import { toggleCart } from '../../../../store/actions/cart';
+import { toggleCart } from "../../../../store/actions/cart";
+import { deliveryCheck } from "../../../../services/address/address.service";
 
-
-
-function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan }) {
+function OrderReview({
+  deliverySpeed,
+  cartPaymentInfo,
+  callBackAfterApplyCoupan,
+  addressItem
+}) {
   const history = useHistory();
 
-
   const { data: items = [] } = useSelector((state) => state.cart);
+  const {cart_id} = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
   const dispatch = useDispatch();
   const [activeDelivery, setActiveDelivery] = React.useState(null);
   const [news, setNews] = React.useState(true);
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(null);
-  const [discount, setDiscount] = useState(null)
+  const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
-  console.log('deliverySpeed0', deliverySpeed);
+  console.log("address",addressItem)
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -45,10 +49,10 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
         setCouponDiscount(true);
 
         callBackAfterApplyCoupan();
-        setDiscount(res.data.data.discount)
+        setDiscount(res.data.data.discount);
       } else if (res.data.success === 201) {
         dispatch(showSnackbar(res.data.message, "success"));
-        setCouponDiscount(true)
+        setCouponDiscount(true);
       }
     }
   };
@@ -56,22 +60,28 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
     e.preventDefault();
     if (activeDelivery != null) {
       history.push("/cart-payment");
-    }
-    else {
+    } else {
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
     }
   };
   useEffect(() => {
     dispatch(toggleCart(false));
-    const amount = items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
+    const amount =
+      items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
     setTotalAmout(amount);
-    setCouponCode(cartPaymentInfo?.coupon_code || '');
+    setCouponCode(cartPaymentInfo?.coupon_code || "");
     setCouponDiscount(Boolean(cartPaymentInfo?.coupon_code));
     setDiscount(cartPaymentInfo?.discount_amount || 0);
-    setActiveDelivery(cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value);
-    setTotalDC(cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value);
+    setActiveDelivery(
+      cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")?.value
+    );
+    setTotalDC(
+      cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")?.value
+    );
     setTotalTax(cartPaymentInfo?.tax_amount);
-    setTotalAmout(cartPaymentInfo?.total_segments?.find(e => e.code === "subtotal")?.value);
+    setTotalAmout(
+      cartPaymentInfo?.total_segments?.find((e) => e.code === "subtotal")?.value
+    );
   }, []);
 
   const handleRemoveCoupon = async (e) => {
@@ -90,9 +100,28 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
         dispatch(showSnackbar("Coupon removed successfully", "success"));
         setCouponDiscount(false);
         callBackAfterApplyCoupan();
-        setCouponCode("")
-        setDiscount(null)
+        setCouponCode("");
+        setDiscount(null);
       }
+    }
+  };
+
+  const onSpeedDeliveryRadio = async (val) => {
+    const code = `${val?.carrier_code}_${val?.method_code}`
+    const price = cartPaymentInfo?.grand_total || 0
+    const firstName =  addressItem?.name?.split(" ")[0] || ""
+    const lastName =   addressItem?.name?.split(" ")[1] || ""
+    const street = addressItem?.street || ""
+    const city = addressItem?.city || ""
+    const postcode = addressItem?.postcode || ""
+    const phone = addressItem?.phone || ""
+    const country = addressItem?.country || ""
+    const region = addressItem?.region || ""
+    const res = await deliveryCheck(cart_id,code,price,firstName,lastName,street,city,postcode,phone,country,region);
+    if (res.status === 200) {
+      dispatch(showSnackbar("Delivery speed added successfully","success"));
+    } else {
+      dispatch(showSnackbar("Something went wrong","error"));
     }
   };
 
@@ -152,15 +181,31 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
       </div>
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
       {deliverySpeed?.map((item, index) => {
-        return (<div className={styles.chooseShipping} onClick={() => { setActiveDelivery(index); setTotalDC(item?.price_incl_tax) }}>
-          <div>
-            <input type="radio" checked={index == activeDelivery} name={item.method_code} id={item.method_code} />
+        return (
+          <div
+            className={styles.chooseShipping}
+            onClick={() => {
+              setActiveDelivery(index);
+              setTotalDC(item?.price_incl_tax);
+            }}
+          >
+            <div>
+              <input
+                onChange={() => onSpeedDeliveryRadio(item)}
+                type="radio"
+                checked={index == activeDelivery}
+                name={item.method_code}
+                id={item.method_code}
+              />
+            </div>
+            <label htmlFor="twoDays">
+              <h5>{item?.method_title}</h5>
+              <span className={styles.greyText}>
+                ${item.amount} - {item.carrier_title}
+              </span>
+            </label>
           </div>
-          <label htmlFor="twoDays">
-            <h5>{item?.method_title}</h5>
-            <span className={styles.greyText}>${item.amount} - {item.carrier_title}</span>
-          </label>
-        </div>)
+        );
       })}
 
       <Products products={items} />
@@ -198,7 +243,12 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${discount ? parseFloat((totalDC + totalTax + totalAmout) + discount).toFixed(2) : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}</strong>
+        <strong>
+          $
+          {discount
+            ? parseFloat(totalDC + totalTax + totalAmout + discount).toFixed(2)
+            : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}
+        </strong>
       </div>
       <div className="d-flex align-items-center mt-12px">
         <input
@@ -212,7 +262,14 @@ function OrderReview({ deliverySpeed, cartPaymentInfo, callBackAfterApplyCoupan 
           Sign up for Newsletter
         </span>
       </div>
-      <button onClick={(e) => { handlePlaceOrder(e) }} className={styles.placeOrderBtn}>PLACE ORDER</button>
+      <button
+        onClick={(e) => {
+          handlePlaceOrder(e);
+        }}
+        className={styles.placeOrderBtn}
+      >
+        PLACE ORDER
+      </button>
       <div className={`${styles.borderBottom} my-12px`}>
         <img
           src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/da0d5827-4617-454f-ab2f-e4e970ae73e3.png"

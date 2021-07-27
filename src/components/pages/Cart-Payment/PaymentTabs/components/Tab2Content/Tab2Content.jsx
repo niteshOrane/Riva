@@ -1,8 +1,21 @@
 import React from "react";
 import styles from "./Tab2Content.module.scss";
 import * as icons from "../../../Icons/Icons";
+import { cartPaymentAction } from "../../../../../../services/cart/cart.service";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../../../store/actions/common";
 const Tab2Content = () => {
+  const dispatch = useDispatch();
   const [saveCardDetails, setSaveCardDetails] = React.useState(true);
+  const onPayNow = async (e) => {
+    e.preventDefault()
+    const res = await cartPaymentAction();
+    if (res.status === 200) {
+      dispatch(showSnackbar("Payment success", "success"));
+    } else {
+      dispatch(showSnackbar("Payment Failed", "error"));
+    }
+  };
   return (
     <div>
       <h3 className="my-20px">CREDIT/DEBIT CARD</h3>
@@ -58,7 +71,7 @@ const Tab2Content = () => {
             <icons.Cvv />
           </span>
         </div>
-        <button type="submit" className={styles.payNowBtn}>
+        <button onClick = {onPayNow} type="submit" className={styles.payNowBtn}>
           PAY NOW
         </button>
       </form>
