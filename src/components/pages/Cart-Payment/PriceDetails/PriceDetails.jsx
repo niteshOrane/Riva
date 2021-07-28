@@ -32,7 +32,7 @@ const PriceDetails = ({ cartItem, cartPaymentInfo }) => {
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value).toFixed(2)}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}

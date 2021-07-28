@@ -17,8 +17,8 @@ export const addToCartService = (id, color, size, qty) => {
 
 export const getCartPaymentInfo = () => {
   const config = {
-    method: "get",
-    url: `${API_URL}/carts/${getCartId()}/totals`,
+    method: "post",
+    url: `${API_URL}/webapi/quoteInfo?quoteId=${getCartId()}`,
     silent: true,
   };
   return axios(config);
