@@ -29,6 +29,9 @@ export const defaultStore = {
 export const getStoreId = () =>
   store?.getState()?.common?.store?.store_id || '1';
 
+export const getStoreData = () =>
+  store?.getState()?.common?.store || defaultStore;
+
 export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
 
 export const getCartId = () => store?.getState()?.cart?.cart_id;
@@ -40,7 +43,7 @@ export const deepEqual = (x, y) => {
     ty = typeof y;
   return x && y && tx === 'object' && tx === ty
     ? ok(x).length === ok(y).length &&
-        ok(x).every((key) => deepEqual(x[key], y[key]))
+    ok(x).every((key) => deepEqual(x[key], y[key]))
     : x === y;
 };
 

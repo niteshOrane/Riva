@@ -11,6 +11,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "axios": "^0.21.1",
+    "frames-react": "^1.0.2",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
@@ -27,7 +28,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "sass-resources-loader": "^2.2.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-app-rewired start",

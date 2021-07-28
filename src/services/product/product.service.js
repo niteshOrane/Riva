@@ -1,6 +1,6 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
-import { getStoreId } from "../../util";
+import { getStoreId, getStoreData } from "../../util";
 
 const urlPath = "http://65.0.141.49/shop/index.php";
 
@@ -26,9 +26,7 @@ export const getProductMedia = (sku) => {
 };
 
 export const getFiltersList = (catId, color = "", size = "", price = "") => {
-  console.log(color, "service");
-  console.log(size, "service");
-  console.log(price, "service");
+
   const filterData = color ? `&categoryData[color]=${color?.value}` : "";
   const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
   const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
@@ -44,7 +42,7 @@ export const getFiltersList = (catId, color = "", size = "", price = "") => {
 export const getProduct = (sku) => {
   const config = {
     method: "get",
-    url: `${API_URL}/products/${sku}`,
+    url: `${urlPath}/rest/${getStoreData().store_code}/V1/products/${sku}`,
     silent: true,
   };
   return axios(config);

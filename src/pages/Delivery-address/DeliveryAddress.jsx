@@ -10,6 +10,8 @@ import DeliveryAddressForm from "../../components/pages/DeliveryAddress/Delivery
 import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/OrderReview";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
+import swal from 'sweetalert';
+
 import {
   getCustomerAddressList,
   setCustomerAddresDefault,
@@ -77,15 +79,27 @@ function DeliveryAddress() {
     setShowList(false);
   };
   const handleOnDelete = async (record) => {
-    const formData = new FormData();
-    formData.append("addressid", record?.id);
-    const res = await deleteAddress(formData);
-    if (res.status === 200) {
-      dispatch(showSnackbar("Address Deleted Successfully", "success"));
-      dispatch(getCustomerAddressList());
-    } else {
-      dispatch(showSnackbar("Something went wrong", "error"));
-    }
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Address",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(async (willDelete) => {
+        if(willDelete) {
+          const formData = new FormData();
+          formData.append("addressid", record?.id);
+          const res = await deleteAddress(formData);
+          if (res.status === 200) {
+            dispatch(showSnackbar("Address Deleted Successfully", "success"));
+            dispatch(getCustomerAddressList());
+          } else {
+            dispatch(showSnackbar("Something went wrong", "error"));
+          }
+        }
+      });
+
   };
   const recordUpdated = () => {
     dispatch(getCustomerAddressList());
