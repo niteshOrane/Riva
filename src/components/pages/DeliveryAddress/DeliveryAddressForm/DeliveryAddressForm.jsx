@@ -37,7 +37,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.status === 200) {
       if (res?.data) {
         setCountryList(res?.data);
-        setFormData({ ...formData, country: res?.data[0]?.full_name_english });
+        // setFormData({ ...formData, country: res?.data[0]?.full_name_english });
       }
     }else{
       dispatch(showSnackbar("FailedTo Load Country List","error"))
@@ -213,6 +213,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               className={`${styles.input} c-pointer`}
               value = {country}
             >
+              <option>Select Country</option>
               {countryList?.map((li) => (
                 <option value = {li?.full_name_english} key={li.id}>{li?.full_name_english}</option>
               ))}
@@ -228,6 +229,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               onChange={handleChange}
               value = {state}
             >
+              <option>Select state</option>
               {stateList?.map((li) => (
                 <option value = {li?.name} key={li.id}>{li?.name}</option>
               ))}
