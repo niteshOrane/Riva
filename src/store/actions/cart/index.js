@@ -7,12 +7,14 @@ import {
   getProductIdBySku,
   getCartPaymentInfo
 } from '../../../services/cart/cart.service';
-import {
-  getProductMedia
-} from '../../../services/product/product.service';
+
 import { getCartId, getCustId } from '../../../util';
 import { showSnackbar } from '../common';
 
+export const getCartPaymentInfo_action = (data) => ({
+  type: DATA_TYPES.CART_INFO,
+  payload: { ...data },
+});
 
 export const getCustomerCartPayments = () => async (dispatch) => {
   const id = getCustId();
@@ -20,16 +22,11 @@ export const getCustomerCartPayments = () => async (dispatch) => {
 
   const res = await getCartPaymentInfo(id);
 
-  if (res.data && res.statusText=="OK") {
+  if (res.data && res.statusText == "OK") {
     dispatch(getCartPaymentInfo_action(res.data));
-    console.log('res.data', res.data)
   } else dispatch(getCartPaymentInfo_action([]));
 };
 
-export const getCartPaymentInfo_action = (data) => ({
-  type: DATA_TYPES.CART_INFO,
-  payload: { ...data },
-});
 
 export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
@@ -42,9 +39,8 @@ export const getCart = () => async (dispatch) => {
 
     const products = res.data.map((r, i) => ({
       ...r,
-      id: productIds?.[i]?.value?.data?.data?.product_id
-        ? parseInt(productIds?.[i]?.value?.data?.data?.product_id)
-        : '',
+      id: productIds?.[i]?.value?.data?.data?.product_id ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+        : 0,
       src: r?.extension_attributes?.image
     }));
 
