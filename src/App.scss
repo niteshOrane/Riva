@@ -140,12 +140,6 @@ h6 {
 }
 
 
-.card-number-frame{
-  height: 3rem;
-}
-.cvv-frame{
-  height: 3rem;
-}
-.expiry-date-frame{
-  height: 3rem;
+.card-number-frame, .cvv-frame, .expiry-date-frame{
+  height: 4rem;
 }

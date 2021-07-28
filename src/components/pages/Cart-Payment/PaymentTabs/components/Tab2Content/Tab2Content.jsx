@@ -94,7 +94,7 @@ const Tab2Content = () => {
             base: {
               fontSize: "17px",
               border: "1px solid black",
-              height: "2rem",
+              height: "3rem",
               padding: "4px",
             },
           },
