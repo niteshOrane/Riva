@@ -4,11 +4,13 @@ import * as icons from "../../../Icons/Icons";
 import { cartPaymentAction } from "../../../../../../services/cart/cart.service";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
+import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 const Tab2Content = () => {
   const dispatch = useDispatch();
   const [saveCardDetails, setSaveCardDetails] = React.useState(true);
+  const [paymentToken, setPaymentToken] = React.useState("");
   const onPayNow = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const res = await cartPaymentAction();
     if (res.status === 200) {
       dispatch(showSnackbar("Payment success", "success"));
@@ -16,10 +18,11 @@ const Tab2Content = () => {
       dispatch(showSnackbar("Payment Failed", "error"));
     }
   };
+  console.log(paymentToken);
   return (
     <div>
       <h3 className="my-20px">CREDIT/DEBIT CARD</h3>
-      <form>
+      {/* <form>
         <div className={styles.inpContainer}>
           <input
             type="text"
@@ -74,7 +77,47 @@ const Tab2Content = () => {
         <button onClick = {onPayNow} type="submit" className={styles.payNowBtn}>
           PAY NOW
         </button>
-      </form>
+      </form> */}
+      <Frames
+        id={styles.cardNumber}
+        config={{
+          debug: true,
+          publicKey: "pk_test_15144f98-d5cf-435d-943c-325ed98564ba",
+          localization: {
+            cardNumberPlaceholder: "Card number",
+            expiryMonthPlaceholder: "MM",
+            expiryYearPlaceholder: "YY",
+            cvvPlaceholder: "CVV",
+          },
+
+          style: {
+            base: {
+              fontSize: "17px",
+              border: "1px solid black",
+              height: "2rem",
+              padding: "4px",
+            },
+          },
+        }}
+        cardSubmitted={() => {}}
+        cardTokenized={(e) => {
+          console.log(e)
+          setPaymentToken(e?.token);
+        }}
+        cardTokenizationFailed={(e) => {}}
+      >
+        <CardNumber />
+        <ExpiryDate />
+        <Cvv />
+        <button
+          className={styles.payNowBtn}
+          onClick={() => {
+            Frames.submitCard();
+          }}
+        >
+          PAY NOW
+        </button>
+      </Frames>
     </div>
   );
 };
