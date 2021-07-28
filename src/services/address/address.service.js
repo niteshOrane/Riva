@@ -34,9 +34,8 @@ export const updateCustomerAddress = (formData) => {
 export const setDefaultAddressCustomer = (formData, isBilling = false) => {
   const config = {
     method: "post",
-    url: `${API_URL}/${
-      isBilling ? "setDefaultBillingAddress" : "setDefaultShippingAddress"
-    }`,
+    url: `${API_URL}/${isBilling ? "setDefaultBillingAddress" : "setDefaultShippingAddress"
+      }`,
     silent: true,
     data: formData,
   };
@@ -68,7 +67,7 @@ export const deliveryCheck = (
 ) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/setshippinginfo?quoteId=${id}&shippingInfo[method]=${method}&shippingInfo[amount]=${price}&shippingInfo[shipping_address][firstname]=${firstName}&shippingInfo[shipping_address][lastname]=${lastName}&shippingInfo[shipping_address][street]=${street}&shippingInfo[shipping_address][city]=${city}&shippingInfo[shipping_address][country_id]=${country}&shippingInfo[shipping_address][region]=${region}&shippingInfo[shipping_address][postcode]=${postcode}&shippingInfo[shipping_address][telephone]=${phone}&shippingInfo[shipping_address][region_id]=`,
+    url: `${process.env.REACT_APP_DEV}/webapi/setshippinginfo?quoteId=${id}&shippingInfo[method]=${method}&shippingInfo[amount]=${price}&shippingInfo[shipping_address][firstname]=${firstName}&shippingInfo[shipping_address][lastname]=${lastName}&shippingInfo[shipping_address][street]=${street}&shippingInfo[shipping_address][city]=${city}&shippingInfo[shipping_address][country_id]=${country || 'KW'}&shippingInfo[shipping_address][region]=${region || 'Kuwait'}&shippingInfo[shipping_address][postcode]=${postcode}&shippingInfo[shipping_address][telephone]=${phone}&shippingInfo[shipping_address][region_id]=`,
     silent: true,
   };
   return axios(config);

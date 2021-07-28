@@ -228,7 +228,7 @@ function DeliveryAddress() {
         <div>
           <div className={styles.columnRight}>
             <OrderReview
-              cartPaymentInfo={cartPaymentInfo}
+              cartPayment={cartPaymentInfo}
               deliverySpeed={customerDeliverySpeed}
               callBackAfterApplyCoupan={callBackAfterApplyCoupan}
               addressItem={

@@ -8,12 +8,9 @@ export const loginSuccess = (data) => (dispatch) => {
     payload: { customer: data, token: 'temp_jwt_token' },
   });
   dispatch(getWishlist());
-  dispatch(
-    dispatch({
-      type: DATA_TYPES.SET_CART_ID,
-      payload: { cart_id: data.quoteid },
-    })
-  );
+  dispatch({
+    type: DATA_TYPES.SET_CART_ID, payload: { cart_id: data.quoteid },
+  })
   if (data.quoteid && data.quoteid !== '0') dispatch(getCart());
 };
 
@@ -23,6 +20,10 @@ export const loginFailure = () => ({
 
 export const logout = () => ({
   type: DATA_TYPES.LOGOUT,
+});
+export const emptyCart = () => ({
+  type: DATA_TYPES.SET_CART_ID,
+  payload: { cart_id: 0 }
 });
 
 export const setCustomer = (data) => ({

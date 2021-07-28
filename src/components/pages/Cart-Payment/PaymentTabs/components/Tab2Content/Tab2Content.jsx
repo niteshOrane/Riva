@@ -1,84 +1,36 @@
 import React from "react";
+import * as DATA_TYPES from '../../../../../../store/types';
+import { Link, useHistory } from "react-router-dom";
 import styles from "./Tab2Content.module.scss";
-import * as icons from "../../../Icons/Icons";
 import { cartPaymentAction } from "../../../../../../services/cart/cart.service";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
 import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 const Tab2Content = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const [saveCardDetails, setSaveCardDetails] = React.useState(true);
-  const [paymentToken, setPaymentToken] = React.useState("");
-  const onPayNow = async () => {
-    if (paymentToken) {
-      const res = await cartPaymentAction(paymentToken);
+  const onPayNow = async (e) => {
+    if (e) {
+      const res = await cartPaymentAction(e);
       if (res.status === 200) {
         dispatch(showSnackbar("Payment success", "success"));
+        dispatch({
+          type: DATA_TYPES.SET_CART_ID,
+          payload: { cart_id: 0 },
+        });
+        dispatch({
+          type: DATA_TYPES.SET_BULK_CART,
+          payload: [],
+        });
+        history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
       } else {
         dispatch(showSnackbar("Payment Failed", "error"));
       }
     }
   };
-  console.log(paymentToken);
   return (
     <div>
       <h3 className="my-20px">CREDIT/DEBIT CARD</h3>
-      {/* <form>
-        <div className={styles.inpContainer}>
-          <input
-            type="text"
-            name="cardNumber"
-            placeholder="Card Number"
-            id="cardNumber"
-          />
-          <img
-            src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/3f2c72bf-7c3a-48c8-b038-0e65ac92b2dc.png"
-            width="100%"
-            alt="Card Number"
-          />
-        </div>
-        <div className={styles.inpContainer}>
-          <input
-            type="text"
-            placeholder="Name on Card"
-            name="nameOnCard"
-            id="nameOnCard"
-          />
-        </div>
-        <div className={styles.twoInpsContainer}>
-          <div>
-            <input
-              type="text"
-              name="validTill"
-              placeholder="Valid Thru (MM/YY)"
-              id="validTill"
-            />
-          </div>
-
-          <div className="d-flex align-items-center">
-            <input type="text" name="cvv" placeholder="CVV" id="cvv" />
-            <icons.Cvv />
-          </div>
-        </div>
-        <div className="my-20px d-flex align-items-center gap-12px">
-          <input
-            onChange={() => setSaveCardDetails(!saveCardDetails)}
-            checked={saveCardDetails}
-            type="checkbox"
-            name="saveCard"
-            id="saveCard"
-          />
-          <label className={styles.fontSmall} htmlFor="saveCard">
-            Save this card for faster payments
-          </label>
-          <span className="d-flex align-items-center">
-            <icons.Cvv />
-          </span>
-        </div>
-        <button onClick = {onPayNow} type="submit" className={styles.payNowBtn}>
-          PAY NOW
-        </button>
-      </form> */}
       <Frames
         id={styles.cardNumber}
         config={{
@@ -90,26 +42,26 @@ const Tab2Content = () => {
             expiryYearPlaceholder: "YY",
             cvvPlaceholder: "CVV",
           },
-
           style: {
             base: {
               fontSize: "17px",
               border: "1px solid black",
               height: "3rem",
               padding: "4px",
+              width: '95%'
             },
             invalid: {
               color: "red",
             },
           },
         }}
-        cardSubmitted={() => {}}
-        cardTokenized={(e) => {
-          console.log(e);
-          setPaymentToken(e?.token);
+        cardSubmitted={(e) => {
+
         }}
-        cardTokenizationFailed={(e) => {
-          console.log(e);
+        cardTokenized={(e) => {
+          onPayNow(e);
+        }}
+        cardTokenizationFailed={e => {
           dispatch(showSnackbar("Payment Fail", "error"));
         }}
       >
@@ -117,16 +69,16 @@ const Tab2Content = () => {
         <ExpiryDate />
         <Cvv />
         <button
+          type="button"
           className={styles.payNowBtn}
           onClick={() => {
             Frames.submitCard();
-            onPayNow();
           }}
         >
           PAY NOW
         </button>
       </Frames>
-    </div>
+    </div >
   );
 };
 

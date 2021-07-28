@@ -12,16 +12,21 @@ const ShoppingCart = () => {
   useEffect(() => {
     dispatch(toggleCart(false));
   }, []);
-
+  const handleContinueShopping = () => {
+    window.location.href = "/";
+  };
   return (
-    <div className="container-90 max-width-1600 mx-auto">
+    <div className="container-90 max-width-1600 mx-auto" style={{ height: "100vh" }}>
       <div className={style.pageHeader}>
         <h1 className={style.pageTitle}>Shopping Cart</h1>
       </div>
-      <div className="d-flex">
+      {items.length > 0 ? <div className="d-flex">
         <Products products={items} />
         <Summary />
-      </div>
+      </div> :  <div className="text-center"> SHOPPING CART IS EMPTY
+                You have no items in your shopping cart.
+                Click <a onClick={() => { handleContinueShopping() }}  href="#"
+                className="color-red c-pointer">here</a> to continue shopping.</div>}
     </div>
   );
 };

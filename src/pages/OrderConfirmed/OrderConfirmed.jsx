@@ -15,7 +15,8 @@ const randomProduct = {
   orderId: "R0374915036",
   payment: "Approved",
 };
-function OrderConfirmed() {
+function OrderConfirmed(props) {
+  console.log('props', props)
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -27,7 +28,7 @@ function OrderConfirmed() {
           <div className={styles.contentConatiner}>
             <h2 className={styles.title}>Order Confirmed</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
-              <Congratulations />
+              <Congratulations {...props?.match?.params} />
               <ProductCard product={randomProduct} />
             </div>
             <Details />
