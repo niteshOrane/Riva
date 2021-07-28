@@ -97,14 +97,20 @@ const Tab2Content = () => {
               height: "3rem",
               padding: "4px",
             },
+            invalid: {
+              color: "red"
+            },
           },
         }}
         cardSubmitted={() => {}}
         cardTokenized={(e) => {
-          console.log(e)
+          console.log(e);
           setPaymentToken(e?.token);
         }}
-        cardTokenizationFailed={(e) => {}}
+        cardTokenizationFailed={(e) => {
+          console.log(e)
+          dispatch(showSnackbar("Payment Fail", "error"));
+        }}
       >
         <CardNumber />
         <ExpiryDate />
