@@ -30,7 +30,6 @@ function OrderReview({
   const [totalAmout, setTotalAmout] = useState(0);
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
-  console.log("address", addressItem);
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -73,7 +72,7 @@ function OrderReview({
     setCouponDiscount(Boolean(cartPaymentInfo?.coupon_code));
     setDiscount(cartPaymentInfo?.discount_amount || 0);
     setActiveDelivery(
-      cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")?.value
+      cartPaymentInfo?.shipping_method
     );
     setTotalDC(
       cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")?.value
@@ -202,7 +201,7 @@ function OrderReview({
           <div
             className={styles.chooseShipping}
             onClick={() => {
-              setActiveDelivery(index);
+              setActiveDelivery(`${item?.carrier_code}_${item?.method_code}`);
               setTotalDC(item?.price_incl_tax);
             }}
           >
@@ -210,7 +209,7 @@ function OrderReview({
               <input
                 onChange={() => onSpeedDeliveryRadio(item)}
                 type="radio"
-                checked={index == activeDelivery}
+                checked={`${item?.carrier_code}_${item?.method_code}` === activeDelivery}
                 name={item.method_code}
                 id={item.method_code}
               />
