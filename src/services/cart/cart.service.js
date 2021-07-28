@@ -67,10 +67,10 @@ export const getProductIdBySku = (sku) => {
   return axios(config);
 };
 
-export const cartPaymentAction = () => {
+export const cartPaymentAction = (token) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=checkoutcom_card_payment`,
+    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=checkoutcom_card_payment&paymentInfo[transactionId]=${token}`,
     silent: true,
   };
   return axios(config);

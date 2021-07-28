@@ -13,7 +13,7 @@ function OrderReview({
   deliverySpeed,
   cartPaymentInfo,
   callBackAfterApplyCoupan,
-  addressItem
+  addressItem,
 }) {
   const history = useHistory();
 
@@ -30,7 +30,7 @@ function OrderReview({
   const [totalAmout, setTotalAmout] = useState(0);
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
-  console.log("address", addressItem)
+  console.log("address", addressItem);
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -107,22 +107,38 @@ function OrderReview({
   };
 
   const onSpeedDeliveryRadio = async (val) => {
-    const code = `${val?.carrier_code}_${val?.method_code}`
-    const price = val?.amount || 0
-    const firstName = addressItem?.name?.split(" ")[0] || ""
-    const lastName = addressItem?.name?.split(" ")[1] || ""
-    const street = addressItem?.street || ""
-    const city = addressItem?.city || ""
-    const postcode = addressItem?.postcode || ""
-    const phone = addressItem?.phone || ""
-    const country = addressItem?.country || ""
-    const region = addressItem?.region || ""
-    const res = await deliveryCheck(cart_id, code, price, firstName, lastName, street, city, postcode, phone, country, region);
-    if (res.status === 200) {
-      dispatch(showSnackbar("Delivery speed added successfully", "success"));
-      callBackAfterApplyCoupan()
+    if (addressItem?.name) {
+      const code = `${val?.carrier_code}_${val?.method_code}`;
+      const price = val?.amount || 0;
+      const firstName = addressItem?.name?.split(" ")[0] || "";
+      const lastName = addressItem?.name?.split(" ")[1] || "";
+      const street = addressItem?.street || "";
+      const city = addressItem?.city || "";
+      const postcode = addressItem?.postcode || "";
+      const phone = addressItem?.phone || "";
+      const country = addressItem?.country || "";
+      const region = addressItem?.region || "";
+      const res = await deliveryCheck(
+        cart_id,
+        code,
+        price,
+        firstName,
+        lastName,
+        street,
+        city,
+        postcode,
+        phone,
+        country,
+        region
+      );
+      if (res.status === 200) {
+        dispatch(showSnackbar("Delivery speed added successfully", "success"));
+        callBackAfterApplyCoupan();
+      } else {
+        dispatch(showSnackbar("Something went wrong", "error"));
+      }
     } else {
-      dispatch(showSnackbar("Something went wrong", "error"));
+      dispatch(showSnackbar("Add a delivery address first", "error"));
     }
   };
 

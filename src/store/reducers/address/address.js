@@ -18,8 +18,8 @@ const address = (state = INITIAL_STATE, action) => {
     case DATA_TYPES.GET_ADDRESS:
       return {
         ...state,
-        data: [...action.payload.data.data],
-        defaultAddressIds: action.payload.data.dataind,
+        data: [...action?.payload?.data?.data],
+        defaultAddressIds: action?.payload?.data?.dataind,
       };
     case DATA_TYPES.ADD_ADDRESS:
       return {

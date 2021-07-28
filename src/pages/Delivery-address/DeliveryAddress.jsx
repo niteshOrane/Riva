@@ -42,7 +42,7 @@ function DeliveryAddress() {
     });
   };
   const dispatch = useDispatch();
-  const customerAddressList = useSelector((state) => state.address?.data || []);
+  const customerAddressList = useSelector((state) => state?.address?.data || []);
   const customerDeliverySpeed = useSelector(
     (state) => state.payment?.deliverySpeed || []
   );
@@ -165,14 +165,14 @@ function DeliveryAddress() {
             <SelectDeliveryAddress
               addressItem={
                 dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds.Shippingid)
+                  ? dataList?.find((e) => e.id === defaultAddressIds?.Shippingid)
                   : {}
               }
             />
             <SelectBillingAddress
               addressItem={
                 dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds.Billingid)
+                  ? dataList?.find((e) => e.id === defaultAddressIds?.Billingid)
                   : {}
               }
             />
@@ -233,7 +233,7 @@ function DeliveryAddress() {
               callBackAfterApplyCoupan={callBackAfterApplyCoupan}
               addressItem={
                 dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds.Shippingid)
+                  ? dataList?.find((e) => e.id === defaultAddressIds?.Shippingid)
                   : {}
               }
             />

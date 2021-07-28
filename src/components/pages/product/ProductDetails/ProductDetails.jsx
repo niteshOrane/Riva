@@ -386,6 +386,7 @@ const ProductDetails = (props) => {
                       </button>
                     </div>
                   )}
+               
                   <div
                     className={`${styles.wishlist} d-flex-all-center`}
                     onClick={handleWishList}

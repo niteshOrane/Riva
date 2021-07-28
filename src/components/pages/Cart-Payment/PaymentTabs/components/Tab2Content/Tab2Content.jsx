@@ -9,13 +9,14 @@ const Tab2Content = () => {
   const dispatch = useDispatch();
   const [saveCardDetails, setSaveCardDetails] = React.useState(true);
   const [paymentToken, setPaymentToken] = React.useState("");
-  const onPayNow = async (e) => {
-    e.preventDefault();
-    const res = await cartPaymentAction();
-    if (res.status === 200) {
-      dispatch(showSnackbar("Payment success", "success"));
-    } else {
-      dispatch(showSnackbar("Payment Failed", "error"));
+  const onPayNow = async () => {
+    if (paymentToken) {
+      const res = await cartPaymentAction(paymentToken);
+      if (res.status === 200) {
+        dispatch(showSnackbar("Payment success", "success"));
+      } else {
+        dispatch(showSnackbar("Payment Failed", "error"));
+      }
     }
   };
   console.log(paymentToken);
@@ -98,7 +99,7 @@ const Tab2Content = () => {
               padding: "4px",
             },
             invalid: {
-              color: "red"
+              color: "red",
             },
           },
         }}
@@ -108,7 +109,7 @@ const Tab2Content = () => {
           setPaymentToken(e?.token);
         }}
         cardTokenizationFailed={(e) => {
-          console.log(e)
+          console.log(e);
           dispatch(showSnackbar("Payment Fail", "error"));
         }}
       >
@@ -119,6 +120,7 @@ const Tab2Content = () => {
           className={styles.payNowBtn}
           onClick={() => {
             Frames.submitCard();
+            onPayNow();
           }}
         >
           PAY NOW
