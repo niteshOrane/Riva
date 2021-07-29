@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Details.module.scss";
 import { Link } from "react-router-dom";
-function Details() {
+function Details({deliveryAddress,amount}) {
+  const {firstname,lastname,street,region,country_id,postcode,telephone} = deliveryAddress
+  const {total, shippingAmount} = amount
   return (
     <>
       <div className={styles.container}>
@@ -15,25 +17,25 @@ function Details() {
         </div>
         <div className={styles.body}>
           <div className={styles.bodyLeft}>
-            <h5 className={styles.name}>David Smith</h5>
+            <h5 className={styles.name}>{`${firstname} ${lastname}`}</h5>
             <address className={`${styles.greyText} ${styles.address}`}>
-              Melba R Fox, 4900 Spirit Drive Hastings, Florida - 32145{" "}
-              <div>USA</div>
+              {`${street.map(li => li)}, ${region}, ${postcode}`}
+              <div>{`${country_id}`}</div>
             </address>
-            <div>Phone: 4567 8925 </div>
+            <div>{telephone} </div>
           </div>
           <div className={styles.bodyRight}>
             <div className="d-flex justify-content-between">
               <div className={styles.greyText}>Item :</div>
-              <div className={styles.greyText}>$39.00</div>
+              <div className={styles.greyText}>${total}</div>
             </div>
             <div className="d-flex justify-content-between">
               <div className={styles.greyText}>Shipping:</div>
-              <div className={styles.greyText}>$4.00</div>
+              <div className={styles.greyText}>${shippingAmount}</div>
             </div>
             <div className="d-flex justify-content-between">
               <div>Total</div>
-              <div>$43.00</div>
+              <div>${total + shippingAmount}</div>
             </div>
           </div>
         </div>

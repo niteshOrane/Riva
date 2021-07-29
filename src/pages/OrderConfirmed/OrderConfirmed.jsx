@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Congratulations from "../../components/pages/Dashboard/OrderConfirmed/Congratulations/Congratulations";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
 import styles from "./OrderConfirmed.module.scss";
+import { useParams } from "react-router-dom";
+import { orderConfirmed } from "../../services/order/order.services";
 const randomProduct = {
   src: "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/b4bac6c2-516e-4778-89c1-fdf75fc725ce.png",
   name: "High Waist Slim Fit Trouser",
@@ -16,7 +18,26 @@ const randomProduct = {
   payment: "Approved",
 };
 function OrderConfirmed(props) {
-  console.log('props', props)
+  const { orderId } = useParams();
+  const [deliveryAddress, setDeliveryAddress] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [orderItems,setOrderItems] = useState(null)
+
+  const getOrderDetails = async (val) => {
+    const res = await orderConfirmed(val);
+    if (res.status === 200 && res?.data) {
+      console.log(res);
+      setOrderItems(res?.data?.items)
+      setDeliveryAddress(res?.data?.billing_address);
+      setAmount({
+        total: res?.data?.subtotal_incl_tax,
+        shippingAmount: res?.data?.shipping_amount,
+      });
+    }
+  };
+  useEffect(() => {
+    getOrderDetails(orderId);
+  }, [orderId]);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -29,9 +50,11 @@ function OrderConfirmed(props) {
             <h2 className={styles.title}>Order Confirmed</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
               <Congratulations {...props?.match?.params} />
-              <ProductCard product={randomProduct} />
+              {orderItems?.map(li => (
+                 <ProductCard product={li} />
+              ))}
             </div>
-            <Details />
+            {deliveryAddress && amount && <Details deliveryAddress={deliveryAddress} amount ={amount} />}
           </div>
         </div>
       </div>
