@@ -26,12 +26,12 @@ function OrderConfirmed(props) {
   const getOrderDetails = async (val) => {
     const res = await orderConfirmed(val);
     if (res.status === 200 && res?.data) {
-      console.log(res);
-      setOrderItems(res?.data?.items)
+      setOrderItems(res?.data?.items.map(li => li.product_type==="simple"))
       setDeliveryAddress(res?.data?.billing_address);
       setAmount({
         total: res?.data?.subtotal_incl_tax,
         shippingAmount: res?.data?.shipping_amount,
+        totalPaid: res?.data?.grand_total
       });
     }
   };
@@ -51,7 +51,7 @@ function OrderConfirmed(props) {
             <div className="py-20px d-flex w-100 justify-content-between">
               <Congratulations {...props?.match?.params} />
               {orderItems?.map(li => (
-                 <ProductCard product={li} />
+                <ProductCard product = {li} />
               ))}
             </div>
             {deliveryAddress && amount && <Details deliveryAddress={deliveryAddress} amount ={amount} />}

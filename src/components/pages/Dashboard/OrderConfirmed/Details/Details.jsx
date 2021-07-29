@@ -3,7 +3,7 @@ import styles from "./Details.module.scss";
 import { Link } from "react-router-dom";
 function Details({deliveryAddress,amount}) {
   const {firstname,lastname,street,region,country_id,postcode,telephone} = deliveryAddress
-  const {total, shippingAmount} = amount
+  const {total, shippingAmount,totalPaid} = amount
   return (
     <>
       <div className={styles.container}>
@@ -35,7 +35,7 @@ function Details({deliveryAddress,amount}) {
             </div>
             <div className="d-flex justify-content-between">
               <div>Total</div>
-              <div>${total + shippingAmount}</div>
+              <div>${totalPaid}</div>
             </div>
           </div>
         </div>

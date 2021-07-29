@@ -67,6 +67,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       block: "",
       houseName: "",
       defaultAddess: true,
+      country:""
     });
     onAfterSaveEdit();
   };

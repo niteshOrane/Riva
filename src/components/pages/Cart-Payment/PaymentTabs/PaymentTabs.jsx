@@ -9,6 +9,12 @@ import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../store/actions/common";
+import { cartPaymentAction } from "../../../../services/cart/cart.service";
+import { useHistory } from "react-router";
+import * as DATA_TYPES from '../../../../store/types';
+import Loader from "../../../common/Loader";
 
 const tabLinks = [
   { text: "CASH ON DELIVERY (CASH/CARD/UP)", icon: <tabIcons.Icon1 /> },
@@ -88,17 +94,41 @@ function a11yProps(index) {
 }
 
 export default function PaymentTabs({ paymentMode }) {
+  const history = useHistory();
+  const dispatch = useDispatch()
   const [value, setValue] = React.useState(0);
-  console.log('paymentMode', paymentMode)
+  const [loading,setLoading] = React.useState(false)
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([])
+  const onPayNow = async (e) => {
+    if (e) {
+      setLoading(true)
+      const res = await cartPaymentAction(e);
+      if (res.status === 200) {
+        setLoading(false)
+        dispatch(showSnackbar("Payment success", "success"));
+        dispatch({
+          type: DATA_TYPES.SET_CART_ID,
+          payload: { cart_id: 0 },
+        });
+        dispatch({
+          type: DATA_TYPES.SET_BULK_CART,
+          payload: [],
+        });
+        history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
+      } else {
+        dispatch(showSnackbar("Payment Failed", "error"));
+      }
+    }
+  };
   useEffect(() => {
     setPaymentMethod(paymentMode);
   }, [])
   const handleChange = (_, newValue) => {
     setValue(newValue);
   };
-
+  
+  if(loading) return <Loader />
   return (
     <div className="d-flex my-20px w-80">
       <Tabs
@@ -128,7 +158,7 @@ export default function PaymentTabs({ paymentMode }) {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          <Tab2Content />
+          <Tab2Content onPayNow = {onPayNow} />
         </TabPanel>
       </div>
     </div>

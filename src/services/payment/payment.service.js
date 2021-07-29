@@ -22,3 +22,5 @@ export const getShippingMethod = (addressId) => {
   };
   return axios(config);
 };
+
+

@@ -6,28 +6,38 @@ import { cartPaymentAction } from "../../../../../../services/cart/cart.service"
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
 import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
-const Tab2Content = () => {
-  const history = useHistory();
+
+const Tab2Content = ({onPayNow}) => {
   const dispatch = useDispatch();
-  const onPayNow = async (e) => {
-    if (e) {
-      const res = await cartPaymentAction(e);
-      if (res.status === 200) {
-        dispatch(showSnackbar("Payment success", "success"));
-        dispatch({
-          type: DATA_TYPES.SET_CART_ID,
-          payload: { cart_id: 0 },
-        });
-        dispatch({
-          type: DATA_TYPES.SET_BULK_CART,
-          payload: [],
-        });
-        history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
-      } else {
-        dispatch(showSnackbar("Payment Failed", "error"));
-      }
+  const [validation,setValidation] = React.useState(false)
+  // const onPayNow = async (e) => {
+  //   if (e) {
+  //     setLoading(true)
+  //     const res = await cartPaymentAction(e);
+  //     if (res.status === 200) {
+  //       setLoading(false)
+  //       dispatch(showSnackbar("Payment success", "success"));
+  //       dispatch({
+  //         type: DATA_TYPES.SET_CART_ID,
+  //         payload: { cart_id: 0 },
+  //       });
+  //       dispatch({
+  //         type: DATA_TYPES.SET_BULK_CART,
+  //         payload: [],
+  //       });
+  //       history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
+  //     } else {
+  //       dispatch(showSnackbar("Payment Failed", "error"));
+  //     }
+  //   }
+  // };
+  const showValidation = (e) => {
+    if(!e.isValid || e.isEmpty){
+      setValidation(true)
+    }else{
+      setValidation(false)
     }
-  };
+  }
   return (
     <div>
       <h3 className="my-20px">CREDIT/DEBIT CARD</h3>
@@ -55,9 +65,7 @@ const Tab2Content = () => {
             },
           },
         }}
-        cardSubmitted={(e) => {
-
-        }}
+        frameValidationChanged={(e) => showValidation(e)}
         cardTokenized={(e) => {
           onPayNow(e);
         }}
@@ -78,6 +86,8 @@ const Tab2Content = () => {
           PAY NOW
         </button>
       </Frames>
+      <br/>
+      {validation && <span className={styles.cardValidation}>Please enter valid card details</span>}
     </div >
   );
 };
