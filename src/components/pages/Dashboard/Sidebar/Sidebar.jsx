@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 import * as icons from "../../../common/Icons/Icons";
 import { logoutUser } from '../../../../services/auth/auth.service';
-import { logout } from '../../../../store/actions/auth';
+import { logout, emptyCart } from '../../../../store/actions/auth';
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -133,6 +133,7 @@ function Sidebar() {
           <span onClick={
               () => {
                 dispatch(logout());
+                dispatch(emptyCart());
                 logoutUser();
               }
             }

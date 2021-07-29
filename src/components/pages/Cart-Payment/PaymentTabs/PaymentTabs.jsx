@@ -88,7 +88,7 @@ function a11yProps(index) {
 }
 
 export default function PaymentTabs({ paymentMode }) {
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
   console.log('paymentMode', paymentMode)
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([])
@@ -128,9 +128,6 @@ export default function PaymentTabs({ paymentMode }) {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-        <Tab2Content />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
           <Tab2Content />
         </TabPanel>
       </div>

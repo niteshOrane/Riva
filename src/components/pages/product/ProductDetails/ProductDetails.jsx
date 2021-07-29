@@ -370,7 +370,7 @@ const ProductDetails = (props) => {
                 </div>
 
                 <div className="d-flex align-items-center my-50px">
-                  {outOfStock ? (
+                  {1==2 ? (
                     <OutOfStock productId={product.id} />
                   ) : (
                     <div className={styles.addToCart}>

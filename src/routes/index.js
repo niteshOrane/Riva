@@ -133,6 +133,14 @@ class AppRoutes extends Component {
         index: 5,
       },
       {
+        path: "/order-confirmed/:orderId/:displayOrderNumber",
+        component: OrderConfirmed,
+        exact: true,
+        name: "OrderConfirmed",
+        layout: MainLayout,
+        index: 6,
+      },
+      {
         path: "/order-confirmed",
         component: OrderConfirmed,
         exact: true,

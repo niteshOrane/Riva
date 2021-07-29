@@ -11,7 +11,7 @@ import { deliveryCheck } from "../../../../services/address/address.service";
 
 function OrderReview({
   deliverySpeed,
-  cartPaymentInfo,
+  cartPayment,
   callBackAfterApplyCoupan,
   addressItem,
 }) {
@@ -23,6 +23,7 @@ function OrderReview({
   const dispatch = useDispatch();
   const [activeDelivery, setActiveDelivery] = React.useState(null);
   const [news, setNews] = React.useState(true);
+  const [cartPaymentInfo, setCartPaymentInfo] = React.useState({});
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(null);
   const [discount, setDiscount] = useState(null);
@@ -55,6 +56,7 @@ function OrderReview({
       }
     }
   };
+  
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (activeDelivery != null) {
@@ -68,20 +70,21 @@ function OrderReview({
     const amount =
       items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
     setTotalAmout(amount);
-    setCouponCode(cartPaymentInfo?.coupon_code || "");
-    setCouponDiscount(Boolean(cartPaymentInfo?.coupon_code));
-    setDiscount(cartPaymentInfo?.discount_amount || 0);
+    setCouponCode(cartPayment?.coupon_code || "");
+    setCouponDiscount(Boolean(cartPayment?.coupon_code));
+    setDiscount(cartPayment?.discount_amount || 0);
     setActiveDelivery(
-      cartPaymentInfo?.shipping_method
+      cartPayment?.shipping_method
     );
     setTotalDC(
-      cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")?.value
+      cartPayment?.total_segments?.find((e) => e.code === "shipping")?.value
     );
-    setTotalTax(cartPaymentInfo?.tax_amount);
+    setTotalTax(cartPayment?.tax_amount);
     setTotalAmout(
-      cartPaymentInfo?.total_segments?.find((e) => e.code === "subtotal")?.value
+      cartPayment?.total_segments?.find((e) => e.code === "subtotal")?.value
     );
-  }, []);
+    setCartPaymentInfo(cartPayment);
+  }, [cartPayment]);
 
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();

@@ -5,11 +5,9 @@ import { getCustId, getCartId, getStoreId } from "../../util";
 export const addToCartService = (id, color, size, qty) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
-      getCartId() || 0
-    }&productInfo[customer_id]=${
-      getCustId() || 0
-    }&productInfo[store_id]=${getStoreId()}`,
+    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${getCartId() || 0
+      }&productInfo[customer_id]=${getCustId() || 0
+      }&productInfo[store_id]=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -49,12 +47,14 @@ export const editCartService = (id, qty) => {
 };
 
 export const deleteCartItem = (id) => {
-  const config = {
-    method: "delete",
-    url: `${API_URL}/carts/${getCartId()}/items/${id}`,
-    silent: true,
-  };
-  return axios(config);
+  if (getCartId() != 0) {
+    const config = {
+      method: "delete",
+      url: `${API_URL}/carts/${getCartId()}/items/${id}`,
+      silent: true,
+    };
+    return axios(config);
+  }
 };
 
 export const getProductIdBySku = (sku) => {
@@ -70,7 +70,7 @@ export const getProductIdBySku = (sku) => {
 export const cartPaymentAction = (token) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=checkoutcom_card_payment&paymentInfo[transactionId]=${token}`,
+    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=checkoutcom_card_payment&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
     silent: true,
   };
   return axios(config);
