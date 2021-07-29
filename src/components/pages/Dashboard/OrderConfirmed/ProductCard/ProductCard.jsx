@@ -1,6 +1,19 @@
 import React from "react";
 import styles from "./ProductCard.module.scss";
+import { extractColorSize } from '../../../../../util';
+
 function ProductCard({ product }) {
+  const getColorSize = (options) => {
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === '92' ? 'Color' : 'Size',
+        values: [{ value_index: o.option_value }],
+      }))
+    );
+
+    return { colors, size };
+  };
+  const colorSize = getColorSize(product?.parent_item?.product_option.extension_attributes?.configurable_item_options)
   return (
     <div className={styles.card}>
       <div className={styles.image}>
@@ -8,18 +21,17 @@ function ProductCard({ product }) {
       </div>
       <div className={styles.productDetails}>
         <h4 className={styles.name}>{product?.name}</h4>
-        <h4 className={styles.price}>{product?.price}</h4>
         <div className="d-flex align-items-center">
           <span className={`${styles.sizeColor} ${styles.mt4}`}>Color: </span>{" "}
-          <span>{product?.color}</span>
+          <span>{colorSize?.colors?.[0]?.label}</span>
         </div>
         <div className="d-flex align-items-center">
           <span className={styles.sizeColor}>Size: </span>{" "}
-          <span>{product?.size}</span>
+          <span>{colorSize.size?.[0]?.label}</span>
         </div>
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
-        <p>Order ID #${product?.order_id}</p>
-        <p>Payment {product?.payment}</p>
+        <p>Order ID #{product?.order_id}</p>
+        <p>Payment: {product?.parent_item?.price}</p>
       </div>
     </div>
   );

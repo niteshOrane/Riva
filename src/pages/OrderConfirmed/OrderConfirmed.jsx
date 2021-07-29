@@ -21,12 +21,12 @@ function OrderConfirmed(props) {
   const { orderId } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
   const [amount, setAmount] = useState(null);
-  const [orderItems,setOrderItems] = useState(null)
+  const [orderItems, setOrderItems] = useState(null)
 
   const getOrderDetails = async (val) => {
     const res = await orderConfirmed(val);
     if (res.status === 200 && res?.data) {
-      setOrderItems(res?.data?.items.map(li => li.product_type==="simple"))
+      setOrderItems(res?.data?.items.filter(li => li.product_type === "simple"))
       setDeliveryAddress(res?.data?.billing_address);
       setAmount({
         total: res?.data?.subtotal_incl_tax,
@@ -51,10 +51,10 @@ function OrderConfirmed(props) {
             <div className="py-20px d-flex w-100 justify-content-between">
               <Congratulations {...props?.match?.params} />
               {orderItems?.map(li => (
-                <ProductCard product = {li} />
+                <ProductCard product={li} />
               ))}
             </div>
-            {deliveryAddress && amount && <Details deliveryAddress={deliveryAddress} amount ={amount} />}
+            {deliveryAddress && amount && <Details deliveryAddress={deliveryAddress} amount={amount} />}
           </div>
         </div>
       </div>
