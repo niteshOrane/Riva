@@ -174,7 +174,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   return (
     <>
       <form className={styles.form} id="addNewAddress">
+        <div className={styles.inpContainerAdd}>Add an address for delivery in your address book and make checkout faster</div>
         <div className={styles.inpContainer}>
+
           <div className="w-100">
             <p className={styles.inpLable}>
               First Name<span className={styles.star}>*</span>
