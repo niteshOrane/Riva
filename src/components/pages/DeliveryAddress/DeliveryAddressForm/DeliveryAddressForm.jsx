@@ -39,8 +39,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         setCountryList(res?.data);
         // setFormData({ ...formData, country: res?.data[0]?.full_name_english });
       }
-    }else{
-      dispatch(showSnackbar("FailedTo Load Country List","error"))
+    } else {
+      dispatch(showSnackbar("FailedTo Load Country List", "error"))
     }
   };
   useEffect(() => {
@@ -67,9 +67,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       block: "",
       houseName: "",
       defaultAddess: true,
-      country:""
+      country: ""
     });
-    onAfterSaveEdit();
+    if (onAfterSaveEdit) { onAfterSaveEdit(); }
   };
   const addAddress = (item, id) => async () => {
     const res = await (id
@@ -78,7 +78,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.data.success) {
       dispatch(addNewAddress(res, item));
       clearAll();
-      onAfterSaveEdit();
+      if (onAfterSaveEdit) { onAfterSaveEdit(); }
     } else {
       dispatch(
         showSnackbar(
@@ -167,7 +167,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("telephone", mobile);
     form.append("street", `${block} ${houseName}`);
     form.append("street1", street);
-    form.append("country",country)
+    form.append("country", country)
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
   };
@@ -181,6 +181,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             </p>
             <input
               type="text"
+              maxLength={15}
               className={styles.input}
               value={firstName}
               name="firstName"
@@ -194,6 +195,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             </p>
             <input
               type="text"
+              maxLength={15}
               value={lastName}
               className={styles.input}
               name="lastName"
@@ -212,11 +214,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               name="country"
               onChange={handleChange}
               className={`${styles.input} c-pointer`}
-              value = {country}
+              value={country}
             >
               <option>Select Country</option>
               {countryList?.map((li) => (
-                <option value = {li?.full_name_english} key={li.id}>{li?.full_name_english}</option>
+                <option value={li?.full_name_english} key={li.id}>{li?.full_name_english}</option>
               ))}
             </select>
           </div>
@@ -228,11 +230,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               className={`${styles.input} c-pointer`}
               name="state"
               onChange={handleChange}
-              value = {state}
+              value={state}
             >
               <option>Select state</option>
               {stateList?.map((li) => (
-                <option value = {li?.name} key={li.id}>{li?.name}</option>
+                <option value={li?.name} key={li.id}>{li?.name}</option>
               ))}
             </select>
           </div>
@@ -286,6 +288,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <input
               type="text"
               value={street}
+              maxLength={15}
               className={styles.input}
               name="street"
               id="street"
@@ -298,6 +301,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             </p>
             <input
               type="text"
+              maxLength={15}
               className={styles.input}
               name="houseName"
               value={houseName}
@@ -316,6 +320,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               <input
                 type="mobile"
                 value={mobile}
+                maxLength={15}
                 className={`${styles.input} ${styles.mobileInput}`}
                 name="mobile"
                 id="mobile"

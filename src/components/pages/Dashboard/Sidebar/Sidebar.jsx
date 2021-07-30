@@ -74,7 +74,7 @@ function Sidebar() {
               <icons.AngleRight />
               &nbsp; Profile information
             </Link>
-            <Link to="/" className={styles.child}>
+            <Link to="/manage-addresses" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Manage Addresses
             </Link>

@@ -49,6 +49,9 @@ const CMSContent = React.lazy(() => import("../pages/CMSContent/CMSContent"));
 const ProfileInformation = React.lazy(() =>
   import("../pages/profile-information/ProfileInformation")
 );
+const ManageAddress = React.lazy(() =>
+  import("../pages/Manage-address/ManageAddress")
+);
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -192,7 +195,7 @@ class AppRoutes extends Component {
         path: "/delivery-address",
         component: DeliveryAddress,
         exact: true,
-        name: "DeliveryAddress",
+        name: "Delivery Address",
         layout: MainLayout,
         index: 9,
       },
@@ -243,6 +246,14 @@ class AppRoutes extends Component {
         name: "Landing page",
         layout: MainLayout,
         index: 14,
+      },
+      {
+        path: "/manage-addresses",
+        component: ManageAddress,
+        exact: true,
+        name: "Manage Address",
+        layout: MainLayout,
+        index: 15
       },
     ];
   }
