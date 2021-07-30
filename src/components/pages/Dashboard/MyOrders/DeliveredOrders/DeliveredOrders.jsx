@@ -1,35 +1,52 @@
 import React from "react";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
-const DeliveredOrders = ({ products }) => {
-  return products?.map((product) => (
-    <div className={styles.card}>
-      <span className="greyText">Order Id {product?.orderId}</span>
+import { extractColorSize } from "../../../../../util";
+const DeliveredOrders = ({ products,status }) => {
+  return products?.map((product) => {
+    const getColorSize = (options) => {
+      const { colors, size } = extractColorSize(
+        options.map((o) => ({
+          label: o.option_id === "92" ? "Color" : "Size",
+          values: [{ value_index: o.option_value }],
+        }))
+      );
+  
+      return { colors, size };
+    };
+    const colorSize = getColorSize(product?.parent_item?.product_option.extension_attributes?.configurable_item_options)
+
+    return <div className={styles.card}>
+      <span className="greyText">Order Id {product?.order_id}</span>
       <div className={styles.carItem}>
         <div className={styles.col1}>
           <div className={styles.img}>
-            <img src={product?.image} width="100%" alt={product?.name} />
+            <img
+              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/54ec64f9-21e9-4968-8d23-f376f3eeff2f.png"
+              width="100%"
+              alt={product?.name}
+            />
           </div>
           <div>
             <h3 className="font-weight-normal">{product?.name}</h3>
             <div className="mt-12px">
               <div className={styles.colorSize}>
                 <span>Color: </span>
-                <span className={styles.greyText}>{product?.color}</span>
+                <span className={styles.greyText}>{colorSize?.colors?.[0]?.label}</span>
               </div>
               <div className={styles.colorSize}>
                 <span>Size: </span>
-                <span className={styles.greyText}>{product?.size}</span>
+                <span className={styles.greyText}>{colorSize.size?.[0]?.label}</span>
               </div>
             </div>
           </div>
         </div>
         <div className="text-center">
-          <strong>${product?.price}</strong>
+          <strong>${product?.parent_item?.price}</strong>
         </div>
         <div>
           <h4 className="greyText">
-            <span className={styles.deliveredIcon}></span> Delivered on{" "}
+            <span className={status==="processing" ? styles.processIcon : styles.deliveredIcon}></span> {status}{" "}
             {product.deliveryDate}
           </h4>
           <p className="mt-12px">
@@ -52,7 +69,7 @@ const DeliveredOrders = ({ products }) => {
         </div>
       </div>
     </div>
-  ));
+  });
 };
 
 export default DeliveredOrders;

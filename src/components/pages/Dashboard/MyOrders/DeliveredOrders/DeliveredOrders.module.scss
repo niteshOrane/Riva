@@ -36,7 +36,16 @@
       background-color: #26a541;
       border-radius: 50%;
     }
+    .processIcon {
+      display: inline-block;
+      width: 12.5px;
+      height: 12.5px;
+      border: solid 2px orange;
+      background-color: orange;
+      border-radius: 50%;
+    }
   }
+  
   .icon {
     margin-right: 12px;
   }
