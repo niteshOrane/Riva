@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, HashRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
@@ -284,12 +284,14 @@ class AppRoutes extends Component {
 
   render() {
     return (
+      <HashRouter>
       <Suspense fallback={<Loader />}>
         <Switch>
           {this.renderRoutes()}
           <Redirect to="/" />
         </Switch>
       </Suspense>
+      </HashRouter>
     );
   }
 }
