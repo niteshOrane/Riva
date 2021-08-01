@@ -36,7 +36,9 @@ function OrderConfirmed(props) {
     }
   };
   useEffect(() => {
-    getOrderDetails(orderId);
+    if (orderId) {
+      getOrderDetails(orderId);
+    }
   }, [orderId]);
   return (
     <div className="d-flex py-20px">

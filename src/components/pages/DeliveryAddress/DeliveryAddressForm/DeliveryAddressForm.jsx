@@ -49,7 +49,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   useEffect(() => {
     if (countryList && formData.country) {
       const temp = countryList?.find(
-        (li) => li.full_name_english === formData.country
+        (li) => li.id === formData.country
       )?.available_regions;
       setStateList(temp);
     }
@@ -97,10 +97,16 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.block = customerData?.street?.split(" ")?.[0];
     formData.houseName = customerData?.street?.split(" ")?.[1];
     formData.country = customerData?.country
+    formData.defaultAddess = customerData?.Shippingid !== ""
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.type === "checkbox") {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    }
+    else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
   const {
     firstName = "",
@@ -168,6 +174,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("street", `${block} ${houseName}`);
     form.append("street1", street);
     form.append("country", country)
+    form.append("setDefaultAddress", defaultAddess ? 1 : 0)
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
   };
@@ -220,7 +227,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             >
               <option>Select Country</option>
               {countryList?.map((li) => (
-                <option value={li?.full_name_english} key={li.id}>{li?.full_name_english}</option>
+                <option value={li?.id} key={li.id}>{li?.full_name_english}</option>
               ))}
             </select>
           </div>

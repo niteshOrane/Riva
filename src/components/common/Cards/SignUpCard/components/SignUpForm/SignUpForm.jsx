@@ -10,6 +10,7 @@ import {
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
 import { createCustomer,createCustomerSocial } from "../../../../../../services/auth/auth.service";
+import { getStoreId } from "../../../../../../util";
 
 const SignUpForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const SignUpForm = ({ handleSubmit }) => {
     email: "",
     password: "",
     name: "",
+    phone:""
   });
 
   const handleChange = (e) => {
@@ -27,7 +29,7 @@ const SignUpForm = ({ handleSubmit }) => {
     dispatch(toggleSignUpCard({}));
   };
 
-  const { email, password, name } = formData;
+  const { email, password, name, phone } = formData;
 
   const userCreateHandler = async (e) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ const SignUpForm = ({ handleSubmit }) => {
         )
       );
 
-    if (!email || !name)
+    if (!email || !name || !phone)
       return dispatch(showSnackbar("All fields are required", "warning"));
 
     const customer = new FormData();
@@ -51,12 +53,13 @@ const SignUpForm = ({ handleSubmit }) => {
     customer.append("firstname", name?.split(" ")?.[0] || "");
     customer.append("lastname", name?.split(" ")?.[1] || "");
     customer.append("password", password);
-
+    customer.append("mobile_number", phone);
+    customer.append("storeId", getStoreId());
     const res = await createCustomer(customer);
 
-    if (res.status === 200) {
+    if (res.status === 200 && res?.data?.success) {
       handleSubmit();
-      return dispatch(showSnackbar(res?.data?.data, "success"));
+      return dispatch(showSnackbar(res?.data?.message, "success"));
     }
     return dispatch(showSnackbar("Something went wrong", "error"));
   };
@@ -122,6 +125,7 @@ const SignUpForm = ({ handleSubmit }) => {
             type="text"
             name="name"
             id="name"
+            maxLength={30}
             onChange={handleChange}
           />
         </div>
@@ -138,6 +142,7 @@ const SignUpForm = ({ handleSubmit }) => {
             type="email"
             name="email"
             id="email"
+            maxLength={25}
             onChange={handleChange}
           />
         </div>
@@ -149,9 +154,11 @@ const SignUpForm = ({ handleSubmit }) => {
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">call</span>
           <input
-            type="number"
+            type="mobile"
             name="phone"
             id="phone"
+            value={phone}
+            maxLength={15}
             onChange={handleChange}
           />
         </div>
@@ -168,6 +175,7 @@ const SignUpForm = ({ handleSubmit }) => {
             type={!showPass ? "password" : "text"}
             name="password"
             id="password"
+            maxLength={15}
             onChange={handleChange}
           />
           <button
