@@ -89,7 +89,7 @@ const Cart = () => {
                             </div>
                             <div>
                               <span className="font-weight-600 color-primary">
-                                ${item.price}
+                                ${parseFloat(item.price)?.toFixed(2)}
                               </span>
                             </div>
                           </div>
@@ -171,10 +171,10 @@ const Cart = () => {
                   <strong>Total</strong>{' '}
                   <strong className="color-primary">
                     $
-                    {items.reduce(
+                    {parseFloat(items.reduce(
                       (total, item) => total + item.price * item.qty,
                       0
-                    ) || 0}
+                    ) || 0)?.toFixed(2)}
                   </strong>
                 </h4>
               </div>

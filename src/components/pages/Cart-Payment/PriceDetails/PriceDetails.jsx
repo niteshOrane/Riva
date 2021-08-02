@@ -11,21 +11,21 @@ const PriceDetails = ({ cartItem, cartPaymentInfo }) => {
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>SUBTOTAL</span>
-        <strong>${cartPaymentInfo?.subtotal}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.subtotal || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>${cartPaymentInfo?.tax_amount}</strong>
+        <strong>${parseFloat(cartPaymentInfo?.tax_amount || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}

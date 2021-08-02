@@ -234,28 +234,28 @@ function OrderReview({
       >
         <span className={styles.greyText}>SUBTOTAL</span>
 
-        <strong>${totalAmout}</strong>
+        <strong>${parseFloat(totalAmout || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${totalDC}</strong>
+        <strong>${parseFloat(totalDC || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>${totalTax}</strong>
+        <strong>${parseFloat(totalTax || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${discount ?? 0}</strong>
+        <strong>${parseFloat(discount || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}

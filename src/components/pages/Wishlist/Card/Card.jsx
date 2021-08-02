@@ -26,8 +26,8 @@ function Card({ src, name, priceWas, priceIs, remove }) {
         <p className="font-size-600">{name}</p>
       </div>
       <div className="d-flex align-items-center gap-12px">
-        <s className="color-grey">was ${priceWas}</s>&nbsp; &nbsp;
-        <span>Now ${priceIs}</span>
+        <s className="color-grey">was ${parseFloat(priceWas)?.toFixed(2)}</s>&nbsp; &nbsp;
+        <span>Now ${parseFloat(priceIs)?.toFixed(2)}</span>
       </div>
     </div>
   );
