@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./navbar.module.scss";
 
 const NavLinks = () => {
   return (
@@ -12,7 +13,11 @@ const NavLinks = () => {
           <span className="material-icons-outlined font-light-black">
             favorite_border
           </span>
-          <span className="align-self-end font-light-black">Wishlist</span>{" "}
+          <span
+            className={`${style.navLinksWeight} align-self-end font-light-black`}
+          >
+            Wishlist
+          </span>{" "}
         </a>
       </li>
       <li className="nav-li">

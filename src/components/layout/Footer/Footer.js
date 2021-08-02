@@ -45,10 +45,12 @@ function Footer() {
                     to={`/${link.href.split("/").pop()}`}
                     className={`w-100 ${style.footerLink}`}
                   >
-                    <span className="material-icons-outlined">
-                      arrow_right_alt
+                    <span
+                      className={`material-icons`}
+                    >
+                      arrow_forward
                     </span>
-                    <span>{link.name}</span>
+                    <span style = {{marginLeft:"2rem"}}>{link.name}</span>
                   </Link>
                 </li>
               ))}

@@ -117,6 +117,7 @@ export default function PaymentTabs({ paymentMode }) {
         });
         history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
       } else {
+        setLoading(false)
         dispatch(showSnackbar("Payment Failed", "error"));
       }
     }

@@ -39,9 +39,9 @@ const ProductCard = ({
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === 'special_price'
     )?.value;
-    origprice = `$${origpriceWithoutCurrency}`;
+    origprice = `$${parseFloat(origpriceWithoutCurrency)?.toFixed(2)}`;
     priceWithoutCurrency = price;
-    price = `$${price}`;
+    price = `$${parseFloat(price).toFixed(2)}`;
   }
   const wishList = useSelector((state) => state.wishlist.data);
 

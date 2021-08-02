@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import './profileInformation.scss';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import { profileUpdate, getProfileUpdate } from '../../services/dashboard/dashboard.service';
-import { showSnackbar } from '../../store/actions/common';
-import { setCustomer } from '../../store/actions/auth';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./profileInformation.scss";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import {
+  profileUpdate,
+  getProfileUpdate,
+} from "../../services/dashboard/dashboard.service";
+import { showSnackbar } from "../../store/actions/common";
+import { setCustomer } from "../../store/actions/auth";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
@@ -21,21 +24,29 @@ function ProfileInfoForm() {
     number: customer?.mobile,
     gender: customer.gender,
     dob: customer.dob,
+    profileImg: "",
   });
   const handleChange = (event) => {
-    const { value, name } = event.target;
-    setValues({ ...values, [name]: value });
+    if (event.target.type === "file") {
+      setValues({
+        ...values,
+        [event.target.name]: event.target.files[0],
+      });
+    } else {
+      const { value, name } = event.target;
+      setValues({ ...values, [name]: value });
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const cust = new FormData();
 
-    cust.append('customerid', customer.customerID);
-    cust.append('firstname', values.firstname);
-    cust.append('email', values.email);
-    cust.append('lastname', values.lastname);
-    cust.append('dob', values.dob);
-    cust.append('gender', values.gender);
+    cust.append("customerid", customer.customerID);
+    cust.append("firstname", values.firstname);
+    cust.append("email", values.email);
+    cust.append("lastname", values.lastname);
+    cust.append("dob", values.dob);
+    cust.append("gender", values.gender);
 
     const res = await profileUpdate(cust);
 
@@ -45,9 +56,9 @@ function ProfileInfoForm() {
           ...values,
         })
       );
-      return dispatch(showSnackbar(res?.data?.data, 'success'));
+      return dispatch(showSnackbar(res?.data?.data, "success"));
     }
-    return dispatch(showSnackbar('Something went wrong', 'error'));
+    return dispatch(showSnackbar("Something went wrong", "error"));
   };
   return (
     <>
@@ -63,7 +74,7 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div style={{ marginLeft: '2rem' }}>
+              <div style={{ marginLeft: "2rem" }}>
                 <label>Last Name</label>
                 <input
                   name="lastname"
@@ -81,7 +92,7 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div style={{ marginLeft: '2rem' }}>
+              <div style={{ marginLeft: "2rem" }}>
                 <label>Mobile Number</label>
                 <input
                   name="number"
@@ -130,6 +141,17 @@ function ProfileInfoForm() {
                   name="dob"
                   onChange={handleChange}
                   type="date"
+                />
+              </div>
+            </section>
+            <section>
+              <div>
+                <label>Upload Image</label>
+                <input
+                  placeholder="Upload a file"
+                  name="profileImg"
+                  onChange={handleChange}
+                  type="file"
                 />
               </div>
             </section>

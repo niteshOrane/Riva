@@ -18,6 +18,8 @@ const closeStyle = {
   position: "absolute",
   top: 4,
   right: 4,
+  paddingTop:8,
+  paddingRight:8
 };
 function Wishlist() {
   const [productQuantity, setProductQuantity] = React.useState(1);
@@ -27,7 +29,7 @@ function Wishlist() {
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
   const { auth } = useSelector((state) => state);
-  const [outOfStock, setOutOfStock] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -62,27 +64,10 @@ function Wishlist() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
-  const getOutOfStock = async () => {
-    const id = data?.id;
-    const color = data?.selected?.color?.label;
-    const size = data?.selected?.size?.label;
-    const res = await outOfStockCheck(id, color, size);
-    if (res && res.status === 200) {
-      if (res?.data?.data?.Stock) {
-        return setOutOfStock(false);
-      }
-      if (res?.data?.data?.Stock === 0) {
-        return setOutOfStock(true);
-      }
-    }
-  };
-  React.useEffect(() => {
-    getOutOfStock();
-  }, [data]);
 
   return (
     <Dialog
-      fullWidth
+      width="975px"
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
       open={isOpen}
@@ -166,16 +151,19 @@ function Wishlist() {
             <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <a href="#" className="d-flex align-items-center">
-                  <span className="material-icons-outlined font-light-black">
+                  {/* <span className="material-icons-outlined font-light-black">
                     straighten
-                  </span>
+                  </span> */}
+                  <img src = "/assets/images/ruler (1).svg" alt ="/" />
                   &nbsp; &nbsp;
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
                     //   onClick={() => setGuideCardOpen(true)}
                   >
-                    <span className="align-self-end font-light-black">
+                    <span
+                      className={` ${styles.sizeGuideDecoration} align-self-end font-light-black`}
+                    >
                       Size Guide
                     </span>
                   </button>
@@ -183,16 +171,17 @@ function Wishlist() {
               </li>
               <li className="nav-li">
                 <a href="#" className="d-flex align-items-center">
-                  <span className="material-icons-outlined font-light-black">
+                  {/* <span className="material-icons-outlined font-light-black">
                     search
-                  </span>
+                  </span> */}
+                   <img src = "/assets/images/search.svg" alt ="/" />
                   &nbsp;
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
                     //   onClick={() => setSizeCardOpen(true)}
                   >
-                    <span className="align-self-end font-light-black">
+                    <span className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}>
                       Find your size
                     </span>
                   </button>
@@ -218,7 +207,7 @@ function Wishlist() {
               <div
                 className={`${styles.qty} d-flex align-items-center justify-content-between`}
               >
-                <div className={styles.title}>qty:</div>
+                <div className={styles.title}>Qty:</div>
                 <div
                   className={`${styles.counter} d-flex align-items-center justify-content-between`}
                 >
@@ -254,25 +243,21 @@ function Wishlist() {
             </div>
 
             <div className="d-flex w-100 align-items-center ">
-              {outOfStock ? (
-                <OutOfStock />
-              ) : (
-                <div className={styles.addToCart}>
-                  <button
-                    type="button"
-                    onClick={handleWishlist}
-                    className="w-100 d-flex-all-center bg-black color-white p-12px"
-                  >
-                    <span className="material-icons-outlined">
-                      favorite_border
-                    </span>
-                    &nbsp;{" "}
-                    {isAddedToWishlist
-                      ? "REMOVE FROM WISHLIST"
-                      : "ADD TO WISHLIST"}
-                  </button>
-                </div>
-              )}
+              <div className={styles.addToCart}>
+                <button
+                  type="button"
+                  onClick={handleWishlist}
+                  className="w-100 d-flex-all-center bg-black color-white p-12px"
+                >
+                  <span className="material-icons-outlined">
+                    favorite_border
+                  </span>
+                  &nbsp;{" "}
+                  {isAddedToWishlist
+                    ? "REMOVE FROM WISHLIST"
+                    : "ADD TO WISHLIST"}
+                </button>
+              </div>
 
               {/* <div className={`${styles.wishlist} d-flex-all-center`}>
                 <span className="material-icons-outlined font-light-black">

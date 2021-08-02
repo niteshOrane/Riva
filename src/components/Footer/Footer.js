@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import style from "./footer.module.scss";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 function Footer() {
   const [value, setValue] = useState("");
@@ -18,7 +19,7 @@ function Footer() {
             {links.map((link) => (
               <li className={`d-flex align-items-center ${style.link}`}>
                 <a className={`w-100 ${style.footerLink}`} href={link.slug}>
-                  <span class="material-icons-outlined">arrow_right_alt</span>
+                  <ArrowForwardIcon />
                   <span>{link.title}</span>
                 </a>
               </li>
@@ -31,7 +32,7 @@ function Footer() {
             {links.map((link) => (
               <li className={`d-flex align-items-center ${style.link}`}>
                 <a className={`w-100 ${style.footerLink}`} href={link.slug}>
-                  <span class="material-icons-outlined">arrow_right_alt</span>
+                  <span className="material-icons">arrow_forward</span>
                   <span>{link.title}</span>
                 </a>
               </li>
@@ -77,48 +78,37 @@ function Footer() {
             </div>
           </ul>
 
-            <div className={style.m}>
-            <span class="material-icons-outlined">
-            settings_phone
-            </span>
+          <div className={style.m}>
+            <span class="material-icons-outlined">settings_phone</span>
             <div>
-            <span className={style.clrGrey}>
-            Customer care:&nbsp;
-            </span>
-            <a href="tel: +971 800 7482" className="color-white">
-              +971 800 7482 
-            </a>
+              <span className={style.clrGrey}>Customer care:&nbsp;</span>
+              <a href="tel: +971 800 7482" className="color-white">
+                +971 800 7482
+              </a>
             </div>
-            </div>
+          </div>
 
-
-            <div className={style.m}>
-            <span class="material-icons-outlined">
-            settings_phone
-            </span>
+          <div className={style.m}>
+            <span class="material-icons-outlined">settings_phone</span>
             <div>
-            <span className={style.clrGrey}>
-            WhatsApp Customer Care:&nbsp;
-            </span>
-            <a href="tel: +971 800 7482" className="color-white">
-             +965 22216688
-            </a>
+              <span className={style.clrGrey}>
+                WhatsApp Customer Care:&nbsp;
+              </span>
+              <a href="tel: +971 800 7482" className="color-white">
+                +965 22216688
+              </a>
             </div>
+          </div>
+
+          <div className={style.lm}>
+            <h3 className="font-weight-normal color-white">RIVA APP</h3>
+            <div>
+              <img src="./assets/images/appleStore.png" width="120px" alt="" />
             </div>
-
-
-            <div className={style.lm}>
-            <h3 className="font-weight-normal color-white">
-            RIVA APP
-            </h3>
-           <div>
-             <img src="./assets/images/appleStore.png" width="120px" alt="" />
-           </div>
-           <div>
-             <img src="./assets/images/googleStore.png" width="120px" alt="" />
-           </div>
+            <div>
+              <img src="./assets/images/googleStore.png" width="120px" alt="" />
             </div>
-
+          </div>
         </div>
       </div>
     </footer>

@@ -57,9 +57,9 @@ $footer-grey-color: #737373;
         button {
           border: none;
           cursor: pointer;
-          background-color: #373636;
-          padding: 12px;
-          color: $footer-grey-color;
+          background-color: #fff;
+          padding: 10px;
+          color: #000;
           font-size: 1.1rem;
         }
       }
@@ -137,6 +137,7 @@ $footer-grey-color: #737373;
 
   .toTopBtn {
     position: relative;
+    background-color: black;
 
     span {
       position: absolute;
@@ -162,4 +163,9 @@ $footer-grey-color: #737373;
       margin-left: 18px;
     }
   }
+}
+
+.arrowIcons{
+  width :8px;
+  height: 6px;
 }
