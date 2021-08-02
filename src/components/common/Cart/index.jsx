@@ -1,20 +1,28 @@
 import React from 'react';
 import { Drawer } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
 import { toggleCart, removeFromCart, editItemQntCart } from '../../../store/actions/cart';
 import style from './style.module.scss';
 import { extractColorSize } from '../../../util';
 import Image from "../LazyImage/Image";
-
+import { toggleSignUpCard } from '../../../store/actions/common';
 
 const Cart = () => {
+
   const { data: items = [], isOpen = false } = useSelector(
     (state) => state.cart
   );
+
+
+  const history = useHistory();
+  const auth = useSelector((state) => state.auth);
   const [editableIndex, setEditableIndex] = React.useState(null);
   const dispatch = useDispatch();
+  const openSignUpCard = (redirectTo) => {
+    dispatch(toggleSignUpCard({ redirectTo }));
+  };
   const handleIncrementProduct = (product) => {
     product.qty = product.qty + 1;
     dispatch(editItemQntCart(product));
@@ -32,6 +40,7 @@ const Cart = () => {
     window.location.href = "/";
   };
 
+  const isAuth = auth.isAuthenticated;
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -129,7 +138,7 @@ const Cart = () => {
                                   </span>
                                 </div>
                                 : item.qty}</span>
-                              
+
                             </div>
                             <div>
                               <span
@@ -182,14 +191,14 @@ const Cart = () => {
                 <h4 className="color-grey">*Before taxes</h4>
               </div>
               <div className={style.processBtns}>
-                <Link to="/delivery-address">
-                  <button
-                    type="button"
-                    className="bg-black color-white p-12px w-100 d-block c-pointer"
-                  >
-                    GO TO CHECKOUT
-                  </button>
-                </Link>
+                <button onClick={() => {
+                  isAuth ? history.push('/delivery-address') : openSignUpCard('/delivery-address');
+                }}
+                  type="button"
+                  className="bg-black color-white p-12px w-100 d-block c-pointer"
+                >
+                  GO TO CHECKOUT
+                </button>
                 <Link to="/shopping-cart" href="/shopping-cart">
                   <button
                     type="button"

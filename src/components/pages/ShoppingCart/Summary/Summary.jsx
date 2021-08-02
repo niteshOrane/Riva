@@ -1,10 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import LetUsHear from '../../../common/Cards/LetUsHear/LetUsHear';
 import style from './Summary.module.scss';
+import { toggleSignUpCard } from '../../../../store/actions/common';
+
 const Summary = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
+  const history = useHistory();
+  const auth = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const openSignUpCard = (redirectTo) => {
+    dispatch(toggleSignUpCard({ redirectTo }));
+  };
+  
+  const isAuth = auth.isAuthenticated;
   return (
     <div className={style.container}>
       <div className={style.bgGrey}>
@@ -35,14 +46,16 @@ const Summary = () => {
           </Link>
         </div>
         <div>
-          <Link to="/delivery-address">
+            
             <button
+            onClick={() => {
+              isAuth ? history.push('/delivery-address') : openSignUpCard('/delivery-address');
+            }}
               type="button"
               className="bg-black color-white p-12px w-100 d-block c-pointer"
             >
               Change Delivery Address
             </button>
-          </Link>
         </div>
         <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>
