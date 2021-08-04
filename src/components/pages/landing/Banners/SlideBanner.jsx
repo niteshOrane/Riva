@@ -6,6 +6,7 @@ import Slider from '../../../common/Sliders/Slider';
 import Image from '../../../common/LazyImage/Image';
 
 const SlideBanner = ({ banners = [] }) => {
+  console.log("nitesh",banners)
   return (
     <div className={style.slider}>
       <Slider

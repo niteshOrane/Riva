@@ -38,10 +38,10 @@ function Sidebar() {
               <icons.AngleRight />
               &nbsp; Track Orders
             </Link>
-            <Link to="/track-your-order" className={styles.child}>
+            {/* <Link to="/track-your-order" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Track Your Order
-            </Link>
+            </Link> */}
             <Link to="/cancelled-orders" className={styles.child}>
               <icons.AngleRight />
               &nbsp; Cancelled

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import useLanding from "./LandingHooks";
 import { URL } from "../../util";
 import HeroGrid from "../../components/pages/landing/Hero-grid/HeroGrid";
+import HeroGrid2 from "../../components/pages/landing/Hero-grid/HeroGrid2";
 import Slider from "../../components/common/Sliders/Slider";
 import ExtraordinaryEssentials from "../../components/pages/landing/ExtraordinaryEssentials";
 import BestSellingProducts from "../../components/pages/landing/BestSellingProducts/BestSellingProducts";
@@ -38,7 +39,7 @@ function Landing() {
   return (
     <>
       <div>
-        <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
+        <HeroGrid2 src1="/assets/images/banner1.jpg" src2="/assets/images/banner2.jpg" src3 = "/assets/images/banner3.jpg"/>
         <div className="container-with-circles">
           <Slider
             className="categoriesSlider"
