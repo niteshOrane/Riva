@@ -56,10 +56,11 @@ const BestSellingProducts = () => {
         <SectionHeader roboto="Best Selling" dancing="Products" />
         <div className="d-flex align-items-center">
           <ul className="nav-list d-flex align-items-center">
-            <li className="nav-li">
+            <li  className="nav-li">
               <span
                 className="d-flex align-items-center"
                 onClick={() => changeCategory(category_ids.all)}
+            
               >
                 <span
                   className={`align-self-end font-light-black ${

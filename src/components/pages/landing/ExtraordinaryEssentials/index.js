@@ -35,7 +35,7 @@ const ProductList = () => {
 
   return (
     <React.Fragment>
-      <div className="section-header-container">
+      <div style={{marginTop:"52px"}} className="section-header-container">
         <SectionHeader roboto="Extraordinary" dancing="Essentials" />
       </div>
       <div className="product-list-container container-with-circles ">

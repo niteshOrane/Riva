@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Image from '../../LazyImage/Image';
-import { toggleWishlist } from '../../../../store/actions/wishlist';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Image from "../../LazyImage/Image";
+import { toggleWishlist } from "../../../../store/actions/wishlist";
 import {
   toggleQuickView,
   showSnackbar,
-} from '../../../../store/actions/common';
-import { addToCart } from '../../../../store/actions/cart';
-import { extractColorSize, URL } from '../../../../util';
+} from "../../../../store/actions/common";
+import { addToCart } from "../../../../store/actions/cart";
+import { extractColorSize, URL } from "../../../../util";
 
-import {
-  getProduct,
-} from "../../../../services/product/product.service";
-import styles from './product.module.scss';
+import { getProduct } from "../../../../services/product/product.service";
+import styles from "./product.module.scss";
 
 const TempLink = ({ children, product }) => {
   if (product.sku)
@@ -37,7 +35,7 @@ const ProductCard = ({
   } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
-      (e) => e?.attribute_code === 'special_price'
+      (e) => e?.attribute_code === "special_price"
     )?.value;
     origprice = `$${parseFloat(origpriceWithoutCurrency)?.toFixed(2)}`;
     priceWithoutCurrency = price;
@@ -141,7 +139,7 @@ const ProductCard = ({
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
 
   const srcImage =
-    image?.indexOf('http') > -1 ? image : `${URL.baseUrlProduct}/${image}`;
+    image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <div key={id} className={styles.productCard}>
       {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
@@ -163,21 +161,21 @@ const ProductCard = ({
         <div>
           <button
             type="button"
-            className="no-border bg-transparent c-pointer"
+            className={`no-border bg-transparent c-pointer`}
             onClick={handleWishList}
           >
             <span
               className="material-icons-outlined"
-              style={{ color: isAddedToWishlist ? 'red' : 'black' }}
+              style={{ color: isAddedToWishlist ? "red" : "black" }}
             >
-              {isAddedToWishlist ? 'favorite' : 'favorite_border'}
+              {isAddedToWishlist ? "favorite" : "favorite_border"}
             </span>
           </button>
         </div>
         <div>
           <button
             type="button"
-            className="no-border bg-transparent c-pointer"
+            className={`${styles.productBtn} no-border bg-transparent c-pointer`}
             onClick={handleQuickView}
           >
             <span className="material-icons-outlined font-light-black">
@@ -187,36 +185,43 @@ const ProductCard = ({
         </div>
         <div>
           <TempLink product={product}>
-            <span className="material-icons-outlined font-light-black">
-              shopping_cart
-            </span>
+            <button
+              type="button"
+              className={`${styles.productBtn} no-border bg-transparent c-pointer`}
+            >
+              <span className={`material-icons-outlined font-light-black`}>
+                shopping_cart
+              </span>
+            </button>
           </TempLink>
         </div>
       </div>
       <TempLink product={product}>
         <div
-          className={`${styles.productName} two-lines-text ${!isProduct ? 'text-center ' : 'd-flex'
-            }`}
+          className={`${styles.productName} two-lines-text ${
+            !isProduct ? "text-center " : "d-flex"
+          }`}
           title={name}
         >
-          {name || ''}
+          {name || ""}
         </div>
         <div
-          className={`${styles.productPrice} ${!isProduct ? 'text-center' : ''
-            }`}
+          className={`${styles.productPrice} ${
+            !isProduct ? "text-center" : ""
+          }`}
         >
           {origpriceWithoutCurrency > priceWithoutCurrency ? (
-            <div className={styles.was}>Was {origprice || ''}</div>
+            <div className={styles.was}>Was {origprice || ""}</div>
           ) : null}
           <div className={styles.now}>
-            {origpriceWithoutCurrency > priceWithoutCurrency ? 'Now' : ''}{' '}
+            {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
             {price}
           </div>
         </div>
         <div
-          className={`${styles.productColors} ${!isProduct ?
-            'text-center justify-content-center' : 'd-none'
-            }`}
+          className={`${styles.productColors} ${
+            !isProduct ? "text-center justify-content-center" : "d-none"
+          }`}
         >
           <div>
             {attributes.colors?.map((c) => (
