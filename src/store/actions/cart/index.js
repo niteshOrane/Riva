@@ -59,29 +59,39 @@ export const getCart = () => async (dispatch) => {
 };
 
 export const addToCart = (data) => async (dispatch) => {
-  const res = await addToCartService(
-    data.id,
-    data?.color,
-    data?.size,
-    data.qty
-  );
-
-  const response = { ...res?.data?.[0] };
-
-  if (res.status === 200 && !response?.error) {
-    dispatch({
-      type: DATA_TYPES.ADD_TO_CART,
-      payload: { ...data },
-    });
-    dispatch({
-      type: DATA_TYPES.SET_CART_ID,
-      payload: { cart_id: response.cart_id },
-    });
-    dispatch(showSnackbar('Added to cart', 'success'));
+  if (!data?.color?.value || !data?.size?.value) {
+    dispatch(showSnackbar('please select one color and size', 'error'));
+    return true;
   }
-  else dispatch(showSnackbar(response?.message || '', 'error'));
+  if(!data?.price){
+    dispatch(showSnackbar(`please select Other color and size, we don't have price`, 'error'));
+    return true;
+  }
+  else {
+    const res = await addToCartService(
+      data.id,
+      data?.color?.value,
+      data?.size?.value,
+      data.qty
+    );
 
-  dispatch(getCart());
+    const response = { ...res?.data?.[0] };
+
+    if (res.status === 200 && !response?.error) {
+      dispatch({
+        type: DATA_TYPES.ADD_TO_CART,
+        payload: { ...data },
+      });
+      dispatch({
+        type: DATA_TYPES.SET_CART_ID,
+        payload: { cart_id: response.cart_id },
+      });
+      dispatch(showSnackbar('Added to cart', 'success'));
+    }
+    else dispatch(showSnackbar(response?.message || '', 'error'));
+
+    dispatch(getCart());
+  }
 };
 
 export const removeFromCart = (data) => async (dispatch) => {

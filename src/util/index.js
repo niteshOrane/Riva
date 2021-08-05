@@ -58,8 +58,8 @@ export const extractColorSize = (attributes = []) => {
   const { size = [], color = [] } = store.getState()?.common?.attributes || {};
 
   const color_attr =
-    attributes?.find((e) => e?.label === 'Color')?.values || [];
-  const size_attr = attributes?.find((e) => e?.label === 'Size')?.values || [];
+    attributes?.find((e) => e?.attribute_id === '92')?.values || [];
+  const size_attr = attributes?.find((e) => e?.attribute_id === '213')?.values || [];
 
   return {
     colors:
