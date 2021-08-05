@@ -1,0 +1,22 @@
+import React from "react";
+import Input from "@material-ui/core/Input";
+import FormControl from "@material-ui/core/FormControl";
+
+const Search = ({ handleChange, value = "Search" }) => (
+  <FormControl>
+    <Input
+      placeholder="Type here to search"
+      id="standard-adornment-weight"
+      value={value}
+      onChange={handleChange}
+      startAdornment={
+        <img
+          style={{ marginRight: "3px" }}
+          src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/88518f18-5a2c-4c12-adce-66736037ca22.svg"
+        />
+      }
+      aria-describedby="standard-weight-helper-text"
+    />
+  </FormControl>
+);
+export default Search;

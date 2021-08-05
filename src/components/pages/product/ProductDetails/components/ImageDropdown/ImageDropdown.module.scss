@@ -1,0 +1,15 @@
+.howToWareItDropdown {
+  position: absolute;
+  bottom: 9px;
+  right: 9px;
+  border: 1px solid #fff;
+  padding: 4px 12px;
+  .icon {
+    background: #fff;
+    margin-left: 12px;
+    height: 100%;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+  }
+}

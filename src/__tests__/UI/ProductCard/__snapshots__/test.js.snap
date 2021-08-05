@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product card with color functionality 1`] = `
+<div
+  className="productCard"
+>
+  <div
+    className="imageContainer"
+  >
+    <img
+      alt="No image available"
+      onError={[Function]}
+      src="assets/images/recentGirl.png"
+    />
+  </div>
+  <div
+    className="actionContainer"
+  >
+    <div>
+      <span
+        className="material-icons-outlined font-light-black"
+      >
+        favorite_border
+      </span>
+    </div>
+    <div>
+      <span
+        className="material-icons-outlined font-light-black"
+      >
+        search
+      </span>
+    </div>
+    <div>
+      <span
+        className="material-icons-outlined font-light-black"
+      >
+        shopping_cart
+      </span>
+    </div>
+  </div>
+  <div
+    className="productName"
+  />
+  <div
+    className="productPrice"
+  >
+    <div
+      className="was"
+    >
+      Was 
+      $
+    </div>
+    <div
+      className="now"
+    >
+      Now 
+      $
+    </div>
+  </div>
+  <div
+    className="productColors"
+  >
+    <div
+      className="color color_red"
+    />
+    <div
+      className="color color_oranage"
+    />
+    <div
+      className="color color_blue"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,111 @@
+.container {
+  height: 40px;
+  align-items: flex-start;
+  .link {
+    margin: 0 10px;
+  }
+  .megaLink {
+    color: $color-black;
+    cursor: pointer;
+  }
+  .megaLink {
+    padding: 0px 5px;
+    cursor: pointer;
+    span {
+      font-family: Roboto;
+      font-size: 15px;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.47;
+      letter-spacing: normal;
+      text-align: left;
+      transition: all 0.3s ease-in-out;
+      border-bottom: 1px solid transparent;
+      color: #181617;
+      font-family: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande',
+        sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    &:hover {
+      span {
+        border-color: $color-black;
+      }
+    }
+    &:focus {
+      span {
+        border-color: $color-black;
+      }
+    }
+  }
+
+  .megaContainer {
+    top: 70%;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    max-width: 1750px;
+    margin: 0 auto !important;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    box-shadow: -1px 796px 0px 778px rgba(0, 0, 0, 0.5);
+  }
+
+  .allProductsCard {
+    // width: 50%;
+    .allProductsTitleLine {
+      margin-top: 9.5px;
+      border: solid 1px #707070;
+    }
+
+    .allProductsTitles {
+      margin-top: 20px;
+      max-height: 300px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      .pLink {
+        margin: 2px 0;
+        transition: all 0.3s ease;
+        &:hover {
+          color: black !important;
+        }
+      }
+    }
+  }
+  .show {
+    transition: all 0.4s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .megaImg {
+    img {
+      max-width: 380px;
+      max-height: 380px;
+      object-fit: contain;
+    }
+  }
+}
+
+.titleDoubleLine {
+  height: 1px;
+  margin: 5px 0 2px 0;
+  border: solid 0.1px #e1dfdf;
+}
+.titleDoubleLine_Second {
+  height: 1px;
+  margin: 1px 0 3px 0;
+  border: solid 0.1px #e1dfdf;
+}
+.titleDoubleLineFilter {
+  height: 1px;
+  margin: 13px 0px 2px 0px;
+  border: solid 0.1px #e1dfdf;
+}
+.titleDoubleLine_SecondFilter {
+  height: 1px;
+  margin: 1px 0px 16px 0px;
+  border: solid 0.1px #e1dfdf;
+}

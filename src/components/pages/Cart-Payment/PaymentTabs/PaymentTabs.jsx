@@ -1,0 +1,167 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import * as tabIcons from "../Icons/Icons";
+import Tab2Content from "./components/Tab2Content/Tab2Content";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../../store/actions/common";
+import { cartPaymentAction } from "../../../../services/cart/cart.service";
+import { useHistory } from "react-router";
+import * as DATA_TYPES from '../../../../store/types';
+import Loader from "../../../common/Loader";
+
+const tabLinks = [
+  { text: "CASH ON DELIVERY (CASH/CARD/UP)", icon: <tabIcons.Icon1 /> },
+  { text: "CREDIT/DEBIT CARD", icon: <tabIcons.Icon2 /> },
+  { text: "PHONEPE/GOOGLE PAY/BHIM UPI", icon: <tabIcons.Icon3 /> },
+  { text: "PAYTM/PAYZAPP/WALLETS", icon: <tabIcons.Icon4 /> },
+  { text: "NET BANKING", icon: <tabIcons.Icon5 /> },
+];
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: "flex",
+    height: 224,
+  },
+  selectedTabLink: {
+    background: "#fff",
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+    maxWidth: "46%",
+    width: "100%",
+  },
+  tab: {
+    maxWidth: "100%",
+  },
+  icon: {
+    display: "inline-block",
+    width: "20px",
+  },
+  tbText: {
+    display: "inline-block",
+    textAlign: "left",
+    paddingLeft: "12px",
+    fontWeight: "600",
+    maxWidth: "fit-content",
+    fontSize: ".9rem",
+  },
+  tabContent: {
+    maxWidth: "50%",
+    width: "100%",
+    border: "1px solid #ddd",
+    borderLeft: "0",
+  },
+}));
+const selectedIndicatorStyle = {
+  width: "4px",
+  background: "#000",
+  left: "0",
+};
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+}
+
+export default function PaymentTabs({ paymentMode }) {
+  const history = useHistory();
+  const dispatch = useDispatch()
+  const [value, setValue] = React.useState(0);
+  const [loading,setLoading] = React.useState(false)
+  const classes = useStyles();
+  const [paymentMethod, setPaymentMethod] = useState([])
+  const onPayNow = async (e) => {
+    if (e) {
+      setLoading(true)
+      const res = await cartPaymentAction(e);
+      if (res.status === 200) {
+        setLoading(false)
+        dispatch(showSnackbar("Payment success", "success"));
+        dispatch({
+          type: DATA_TYPES.SET_CART_ID,
+          payload: { cart_id: 0 },
+        });
+        dispatch({
+          type: DATA_TYPES.SET_BULK_CART,
+          payload: [],
+        });
+        history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
+      } else {
+        setLoading(false)
+        dispatch(showSnackbar("Payment Failed", "error"));
+      }
+    }
+  };
+  useEffect(() => {
+    setPaymentMethod(paymentMode);
+  }, [])
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+  };
+  
+  if(loading) return <Loader />
+  return (
+    <div className="d-flex my-20px w-80">
+      <Tabs
+        className={classes.tabs}
+        TabIndicatorProps={{ style: selectedIndicatorStyle }}
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        style={{ background: "#f4f4f5" }}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+      >
+        {paymentMethod?.map((tab, i) => (
+          <Tab
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
+            disableRipple
+            label={
+              <div className="d-flex align-items-center w-100">
+                <span className={classes.icon}>{tab?.icon || <tabIcons.Icon2 />}</span>{" "}
+                <span className={classes.tbText}>{tab.title}</span>
+              </div>
+            }
+            {...a11yProps(i)}
+          />
+        ))}
+      </Tabs>
+      <div className={classes.tabContent}>
+        <TabPanel value={value} index={0}>
+          <Tab2Content onPayNow = {onPayNow} />
+        </TabPanel>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,27 @@
+.card {
+  margin: 25px 0;
+  padding: 12px;
+  border: 1px solid #ddd;
+  .editRemove {
+    display: flex;
+    align-items: center;
+    .edit {
+      margin-right: 20px;
+    }
+    svg {
+      height: 12px;
+      width: 12px;
+      margin-right: 12px;
+    }
+  }
+  .visa {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    img {
+      max-width: 35px;
+      object-fit: contain;
+      margin-right: 12px;
+    }
+  }
+}

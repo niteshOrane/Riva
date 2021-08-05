@@ -1,0 +1,42 @@
+From 397bdaaebd8fac2804bfdc4ec32dda35e6853153 Mon Sep 17 00:00:00 2001
+From: Dheeraj Varshney <dheerajvarshney@mail.com>
+Date: Fri, 16 Jul 2021 19:06:18 +0530
+Subject: [PATCH] Load Wish
+
+---
+ src/components/common/Wishlist/Wishlist.jsx | 6 ++++--
+ src/store/actions/wishlist/index.js         | 1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/src/components/common/Wishlist/Wishlist.jsx b/src/components/common/Wishlist/Wishlist.jsx
+index 9660264..79e9a04 100644
+--- a/src/components/common/Wishlist/Wishlist.jsx
++++ b/src/components/common/Wishlist/Wishlist.jsx
+@@ -40,8 +40,10 @@ function Wishlist() {
+       dispatch(removeWishlist(data));
+       dispatch(getWishlist());
+     }
+-    else { dispatch(addWishlist(data)); 
+-      dispatch(getWishlist());}
++    else { 
++      dispatch(addWishlist(data)); 
++      dispatch(getWishlist());
++    }
+     handleClose();
+   };
+ 
+diff --git a/src/store/actions/wishlist/index.js b/src/store/actions/wishlist/index.js
+index 6ee2f1f..b1935f7 100644
+--- a/src/store/actions/wishlist/index.js
++++ b/src/store/actions/wishlist/index.js
+@@ -45,6 +45,7 @@ export const addWishlist = (item) => async (dispatch) => {
+     dispatch(
+       showSnackbar(res.data?.data || 'Item added to wishlist', 'success')
+     );
++    dispatch(getWishlist());
+   } else
+     dispatch(
+       showSnackbar(
+-- 
+2.32.0.windows.1
+

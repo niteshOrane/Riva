@@ -1,0 +1,26 @@
+.contactCard {
+  position: relative;
+  margin: 40px 0;
+  border: 1px solid $color-black;
+
+  padding: 30px;
+  text-align: center;
+  .contactIcon {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    box-shadow: 0 0 12px #ddd;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  span:nth-child(2) {
+    font-size: 14px;
+    margin-left: 3px;
+  }
+}

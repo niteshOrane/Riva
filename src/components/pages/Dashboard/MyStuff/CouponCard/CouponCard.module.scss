@@ -1,0 +1,38 @@
+.card {
+  position: relative;
+  border: 1px solid#707070;
+  margin: 30px 0;
+  padding: 12px 12px 12px 20px;
+  .title {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+  .dottedBorder {
+    width: 100%;
+    margin: 12px 0;
+    background-image: linear-gradient(
+      to right,
+      #757474 33%,
+      rgba(255, 255, 255, 0) 0%
+    );
+    background-position: bottom;
+    background-size: 19px 2px;
+    background-repeat: repeat-x;
+    height: 4px;
+  }
+  .icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border: 1px solid #4c4b4b;
+    padding: 6px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

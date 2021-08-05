@@ -1,0 +1,89 @@
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    svg {
+      fill: #f7591a;
+    }
+  }
+}
+
+.img {
+  padding: 5px;
+  margin-right: 15px;
+  img {
+    max-width: 200px;
+  }
+}
+
+.details {
+  padding-right: 20px;
+  * {
+    font-family: Jost;
+  }
+  .unitToChange {
+    width: 45px;
+  }
+  .smallFonts {
+    font-size: 0.92rem;
+    color: #6c6a6a;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .measurements {
+    margin: 20px 0;
+    .mearTitle {
+      font-family: Jost;
+      font-size: 22px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-align: left;
+      color: #181617;
+      margin: 0;
+    }
+
+    .mearUnits {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mearSliders {
+      .slider {
+        width: 70%;
+        input {
+          height: 3px;
+          background-color: rgba(0, 0, 0, 0.16);
+          -webkit-appearance: none;
+          width: 100%;
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            margin-top: -15px;
+            cursor: pointer;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 10px solid #181617;
+          }
+        }
+      }
+    }
+  }
+  .findSizeBtn {
+    border: none;
+    background-color: #181617;
+    color: #ffffff;
+    padding: 5px 30px;
+    text-align: center;
+    margin-top: 20px;
+  }
+}

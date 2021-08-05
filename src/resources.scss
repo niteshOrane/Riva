@@ -1,0 +1,10 @@
+// Application wide imports
+@import './styles/variables.scss';
+@import './styles/mixins.scss';
+@import './styles/overrides.scss';
+@import './styles/breakPoints.scss';
+@import './styles/fonts.scss';
+@import './styles/global.scss';
+// Component style imports
+@import './styles/button.scss';
+@import './styles/custom.scss';

@@ -1,0 +1,126 @@
+$grey-color: #737373;
+
+.footer {
+  background-color: $footer-bg;
+  .footerGrid {
+    padding-top: 35px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-left: 75px;
+    .footerCol {
+      ul {
+        max-width: 200px;
+      }
+
+      .title {
+        color: #ffffff;
+        margin-bottom: 20px;
+        font-weight: normal;
+      }
+      .link {
+        color: $grey-color;
+        padding: 6px 0;
+        .footerLink {
+          color: $grey-color;
+          display: flex;
+          align-items: center;
+          transition: color 0.2s ease-in;
+
+          &:hover {
+            color: $color-white;
+          }
+        }
+      }
+      //third column
+      .inp {
+        margin-top: 12px;
+        input {
+          padding: 12px;
+          width: 77%;
+          background: #292828;
+          border: 1px solid $grey-color;
+          color: $grey-color;
+          font-size: 1rem;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+      .thirdMsg {
+        color: $grey-color;
+      }
+
+      .sub {
+        margin-top: 12px;
+        button {
+          border: none;
+          background-color: #373636;
+          padding: 12px;
+          color: $grey-color;
+          font-size: 1.1rem;
+        }
+      }
+
+
+    //   last column
+      .icon {
+        width: 39.3px;
+        height: 39.3px;
+        background-color: #eae7e7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: hover .5s ease-in-out;
+        &:hover{
+            span{
+            animation: juggle .4s linear;
+        }}
+      }
+
+      @keyframes juggle {
+          0%{
+              transform: rotate(0deg);
+          }
+          25%{
+              transform: rotate(20deg);
+          }
+
+          50%{
+              transform: rotate(0deg);
+          }
+          75%{
+              transform: rotate(-20deg);
+          }
+          100%{
+              transform: rotate(0deg);
+          }
+          
+           
+      }
+
+      .m{
+          font-size: 14px;
+          margin: 12px 0;
+          display: flex;
+          align-items: center;
+          span:nth-child(1){
+              color: $grey-color;
+          }
+          .clrGrey{
+              margin-left: 9px;
+              color: $grey-color;
+          }
+      }
+      .lm{
+        margin: 12px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 90%;
+      }
+
+    }
+  }
+}

@@ -1,0 +1,85 @@
+.topBarcontainer {
+  height: 37px;
+  .topBarRight {
+    margin-left: 88px;
+    display: flex;
+    align-items: center;
+    @include mobile {
+      background-color: red;
+    }
+    @include tablet {
+      background-color: blue;
+    }
+
+    :global {
+      .d-flex {
+        width: 180px;
+        justify-content: space-between;
+        button {
+          span {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+  .topBarMsg {
+    line-height: 22px;
+    font-size: 14px;
+  }
+  .topBarLeft {
+    padding-right: 75px;
+    padding-left: 12px;
+    background-color: transparent;
+    color: white;
+  }
+  .flag {
+    padding: 12px 5px;
+  }
+
+  .select {
+    border: none;
+    background-color: transparent;
+    color: white;
+    border-radius: 0px;
+    font-size: 14px;
+    padding: 0px 5px;
+    margin-right: 5px;
+    width: 100px;
+    .option {
+      color: black;
+    }
+  }
+  .curImage{  
+    width: 20.8px;
+    height: 15.6px;
+    margin: 0 13.4px 12.6px 0;
+    object-fit: contain;
+  }
+  .curName{
+    margin-left:10px ;
+    font-size: 13px;
+    font-weight: 700;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #181617;
+  }
+  .curSelected{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: #181617;
+  }
+  .curSelectedImage{
+    width: 20.8px;
+    height: 15.6px;
+    object-fit: contain;
+  }
+}

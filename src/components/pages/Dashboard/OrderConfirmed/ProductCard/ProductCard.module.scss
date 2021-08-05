@@ -1,0 +1,28 @@
+.card {
+  padding: 12px;
+  margin-top: 5px;
+  border: solid 1px #c2bfbf;
+  display: flex;
+  height: fit-content;
+  .image {
+    margin-right: 20px;
+  }
+  .name {
+    font-weight: normal;
+    color: #343232;
+    font-size: 17px;
+  }
+  p {
+    opacity: 0.6;
+  }
+  .sizeColor {
+    width: 70px;
+  }
+
+  .sizeColor + span {
+    opacity: 0.6;
+  }
+  .mt4 {
+    margin-top: 4px;
+  }
+}

@@ -1,0 +1,24 @@
+.bestSellingProductsContainer {
+  :global {
+    .slick-slider {
+      border-top: 1px solid #ddd;
+    }
+  }
+}
+
+.bestSellingProductsContainer .arrowButton {
+  display: flex;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+  cursor: pointer;
+  background-color: black;
+  color: #d0cfcf;
+  margin: 4px;
+  padding: 3px;
+}
+
+.bestSellingProductsContainer li + li:before {
+  content: " | ";
+  padding: 0 10px;
+}

@@ -1,0 +1,31 @@
+.header {
+  margin: 30px auto;
+  .logo {
+    display: inline-block;
+    img {
+      width: 184px;
+      height: 36px;
+      object-fit: contain;
+    }
+  }
+  .breadCrumb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    .bcLinks {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+}
+.container {
+  display: flex;
+  .col1 {
+    flex-basis: calc(70% - 12px);
+  }
+  .col2 {
+    flex-basis: calc(30% - 12px);
+  }
+}

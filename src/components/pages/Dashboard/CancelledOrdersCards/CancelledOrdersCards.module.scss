@@ -1,0 +1,49 @@
+.card {
+  .fontSmall {
+    font-size: 14px;
+  }
+  .greenText {
+    color: #26a541;
+  }
+  padding: 12px;
+  border: 1px solid #ddd;
+  margin: 20px 0;
+  .carItem {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    .col1 {
+      display: flex;
+      .img {
+        margin-right: 12px;
+        img {
+          max-width: 100px;
+          height: 100px;
+          object-fit: contain;
+        }
+      }
+      .colorSize {
+        display: flex;
+        margin-top: 5px;
+        span {
+          font-size: 14px;
+          &:nth-child(1) {
+            width: 50px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .deliveredIcon {
+      display: inline-block;
+      width: 12.5px;
+      height: 12.5px;
+      border: solid 2px #d12003;
+      background-color: #d12003;
+      border-radius: 50%;
+    }
+  }
+  .icon {
+    margin-right: 12px;
+  }
+}

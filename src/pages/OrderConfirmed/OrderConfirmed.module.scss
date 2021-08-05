@@ -1,0 +1,17 @@
+.circlesContainer {
+  margin-left: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  float: left;
+  margin-left: -65px;
+  div {
+    cursor: pointer;
+  }
+}
+.contentConatiner {
+  width: 100%;
+  .title {
+    font-weight: normal;
+  }
+}

@@ -1,0 +1,73 @@
+.form {
+  border: 1px solid;
+  padding: 12px;
+  margin-bottom: 30px;
+  
+  .inpContainerAdd{
+    height: 17px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+  }
+  .inpContainer {
+    margin: 14px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    .inpLable {
+      font-weight: 500;
+      margin-bottom: 4px;
+      .star {
+        color: #d12003;
+      }
+    }
+
+    .input {
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+      border: 2px solid #1f1f1f;
+    }
+    .mobileInput {
+      padding-left: 50px;
+    }
+    .mobileCode {
+      border-right: 1px solid rgb(194, 194, 194);
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      font-weight: 500;
+    }
+  }
+  .useDefaultText {
+    margin-left: 12px;
+    cursor: pointer;
+  }
+}
+.addAddressBtn {
+  background-color: #000000;
+  color: #fff;
+  min-width: 204.2px;
+  height: 41px;
+  border: none;
+  cursor: pointer;
+}
+
+.clrAddressBtn {
+  background-color: #000000;
+  color: #fff;
+  min-width: 204.2px;
+  height: 41px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}

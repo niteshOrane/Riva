@@ -1,0 +1,17 @@
+.cardBoxContent {
+  min-height: 124px;
+  position: relative;
+  background: $color-white;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: -35px;
+  padding: 20px;
+  transition: box-shadow 0.3s ease-in;
+  .description {
+    margin: 12px 0;
+  }
+
+  &:hover {
+    box-shadow: 0.3px 3px 35px 0 rgba(0, 0, 0, 0.17);
+  }
+}

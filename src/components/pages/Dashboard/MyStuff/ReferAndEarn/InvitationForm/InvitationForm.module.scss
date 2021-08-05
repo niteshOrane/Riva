@@ -1,0 +1,15 @@
+#emailsTextArea,
+#msgTextarea {
+  margin-top: 4px;
+  &::placeholder {
+    font-size: 13px;
+  }
+}
+.sendBtn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 20px;
+}

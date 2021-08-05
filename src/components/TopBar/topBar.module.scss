@@ -1,0 +1,21 @@
+.topBarcontainer{
+    height: 37px;
+}
+.topBarRight{
+    margin-left: 75px;
+    display: flex;
+    align-items: center;
+}
+.topBarMsg{
+    line-height: 22px;
+    font-size: 14px;
+    color: $font-black;
+    margin-right: 75px;
+}
+ .topBarLeft{
+     padding-right: 75px;
+    padding-left: 12px;
+ }
+ .flag{
+     padding: 12px
+ }

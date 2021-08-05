@@ -1,0 +1,171 @@
+.filterText {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+.filterTextwrapper {
+  margin-right: 15px;
+  display: flex;
+}
+.filterDots {
+  margin-left: 12px;
+  display: flex;
+  span {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    margin: 3px;
+  }
+  .greyDots {
+    margin-right: 10px;
+    span {
+      background-color: grey;
+    }
+  }
+  .blackDots {
+    span {
+      background-color: black;
+    }
+  }
+}
+
+.filtersContainer {
+  margin: 70px auto 0;
+  width: 90vw;
+  min-height: 540px;
+  .filterBy {
+    margin: 20px 0;
+    font-weight: 700;
+  }
+  .filtersGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    // display: flex;
+    // gap: 12px;
+    // flex-direction: column;
+    max-height: 500px;
+    // flex-wrap: wrap;
+    .mt10Px {
+      margin-top: 10px;
+    }
+  }
+}
+
+// COMPONENTS
+
+// CHECKBOX
+.checkBoxContainer {
+  margin-top: 4px;
+  padding-left: 15px;
+}
+
+// TAGS
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 0 7px;
+  border-radius: 4px;
+  margin: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  span {
+    padding: 3px;
+  }
+  span:nth-child(2) {
+    font-size: 12px;
+  }
+  &:hover {
+    border-color: rgb(255, 162, 162);
+  }
+}
+
+// LIST
+.listContainer {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  span:nth-child(1) {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #181617;
+    border-radius: 8px;
+  }
+  span:nth-child(2) {
+    margin-left: 12px;
+  }
+}
+
+// RANGE SLIDER
+.sliderParent {
+  margin-top: 12px;
+  padding: 0 12px;
+  #rangBtns {
+    margin-top: 20px;
+  }
+  .rangePriceBtn {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    padding: 7px;
+  }
+  .rangeFilterBtn {
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 7px 12px;
+    &:hover {
+      background-color: #181617;
+      color: #fff;
+    }
+  }
+}
+
+// COLORS STYLING
+#color {
+  .tooltiptext {
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 1;
+    display: none;
+    bottom: 123%;
+    transform: translate(-19px, -2px);
+    width: 65px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+    }
+  }
+  &:hover {
+    .tooltiptext {
+      display: inline-block;
+    }
+  }
+}
+
+
+.dropdownCollapse{
+  padding-right: 2rem !important;
+}
+
+.filterListScroll{
+  height: "60rem" !important; 
+  overflow-y: "scroll" !important;
+}
+
+.tagsFlex{
+  display: flex;
+}
