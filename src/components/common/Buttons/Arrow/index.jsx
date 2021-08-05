@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ArrowButton = ({ direction, onClick }) => {
-    return <span className="material-icons-outlined">
+    return <span className="material-icons-two-tone">
         {direction == 'forward' ? 'arrow_forward_ios' : 'arrow_back_ios'}
     </span>;
 }

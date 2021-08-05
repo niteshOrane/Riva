@@ -65,6 +65,8 @@ function QuickView() {
         ...selectedProduct,
         id: `${data?.id}`,
         name: data?.name,
+        color:data?.selected?.color?.value,
+        size:data?.selected?.size?.value,
         src: data?.image,
         qty: productQuantity,
         ...selectedProduct?.selected,
@@ -74,6 +76,7 @@ function QuickView() {
 
     dispatch(toggleQuickView(null));
   };
+  console.log("data",data)
   const getOutOfStock = async () => {
     const id = data?.id;
     const color = data?.selected?.color?.label;

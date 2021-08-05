@@ -288,6 +288,7 @@ function Filters({
               {items?.children?.map((item) =>
                 item?.children ? menu(item, depth + 1) : renderComponent(item)
               )}
+              <hr />
             </div>
           </>
         </Dropdown>
@@ -368,6 +369,11 @@ function Filters({
               })}
             </div>
           </div>
+          <section className={`${style.seeResult}`}>
+            <button>
+              SEE RESULTS
+            </button>
+          </section>
         </Drawer>
       </>
     );

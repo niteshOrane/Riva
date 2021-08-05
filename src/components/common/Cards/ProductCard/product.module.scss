@@ -10,9 +10,12 @@
   display: inline-block;
   // background-color: #f4f3f3;
   cursor: pointer;
-
+  
   &:hover {
     box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
+    .productBtn{
+      display: block;
+    }
   }
 
   .outOfStock {
@@ -211,4 +214,10 @@
       }
     }
   }
+}
+
+
+.productBtn {
+  display: none;
+  transition: 2s ease;
 }
