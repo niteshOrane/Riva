@@ -61,8 +61,8 @@ export const getCart = () => async (dispatch) => {
 export const addToCart = (data) => async (dispatch) => {
   const res = await addToCartService(
     data.id,
-    data?.color?.value,
-    data?.size?.value,
+    data?.color,
+    data?.size,
     data.qty
   );
 
