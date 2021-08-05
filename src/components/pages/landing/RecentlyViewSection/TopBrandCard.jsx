@@ -30,7 +30,7 @@ const TopBrandCard = ({ item }) => {
       <div className={`d-flex align-items-cetner ${style.cardBody}`}>
         <div className={style.cardImg}>
           <Image src={item.image || item.src} width="100%" alt="" />
-          <div>
+          <div className={style.cartImage}>
             <span class="material-icons-outlined">shopping_cart</span>
           </div>
         </div>

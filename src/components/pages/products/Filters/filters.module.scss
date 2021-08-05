@@ -169,3 +169,13 @@
 .tagsFlex{
   display: flex;
 }
+
+.seeResult{
+  text-align: right;
+  margin: 20px 20px;
+  button{
+    padding: 0.5rem 10px;
+    background-color: black;
+    color: white;
+  }
+}

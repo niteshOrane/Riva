@@ -67,7 +67,7 @@ function ProfileInfoForm() {
           <article className="inner-form-wrapper">
             <section>
               <div className>
-                <label>First Name</label>
+                <label className="profile-label">First Name</label>
                 <input
                   value={values?.firstname}
                   name="firstname"
@@ -75,7 +75,7 @@ function ProfileInfoForm() {
                 />
               </div>
               <div style={{ marginLeft: "2rem" }}>
-                <label>Last Name</label>
+                <label className="profile-label">Last Name</label>
                 <input
                   name="lastname"
                   value={values?.lastname}
@@ -85,7 +85,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <div className>
-                <label>Email</label>
+                <label  className="profile-label">Email</label>
                 <input
                   name="email"
                   value={values?.email}
@@ -93,7 +93,7 @@ function ProfileInfoForm() {
                 />
               </div>
               <div style={{ marginLeft: "2rem" }}>
-                <label>Mobile Number</label>
+                <label  className="profile-label">Mobile Number</label>
                 <input
                   name="number"
                   value={values?.number}
@@ -103,7 +103,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <FormControl component="fieldset">
-                <FormLabel component="legend">Your Gender</FormLabel>
+                <FormLabel  className="profile-label" component="legend">Your Gender</FormLabel>
                 <RadioGroup
                   row
                   aria-label="position"
@@ -134,7 +134,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <div>
-                <label>Date of Birth</label>
+                <label  className="profile-label">Date of Birth</label>
                 <input
                   value={values.dob}
                   placeholder="Select DOB"
@@ -146,7 +146,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <div>
-                <label>Upload Image</label>
+                <label  className="profile-label">Upload Image</label>
                 <input
                   placeholder="Upload a file"
                   name="profileImg"

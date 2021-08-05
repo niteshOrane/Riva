@@ -12,7 +12,7 @@ function Sidebar() {
     <div className={styles.sidebar}>
       <div className={styles.header}>
         <h2>My Account</h2>
-        <button type="button">Join VIP Membership</button>
+        <button className={styles.membership} type="button">Join VIP Membership</button>
       </div>
       <div className={styles.sidebarBody}>
         <div className="d-flex align-items-center" id={styles.sec}>
