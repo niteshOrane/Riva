@@ -57,7 +57,7 @@ const HomeHeroGrid = (props) => {
             </div>
           </section>
         </section>
-        <div className="red-banner-wrapper">
+        <div className="red-banner-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory.find(e => e?.name?.toLowerCase() === "woman").id) }}>
           <section>
             <img src="/assets/images/redBanner.jpg" alt="" />
           </section>
