@@ -3,8 +3,9 @@ import { Redirect, Route, Switch, HashRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
+import HomeLayout from "../Layouts/HomeLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
-
+const LandingHome = React.lazy(() => import("../pages/Landing/HomeLanding"));
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
@@ -60,6 +61,14 @@ class AppRoutes extends Component {
     this.openRoutes = [
       {
         path: "/",
+        component: LandingHome,
+        exact: true,
+        name: "Landing page",
+        layout: HomeLayout,
+        index: 0,
+      },
+      {
+        path: "/type/:mainCategoryId",
         component: Landing,
         exact: true,
         name: "Landing page",
@@ -285,12 +294,12 @@ class AppRoutes extends Component {
   render() {
     return (
       <HashRouter>
-      <Suspense fallback={<Loader />}>
-        <Switch>
-          {this.renderRoutes()}
-          <Redirect to="/" />
-        </Switch>
-      </Suspense>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            {this.renderRoutes()}
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
       </HashRouter>
     );
   }

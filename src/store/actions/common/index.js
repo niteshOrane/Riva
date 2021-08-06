@@ -40,9 +40,9 @@ export const fetchHeaderCategory = (data) => ({
   payload: { data },
 });
 
-export const selectedCategory = (data) => ({
+export const selectedCategory = (data, id) => ({
   type: DATA_TYPES.SELECTED_CATEGORY,
-  payload: { data },
+  payload: { data, id },
 });
 
 export const toggleQuickView = (data) => ({

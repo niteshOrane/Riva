@@ -6,7 +6,7 @@ import MainHeaderTopBar from '../components/TopBar/MainHeaderTopBar/MainHeaderTo
 import { header } from '../../../../mockdata.json';
 import styles from './MainHeader.module.scss';
 
-function MainHeader({ mainHeader }) {
+function MainHeader({ mainHeader, disableMegicLink }) {
   // const links = useSelector((state) => state.common.header);
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
@@ -14,8 +14,8 @@ function MainHeader({ mainHeader }) {
   return (
     <header className={styles.sticky} id="header">
       <MainHeaderTopBar mainHeader={mainHeader} />
-      <NavbarMain />
-      <MegaLinks links={selectedCategoryItem?.data} />
+      <NavbarMain disableMegicLink={disableMegicLink}/>
+      {!disableMegicLink ? <MegaLinks links={selectedCategoryItem?.data} /> : null}
     </header>
   );
 }
