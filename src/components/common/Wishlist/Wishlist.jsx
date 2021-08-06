@@ -137,111 +137,12 @@ function Wishlist() {
                 })}
             </div>
           </div>
-          <div
-            className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
-          >
-            <div className={`${styles.icon} d-flex-all-center`}>
-              <span className="material-icons">mail</span>
-            </div>
-            <div className={styles.text}>
-              We will let you know when its in stock
-            </div>
-          </div>
-          <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-            <ul className="nav-list gap-12px d-flex align-items-center">
-              <li className="nav-li">
-                <a href="#" className="d-flex align-items-center">
-                  {/* <span className="material-icons-outlined font-light-black">
-                    straighten
-                  </span> */}
-                  <img src = "/assets/images/ruler (1).svg" alt ="/" />
-                  &nbsp; &nbsp;
-                  <button
-                    type="button"
-                    className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setGuideCardOpen(true)}
-                  >
-                    <span
-                      className={` ${styles.sizeGuideDecoration} align-self-end font-light-black`}
-                    >
-                      Size Guide
-                    </span>
-                  </button>
-                </a>
-              </li>
-              <li className="nav-li">
-                <a href="#" className="d-flex align-items-center">
-                  {/* <span className="material-icons-outlined font-light-black">
-                    search
-                  </span> */}
-                   <img src = "/assets/images/search.svg" alt ="/" />
-                  &nbsp;
-                  <button
-                    type="button"
-                    className="bg-transparent no-border c-pointer"
-                    //   onClick={() => setSizeCardOpen(true)}
-                  >
-                    <span className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}>
-                      Find your size
-                    </span>
-                  </button>
-                </a>
-              </li>
-            </ul>
-          </div>
+        
+         
 
-          <div className={`${styles.stats} d-flex justify-content-between`}>
-            <div
-              className={`${styles.visibility} d-flex gap-12px align-items-center`}
-            >
-              <div className={styles.icon}>
-                <span className="material-icons-outlined font-light-black">
-                  visibility
-                </span>
-              </div>
-            </div>
-          </div>
+          
 
           <div className={styles.actions}>
-            <div className="d-flex align-items-center justify-content-between flex-wrap my-20px">
-              <div
-                className={`${styles.qty} d-flex align-items-center justify-content-between`}
-              >
-                <div className={styles.title}>Qty:</div>
-                <div
-                  className={`${styles.counter} d-flex align-items-center justify-content-between`}
-                >
-                  <div>
-                    <span
-                      onClick={handleDecrementProduct}
-                      className="material-icons-outlined font-light-black"
-                      style={{ cursor: "pointer" }}
-                    >
-                      remove
-                    </span>
-                  </div>
-                  <div>{productQuantity}</div>
-                  <div>
-                    <span
-                      onClick={handleIncrementProduct}
-                      className="material-icons-outlined font-light-black"
-                      style={{ cursor: "pointer" }}
-                    >
-                      add
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className={`${styles.demand} d-flex gap-12px align-items-center`}
-              >
-                <div className="d-flex align-items-center">
-                  <div className={styles.title}>Availability: </div>
-                  &nbsp;<div className={styles.text}>In stock</div>
-                </div>
-              </div>
-            </div>
-
             <div className="d-flex w-100 align-items-center ">
               <div className={styles.addToCart}>
                 <button

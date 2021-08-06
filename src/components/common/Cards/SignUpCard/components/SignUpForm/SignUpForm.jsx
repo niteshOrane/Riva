@@ -18,7 +18,8 @@ const SignUpForm = ({ handleSubmit }) => {
     email: "",
     password: "",
     name: "",
-    phone:""
+    phone:"",
+    lastName:""
   });
 
   const handleChange = (e) => {
@@ -29,7 +30,7 @@ const SignUpForm = ({ handleSubmit }) => {
     dispatch(toggleSignUpCard({}));
   };
 
-  const { email, password, name, phone } = formData;
+  const { email, password, name, phone, lastName } = formData;
 
   const userCreateHandler = async (e) => {
     e.preventDefault();
@@ -50,8 +51,8 @@ const SignUpForm = ({ handleSubmit }) => {
     const customer = new FormData();
 
     customer.append("email", email);
-    customer.append("firstname", name?.split(" ")?.[0] || "");
-    customer.append("lastname", name?.split(" ")?.[1] || "");
+    customer.append("firstname", name || "");
+    customer.append("lastname", lastName|| "");
     customer.append("password", password);
     customer.append("mobile_number", phone);
     customer.append("storeId", getStoreId());
@@ -69,12 +70,12 @@ const SignUpForm = ({ handleSubmit }) => {
   const responseFacebook = async (response) => {
     if (response) {
       const firstName = response?.name?.split(" ")[0];
-      const lastName = response?.name?.split(" ")[1];
+      const lName = response?.name?.split(" ")[1];
       const userEmail = response?.email;
       const customer = new FormData();
       customer.append("email", userEmail);
       customer.append("firstname", firstName || "");
-      customer.append("lastname", lastName || "");
+      customer.append("lastname", lName || "");
       customer.append("password",  "hello@123");
       customer.append('resource',"Facebook")
       const res = await createCustomer(customer);
@@ -92,11 +93,11 @@ const SignUpForm = ({ handleSubmit }) => {
   const responseGoogle = async (response) => {
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
-      const lastName = response?.profileObj?.familyName;
+      const lname = response?.profileObj?.familyName;
       const userEmail = response?.profileObj?.email;
       const customer = new FormData();
       customer.append("email", userEmail);
-      customer.append("lastname", lastName || "");
+      customer.append("lastname", lname || "");
       customer.append("firstname", firstName || "");
       customer.append("password",  "hello@123");
       customer.append('resource',"Google")
@@ -115,7 +116,7 @@ const SignUpForm = ({ handleSubmit }) => {
     <form className={styles.form} onSubmit={userCreateHandler}>
       <div className={styles.container}>
         <p className="mt-12px">
-          First Name & Last Name <span className={styles.star}>*</span>
+          First Name<span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">account_circle</span>
@@ -125,6 +126,23 @@ const SignUpForm = ({ handleSubmit }) => {
             type="text"
             name="name"
             id="name"
+            maxLength={30}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className={styles.container}>
+        <p className="mt-12px">
+         Last Name <span className={styles.star}>*</span>
+        </p>
+        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <span className="material-icons-outlined">account_circle</span>
+          <input
+            required
+            value={lastName}
+            type="text"
+            name="lastName"
+            id="lastName"
             maxLength={30}
             onChange={handleChange}
           />
