@@ -26,6 +26,7 @@ const NavbarMain = () => {
           />
         </Link>
       </strong>
+
       <NavLinks />
     </nav>
   );
