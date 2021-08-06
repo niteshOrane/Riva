@@ -145,17 +145,6 @@ function ProfileInfoForm() {
                 />
               </div>
             </section>
-            <section>
-              <div>
-                <label  className="profile-label">Upload Image</label>
-                <input
-                  placeholder="Upload a file"
-                  name="profileImg"
-                  onChange={handleChange}
-                  type="file"
-                />
-              </div>
-            </section>
           </article>
           <section className="registration-submit-btn-wrapper">
             <button type="submit" className="registration-btn">
