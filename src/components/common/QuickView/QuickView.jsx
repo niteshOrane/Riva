@@ -19,6 +19,8 @@ const closeStyle = {
   position: "absolute",
   top: 4,
   right: 4,
+  paddingTop:8,
+  paddingRight:8
 };
 
 function QuickView() {
@@ -65,8 +67,8 @@ function QuickView() {
         ...selectedProduct,
         id: `${data?.id}`,
         name: data?.name,
-        color:data?.selected?.color?.value,
-        size:data?.selected?.size?.value,
+        color: data?.selected?.color?.value,
+        size: data?.selected?.size?.value,
         src: data?.image,
         qty: productQuantity,
         ...selectedProduct?.selected,
@@ -76,7 +78,7 @@ function QuickView() {
 
     dispatch(toggleQuickView(null));
   };
-  console.log("data",data)
+  console.log("data", data);
   const getOutOfStock = async () => {
     const id = data?.id;
     const color = data?.selected?.color?.label;
@@ -230,16 +232,19 @@ function QuickView() {
             <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <span className="d-flex align-items-center">
-                  <span className="material-icons-outlined font-light-black">
+                  {/* <span className="material-icons-outlined font-light-black">
                     straighten
-                  </span>
+                  </span> */}
+                  <img src="/assets/images/ruler (1).svg" alt="/" />
                   &nbsp; &nbsp;
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
                     onClick={() => setGuideCardOpen(true)}
                   >
-                    <span className="align-self-end font-light-black">
+                    <span
+                      className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}
+                    >
                       Size Guide
                     </span>
                   </button>
@@ -247,16 +252,19 @@ function QuickView() {
               </li>
               <li className="nav-li">
                 <span className="d-flex align-items-center">
-                  <span className="material-icons-outlined font-light-black">
+                  {/* <span className="material-icons-outlined font-light-black">
                     search
-                  </span>
+                  </span> */}
+                  <img src="/assets/images/search.svg" alt="/" />
                   &nbsp;
                   <button
                     type="button"
                     className="bg-transparent no-border c-pointer"
                     onClick={() => setSizeCardOpen(true)}
                   >
-                    <span className="align-self-end font-light-black">
+                    <span
+                      className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}
+                    >
                       Find your size
                     </span>
                   </button>
@@ -282,7 +290,7 @@ function QuickView() {
               <div
                 className={`${styles.qty} d-flex align-items-center justify-content-between`}
               >
-                <div className={styles.title}>qty:</div>
+                <div className={styles.title}>Qty:</div>
                 <div
                   className={`${styles.counter} d-flex align-items-center justify-content-between`}
                 >
@@ -337,17 +345,15 @@ function QuickView() {
                 </div>
               )} */}
               <div className={styles.addToCart}>
-                  <button
-                    type="button"
-                    onClick={addToCardHandler}
-                    className="w-100 d-flex-all-center bg-black color-white p-12px"
-                  >
-                    <span className="material-icons-outlined">
-                      shopping_cart
-                    </span>
-                    &nbsp;ADD TO CART
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={addToCardHandler}
+                  className="w-100 d-flex-all-center bg-black color-white p-12px"
+                >
+                  <span className="material-icons-outlined">shopping_cart</span>
+                  &nbsp;ADD TO CART
+                </button>
+              </div>
               <div className={`${styles.wishlist} d-flex-all-center`}>
                 <span className="material-icons-outlined font-light-black">
                   favorite_border

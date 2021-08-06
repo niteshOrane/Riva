@@ -344,6 +344,7 @@ function Filters({
             <BlackCloseBtn
               handleClose={closeDrawer}
               drawerPosition={drawerPosition}
+              filter
             />
             {/* <Search handleChange={handleSearchChange} value={searchValue} /> */}
             <div className={style.tagsFlex}>
