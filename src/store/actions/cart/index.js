@@ -63,10 +63,6 @@ export const addToCart = (data) => async (dispatch) => {
     dispatch(showSnackbar('please select one color and size', 'error'));
     return true;
   }
-  if(!data?.price){
-    dispatch(showSnackbar(`please select Other color and size, we don't have price`, 'error'));
-    return true;
-  }
   else {
     const res = await addToCartService(
       data.id,
