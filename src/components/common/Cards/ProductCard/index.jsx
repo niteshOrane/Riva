@@ -120,22 +120,6 @@ const ProductCard = ({
     };
     dispatch(toggleQuickView(p));
   };
-
-  const addToCardHandler = () => {
-    dispatch(
-      addToCart({
-        ...product,
-        id: `${product.id}`,
-        name: product.name,
-        src: product.image,
-        color: attributes.colors?.[0] || {},
-        size: attributes.size?.[0] || {},
-        qty: 1,
-        price: product.price,
-      })
-    );
-  };
-
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
 
   const srcImage =

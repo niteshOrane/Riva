@@ -21,7 +21,7 @@ function ProfileInfoForm() {
     firstname: customer?.firstname,
     lastname: customer?.lastname,
     email: customer?.email,
-    number: customer?.mobile,
+    mobile_number: customer?.mobile_number,
     gender: customer.gender,
     dob: customer.dob,
     profileImg: "",
@@ -47,6 +47,7 @@ function ProfileInfoForm() {
     cust.append("lastname", values.lastname);
     cust.append("dob", values.dob);
     cust.append("gender", values.gender);
+    cust.append("mobile_number", values.mobile_number);
 
     const res = await profileUpdate(cust);
 
@@ -95,8 +96,8 @@ function ProfileInfoForm() {
               <div style={{ marginLeft: "2rem" }}>
                 <label  className="profile-label">Mobile Number</label>
                 <input
-                  name="number"
-                  value={values?.number}
+                  name="mobile_number"
+                  value={values?.mobile_number}
                   onChange={handleChange}
                 />
               </div>

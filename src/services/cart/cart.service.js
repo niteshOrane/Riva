@@ -3,7 +3,6 @@ import API_URL from "../../enviroments/index";
 import { getCustId, getCartId, getStoreId } from "../../util";
 
 export const addToCartService = (id, color, size, qty) => {
-  console.log(color,size)
   const config = {
     method: "post",
     url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${getCartId() || 0
