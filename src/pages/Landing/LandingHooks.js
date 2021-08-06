@@ -8,7 +8,6 @@ const useLanding = () => {
     getBanners(11)
       .then((response) => response.data)
       .then((banner) => SetMiddleBanner(banner))
-      .catch((error) => console.log(error));
   }, []);
 
   return {

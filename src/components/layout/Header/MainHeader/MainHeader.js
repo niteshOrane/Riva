@@ -14,8 +14,12 @@ function MainHeader({ mainHeader, disableMegicLink }) {
   return (
     <header className={styles.sticky} id="header">
       <MainHeaderTopBar mainHeader={mainHeader} />
-      <NavbarMain disableMegicLink={disableMegicLink}/>
-      {!disableMegicLink ? <MegaLinks links={selectedCategoryItem?.data} /> : null}
+      <NavbarMain disableMegicLink={disableMegicLink} />
+
+      {!disableMegicLink ? <MegaLinks links={selectedCategoryItem?.data} /> : <div className="container-with-circles">
+        <div className={styles.titleDoubleLine} />
+        <div className={styles.titleDoubleLine_Second} />
+      </div>}
     </header>
   );
 }

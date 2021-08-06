@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import style from "./Landing.module.scss"
 
 import HeroGrid2 from "../../components/pages/landing/Hero-grid/HomeHeroGrid";
 
@@ -8,11 +9,7 @@ function HomeLanding() {
     (state) => state.common.selectedCategoryItem
   );
   return (
-    <>
-      <div>
-        <HeroGrid2 items={selectedCategoryItem?.data} srcPath='/assets/images/banner' isHomePage={Boolean(true)} />
-      </div>
-    </>
+    <HeroGrid2 items={selectedCategoryItem?.data} srcPath='/assets/images/banner' isHomePage={Boolean(true)} />
   );
 }
 

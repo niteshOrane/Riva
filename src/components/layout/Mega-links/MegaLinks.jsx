@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '../../common/LazyImage/Image';
 import style from './megalinks.module.scss';
-import { header } from '../../../mockdata.json';
 
 const MegaLinks = ({ links }) => {
   const [showMegaMenue, setShowMegaMenue] = useState(null);
