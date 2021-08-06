@@ -197,7 +197,7 @@ const ProductDetails = (props) => {
                 productColorList.map((item, index) => (
                   <div
                     key={`color${index}`}
-                    className={`${styles.option} `}
+                    className={`${styles.option}  c-pointer `}
                     onClick={() => colorImageAction(item)}
                     style={{
                       transform:
@@ -244,7 +244,7 @@ const ProductDetails = (props) => {
                 })}
               </div>
             </div>
-            <div
+           {outOfStock?<div
               className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
             >
               <div className={`${styles.icon} d-flex-all-center`}>
@@ -253,7 +253,7 @@ const ProductDetails = (props) => {
               <div className={styles.text}>
                 We will let you know when its in stock
               </div>
-            </div>
+            </div>:null}
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li m-0">
@@ -370,7 +370,7 @@ const ProductDetails = (props) => {
                 </div>
 
                 <div className="d-flex align-items-center my-50px">
-                  {1==2 ? (
+                  {outOfStock? (
                     <OutOfStock productId={product.id} />
                   ) : (
                     <div className={styles.addToCart}>

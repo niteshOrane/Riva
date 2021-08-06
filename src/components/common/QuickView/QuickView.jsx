@@ -320,7 +320,7 @@ function QuickView() {
               </div>
             </div>
             <div className="d-flex w-100 align-items-center ">
-              {/* {outOfStock ? (
+             {outOfStock ? (
                 <OutOfStock />
               ) : (
                 <div className={styles.addToCart}>
@@ -335,19 +335,7 @@ function QuickView() {
                     &nbsp;ADD TO CART
                   </button>
                 </div>
-              )} */}
-              <div className={styles.addToCart}>
-                  <button
-                    type="button"
-                    onClick={addToCardHandler}
-                    className="w-100 d-flex-all-center bg-black color-white p-12px"
-                  >
-                    <span className="material-icons-outlined">
-                      shopping_cart
-                    </span>
-                    &nbsp;ADD TO CART
-                  </button>
-                </div>
+              )}
               <div className={`${styles.wishlist} d-flex-all-center`}>
                 <span className="material-icons-outlined font-light-black">
                   favorite_border
