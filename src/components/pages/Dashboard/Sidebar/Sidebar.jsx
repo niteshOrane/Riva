@@ -59,13 +59,14 @@ function Sidebar() {
             <p className={styles.title}>My Wishlist</p>
           </Link>
         </div>
-        <div className="d-flex align-items-center" id={styles.sec}>
+        {/* <div className="d-flex align-items-center" id={styles.sec}>
           <icons.Loyalty />
           <Link to="/order-confirmed">
             {" "}
             <p className={styles.title}>Order Confirmed</p>
           </Link>
         </div>
+          */}
         <div className="d-flex" id={styles.sec}>
           <icons.Accounts />
           <div className={styles.children}>
