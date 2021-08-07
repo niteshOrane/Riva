@@ -23,13 +23,14 @@ function TrackOrders() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await orderConfirmed(value);
-    if (res.status === 200 && res?.data) {
-      setOrderItems(
-        res?.data?.items.filter((li) => li.product_type === "simple")
-      );
+    if (value) {
+      const res = await orderConfirmed(value);
+      if (res.status === 200 && res?.data) {
+        setOrderItems(
+          res?.data?.items.filter((li) => li.product_type === "simple")
+        );
+      }
     }
-    setValue("");
   };
   return (
     <div className="container-with-circles my-20px">

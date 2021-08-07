@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
@@ -13,13 +13,14 @@ function TrackYourOrder() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await orderConfirmed(value);
-    if (res.status === 200 && res?.data) {
-      setOrderItems(
-        res?.data?.items.filter((li) => li.product_type === "simple")
-      );
+    if (value) {
+      const res = await orderConfirmed(value);
+      if (res.status === 200 && res?.data) {
+        setOrderItems(
+          res?.data?.items.filter((li) => li.product_type === "simple")
+        );
+      }
     }
-    setValue("");
   };
   return (
     <div className="d-flex py-20px">
