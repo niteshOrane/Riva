@@ -9,8 +9,8 @@ const VerticalProductCard = ({ product }) => {
     price: now,
     size = 'unavailable',
   } = product;
-  const colors = Object.keys(product?.options.filter(e => e.label === "Color")[0].values);
-  const sizes = Object.keys(product?.options.filter(e => e.label === "Size")[0].values);
+  const colors = product?.options && product?.options.length ? Object.keys(product?.options?.filter(e => e.label === "Color")?.[0]?.values) : [];
+  const sizes = product?.options && product?.options.length ? Object.keys(product?.options?.filter(e => e.label === "Size")?.[0]?.values) : [];
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
