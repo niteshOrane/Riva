@@ -1,1 +1,19 @@
- 
+.line1 {
+  height: 1px;
+  margin: 5px 0 2px 0;
+  border: solid 0.1px #e1dfdf;
+}
+.line2 {
+  height: 1px;
+  margin: 0px 0 3px 0;
+  border: solid 0.1px #e1dfdf;
+}
+.lineContainer {
+  margin-left: 3.7rem;
+  margin-top: 15px;
+  width: 100vw;
+  position: fixed;
+  top: 16.5%;
+  z-index: 999;
+  background-color: white;
+}

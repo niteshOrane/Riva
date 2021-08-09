@@ -5,6 +5,8 @@ import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackY
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
 import { orderConfirmed } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../store/actions/common";
 
 const randomOrder = {
   orderId: "R0374915036",
@@ -16,12 +18,14 @@ const randomOrder = {
 };
 
 function TrackOrders() {
+  const dispatch = useDispatch()
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState();
   const handleChange = (e) => {
     setValue(e.target.value);
   };
   const handleSubmit = async (e) => {
+    if(!value) return dispatch(showSnackbar("Please enter order Id","error"))
     e.preventDefault();
     if (value) {
       const res = await orderConfirmed(value);

@@ -61,7 +61,7 @@ function Landing() {
                   />
                 </div>
                 <div>
-                  <span className="my-12px d-inline-block">{item.name}</span>
+                  <span className="my-12px d-inline-block">{item?.name?.toUpperCase()}</span>
                 </div>
               </Link>
             )}

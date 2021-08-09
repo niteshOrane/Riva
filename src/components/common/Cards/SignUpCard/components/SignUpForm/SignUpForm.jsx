@@ -91,6 +91,7 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const responseGoogle = async (response) => {
+    console.log(response)
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
       const lname = response?.profileObj?.familyName;
@@ -273,7 +274,7 @@ const SignUpForm = ({ handleSubmit }) => {
               )}
               className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
               onSuccess={(response) => responseGoogle(response)}
-              // onFailure={(responseGoogle) => console.log(responseGoogle)}
+              onFailure={(response) => console.log(response)}
             />
           </button>
         </div>

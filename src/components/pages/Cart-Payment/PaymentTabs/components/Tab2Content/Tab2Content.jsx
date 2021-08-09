@@ -10,28 +10,9 @@ import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 const Tab2Content = ({onPayNow}) => {
   const dispatch = useDispatch();
   const [validation,setValidation] = React.useState(false)
-  // const onPayNow = async (e) => {
-  //   if (e) {
-  //     setLoading(true)
-  //     const res = await cartPaymentAction(e);
-  //     if (res.status === 200) {
-  //       setLoading(false)
-  //       dispatch(showSnackbar("Payment success", "success"));
-  //       dispatch({
-  //         type: DATA_TYPES.SET_CART_ID,
-  //         payload: { cart_id: 0 },
-  //       });
-  //       dispatch({
-  //         type: DATA_TYPES.SET_BULK_CART,
-  //         payload: [],
-  //       });
-  //       history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
-  //     } else {
-  //       dispatch(showSnackbar("Payment Failed", "error"));
-  //     }
-  //   }
-  // };
   const showValidation = (e) => {
+    console.log(e)
+    if(e.isEmpty) return setValidation(true)
     if(!e.isValid || e.isEmpty){
       setValidation(true)
     }else{
@@ -67,9 +48,11 @@ const Tab2Content = ({onPayNow}) => {
         }}
         frameValidationChanged={(e) => showValidation(e)}
         cardTokenized={(e) => {
+          console.log(e)
           onPayNow(e);
         }}
         cardTokenizationFailed={e => {
+          console.log(e)
           dispatch(showSnackbar("Payment Fail", "error"));
         }}
       >

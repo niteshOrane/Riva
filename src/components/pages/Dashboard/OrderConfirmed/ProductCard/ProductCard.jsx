@@ -17,7 +17,7 @@ function ProductCard({ product }) {
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <img src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/b4bac6c2-516e-4778-89c1-fdf75fc725ce.png" width="100%" alt={product?.name} />
+        <img src={product?.image} width="100%" alt={product?.name} />
       </div>
       <div className={styles.productDetails}>
         <h4 className={styles.name}>{product?.name}</h4>

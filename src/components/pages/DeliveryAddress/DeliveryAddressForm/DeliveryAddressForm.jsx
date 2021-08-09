@@ -136,6 +136,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!city) {
       return dispatch(showSnackbar("City Require", "error"));
     }
+    if(!country){
+      return dispatch(showSnackbar("Country is Required","error"))
+    }
     if (!state) {
       return dispatch(showSnackbar("State Require", "error"));
     }
@@ -144,7 +147,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     }
 
     if (!block) {
-      return dispatch(showSnackbar("street Require", "error"));
+      return dispatch(showSnackbar("block Require", "error"));
     }
 
     if (!houseName) {
@@ -278,7 +281,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             />
           </div>
           <div className="w-100">
-            <p className={styles.inpLable}>Block</p>
+            <p className={styles.inpLable}>Block<span className = {styles.star}>*</span></p>
             <input
               type="block"
               className={styles.input}
