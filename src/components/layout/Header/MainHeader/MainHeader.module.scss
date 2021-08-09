@@ -5,3 +5,24 @@
     background-color: $color-white;
     z-index: 100;
 }
+.titleDoubleLine {
+    height: 1px;
+    margin: 5px 0 2px 0;
+    border: solid 0.1px #e1dfdf;
+  }
+  .titleDoubleLine_Second {
+    height: 1px;
+    margin: 1px 0 3px 0;
+    border: solid 0.1px #e1dfdf;
+  }
+  .titleDoubleLineFilter {
+    height: 1px;
+    margin: 13px 0px 2px 0px;
+    border: solid 0.1px #e1dfdf;
+  }
+  .titleDoubleLine_SecondFilter {
+    height: 1px;
+    margin: 1px 0px 16px 0px;
+    border: solid 0.1px #e1dfdf;
+  }
+  

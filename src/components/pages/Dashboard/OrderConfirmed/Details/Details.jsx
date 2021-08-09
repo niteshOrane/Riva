@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Details.module.scss";
 import { Link } from "react-router-dom";
 function Details({deliveryAddress,amount}) {
-  const {firstname,lastname,street,region,country_id,postcode,telephone} = deliveryAddress
+  const {firstname,lastname,street,region,country_id,postcode,telephone,city} = deliveryAddress
   const {total, shippingAmount,totalPaid} = amount
   return (
     <>
@@ -19,7 +19,7 @@ function Details({deliveryAddress,amount}) {
           <div className={styles.bodyLeft}>
             <h5 className={styles.name}>{`${firstname} ${lastname}`}</h5>
             <address className={`${styles.greyText} ${styles.address}`}>
-              {`${street.map(li => li)}, ${region}, ${postcode}`}
+              {`${street.map(li => li)}, ${city || region}, ${postcode}`}
               <div>{`${country_id}`}</div>
             </address>
             <div>{telephone} </div>

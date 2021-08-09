@@ -1,6 +1,10 @@
 $footer-grey-color: #737373;
 
 .footer {
+  background-image: url("/assets/images/footerShape1.png"),
+    url("/assets/images/footerShape2.png");
+  background-position: left top, right bottom;
+  background-repeat: no-repeat;
   background-color: $footer-bg;
   font-family: Jost;
   .footerGrid {
@@ -137,7 +141,7 @@ $footer-grey-color: #737373;
 
   .toTopBtn {
     position: relative;
-    background-color: grey !important;
+    background-color: black !important;
 
     span {
       position: absolute;
@@ -145,7 +149,7 @@ $footer-grey-color: #737373;
       right: 32px;
       height: 40px;
       width: 40px;
-      background: grey;
+      background: black;
     }
   }
   .copyRightText {
@@ -165,7 +169,7 @@ $footer-grey-color: #737373;
   }
 }
 
-.arrowIcons{
-  width :8px;
+.arrowIcons {
+  width: 8px;
   height: 6px;
 }

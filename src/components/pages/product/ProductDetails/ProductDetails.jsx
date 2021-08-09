@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import moment from 'moment';
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Image from "../../../common/LazyImage/Image";
@@ -78,7 +79,22 @@ const ProductDetails = (props) => {
     if (productQuantity === 1) return;
     setProductQuantity((prevState) => prevState - 1);
   };
+  const calculateOnSale = () => {
+    const newProductMessage = custom_attributes?.find(
+      (e) => e?.attribute_code === "news_to_date"
+    )?.value;
 
+    const saleEndDate = custom_attributes?.find(
+      (e) => e?.attribute_code === "salebadge_enddate"
+    )?.value;
+    if (saleEndDate && moment(saleEndDate).isAfter(moment().format('YYYY-MM-DDTHH:mm:ssZ'))) {
+      return <div>On Sale</div>
+    }
+    if (newProductMessage && moment(newProductMessage).isAfter(moment().format('YYYY-MM-DDTHH:mm:ssZ'))) {
+      return <div>New</div>
+    }
+    return null;
+  };
   const addToCardHandler = () =>
     dispatch(
       addToCart({
@@ -136,7 +152,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div className={styles.actionContainerTopLeft}>
-              <div>ON SALE</div>
+              {calculateOnSale()}
             </div>
             {/* <div className={styles.actionContainerBottomRight}>
               <div>
@@ -244,7 +260,7 @@ const ProductDetails = (props) => {
                 })}
               </div>
             </div>
-           {outOfStock?<div
+            {outOfStock ? <div
               className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
             >
               <div className={`${styles.icon} d-flex-all-center`}>
@@ -253,7 +269,7 @@ const ProductDetails = (props) => {
               <div className={styles.text}>
                 We will let you know when its in stock
               </div>
-            </div>:null}
+            </div> : null}
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li m-0">
@@ -370,7 +386,7 @@ const ProductDetails = (props) => {
                 </div>
 
                 <div className="d-flex align-items-center my-50px">
-                  {outOfStock? (
+                  {outOfStock ? (
                     <OutOfStock productId={product.id} />
                   ) : (
                     <div className={styles.addToCart}>
@@ -386,7 +402,7 @@ const ProductDetails = (props) => {
                       </button>
                     </div>
                   )}
-               
+
                   <div
                     className={`${styles.wishlist} d-flex-all-center`}
                     onClick={handleWishList}

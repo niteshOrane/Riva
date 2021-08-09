@@ -21,7 +21,7 @@ function ProfileInfoForm() {
     firstname: customer?.firstname,
     lastname: customer?.lastname,
     email: customer?.email,
-    mobile_number: customer?.mobile_number,
+    mobile_number: customer?.mobile,
     gender: customer.gender,
     dob: customer.dob,
     profileImg: "",

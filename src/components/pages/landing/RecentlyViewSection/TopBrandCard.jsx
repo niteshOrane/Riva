@@ -29,9 +29,9 @@ const TopBrandCard = ({ item }) => {
     <TempLink product={item}>
       <div className={`d-flex align-items-cetner ${style.cardBody}`}>
         <div className={style.cardImg}>
-          <Image src={item.image || item.src} width="100%" alt="" />
+          <Image src={item.image || item.src} width="100%" alt=""  type = 'product-details' />
           <div className={style.cartImage}>
-            <span class="material-icons-outlined">shopping_cart</span>
+            <span className="material-icons-outlined">shopping_cart</span>
           </div>
         </div>
         <div className={style.cardText}>

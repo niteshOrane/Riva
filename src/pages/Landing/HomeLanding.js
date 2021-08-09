@@ -9,15 +9,7 @@ function HomeLanding() {
     (state) => state.common.selectedCategoryItem
   );
   return (
-    <>
-      <div>
-        <div className = {style.lineContainer}>
-          <div className = {style.line1}></div>
-          <div className={style.line2}></div>
-        </div>
-        <HeroGrid2 items={selectedCategoryItem?.data} srcPath='/assets/images/banner' isHomePage={Boolean(true)} />
-      </div>
-    </>
+    <HeroGrid2 items={selectedCategoryItem?.data} srcPath='/assets/images/banner' isHomePage={Boolean(true)} />
   );
 }
 

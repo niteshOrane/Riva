@@ -28,16 +28,18 @@ function WishList() {
 
             <div className="d-flex gap-12px f1" style={{ flexWrap: 'wrap' }}>
               {wishlist?.map((product) => {
-               
-                return(
-                <Card
-                  name={product?.name}
-                  src={product?.image}
-                  priceWas={product?.price}
-                  priceIs={product?.special}
-                  remove={() => removeFromWishlist(product)}
-                />
-              )})}
+
+                return (
+                  <Card
+                    name={product?.name}
+                    src={product?.image}
+                    priceWas={product?.price}
+                    priceIs={product?.special}
+                    sku={product?.sku}
+                    remove={() => removeFromWishlist(product)}
+                  />
+                )
+              })}
             </div>
           </div>
         </div>
