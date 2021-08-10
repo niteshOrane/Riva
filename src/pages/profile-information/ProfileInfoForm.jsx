@@ -12,6 +12,7 @@ import {
 } from "../../services/dashboard/dashboard.service";
 import { showSnackbar } from "../../store/actions/common";
 import { setCustomer } from "../../store/actions/auth";
+import { getStoreId } from "../../util";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
@@ -44,10 +45,11 @@ function ProfileInfoForm() {
     cust.append("customerid", customer.customerID);
     cust.append("firstname", values.firstname);
     cust.append("email", values.email);
-    cust.append("lastname", values.lastname);
-    cust.append("dob", values.dob);
-    cust.append("gender", values.gender);
-    cust.append("mobile_number", values.mobile_number);
+    cust.append("customerInfo[lastname]", values.lastname);
+    cust.append("customerInfo[dob]", values.dob);
+    cust.append("customerInfo[gender]", values.gender);
+    cust.append("customerInfo[mobile_number]", values.mobile_number);
+    cust.append("customerInfo[storeId]", getStoreId());
 
     const res = await profileUpdate(cust);
 
@@ -57,7 +59,7 @@ function ProfileInfoForm() {
           ...values,
         })
       );
-      return dispatch(showSnackbar(res?.data?.data, "success"));
+      return dispatch(showSnackbar(res?.data?.message, "success"));
     }
     return dispatch(showSnackbar("Something went wrong", "error"));
   };
@@ -86,7 +88,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <div className>
-                <label  className="profile-label">Email</label>
+                <label className="profile-label">Email</label>
                 <input
                   name="email"
                   value={values?.email}
@@ -94,7 +96,7 @@ function ProfileInfoForm() {
                 />
               </div>
               <div style={{ marginLeft: "2rem" }}>
-                <label  className="profile-label">Mobile Number</label>
+                <label className="profile-label">Mobile Number</label>
                 <input
                   name="mobile_number"
                   value={values?.mobile_number}
@@ -104,7 +106,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <FormControl component="fieldset">
-                <FormLabel  className="profile-label" component="legend">Your Gender</FormLabel>
+                <FormLabel className="profile-label" component="legend">Your Gender</FormLabel>
                 <RadioGroup
                   row
                   aria-label="position"
@@ -135,7 +137,7 @@ function ProfileInfoForm() {
             </section>
             <section>
               <div>
-                <label  className="profile-label">Date of Birth</label>
+                <label className="profile-label">Date of Birth</label>
                 <input
                   value={values.dob}
                   placeholder="Select DOB"
