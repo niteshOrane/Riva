@@ -16,7 +16,7 @@ const ShoppingCart = () => {
     window.location.href = "/";
   };
   return (
-    <div className="container-90 max-width-1600 mx-auto" style={{ height: "100vh" }}>
+    <div className="container-90 max-width-1600 mx-auto" style={{ height: "auto" }}>
       <div className={style.pageHeader}>
         <h1 className={style.pageTitle}>Shopping Cart</h1>
       </div>
