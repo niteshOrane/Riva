@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './horizontalProductCard.module.scss';
 
-const VerticalProductCard = ({ product }) => {
+const VerticalProductCard = ({ product, index, setColorSize }) => {
+
+
   const {
     name = 'not available',
     image: src,
@@ -26,17 +28,19 @@ const VerticalProductCard = ({ product }) => {
           <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Color:</span>
             {colors.map((color, index) => {
-              const colorItem = product?.options.filter(e => e.label === "Color")?.[0]?.values[color]?.label;
+              const colorItem = product?.options.filter(e => e.label === "Color")?.[0]?.values[color];
               return (
-                <span className={styles.text}>{colorItem} {colors.length > index + 1 ? '|' : ''}</span>
+                <span onClick={() => setColorSize(colorItem, product, index, 'color')}
+                  className={styles.text}>{colorItem.label} {colors.length > index + 1 ? '|' : ''}</span>
               )
             })}
           </div>
           <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Size:</span>
-            {sizes?.map((color) => {
+            {sizes?.map((sizeName) => {
+              const sizeItem = product?.options.filter(e => e.label === "Size")[0].values[sizeName];
               return (
-                <span className={styles.text}>{product?.options.filter(e => e.label === "Size")[0].values[color].label}</span>
+                <span onClick={() => setColorSize(sizeItem, product, index, "Size")} className={styles.text}>{sizeItem.label}</span>
               )
             })}
           </div>

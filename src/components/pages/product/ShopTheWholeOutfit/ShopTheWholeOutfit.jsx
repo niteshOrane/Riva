@@ -1,17 +1,48 @@
 import React, { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
+import { useDispatch, useSelector } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
 import HorizontalProductCard from '../../../common/Cards/ProductCard/HorizontalProductCard';
 import Image from '../../../common/LazyImage/Image';
 import styles from './shopTheWholeOutfit.module.scss';
 
+import { addToCart } from "../../../../store/actions/cart";
+import { useEffect } from 'react';
+
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
-
+  const [dataItems, setDataItems] = useState(data || []);
+  const dispatch = useDispatch();
   const handleSelected = (checked, product) => {
     if (checked) setSelected(selected.filter((c) => c.id !== product.id));
     else setSelected((s) => [...s, product]);
   };
+  useEffect(() => {
+    setDataItems(data)
+  }, [])
+  const setColorSize = (attr, product, index, type) => {
+    product[type] = attr;
+    dataItems[index] = product;
+    setDataItems(dataItems)
+  };
+  const addToCardHandler = () => {
+    if (selected && selected.length > 0) {
+      selected.map((product) => {
+        dispatch(
+          addToCart({
+            ...product,
+            id: `${product.id}`,
+            name: product.name,
+            src: product.image,
+            qty: 1,
+            price: product.price,
+            ...product.selected,
+          })
+        );
+      })
+
+    }
+  }
 
   return (
     <div className={styles.wholeOutfit}>
@@ -28,7 +59,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
           {/* <div className={styles.description}>{data.mainCard.description}</div> */}
         </div>
         <div>
-          {data.map((product) => (
+          {dataItems.map((product, index) => (
             <div style={{ position: 'relative' }}>
               <div style={{ position: 'absolute', top: -10, left: -10 }}>
                 {' '}
@@ -38,7 +69,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
                   onClick={(e) => handleSelected(!e.target.checked, product)}
                 />{' '}
               </div>
-              <HorizontalProductCard product={product} />
+              <HorizontalProductCard product={product} index={index} setColorSize={setColorSize} />
               <hr className="my-10px" />
             </div>
           ))}
@@ -68,10 +99,10 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
               />
             </div>
             <div className={styles.selectedCount}>
-              {selected.length} out of {data.length} products selected
+              {selected.length} out of {dataItems.length} products selected
             </div>
           </div>
-          {data?.discount?.discounts?.map((discount) => (
+          {dataItems?.discount?.discounts?.map((discount) => (
             <div
               className={`${styles.discount} d-flex p-12px justify-content-between`}
             >
@@ -90,9 +121,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
               USD {selected.reduce((t, s) => s.priceWithoutCurrency + t, 0)}
             </div>
           </div>
-          <div className={styles.addToCart}>
+          <div className={styles.addToCart} onClick={() => addToCardHandler()}>
             <span className={styles.text}>
-              Add {selected.length} of {data.length} items to cart
+              Add {selected.length} of {dataItems.length} items to cart
             </span>
           </div>
         </div>
