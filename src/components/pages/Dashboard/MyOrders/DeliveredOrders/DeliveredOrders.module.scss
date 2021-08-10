@@ -10,8 +10,9 @@
       display: flex;
       .img {
         margin-right: 12px;
+        width: 11rem;
         img {
-          max-width: 100px;
+          max-width: 150px;
           height: 100px;
           object-fit: contain;
         }

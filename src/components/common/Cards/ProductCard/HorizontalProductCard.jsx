@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './horizontalProductCard.module.scss';
 
-const VerticalProductCard = ({ product, index, setColorSize }) => {
+const VerticalProductCard = ({ product, index, setColorSize,getOutOfStock }) => {
 
 
   const {

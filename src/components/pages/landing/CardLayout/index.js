@@ -8,7 +8,9 @@ function Index() {
 
   const init = async () => {
     const res = await getPromoCategories();
-    setdata(res?.data?.map((d) => ({ ...d, title: d.name })) || []);
+    if (res.status===200 && res.data) {
+      setdata(res?.data?.map((d) => ({ ...d, title: d.name })) || []);
+    }
   };
 
   useEffect(() => {
@@ -17,7 +19,7 @@ function Index() {
 
   return (
     <div className={`container-with-circles ${style.container}`}>
-      {data.map((item) => (
+      {data?.map((item) => (
         <Card item={item} />
       ))}
     </div>

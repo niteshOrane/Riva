@@ -4,6 +4,7 @@ import Slider from '../../../common/Sliders/Slider';
 import ArrowButton from '../../../common/Buttons/Arrow';
 import { getProducts } from '../../../../services/layout/Layout.service';
 import style from './TopBrandCard.module.scss';
+
 const TopBrandsSlider = () => {
   const refContainer = useRef();
 

@@ -1,30 +1,69 @@
-import React, { useState } from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { useState } from "react";
+import { PieChart } from "react-minimal-pie-chart";
 import { useDispatch, useSelector } from "react-redux";
-import Checkbox from '@material-ui/core/Checkbox';
-import HorizontalProductCard from '../../../common/Cards/ProductCard/HorizontalProductCard';
-import Image from '../../../common/LazyImage/Image';
-import styles from './shopTheWholeOutfit.module.scss';
+import Checkbox from "@material-ui/core/Checkbox";
+import HorizontalProductCard from "../../../common/Cards/ProductCard/HorizontalProductCard";
+import Image from "../../../common/LazyImage/Image";
+import styles from "./shopTheWholeOutfit.module.scss";
 
 import { addToCart } from "../../../../store/actions/cart";
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { outOfStockCheck } from "../../../../services/product/product.service";
+import { showSnackbar } from "../../../../store/actions/common";
 
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
   const [dataItems, setDataItems] = useState(data || []);
+  const [proId, setProId] = useState(null);
   const dispatch = useDispatch();
-  const handleSelected = (checked, product) => {
-    if (checked) setSelected(selected.filter((c) => c.id !== product.id));
-    else setSelected((s) => [...s, product]);
+  const getOutOfStock = async (val) => {
+    if (dataItems?.length > 0) {
+      const temp = dataItems?.find((li) => li.id === val);
+      const id = temp?.id;
+      const colorIndex = Object.keys(
+        temp?.options?.filter((e) => e.label === "Color")?.[0]?.values
+      );
+      const color = temp?.options.filter((e) => e.label === "Color")?.[0]
+        ?.values[colorIndex[0]]?.label;
+      const sizeIndex = Object.keys(
+        temp?.options?.filter((e) => e.label === "Size")?.[0]?.values
+      );
+      const size = temp?.options.filter((e) => e.label === "Size")?.[0]?.values[
+        sizeIndex[0]
+      ]?.label;
+      const res = await outOfStockCheck(id, color, size);
+      if (res && res.status === 200) {
+        if (res?.data?.data?.Stock) {
+          return true;
+        }
+        if (res?.data?.data?.Stock === 0) {
+          dispatch(showSnackbar("Product is out of stock", "error"));
+          return false;
+        }
+      }
+    }
+  };
+
+  const handleSelected = async (checked, product) => {
+    const isProductInStock = await getOutOfStock(product?.id);
+    if (isProductInStock) {
+      if (checked) setSelected(selected.filter((c) => c.id !== product.id));
+      else setSelected((s) => [...s, product]);
+    } else {
+      return null;
+    }
   };
   useEffect(() => {
-    setDataItems(data)
-  }, [])
+    setDataItems(data);
+  }, []);
   const setColorSize = (attr, product, index, type) => {
     product[type] = attr;
+    // setProId(product);
     dataItems[index] = product;
-    setDataItems(dataItems)
+    setDataItems([...dataItems]);
+    // getOutOfStock()
   };
+
   const addToCardHandler = () => {
     if (selected && selected.length > 0) {
       selected.map((product) => {
@@ -39,11 +78,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
             ...product.selected,
           })
         );
-      })
-
+      });
     }
-  }
-
+  };
   return (
     <div className={styles.wholeOutfit}>
       <div className={styles.header}>Shop the Whole Outfit</div>
@@ -60,16 +97,23 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
         </div>
         <div>
           {dataItems.map((product, index) => (
-            <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', top: -10, left: -10 }}>
-                {' '}
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", top: -10, left: -10 }}>
+                {" "}
                 <Checkbox
-                  checked={selected.find((s) => s.id === product.id)}
+                  checked={
+                    selected.filter((s) => s.id === product.id).length > 0
+                  }
                   color="default"
                   onClick={(e) => handleSelected(!e.target.checked, product)}
-                />{' '}
+                />{" "}
               </div>
-              <HorizontalProductCard product={product} index={index} setColorSize={setColorSize} />
+              <HorizontalProductCard
+                product={product}
+                index={index}
+                setColorSize={setColorSize}
+                getOutOfStock={getOutOfStock}
+              />
               <hr className="my-10px" />
             </div>
           ))}
@@ -83,14 +127,14 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
               <PieChart
                 data={[
                   {
-                    title: 'One',
+                    title: "One",
                     value: selected.length,
-                    color: 'black',
+                    color: "black",
                   },
                   {
-                    title: 'Two',
+                    title: "Two",
                     value: data.length - selected.length,
-                    color: '#b2aeae',
+                    color: "#b2aeae",
                   },
                 ]}
                 lineWidth={5}

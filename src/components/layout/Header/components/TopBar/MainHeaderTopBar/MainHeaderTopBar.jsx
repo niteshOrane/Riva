@@ -9,7 +9,8 @@ const MainHeaderTopBar = ({ mainHeader }) => {
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
-  const header = useSelector((state) => state.common.header);
+  const header = useSelector((state) => state?.common?.header);
+  console.log(header)
   const foundStore =
     header?.find(({ country_id }) => country_id === currentLocation) || {};
   const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");

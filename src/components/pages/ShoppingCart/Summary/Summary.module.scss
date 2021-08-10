@@ -1,5 +1,7 @@
 .container {
   width: 100%;
+  overflow-y: scroll;
+    height: 90vh;
   .bgGrey {
     background-color: #f5f7f9;
     padding: 12px;
