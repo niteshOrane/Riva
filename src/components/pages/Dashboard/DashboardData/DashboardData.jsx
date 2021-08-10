@@ -35,7 +35,7 @@ const DashboardData = () => {
         </Link>
       </div>
       <div className={styles.grid}>
-        <Link className={styles.box} to="#">
+        <Link className={styles.box} to="/delivered">
           <span className="my-12px">
             <icons.MyOrders />
           </span>
@@ -53,13 +53,13 @@ const DashboardData = () => {
           </span>
           <span>My Stuff</span>
         </Link>
-        <Link className={styles.box} to="#">
+        <Link className={styles.box} to="/notify-me">
           <span className="my-12px">
             <icons.Notification />
           </span>
           <span>Notify Me</span>
         </Link>
-        <Link className={styles.box} to="#">
+        <Link className={styles.box} to="/profile-information">
           <span className="my-12px">
             <icons.Accounts />
           </span>

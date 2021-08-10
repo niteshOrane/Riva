@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useHistory } from 'react-router';
+
+import { getCart } from '../../../../../../store/actions/cart';
 import {
   showSnackbar,
   toggleSignUpCard,
 } from '../../../../../../store/actions/common';
-import { useHistory } from 'react-router';
 import styles from '../../SignUpCard.module.scss';
-import * as icons from '../../../../Icons/Icons';
 import {
   loginCustomer,
   forgotPassword,
+  mergeGuestCart
 } from '../../../../../../services/auth/auth.service';
 import { loginSuccess } from '../../../../../../store/actions/auth';
+import { getCartId } from "../../../../../../util";
 
 const LoginForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
@@ -73,6 +77,13 @@ const LoginForm = ({ handleSubmit }) => {
 
     if (res.status === 200) {
       if (res?.data?.success) {
+        if (getCartId() > 0) {
+          const customerCart = new FormData();
+          customerCart.append('guestQuoteId', getCartId());
+          customerCart.append('customerId', res.data?.data?.customerID);
+          await mergeGuestCart(customerCart);
+          dispatch(getCart());
+        }
         handleSubmit();
         typeof res?.data?.data !== 'string' &&
           dispatch(loginSuccess(res.data.data));
@@ -84,6 +95,7 @@ const LoginForm = ({ handleSubmit }) => {
             'success'
           )
         );
+
         return typeof res?.data?.data !== 'string'
           ? history.push(redirectTo || '/dashboard')
           : null;

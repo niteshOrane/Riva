@@ -66,10 +66,10 @@ export const getProducts = (categoryId, limit) => {
   return axios(config);
 };
 
-export const getPromoCategories = () => {
+export const getPromoCategories = (categoryId) => {
   const config = {
     method: 'get',
-    url: `${API_URL}/webapi/getpromotionalcategories/?categoryId=1241`,
+    url: `${API_URL}/webapi/getpromotionalcategories/?categoryId=${categoryId}`,
     silent: true,
   };
   return axios(config);

@@ -31,6 +31,17 @@ export const loginCustomer = (formData) => {
   return axios(config);
 };
 
+export const mergeGuestCart = async (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/mergeGuestCart`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};
+
+
 export const forgotPassword = (formData) => {
   const config = {
     method: "post",
