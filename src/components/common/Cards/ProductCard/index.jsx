@@ -4,10 +4,8 @@ import { Link } from "react-router-dom";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import {
-  toggleQuickView,
-  showSnackbar,
+  toggleQuickView
 } from "../../../../store/actions/common";
-import { addToCart } from "../../../../store/actions/cart";
 import { extractColorSize, URL } from "../../../../util";
 
 import { getProduct } from "../../../../services/product/product.service";
