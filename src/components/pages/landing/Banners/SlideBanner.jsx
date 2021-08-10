@@ -25,7 +25,7 @@ const SlideBanner = ({ banners = [] }) => {
               <div className={style.overlay}>
                 <a href="/" className={style.overlay}>
                   <div className={`${style.sliderTxt} text-center `}>
-                    <h2 className="color-white">{item?.title}</h2>
+                    <h2 className="color-white">{item?.title?.toUpperCase()}</h2>
                     <p className="color-white">
                       Discover this week the latest pieces from our latest
                       collection Spring summer 2021 Woman
