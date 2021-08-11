@@ -13,7 +13,8 @@ import {
   addNewAddress,
 } from "../../../../store/actions/customerAddress";
 
-function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
+function DeliveryAddressForm({ customerData, onAfterSaveEdit, userAddress }) {
+  console.log({ userAddress });
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -40,14 +41,26 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         // setFormData({ ...formData, country: res?.data[0]?.full_name_english });
       }
     } else {
-      dispatch(showSnackbar("FailedTo Load Country List", "error"))
+      dispatch(showSnackbar("FailedTo Load Country List", "error"));
     }
   };
   useEffect(() => {
     getAllCountryList();
   }, []);
   useEffect(() => {
-    if (countryList && formData.country) {
+    if (userAddress) {
+      setFormData({
+        ...formData,
+        country: userAddress?.country_code?.slice(0, -1),
+        state: userAddress?.region,
+        street: userAddress?.label,
+        city:userAddress?.locality,
+        block:userAddress?.name
+      });
+    }
+  }, [userAddress]);
+  useEffect(() => {
+    if (countryList) {
       const temp = countryList?.find(
         (li) => li.id === formData.country
       )?.available_regions;
@@ -67,9 +80,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       block: "",
       houseName: "",
       defaultAddess: true,
-      country: ""
+      country: "",
     });
-    if (onAfterSaveEdit) { onAfterSaveEdit(); }
+    if (onAfterSaveEdit) {
+      onAfterSaveEdit();
+    }
   };
   const addAddress = (item, id) => async () => {
     const res = await (id
@@ -78,7 +93,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.data.success) {
       dispatch(addNewAddress(res, item));
       clearAll();
-      if (onAfterSaveEdit) { onAfterSaveEdit(); }
+      if (onAfterSaveEdit) {
+        onAfterSaveEdit();
+      }
     } else {
       dispatch(
         showSnackbar(
@@ -96,15 +113,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.id = customerData?.id;
     formData.block = customerData?.street?.split(" ")?.[0];
     formData.houseName = customerData?.street?.split(" ")?.[1];
-    formData.country = customerData?.country
-    formData.defaultAddess = customerData?.Shippingid !== ""
+    formData.country = customerData?.country;
+    formData.defaultAddess = customerData?.Shippingid !== "";
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
   const handleChange = (e) => {
     if (e.target.type === "checkbox") {
       setFormData({ ...formData, [e.target.name]: e.target.checked });
-    }
-    else {
+    } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
@@ -121,7 +137,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     defaultAddess,
     id,
     email,
-    country
+    country,
   } = formData;
 
   const addAddressHandler = () => {
@@ -136,8 +152,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!city) {
       return dispatch(showSnackbar("City Require", "error"));
     }
-    if(!country){
-      return dispatch(showSnackbar("Country is Required","error"))
+    if (!country) {
+      return dispatch(showSnackbar("Country is Required", "error"));
     }
     if (!state) {
       return dispatch(showSnackbar("State Require", "error"));
@@ -176,17 +192,19 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("telephone", mobile);
     form.append("street", `${block} ${houseName}`);
     form.append("street1", street);
-    form.append("country", country)
-    form.append("setDefaultAddress", defaultAddess ? 1 : 0)
+    form.append("country", country);
+    form.append("setDefaultAddress", defaultAddess ? 1 : 0);
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
   };
   return (
     <>
       <form className={styles.form} id="addNewAddress">
-        <div className={styles.inpContainerAdd}>Add an address for delivery in your address book and make checkout faster</div>
+        <div className={styles.inpContainerAdd}>
+          Add an address for delivery in your address book and make checkout
+          faster
+        </div>
         <div className={styles.inpContainer}>
-
           <div className="w-100">
             <p className={styles.inpLable}>
               First Name<span className={styles.star}>*</span>
@@ -230,7 +248,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             >
               <option>Select Country</option>
               {countryList?.map((li) => (
-                <option value={li?.id} key={li.id}>{li?.full_name_english}</option>
+                <option value={li?.id} key={li.id}>
+                  {li?.full_name_english}
+                </option>
               ))}
             </select>
           </div>
@@ -246,7 +266,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             >
               <option>Select state</option>
               {stateList?.map((li) => (
-                <option value={li?.name} key={li.id}>{li?.name}</option>
+                <option value={li?.name} key={li.id}>
+                  {li?.name}
+                </option>
               ))}
             </select>
           </div>
@@ -281,7 +303,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             />
           </div>
           <div className="w-100">
-            <p className={styles.inpLable}>Block<span className = {styles.star}>*</span></p>
+            <p className={styles.inpLable}>
+              Block<span className={styles.star}>*</span>
+            </p>
             <input
               type="block"
               className={styles.input}
