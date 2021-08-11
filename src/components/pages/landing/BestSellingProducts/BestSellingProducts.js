@@ -13,9 +13,9 @@ const category_ids = {
 };
 
 const BestSellingProducts = () => {
-  const [title,setTitle] = useState({
-    roboto:"Featured",
-    dancing:"Products"
+  const [title, setTitle] = useState({
+    roboto: "Featured",
+    dancing: "Products"
   })
   const refContainer = useRef();
 
@@ -26,10 +26,9 @@ const BestSellingProducts = () => {
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
 
-  const changeCategory = (slug,title1,title2) => {
+  const changeCategory = (slug, title1, title2) => {
     setcategoryId(slug);
-    if(title1==="All") return setTitle({roboto:title1,dancing:""})
-    setTitle({roboto:title1,dancing:title2})
+    setTitle({ roboto: title1, dancing: title2 })
   };
 
   const fetchProducts = async (id) => {
@@ -62,16 +61,15 @@ const BestSellingProducts = () => {
         <SectionHeader roboto={title.roboto} dancing={title.dancing} />
         <div className="d-flex align-items-center">
           <ul className="nav-list d-flex align-items-center">
-            <li  className="nav-li">
+            <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.all,"All","")}
-            
+                onClick={() => changeCategory(category_ids.all, "All", "Products")}
+
               >
                 <span
-                  className={`align-self-end font-light-black ${
-                    categoryId === category_ids.all ? "color-text-primary" : ""
-                  }`}
+                  className={`align-self-end font-light-black ${categoryId === category_ids.all ? "color-text-primary" : ""
+                    }`}
                 >
                   All
                 </span>
@@ -80,14 +78,13 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.best_selling,"Best Selling", "Product")}
+                onClick={() => changeCategory(category_ids.best_selling, "Best Selling", "Products")}
               >
                 <span
-                  className={`align-self-end font-light-black ${
-                    categoryId === category_ids.best_selling
-                      ? "color-text-primary"
-                      : ""
-                  }`}
+                  className={`align-self-end font-light-black ${categoryId === category_ids.best_selling
+                    ? "color-text-primary"
+                    : ""
+                    }`}
                 >
                   Best Selling Products
                 </span>
@@ -96,14 +93,13 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.featured,"Featured", "Product")}
+                onClick={() => changeCategory(category_ids.featured, "Featured", "Products")}
               >
                 <span
-                  className={`align-self-end font-light-black ${
-                    categoryId === category_ids.featured
-                      ? "color-text-primary"
-                      : ""
-                  }`}
+                  className={`align-self-end font-light-black ${categoryId === category_ids.featured
+                    ? "color-text-primary"
+                    : ""
+                    }`}
                 >
                   Featured Products
                 </span>
