@@ -1,11 +1,10 @@
 import React, { Component, Suspense } from "react";
-import { Redirect, Route, Switch, BrowserRouter } from "react-router-dom";
+import { Redirect, Route, Switch, HashRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
 import HomeLayout from "../Layouts/HomeLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
-
 const LandingHome = React.lazy(() => import("../pages/Landing/HomeLanding"));
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
@@ -294,15 +293,14 @@ class AppRoutes extends Component {
 
   render() {
     return (
-
-      <Suspense fallback={<Loader />}>
-        <BrowserRouter>
+      <HashRouter>
+        <Suspense fallback={<Loader />}>
           <Switch>
             {this.renderRoutes()}
             <Redirect to="/" />
           </Switch>
-        </BrowserRouter>
-      </Suspense>
+        </Suspense>
+      </HashRouter>
     );
   }
 }
