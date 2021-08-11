@@ -13,6 +13,10 @@ const category_ids = {
 };
 
 const BestSellingProducts = () => {
+  const [title,setTitle] = useState({
+    roboto:"Featured",
+    dancing:"Products"
+  })
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
@@ -22,8 +26,10 @@ const BestSellingProducts = () => {
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
 
-  const changeCategory = (slug) => {
+  const changeCategory = (slug,title1,title2) => {
     setcategoryId(slug);
+    if(title1==="All") return setTitle({roboto:title1,dancing:""})
+    setTitle({roboto:title1,dancing:title2})
   };
 
   const fetchProducts = async (id) => {
@@ -53,13 +59,13 @@ const BestSellingProducts = () => {
       className={`container-with-circles ${styles.bestSellingProductsContainer}`}
     >
       <div className="d-flex align-items-center justify-content-between my-20px">
-        <SectionHeader roboto="Best Selling" dancing="Products" />
+        <SectionHeader roboto={title.roboto} dancing={title.dancing} />
         <div className="d-flex align-items-center">
           <ul className="nav-list d-flex align-items-center">
             <li  className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.all)}
+                onClick={() => changeCategory(category_ids.all,"All","")}
             
               >
                 <span
@@ -74,7 +80,7 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.best_selling)}
+                onClick={() => changeCategory(category_ids.best_selling,"Best Selling", "Product")}
               >
                 <span
                   className={`align-self-end font-light-black ${
@@ -90,7 +96,7 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.featured)}
+                onClick={() => changeCategory(category_ids.featured,"Featured", "Product")}
               >
                 <span
                   className={`align-self-end font-light-black ${
