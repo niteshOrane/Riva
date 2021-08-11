@@ -210,7 +210,7 @@ const ProductDetails = (props) => {
                 </div>
               ))} */}
               {productColorList.length > 0 &&
-                productColorList.map((item, index) => (
+                productColorList?.map((item, index) => (
                   <div
                     key={`color${index}`}
                     className={`${styles.option}  c-pointer `}
@@ -222,8 +222,8 @@ const ProductDetails = (props) => {
                           : "scale(.9)",
                     }}
                   >
-                    {item.color.trim()}{" "}
-                    {productColorList.length > index + 1 ? "|" : ""}
+                    {typeof item?.color === "string" ? `${item?.color} ${productColorList.length > index + 1 ? "|" : ""}` : ''}{" "}
+
                   </div>
                 ))}
 

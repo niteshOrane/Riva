@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getStoreId } from '../../../../util';
+import { getStoreId, getLanguageName } from '../../../../util';
 import API_URL from '../../../../enviroments';
 
 const useVideoPlayer = () => {
@@ -9,7 +9,7 @@ const useVideoPlayer = () => {
   useEffect(() => {
     const config = {
       method: 'get',
-      url: `${API_URL}/webapi/getbanners?sliderId=9&storeId=${getStoreId()}`,
+      url: `${API_URL}/webapi/getbanners?type=lookbook&storeId=${getStoreId()}&language=${getLanguageName()}`,
       silent: true,
     };
 

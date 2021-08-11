@@ -18,7 +18,7 @@ import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks"
 import { Link } from "react-router-dom";
 
 function Landing() {
-  const { middleBanner } = useLanding();
+  const { middleBanner } = useLanding('topbrands');
   const { btfLeft, btfRight, videoBanner } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem

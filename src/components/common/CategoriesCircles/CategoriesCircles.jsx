@@ -21,6 +21,7 @@ function CategoriesCircles({ isHomePage }) {
     if (items.length) {
       dispatch(selectedCategory(items[0]?.children_data, id));
       history.push(`/type/${id}`);
+      window.location.reload();
     }
   };
 

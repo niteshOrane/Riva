@@ -36,6 +36,12 @@ export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
 
 export const getCartId = () => store?.getState()?.cart?.cart_id;
 
+
+export const getLanguageName = () => store?.getState()?.common?.store.language === "English" ? 'en' : 'ae';
+
+
+export const getSelectedCategoryId = () => store?.getState().common?.selectedCategoryItem?.id;
+
 export const deepEqual = (x, y) => {
   // eslint-disable-next-line one-var
   const ok = Object.keys,

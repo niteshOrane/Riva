@@ -34,7 +34,7 @@ const ProductList = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div style={{marginTop:"52px"}} className="section-header-container">
         <SectionHeader roboto="Extraordinary" dancing="Essentials" />
       </div>
@@ -57,7 +57,7 @@ const ProductList = () => {
           <ArrowButton direction="forward" />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
