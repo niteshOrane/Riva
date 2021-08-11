@@ -53,7 +53,7 @@ export const deepEqual = (x, y) => {
     : x === y;
 };
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({ queryKey: false });
 
 export const hardReload = () =>
   setTimeout(() => {
