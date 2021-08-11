@@ -78,7 +78,7 @@ export const getPromoCategories = (categoryId) => {
 export const searchProducts = (categoryId, limit) => {
   const config = {
     method: 'get',
-    url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=1`,
+    url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
