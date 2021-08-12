@@ -27,6 +27,7 @@ function CancelledOrders() {
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
+      console.log(temp)
       setOrderList(temp?.filter((li) => li.status === "canceled"));
     }
   };

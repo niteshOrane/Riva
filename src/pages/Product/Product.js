@@ -81,6 +81,14 @@ const Product = (props) => {
 
       setCompositioncare(rescompositioncare);
       setproduct(p);
+      if (p.custom_attributes) {
+        p.origpriceWithoutCurrency = p.custom_attributes?.find(
+          (e) => e?.attribute_code === "special_price"
+        )?.value;
+        p.origprice = `$${parseFloat(p.origpriceWithoutCurrency)?.toFixed(2)}`;
+        p.priceWithoutCurrency = p.price;
+        p.price = `$${parseFloat(p.price).toFixed(2)}`;
+      }
       dispatch(addToRecentlyViewed(p));
     } catch (err) {
       setproduct({});

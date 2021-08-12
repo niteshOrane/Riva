@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    border:"none"
   },
   box: {
     width: "50%",
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   size: {
     marginLeft: "5px",
-    border: "1px solid grey",
+    border: "1px solid #c8c0c0",
     padding: "2px",
     marginTop: "50px",
   },
@@ -52,18 +53,22 @@ const useStyles = makeStyles((theme) => ({
     padding: "3px",
     border: "2px solid black",
     outline: "none",
-    marginTop:"10px",
+    marginTop:"20px",
   },
   sizeWrapper:{
       display:"flex",
       marginTop:"15px",
       marginBottom:"15px"
   },
+  span:{
+    fontSize:"13px",
+    color:"#2d2d2d"
+  },
   btn: {
-      padding:"10px",
+      padding:"15px",
       backgroundColor:"#000",
       color:"#fff",
-      marginTop:"10px",
+      marginTop:"20px",
       border:"none",
       cursor:"pointer"
   },
@@ -71,7 +76,9 @@ const useStyles = makeStyles((theme) => ({
     position:"absolute",
     top:"3%",
     left:"95%",
-    background:"transparent"
+    background:"transparent",
+    border:"none",
+    cursor:"pointer"
   }
 }));
 
@@ -90,21 +97,21 @@ export default function SimpleModal({ image, sizes }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <button className = {classes.closeBtn}>
+      <button onClick={handleClose} className = {classes.closeBtn}>
        <icons.Close />
       </button>
       <div className={classes.box}>
         <img style={{ width: "100%", height: "100%" }} src={image} alt="" />
       </div>
       <div className={classes.box2}>
-        <h3 className={classes.para}>
+        <h3 style={{color:"#161616"}} className={classes.para}>
           WOULD YOU LIKE TO KNOW IF THIS ITEM IS AVAILABLE IN STORE?
         </h3>
-        <p className={classes.para}>
+        <span className={`${classes.para} ${classes.span}`}>
           To check in store availability, enter a city or post code. Please keep
           in mind that stocks are indicative only and w recommend that you call
           the store to make sure they have the item you are interested in.
-        </p>
+        </span>
         <section className={classes.sizeWrapper}>
           <strong>Size: </strong>
           {sizes?.map((li) => (
@@ -114,9 +121,9 @@ export default function SimpleModal({ image, sizes }) {
           ))}
         </section>
         <h5 className={classes.para}>Tell us your area</h5>
-        <p className={classes.para}>
+        <span className={`${classes.para} ${classes.span}`}>
           We’ll show you availability for the stores closest to your location.
-        </p>
+        </span>
         <div>
           <input
             className={classes.input}

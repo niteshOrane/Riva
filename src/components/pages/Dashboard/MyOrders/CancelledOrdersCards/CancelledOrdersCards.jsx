@@ -4,15 +4,14 @@ import { extractColorSize } from "../../../../../util";
 
 const CancelledOrdersCards = ({ products }) => {
   const getColorSize = (options) => {
-    console.log(options);
     const { colors, size } = extractColorSize(
       options.map((o) => ({
         label: o.option_id === "92" ? "Color" : "Size",
         values: [{ value_index: o.option_value }],
+        attribute_id: o.option_id
       }))
-    
     );
-    console.log(colors)
+
     return { colors, size };
   };
   const colorSize = getColorSize(
@@ -40,7 +39,7 @@ const CancelledOrdersCards = ({ products }) => {
               </div>
               <div className={styles.colorSize}>
                 <span>Size: </span>
-                <span className={styles.greyText}>{product?.size}</span>
+                <span className={styles.greyText}>{colorSize.size?.[0]?.label}</span>
               </div>
             </div>
           </div>

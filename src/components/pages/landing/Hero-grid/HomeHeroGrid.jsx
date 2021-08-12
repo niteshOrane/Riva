@@ -31,29 +31,13 @@ const HomeHeroGrid = (props) => {
       <CategoriesCircles isHomePage={isHomePage} />
       {itemsImage.length ? (
         <div>
-          <section className="banner-grid-wrapper">
-            <div
-              className="base-image-wrapper c-pointer"
-              onClick={() => {
-                onCategorySelect(
-                  defaultCategory.find(
-                    (e) =>
-                      e?.name?.toLowerCase() ===
-                      itemsImage
-                        .find((m) => m.position === "1")
-                        ?.title?.toLowerCase()
-                  )?.id
-                );
-              }}
-            >
-              {itemsImage.length ? (
-                <Image
-                  src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${
-                    itemsImage.find((e) => e.position === "1").image || ""
-                  }`}
-                  alt={items?.[0]?.title}
-                />
-              ) : null}
+          <section className="banner-grid-wrapper"
+          >
+            <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory.find(e => e?.name?.toLowerCase() === itemsImage.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>
+              {itemsImage.length ? <Image
+                src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${itemsImage.find(e => e.position === '1').image || ''}`}
+                alt={items?.[0]?.title} />
+                : null}
               <div className="banner-wrapper-text">
                 <h3>{items?.[0]?.title ?? "WOMEN"}</h3>
                 <ButtonWithArrows

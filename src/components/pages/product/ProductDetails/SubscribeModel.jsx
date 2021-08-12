@@ -17,12 +17,31 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 590,
+    height:264,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    display:"flex"
   },
+  heading:{
+    margin:"30px 70px 21px 87px "
+  },
+  input: {
+    height: 42,
+    width: 200,
+    padding: "3px",
+    border: "2px solid black",
+    outline: "none",
+    marginTop:"10px",
+  },
+  btn: {
+    padding:"10px",
+    backgroundColor:"#000",
+    color:"#fff",
+    marginTop:"10px",
+    border:"none",
+    cursor:"pointer"
+},
 }));
 
 export default function SimpleModal() {
@@ -34,28 +53,31 @@ export default function SimpleModal() {
   const handleOpen = () => {
     setOpen(true);
   };
-  React.useEffect(() => {
-      setOpen(true)
-  },[])
   const handleClose = () => {
     setOpen(false);
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-      <SimpleModal />
+      <div className="w-50">
+        <img src ="/assets/images/sub.jpg" alt="" />
+      </div>
+      <div>
+        <h1 className={classes.heading}>RIVA</h1>
+        <span>Subscribe to the Riva fashion website to receive timely updates to your favourite products</span>
+        <div className="d-flex">
+          <input className={classes.input} placeholder="Enter Your Mail" />
+          <button className={classes.btn}>Subscibe</button>
+        </div>
+      </div>
     </div>
   );
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        Open Modal
-      </button>
+      <span  onClick={handleOpen}>
+        Share
+      </span>
       <Modal
         open={open}
         onClose={handleClose}

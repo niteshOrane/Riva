@@ -53,7 +53,6 @@ const ProductDetails = (props) => {
   };
   useEffect(() => {
     getOutOfStock();
-    <SubscribeModel />;
   }, []);
   useEffect(() => {
     getOutOfStock();
@@ -198,9 +197,7 @@ const ProductDetails = (props) => {
                   Was ${parseFloat(origprice)?.toFixed(2) || ""}
                 </div>
               ) : null}
-              <div className={styles.now}>
-                Now ${parseFloat(price)?.toFixed(2)}
-              </div>
+              <div className={styles.now}>Now {price}</div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
@@ -446,6 +443,7 @@ const ProductDetails = (props) => {
                           image={colorImg || product?.image}
                           sizes={product?.size}
                         />
+                        // <SubscribeModel />
                       ),
                       icon: "/assets/images/shop.png",
                     },
@@ -455,7 +453,7 @@ const ProductDetails = (props) => {
                     },
 
                     { name: "Review", icon: "/assets/images/review.png" },
-                    { name: "Share", icon: "/assets/images/share.png" },
+                    { name: (<SubscribeModel/>), icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
                       <div className="d-flex align-items-center gap-12px my-10px">

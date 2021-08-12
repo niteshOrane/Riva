@@ -7,14 +7,15 @@ import {
   addCustomerAddress,
   updateCustomerAddress,
   getCountryList,
+  getAddressByLocation,
 } from "../../../../services/address/address.service";
 import {
   toggleAddresslist,
   addNewAddress,
 } from "../../../../store/actions/customerAddress";
+import * as icons from "../../../../components/common/Icons/Icons";
 
-function DeliveryAddressForm({ customerData, onAfterSaveEdit, userAddress }) {
-  console.log({ userAddress });
+function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -33,6 +34,35 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit, userAddress }) {
   });
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
+
+  // get address by location
+  const [currentPosition, setCurrentPosition] = useState({
+    lat: "",
+    lng: "",
+  });
+  const [userAddress, setUserAddress] = useState(null);
+  const getLatLng = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCurrentPosition({
+        ...currentPosition,
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  };
+  const getAddress = async (lat, lng) => {
+    const res = await getAddressByLocation(lat, lng);
+    if (res.status === 200) {
+      console.log(res)
+      setUserAddress(res?.data?.data?.find(li => li?.postal_code !== null) || res?.data?.data[0]);
+    }
+  };
+  useEffect(() => {
+    const { lat, lng } = currentPosition;
+    if (currentPosition.lat && currentPosition.lng) {
+      getAddress(lat, lng);
+    }
+  }, [currentPosition]);
   const getAllCountryList = async () => {
     const res = await getCountryList();
     if (res.status === 200) {
@@ -54,8 +84,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit, userAddress }) {
         country: userAddress?.country_code?.slice(0, -1),
         state: userAddress?.region,
         street: userAddress?.label,
-        city:userAddress?.locality,
-        block:userAddress?.name
+        city: userAddress?.locality,
+        block: userAddress?.name,
+        pincode:userAddress?.postal_code || ""
       });
     }
   }, [userAddress]);
@@ -199,6 +230,18 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit, userAddress }) {
   };
   return (
     <>
+      <div>
+        <div
+        style={{marginBottom:"10px"}}
+          onClick={getLatLng}
+          className="font-weight-normal d-flex c-pointer"
+        >
+          <div className="location-icon">
+            <icons.LocationFlag />
+          </div>
+          <div style={{marginLeft:"2rem"}} className="location-map">USE MY CURRENT LOCATION</div>
+        </div>
+      </div>
       <form className={styles.form} id="addNewAddress">
         <div className={styles.inpContainerAdd}>
           Add an address for delivery in your address book and make checkout

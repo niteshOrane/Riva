@@ -79,6 +79,41 @@
         padding-left: 25px;
       }
     }
+    .dropdownItemRight {
+      padding-right: 7px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      display: flex;
+      align-items: center;
+      &:hover {
+        background: #ddd;
+      }
+      .curImage {
+        width: 20.8px;
+        height: 15.6px;
+        object-fit: contain;
+      }
+      .curName {
+        font-size: 13px;
+        font-weight: 700;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        text-align: left;
+        color: #181617;
+        padding-left: 25px;
+      }
+      .curName {
+        font-size: 13px;
+        font-weight: 700;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        text-align: left;
+        color: #181617;
+        padding-right: 25px;
+      }
+    }
   }
   .showDD {
     transition: all 0.4s ease;
@@ -89,6 +124,10 @@
   .angleIcon {
     margin: 0 9px;
     margin-right: 0;
+  }
+  .angleIconRight {
+    margin: 0 9px;
+    margin-right: 10px;
   }
   .langItem {
     font-size: 14px;

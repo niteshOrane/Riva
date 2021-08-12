@@ -44,13 +44,13 @@ function ManageAddress() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">Add Address</h2>
+            {/* <h2 className="font-weight-normal">Add Address</h2>
             <div style={{cursor:"pointer"}} onClick = {getLatLng} className="font-weight-normal d-flex">
               <div className="location-icon">
                 <icons.LocationFlag />
               </div>
               <div className="location-map">USE MY CURRENT LOCATION</div>
-            </div>
+            </div> */}
             <DeliveryAddressForm userAddress={userAddress} />
           </div>
         </div>
