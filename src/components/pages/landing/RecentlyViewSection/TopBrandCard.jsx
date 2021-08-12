@@ -29,7 +29,7 @@ const TopBrandCard = ({ item }) => {
     <TempLink product={item}>
       <div className={`d-flex align-items-cetner ${style.cardBody}`}>
         <div className={style.cardImg}>
-          <Image src={item.image || item.src} width="100%" alt=""  type = 'product-details' />
+          <Image src={item.image || item.src} width="100px" alt=""  type = 'product-details' />
           <div className={style.cartImage}>
             <span className="material-icons-outlined">shopping_cart</span>
           </div>
@@ -40,9 +40,9 @@ const TopBrandCard = ({ item }) => {
           </p>
           <div className="d-flex align-items-center">
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
-              <s className={style.crosedPrice}>Was {origprice || ""}</s>
+              <s className={style.crosedPrice}>Was {origprice || "0.00"}</s>
             ) : null}
-            <p className={`${style.price} color-primary`}>{price || ""}</p>
+            <p className={`${style.price} color-primary`}>{price || "0.00"}</p>
           </div>
         </div>
       </div>

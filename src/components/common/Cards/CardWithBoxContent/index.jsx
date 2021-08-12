@@ -6,7 +6,7 @@ import style from "./style.module.scss";
 
 const CardWithBoxContent = ({ item }) => {
   return (
-    <Link to={`/${item?.url_banner ?? ''}`}>
+    <Link to={`/products/${item?.url_key ?? ''}/${item?.id ?? ''}`}>
       <div className="position-relative" title={item?.name}>
         <div>
           <Image src={item.image || ""} width="100%" alt={item?.title} />
