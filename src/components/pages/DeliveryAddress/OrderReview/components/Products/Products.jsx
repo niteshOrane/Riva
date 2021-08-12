@@ -9,6 +9,7 @@ function Products({ products }) {
       options.map((o) => ({
         label: o.option_id === '92' ? 'Color' : 'Size',
         values: [{ value_index: o.option_value }],
+        attribute_id: o.option_id
       }))
     );
     return { colors, size };
