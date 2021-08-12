@@ -68,7 +68,8 @@ const HomeHeroGrid = (props) => {
             </section>
           </div>
         </div>
-        : <center><Image src={'https://via.placeholder.com/1000x700?text=Loading+Please+wait'} alt="" /></center>}
+        : <div style={{ margin: '0% auto' }} >
+          <Image src={'https://via.placeholder.com/1300x500?text=Loading+Please+wait'} alt="" /></div>}
     </div>
   );
 };
