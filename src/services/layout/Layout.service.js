@@ -51,7 +51,7 @@ export const getFooter = async () => {
 export const getBanners = (typeName) => {
   const config = {
     method: 'get',
-    url: `${API_URL}/webapi/getbanners?type=${typeName}&storeId=${getStoreId()}&language=${getLanguageName()}`,
+    url: `${API_URL}/webapi/getbanners?type=${typeName}&storeId=${getStoreId()}&language=${getLanguageName()}&categoryId=${typeName === "landing" ? 0 : getSelectedCategoryId()}`,
     silent: true,
   };
   return axios(config);

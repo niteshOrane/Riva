@@ -16,7 +16,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const res = await getProducts("2045", 10);
+    const res = await getProducts("2046", 10);
     setProducts(res.data || []);
   };
 
