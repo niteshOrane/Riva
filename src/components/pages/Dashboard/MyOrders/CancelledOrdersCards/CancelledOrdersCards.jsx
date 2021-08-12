@@ -1,19 +1,42 @@
 import React from "react";
 import styles from "./CancelledOrdersCards.module.scss";
+import { extractColorSize } from "../../../../../util";
+
 const CancelledOrdersCards = ({ products }) => {
+  const getColorSize = (options) => {
+    console.log(options);
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === "92" ? "Color" : "Size",
+        values: [{ value_index: o.option_value }],
+      }))
+    
+    );
+    console.log(colors)
+    return { colors, size };
+  };
+  const colorSize = getColorSize(
+    products[0]?.parent_item?.product_option.extension_attributes
+      ?.configurable_item_options
+  );
   return products?.map((product) => (
     <div className={styles.card}>
       <div className={styles.carItem}>
         <div className={styles.col1}>
           <div className={styles.img}>
-            <img src={product?.image} width="100%" alt={product?.name} />
+            {/* <img src={product?.image} width="100%" alt={product?.name} /> */}
+            <h4 className="greyText">
+              <span className={styles.deliveredIcon}></span> Cancelled
+            </h4>
           </div>
           <div>
             <h3 className="font-weight-normal">{product?.name}</h3>
             <div className="mt-12px">
               <div className={styles.colorSize}>
                 <span>Color: </span>
-                <span className={styles.greyText}>{product?.color}</span>
+                <span className={styles.greyText}>
+                  {colorSize?.colors?.[0]?.label}
+                </span>
               </div>
               <div className={styles.colorSize}>
                 <span>Size: </span>
@@ -23,12 +46,9 @@ const CancelledOrdersCards = ({ products }) => {
           </div>
         </div>
         <div className="text-center">
-          <strong>${product?.price}</strong>
+          <strong>${product?.parent_item?.price}</strong>
         </div>
         <div>
-          <h4 className="greyText">
-            <span className={styles.deliveredIcon}></span> Cancelled
-          </h4>
           <p className={`mt-12px greyText ${styles.fontSmall}`}>
             You requested a cancellation because you changed your mind about
             this product.
@@ -40,7 +60,7 @@ const CancelledOrdersCards = ({ products }) => {
         &nbsp;&nbsp;&nbsp;
         <span className="greyText">(Refund ID: {product?.refundId})</span>
         <p className={`greyText ${styles.fontSmall}`}>
-          $184.17 has been refunded to your PhonePe Wallet on May 21.Credit Card
+          {product?.amount_refunded} has been refunded to your PhonePe Wallet on May 21.Credit Card
           refunds will take 7 business days.
         </p>
         <p className={`greyText ${styles.fontSmall}`}>

@@ -2,7 +2,9 @@ import React from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import styles from "./CancelledOrders.module.scss";
+import { useSelector } from "react-redux";
 import CancelledOrdersCards from "../../components/pages/Dashboard/MyOrders/CancelledOrdersCards/CancelledOrdersCards";
+import { getOrderList } from "../../services/order/order.services";
 const randomProducts = [
   {
     image:
@@ -16,6 +18,21 @@ const randomProducts = [
 ];
 
 function CancelledOrders() {
+  const { customer } = useSelector((state) => state.auth);
+  const [orderList, setOrderList] = React.useState([]);
+  const getOrders = async (id) => {
+    const res = await getOrderList(id);
+    if (res?.status === 200 && res?.data) {
+      const temp = res?.data?.items?.map((li) => ({
+        status: li.status,
+        list: li?.items?.filter((a) => a.product_type === "simple"),
+      }));
+      setOrderList(temp?.filter((li) => li.status === "canceled"));
+    }
+  };
+  React.useEffect(() => {
+    getOrders(customer?.customerID);
+  }, []);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -26,8 +43,9 @@ function CancelledOrders() {
           <Sidebar />
           <div className="w-100">
             <h2 className="font-weight-normal">Order Cancelled</h2>
-
-            <CancelledOrdersCards products={randomProducts} />
+            {orderList?.map((li) => (
+              <CancelledOrdersCards products={li?.list} />
+            ))}
           </div>
         </div>
       </div>

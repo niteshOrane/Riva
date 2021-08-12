@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import moment from 'moment';
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Image from "../../../common/LazyImage/Image";
@@ -11,6 +11,8 @@ import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
 import { outOfStockCheck } from "../../../../services/product/product.service";
+import SearchInStorePopup from "./SearchInStorePopup";
+import SubscribeModel from "./SubscribeModel";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -51,6 +53,7 @@ const ProductDetails = (props) => {
   };
   useEffect(() => {
     getOutOfStock();
+    <SubscribeModel />;
   }, []);
   useEffect(() => {
     getOutOfStock();
@@ -87,11 +90,17 @@ const ProductDetails = (props) => {
     const saleEndDate = custom_attributes?.find(
       (e) => e?.attribute_code === "salebadge_enddate"
     )?.value;
-    if (saleEndDate && moment(saleEndDate).isAfter(moment().format('YYYY-MM-DDTHH:mm:ssZ'))) {
-      return <div>On Sale</div>
+    if (
+      saleEndDate &&
+      moment(saleEndDate).isAfter(moment().format("YYYY-MM-DDTHH:mm:ssZ"))
+    ) {
+      return <div>On Sale</div>;
     }
-    if (newProductMessage && moment(newProductMessage).isAfter(moment().format('YYYY-MM-DDTHH:mm:ssZ'))) {
-      return <div>New</div>
+    if (
+      newProductMessage &&
+      moment(newProductMessage).isAfter(moment().format("YYYY-MM-DDTHH:mm:ssZ"))
+    ) {
+      return <div>New</div>;
     }
     return null;
   };
@@ -185,9 +194,13 @@ const ProductDetails = (props) => {
             </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
-                <div className={styles.was}>Was ${parseFloat(origprice)?.toFixed(2) || ""}</div>
+                <div className={styles.was}>
+                  Was ${parseFloat(origprice)?.toFixed(2) || ""}
+                </div>
               ) : null}
-              <div className={styles.now}>Now ${parseFloat(price)?.toFixed(2)}</div>
+              <div className={styles.now}>
+                Now ${parseFloat(price)?.toFixed(2)}
+              </div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
@@ -222,8 +235,11 @@ const ProductDetails = (props) => {
                           : "scale(.9)",
                     }}
                   >
-                    {typeof item?.color === "string" ? `${item?.color} ${productColorList.length > index + 1 ? "|" : ""}` : ''}{" "}
-
+                    {typeof item?.color === "string"
+                      ? `${item?.color} ${
+                          productColorList.length > index + 1 ? "|" : ""
+                        }`
+                      : ""}{" "}
                   </div>
                 ))}
 
@@ -260,16 +276,18 @@ const ProductDetails = (props) => {
                 })}
               </div>
             </div>
-            {outOfStock ? <div
-              className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
-            >
-              <div className={`${styles.icon} d-flex-all-center`}>
-                <span className="material-icons">mail</span>
+            {outOfStock ? (
+              <div
+                className={`${styles.outOfStock} d-flex align-items-center gap-12px`}
+              >
+                <div className={`${styles.icon} d-flex-all-center`}>
+                  <span className="material-icons">mail</span>
+                </div>
+                <div className={styles.text}>
+                  We will let you know when its in stock
+                </div>
               </div>
-              <div className={styles.text}>
-                We will let you know when its in stock
-              </div>
-            </div> : null}
+            ) : null}
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
               <ul className="nav-list gap-12px d-flex align-items-center">
                 <li className="nav-li m-0">
@@ -423,13 +441,19 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/delivery.png",
                     },
                     {
-                      name: "Search in store",
+                      name: (
+                        <SearchInStorePopup
+                          image={colorImg || product?.image}
+                          sizes={product?.size}
+                        />
+                      ),
                       icon: "/assets/images/shop.png",
                     },
                     {
                       name: "Product details",
                       icon: "/assets/images/tshirt.png",
                     },
+
                     { name: "Review", icon: "/assets/images/review.png" },
                     { name: "Share", icon: "/assets/images/share.png" },
                   ].map((item) => {
@@ -438,7 +462,7 @@ const ProductDetails = (props) => {
                         <div className={styles.icon}>
                           <img src={item.icon} alt={item.name} />
                         </div>
-                        <div>{item.name}</div>
+                        <div className="c-pointer">{item.name}</div>
                       </div>
                     );
                   })}

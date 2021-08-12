@@ -1,7 +1,26 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./CancelledOrdersCards.module.scss";
+import {getOrderList} from "../../../../services/order/order.services"
+
 const CancelledOrdersCards = ({ products }) => {
+  const { customer } = useSelector((state) => state.auth);
+  const [orderList, setOrderList] = React.useState([]);
+  const getOrders = async (id) => {
+    const res = await getOrderList(id);
+    console.log(res)
+    if (res?.status === 200 && res?.data) {
+      const temp = res?.data?.items?.map((li) => ({
+        status: li.status,
+        list: li?.items?.filter((a) => a.product_type === "simple"),
+      }));
+      setOrderList(temp);
+    }
+  };
+  React.useEffect(() => {
+    getOrders(customer?.customerID);
+  }, []);
   return products?.map((product) => (
     <div className={styles.card}>
       <div className={styles.carItem}>
