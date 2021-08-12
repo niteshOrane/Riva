@@ -12,26 +12,26 @@ function ManageAddress() {
     lat: "",
     lng: "",
   });
-  const [userAddress,setUserAddress] = useState(null)
+  const [userAddress, setUserAddress] = useState(null)
   const getLatLng = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCurrentPosition({
         ...currentPosition,
         lat: position.coords.latitude,
-        lng:position.coords.longitude
+        lng: position.coords.longitude
       });
     });
   }
-  const getAddress = async (lat,lng) => {
-    const res = await getAddressByLocation(lat,lng)
-    if(res.status===200){
+  const getAddress = async (lat, lng) => {
+    const res = await getAddressByLocation(lat, lng)
+    if (res.status === 200) {
       setUserAddress(res?.data?.data[0])
     }
   }
   useEffect(() => {
-    const {lat,lng} = currentPosition
-    if(currentPosition.lat && currentPosition.lng){
-      getAddress(lat,lng)
+    const { lat, lng } = currentPosition
+    if (currentPosition.lat && currentPosition.lng) {
+      getAddress(lat, lng)
     }
   }, [currentPosition]);
 
@@ -45,7 +45,7 @@ function ManageAddress() {
           <Sidebar />
           <div className="w-100">
             {/* <h2 className="font-weight-normal">Add Address</h2>
-            <div style={{cursor:"pointer"}} onClick = {getLatLng} className="font-weight-normal d-flex">
+            <div style={{ cursor: "pointer" }} onClick={() => { getLatLng(e) }} className="font-weight-normal d-flex">
               <div className="location-icon">
                 <icons.LocationFlag />
               </div>

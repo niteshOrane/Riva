@@ -45,7 +45,7 @@ const Cart = () => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
         label: o.option_id === '92' ? 'Color' : 'Size',
-        values: [{ value_index: o.option_value}],
+        values: [{ value_index: o.option_value }],
         attribute_id: o.option_id
       }))
     );
@@ -130,7 +130,8 @@ const Cart = () => {
                               <span className="font-weight-600">Qty: </span>
                               <span className="color-grey">{editableIndex == index ?
                                 <div className={style.counter}>
-                                  <span className="c-pointer material-icons-outlined" onClick={() => { handleDecrementProduct(item) }}>
+                                  <span className="c-pointer material-icons-outlined"
+                                    onClick={() => { handleDecrementProduct(item) }}>
                                     remove
                                   </span>
                                   <span>{item.qty}</span>
