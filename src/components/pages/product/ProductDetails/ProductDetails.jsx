@@ -187,7 +187,7 @@ const ProductDetails = (props) => {
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>Was ${parseFloat(origprice)?.toFixed(2) || ""}</div>
               ) : null}
-              <div className={styles.now}>Now ${parseFloat(price)?.toFixed(2)}</div>
+              <div className={styles.now}>Now {price}</div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
