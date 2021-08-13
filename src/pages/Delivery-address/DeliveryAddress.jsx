@@ -163,27 +163,56 @@ function DeliveryAddress() {
 
       <div className={styles.container}>
         <div className={styles.columnLeft}>
-          <div className="d-flex">
-            <SelectDeliveryAddress
-              addressItem={
-                dataList && dataList.length > 0
-                  ? dataList?.find(
+          <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: "10px" }}>
+            {showList ? <>
+              <AddressCard
+                className={styles.defualtAddressArea}
+                onEdit={handleOnEdit}
+                onDelete={handleOnDelete}
+                addressItem={
+                  dataList && dataList.length > 0
+                    ? dataList?.find(
                       (e) => e.id === defaultAddressIds?.Shippingid
                     )
-                  : {}
-              }
-            />
-            <SelectBillingAddress
-              addressItem={
-                dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds?.Billingid)
-                  : {}
-              }
-            />
-          </div>
-          <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr",gridGap:"10px" }}>
+                    : {}
+                }
+                setDefaultAddress={setDefaultAddress}
+                isDefault={
+                  dataList && dataList.length > 0
+                    ? dataList?.find(
+                      (e) => e.id === defaultAddressIds?.Shippingid
+                    )?.Shippingid?.length > 0
+                    : {}
+                }
+                isBillingDefault={false}
+              />
+
+              <AddressCard
+                className={styles.defualtAddressArea}
+                onEdit={handleOnEdit}
+                onDelete={handleOnDelete}
+                addressItem={
+                  dataList && dataList.length > 0
+                    ? dataList?.find(
+                      (e) => e.id === defaultAddressIds?.Billingid
+                    )
+                    : {}
+                }
+                setDefaultAddress={setDefaultAddress}
+                isDefault={
+                  false
+                }
+                isBillingDefault={
+                  dataList && dataList.length > 0
+                    ? dataList?.find(
+                      (e) => e.id === defaultAddressIds?.Billingid
+                    )?.Billingid?.length > 0
+                    : {}
+                }
+              />
+            </> : null}
             {showList &&
-              dataList.map((addr, index) => {
+              dataList.filter(e => e.Billingid === "" && e.Shippingid === "").map((addr, index) => {
                 return (
                   // <AddressItem
                   //   addressItem={addr}
@@ -199,14 +228,9 @@ function DeliveryAddress() {
                     onEdit={handleOnEdit}
                     onDelete={handleOnDelete}
                     addressItem={addr}
-                      setDefaultAddress={setDefaultAddress}
-                    isDefault={
-                      dataList && dataList.length > 0
-                        ? dataList?.find(
-                            (e) => e.id === defaultAddressIds?.Shippingid
-                          )
-                        : {}
-                    }
+                    setDefaultAddress={setDefaultAddress}
+                    isDefault={false}
+                    isBillingDefault={false}
                   />
                 );
               })}
@@ -254,8 +278,8 @@ function DeliveryAddress() {
               addressItem={
                 dataList && dataList.length > 0
                   ? dataList?.find(
-                      (e) => e.id === defaultAddressIds?.Shippingid
-                    )
+                    (e) => e.id === defaultAddressIds?.Shippingid
+                  )
                   : {}
               }
             />

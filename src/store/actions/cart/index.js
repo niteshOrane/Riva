@@ -83,10 +83,9 @@ export const addToCart = (data) => async (dispatch) => {
         payload: { cart_id: response.cart_id },
       });
       dispatch(showSnackbar('Added to cart', 'success'));
+      dispatch(getCart());
     }
     else dispatch(showSnackbar(response?.message || '', 'error'));
-
-    dispatch(getCart());
   }
 };
 

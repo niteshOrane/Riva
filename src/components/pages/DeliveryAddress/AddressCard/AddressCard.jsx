@@ -1,15 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardHeader from '@material-ui/core/CardHeader';
+import { CardHeader, Card, CardActions, CardContent, Typography, Avatar, IconButton, colors } from "@material-ui/core";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import style from "./AddressCard.module.scss";
 
 const useStyles = makeStyles({
   root: {
-    width: "20rem",
+    width: "30rem",
   },
   bullet: {
     display: "inline-block",
@@ -23,6 +21,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  avatar: {
+    backgroundColor: colors.red[500],
+  },
 });
 
 function AddressCard({
@@ -30,60 +31,83 @@ function AddressCard({
   onEdit,
   onDelete,
   isDefault,
+  isBillingDefault,
   setDefaultAddress,
 }) {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {addressItem?.name}
-        </Typography>
-        <Typography variant="p" component="p">
-          {addressItem?.street}
-        </Typography>
-        <Typography variant="p" component="p">
-          {addressItem.state}, {addressItem.postcode}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {addressItem?.phone}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <div className={style.action}>
-          <span
-            onClick={() => {
-              onEdit(addressItem);
-            }}
-            className={style.edit}
+    addressItem ?
+      <Card className={classes.root
+      } >
+        {isDefault || isBillingDefault ? <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              {isDefault ? 'D' : 'B'}
+            </Avatar>
+          }
+
+          title={isDefault ? 'Delivery Address' : 'Billing Address'}
+          subheader="Default"
+        /> : null
+        }
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
           >
-            Edit
-          </span>{" "}
-          |{" "}
-          <span
-            onClick={() => {
-              onDelete(addressItem);
-            }}
-            className={style.delete}
-          >
-            Remove
-          </span>{" "}
-          {isDefault?.id !== addressItem?.id && (
+            {addressItem?.name}
+          </Typography>
+          <Typography variant="p" component="p">
+            {addressItem?.street}
+          </Typography>
+          <Typography variant="p" component="p">
+            {addressItem.state}, {addressItem.postcode}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {addressItem?.phone}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <div className={style.action}>
             <span
-              onClick={() => setDefaultAddress(addressItem)}
+              onClick={() => {
+                onEdit(addressItem);
+              }}
+              className={style.edit}
+            >
+              Edit
+            </span>{" "}
+            |{" "}
+            <span
+              onClick={() => {
+                onDelete(addressItem);
+              }}
               className={style.delete}
             >
-               |{" "}
-              Set as default
-            </span>
-          )}
-        </div>
-      </CardActions>
-    </Card>
+              Remove
+            </span>{" "}
+            {!isDefault && (
+              <span
+                onClick={() => setDefaultAddress(addressItem, false)}
+                className={style.delete}
+              >
+                |{" "}
+                Set as default Delivery
+              </span>
+            )}{" "}
+            {!isBillingDefault && (
+              <span
+                onClick={() => setDefaultAddress(addressItem, true)}
+                className={style.delete}
+              >
+                |{" "}
+                Set as default Billing
+              </span>
+            )}
+          </div>
+        </CardActions>
+      </Card > : null
   );
 }
 

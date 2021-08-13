@@ -29,18 +29,26 @@
     margin-bottom: 1rem;
 }
 .edit{
-    margin-right: 10px;
-
+    margin-right: 0px;
+    color: #007eb9;
+}
+.edit:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #C7511F;
+}
+.delete:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #C7511F;
 }
 .delete{
-    margin-left: 10px;
-    color:black;
+    margin-left: 0px;
     font-weight: bold;
     cursor: pointer;
-
+    color: #007eb9;
 }
 .action{
-    color: black;
     font-weight: bold;
     cursor: pointer;
 }

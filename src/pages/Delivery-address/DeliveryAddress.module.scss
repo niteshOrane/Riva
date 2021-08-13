@@ -28,11 +28,12 @@
     }
   }
 }
-
+.defualtAddressArea{
+  margin-bottom: 100px;
+}
 .container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  padding-top: 30px;
   margin-bottom: 40px;
   .title {
     font-family: Roboto;
