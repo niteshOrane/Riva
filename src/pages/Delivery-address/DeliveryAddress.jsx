@@ -199,6 +199,7 @@ function DeliveryAddress() {
                     onEdit={handleOnEdit}
                     onDelete={handleOnDelete}
                     addressItem={addr}
+                      setDefaultAddress={setDefaultAddress}
                     isDefault={
                       dataList && dataList.length > 0
                         ? dataList?.find(
