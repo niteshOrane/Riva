@@ -16,7 +16,7 @@ const NavbarMain = () => {
         </a>
       </strong>
       <div className="gap-12 d-flex align-items-center">
-        <Circle bg="primary">Woman</Circle>
+        <Circle bg="primary">Woman </Circle>
         <Circle bg="lightBlack">Teens</Circle>
         <Circle bg="lightBlack">Kids</Circle>
       </div>

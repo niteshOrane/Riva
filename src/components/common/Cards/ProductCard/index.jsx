@@ -23,6 +23,7 @@ const ProductCard = ({
   index,
   isProduct = false,
   pageColumns = 2,
+  extraOridnary
 }) => {
   const { custom_attributes, id, image, name } = product;
   let {
@@ -180,7 +181,7 @@ const ProductCard = ({
       </div>
       <TempLink product={product}>
         <div
-          className={`${styles.productName} two-lines-text ${
+          className={`${!extraOridnary ?  styles.productName: styles.extraOridnary} two-lines-text ${
             !isProduct ? "text-center " : "d-flex"
           }`}
           title={name}

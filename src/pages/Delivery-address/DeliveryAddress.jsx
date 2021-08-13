@@ -10,7 +10,7 @@ import DeliveryAddressForm from "../../components/pages/DeliveryAddress/Delivery
 import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/OrderReview";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 import {
   getCustomerAddressList,
@@ -27,6 +27,7 @@ import {
 } from "../../services/address/address.service";
 import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
+import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 
 function DeliveryAddress() {
   const [stateCheck, setState] = React.useState({
@@ -42,7 +43,9 @@ function DeliveryAddress() {
     });
   };
   const dispatch = useDispatch();
-  const customerAddressList = useSelector((state) => state?.address?.data || []);
+  const customerAddressList = useSelector(
+    (state) => state?.address?.data || []
+  );
   const customerDeliverySpeed = useSelector(
     (state) => state.payment?.deliverySpeed || []
   );
@@ -85,30 +88,29 @@ function DeliveryAddress() {
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    })
-      .then(async (willDelete) => {
-        if(willDelete) {
-          const formData = new FormData();
-          formData.append("addressid", record?.id);
-          const res = await deleteAddress(formData);
-          if (res.status === 200) {
-            dispatch(showSnackbar("Address Deleted Successfully", "success"));
-            dispatch(getCustomerAddressList());
-          } else {
-            dispatch(showSnackbar("Something went wrong", "error"));
-          }
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const formData = new FormData();
+        formData.append("addressid", record?.id);
+        const res = await deleteAddress(formData);
+        if (res.status === 200) {
+          dispatch(showSnackbar("Address Deleted Successfully", "success"));
+          dispatch(getCustomerAddressList());
+        } else {
+          dispatch(showSnackbar("Something went wrong", "error"));
         }
-      });
-
+      }
+    });
   };
   const recordUpdated = () => {
     dispatch(getCustomerAddressList());
   };
   const setDefaultAddress = async (record, isBilling) => {
+    console.log(record, isBilling);
     const form = new FormData();
 
     form.append("customerid", getCustId());
-    form.append("addressid", record?.addressItem?.id);
+    form.append("addressid", record?.id);
     const res = await setDefaultAddressCustomer(form, isBilling);
     if (res.data.success) {
       dispatch(setCustomerAddresDefault(res));
@@ -165,7 +167,9 @@ function DeliveryAddress() {
             <SelectDeliveryAddress
               addressItem={
                 dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds?.Shippingid)
+                  ? dataList?.find(
+                      (e) => e.id === defaultAddressIds?.Shippingid
+                    )
                   : {}
               }
             />
@@ -177,20 +181,35 @@ function DeliveryAddress() {
               }
             />
           </div>
-          {showList &&
-            dataList.map((addr, index) => {
-              return (
-                <AddressItem
-                  addressItem={addr}
-                  state={stateCheck}
-                  handleChange={handleChange}
-                  setDefaultAddress={setDefaultAddress}
-                  index={index}
-                  onEdit={handleOnEdit}
-                  onDelete={handleOnDelete}
-                />
-              );
-            })}
+          <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr",gridGap:"10px" }}>
+            {showList &&
+              dataList.map((addr, index) => {
+                return (
+                  // <AddressItem
+                  //   addressItem={addr}
+                  //   state={stateCheck}
+                  //   handleChange={handleChange}
+                  //   setDefaultAddress={setDefaultAddress}
+                  //   index={index}
+                  //   onEdit={handleOnEdit}
+                  //   onDelete={handleOnDelete}
+                  // />
+
+                  <AddressCard
+                    onEdit={handleOnEdit}
+                    onDelete={handleOnDelete}
+                    addressItem={addr}
+                    isDefault={
+                      dataList && dataList.length > 0
+                        ? dataList?.find(
+                            (e) => e.id === defaultAddressIds?.Shippingid
+                          )
+                        : {}
+                    }
+                  />
+                );
+              })}
+          </section>
           <div className={styles.addAddress}>
             <p className={styles.title}>
               {recordToEdit ? "Edit your address" : "Add a new address"}
@@ -233,7 +252,9 @@ function DeliveryAddress() {
               callBackAfterApplyCoupan={callBackAfterApplyCoupan}
               addressItem={
                 dataList && dataList.length > 0
-                  ? dataList?.find((e) => e.id === defaultAddressIds?.Shippingid)
+                  ? dataList?.find(
+                      (e) => e.id === defaultAddressIds?.Shippingid
+                    )
                   : {}
               }
             />

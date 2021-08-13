@@ -45,7 +45,9 @@ function CategoriesCircles({ isHomePage }) {
               }}
               bg={`${defaultCategory === item?.id ? "skin" : "black"}`}
             >
+              <span style={{fontWeight:"bold"}}>
               {item?.name}
+              </span>
             </Circle>
           )
       )}

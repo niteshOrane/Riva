@@ -30,7 +30,7 @@ const SlideBanner = ({ banners = [] }) => {
                       Discover this week the latest pieces from our latest
                       collection Spring summer 2021 Woman
                     </p>
-                    <ButtonWithArrows btnClass="mx-auto" text="Shop Now" />
+                    <ButtonWithArrows btnClass="mx-auto py-10px" text="Shop Now" />
                   </div>
                 </a>
               </div>
