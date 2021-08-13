@@ -47,7 +47,7 @@ const ProductList = () => {
             {products.map((product, index) => {
               return (
                 <div key={index}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} extraOridnary />
                 </div>
               );
             })}

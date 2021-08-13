@@ -11,7 +11,7 @@
     max-height: 125px;
     &:hover {
       .cartImage {
-        display: block;
+        opacity: 1;
       }
     }
     .cardImg {
@@ -24,7 +24,7 @@
       }
     }
     .cardText {
-      margin-left: 12px;
+      margin-left: 0px;
       width: 100%;
       padding: 12px;
       // background-color: #fdfbfb;
@@ -54,11 +54,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: red;
   border-radius: 50%;
   padding: 5px;
-  display: none;
-  transition: 2.5s ease;
+  opacity: 0;
+  width: 30px;
+  height: 30px;
+  padding: 7px 5.9px 5.8px 6px;
+  box-shadow: 0.2px 2px 2px 0 rgba(61, 59, 59, 0.16);
+  background-color: #d12003;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .recentLyViwed_title {
   font: 1.2rem;

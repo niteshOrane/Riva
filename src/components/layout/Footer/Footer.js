@@ -131,7 +131,7 @@ function Footer() {
           </ul>
 
           <div className={style.m}>
-            <span className="material-icons-outlined">settings_phone</span>
+            <img src = "/assets/images/footerPhn.png" alt = "" />
             <div>
               <span className={style.clrGrey}>Customer care:&nbsp;</span>
               <a href={`tel: ${phone}`} className="color-white">

@@ -9,8 +9,8 @@ const NavLinks = () => {
         <span className="align-self-end font-light-black">Search </span>
       </li>
       <li className="nav-li">
-        <a href="#" className="d-flex align-items-center gap-12px">
-          <span className="material-icons-outlined font-light-black">
+        <a href="#" className="d-flex align-items-center">
+          <span style={{marginRight:"9px"}} className="material-icons-outlined font-light-black ml-9px">
             favorite_border
           </span>
           <span
@@ -22,7 +22,7 @@ const NavLinks = () => {
       </li>
       <li className="nav-li">
         <a href="#" className="d-flex align-items-center gap-12px">
-          <span className="material-icons-outlined font-light-black">
+          <span style={{marginRight:"9px"}}  className="material-icons-outlined font-light-black">
             person
           </span>
           <span className="align-self-end font-light-black">Account</span>{" "}
