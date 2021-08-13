@@ -4,11 +4,12 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import CardHeader from '@material-ui/core/CardHeader';
 import style from "./AddressCard.module.scss";
 
 const useStyles = makeStyles({
   root: {
-    width:"20rem"
+    width: "20rem",
   },
   bullet: {
     display: "inline-block",
@@ -24,7 +25,13 @@ const useStyles = makeStyles({
   },
 });
 
-function AddressCard({ addressItem, onEdit, onDelete, isDefault }) {
+function AddressCard({
+  addressItem,
+  onEdit,
+  onDelete,
+  isDefault,
+  setDefaultAddress,
+}) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -65,7 +72,15 @@ function AddressCard({ addressItem, onEdit, onDelete, isDefault }) {
           >
             Remove
           </span>{" "}
-          | <span className={style.delete}>Set as default</span>
+          {isDefault?.id !== addressItem?.id && (
+            <span
+              onClick={() => setDefaultAddress(addressItem)}
+              className={style.delete}
+            >
+               |{" "}
+              Set as default
+            </span>
+          )}
         </div>
       </CardActions>
     </Card>
