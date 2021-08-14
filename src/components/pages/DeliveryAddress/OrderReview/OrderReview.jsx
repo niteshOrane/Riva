@@ -44,14 +44,13 @@ function OrderReview({
         data: coupon,
       };
       const res = await axios(config);
-      if (res.data.success === 200) {
+      if (res.data.success) {
         dispatch(showSnackbar(res.data.message, "success"));
         setCouponDiscount(true);
-
         callBackAfterApplyCoupan();
         setDiscount(res.data.data.discount);
-      } else if (res.data.success === 201) {
-        dispatch(showSnackbar(res.data.message, "success"));
+      } else if (!res.data.success) {
+        dispatch(showSnackbar(res.data.message, "error"));
         setCouponDiscount(true);
       }
     }
