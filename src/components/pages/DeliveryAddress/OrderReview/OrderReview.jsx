@@ -51,7 +51,6 @@ function OrderReview({
         setDiscount(res.data.data.discount);
       } else if (!res.data.success) {
         dispatch(showSnackbar(res.data.message, "error"));
-        setCouponDiscount(true);
       }
     }
   };
