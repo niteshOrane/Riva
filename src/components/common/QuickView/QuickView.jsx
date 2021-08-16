@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Dialog from "@material-ui/core/Dialog";
 import { useSelector, useDispatch } from "react-redux";
-import { showSnackbar, toggleQuickView } from "../../../store/actions/common";
-import { addToCart, toggleCart } from "../../../store/actions/cart";
+import {  toggleQuickView } from "../../../store/actions/common";
+import { addToCart } from "../../../store/actions/cart";
 import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 
 import Image from "../LazyImage/Image";
@@ -78,7 +78,6 @@ function QuickView() {
 
     dispatch(toggleQuickView(null));
   };
-  console.log("data", data);
   const getOutOfStock = async () => {
     const id = data?.id;
     const color = data?.selected?.color?.label;

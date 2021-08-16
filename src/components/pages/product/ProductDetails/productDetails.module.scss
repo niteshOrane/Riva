@@ -109,7 +109,7 @@
     .name {
       font-family: Jost;
       font-size: 28px;
-      font-weight: 500;
+      font-weight: bold;
       font-stretch: normal;
       font-style: normal;
       line-height: 0.85;
@@ -156,7 +156,7 @@
       .now {
         font-family: Jost;
         font-size: 22px;
-        font-weight: 500;
+        font-weight: bold;
         font-stretch: normal;
         font-style: normal;
         line-height: 1;
@@ -168,7 +168,7 @@
       .loyalty {
         font-family: Jost;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: normal;
         font-stretch: normal;
         font-style: normal;
         line-height: 1.57;
@@ -245,7 +245,7 @@
           border: solid 1px #c8c0c0;
           font-size: 14.5px;
           font-family: Roboto;
-          font-weight: 700;
+          font-weight: normal;
           font-stretch: normal;
           font-style: normal;
           line-height: 1.83;
@@ -417,7 +417,7 @@
           background-color: #181617;
           font-family: Jost;
           font-size: 17px;
-          font-weight: 700;
+          font-weight: normal;
           font-stretch: normal;
           font-style: normal;
           line-height: 1.35;
@@ -455,4 +455,13 @@
       }
     }
   }
+}
+
+.labelName{
+  margin-left: 13px;
+  font-weight: normal;
+}
+.labelContainer{
+  display: flex;
+  margin-left: 15px;
 }

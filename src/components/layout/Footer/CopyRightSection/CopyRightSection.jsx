@@ -11,7 +11,7 @@ const CopyRightSection = () => {
               <img
                 src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/bde346b9-37f2-4300-b2be-c81f2ca3dd57.png"
                 width="90%"
-                className="logo-image"
+                className={`${style.footerLogoImg} logo-image`}
                 alt=""
               />
             </Link>

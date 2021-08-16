@@ -1,6 +1,7 @@
 .MuiDialog-paperWidthSm {
   max-width: auto !important;
 }
+
 .details {
   display: flex;
   padding: 12px;
@@ -87,7 +88,7 @@
     .loyalty {
       font-family: Jost;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: normal;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.57;
@@ -204,6 +205,8 @@
     letter-spacing: normal;
     text-align: left;
     color: #181617;
+    border: solid 1px #c8c0c0;
+    padding: 3px 8px 3px 8px;
   }
 
   .sizeHelp {

@@ -12,9 +12,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
-// ul, li{
-//     list-style: none;
-// }
+
 a,
 a:hover,
 a:focus {
@@ -139,8 +137,9 @@ h6 {
   }
 }
 
-
-.card-number-frame, .cvv-frame, .expiry-date-frame{
+.card-number-frame,
+.cvv-frame,
+.expiry-date-frame {
   height: 4rem;
 }
 .navbar_container__3KxOu {
@@ -154,27 +153,29 @@ h6 {
   text-transform: uppercase;
 }
 
-.categoriesSlider .slick-prev::before, .categoriesSlider .slick-next:before {
-    font-family: sans-serif !important;
-    background-color: #000000 !important;
-    width: 30px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-size: 2rem;
-    padding-bottom: 8px;
-  }
-  .basicSlider .slick-prev::before, .basicSlider .slick-next:before {
-    font-family: sans-serif !important;
-    background-color: #181617;
-    width: 30px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-size: 2rem;
-    padding-bottom: 8px;
-  }
+.categoriesSlider .slick-prev::before,
+.categoriesSlider .slick-next:before {
+  font-family: sans-serif !important;
+  background-color: #000000 !important;
+  width: 30px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2rem;
+  padding-bottom: 8px;
+}
+.basicSlider .slick-prev::before,
+.basicSlider .slick-next:before {
+  font-family: sans-serif !important;
+  background-color: #181617;
+  width: 30px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2rem;
+  padding-bottom: 8px;
+}

@@ -5,7 +5,7 @@ const ImageDropdown = () => {
     <a href="#complete-your-look">
       <div className={styles.howToWareItDropdown}>
         <div className="d-flex align-items-center">
-          <span>How to Ware it</span>
+          <span className = {styles.howTo}>HOW TO WEAR IT</span>
           <span className={styles.icon}>
             <span className="material-icons-outlined">arrow_right</span>
           </span>

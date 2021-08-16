@@ -2,7 +2,8 @@
   .header {
     height: 27px;
     font-family: Roboto;
-    font-size: 22px;
+    font-size: 30px;
+    margin-bottom: 50px;
     font-weight: 700;
     font-stretch: normal;
     font-style: normal;
@@ -140,4 +141,10 @@
       }
     }
   }
+}
+
+.checkboxCancelBtn{
+  position: absolute;
+  top: 13%;
+  left: 830%;
 }

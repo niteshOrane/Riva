@@ -123,6 +123,7 @@ function ProfileInfoForm() {
                       label="Male"
                       labelPlacement="start"
                       name="gender"
+                      style={{color:"black"}}
                     />
                     <FormControlLabel
                       value="Female"
@@ -130,21 +131,22 @@ function ProfileInfoForm() {
                       label="Female"
                       labelPlacement="start"
                       name="gender"
+                      style={{color:"black"}}
                     />
                   </section>
                 </RadioGroup>
               </FormControl>
             </section>
             <section>
-              <div>
+              <div style={{position:"relative"}}>
                 <label className="profile-label">Date of Birth</label>
                 <input
                   value={values.dob}
                   placeholder="Select DOB"
                   name="dob"
                   onChange={handleChange}
-                  type="date"
                 />
+                <img className="inputCalender" src="/assets/images/pfCalender.svg" />
               </div>
             </section>
           </article>

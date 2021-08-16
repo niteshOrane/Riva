@@ -29,6 +29,7 @@ const useProducts = ({ categoryId,
     };
     axios(config)
       .then((response) => {
+        console.log(response)
         const productsList = response?.data?.items?.map((product) => {
           return {
             ...product,

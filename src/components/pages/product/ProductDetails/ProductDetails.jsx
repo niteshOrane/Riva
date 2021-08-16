@@ -362,7 +362,7 @@ const ProductDetails = (props) => {
                   <div
                     className={`${styles.qty} d-flex align-items-center justify-content-between`}
                   >
-                    <div className={styles.title}>qty:</div>
+                    <div className={styles.title}>Quantity:</div>
                     <div
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >
@@ -456,11 +456,11 @@ const ProductDetails = (props) => {
                     { name: (<SubscribeModel/>), icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
-                      <div className="d-flex align-items-center gap-12px my-10px">
+                      <div className={`${styles.labelContainer}`}>
                         <div className={styles.icon}>
                           <img src={item.icon} alt={item.name} />
                         </div>
-                        <div className="c-pointer">{item.name}</div>
+                        <div className={`${styles.labelName} c-pointer`}>{item.name}</div>
                       </div>
                     );
                   })}

@@ -4,6 +4,7 @@ import SectionHeader from '../../SectionHeader/SectionHeader';
 
 const Slider = React.forwardRef((props, ref) => {
   const {
+    recomended,
     bgImage,
     bgImageUrl,
     className = '',
@@ -18,8 +19,8 @@ const Slider = React.forwardRef((props, ref) => {
       margin: 0,
       dots: false,
       arrows,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
+      nextArrow: recomended ? <img style={{ width: "15px",height:"22px"}} src="/assets/images/recomended2.svg" alt="" /> : <SampleNextArrow />,
+      prevArrow: recomended ? <img style={{width:"15px",  height: "22px"}} src="/assets/images/recomended.svg" alt="" /> : <SamplePrevArrow />,
       slidesToShow,
       swipeToSlide: true,
       rows,

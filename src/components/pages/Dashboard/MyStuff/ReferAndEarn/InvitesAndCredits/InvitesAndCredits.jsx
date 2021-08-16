@@ -10,7 +10,7 @@ const InvitesAndCredits = () => {
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               <span className="m-12px d-inline-block">
-                <icons.Loyalty />
+                <img src="/assets/images/iandc.svg" />
               </span>
               <h4>Invites & Credits</h4>
             </div>

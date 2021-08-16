@@ -5,6 +5,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import HorizontalProductCard from "../../../common/Cards/ProductCard/HorizontalProductCard";
 import Image from "../../../common/LazyImage/Image";
 import styles from "./shopTheWholeOutfit.module.scss";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import { addToCart } from "../../../../store/actions/cart";
 import { useEffect } from "react";
@@ -99,7 +100,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
           {dataItems.map((product, index) => (
             <div style={{ position: "relative" }}>
               <div style={{ position: "absolute", top: -10, left: -10 }}>
-                {" "}
+                <div className={styles.checkboxCancelBtn}>
+                  <CancelIcon />
+                </div>{" "}
                 <Checkbox
                   checked={
                     selected.filter((s) => s.id === product.id).length > 0

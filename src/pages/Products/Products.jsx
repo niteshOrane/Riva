@@ -30,7 +30,7 @@ function Products(props) {
     sortField,
     onScreen,
   });
-
+  console.log(products)
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
     setSortDirection(event.target.value.split("-")?.[1]);
@@ -150,6 +150,7 @@ function Products(props) {
       <div className="container-90 max-width-1600 mx-auto">
         <Slider
           className="basicSlider"
+          recomended
           items={products}
           slidesToShow={4}
           arrows={Boolean(true)}

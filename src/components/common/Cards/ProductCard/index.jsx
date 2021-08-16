@@ -26,6 +26,7 @@ const ProductCard = ({
   extraOridnary
 }) => {
   const { custom_attributes, id, image, name } = product;
+  console.log(product,"ui")
   let {
     origprice = 0,
     origpriceWithoutCurrency,

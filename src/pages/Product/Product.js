@@ -142,6 +142,7 @@ const Product = (props) => {
               render={(item) => <ProductCard product={item} />}
             />
           </div>
+          <hr style={{marginTop:"100px",marginBottom:"60px"}} />
           <div className="container-90 max-width-1750 mx-auto my-20px">
             <ShopTheWholeOutfit data={howToWear} mainProd={product} />
           </div>
