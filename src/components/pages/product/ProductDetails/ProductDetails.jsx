@@ -26,6 +26,10 @@ const ProductDetails = (props) => {
       const temp = colorImage?.databind;
       setProductColorList(temp);
       setColorImg(colorImage?.databind[0]?.file || "");
+      setColorSize({
+        ...product?.selected,
+        color: { label: temp[0]?.color, value: temp[0]?.option_id },
+      });
     }
   }, []);
   const colorImageAction = (data) => {
@@ -124,7 +128,7 @@ const ProductDetails = (props) => {
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
 
   return (
-    <div style={{marginTop:"25px"}}>
+    <div style={{ marginTop: "25px" }}>
       <SizeCard
         imageSelected={colorImg || product?.image}
         open={sizeCardOpen}
@@ -202,7 +206,11 @@ const ProductDetails = (props) => {
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
-              <div className={styles.title}>Color:</div>
+              <div className={styles.title}>Color: {typeof productColorList?.find((item) =>
+                product.selected.color.value === item.option_id
+              )?.color === "string" ? productColorList?.find((item) =>
+                product.selected.color.value === item.option_id
+              )?.color : 'White'}{'  '}</div>
               {productColorList.length > 0 &&
                 productColorList?.map((item, index) => (
                   <div
@@ -221,8 +229,8 @@ const ProductDetails = (props) => {
                         ? styles.active
                         : ""}`} alt={item?.color} />
                       : <img src={item?.file} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                      ? styles.active
-                      : ""}`} alt={item?.color} />
+                        ? styles.active
+                        : ""}`} alt={item?.color} />
                     }
                   </div>
                 ))}
