@@ -14,7 +14,7 @@ const CardWithBoxContent = ({ item }) => {
         <div className={style.cardBoxContent}>
           <h3 className="text-center">{item?.title}</h3>
           <p className={`text-center ${style.description}`}>
-            {item?.description || item?.name || <i>No Description</i>}
+            {item?.description || item?.name || <i>No Description</i>} 
           </p>
           <ButtonWithArrows
             btnClass="bg-black color-white mx-auto"

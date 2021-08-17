@@ -123,7 +123,7 @@ const ProductDetails = (props) => {
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
 
   return (
-    <>
+    <div style={{marginTop:"25px"}}>
       <SizeCard
         imageSelected={colorImg || product?.image}
         open={sizeCardOpen}
@@ -470,7 +470,7 @@ const ProductDetails = (props) => {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -38,7 +38,7 @@ const MegaLinks = ({ links }) => {
                   {link.name.toUpperCase()}
                 </span>
               </Link>
-
+            
               <div
                 className={`${style.megaContainer} ${
                   showMegaMenue === link.url_key ? style.show : ''
@@ -48,6 +48,7 @@ const MegaLinks = ({ links }) => {
                 <div className={style.titleDoubleLine_SecondFilter} />
                 <div className="d-flex justify-content-between text-left">
                   <div className={style.allProductsCard}>
+           
                     <div
                       className={`d-flex justify-content-between ${style.allProductsTitles}`}
                       style={{
@@ -67,6 +68,7 @@ const MegaLinks = ({ links }) => {
                           : 'unset',
                       }}
                     >
+                   
                       {childLinks?.children_data?.map((child) => (
                         <div
                           style={{
@@ -74,6 +76,7 @@ const MegaLinks = ({ links }) => {
                             paddingRight: 60,
                           }}
                         >
+                     
                           <span>
                             <Link
                               to={`/products/${child.url_key}/${child.id}`}

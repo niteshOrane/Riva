@@ -11,8 +11,6 @@ import {
 import Image from "../LazyImage/Image";
 import styles from "./Wishlist.module.scss";
 import { toggleSignUpCard } from "../../../store/actions/common";
-import { outOfStockCheck } from "../../../services/product/product.service";
-import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 
 const closeStyle = {
   position: "absolute",
@@ -22,7 +20,6 @@ const closeStyle = {
   paddingRight:8
 };
 function Wishlist() {
-  const [productQuantity, setProductQuantity] = React.useState(1);
   const {
     isOpen,
     modalData: data = {},
@@ -34,13 +31,6 @@ function Wishlist() {
 
   const handleClose = () => {
     dispatch(toggleWishlist(null));
-  };
-  const handleIncrementProduct = () => {
-    setProductQuantity((prevState) => prevState + 1);
-  };
-  const handleDecrementProduct = () => {
-    if (productQuantity === 1) return;
-    setProductQuantity((prevState) => prevState - 1);
   };
   const handleWishlist = () => {
     if (!auth.isAuthenticated)

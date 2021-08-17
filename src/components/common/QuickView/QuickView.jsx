@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Dialog from "@material-ui/core/Dialog";
 import { useSelector, useDispatch } from "react-redux";
-import {  toggleQuickView } from "../../../store/actions/common";
+import {
+  toggleQuickView,
+  toggleSignUpCard,
+} from "../../../store/actions/common";
 import { addToCart } from "../../../store/actions/cart";
 import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 
@@ -14,16 +17,23 @@ import { extractColorSize, URL } from "../../../util";
 import SizeCard from "../../pages/product/ProductDetails/components/SizeCard/SizeCard";
 import SizeGuide from "../../pages/product/ProductDetails/components/SizeGuide/SizeGuide";
 import { outOfStockCheck } from "../../../services/product/product.service";
+import {
+  addWishlist,
+  removeWishlist,
+  toggleWishlist,
+} from "../../../store/actions/wishlist";
 
 const closeStyle = {
   position: "absolute",
   top: 4,
   right: 4,
-  paddingTop:8,
-  paddingRight:8
+  paddingTop: 8,
+  paddingRight: 8,
 };
 
 function QuickView() {
+  const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state);
   const [outOfStock, setOutOfStock] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(1);
   const [attributes, setattributes] = useState({ colors: [], size: [] });
@@ -38,11 +48,16 @@ function QuickView() {
     if (productQuantity === 1) return;
     setProductQuantity((prevState) => prevState - 1);
   };
+  const handleClose = () => {
+    dispatch(toggleQuickView(null));
+  };
+  // const handleWishlist = () => {
+  //   dispatch(toggleWishlist(selectedProduct));
+  // };
 
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
-  const dispatch = useDispatch();
   const {
     origpriceWithoutCurrency = 0,
     priceWithoutCurrency = 0,
@@ -51,9 +66,6 @@ function QuickView() {
     custom_attributes,
   } = data ?? {};
 
-  const handleClose = () => {
-    dispatch(toggleQuickView(null));
-  };
   const setColorSize = (attr) => {
     data.selected = attr;
     setSelectedProduct(data);
@@ -67,8 +79,8 @@ function QuickView() {
         ...selectedProduct,
         id: `${data?.id}`,
         name: data?.name,
-        color:data?.selected?.color,
-        size:data?.selected?.size,
+        color: data?.selected?.color,
+        size: data?.selected?.size,
         src: data?.image,
         qty: productQuantity,
         ...selectedProduct?.selected,
@@ -115,6 +127,22 @@ function QuickView() {
     }
   }, [data]);
 
+  // const handleWishList = () => {
+  //   dispatch(toggleWishlist(data));
+  // };
+  const { data: wishlist = [] } = useSelector((state) => state.wishlist);
+  const handleWishlist = () => {
+    if (!auth.isAuthenticated)
+      return dispatch(
+        toggleSignUpCard({ redirectTo: window.location.pathname })
+      );
+    if (wishlist.find((w) => data?.id === w.id)) {
+      dispatch(removeWishlist(data));
+    } else {
+      dispatch(addWishlist(data));
+    }
+  };
+  const isAddedToWishlist = !!wishlist.find((w) => w.id == data?.id);
   return (
     <Dialog
       fullWidth
@@ -327,7 +355,7 @@ function QuickView() {
               </div>
             </div>
             <div className="d-flex w-100 align-items-center ">
-             {outOfStock ? (
+              {outOfStock ? (
                 <OutOfStock />
               ) : (
                 <div className={styles.addToCart}>
@@ -343,9 +371,15 @@ function QuickView() {
                   </button>
                 </div>
               )}
-              <div className={`${styles.wishlist} d-flex-all-center`}>
-                <span className="material-icons-outlined font-light-black">
-                  favorite_border
+              <div
+                onClick={handleWishlist}
+                className={`${styles.wishlist} d-flex-all-center c-pointer`}
+              >
+                <span
+                  style={{ color: isAddedToWishlist ? "red" : "black" }}
+                  className="material-icons-outlined font-light-black"
+                >
+                  {isAddedToWishlist ? "favorite" : "favorite_border"}
                 </span>
               </div>
             </div>
