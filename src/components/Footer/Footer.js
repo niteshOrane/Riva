@@ -19,7 +19,7 @@ function Footer() {
             {links.map((link) => (
               <li className={`d-flex align-items-center ${style.link}`}>
                 <a className={`w-100 ${style.footerLink}`} href={link.slug}>
-                  <ArrowForwardIcon />
+                  <img src= "/assets/images/footerArr.svg" />
                   <span>{link.title}</span>
                 </a>
               </li>

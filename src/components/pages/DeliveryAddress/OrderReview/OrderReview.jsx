@@ -54,14 +54,14 @@ function OrderReview({
       }
     }
   };
-  
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    if (activeDelivery != null) {
-      history.push("/cart-payment");
-    } else {
-      dispatch(showSnackbar("Please select Delivery Speed ", "error"));
-    }
+    // if (activeDelivery != null) {
+    //   history.push("/cart-payment");
+    // } else {
+    //   dispatch(showSnackbar("Please select Delivery Speed ", "error"));
+    // }
   };
   useEffect(() => {
     dispatch(toggleCart(false));
@@ -71,9 +71,7 @@ function OrderReview({
     setCouponCode(cartPayment?.coupon_code || "");
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
-    setActiveDelivery(
-      cartPayment?.shipping_method
-    );
+    setActiveDelivery(cartPayment?.shipping_method);
     setTotalDC(
       cartPayment?.total_segments?.find((e) => e.code === "shipping")?.value
     );
@@ -83,6 +81,7 @@ function OrderReview({
     );
     setCartPaymentInfo(cartPayment);
   }, [cartPayment]);
+  console.log("ammount", totalAmout);
 
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
@@ -141,7 +140,6 @@ function OrderReview({
       dispatch(showSnackbar("Add a delivery address first", "error"));
     }
   };
-
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
@@ -210,7 +208,10 @@ function OrderReview({
               <input
                 onChange={() => onSpeedDeliveryRadio(item)}
                 type="radio"
-                checked={`${item?.carrier_code}_${item?.method_code}` === activeDelivery}
+                checked={
+                  `${item?.carrier_code}_${item?.method_code}` ===
+                  activeDelivery
+                }
                 name={item.method_code}
                 id={item.method_code}
               />

@@ -19,8 +19,8 @@ const Slider = React.forwardRef((props, ref) => {
       margin: 0,
       dots: false,
       arrows,
-      nextArrow: recomended ? <img style={{ width: "15px",height:"22px"}} src="/assets/images/recomended2.svg" alt="" /> : <SampleNextArrow />,
-      prevArrow: recomended ? <img style={{width:"15px",  height: "22px"}} src="/assets/images/recomended.svg" alt="" /> : <SamplePrevArrow />,
+      nextArrow: <SampleNextArrow />,
+      prevArrow: <SamplePrevArrow />,
       slidesToShow,
       swipeToSlide: true,
       rows,
@@ -34,10 +34,13 @@ const Slider = React.forwardRef((props, ref) => {
         className={className}
         style={{
           right: 0,
+          width:"37px",
+          hight:"35px",
+          opacity:"0.7"
         }}
         onClick={onClick}
       >
-        <span>›</span>
+        <span >›</span>
       </div>
     );
   }
@@ -50,6 +53,9 @@ const Slider = React.forwardRef((props, ref) => {
         style={{
           left: 0,
           zIndex: 1,
+          width:"37px",
+          hight:"35px",
+          opacity:"0.7"
         }}
         onClick={onClick}
       >

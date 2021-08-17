@@ -26,7 +26,6 @@ const ProductCard = ({
   extraOridnary
 }) => {
   const { custom_attributes, id, image, name } = product;
-  console.log(product,"ui")
   let {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -121,7 +120,6 @@ const ProductCard = ({
     dispatch(toggleQuickView(p));
   };
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
-
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
@@ -136,6 +134,7 @@ const ProductCard = ({
                 defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                 width="100%"
               />
+
             </div>
           </div>
         </TempLink>

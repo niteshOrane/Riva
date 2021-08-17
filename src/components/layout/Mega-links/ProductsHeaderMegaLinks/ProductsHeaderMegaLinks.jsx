@@ -37,6 +37,7 @@ const ProductsHeaderMegaLinks = ({ links }) => {
                 <div className="d-flex justify-content-between">
                   <div className={style.allProductsCard}>
                     <div>All Products</div>
+                    <hr />
                     <div className={style.allProductsTitleLine} />
                     <div className={style.allProductsTitles}>
                       {links

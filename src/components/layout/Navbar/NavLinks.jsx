@@ -28,10 +28,10 @@ const NavLinks = () => {
             isAuth ? history.push('/wishlist') : openSignUpCard('/wishlist');
           }}
         >
-          <span className="material-icons-outlined font-light-black">
+          <span style={{marginRight:"12px"}} className="material-icons-outlined font-light-black">
             favorite_border
           </span>
-          <span className="align-self-end font-light-black">
+          <span  className="align-self-end font-light-black">
             Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
           </span>{' '}
         </span>
@@ -44,7 +44,7 @@ const NavLinks = () => {
           }}
           className="d-flex align-items-center gap-12"
         >
-          <span className="material-icons-outlined font-light-black">
+          <span style={{marginRight:"12px"}} className="material-icons-outlined font-light-black">
             person
           </span>
           <span className="align-self-end font-light-black">

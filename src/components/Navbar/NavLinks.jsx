@@ -22,7 +22,7 @@ const NavLinks = () => {
       </li>
       <li className="nav-li">
         <a href="#" className="d-flex align-items-center gap-12px">
-          <span style={{marginRight:"9px"}}  className="material-icons-outlined font-light-black">
+          <span style={{marginRight:"12px"}}  className="material-icons-outlined font-light-black">
             person
           </span>
           <span className="align-self-end font-light-black">Account</span>{" "}
