@@ -13,6 +13,7 @@ import OutOfStock from "./outOfStock/OutOfStock";
 import { outOfStockCheck } from "../../../../services/product/product.service";
 import SearchInStorePopup from "./SearchInStorePopup";
 import SubscribeModel from "./SubscribeModel";
+import { URL } from '../../../../util';
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -201,24 +202,7 @@ const ProductDetails = (props) => {
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
-              <div className={styles.title}>Color:&nbsp;</div>
-              {/* {product?.colors?.map((c) => (
-                <div
-                  onClick={() =>
-                    setColorSize({ ...product?.selected, color: c })
-                  }
-                  className={styles.text}
-                  style={{
-                    transform:
-                      product.selected.color.value === c.value
-                        ? 'scale(1.2)'
-                        : 'scale(1)',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {c.label}{' '}
-                </div>
-              ))} */}
+              <div className={styles.title}>Color:</div>
               {productColorList.length > 0 &&
                 productColorList?.map((item, index) => (
                   <div
@@ -233,10 +217,13 @@ const ProductDetails = (props) => {
                     }}
                   >
                     {typeof item?.color === "string"
-                      ? `${item?.color} ${
-                          productColorList.length > index + 1 ? "|" : ""
-                        }`
-                      : ""}{" "}
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.color.replace('/', "-").toLowerCase().replace(' ', '-')}.png`} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                        ? styles.active
+                        : ""}`} alt={item?.color} />
+                      : <img src={item?.file} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                      ? styles.active
+                      : ""}`} alt={item?.color} />
+                    }
                   </div>
                 ))}
 
@@ -453,7 +440,7 @@ const ProductDetails = (props) => {
                     },
 
                     { name: "Review", icon: "/assets/images/review.png" },
-                    { name: (<SubscribeModel/>), icon: "/assets/images/share.png" },
+                    { name: (<SubscribeModel />), icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
                       <div className={`${styles.labelContainer}`}>

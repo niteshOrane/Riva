@@ -4,6 +4,7 @@ import store from '../store/index';
 
 export const URL = {
   baseUrl: `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image`,
+  baseUrlColorSwitcher: `http://65.0.141.49/shop/pub/media/wysiwyg/swatches`,
   baseUrlProduct: `http://65.0.141.49/shop/media/catalog/product/`, //https://www.rivafashion.com/media/catalog/product
 };
 

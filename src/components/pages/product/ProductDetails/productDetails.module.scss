@@ -1,7 +1,24 @@
 .product {
   display: grid;
   grid-template-columns: 33fr 35fr;
-
+    .colorItem {
+        height: 13px;
+        display: inline-block;
+        width: 13px;
+        margin-left: 5px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        &:hover {
+          border: solid 1px #2c2a2a;
+        }
+       
+      }
+    .active {
+      border: solid 1px #2c2a2a;
+    }
   .mainImage {
     position: relative;
     .actionContainerTopRight {
