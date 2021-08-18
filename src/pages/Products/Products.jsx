@@ -10,6 +10,7 @@ import { body } from "../../mockdata.json";
 import Image from "../../components/common/LazyImage/Image";
 import styles from "./products.module.scss";
 import { useEffect } from "react";
+import SliderCarousel from "react-slick";
 
 function Products(props) {
   const handleQuickView = () => {};
@@ -30,7 +31,6 @@ function Products(props) {
     sortField,
     onScreen,
   });
-  console.log(products)
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
     setSortDirection(event.target.value.split("-")?.[1]);
@@ -55,7 +55,13 @@ function Products(props) {
       }
     }
   };
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   return (
     <div>
       <div className="container-90 max-width-1600">
@@ -120,6 +126,20 @@ function Products(props) {
       {!loading && !products.length && (
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
+      <div className={styles.listingWrapper}>
+        {products?.map((product, i) => (
+          <div className={getClassOfBigCard(i)}>
+            <ProductCard
+              index={i}
+              pageColumns={pageColumns}
+              handleQuickView={handleQuickView}
+              product={product}
+              isProduct={Boolean(true)}
+              isListing
+            />
+          </div>
+        ))}
+      </div>
       <div
         className={`${styles.productsPage} ${
           pageColumns === 3
@@ -127,7 +147,7 @@ function Products(props) {
             : styles.twoColumnsLayOut
         } container-90 max-width-1600 mx-auto`}
       >
-        {products?.map((product, i) => (
+        {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
             <ProductCard
               index={i}
@@ -137,7 +157,19 @@ function Products(props) {
               isProduct={Boolean(true)}
             />
           </div>
-        ))}
+        ))} */}
+        {/* {products?.map((product, i) => (
+          <div className={getClassOfBigCard(i)}>
+            <ProductCard
+              index={i}
+              pageColumns={pageColumns}
+              handleQuickView={handleQuickView}
+              product={product}
+              isProduct={Boolean(true)}
+            />
+          </div>
+        ))} */}
+
         <div ref={refContainerLoad} />
       </div>
       <center>

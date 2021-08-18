@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../store/actions/common";
 import { cartPaymentAction } from "../../../../services/cart/cart.service";
 import { useHistory } from "react-router";
-import * as DATA_TYPES from '../../../../store/types';
+import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 
 const tabLinks = [
@@ -98,16 +98,15 @@ export default function PaymentTabs({ paymentMode }) {
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
   const [value, setValue] = React.useState(0);
-  const [formData, setFormData] = React.useState(null);
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
-  const [paymentMethod, setPaymentMethod] = useState([])
+  const [paymentMethod, setPaymentMethod] = useState([]);
   const onPayNow = async (e) => {
     if (e) {
-      setLoading(true)
+      setLoading(true);
       const res = await cartPaymentAction(e);
       if (res.status === 200) {
-        setLoading(false)
+        setLoading(false);
         dispatch(showSnackbar("Payment success", "success"));
         dispatch({
           type: DATA_TYPES.SET_CART_ID,
@@ -117,9 +116,11 @@ export default function PaymentTabs({ paymentMode }) {
           type: DATA_TYPES.SET_BULK_CART,
           payload: [],
         });
-        history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
+        history.push(
+          `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
+        );
       } else {
-        setLoading(false)
+        setLoading(false);
         dispatch(showSnackbar("Payment Failed", "error"));
       }
     }
@@ -128,7 +129,7 @@ export default function PaymentTabs({ paymentMode }) {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
     }
-  }, [paymentMode])
+  }, [paymentMode]);
   const handleChange = async (_, newValue) => {
     switch (_.currentTarget.innerText.toLowerCase()) {
       case "mada debit card":
@@ -139,7 +140,7 @@ export default function PaymentTabs({ paymentMode }) {
           url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada`,
           silent: true,
         };
-        await axios(config).then(res => {
+        await axios(config).then((res) => {
           setCheckoutId(JSON.parse(res.data).id);
           setValue(newValue);
         });
@@ -153,23 +154,24 @@ export default function PaymentTabs({ paymentMode }) {
   const renderPaymentform = (checkoutIdNumber) => {
     if (checkoutIdNumber) {
       const script = document.createElement("script");
-     
+
       script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdNumber}`;
       script.async = true;
-
       document.body.appendChild(script);
 
-      const form = document.createElement("form")
-      form.action = "http://localhost:3000/result";
+      const form = document.createElement("form");
+      form.action = `http://localhost:3001/#/order-confirmed`;
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute("data-brands", "VISA MASTER AMEX");
-      const menu = document.querySelector('#vertical-tabpanel-1')
+
+      const menu = document.querySelector("#vertical-tabpanel-1");
+
       if (menu && menu != null) {
         menu.appendChild(form);
       }
     }
-  }
-  if (loading) return <Loader />
+  };
+  if (loading) return <Loader />;
   return (
     <div className="d-flex my-20px w-80">
       <Tabs
@@ -183,14 +185,20 @@ export default function PaymentTabs({ paymentMode }) {
         aria-label="Vertical tabs example"
       >
         {paymentMethod?.map((tab, i) => (
-          <Tab id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+          <Tab
+            id={tab.code}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
-                <span id={tab.code} className={classes.icon}>{tab?.icon || <tabIcons.Icon2 />}</span>{" "}
-                <span id={tab.code} className={classes.tbText}>{tab.title}</span>
+                <span id={tab.code} className={classes.icon}>
+                  {tab?.icon || <tabIcons.Icon2 />}
+                </span>{" "}
+                <span id={tab.code} className={classes.tbText}>
+                  {tab.title}
+                </span>
               </div>
             }
             {...a11yProps(i)}
@@ -202,7 +210,7 @@ export default function PaymentTabs({ paymentMode }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div id="renderPaymentform"> {renderPaymentform(checkoutId)}</div>
+          <div id="renderPaymentform">{renderPaymentform(checkoutId)}</div>
         </TabPanel>
       </div>
     </div>

@@ -10,10 +10,10 @@
   display: inline-block;
   // background-color: #f4f3f3;
   cursor: pointer;
-  
+
   &:hover {
     box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
-    .productBtn{
+    .productBtn {
       display: block;
     }
   }
@@ -216,11 +216,14 @@
   }
 }
 
-
 .productBtn {
   display: none;
   transition: 2s ease;
 }
-.extraOridnary{
+.extraOridnary {
   margin-top: 13px;
+}
+
+.listingSlider{
+  width: 30rem;
 }

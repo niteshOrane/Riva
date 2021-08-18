@@ -10,7 +10,12 @@
     }
   }
 }
-
+.listingWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .sliderCol {
   max-width: calc(50% - 12px);
   flex-basis: 50%;
