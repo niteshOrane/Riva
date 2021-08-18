@@ -43,9 +43,9 @@ const ProductDetails = (props) => {
   const [productQuantity, setProductQuantity] = useState(1);
 
   const getOutOfStock = async () => {
-    let id = product?.id;
-    let color = product?.selected?.color?.label;
-    let size = product?.selected?.size?.label;
+    const id = product?.id;
+    const color = product?.selected?.color?.label;
+    const size = product?.selected?.size?.label;
     const res = await outOfStockCheck(id, color, size);
     if (res && res.status === 200) {
       if (res?.data?.data?.Stock) {

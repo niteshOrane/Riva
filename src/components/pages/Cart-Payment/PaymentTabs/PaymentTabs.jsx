@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -95,9 +95,11 @@ function a11yProps(index) {
 
 export default function PaymentTabs({ paymentMode }) {
   const history = useHistory();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [checkoutId, setCheckoutId] = React.useState(0);
   const [value, setValue] = React.useState(0);
-  const [loading,setLoading] = React.useState(false)
+  const [formData, setFormData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false)
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([])
   const onPayNow = async (e) => {
@@ -123,13 +125,51 @@ export default function PaymentTabs({ paymentMode }) {
     }
   };
   useEffect(() => {
-    setPaymentMethod(paymentMode);
-  }, [])
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
+    if (paymentMode && paymentMode.length > 0) {
+      setPaymentMethod(paymentMode);
+    }
+  }, [paymentMode])
+  const handleChange = async (_, newValue) => {
+    switch (_.currentTarget.innerText.toLowerCase()) {
+      case "mada debit card":
+      case "MASTERCARD":
+      case "visa":
+        const config = {
+          method: "post",
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada`,
+          silent: true,
+        };
+        await axios(config).then(res => {
+          setCheckoutId(JSON.parse(res.data).id);
+          setValue(newValue);
+        });
+        break;
+      default:
+        setValue(newValue);
+        break;
+    }
   };
-  
-  if(loading) return <Loader />
+
+  const renderPaymentform = (checkoutIdNumber) => {
+    if (checkoutIdNumber) {
+      const script = document.createElement("script");
+     
+      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdNumber}`;
+      script.async = true;
+
+      document.body.appendChild(script);
+
+      const form = document.createElement("form")
+      form.action = "http://localhost:3000/result";
+      form.setAttribute("class", "paymentWidgets");
+      form.setAttribute("data-brands", "VISA MASTER AMEX");
+      const menu = document.querySelector('#vertical-tabpanel-1')
+      if (menu && menu != null) {
+        menu.appendChild(form);
+      }
+    }
+  }
+  if (loading) return <Loader />
   return (
     <div className="d-flex my-20px w-80">
       <Tabs
@@ -143,14 +183,14 @@ export default function PaymentTabs({ paymentMode }) {
         aria-label="Vertical tabs example"
       >
         {paymentMethod?.map((tab, i) => (
-          <Tab
+          <Tab id={tab.code}
             className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
               }`}
             disableRipple
             label={
-              <div className="d-flex align-items-center w-100">
-                <span className={classes.icon}>{tab?.icon || <tabIcons.Icon2 />}</span>{" "}
-                <span className={classes.tbText}>{tab.title}</span>
+              <div className="d-flex align-items-center w-100" id={tab.code}>
+                <span id={tab.code} className={classes.icon}>{tab?.icon || <tabIcons.Icon2 />}</span>{" "}
+                <span id={tab.code} className={classes.tbText}>{tab.title}</span>
               </div>
             }
             {...a11yProps(i)}
@@ -159,7 +199,10 @@ export default function PaymentTabs({ paymentMode }) {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          <Tab2Content onPayNow = {onPayNow} />
+          <Tab2Content onPayNow={onPayNow} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div id="renderPaymentform"> {renderPaymentform(checkoutId)}</div>
         </TabPanel>
       </div>
     </div>

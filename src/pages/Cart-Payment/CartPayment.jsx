@@ -13,17 +13,20 @@ import { toggleCart } from '../../store/actions/cart';
 function CartPayment() {
   const dispatch = useDispatch();
   const { data: items = [] } = useSelector((state) => state.cart);
+  const [paymentOption, setPaymentOption] = React.useState([]);
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
- 
   
   const cartPaymentInfo = useSelector((state) => state.cart?.cartPaymentInfo || {});
-
   useEffect(() => {
     dispatch(getPaymentMethodlist());
     dispatch(toggleCart(false));
-  }, []);
+  }, [customerid]);
+
+  useEffect(() => {
+    setPaymentOption(paymentMode)
+  }, [paymentMode]);
 
   return (
     <div className="container-90 max-width-1600">
@@ -50,10 +53,16 @@ function CartPayment() {
         </div>
       </div>
       <div className={styles.container}>
+
         <div className={styles.col1}>
-          <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
-          <PaymentTabs paymentMode={paymentMode?.data}/>
+          {paymentOption && paymentOption?.data && paymentOption?.data?.length ?
+            <>
+              <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
+              <PaymentTabs paymentMode={paymentOption?.data} />
+            </>
+            : null}
         </div>
+
         <div className={styles.col2}>
           <PriceDetails cartItem={items} customerID={customerid} cartPaymentInfo={cartPaymentInfo} />
           <LetUsHear />
