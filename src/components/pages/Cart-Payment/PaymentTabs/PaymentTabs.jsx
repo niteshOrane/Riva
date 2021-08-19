@@ -15,6 +15,7 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 import { useHistory } from "react-router";
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
+import { compose } from "redux";
 
 const tabLinks = [
   { text: "CASH ON DELIVERY (CASH/CARD/UP)", icon: <tabIcons.Icon1 /> },
@@ -97,6 +98,7 @@ export default function PaymentTabs({ paymentMode }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
+  const [paymentForm, setPaymentForm] = React.useState();
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
@@ -130,6 +132,30 @@ export default function PaymentTabs({ paymentMode }) {
       setPaymentMethod(paymentMode);
     }
   }, [paymentMode]);
+  const renderPaymentform = (checkoutIdNumber) => {
+    if (checkoutIdNumber) {
+      const script = document.createElement("script");
+
+      script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdNumber}`;
+      script.async = true;
+      document.body.appendChild(script);
+
+      const form = document.createElement("form");
+      form.action = ``;
+      form.setAttribute("class", "paymentWidgets");
+      form.setAttribute("data-brands", "VISA MASTER AMEX");
+
+      let menu = document.getElementById("vertical-tabpanel-1");
+      let child = menu?.lastElementChild
+      while (child) {
+          menu.removeChild(child);
+          child = menu.lastElementChild;
+      }
+      if (menu && menu != null) {
+        menu = menu?.append(form);
+      }
+    }
+  };
   const handleChange = async (_, newValue) => {
     switch (_.currentTarget.innerText.toLowerCase()) {
       case "mada debit card":
@@ -137,38 +163,17 @@ export default function PaymentTabs({ paymentMode }) {
       case "visa":
         const config = {
           method: "post",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada`,
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada&currency=EUR&paymentType=DB`,
           silent: true,
         };
         await axios(config).then((res) => {
-          setCheckoutId(JSON.parse(res.data).id);
+          renderPaymentform(JSON.parse(res.data).id);
           setValue(newValue);
         });
         break;
       default:
         setValue(newValue);
         break;
-    }
-  };
-
-  const renderPaymentform = (checkoutIdNumber) => {
-    if (checkoutIdNumber) {
-      const script = document.createElement("script");
-
-      script.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdNumber}`;
-      script.async = true;
-      document.body.appendChild(script);
-
-      const form = document.createElement("form");
-      form.action = `http://localhost:3001/#/order-confirmed`;
-      form.setAttribute("class", "paymentWidgets");
-      form.setAttribute("data-brands", "VISA MASTER AMEX");
-
-      const menu = document.querySelector("#vertical-tabpanel-1");
-
-      if (menu && menu != null) {
-        menu.appendChild(form);
-      }
     }
   };
   if (loading) return <Loader />;
@@ -210,7 +215,7 @@ export default function PaymentTabs({ paymentMode }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div id="renderPaymentform">{renderPaymentform(checkoutId)}</div>
+          <div id="renderPaymentform">{renderPaymentform()}</div>
         </TabPanel>
       </div>
     </div>
