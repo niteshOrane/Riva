@@ -55,13 +55,6 @@ function Products(props) {
       }
     }
   };
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
   return (
     <div>
       <div className="container-90 max-width-1600">
@@ -126,7 +119,13 @@ function Products(props) {
       {!loading && !products.length && (
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
-      <div className={styles.listingWrapper}>
+      <div
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        } container-90 max-width-1600 mx-auto`}
+      >
         {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
             <ProductCard

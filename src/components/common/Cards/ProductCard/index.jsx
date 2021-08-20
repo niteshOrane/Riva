@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import { toggleQuickView } from "../../../../store/actions/common";
@@ -8,9 +9,9 @@ import { extractColorSize, URL } from "../../../../util";
 
 import { getProduct } from "../../../../services/product/product.service";
 import styles from "./product.module.scss";
-import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const TempLink = ({ children, product }) => {
   if (product.sku)
@@ -125,11 +126,12 @@ const ProductCard = ({
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
   const settings = {
     infinite: true,
+    adaptiveHeight: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <img src="/assets/images/recomended2.svg" />,
-    prevArrow: <img src="/assets/images/recomended.svg" />,
+    nextArrow: <img src="/assets/images/recomended2.svg" alt="" />,
+    prevArrow: <img src="/assets/images/recomended.svg" alt="" />,
   };
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
@@ -139,18 +141,21 @@ const ProductCard = ({
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
           <div className={styles.listingSlider}>
-            <Slider {...settings}>
-              {product?.media_gallery_entries?.map((item) => (
-                <Image
-                  src={`${URL.baseUrlProduct}/${item?.file}`}
-                  defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                  width="100%"
-                />
-              ))}
-            </Slider>
+            <TempLink product={product}>
+              <div className={styles.imgContainer_P}>
+                <Slider {...settings}>
+                  {product?.media_gallery_entries?.map((item) => (
+                    <Image
+                      src={`${URL.baseUrlProduct}/${item?.file}`}
+                      defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                      width="100%"
+                    />
+                  ))}
+                </Slider>
+              </div>
+            </TempLink>
           </div>
         )}
-
         {!isListing && (
           <div className={styles.imageContainer}>
             <TempLink product={product}>
@@ -168,7 +173,6 @@ const ProductCard = ({
             </TempLink>
           </div>
         )}
-
         {product.sale && <div className={styles.sale}>Sale</div>}
         <div className={styles.actionContainer}>
           <div>

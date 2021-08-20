@@ -132,7 +132,7 @@ export default function PaymentTabs({ paymentMode }) {
       setPaymentMethod(paymentMode);
     }
   }, [paymentMode]);
-  const renderPaymentform = (checkoutIdNumber) => {
+  const renderPaymentform = (checkoutIdNumber, name) => {
     if (checkoutIdNumber) {
       const script = document.createElement("script");
 
@@ -145,11 +145,11 @@ export default function PaymentTabs({ paymentMode }) {
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute("data-brands", "VISA MASTER AMEX");
 
-      let menu = document.getElementById("vertical-tabpanel-1");
-      let child = menu?.lastElementChild
+      let menu = document.getElementById(name);
+      let child = menu?.lastElementChild;
       while (child) {
-          menu.removeChild(child);
-          child = menu.lastElementChild;
+        menu.removeChild(child);
+        child = menu.lastElementChild;
       }
       if (menu && menu != null) {
         menu = menu?.append(form);
@@ -159,15 +159,28 @@ export default function PaymentTabs({ paymentMode }) {
   const handleChange = async (_, newValue) => {
     switch (_.currentTarget.innerText.toLowerCase()) {
       case "mada debit card":
-      case "MASTERCARD":
+      case "pay by card with checkout.com":
+      case "mastercard":
       case "visa":
         const config = {
           method: "post",
           url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada&currency=EUR&paymentType=DB`,
           silent: true,
         };
+        let tabName = "";
+        if (newValue === 0) {
+          tabName = "";
+        } else if (newValue === 1) {
+          tabName = "vertical-tabpanel-1";
+        } else if (newValue === 2) {
+          tabName = "vertical-tabpanel-2";
+        } else if (newValue === 3) {
+          tabName = "vertical-tabpanel-3";
+        } else if (newValue === 4) {
+          tabName = "vertical-tabpanel-4";
+        }
         await axios(config).then((res) => {
-          renderPaymentform(JSON.parse(res.data).id);
+          renderPaymentform(JSON.parse(res.data).id, tabName);
           setValue(newValue);
         });
         break;
@@ -215,6 +228,15 @@ export default function PaymentTabs({ paymentMode }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
+          <div id="renderPaymentform">{renderPaymentform()}</div>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div id="renderPaymentform">{renderPaymentform()}</div>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <div id="renderPaymentform">{renderPaymentform()}</div>
+        </TabPanel>
+        <TabPanel value={value} index={4}>
           <div id="renderPaymentform">{renderPaymentform()}</div>
         </TabPanel>
       </div>

@@ -3,7 +3,7 @@
   // width: 281px;
   // height: 400px;
   width: 100%;
-  margin: 10px 0px 10px 0px;
+  margin: 10px 0px 0px 0px;
   padding: 4px;
   font-family: arial;
   position: relative;
@@ -225,5 +225,10 @@
 }
 
 .listingSlider{
-  width: 30rem;
+  width: 34rem;
+  padding-left: 3.8rem;
+}
+.slide{
+  width: 100%;
+  height: 100%;
 }
