@@ -1,3 +1,4 @@
+import MenuListComposition from './MenuItem';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -28,10 +29,10 @@ const NavLinks = () => {
             isAuth ? history.push('/wishlist') : openSignUpCard('/wishlist');
           }}
         >
-          <span style={{marginRight:"12px"}} className="material-icons-outlined font-light-black">
+          <span style={{ marginRight: "12px" }} className="material-icons-outlined font-light-black">
             favorite_border
           </span>
-          <span  className="align-self-end font-light-black">
+          <span className="align-self-end font-light-black">
             Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
           </span>{' '}
         </span>
@@ -39,18 +40,10 @@ const NavLinks = () => {
 
       <li className="nav-li">
         <span
-          onClick={() => {
-            isAuth ? history.push('/dashboard') : openSignUpCard('');
-          }}
           className="d-flex align-items-center gap-12"
         >
-          <span style={{marginRight:"12px"}} className="material-icons-outlined font-light-black">
-            person
-          </span>
-          <span className="align-self-end font-light-black">
-            {' '}
-            {'Account'}
-          </span>{' '}
+           <MenuListComposition auth={auth} history={history} openSignUpCard={openSignUpCard} />
+         {' '}
         </span>
       </li>
       <li className="nav-li">
