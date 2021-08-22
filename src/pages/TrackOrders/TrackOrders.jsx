@@ -3,7 +3,7 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
-import { orderConfirmed } from "../../services/order/order.services";
+import { orderConfirmed, cancelOrder } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../store/actions/common";
@@ -25,7 +25,7 @@ function TrackOrders() {
     setValue(e.target.value);
   };
   const handleSubmit = async (e) => {
-    if(!value) return dispatch(showSnackbar("Please enter order Id","error"))
+    if (!value) return dispatch(showSnackbar("Please enter order Id", "error"))
     e.preventDefault();
     if (value) {
       const res = await orderConfirmed(value);
@@ -33,6 +33,15 @@ function TrackOrders() {
         setOrderItems(
           res?.data?.items.filter((li) => li.product_type === "simple")
         );
+      }
+    }
+  };
+  const cancelOrderfn = async (e, id) => {
+    e.preventDefault();
+    if (value) {
+      const res = await cancelOrder(id);
+      if (res.status === 200 && res?.data) {
+        dispatch(showSnackbar("Order Canceled", "Sucess"))
       }
     }
   };
@@ -51,7 +60,7 @@ function TrackOrders() {
           />
           <div className="mt-5">
             {orderItems?.map((li) => (
-              <ProductCard product={li} />
+              <ProductCard product={li} cancelOrderFn={cancelOrderfn} />
             ))}
           </div>
           <TrackOrderDetails order={randomOrder} />

@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStore } from "../../../../../../store/actions/common";
 import style from "./MainHeaderTopBar.module.scss";
 import storeData from "../../../../../../store/index";
-import { useEffect } from "react";
+
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
   const header = useSelector((state) => state?.common?.header);
-  console.log(header)
   const foundStore =
     header?.find(({ country_id }) => country_id === currentLocation) || {};
   const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");

@@ -213,7 +213,7 @@ const ProductDetails = (props) => {
               )?.color : 'White'}{'  '}</div>
               {productColorList.length > 0 &&
                 productColorList?.map((item, index) => (
-                  <div
+                  <div title={item?.color}
                     key={`color${index}`}
                     className={`${styles.option}  c-pointer `}
                     onClick={() => colorImageAction(item)}
@@ -225,7 +225,8 @@ const ProductDetails = (props) => {
                     }}
                   >
                     {typeof item?.color === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.color.replace('/', "-").toLowerCase().replace(' ', '-')}.png`} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.color.replace('/', "-").toLowerCase().replace(' ', '-')}.png`} 
+                      className={`${styles.colorItem} ${product.selected.color.value === item.option_id
                         ? styles.active
                         : ""}`} alt={item?.color} />
                       : <img src={item?.file} className={`${styles.colorItem} ${product.selected.color.value === item.option_id

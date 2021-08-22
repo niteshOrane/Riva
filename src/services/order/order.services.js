@@ -17,3 +17,11 @@ export const getOrderList = (id) => {
   };
   return axios(config);
 };
+export const cancelOrder = (id) => {
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/orders/${id}/cancel`,
+    silent: true,
+  };
+  return axios(config);
+};

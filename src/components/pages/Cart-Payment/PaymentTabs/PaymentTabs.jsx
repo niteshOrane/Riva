@@ -136,7 +136,7 @@ export default function PaymentTabs({ paymentMode }) {
     if (checkoutIdNumber) {
       const script = document.createElement("script");
 
-      script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdNumber}`;
+      script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
       script.async = true;
       document.body.appendChild(script);
 
@@ -180,7 +180,7 @@ export default function PaymentTabs({ paymentMode }) {
           tabName = "vertical-tabpanel-4";
         }
         await axios(config).then((res) => {
-          renderPaymentform(JSON.parse(res.data).id, tabName);
+          setCheckoutId(JSON.parse(res.data).id);
           setValue(newValue);
         });
         break;

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ProductCard.module.scss";
 import { extractColorSize } from '../../../../../util';
 
-function ProductCard({ product }) {
+function ProductCard({ product, cancelOrderFn }) {
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -33,6 +33,7 @@ function ProductCard({ product }) {
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
         <p>Order ID #{product?.order_id}</p>
         <p>Payment: {product?.parent_item?.price}</p>
+        <div className="underline underline-hovered c-pointer font-weight-normal color-blue" onClick={(e) => { cancelOrderFn(e, product?.order_id) }}>Cancel order</div>
       </div>
     </div>
   );

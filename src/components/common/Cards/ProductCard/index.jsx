@@ -7,29 +7,29 @@ import { toggleWishlist } from "../../../../store/actions/wishlist";
 import { toggleQuickView } from "../../../../store/actions/common";
 import { extractColorSize, URL } from "../../../../util";
 
-import { getProduct } from "../../../../services/product/product.service";
+
+import { getProduct, getProductColor } from "../../../../services/product/product.service";
 import styles from "./product.module.scss";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const TempLink = ({ children, product }) => {
-  if (product.sku)
-    return <Link to={`/product/${product.sku}`}>{children} </Link>;
+  if (product?.sku)
+    return <Link to={`/product/${product?.sku}`}>{children} </Link>;
 
-  return <a href={product.uri}>{children}</a>;
+  return <a href={product?.uri}>{children}</a>;
 };
 
 const ProductCard = ({
   product,
   index,
   isProduct = false,
-  pageColumns = 2,
   extraOridnary,
   isListing,
 }) => {
   const { custom_attributes, id, image, name } = product;
-  const refContainer = useRef();
+
   let {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -47,6 +47,9 @@ const ProductCard = ({
   const wishList = useSelector((state) => state.wishlist.data);
 
   const [attributes, setattributes] = useState({ colors: [], size: [] });
+  const [productItem, setProductItem] = useState({});
+  const [colorImg, setColorImg] = useState(null);
+
 
   useEffect(() => {
     if (product?.extension_attributes?.configurable_product_options) {
@@ -55,20 +58,25 @@ const ProductCard = ({
       );
 
       setattributes({ colors, size });
+ 
+      product["selected"] = { color: colors[0], size: size[0] }
+
     }
+
+    setProductItem(product)
   }, [product]);
 
   const dispatch = useDispatch();
 
   const handleWishList = async () => {
-    const res = await getProduct(product.sku);
+    const res = await getProduct(productItem.sku);
 
     const { colors, size } = extractColorSize(
       res.data?.extension_attributes?.configurable_product_options || []
     );
 
     const p = {
-      ...product,
+      ...productItem,
       ...res.data,
       image: res.data?.custom_attributes.find(
         (attr) => attr.attribute_code === "image"
@@ -92,15 +100,30 @@ const ProductCard = ({
     dispatch(toggleWishlist(p));
   };
 
+  const loadColorImages = async (pro, colorSelected) => {
+    setColorImg('');
+
+    if (!pro.productColorImage) {
+      const pResponse = await getProductColor(pro?.id);
+      const productColorImage = pResponse?.data?.databind || [];
+      pro.productColorImage = productColorImage;
+      pro.media_gallery_entries = productColorImage;
+      setProductItem({ ...pro, productColorImage });
+    }
+    product["selected"] = { color: colorSelected }
+    setColorImg(pro?.productColorImage.find(e => e.option_id === colorSelected.value)?.file);
+  };
+
+
   const handleQuickView = async () => {
-    const res = await getProduct(product.sku);
+    const res = await getProduct(productItem.sku);
 
     const { colors, size } = extractColorSize(
       res.data?.extension_attributes?.configurable_product_options || []
     );
 
     const p = {
-      ...product,
+      ...productItem,
       ...res.data,
       image: res.data?.custom_attributes.find(
         (attr) => attr.attribute_code === "image"
@@ -123,15 +146,64 @@ const ProductCard = ({
     };
     dispatch(toggleQuickView(p));
   };
-  const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
+  const handleChange = async (event, newValue) => {
+    if (!product.productColorImage) {
+      const pResponse = await getProductColor(product?.id);
+      const productColorImage = pResponse?.data?.databind || [];
+      product.productColorImage = productColorImage;
+      product.media_gallery_entries = productColorImage;
+      setProductItem({ ...product, productColorImage })
+    }
+    setColorImg('');
+  };
+  function SampleNextArrow(props) {
+    const { className, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          right: 0,
+          width: "37px",
+          hight: "35px",
+          opacity: "0.7"
+        }}
+        onClick={handleChange}
+      >
+        <span ><img src="/assets/images/recomended2.svg" alt="Next" /></span>
+      </div>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          left: 0,
+          zIndex: 1,
+          width: "37px",
+          hight: "35px",
+          opacity: "0.7"
+        }}
+        onClick={handleChange}
+      >
+        <span><img src="/assets/images/recomended.svg" alt="Previos" /></span>
+      </div>
+    );
+  }
+
+  const isAddedToWishlist = !!wishList.find((w) => w.id === product.id);
   const settings = {
     infinite: true,
     adaptiveHeight: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <img src="/assets/images/recomended2.svg" alt="" />,
-    prevArrow: <img src="/assets/images/recomended.svg" alt="" />,
+    arrows: false,
+    className: 'notes-slider',
+    nextArrow: <SampleNextArrow onClick={handleChange} />,
+    prevArrow: <SamplePrevArrow onClick={handleChange} />,
   };
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
@@ -141,24 +213,25 @@ const ProductCard = ({
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
           <div className={styles.listingSlider}>
-            <TempLink product={product}>
-              <div className={styles.imgContainer_P}>
-                <Slider {...settings}>
-                  {product?.media_gallery_entries?.map((item) => (
+
+            <div className={styles.imgContainer_P}>
+              <Slider {...settings}>
+                {(productItem?.media_gallery_entries)?.map((item, indexitem) => (
+                  <TempLink product={productItem}>
                     <Image
-                      src={`${URL.baseUrlProduct}/${item?.file}`}
+                      src={colorImg || `${!productItem?.productColorImage ? URL.baseUrlProduct : ''}/${item?.file}`}
                       defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                       width="100%"
                     />
-                  ))}
-                </Slider>
-              </div>
-            </TempLink>
+                  </TempLink>
+                ))}
+              </Slider>
+            </div>
           </div>
         )}
         {!isListing && (
           <div className={styles.imageContainer}>
-            <TempLink product={product}>
+            <TempLink product={productItem}>
               <div className={styles.imgContainer_P}>
                 <div className={styles.imgContainer}>
                   {!isListing && (
@@ -173,59 +246,57 @@ const ProductCard = ({
             </TempLink>
           </div>
         )}
-        {product.sale && <div className={styles.sale}>Sale</div>}
-        <div className={styles.actionContainer}>
-          <div>
-            <button
-              type="button"
-              className={`no-border bg-transparent c-pointer`}
-              onClick={handleWishList}
-            >
-              <span
-                className="material-icons-outlined"
-                style={{ color: isAddedToWishlist ? "red" : "black" }}
+        {productItem?.sale && <div className={styles.sale}>Sale</div>}
+        <div style={{ marginLeft: '50px' }}>
+          <div className={styles.actionContainer}>
+            <div>
+              <button
+                type="button"
+                className='no-border bg-transparent c-pointer'
+                onClick={handleWishList}
               >
-                {isAddedToWishlist ? "favorite" : "favorite_border"}
-              </span>
-            </button>
-          </div>
-          <div>
-            <button
-              type="button"
-              className={`${styles.productBtn} no-border bg-transparent c-pointer`}
-              onClick={handleQuickView}
-            >
-              <span className="material-icons-outlined font-light-black">
-                search
-              </span>
-            </button>
-          </div>
-          <div>
-            <TempLink product={product}>
+                <span
+                  className="material-icons-outlined"
+                  style={{ color: isAddedToWishlist ? "red" : "black" }}
+                >
+                  {isAddedToWishlist ? "favorite" : "favorite_border"}
+                </span>
+              </button>
+            </div>
+            <div>
               <button
                 type="button"
                 className={`${styles.productBtn} no-border bg-transparent c-pointer`}
+                onClick={handleQuickView}
               >
-                <span className={`material-icons-outlined font-light-black`}>
-                  shopping_cart
+                <span className="material-icons-outlined font-light-black">
+                  search
                 </span>
               </button>
-            </TempLink>
+            </div>
+            <div>
+              <TempLink product={productItem}>
+                <button
+                  type="button"
+                  className={`${styles.productBtn} no-border bg-transparent c-pointer`}
+                >
+                  <span className='material-icons-outlined font-light-black'>
+                    shopping_cart
+                  </span>
+                </button>
+              </TempLink>
+            </div>
           </div>
-        </div>
-        <TempLink product={product}>
           <div
-            className={`${
-              !extraOridnary ? styles.productName : styles.extraOridnary
-            } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
+            className={`${!extraOridnary ? styles.productName : styles.extraOridnary
+              } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
             title={name}
           >
             {name || ""}
           </div>
           <div
-            className={`${styles.productPrice} ${
-              !isProduct ? "text-center" : ""
-            }`}
+            className={`${styles.productPrice} ${!isProduct ? "text-center" : ""
+              }`}
           >
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
               <div className={styles.was}>Was {origprice || ""}</div>
@@ -236,17 +307,34 @@ const ProductCard = ({
             </div>
           </div>
           <div
-            className={`${styles.productColors} ${
-              !isProduct ? "text-center justify-content-center" : "d-none"
-            }`}
+            className={`${styles.productColors} ${!isProduct ? "text-center justify-content-center" : ""
+              }`}
           >
-            <div>
-              {attributes.colors?.map((c) => (
-                <div className={styles.text}>{c.label} </div>
-              ))}
+            <div className={`${styles.color} d-flex`}>
+              {attributes?.colors?.length > 0 &&
+                attributes?.colors?.map(item => (
+                  <div
+                    key={`color${index}`}
+                    title={item?.label}
+                    className={`${styles.option}  c-pointer `}
+                    onClick={() => { loadColorImages(product, item) }}
+                  >
+                    {typeof item?.label === "string"
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.label.replace('/', "-").toLowerCase().replace(' ', '-').trim()}.png`}
+                        className={`${styles.colorItem} ${product?.selected?.color?.value === item.value
+                          ? styles.active
+                          : ""}`} alt={item?.label} />
+                      : <div src={item?.file}
+                        className={`${styles.colorItem} 
+                        ${product.selected.color.value === item.value
+                            ? styles.active
+                            : ""}`} title={item?.label} />
+                    }
+                  </div>
+                ))}
             </div>
           </div>
-        </TempLink>
+        </div>
       </div>
     </>
   );
