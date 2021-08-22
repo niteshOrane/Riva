@@ -73,9 +73,11 @@ export default function MenuListComposition({ auth, history, openSignUpCard }) {
             <span style={{ marginRight: "12px" }} className="material-icons-outlined font-light-black">
                 person
             </span>
-            <span className="align-self-end font-light-black">
+            <span className="align-self-end font-light-black d-flex">
                 {' '}
-                {isAuthenticated ? customer.firstname : 'Account'}
+                {isAuthenticated ? <><span>{customer.firstname} </span>
+                    <span className="material-icons-outlined" style={{ marginTop: '-2px' }}> keyboard_arrow_down</span>
+                </> : 'Account'}
             </span>
 
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
