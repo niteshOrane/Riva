@@ -91,7 +91,6 @@ const SignUpForm = ({ handleSubmit }) => {
   };
 
   const responseGoogle = async (response) => {
-    console.log(response)
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
       const lname = response?.profileObj?.familyName;

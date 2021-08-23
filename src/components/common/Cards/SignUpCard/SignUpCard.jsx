@@ -40,7 +40,7 @@ const SignUpCard = () => {
         >
           <icons.Close />
         </button>
-        <h2 className={styles.title}>{isLogin ? 'LOGIN' : 'SIGN UP'} </h2>
+        <h2 className={styles.title}>{isLogin ? 'SIGN IN' : 'SIGN UP'} </h2>
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
         {!isOtp ? (
           isLogin ? (

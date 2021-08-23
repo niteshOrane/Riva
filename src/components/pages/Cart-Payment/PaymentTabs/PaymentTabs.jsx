@@ -98,7 +98,7 @@ export default function PaymentTabs({ paymentMode }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
-  const [paymentForm, setPaymentForm] = React.useState();
+  const [paymentType, setPaymentType] = React.useState("");
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
@@ -132,8 +132,8 @@ export default function PaymentTabs({ paymentMode }) {
       setPaymentMethod(paymentMode);
     }
   }, [paymentMode]);
-  const renderPaymentform = (checkoutIdNumber, name) => {
-    if (checkoutIdNumber) {
+  const renderPaymentform = () => {
+    if (checkoutId) {
       const script = document.createElement("script");
 
       script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
@@ -145,12 +145,25 @@ export default function PaymentTabs({ paymentMode }) {
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute("data-brands", "VISA MASTER AMEX");
 
-      let menu = document.getElementById(name);
+      let tabName;
+      if (value === 1) {
+        tabName = "renderPaymentformOne";
+      } else if (value === 2) {
+        tabName = "renderPaymentformTwo";
+      } else if (value === 3) {
+        tabName = "renderPaymentformThree";
+      } else if (value === 4) {
+        tabName = "renderPaymentformFour";
+      }
+
+      let menu = document.getElementById(tabName);
+
       let child = menu?.lastElementChild;
       while (child) {
-        menu.removeChild(child);
-        child = menu.lastElementChild;
+        menu?.removeChild(child);
+        child = menu?.lastElementChild;
       }
+
       if (menu && menu != null) {
         menu = menu?.append(form);
       }
@@ -160,29 +173,18 @@ export default function PaymentTabs({ paymentMode }) {
     switch (_.currentTarget.innerText.toLowerCase()) {
       case "mada debit card":
       case "pay by card with checkout.com":
-      case "mastercard":
-      case "visa":
+      case "hyperpay visa":
+      case "hyperpay mastercard":
         const config = {
           method: "post",
           url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada&currency=EUR&paymentType=DB`,
           silent: true,
         };
-        let tabName = "";
-        if (newValue === 0) {
-          tabName = "";
-        } else if (newValue === 1) {
-          tabName = "vertical-tabpanel-1";
-        } else if (newValue === 2) {
-          tabName = "vertical-tabpanel-2";
-        } else if (newValue === 3) {
-          tabName = "vertical-tabpanel-3";
-        } else if (newValue === 4) {
-          tabName = "vertical-tabpanel-4";
-        }
         await axios(config).then((res) => {
           setCheckoutId(JSON.parse(res.data).id);
           setValue(newValue);
         });
+        setValue(newValue);
         break;
       default:
         setValue(newValue);
@@ -228,16 +230,16 @@ export default function PaymentTabs({ paymentMode }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div id="renderPaymentform">{renderPaymentform()}</div>
+          <div id="renderPaymentformOne">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div id="renderPaymentform">{renderPaymentform()}</div>
+          <div id="renderPaymentformTwo">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <div id="renderPaymentform">{renderPaymentform()}</div>
+          <div id="renderPaymentformThree">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={4}>
-          <div id="renderPaymentform">{renderPaymentform()}</div>
+          <div id="renderPaymentformFour">{renderPaymentform()}</div>
         </TabPanel>
       </div>
     </div>
