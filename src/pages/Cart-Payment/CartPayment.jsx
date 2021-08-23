@@ -58,7 +58,7 @@ function CartPayment() {
           {paymentOption && paymentOption?.data && paymentOption?.data?.length ?
             <>
               <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
-              <PaymentTabs paymentMode={paymentOption?.data} />
+              <PaymentTabs paymentMode={paymentOption?.data} cartPaymentInfo={cartPaymentInfo}/>
             </>
             : null}
         </div>

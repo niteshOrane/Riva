@@ -1,12 +1,10 @@
-import MenuListComposition from './MenuItem';
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { logoutUser } from '../../../services/auth/auth.service';
-import { logout } from '../../../store/actions/auth';
+import { useHistory } from 'react-router-dom';
+import MenuListComposition from './MenuItem';
 import { toggleCart } from '../../../store/actions/cart';
 import { toggleSignUpCard } from '../../../store/actions/common';
-import { hardReload } from '../../../util';
 
 const NavLinks = () => {
   const history = useHistory();

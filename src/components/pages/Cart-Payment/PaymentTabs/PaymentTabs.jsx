@@ -94,7 +94,7 @@ function a11yProps(index) {
   };
 }
 
-export default function PaymentTabs({ paymentMode }) {
+export default function PaymentTabs({ paymentMode, cartPaymentInfo }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -141,9 +141,9 @@ export default function PaymentTabs({ paymentMode }) {
       document.body.appendChild(script);
 
       const form = document.createElement("form");
-      form.action = ``;
+      form.action = `/order-confirmed`;
       form.setAttribute("class", "paymentWidgets");
-      form.setAttribute("data-brands", "VISA MASTER AMEX");
+      form.setAttribute("data-brands", "VISA MASTER AMEX" || paymentMode[value].tbText);
 
       let tabName;
       if (value === 1) {
@@ -155,9 +155,7 @@ export default function PaymentTabs({ paymentMode }) {
       } else if (value === 4) {
         tabName = "renderPaymentformFour";
       }
-
       let menu = document.getElementById(tabName);
-
       let child = menu?.lastElementChild;
       while (child) {
         menu?.removeChild(child);
@@ -170,14 +168,14 @@ export default function PaymentTabs({ paymentMode }) {
     }
   };
   const handleChange = async (_, newValue) => {
-    switch (_.currentTarget.innerText.toLowerCase()) {
-      case "mada debit card":
-      case "pay by card with checkout.com":
-      case "hyperpay visa":
-      case "hyperpay mastercard":
+    switch (newValue) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
         const config = {
           method: "post",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=50&method=HyperPay_Mada&currency=EUR&paymentType=DB`,
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value).toFixed(2)}&method=${paymentMode[newValue].code}&currency=EUR&paymentType=DB`,
           silent: true,
         };
         await axios(config).then((res) => {
@@ -207,9 +205,8 @@ export default function PaymentTabs({ paymentMode }) {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -230,16 +227,16 @@ export default function PaymentTabs({ paymentMode }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div id="renderPaymentformOne">{renderPaymentform()}</div>
+          <div id="renderPaymentformOne">{renderPaymentform(1)}</div>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div id="renderPaymentformTwo">{renderPaymentform()}</div>
+          <div id="renderPaymentformTwo">{renderPaymentform(2)}</div>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <div id="renderPaymentformThree">{renderPaymentform()}</div>
+          <div id="renderPaymentformThree">{renderPaymentform(3)}</div>
         </TabPanel>
         <TabPanel value={value} index={4}>
-          <div id="renderPaymentformFour">{renderPaymentform()}</div>
+          <div id="renderPaymentformFour">{renderPaymentform(4)}</div>
         </TabPanel>
       </div>
     </div>
