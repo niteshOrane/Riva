@@ -1,11 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
 import { orderConfirmed, cancelOrder } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
-import { useDispatch } from "react-redux";
+
 import { showSnackbar } from "../../store/actions/common";
 
 const randomOrder = {
@@ -42,6 +43,9 @@ function TrackOrders() {
       const res = await cancelOrder(id);
       if (res.status === 200 && res?.data) {
         dispatch(showSnackbar("Order Canceled", "Sucess"))
+      }
+      else {
+        dispatch(showSnackbar("Order Cancelation failed", "error"))
       }
     }
   };

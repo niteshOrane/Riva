@@ -1,4 +1,5 @@
 import axios from "axios";
+import {  getCustId } from '../../util';
 
 export const orderConfirmed = (id) => {
   const config = {
@@ -22,6 +23,41 @@ export const cancelOrder = (id) => {
     method: "post",
     url: `${process.env.REACT_APP_DEV}/orders/${id}/cancel`,
     silent: true,
+  };
+  return axios(config);
+};
+
+
+export const deleteNotification = (id) => {
+  const customer = new FormData();
+  customer.append('customerId', getCustId());
+  customer.append('productId', id);
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/productalertstock/delete`,
+    silent: true,
+    data: customer
+  };
+  return axios(config);
+};
+export const getNotification = () => {
+  const customer = new FormData();
+  customer.append('customerId', getCustId());
+  const config = {
+    method: 'post',
+    url: `${process.env.REACT_APP_DEV}/productalertstock/customeralertlist`,
+    silent: true,
+    data: customer
+  };
+  return axios(config);
+};
+
+export const addAlertstock = (subscribe) => {
+  const config = {
+    method: 'post',
+    url: `${process.env.REACT_APP_DEV}/productalertstock/add`,
+    silent: true,
+    data: subscribe
   };
   return axios(config);
 };
