@@ -53,7 +53,6 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const getAddress = async (lat, lng) => {
     const res = await getAddressByLocation(lat, lng);
     if (res.status === 200) {
-      console.log(res)
       setUserAddress(res?.data?.data?.find(li => li?.postal_code !== null) || res?.data?.data[0]);
     }
   };

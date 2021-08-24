@@ -11,7 +11,6 @@ function Delivered({ title = "Delivered" }) {
   const [orderList, setOrderList] = React.useState([]);
   const getOrders = async (id) => {
     const res = await getOrderList(id);
-    console.log(res)
     if (res?.status === 200 && res?.data) {
       const temp = res?.data?.items?.map((li) => ({
         status: li.status,

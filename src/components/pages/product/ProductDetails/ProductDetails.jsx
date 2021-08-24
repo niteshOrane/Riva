@@ -14,6 +14,7 @@ import { outOfStockCheck } from "../../../../services/product/product.service";
 import SearchInStorePopup from "./SearchInStorePopup";
 import SubscribeModel from "./SubscribeModel";
 import { URL } from '../../../../util';
+import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -21,6 +22,7 @@ const ProductDetails = (props) => {
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
+
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -32,6 +34,7 @@ const ProductDetails = (props) => {
       });
     }
   }, []);
+  console.log(productColorList)
   const colorImageAction = (data) => {
     setColorImg(data?.file);
     setColorSize({
@@ -41,7 +44,6 @@ const ProductDetails = (props) => {
   };
   const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
-
   const getOutOfStock = async () => {
     const id = product?.id;
     const color = product?.selected?.color?.label;
@@ -225,7 +227,7 @@ const ProductDetails = (props) => {
                     }}
                   >
                     {typeof item?.color === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.color.replace('/', "-").toLowerCase().replace(' ', '-')}.png`} 
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)}.png`} 
                       className={`${styles.colorItem} ${product.selected.color.value === item.option_id
                         ? styles.active
                         : ""}`} alt={item?.color} />

@@ -13,6 +13,7 @@ import styles from "./product.module.scss";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import wishlist from "../../../../store/reducers/wishlist/wishlist";
 
 const TempLink = ({ children, product }) => {
   if (product?.sku)
@@ -192,8 +193,7 @@ const ProductCard = ({
       </div>
     );
   }
-
-  const isAddedToWishlist = !!wishList.find((w) => w.id === product.id);
+  const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
   const settings = {
     infinite: true,
     adaptiveHeight: true,

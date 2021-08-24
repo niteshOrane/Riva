@@ -94,11 +94,11 @@ function a11yProps(index) {
   };
 }
 
-export default function PaymentTabs({ paymentMode, cartPaymentInfo }) {
+export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo  }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
-  const [paymentType, setPaymentType] = React.useState("");
+  const [paymentType] = React.useState("");
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
@@ -155,7 +155,9 @@ export default function PaymentTabs({ paymentMode, cartPaymentInfo }) {
       } else if (value === 4) {
         tabName = "renderPaymentformFour";
       }
+
       let menu = document.getElementById(tabName);
+
       let child = menu?.lastElementChild;
       while (child) {
         menu?.removeChild(child);
@@ -205,8 +207,9 @@ export default function PaymentTabs({ paymentMode, cartPaymentInfo }) {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -227,18 +230,18 @@ export default function PaymentTabs({ paymentMode, cartPaymentInfo }) {
           <Tab2Content onPayNow={onPayNow} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div id="renderPaymentformOne">{renderPaymentform(1)}</div>
+          <div id="renderPaymentformOne">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div id="renderPaymentformTwo">{renderPaymentform(2)}</div>
+          <div id="renderPaymentformTwo">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <div id="renderPaymentformThree">{renderPaymentform(3)}</div>
+          <div id="renderPaymentformThree">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={4}>
-          <div id="renderPaymentformFour">{renderPaymentform(4)}</div>
+          <div id="renderPaymentformFour">{renderPaymentform()}</div>
         </TabPanel>
       </div>
     </div>
   );
-}
+})

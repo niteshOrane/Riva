@@ -6,6 +6,7 @@ import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackY
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
 import { orderConfirmed, cancelOrder } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
+import { useHistory } from "react-router";
 
 import { showSnackbar } from "../../store/actions/common";
 
@@ -20,6 +21,7 @@ const randomOrder = {
 
 function TrackOrders() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState();
   const handleChange = (e) => {
@@ -41,8 +43,9 @@ function TrackOrders() {
     e.preventDefault();
     if (value) {
       const res = await cancelOrder(id);
-      if (res.status === 200 && res?.data) {
-        dispatch(showSnackbar("Order Canceled", "Sucess"))
+      if (res.status === 200) {
+        dispatch(showSnackbar("Order Canceled", "Success"))
+        history.push("/cancelled-orders")
       }
       else {
         dispatch(showSnackbar("Order Cancelation failed", "error"))

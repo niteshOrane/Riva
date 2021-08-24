@@ -11,7 +11,6 @@ const Tab2Content = ({onPayNow}) => {
   const dispatch = useDispatch();
   const [validation,setValidation] = React.useState(false)
   const showValidation = (e) => {
-    console.log(e)
     if(e.isEmpty) return setValidation(true)
     if(!e.isValid || e.isEmpty){
       setValidation(true)
@@ -48,11 +47,9 @@ const Tab2Content = ({onPayNow}) => {
         }}
         frameValidationChanged={(e) => showValidation(e)}
         cardTokenized={(e) => {
-          console.log(e)
           onPayNow(e);
         }}
         cardTokenizationFailed={e => {
-          console.log(e)
           dispatch(showSnackbar("Payment Fail", "error"));
         }}
       >

@@ -75,7 +75,6 @@ function DeliveryAddress() {
     }
   }, [defaultAddressIds]);
   useEffect(() => {
-    console.log("customerDeliverySpeed", customerDeliverySpeed);
   }, [customerDeliverySpeed]);
   const handleOnEdit = (record) => {
     setrecordToEdit(record);
@@ -106,7 +105,6 @@ function DeliveryAddress() {
     dispatch(getCustomerAddressList());
   };
   const setDefaultAddress = async (record, isBilling) => {
-    console.log(record, isBilling);
     const form = new FormData();
 
     form.append("customerid", getCustId());
