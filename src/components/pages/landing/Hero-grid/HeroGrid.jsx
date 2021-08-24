@@ -21,26 +21,26 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
           <div className={`d-grid w-50 ${style.gap25}`}>
             <div className="position-relative">
               <div className="position-relative h-100">
-                <Link to={`/${btfRight?.[0]?.url_banner ?? ""}`}>
+                <a href={`${btfRight?.[0]?.url_banner}`}>
                   <Image
                     src={btfRight?.[0]?.image}
                     classname={style.imgHeight}
                     width="100%"
                     alt=""
                   />
-                </Link>
+                </a>
               </div>
             </div>
             <div className={style.col2Grid}>
               <div className={style.col2GridImgs}>
-                <Link to={`/${btfRight?.[1]?.url_banner ?? ""}`}>
+                <a href={`${btfRight?.[1]?.url_banner}`}>
                   <Image src={`${btfRight?.[1]?.image}`} width="100%" alt="" />
-                </Link>
+                </a>
               </div>
               <div className={style.col2GridImgs}>
-                <Link to={`/${btfRight?.[2]?.url_banner ?? ""}`}>
+                <a href={`${btfRight?.[2]?.url_banner}`}>
                   <Image src={`${btfRight?.[2]?.image}`} width="100%" alt="" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>

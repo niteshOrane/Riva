@@ -75,10 +75,10 @@ export const cartPaymentAction = (token) => {
   };
   return axios(config);
 };
-export const Hypy_PaymentCart = () => {
+export const Hypy_PaymentCart = (data) => {
   const config = {
-    method: "post",
-    url: `${API_URL}/webapi/processhyperpay?method=Hyperpay_Mada`,
+    method: "get",
+    url: `${API_URL}/webapi/processhyperpay${data}&method=HyperPay_Visa`,
     silent: true,
   };
   return axios(config);

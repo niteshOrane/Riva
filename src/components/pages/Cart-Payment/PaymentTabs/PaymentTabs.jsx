@@ -1,5 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import { useHistory } from "react-router";
+
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -7,23 +10,17 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+
+
 import { showSnackbar } from "../../../../store/actions/common";
 import { cartPaymentAction } from "../../../../services/cart/cart.service";
-import { useHistory } from "react-router";
+
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
+import { getCartId } from "../../../../util";
 
-const tabLinks = [
-  { text: "CASH ON DELIVERY (CASH/CARD/UP)", icon: <tabIcons.Icon1 /> },
-  { text: "CREDIT/DEBIT CARD", icon: <tabIcons.Icon2 /> },
-  { text: "PHONEPE/GOOGLE PAY/BHIM UPI", icon: <tabIcons.Icon3 /> },
-  { text: "PAYTM/PAYZAPP/WALLETS", icon: <tabIcons.Icon4 /> },
-  { text: "NET BANKING", icon: <tabIcons.Icon5 /> },
-];
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,7 +91,7 @@ function a11yProps(index) {
   };
 }
 
-export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo  }) {
+export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -141,7 +138,7 @@ export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo  }
       document.body.appendChild(script);
 
       const form = document.createElement("form");
-      form.action = `/order-confirmed`;
+      form.action = `/result`;
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute("data-brands", "VISA MASTER AMEX" || paymentMode[value].tbText);
 
@@ -177,7 +174,7 @@ export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo  }
       case 4:
         const config = {
           method: "post",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?amount=${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value).toFixed(2)}&method=${paymentMode[newValue].code}&currency=EUR&paymentType=DB`,
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[newValue].code}&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
           silent: true,
         };
         await axios(config).then((res) => {

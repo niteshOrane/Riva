@@ -13,7 +13,7 @@ const SlideBanner = ({ banners = [] }) => {
         items={banners}
         slidesToShow={1}
         render={(item) => (
-          <Link to={`/${banners?.url_banner || ''}`}>
+          <a href={`${banners?.url_banner || ''}`}>
             <div
               className={`${style.slide} text-center d-flex-all-center flex-column`}
             >
@@ -35,7 +35,7 @@ const SlideBanner = ({ banners = [] }) => {
                 </a>
               </div>
             </div>
-          </Link>
+          </a>
         )}
       />
     </div>

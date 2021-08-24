@@ -24,7 +24,7 @@ function OrderConfirmed(props) {
 
   useEffect(async () => {
     const parsed = queryString.parse(props?.location?.search)
-    const res = await Hypy_PaymentCart(parsed.resourcePath);
+    const res = await Hypy_PaymentCart(props?.location?.search);
     if (res.status === 200 && res?.data) {
       setResponseData({
         responseData: res.data,
