@@ -6,12 +6,12 @@ const NavbarMain = () => {
   return (
     <nav className="nav d-flex align-items-center justify-content-between">
       <strong className="logo-strong d-block">
-        <a className="d-block" href="#">
+        <a className="d-block" href="/">
           <img
             className="logo-image"
             src="./assets/images/logo.png"
             width="100%"
-            alt="RAVI"
+            alt="RIVA"
           />
         </a>
       </strong>

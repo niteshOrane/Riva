@@ -22,7 +22,7 @@ const NavbarMain = () => {
             className="logo-image"
             src="/assets/images/logo.png"
             width="100%"
-            alt="RAVI"
+            alt="RIVA"
           />
         </Link>
       </strong>
