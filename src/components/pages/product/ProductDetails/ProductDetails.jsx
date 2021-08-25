@@ -34,7 +34,6 @@ const ProductDetails = (props) => {
       });
     }
   }, []);
-  console.log(productColorList)
   const colorImageAction = (data) => {
     setColorImg(data?.file);
     setColorSize({
@@ -227,7 +226,7 @@ const ProductDetails = (props) => {
                     }}
                   >
                     {typeof item?.color === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)}.png`} 
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)?.toLowerCase()}.png`} 
                       className={`${styles.colorItem} ${product.selected.color.value === item.option_id
                         ? styles.active
                         : ""}`} alt={item?.color} />

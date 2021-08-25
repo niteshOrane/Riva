@@ -21,6 +21,9 @@ const SignUpCard = () => {
   const handleClose = () => {
     dispatch(toggleSignUpCard({ isOpen: false }));
   };
+  const handleOtpForm = () => {
+    dispatch(toggleSignUpCard({isOtp:true}))
+  }
 
   const handleSubmit = () => {
     handleClose();
@@ -44,7 +47,7 @@ const SignUpCard = () => {
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
         {!isOtp ? (
           isLogin ? (
-            <LoginForm handleSubmit={handleClose} />
+            <LoginForm handleOtpForm={handleOtpForm} handleSubmit={handleClose} />
           ) : (
             <SignUpForm handleSubmit={handleSubmit} />
           )

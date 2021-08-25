@@ -20,7 +20,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 
-const LoginForm = ({ handleSubmit }) => {
+const LoginForm = ({ handleSubmit, handleOtpForm }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -205,7 +205,8 @@ const LoginForm = ({ handleSubmit }) => {
             <input value="SIGN IN" type="submit" className={styles.signUpBtn} />
             <input
               value="SIGN IN WITH OTP"
-              type="submit"
+              type="button"
+              onClick={handleOtpForm}
               className={styles.signUpBtn}
             />
           </div>
@@ -228,7 +229,7 @@ const LoginForm = ({ handleSubmit }) => {
             Forgot Password hello
           </p>
         </div> */}
-          <div cl>
+          <div>
             <button
               type="button"
               className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}

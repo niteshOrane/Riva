@@ -1,3 +1,3 @@
 export const colorRegexFilter = (str) => {
-    return str.replace(/[\/\s-+]+/g,"-")
+    return str?.replace(/[\/\s-+]+/g,"-")
 }

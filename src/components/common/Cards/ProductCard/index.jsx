@@ -6,9 +6,12 @@ import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import { toggleQuickView } from "../../../../store/actions/common";
 import { extractColorSize, URL } from "../../../../util";
+import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
-
-import { getProduct, getProductColor } from "../../../../services/product/product.service";
+import {
+  getProduct,
+  getProductColor,
+} from "../../../../services/product/product.service";
 import styles from "./product.module.scss";
 
 import "slick-carousel/slick/slick.css";
@@ -51,7 +54,6 @@ const ProductCard = ({
   const [productItem, setProductItem] = useState({});
   const [colorImg, setColorImg] = useState(null);
 
-
   useEffect(() => {
     if (product?.extension_attributes?.configurable_product_options) {
       const { colors, size } = extractColorSize(
@@ -59,12 +61,11 @@ const ProductCard = ({
       );
 
       setattributes({ colors, size });
- 
-      product["selected"] = { color: colors[0], size: size[0] }
 
+      product["selected"] = { color: colors[0], size: size[0] };
     }
 
-    setProductItem(product)
+    setProductItem(product);
   }, [product]);
 
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const ProductCard = ({
   };
 
   const loadColorImages = async (pro, colorSelected) => {
-    setColorImg('');
+    setColorImg("");
 
     if (!pro.productColorImage) {
       const pResponse = await getProductColor(pro?.id);
@@ -111,10 +112,12 @@ const ProductCard = ({
       pro.media_gallery_entries = productColorImage;
       setProductItem({ ...pro, productColorImage });
     }
-    product["selected"] = { color: colorSelected }
-    setColorImg(pro?.productColorImage.find(e => e.option_id === colorSelected.value)?.file);
+    product["selected"] = { color: colorSelected };
+    setColorImg(
+      pro?.productColorImage.find((e) => e.option_id === colorSelected.value)
+        ?.file
+    );
   };
-
 
   const handleQuickView = async () => {
     const res = await getProduct(productItem.sku);
@@ -153,9 +156,9 @@ const ProductCard = ({
       const productColorImage = pResponse?.data?.databind || [];
       product.productColorImage = productColorImage;
       product.media_gallery_entries = productColorImage;
-      setProductItem({ ...product, productColorImage })
+      setProductItem({ ...product, productColorImage });
     }
-    setColorImg('');
+    setColorImg("");
   };
   function SampleNextArrow(props) {
     const { className, onClick } = props;
@@ -166,11 +169,13 @@ const ProductCard = ({
           right: 0,
           width: "37px",
           hight: "35px",
-          opacity: "0.7"
+          opacity: "0.7",
         }}
         onClick={handleChange}
       >
-        <span ><img src="/assets/images/recomended2.svg" alt="Next" /></span>
+        <span>
+          <img src="/assets/images/recomended2.svg" alt="Next" />
+        </span>
       </div>
     );
   }
@@ -185,11 +190,13 @@ const ProductCard = ({
           zIndex: 1,
           width: "37px",
           hight: "35px",
-          opacity: "0.7"
+          opacity: "0.7",
         }}
         onClick={handleChange}
       >
-        <span><img src="/assets/images/recomended.svg" alt="Previos" /></span>
+        <span>
+          <img src="/assets/images/recomended.svg" alt="Previos" />
+        </span>
       </div>
     );
   }
@@ -201,7 +208,7 @@ const ProductCard = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    className: 'notes-slider',
+    className: "notes-slider",
     nextArrow: <SampleNextArrow onClick={handleChange} />,
     prevArrow: <SamplePrevArrow onClick={handleChange} />,
   };
@@ -213,13 +220,19 @@ const ProductCard = ({
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
           <div className={styles.listingSlider}>
-
             <div className={styles.imgContainer_P}>
               <Slider {...settings}>
-                {(productItem?.media_gallery_entries)?.map((item, indexitem) => (
+                {productItem?.media_gallery_entries?.map((item, indexitem) => (
                   <TempLink product={productItem}>
                     <Image
-                      src={colorImg || `${!productItem?.productColorImage ? URL.baseUrlProduct : ''}/${item?.file}`}
+                      src={
+                        colorImg ||
+                        `${
+                          !productItem?.productColorImage
+                            ? URL.baseUrlProduct
+                            : ""
+                        }/${item?.file}`
+                      }
                       defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                       width="100%"
                     />
@@ -247,12 +260,12 @@ const ProductCard = ({
           </div>
         )}
         {productItem?.sale && <div className={styles.sale}>Sale</div>}
-        <div style={{ marginLeft: '50px' }}>
+        <div style={{ marginLeft: "50px" }}>
           <div className={styles.actionContainer}>
             <div>
               <button
                 type="button"
-                className='no-border bg-transparent c-pointer'
+                className="no-border bg-transparent c-pointer"
                 onClick={handleWishList}
               >
                 <span
@@ -280,7 +293,7 @@ const ProductCard = ({
                   type="button"
                   className={`${styles.productBtn} no-border bg-transparent c-pointer`}
                 >
-                  <span className='material-icons-outlined font-light-black'>
+                  <span className="material-icons-outlined font-light-black">
                     shopping_cart
                   </span>
                 </button>
@@ -288,15 +301,17 @@ const ProductCard = ({
             </div>
           </div>
           <div
-            className={`${!extraOridnary ? styles.productName : styles.extraOridnary
-              } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
+            className={`${
+              !extraOridnary ? styles.productName : styles.extraOridnary
+            } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
             title={name}
           >
             {name || ""}
           </div>
           <div
-            className={`${styles.productPrice} ${!isProduct ? "text-center" : ""
-              }`}
+            className={`${styles.productPrice} ${
+              !isProduct ? "text-center" : ""
+            }`}
           >
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
               <div className={styles.was}>Was {origprice || ""}</div>
@@ -307,29 +322,47 @@ const ProductCard = ({
             </div>
           </div>
           <div
-            className={`${styles.productColors} ${!isProduct ? "text-center justify-content-center" : ""
-              }`}
+            className={`${styles.productColors} ${
+              !isProduct ? "text-center justify-content-center" : ""
+            }`}
           >
             <div className={`${styles.color} d-flex`}>
               {attributes?.colors?.length > 0 &&
-                attributes?.colors?.map(item => (
+                attributes?.colors?.map((item) => (
                   <div
                     key={`color${index}`}
                     title={item?.label}
                     className={`${styles.option}  c-pointer `}
-                    onClick={() => { loadColorImages(product, item) }}
+                    onClick={() => {
+                      loadColorImages(product, item);
+                    }}
                   >
-                    {typeof item?.label === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${item?.label.replace('/', "-").toLowerCase().replace(' ', '-').trim()}.png`}
-                        className={`${styles.colorItem} ${product?.selected?.color?.value === item.value
-                          ? styles.active
-                          : ""}`} alt={item?.label} />
-                      : <div src={item?.file}
-                        className={`${styles.colorItem} 
-                        ${product.selected.color.value === item.value
+                    {typeof item?.label === "string" ? (
+                      <img
+                        src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                          item?.label
+                        )
+                          ?.toLowerCase()
+                          .trim()}.png`}
+                        className={`${styles.colorItem} ${
+                          product?.selected?.color?.value === item.value
                             ? styles.active
-                            : ""}`} title={item?.label} />
-                    }
+                            : ""
+                        }`}
+                        alt={item?.label}
+                      />
+                    ) : (
+                      <div
+                        src={item?.file}
+                        className={`${styles.colorItem} 
+                        ${
+                          product.selected.color.value === item.value
+                            ? styles.active
+                            : ""
+                        }`}
+                        title={item?.label}
+                      />
+                    )}
                   </div>
                 ))}
             </div>
