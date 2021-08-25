@@ -131,11 +131,6 @@ function DeliveryAddress() {
   return (
     <div className="container-90 max-width-1600">
       <div className={styles.header}>
-        <strong id="logo" className={styles.logo}>
-          <Link to="/">
-            <img src="/assets/images/logo.png" alt="Riva" />
-          </Link>
-        </strong>
         <div className={styles.breadCrumb}>
           <div className={styles.bcLinks}>
             <Link to="/">
