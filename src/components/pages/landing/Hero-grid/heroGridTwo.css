@@ -29,6 +29,8 @@
   height: 20rem;
   position: relative;
   padding-right: 3.8rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .kids-banner-img {
   padding-top: 10px;

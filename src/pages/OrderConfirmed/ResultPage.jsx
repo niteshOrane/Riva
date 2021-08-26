@@ -13,10 +13,9 @@ import { Hypy_PaymentCart } from "../../services/cart/cart.service";
 
 function ResultPage(props) {
   const history = useHistory();
+  
 
-
-  useEffect(async () => {
-    debugger
+  const getHyperPayPayment = async () => {
     const parsed = queryString.parse(props?.location?.search);
     if (parsed) {
       const res = await Hypy_PaymentCart(props?.location?.search);
@@ -26,6 +25,20 @@ function ResultPage(props) {
         );
       }
     }
+  }
+
+  useEffect(() => {
+    // debugger
+    // const parsed = queryString.parse(props?.location?.search);
+    // if (parsed) {
+    //   const res = await Hypy_PaymentCart(props?.location?.search);
+    //   if (res.status === 200 && res?.data) {
+    //     history.push(
+    //       `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
+    //     );
+    //   }
+    // }
+    getHyperPayPayment()
   }, [])
 
  

@@ -188,6 +188,7 @@ function Products(props) {
           ref={refContainer}
           render={(item, index) => (
             <ProductCard
+              isRecommended
               product={item}
               index={index}
               isProduct={Boolean(true)}

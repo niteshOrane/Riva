@@ -468,6 +468,7 @@
           width: 22px;
           height: 22px;
           object-fit: contain;
+          margin-bottom: 20px;
         }
       }
     }
@@ -477,6 +478,7 @@
 .labelName{
   margin-left: 13px;
   font-weight: normal;
+  white-space: nowrap;
 }
 .labelContainer{
   display: flex;

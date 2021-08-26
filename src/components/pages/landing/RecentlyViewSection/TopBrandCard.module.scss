@@ -4,7 +4,8 @@
   transition: all 0.3s ease-in;
   flex-basis: 50%;
   .cardBody {
-    padding: 12px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     box-shadow: 0.4px 5px 16px 0 rgba(0, 0, 0, 0.1);
     min-height: 125px;
     margin: 12px;
@@ -26,7 +27,8 @@
     .cardText {
       margin-left: 0px;
       width: 100%;
-      padding: 12px;
+      padding-top: 14px;
+      padding-right: 9px;
       // background-color: #fdfbfb;
       .title {
         color: #535353;

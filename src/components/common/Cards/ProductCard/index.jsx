@@ -31,6 +31,7 @@ const ProductCard = ({
   isProduct = false,
   extraOridnary,
   isListing,
+  isRecommended
 }) => {
   const { custom_attributes, id, image, name } = product;
 
@@ -216,7 +217,7 @@ const ProductCard = ({
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <>
-      <div key={id} className={styles.productCard}>
+      <div style={isRecommended ? {padding:"0px"} : null} key={id} className={styles.productCard}>
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
           <div className={styles.listingSlider}>

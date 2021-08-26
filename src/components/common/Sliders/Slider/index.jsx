@@ -35,8 +35,9 @@ const Slider = React.forwardRef((props, ref) => {
         style={{
           right: 0,
           width:"37px",
-          hight:"35px",
-          opacity:"0.7"
+          height:"115px",
+          opacity:"0.7",
+          marginBottom:"15px"
         }}
         onClick={onClick}
       >
@@ -54,7 +55,7 @@ const Slider = React.forwardRef((props, ref) => {
           left: 0,
           zIndex: 1,
           width:"37px",
-          hight:"35px",
+          height:"115px",
           opacity:"0.7"
         }}
         onClick={onClick}

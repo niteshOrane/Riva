@@ -58,6 +58,7 @@ function Landing() {
                     src={`${URL.baseUrl}${item?.image}`}
                     width="100%"
                     alt={item?.name}
+                    customeStyle = {{borderRadius:"50%"}}
                   />
                 </div>
                 <div>

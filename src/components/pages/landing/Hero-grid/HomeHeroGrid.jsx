@@ -43,6 +43,7 @@ const HomeHeroGrid = (props) => {
                 <ButtonWithArrows
                   btnClass="bg-black color-white mx-auto"
                   text="Shop Now"
+                  isFestiveCard
                 />
               </div>
             </div>
@@ -72,6 +73,7 @@ const HomeHeroGrid = (props) => {
                   <ButtonWithArrows
                     btnClass="bg-black color-white mx-auto"
                     text="Shop Now"
+                    isFestiveCard
                   />
                 </div>
               </div>
@@ -100,6 +102,7 @@ const HomeHeroGrid = (props) => {
                   <ButtonWithArrows
                     btnClass="bg-black color-white mx-auto"
                     text="Shop Now"
+                    isFestiveCard
                   />
                 </div>
               </div>

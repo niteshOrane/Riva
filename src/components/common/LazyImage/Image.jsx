@@ -11,6 +11,7 @@ const LazyImage = (props) => {
     customeStyle,
     classname,
     defaultImage,
+    isCategory,
     type = '',
   } = props;
   const [error, setError] = useState(false);

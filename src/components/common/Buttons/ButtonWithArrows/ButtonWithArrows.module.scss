@@ -10,16 +10,16 @@
   border: none;
   .before {
     position: absolute;
-    top: -8px;
-    left: -9px;
+    top: 3px;
+    left: 3px;
     transition: all 0.3s ease;
-    transform: rotate(45deg);
+    // transform: rotate(45deg);
   }
   .next {
     position: absolute;
-    right: -5px;
-    bottom: -10px;
-    transform: rotate(41deg);
+    right: 3px;
+    bottom: 3px;
+    // transform: rotate(41deg);
     transition: all 0.3s ease;
   }
 
@@ -36,5 +36,21 @@
       left: -16px;
       opacity: 0;
     }
+  }
+}
+
+.shopIcon {
+  filter: invert(100%) sepia(0%) saturate(7497%) hue-rotate(337deg)
+    brightness(99%) contrast(103%);
+  .before {
+    top: -1px !important;
+    // transform: rotate(45deg);
+  }
+  .next {
+    position: absolute;
+    right: 3px;
+    bottom: -1px;
+    // transform: rotate(41deg);
+    transition: all 0.3s ease;
   }
 }

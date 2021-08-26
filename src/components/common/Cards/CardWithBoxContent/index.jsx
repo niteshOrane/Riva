@@ -19,6 +19,7 @@ const CardWithBoxContent = ({ item }) => {
           <ButtonWithArrows
             btnClass="bg-black color-white mx-auto"
             text="Shop Now"
+            isFestiveCard
           />
         </div>
       </div>
