@@ -33,7 +33,7 @@ function ProductCard({ product, cancelOrderFn }) {
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
         <p>Order ID #{product?.order_id}</p>
         <p>Payment: {product?.parent_item?.price}</p>
-        <div className="underline underline-hovered c-pointer font-weight-normal color-blue" onClick={(e) => { cancelOrderFn(e, product?.order_id) }}>Cancel order</div>
+        {cancelOrderFn ? <div className="underline underline-hovered c-pointer font-weight-normal color-blue" onClick={(e) => { cancelOrderFn(e, product?.order_id) }}>Cancel order</div> : null}
       </div>
     </div>
   );
