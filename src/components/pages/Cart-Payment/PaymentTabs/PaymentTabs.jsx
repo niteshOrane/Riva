@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
 
@@ -91,7 +91,7 @@ function a11yProps(index) {
   };
 }
 
-export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo }) {
+export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -204,9 +204,8 @@ export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo })
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
