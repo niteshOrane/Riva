@@ -138,7 +138,7 @@ export default React.memo(function PaymentTabs({ paymentMode, cartPaymentInfo })
       document.body.appendChild(script);
 
       const form = document.createElement("form");
-      form.action = `http://localhost:3001/#/result`;
+      form.action = `http://65.0.141.49/#/result`;
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute("data-brands", "VISA MASTER AMEX" || paymentMode[value].tbText);
 
