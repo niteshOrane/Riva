@@ -28,6 +28,9 @@ const Coupons = React.lazy(() => import("../pages/Coupons/Coupons"));
 const OrderConfirmed = React.lazy(() =>
   import("../pages/OrderConfirmed/OrderConfirmed")
 );
+const ResultPage = React.lazy(() =>
+  import("../pages/OrderConfirmed/ResultPage")
+);
 const MySubscription = React.lazy(() =>
   import("../pages/MySubscription/MySubscription")
 );
@@ -154,9 +157,9 @@ class AppRoutes extends Component {
       },
       {
         path: "/result",
-        component: OrderConfirmed,
+        component: ResultPage,
         exact: true,
-        name: "OrderConfirmed",
+        name: "ResultPage",
         layout: MainLayout,
         index: 6,
       },
