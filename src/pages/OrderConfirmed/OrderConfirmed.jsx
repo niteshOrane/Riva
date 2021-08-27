@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import queryString from 'query-string';
-
 import { useHistory } from "react-router";
 import { useDispatch } from 'react-redux';
 
@@ -12,15 +10,10 @@ import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/Product
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
 import styles from "./OrderConfirmed.module.scss";
 import { emptyCart } from '../../store/actions/auth';
-
-
-
-
+import { getCart } from '../../store/actions/cart';
 import { orderConfirmed } from "../../services/order/order.services";
-import { Hypy_PaymentCart } from "../../services/cart/cart.service";
 
 function OrderConfirmed(props) {
-  const history = useHistory();
   const dispatch = useDispatch();
   const { orderId } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
@@ -42,6 +35,7 @@ function OrderConfirmed(props) {
   useEffect(() => {
     if (orderId) {
       dispatch(emptyCart());
+      dispatch(getCart());
       getOrderDetails(orderId);
     }
   }, [orderId]);

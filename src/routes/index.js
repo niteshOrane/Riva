@@ -156,7 +156,7 @@ class AppRoutes extends Component {
         index: 6,
       },
       {
-        path: "/result",
+        path: "/result/:type",
         component: ResultPage,
         exact: true,
         name: "ResultPage",

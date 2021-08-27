@@ -128,20 +128,14 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       silent: true,
     };
     await axios(configTap).then((res) => {
-      if(fnValue==="tap"){
-        setPaymentType(res?.data[0]?.tap?.active_pk);
-      }else{
-        setPaymentType(res?.data[0]?.checkoutcom_card_payment?.active_pk);
-      }
- 
+      setPaymentType(res?.data[0]?.[fnValue]?.active_pk);
     });
   };
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
+        }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -154,6 +148,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
+      getPaymentForTapCheckout(paymentMode[2].code);//changes value to tap
     }
   }, [paymentMode]);
   const renderPaymentform = () => {
@@ -163,9 +158,8 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
       script.async = true;
       document.body.appendChild(script);
-
       const form = document.createElement("form");
-      form.action = `http://65.0.141.49/#/result`;
+      form.action = `${window.location.origin}/#/result/${paymentMode[value].code}`;
       form.setAttribute("class", "paymentWidgets");
       form.setAttribute(
         "data-brands",
@@ -198,11 +192,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const handleChange = async (_, newValue) => {
     switch (newValue) {
       case 0:
-        getPaymentForTapCheckout("tap");
-        setValue(newValue);
-        break;
-      case 1:
-        getPaymentForHyperPay(newValue);
+        getPaymentForTapCheckout("checkoutcom_card_payment");//changes value to tap
         setValue(newValue);
         break;
       case 2:
@@ -210,9 +200,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         setValue(newValue);
         break;
       case 3:
-        getPaymentForHyperPay(newValue);
-        setValue(newValue);
-        break;
+      case 1:
       case 4:
         getPaymentForHyperPay(newValue);
         setValue(newValue);
@@ -238,9 +226,8 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -258,7 +245,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-           {/* {paymentType && <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />} */}
+          {paymentType && <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>
