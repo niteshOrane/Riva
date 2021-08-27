@@ -121,6 +121,36 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       }
     }
   };
+  const getPaymentForTapCheckout = async (fnValue) => {
+    const configTap = {
+      method: "get",
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${fnValue}`,
+      silent: true,
+    };
+    await axios(configTap).then((res) => {
+      if(fnValue==="tap"){
+        setPaymentType(res?.data[0]?.tap?.active_pk);
+      }else{
+        setPaymentType(res?.data[0]?.checkoutcom_card_payment?.active_pk);
+      }
+ 
+    });
+  };
+  const getPaymentForHyperPay = async (fnValue) => {
+    const config = {
+      method: "post",
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      silent: true,
+    };
+    await axios(config).then((res) => {
+      setCheckoutId(JSON.parse(res.data).id);
+    });
+  };
+  // useEffect(() => {
+  //   getPaymentForTapCheckout("tap");
+  // }, []);
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
@@ -145,8 +175,6 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       let tabName;
       if (value === 1) {
         tabName = "renderPaymentformOne";
-      } else if (value === 2) {
-        tabName = "renderPaymentformTwo";
       } else if (value === 3) {
         tabName = "renderPaymentformThree";
       } else if (value === 4) {
@@ -166,35 +194,27 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       }
     }
   };
+
   const handleChange = async (_, newValue) => {
-    console.log(newValue);
     switch (newValue) {
       case 0:
-        const configTap = {
-          method: "get",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=tap`,
-          silent: true,
-        };
-        await axios(configTap).then((res) => {
-          console.log(res);
-          setPaymentType(res?.data[0]?.tap?.active_pk);
-        });
+        getPaymentForTapCheckout("tap");
+        setValue(newValue);
         break;
       case 1:
+        getPaymentForHyperPay(newValue);
+        setValue(newValue);
+        break;
       case 2:
+        getPaymentForTapCheckout("checkoutcom_card_payment");
+        setValue(newValue);
+        break;
       case 3:
+        getPaymentForHyperPay(newValue);
+        setValue(newValue);
+        break;
       case 4:
-        const config = {
-          method: "post",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-            paymentMode[newValue].code
-          }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
-          silent: true,
-        };
-        await axios(config).then((res) => {
-          setCheckoutId(JSON.parse(res.data).id);
-          setValue(newValue);
-        });
+        getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;
       default:
@@ -238,13 +258,15 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          <Tab2Content onPayNow={onPayNow} />
+           {/* {paymentType && <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />} */}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div id="renderPaymentformTwo">{renderPaymentform()}</div>
+          {paymentType && (
+            <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={3}>
           <div id="renderPaymentformThree">{renderPaymentform()}</div>
