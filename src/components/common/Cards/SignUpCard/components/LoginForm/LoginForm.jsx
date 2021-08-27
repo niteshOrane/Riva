@@ -30,6 +30,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    mobile:""
   });
 
   const [showforgotPassword, setforgotPassword] = useState(false);
@@ -75,6 +76,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
     customer.append("email", email);
 
     customer.append("password", password);
+    customer.append("mobile","")
 
     const res = await loginCustomer(customer);
 

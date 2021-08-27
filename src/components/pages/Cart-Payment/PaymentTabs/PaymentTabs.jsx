@@ -11,7 +11,6 @@ import Box from "@material-ui/core/Box";
 import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
 
-
 import { showSnackbar } from "../../../../store/actions/common";
 import { cartPaymentAction } from "../../../../services/cart/cart.service";
 
@@ -19,8 +18,6 @@ import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
 import { getCartId } from "../../../../util";
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +92,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
-  const [paymentType] = React.useState("");
+  const [paymentType, setPaymentType] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
@@ -140,7 +137,10 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       const form = document.createElement("form");
       form.action = `http://65.0.141.49/#/result`;
       form.setAttribute("class", "paymentWidgets");
-      form.setAttribute("data-brands", "VISA MASTER AMEX" || paymentMode[value].tbText);
+      form.setAttribute(
+        "data-brands",
+        "VISA MASTER AMEX" || paymentMode[value].tbText
+      );
 
       let tabName;
       if (value === 1) {
@@ -167,14 +167,28 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
     }
   };
   const handleChange = async (_, newValue) => {
+    console.log(newValue);
     switch (newValue) {
+      case 0:
+        const configTap = {
+          method: "get",
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=tap`,
+          silent: true,
+        };
+        await axios(configTap).then((res) => {
+          console.log(res);
+          setPaymentType(res?.data[0]?.tap?.active_pk);
+        });
+        break;
       case 1:
       case 2:
       case 3:
       case 4:
         const config = {
           method: "post",
-          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[newValue].code}&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+          url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+            paymentMode[newValue].code
+          }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
           silent: true,
         };
         await axios(config).then((res) => {
@@ -204,8 +218,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -240,4 +255,4 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       </div>
     </div>
   );
-})
+});
