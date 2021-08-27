@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
 import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 
-const Tab2Content = ({onPayNow}) => {
+const Tab2Content = ({onPayNow,paymentType}) => {
   const dispatch = useDispatch();
   const [validation,setValidation] = React.useState(false)
   const showValidation = (e) => {
@@ -25,7 +25,7 @@ const Tab2Content = ({onPayNow}) => {
         id={styles.cardNumber}
         config={{
           debug: true,
-          publicKey: "pk_test_15144f98-d5cf-435d-943c-325ed98564ba",
+          publicKey: paymentType,
           localization: {
             cardNumberPlaceholder: "Card number",
             expiryMonthPlaceholder: "MM",
