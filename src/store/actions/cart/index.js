@@ -30,6 +30,7 @@ export const getCustomerCartPayments = () => async (dispatch) => {
 
 export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
+
     const res = await getCartService();
 
     const productIdPromises = res.data.map((r) => getProductIdBySku(r.sku));
@@ -39,7 +40,8 @@ export const getCart = () => async (dispatch) => {
 
     const products = res.data.map((r, i) => ({
       ...r,
-      id: productIds?.[i]?.value?.data?.data?.product_id ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+      id: productIds?.[i]?.value?.data?.data?.product_id ?
+        parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
         : 0,
       src: r?.extension_attributes?.image
     }));
@@ -49,6 +51,7 @@ export const getCart = () => async (dispatch) => {
         type: DATA_TYPES.SET_BULK_CART,
         payload: products,
       });
+
   }
   else {
     dispatch({
