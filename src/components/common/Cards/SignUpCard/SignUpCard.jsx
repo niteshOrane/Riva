@@ -52,7 +52,7 @@ const SignUpCard = () => {
             <SignUpForm handleSubmit={handleSubmit} />
           )
         ) : (
-          <OtpForm />
+          <OtpForm handleSubmit={handleClose} />
         )}
       </div>
     </Dialog>

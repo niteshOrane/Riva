@@ -90,6 +90,8 @@ function ProfileInfoForm() {
               <div className>
                 <label className="profile-label">Email</label>
                 <input
+                  readOnly
+                  disabled
                   name="email"
                   value={values?.email}
                   onChange={handleChange}
@@ -123,7 +125,7 @@ function ProfileInfoForm() {
                       label="Male"
                       labelPlacement="start"
                       name="gender"
-                      style={{color:"black"}}
+                      style={{ color: "black" }}
                     />
                     <FormControlLabel
                       value="Female"
@@ -131,14 +133,14 @@ function ProfileInfoForm() {
                       label="Female"
                       labelPlacement="start"
                       name="gender"
-                      style={{color:"black"}}
+                      style={{ color: "black" }}
                     />
                   </section>
                 </RadioGroup>
               </FormControl>
             </section>
             <section>
-              <div style={{position:"relative"}}>
+              <div style={{ position: "relative" }}>
                 <label className="profile-label">Date of Birth</label>
                 <input
                   value={values.dob}

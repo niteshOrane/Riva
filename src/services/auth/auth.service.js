@@ -31,6 +31,26 @@ export const loginCustomer = (formData) => {
   return axios(config);
 };
 
+export const loginCustomerOTP = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/sendOtp`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};
+
+export const customerVerifyOtp = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/verifyOtp`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};
+
 export const mergeGuestCart = async (formData) => {
   const config = {
     method: "post",
