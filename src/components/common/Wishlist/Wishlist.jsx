@@ -11,15 +11,18 @@ import {
 import Image from "../LazyImage/Image";
 import styles from "./Wishlist.module.scss";
 import { toggleSignUpCard } from "../../../store/actions/common";
+import { colorRegexFilter } from "../colorRegex/colorRegex";
+import { URL } from "../../../util";
 
 const closeStyle = {
   position: "absolute",
   top: 4,
   right: 4,
-  paddingTop:8,
-  paddingRight:8
+  paddingTop: 8,
+  paddingRight: 8,
 };
 function Wishlist() {
+  const [selectedColor, setSelectedColor] = React.useState("");
   const {
     isOpen,
     modalData: data = {},
@@ -44,6 +47,15 @@ function Wishlist() {
     }
     handleClose();
   };
+
+  const setColorSize = (attr) => {
+    setSelectedColor(attr);
+  };
+  React.useEffect(() => {
+    if(data){
+      setSelectedColor(data?.selected?.color)
+    }
+  },[data])
 
   const isAddedToWishlist = !!wishlist.find((w) => w.id == data?.id);
   const {
@@ -106,11 +118,65 @@ function Wishlist() {
             <div className={styles.now}>Now {data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
-          <div className={`${styles.color} d-flex`}>
+          {/* <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>
             {data?.colors?.map((c) => (
               <div className={styles.text}>{c.label} </div>
             ))}
+          </div> */}
+          <div
+          >
+            <div className={`${styles.color} d-flex`}>
+              <div className={styles.title}>Color:&nbsp;</div>
+              <span>{selectedColor?.label===false? "WHITE" : selectedColor?.label}</span>
+              {data?.colors?.length > 0 &&
+                data?.colors?.map((item) => (
+                  <div
+                    // key={`color${index}`}
+                    title={item?.label}
+                    className={`${styles.option}  c-pointer `}
+                    onClick={() => {
+                      setColorSize(item);
+                    }}
+                    style={{
+                      transform:
+                        selectedColor?.value === item?.value
+                          ? "scale(1)"
+                          : "scale(.9)",
+                    }}
+                  >
+                    {typeof item?.label === "string" ? (
+                      <>
+                      
+                        <img
+                          src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                            item?.label
+                          )
+                            ?.toLowerCase()
+                            .trim()}.png`}
+                          className={`${styles.colorItem} ${
+                            data?.selected?.color?.value === item?.value
+                              ? styles.active
+                              : ""
+                          }`}
+                          alt={item?.label}
+                        />
+                      </>
+                    ) : (
+                      <div
+                        src={item?.file}
+                        className={`${styles.colorItem} 
+                        ${
+                          data?.selected.color.value === item.value
+                            ? styles.active
+                            : ""
+                        }`}
+                        title={item?.label}
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
           </div>
           <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
@@ -127,10 +193,6 @@ function Wishlist() {
                 })}
             </div>
           </div>
-        
-         
-
-          
 
           <div className={styles.actions}>
             <div className="d-flex w-100 align-items-center ">

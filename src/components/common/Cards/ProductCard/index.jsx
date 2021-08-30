@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
-import { toggleQuickView } from "../../../../store/actions/common";
+import { setAttributes, toggleQuickView } from "../../../../store/actions/common";
 import { extractColorSize, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
@@ -55,6 +55,8 @@ const ProductCard = ({
   const [productItem, setProductItem] = useState({});
   const [colorImg, setColorImg] = useState(null);
 
+
+
   useEffect(() => {
     if (product?.extension_attributes?.configurable_product_options) {
       const { colors, size } = extractColorSize(
@@ -62,7 +64,8 @@ const ProductCard = ({
       );
 
       setattributes({ colors, size });
-
+      
+     
       product["selected"] = { color: colors[0], size: size[0] };
     }
 
@@ -119,7 +122,6 @@ const ProductCard = ({
         ?.file
     );
   };
-
   const handleQuickView = async () => {
     const res = await getProduct(productItem.sku);
 

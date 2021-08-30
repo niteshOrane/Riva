@@ -126,7 +126,6 @@ function QuickView() {
       setattributes({ colors, size });
     }
   }, [data]);
-
   // const handleWishList = () => {
   //   dispatch(toggleWishlist(data));
   // };
@@ -219,6 +218,7 @@ function QuickView() {
               <div className={`${styles.option} ${styles.option_blue}`} />
             </div> */}
           </div>
+          
           <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
             <div
