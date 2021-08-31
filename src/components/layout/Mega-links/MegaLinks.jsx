@@ -13,7 +13,9 @@ const MegaLinks = ({ links }) => {
   };
 
   const childLinks = links?.find((l) => l.url_key === showMegaMenue);
-
+  const onSelectCaegory = (link) => {
+   sessionStorage.setItem("selectedCategory", link);
+  };
   return (
     <>
       <div
@@ -27,7 +29,7 @@ const MegaLinks = ({ links }) => {
               onMouseOver={() => handleMouseOver(link.url_key)}
               onMouseLeave={() => setShowMegaMenue(null)}
             >
-              <Link
+              <Link onClick={()=>{onSelectCaegory(link.name)}}
                 to={`/products/${link.url_key}/${link.id}`}
                 className={`${style.megaLink} p-12px d-block`}
               >
@@ -78,7 +80,7 @@ const MegaLinks = ({ links }) => {
                         >
                      
                           <span>
-                            <Link
+                            <Link onClick={()=>{onSelectCaegory(child.name)}}
                               to={`/products/${child.url_key}/${child.id}`}
                               className={`${style.megaLink} p-12px d-block`}
                             >
@@ -97,7 +99,7 @@ const MegaLinks = ({ links }) => {
                               )}
                             </Link>
                             {child.children_data?.map((childitem) => (
-                              <Link
+                              <Link onClick={()=>{onSelectCaegory(childitem.name)}}
                                 to={`/products/${childitem.url_key}/${child.id}/${childitem.id}`}
                                 className={`${style.megaLink} p-12px d-block`}
                               >
@@ -116,7 +118,7 @@ const MegaLinks = ({ links }) => {
                   </div>
                   <div className={style.megaImg}>
                     <Image src={link.image} width="100%" alt="change me" />
-                    <Link
+                    <Link onClick={()=>{onSelectCaegory(link.name)}}
                       to={`/products/${link.url_key}/${link.id}`}
                       className={`${style.megaLink} p-12px d-block`}
                     >

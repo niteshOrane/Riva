@@ -58,7 +58,7 @@ function Products(props) {
   return (
     <div>
       <div className="container-90 max-width-1600">
-        <div className={styles.essentials}>Essentials</div>
+        <div className={styles.essentials}>{sessionStorage.getItem("selectedCategory")}</div>
         <div className={styles.header}>
           <div className="d-flex align-items-center">
             <span className="color-grey">
