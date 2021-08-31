@@ -289,7 +289,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
             <p>
               Create an account?{" "}
               <strong className="c-pointer" onClick={() => setSignUpForm()}>
-                Sign In
+                Sign Up
               </strong>
             </p>
           </div>

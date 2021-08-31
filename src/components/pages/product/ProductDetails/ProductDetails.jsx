@@ -234,6 +234,7 @@ const ProductDetails = (props) => {
                         ? styles.active
                         : ""}`} alt={item?.color} />
                     }
+             
                   </div>
                 ))}
 

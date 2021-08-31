@@ -11,9 +11,11 @@ import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
 import { createCustomer,createCustomerSocial } from "../../../../../../services/auth/auth.service";
 import { getStoreId } from "../../../../../../util";
+import SignUpOtp from "./SignUpOtp"
 
 const SignUpForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -48,21 +50,24 @@ const SignUpForm = ({ handleSubmit }) => {
     if (!email || !name || !phone)
       return dispatch(showSnackbar("All fields are required", "warning"));
 
-    const customer = new FormData();
 
-    customer.append("email", email);
-    customer.append("firstname", name || "");
-    customer.append("lastname", lastName|| "");
-    customer.append("password", password);
-    customer.append("mobile_number", phone);
-    customer.append("storeId", getStoreId());
-    const res = await createCustomer(customer);
 
-    if (res.status === 200 && res?.data?.success) {
-      handleSubmit();
-      return dispatch(showSnackbar(res?.data?.message, "success"));
-    }
-    return dispatch(showSnackbar("Something went wrong", "error"));
+
+    // const customer = new FormData();
+
+    // customer.append("email", email);
+    // customer.append("firstname", name || "");
+    // customer.append("lastname", lastName|| "");
+    // customer.append("password", password);
+    // customer.append("mobile_number", phone);
+    // customer.append("storeId", getStoreId());
+    // const res = await createCustomer(customer);
+
+    // if (res.status === 200 && res?.data?.success) {
+    //   handleSubmit();
+    //   return dispatch(showSnackbar(res?.data?.message, "success"));
+    // }
+    // return dispatch(showSnackbar("Something went wrong", "error"));
   };
 
   const [showPass, setShowPass] = useState(false);
@@ -211,7 +216,8 @@ const SignUpForm = ({ handleSubmit }) => {
           Lowercase & 1 Number character.
         </p>
 
-        <input value="SIGN UP" type="submit" className={styles.signUpBtn} />
+        {/* <input value="SIGN UP" type="submit" className={styles.signUpBtn} /> */}
+        <SignUpOtp formData={formData} handleSubmit = {handleSubmit} />
 
         <p className={styles.or}>OR</p>
 
