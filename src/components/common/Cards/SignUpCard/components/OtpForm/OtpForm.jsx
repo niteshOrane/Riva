@@ -61,7 +61,14 @@ const OtpForm = ({ handleSubmit }) => {
       if (res?.data?.success) {
         setHideMobileBox(true);
         setRecivedOTPData(res?.data.data);
-        setSeconds(res?.data.data.expiredtime)
+    
+        const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
+        const minutesTime = Math.floor(divisor_for_minutes / 60);
+
+        const divisor_for_seconds = divisor_for_minutes % 60;
+        const secondsTime = Math.ceil(divisor_for_seconds);
+        setSeconds(secondsTime);
+        setMinutes(minutesTime);
         return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
       }
       else {
@@ -85,7 +92,13 @@ const OtpForm = ({ handleSubmit }) => {
       if (res?.data?.success) {
         setHideMobileBox(true);
         setRecivedOTPData(res?.data.data);
-        setSeconds(res?.data.data.expiredtime)
+        const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
+        const minutesTime = Math.floor(divisor_for_minutes / 60);
+
+        const divisor_for_seconds = divisor_for_minutes % 60;
+        const secondsTime = Math.ceil(divisor_for_seconds);
+        setSeconds(secondsTime);
+        setMinutes(minutesTime);
         return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
       }
       else {
