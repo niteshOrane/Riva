@@ -51,6 +51,16 @@ export const customerVerifyOtp = (formData) => {
   return axios(config);
 };
 
+export const customerResendOtp = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/resendOtp`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};
+
 export const mergeGuestCart = async (formData) => {
   const config = {
     method: "post",

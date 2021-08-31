@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useHistory } from "react-router";
 import * as icons from "../../../../Icons/Icons";
@@ -18,13 +18,14 @@ import { getCart } from "../../../../../../store/actions/cart";
 import {
   loginCustomerOTP,
   customerVerifyOtp,
-  mergeGuestCart
+  mergeGuestCart,
+  customerResendOtp
 } from "../../../../../../services/auth/auth.service";
 
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 
-const OtpForm = ({handleSubmit}) => {
+const OtpForm = ({ handleSubmit }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -32,8 +33,13 @@ const OtpForm = ({handleSubmit}) => {
   const history = useHistory();
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileOtp, setMobileOtp] = useState('');
-  const [mobileOtpRecived, setMobileOtpRecived] = useState('');
+  const [recivedOTPData, setRecivedOTPData] = useState('');
   const [hideMobileBox, setHideMobileBox] = useState(false);
+
+
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
   const handleChange = (e) => {
     setMobileNumber(e.target.value);
   };
@@ -54,7 +60,32 @@ const OtpForm = ({handleSubmit}) => {
     if (res.status === 200) {
       if (res?.data?.success) {
         setHideMobileBox(true);
-        setMobileOtpRecived(res?.data.data.otp)
+        setRecivedOTPData(res?.data.data);
+        setSeconds(res?.data.data.expiredtime)
+        return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
+      }
+      else {
+        return dispatch(showSnackbar(res?.data.message, "error"));
+      }
+    }
+    else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  }
+  const reSendOTP = async (e) => {
+    e.preventDefault();
+    if (!mobileNumber)
+      return dispatch(showSnackbar("Mobile Number are required", "warning"));
+    const customer = new FormData();
+    customer.append("phone", mobileNumber);
+
+    const res = await customerResendOtp(customer);
+
+    if (res.status === 200) {
+      if (res?.data?.success) {
+        setHideMobileBox(true);
+        setRecivedOTPData(res?.data.data);
+        setSeconds(res?.data.data.expiredtime)
         return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
       }
       else {
@@ -105,6 +136,24 @@ const OtpForm = ({handleSubmit}) => {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   }
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval)
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000)
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
   return (
     <>
       <span className={styles.tagline}>Have an account? Sign In</span>
@@ -118,12 +167,12 @@ const OtpForm = ({handleSubmit}) => {
               <div>
                 <p>Mobile Number</p>
                 <p className="font-weight-600">{mobileNumber}</p>
-                <p className="font-weight-600">OTP is - {mobileOtpRecived}</p>
+                <p className="font-weight-600">OTP is - {recivedOTPData?.otp}</p>
               </div>
-              <span className={styles.resend}>Resend OTP</span>
+              {hideMobileBox && minutes === 0 && seconds === 0 ? <span onClick={(e) => { reSendOTP(e) }} className={styles.resend}>Resend OTP</span> : null}
             </div>
           </div>
-          <button type="button" className="no-border bg-transparent"></button>
+          <button type="button" className="no-border bg-transparent" />
         </div>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <div className={styles.otpDots}>
@@ -141,7 +190,10 @@ const OtpForm = ({handleSubmit}) => {
             id="mobileOtp"
             onChange={handleChangeOTP}
           />
-          <span>00:26</span>{" "}
+          {minutes === 0 && seconds === 0
+            ? null
+            : <span> {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>
+          }
         </div>
         <button type="button" onClick={(e) => { verifyOTP(e) }} className={styles.verifyBtn}>
           CONTINUE
