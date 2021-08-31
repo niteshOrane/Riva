@@ -142,13 +142,10 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       setCheckoutId(JSON.parse(res.data).id);
     });
   };
-  // useEffect(() => {
-  //   getPaymentForTapCheckout("tap");
-  // }, []);
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
-      getPaymentForTapCheckout(paymentMode[2].code);//changes value to tap
+      getPaymentForTapCheckout(paymentMode[0].code);//changes value to tap
     }
   }, [paymentMode]);
   const renderPaymentform = () => {
@@ -192,7 +189,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const handleChange = async (_, newValue) => {
     switch (newValue) {
       case 0:
-        getPaymentForTapCheckout("checkoutcom_card_payment");//changes value to tap
+        getPaymentForTapCheckout("tap");//changes value to tap
         setValue(newValue);
         break;
       case 2:

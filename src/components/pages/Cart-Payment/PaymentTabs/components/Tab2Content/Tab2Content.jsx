@@ -7,14 +7,14 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
 import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 
-const Tab2Content = ({onPayNow,paymentType}) => {
+const Tab2Content = ({ onPayNow, paymentType }) => {
   const dispatch = useDispatch();
-  const [validation,setValidation] = React.useState(false)
+  const [validation, setValidation] = React.useState(false)
   const showValidation = (e) => {
-    if(e.isEmpty) return setValidation(true)
-    if(!e.isValid || e.isEmpty){
+    if (e.isEmpty) return setValidation(true)
+    if (!e.isValid || e.isEmpty) {
       setValidation(true)
-    }else{
+    } else {
       setValidation(false)
     }
   }
@@ -66,7 +66,7 @@ const Tab2Content = ({onPayNow,paymentType}) => {
           PAY NOW
         </button>
       </Frames>
-      <br/>
+      <br />
       {validation && <span className={styles.cardValidation}>Please enter valid card details</span>}
     </div >
   );
