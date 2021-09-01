@@ -42,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     height: 41,
     marginTop: 26,
     margin:"0px auto",
-    background:"transparent"
+    background:"transparent",
+    cursor:"pointer"
   },
   otpInput: {
     height: 42,
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#181617",
     textAlign: "center",
     padding: "12px 30px",
+    cursor:"pointer"
     // transition: all 0.4s ease;
     // cursor: pointer;
     // &:hover {

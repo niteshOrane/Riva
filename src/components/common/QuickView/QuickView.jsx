@@ -8,7 +8,7 @@ import {
 } from "../../../store/actions/common";
 import { addToCart } from "../../../store/actions/cart";
 import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
-
+import { colorRegexFilter } from "../colorRegex/colorRegex";
 import Image from "../LazyImage/Image";
 
 import styles from "./QuickView.module.scss";
@@ -34,6 +34,7 @@ const closeStyle = {
 function QuickView() {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
+  const [selectedColor, setSelectedColor] = React.useState("");
   const [outOfStock, setOutOfStock] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(1);
   const [attributes, setattributes] = useState({ colors: [], size: [] });
@@ -51,6 +52,10 @@ function QuickView() {
   const handleClose = () => {
     dispatch(toggleQuickView(null));
   };
+
+  // const setColorSize = (attr) => {
+  //   setSelectedColor(attr);
+  // };
   // const handleWishlist = () => {
   //   dispatch(toggleWishlist(selectedProduct));
   // };
@@ -66,14 +71,23 @@ function QuickView() {
     custom_attributes,
   } = data ?? {};
 
-  const setColorSize = (attr) => {
-    data.selected = attr;
-    setSelectedProduct(data);
-  };
-  const colorImageAction = (colorItem) => {
-    setColorSize({ ...data?.selected, color: colorItem });
+  const setColorSize = (attr,type) => {
+    data.selected[type] = attr
+    setSelectedProduct({...data});
   };
   const addToCardHandler = () => {
+    console.log({
+      ...selectedProduct,
+      id: `${data?.id}`,
+      name: data?.name,
+      color: data?.selected?.color,
+      size: data?.selected?.size,
+      src: data?.image,
+      qty: productQuantity,
+      ...selectedProduct?.selected,
+      price,
+    })
+
     dispatch(
       addToCart({
         ...selectedProduct,
@@ -106,6 +120,7 @@ function QuickView() {
   };
   useEffect(() => {
     getOutOfStock();
+    
   }, [data]);
 
   const srcImage =
@@ -202,23 +217,80 @@ function QuickView() {
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
-            <div className={styles.title}>Color:&nbsp;</div>
-            {attributes.colors?.map((c) => (
+            {/* <div className={styles.title}>Color:&nbsp;</div> */}
+            {/* {attributes.colors?.map((c) => (
               <div
                 onClick={() => colorImageAction(c)}
                 className={`c-pointer ${styles.text}`}
               >
                 {c.label}{" "}
               </div>
-            ))}
+            ))} */}
             {/* <div className={styles.text}>Black</div>
             <div className={`${styles.options} d-flex-all-center`}>
               <div className={`${styles.option} ${styles.option_red}`} />
               <div className={`${styles.option} ${styles.option_oranage}`} />
               <div className={`${styles.option} ${styles.option_blue}`} />
             </div> */}
+            <div className={styles.title}>Color:&nbsp;</div>
+            <span>
+              {data?.selected?.color?.label === false ? "WHITE" : data?.selected?.color?.label}
+            </span>
+            {data?.colors?.length > 0 &&
+              data?.colors?.map((item) => (
+                <div
+                  // key={`color${index}`}
+                  title={item?.label}
+                  className={`${styles.option}  c-pointer `}
+                  onClick={() => {
+                    // colorImageAction(item)
+                    setColorSize(item,"color");
+                  }}
+                  style={{
+                    transform:
+                      data?.selected?.color?.value === item?.value
+                        ? "scale(1)"
+                        : "scale(.9)",
+                  }}
+                >
+                  {typeof item?.label === "string" ? (
+                    <>
+                      <img
+                        src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                          item?.label
+                        )
+                          ?.toLowerCase()
+                          .trim()}.png`}
+                        className={`${styles.colorItem} ${
+                          data?.selected?.color?.value === item?.value
+                            ? styles.active
+                            : ""
+                        }`}
+                        style={{
+                          height: "13px",
+                          width: "13px",
+                          borderRadius: "50%",
+                          margin: "5px",
+                        }}
+                        alt={item?.label}
+                      />
+                    </>
+                  ) : (
+                    <div
+                      src={item?.file}
+                      className={`${styles.colorItem} 
+                        ${
+                          data?.selected?.color?.value === item.value
+                            ? styles.active
+                            : ""
+                        }`}
+                      title={item?.label}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
-          
+
           <div className={`${styles.size} gap-12px d-flex align-items-center`}>
             <div className={styles.title}>Size:</div>
             <div
@@ -234,7 +306,7 @@ function QuickView() {
                         : "scale(1)",
                   }}
                   onClick={() =>
-                    setColorSize({ ...selectedProduct?.selected, size: c })
+                    setColorSize(c,"size")
                   }
                 >
                   {c.label}{" "}

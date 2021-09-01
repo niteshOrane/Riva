@@ -75,6 +75,7 @@ export const addToCart = (data) => async (dispatch) => {
     );
 
     const response = { ...res?.data?.[0] };
+    console.log(response)
 
     if (res.status === 200 && !response?.error) {
       dispatch({

@@ -18,6 +18,7 @@ import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
 import { getCartId } from "../../../../util";
+import Card from "card"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,6 +122,60 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       }
     }
   };
+
+  const paymentTap = () => {
+    // //pass your public key from tap's dashboard
+    // var tap = Tapjsli("pk_test_EtHFV4BuPQokJT6jiROls87Y");
+
+    // var elements = tap.elements({});
+
+    // var style = {
+    //   base: {
+    //     color: "#535353",
+    //     lineHeight: "18px",
+    //     fontFamily: "sans-serif",
+    //     fontSmoothing: "antialiased",
+    //     fontSize: "16px",
+    //     "::placeholder": {
+    //       color: "rgba(0, 0, 0, 0.26)",
+    //       fontSize: "15px",
+    //     },
+    //   },
+    //   invalid: {
+    //     color: "red",
+    //   },
+    // };
+    // // input labels/placeholders
+    // var labels = {
+    //   cardNumber: "Card Number",
+    //   expirationDate: "MM/YY",
+    //   cvv: "CVV",
+    //   cardHolder: "Card Holder Name",
+    // };
+    // //payment options
+    // var paymentOptions = {
+    //   currencyCode: ["KWD", "USD", "SAR"],
+    //   labels: labels,
+    //   TextDirection: "ltr",
+    // };
+    // //create element, pass style and payment options
+    // var card = elements.create("card", { style: style }, paymentOptions);
+    // //mount element
+    // card.mount("#element-container");
+    // //card change event listener
+    // card.addEventListener("change", function (event) {
+    //   if (event.loaded) {
+    //     console.log("UI loaded :" + event.loaded);
+    //     console.log("current currency is :" + card.getCurrency());
+    //   }
+    //   var displayError = document.getElementById("error-handler");
+    //   if (event.error) {
+    //     displayError.textContent = event.error.message;
+    //   } else {
+    //     displayError.textContent = "";
+    //   }
+    // });
+  };
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
       method: "get",
@@ -134,8 +189,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
-        }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -145,7 +201,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
-      getPaymentForTapCheckout(paymentMode[0].code);//changes value to tap
+      // getPaymentForTapCheckout(paymentMode[0].code); //changes value to tap
     }
   }, [paymentMode]);
   const renderPaymentform = () => {
@@ -189,7 +245,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const handleChange = async (_, newValue) => {
     switch (newValue) {
       case 0:
-        getPaymentForTapCheckout("tap");//changes value to tap
+        getPaymentForTapCheckout("tap"); //changes value to tap
         setValue(newValue);
         break;
       case 2:
@@ -223,8 +279,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -242,7 +299,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          {paymentType && <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />}
+          {/* {paymentType && (
+            <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+          )} */}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>
