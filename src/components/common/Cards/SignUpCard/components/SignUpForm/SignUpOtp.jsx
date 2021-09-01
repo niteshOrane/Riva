@@ -87,8 +87,13 @@ export default function TransitionsModal({ formData, handleSubmit }) {
       customer.append("email", email);
       customer.append("name", `${name} ${lastName}`);
       const res = await loginCustomerOTP(customer);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data?.success) {
+        dispatch(showSnackbar(res.data?.message, "success"));
         setOtp(res?.data.data.otp);
+        setOpen(true);
+      }
+      else {
+        dispatch(showSnackbar(res.data.data?.message, "error"));
       }
     }
   };
@@ -122,7 +127,6 @@ export default function TransitionsModal({ formData, handleSubmit }) {
   const handleOpen = () => {
     const { email, name, lastName, password, phone } = formData;
     if(email && name && lastName && password && phone){
-        setOpen(true);
         sendRegisterOtp(formData);
     }else{
         dispatch(showSnackbar("Please fill all required fields", "error"));  

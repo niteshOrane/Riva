@@ -24,7 +24,6 @@ const Tab2Content = ({ onPayNow, paymentType }) => {
       <Frames
         id={styles.cardNumber}
         config={{
-          debug: true,
           publicKey: paymentType,
           localization: {
             cardNumberPlaceholder: "Card number",

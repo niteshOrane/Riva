@@ -1,11 +1,11 @@
 import axios from "axios";
-import {  getCustId } from '../../util';
+import { getCustId } from '../../util';
 
 export const orderConfirmed = (id) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/orderInfo?orderId=${id}`,
-    silent: true,
+    url: `${process.env.REACT_APP_DEV}/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
+    silent: true
   };
   return axios(config);
 };

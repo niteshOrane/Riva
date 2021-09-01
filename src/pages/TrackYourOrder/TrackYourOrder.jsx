@@ -4,8 +4,11 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import { orderConfirmed } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../store/actions/common";
 
 function TrackYourOrder() {
+  const dispatch = useDispatch()
   const [value, setValue] = useState("");
   const [orderItems, setOrderItems] = useState();
   const handleChange = (e) => {
@@ -15,10 +18,13 @@ function TrackYourOrder() {
     e.preventDefault();
     if (value) {
       const res = await orderConfirmed(value);
-      if (res.status === 200 && res?.data) {
+      if (res.status === 200 && res?.data && !res?.data?.error) {
         setOrderItems(
           res?.data?.items.filter((li) => li.product_type === "simple")
         );
+      }
+      else{
+        return dispatch(showSnackbar(res?.data?.error, "error"))
       }
     }
   };

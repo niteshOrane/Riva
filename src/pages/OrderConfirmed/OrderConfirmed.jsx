@@ -13,6 +13,8 @@ import { emptyCart } from '../../store/actions/auth';
 import { getCart } from '../../store/actions/cart';
 import { orderConfirmed } from "../../services/order/order.services";
 
+import { showSnackbar } from "../../store/actions/common";
+
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
   const { orderId } = useParams();
@@ -22,7 +24,7 @@ function OrderConfirmed(props) {
 
   const getOrderDetails = async (val) => {
     const res = await orderConfirmed(val);
-    if (res.status === 200 && res?.data) {
+    if (res.status === 200 && res?.data && !res?.data?.error) {
       setOrderItems(res?.data?.items.filter(li => li.product_type === "simple"))
       setDeliveryAddress(res?.data?.billing_address);
       setAmount({
@@ -30,6 +32,9 @@ function OrderConfirmed(props) {
         shippingAmount: res?.data?.shipping_amount,
         totalPaid: res?.data?.grand_total
       });
+    }
+    else{
+      return dispatch(showSnackbar(res?.data?.error, "error"))
     }
   };
   useEffect(() => {

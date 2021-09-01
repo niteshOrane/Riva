@@ -32,10 +32,13 @@ function TrackOrders() {
     e.preventDefault();
     if (value) {
       const res = await orderConfirmed(value);
-      if (res.status === 200 && res?.data) {
+      if (res.status === 200 && res?.data && !res?.data?.error) {
         setOrderItems(
           res?.data?.items.filter((li) => li.product_type === "simple")
         );
+      }
+      else{
+        return dispatch(showSnackbar(res?.data?.error, "error"))
       }
     }
   };
