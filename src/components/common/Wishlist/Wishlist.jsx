@@ -22,7 +22,10 @@ const closeStyle = {
   paddingRight: 8,
 };
 function Wishlist() {
-  const [selectedColor, setSelectedColor] = React.useState("");
+  const [selectedColor, setSelectedColor] = React.useState({
+    color: null,
+    size: null,
+  });
   const {
     isOpen,
     modalData: data = {},
@@ -48,14 +51,14 @@ function Wishlist() {
     handleClose();
   };
 
-  const setColorSize = (attr) => {
-    setSelectedColor(attr);
+  const setColorSize = (attr, type) => {
+    setSelectedColor({ ...selectedColor, [type]: attr });
   };
   React.useEffect(() => {
-    if(data){
-      setSelectedColor(data?.selected?.color)
+    if (data) {
+      setSelectedColor({ ...selectedColor, color: data?.selected?.color });
     }
-  },[data])
+  }, [data]);
 
   const isAddedToWishlist = !!wishlist.find((w) => w.id == data?.id);
   const {
@@ -124,11 +127,14 @@ function Wishlist() {
               <div className={styles.text}>{c.label} </div>
             ))}
           </div> */}
-          <div
-          >
+          <div>
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>Color:&nbsp;</div>
-              <span>{selectedColor?.label===false? "WHITE" : selectedColor?.label}</span>
+              <span>
+                {selectedColor?.color?.label === false
+                  ? "WHITE"
+                  : selectedColor?.color?.label}
+              </span>
               {data?.colors?.length > 0 &&
                 data?.colors?.map((item) => (
                   <div
@@ -136,18 +142,17 @@ function Wishlist() {
                     title={item?.label}
                     className={`${styles.option}  c-pointer `}
                     onClick={() => {
-                      setColorSize(item);
+                      setColorSize(item, "color");
                     }}
                     style={{
                       transform:
-                        selectedColor?.value === item?.value
+                        selectedColor?.color?.value === item?.value
                           ? "scale(1)"
                           : "scale(.9)",
                     }}
                   >
                     {typeof item?.label === "string" ? (
                       <>
-                      
                         <img
                           src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
                             item?.label
@@ -186,7 +191,16 @@ function Wishlist() {
               {data?.size?.length &&
                 data?.size?.map((size) => {
                   return (
-                    <div className={`${styles.option} d-flex-all-center`}>
+                    <div
+                      style={{
+                        transform:
+                          selectedColor?.size?.value === size?.value
+                            ? "scale(1)"
+                            : "scale(.9)",
+                      }}
+                      onClick={() => setColorSize(size, "size")}
+                      className={`${styles.option} d-flex-all-center`}
+                    >
                       {size.label}
                     </div>
                   );
