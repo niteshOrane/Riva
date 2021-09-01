@@ -61,7 +61,7 @@ const OtpForm = ({ handleSubmit }) => {
       if (res?.data?.success) {
         setHideMobileBox(true);
         setRecivedOTPData(res?.data.data);
-    
+
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
         const minutesTime = Math.floor(divisor_for_minutes / 60);
 
@@ -180,7 +180,6 @@ const OtpForm = ({ handleSubmit }) => {
               <div>
                 <p>Mobile Number</p>
                 <p className="font-weight-600">{mobileNumber}</p>
-                <p className="font-weight-600">OTP is - {recivedOTPData?.otp}</p>
               </div>
               {hideMobileBox && minutes === 0 && seconds === 0 ? <span onClick={(e) => { reSendOTP(e) }} className={styles.resend}>Resend OTP</span> : null}
             </div>
