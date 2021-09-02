@@ -144,10 +144,12 @@ $footer-grey-color: #737373;
 
   .toTopBtn {
     position: relative;
+    display: none;
+  
     background-color: black !important;
-
     span {
-      position: absolute;
+      position: fixed;
+      cursor: pointer;
       bottom: 200px;
       right: 32px;
       height: 40px;
