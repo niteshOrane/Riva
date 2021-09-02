@@ -71,7 +71,7 @@ function Filters({
   const [open, setOpen] = useState(false);
   const handleRemoveTags = async (tag) => {
     let temp = [...selectedTags];
-    temp = temp.filter((li) => li.val.id !== tag.val.id);
+    temp = temp.filter((li) => li.val.value !== tag.val.value);
     // let list = await getFiltersList(categoryId,"","","")
     // setFiltersAttr(list?.data[0]?.filters);
     setSelectedTags(temp);
@@ -80,6 +80,7 @@ function Filters({
     const list = await getFiltersList(catId);
     setFiltersAttr(list?.data[0]?.filters);
   };
+  // console.log(filtersAttr)
   useEffect(() => {
     filterList(categoryId);
   }, []);
@@ -111,7 +112,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
-            value:c.value,
+            value: c.value,
             label: filtersAttr?.find((v) => v.attr_code === "price")
               ?.attr_label,
           };
@@ -130,7 +131,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
-            value:c.value,
+            value: c.value,
             label: filtersAttr?.find((v) => v.attr_code === "color")
               ?.attr_label,
           };
@@ -149,7 +150,7 @@ function Filters({
             title: c.display,
             isItem: false,
             type: "checkbox",
-            value:c.value,
+            value: c.value,
             label: filtersAttr?.find((v) => v.attr_code === "size")?.attr_label,
           };
         }),
@@ -236,13 +237,13 @@ function Filters({
   };
   const renderFilters = () => {
     const renderComponent = (item) => {
-      const handleCheckboxChange =  async (val) => {
+      const handleCheckboxChange = async (val) => {
         handleCheck(val)
           ? ""
           : setSelectedTags([...selectedTags, { checked: true, val }]);
-          // let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
-        const list = await getFiltersList(categoryId, val,val,val);
-        setFiltersAttr(list?.data[0]?.filters);
+        // let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
+        // const list = await getFiltersList(categoryId, val,val,val);
+        // setFiltersAttr(list?.data[0]?.filters);
       };
 
       switch (item.type) {
@@ -280,7 +281,6 @@ function Filters({
                       height: "25rem",
                       overflowY: "scroll",
                       paddingRight: "1rem",
-                      
                     }
                   : null
               }
@@ -288,7 +288,6 @@ function Filters({
               {items?.children?.map((item) =>
                 item?.children ? menu(item, depth + 1) : renderComponent(item)
               )}
-              <hr />
             </div>
           </>
         </Dropdown>
@@ -371,9 +370,7 @@ function Filters({
             </div>
           </div>
           <section className={`${style.seeResult}`}>
-            <button>
-              SEE RESULTS
-            </button>
+            <button>SEE RESULTS</button>
           </section>
         </Drawer>
       </>

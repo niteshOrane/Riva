@@ -18,6 +18,7 @@ import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
 import { getCartId } from "../../../../util";
+import GoSellTap from "./components/Tab2Content/GoSellTap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,7 +101,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
-      const res = await cartPaymentAction(e);
+      const res = await cartPaymentAction(e,"checkoutcom_card_payment");
       if (res.status === 200) {
         setLoading(false);
         dispatch(showSnackbar("Payment success", "success"));
@@ -134,8 +135,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
-        }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -145,7 +147,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
-      getPaymentForTapCheckout(paymentMode[0].code);//changes value to tap
+      // getPaymentForTapCheckout(paymentMode[0].code); //changes value to tap
     }
   }, [paymentMode]);
   const renderPaymentform = () => {
@@ -189,7 +191,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const handleChange = async (_, newValue) => {
     switch (newValue) {
       case 0:
-        getPaymentForTapCheckout("tap");//changes value to tap
+        getPaymentForTapCheckout("tap"); //changes value to tap
         setValue(newValue);
         break;
       case 2:
@@ -223,8 +225,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -242,7 +245,11 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       </Tabs>
       <div className={classes.tabContent}>
         <TabPanel value={value} index={0}>
-          {paymentType && <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />}
+          {/* {paymentType && (
+            <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+          )} */}
+          <GoSellTap />
+
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>

@@ -22,9 +22,25 @@ class AppRoot extends React.Component {
     cartInit();
   }
 
+  topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
   componentDidUpdate(prevProps) {
     const { store } = this.props;
+    window.addEventListener("scroll", (event) => {
+      var mybutton = document.getElementById("myBtn");
 
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+
+        mybutton.style.display = "block";
+        mybutton.style.bottom = `${Math.round(document.documentElement.scrollTop-window.pageYOffset)}px`;
+      } else {
+        mybutton.style.display = "none";
+        mybutton.style.bottom = "10px";
+      }
+    });
     if (deepEqual(store, prevProps.store)) return;
     hardReload();
   }
@@ -46,6 +62,9 @@ class AppRoot extends React.Component {
     return (
       <>
         <AppRoutes {...this.props} />
+
+
+        <button type="button" onClick={() => { this.topFunction() }} id="myBtn" title="Go to top">Top</button>
         {error && this.handleError(error)}
         <SnackBar />
       </>

@@ -67,10 +67,10 @@ export const getProductIdBySku = (sku) => {
   return axios(config);
 };
 
-export const cartPaymentAction = (token) => {
+export const cartPaymentAction = (token,type) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=checkoutcom_card_payment&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
+    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
     silent: true,
   };
   return axios(config);

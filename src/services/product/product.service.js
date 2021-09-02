@@ -30,7 +30,6 @@ export const getFiltersList = (catId, color = "", size = "", price = "") => {
   const filterData = color ? `&categoryData[color]=${color?.value}` : "";
   const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
   const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
-  console.log(priceData, "service");
   const config = {
     method: "get",
     url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${sizeData}${priceData}`,
