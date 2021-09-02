@@ -184,7 +184,7 @@ function Footer() {
         </div>
       </div>
       <CopyRightSection />
-      <div
+      <div   id="myBtn" 
         className={`${style.toTopBtn} c-pointer`}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
