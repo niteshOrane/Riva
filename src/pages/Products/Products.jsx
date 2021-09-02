@@ -20,7 +20,7 @@ function Products(props) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
-  const [sortField, setSortField] = useState("position");
+  const [sortField, setSortField] = useState("id");
   const [sortDirection, setSortDirection] = useState("desc");
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({
@@ -74,6 +74,13 @@ function Products(props) {
               <span>SORT BY:</span>
               <span>
                 <select onChange={handleSortChange}>
+                <option
+                    style={{ background: "#fff" }}
+                    value="id-desc"
+                    id="desc"
+                  >
+                    Newest
+                  </option>
                   <option
                     style={{ background: "#fff" }}
                     value="position-desc"

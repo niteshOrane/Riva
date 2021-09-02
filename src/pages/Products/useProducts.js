@@ -6,8 +6,8 @@ import { getStoreId } from '../../util';
 const useProducts = ({ categoryId,
   currentPage = 1,
   pageSize = 20,
-  sortField = 'position',
-  sortDirection = 'desc', onScreen }) => {
+  sortField,
+  sortDirection, onScreen }) => {
   const [products, setProducts] = useState([]);
   const [filters, setfilters] = useState({});
 
