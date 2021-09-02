@@ -4,7 +4,7 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
-import { orderConfirmed, cancelOrder } from "../../services/order/order.services";
+import { getTrackYourOrder, cancelOrder } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import { useHistory } from "react-router";
 
@@ -31,15 +31,15 @@ function TrackOrders() {
     if (!value) return dispatch(showSnackbar("Please enter order Id", "error"))
     e.preventDefault();
     if (value) {
-      const res = await orderConfirmed(value);
-      if (res.status === 200 && res?.data && !res?.data?.error) {
-        setOrderItems(
-          res?.data?.items.filter((li) => li.product_type === "simple")
-        );
-      }
-      else{
-        return dispatch(showSnackbar(res?.data?.error, "error"))
-      }
+      const res = await getTrackYourOrder(value);
+      // if (res.status === 200 && res?.data && !res?.data?.error) {
+      //   setOrderItems(
+      //     res?.data?.items.filter((li) => li.product_type === "simple")
+      //   );
+      // }
+      // else{
+      //   return dispatch(showSnackbar(res?.data?.error, "error"))
+      // }
     }
   };
   const cancelOrderfn = async (e, id) => {

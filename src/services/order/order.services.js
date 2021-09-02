@@ -1,11 +1,13 @@
 import axios from "axios";
-import { getCustId } from '../../util';
+import { getCustId } from "../../util";
 
 export const orderConfirmed = (id) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
-    silent: true
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
+    silent: true,
   };
   return axios(config);
 };
@@ -27,37 +29,46 @@ export const cancelOrder = (id) => {
   return axios(config);
 };
 
-
 export const deleteNotification = (id) => {
   const customer = new FormData();
-  customer.append('customerId', getCustId());
-  customer.append('productId', id);
+  customer.append("customerId", getCustId());
+  customer.append("productId", id);
   const config = {
     method: "post",
     url: `${process.env.REACT_APP_DEV}/productalertstock/delete`,
     silent: true,
-    data: customer
+    data: customer,
   };
   return axios(config);
 };
 export const getNotification = () => {
   const customer = new FormData();
-  customer.append('customerId', getCustId());
+  customer.append("customerId", getCustId());
   const config = {
-    method: 'post',
+    method: "post",
     url: `${process.env.REACT_APP_DEV}/productalertstock/customeralertlist`,
     silent: true,
-    data: customer
+    data: customer,
   };
   return axios(config);
 };
 
 export const addAlertstock = (subscribe) => {
   const config = {
-    method: 'post',
+    method: "post",
     url: `${process.env.REACT_APP_DEV}/productalertstock/add`,
     silent: true,
-    data: subscribe
+    data: subscribe,
+  };
+  return axios(config);
+};
+
+//track order
+export const getTrackYourOrder = (id) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/trackorder/?orderId=00089`,
+    silent: true,
   };
   return axios(config);
 };

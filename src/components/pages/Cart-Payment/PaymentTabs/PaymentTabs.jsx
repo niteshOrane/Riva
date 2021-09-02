@@ -18,7 +18,7 @@ import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
 import { getCartId } from "../../../../util";
-import Card from "card"
+import GoSellTap from "./components/Tab2Content/GoSellTap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,7 +101,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
-      const res = await cartPaymentAction(e);
+      const res = await cartPaymentAction(e,"checkoutcom_card_payment");
       if (res.status === 200) {
         setLoading(false);
         dispatch(showSnackbar("Payment success", "success"));
@@ -121,60 +121,6 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         dispatch(showSnackbar("Payment Failed", "error"));
       }
     }
-  };
-
-  const paymentTap = () => {
-    // //pass your public key from tap's dashboard
-    // var tap = Tapjsli("pk_test_EtHFV4BuPQokJT6jiROls87Y");
-
-    // var elements = tap.elements({});
-
-    // var style = {
-    //   base: {
-    //     color: "#535353",
-    //     lineHeight: "18px",
-    //     fontFamily: "sans-serif",
-    //     fontSmoothing: "antialiased",
-    //     fontSize: "16px",
-    //     "::placeholder": {
-    //       color: "rgba(0, 0, 0, 0.26)",
-    //       fontSize: "15px",
-    //     },
-    //   },
-    //   invalid: {
-    //     color: "red",
-    //   },
-    // };
-    // // input labels/placeholders
-    // var labels = {
-    //   cardNumber: "Card Number",
-    //   expirationDate: "MM/YY",
-    //   cvv: "CVV",
-    //   cardHolder: "Card Holder Name",
-    // };
-    // //payment options
-    // var paymentOptions = {
-    //   currencyCode: ["KWD", "USD", "SAR"],
-    //   labels: labels,
-    //   TextDirection: "ltr",
-    // };
-    // //create element, pass style and payment options
-    // var card = elements.create("card", { style: style }, paymentOptions);
-    // //mount element
-    // card.mount("#element-container");
-    // //card change event listener
-    // card.addEventListener("change", function (event) {
-    //   if (event.loaded) {
-    //     console.log("UI loaded :" + event.loaded);
-    //     console.log("current currency is :" + card.getCurrency());
-    //   }
-    //   var displayError = document.getElementById("error-handler");
-    //   if (event.error) {
-    //     displayError.textContent = event.error.message;
-    //   } else {
-    //     displayError.textContent = "";
-    //   }
-    // });
   };
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
@@ -302,6 +248,8 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
           {/* {paymentType && (
             <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
           )} */}
+          <GoSellTap />
+
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>

@@ -7,7 +7,7 @@ import Fade from "@material-ui/core/Fade";
 import {
   loginCustomerOTP,
   customerVerifyOtp,
-  customerResendOtp
+  customerResendOtp,
 } from "../../../../../../services/auth/auth.service";
 import { getStoreId } from "../../../../../../util";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: 310,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    position:"relative"
   },
   head: {
     textAlign: "center",
@@ -45,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 26,
     margin: "0px auto",
     background: "transparent",
-    cursor: "pointer"
+    cursor: "pointer",
+    border:"1px solid black"
   },
   otpInput: {
     height: 42,
@@ -59,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#181617",
     textAlign: "center",
     padding: "12px 30px",
-    cursor: "pointer"
+    cursor: "pointer",
     // transition: all 0.4s ease;
     // cursor: pointer;
     // &:hover {
@@ -69,11 +71,11 @@ const useStyles = makeStyles((theme) => ({
   },
   iconWrap: {
     display: "flex",
-    marginTop: "12px"
+    marginTop: "18px",
   },
   para: {
-    paddingLeft: "1rem"
-  }
+    paddingLeft: "1rem",
+  },
 }));
 
 export default function TransitionsModal({ formData, handleSubmit }) {
@@ -83,7 +85,7 @@ export default function TransitionsModal({ formData, handleSubmit }) {
   const [otp, setOtp] = React.useState(null);
   const [userOtp, setUserOtp] = React.useState("");
 
-  const [recivedOTPData, setRecivedOTPData] = useState('');
+  const [recivedOTPData, setRecivedOTPData] = useState("");
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
@@ -108,8 +110,7 @@ export default function TransitionsModal({ formData, handleSubmit }) {
         const secondsTime = Math.ceil(divisor_for_seconds);
         setSeconds(secondsTime);
         setMinutes(minutesTime);
-      }
-      else {
+      } else {
         dispatch(showSnackbar(res.data.data?.message, "error"));
       }
     }
@@ -121,20 +122,20 @@ export default function TransitionsModal({ formData, handleSubmit }) {
       }
       if (seconds === 0) {
         if (minutes === 0) {
-          clearInterval(myInterval)
+          clearInterval(myInterval);
         } else {
           setMinutes(0);
           setSeconds(0);
         }
       }
-    }, 1000)
+    }, 1000);
     return () => {
       clearInterval(myInterval);
     };
   });
   const handleClose = () => {
     setOpen(false);
-    setOtp('');
+    setOtp("");
   };
   const varifyOtp = async () => {
     if (userOtp) {
@@ -166,7 +167,6 @@ export default function TransitionsModal({ formData, handleSubmit }) {
     } else {
       dispatch(showSnackbar("Please fill all required fields", "error"));
     }
-
   };
   const reSendOTP = async (e) => {
     const { email, name, lastName, password, phone } = formData;
@@ -189,15 +189,13 @@ export default function TransitionsModal({ formData, handleSubmit }) {
         setSeconds(secondsTime);
         setMinutes(minutesTime);
         return dispatch(showSnackbar(`Otp Sent on ${phone}`, "success"));
-      }
-      else {
+      } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
-    }
-    else {
+    } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
-  }
+  };
   return (
     <div>
       <button className={classes.signUpBtn} type="button" onClick={handleOpen}>
@@ -208,7 +206,6 @@ export default function TransitionsModal({ formData, handleSubmit }) {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
-
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -218,6 +215,7 @@ export default function TransitionsModal({ formData, handleSubmit }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+            <button onClick={handleClose} className={styles.signOtpCls}>X</button>
             <div>
               <h2 className={classes.head}>SIGN UP</h2>
               <span className={classes.headSpan}>
@@ -233,20 +231,35 @@ export default function TransitionsModal({ formData, handleSubmit }) {
                   <p>Mobile Number</p>
                   <p>{formData.phone}</p>
                 </div>
-                {minutes === 0 && seconds === 0 ? <span onClick={(e) => { reSendOTP(e) }} className={styles.resendSignup}>Resend OTP</span> : null}
+                {minutes === 0 && seconds === 0 ? (
+                  <span
+                    onClick={(e) => {
+                      reSendOTP(e);
+                    }}
+                    className={styles.resendSignup}
+                  >
+                    Resend OTP
+                  </span>
+                ) : null}
               </div>
             </div>
             <div className={`d-flex ${classes.form}`}>
-              <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+              <div
+                className={`d-flex align-items-center ${styles.inpContainer}`}
+              >
+                <img src="/assets/images/signOtp.png" alt="otp-icon" />
                 <input
                   onChange={(e) => setUserOtp(e.target.value)}
                   className={classes.otpInput}
                   placeholder="Enter OTP"
                 />
-                {minutes === 0 && seconds === 0
-                  ? null
-                  : <span> {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>
-                }
+
+                {minutes === 0 && seconds === 0 ? null : (
+                  <span>
+                    {" "}
+                    {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                  </span>
+                )}
               </div>
               <button
                 onClick={varifyOtp}
