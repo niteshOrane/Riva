@@ -369,3 +369,13 @@
   display: block;
   text-align: center;
 }
+.signOtpCls{
+  position: absolute;
+  right: 3%;
+  border: none;
+  background: transparent;
+  /* width: 5px; */
+  font-size: 28px;
+  top: 2%;
+  cursor: pointer;
+}
