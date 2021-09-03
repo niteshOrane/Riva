@@ -6,9 +6,16 @@ import Loader from './components/common/Loader';
 import { getCart } from './store/actions/cart';
 import SnackBar from './components/common/Snakbar';
 import AlertComponent from './components/common/Alert';
+
+import { ToastContainer, toast } from 'react-toastify';
 import AppRoutes from './routes';
 import './App.scss';
-import { deepEqual, hardReload } from './util';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import { deepEqual, hardReload, getCustInfo } from './util';
+
+
 
 class AppRoot extends React.Component {
   componentDidMount() {
@@ -20,6 +27,16 @@ class AppRoot extends React.Component {
     fetch();
     wishlistInit();
     cartInit();
+    toast.configure();
+    toast(`Welcome ${getCustInfo().isAuthenticated ? getCustInfo().customer.firstname : ' Guest'}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   topFunction() {
@@ -29,13 +46,13 @@ class AppRoot extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { store } = this.props;
-    window.addEventListener("scroll", (event) => {
-      var mybutton = document.getElementById("myBtn");
+    window.addEventListener("scroll", () => {
+      const mybutton = document.getElementById("myBtn");
 
       if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 
         mybutton.style.display = "block";
-        mybutton.style.bottom = `${Math.round(document.documentElement.scrollTop-window.pageYOffset)}px`;
+        mybutton.style.bottom = `100px`;
       } else {
         mybutton.style.display = "none";
         mybutton.style.bottom = "10px";
@@ -64,7 +81,6 @@ class AppRoot extends React.Component {
         <AppRoutes {...this.props} />
 
 
-        <button type="button" onClick={() => { this.topFunction() }} id="myBtn" title="Go to top">Top</button>
         {error && this.handleError(error)}
         <SnackBar />
       </>

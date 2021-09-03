@@ -10,9 +10,13 @@ import { logoutUser } from '../../../services/auth/auth.service';
 import * as icons from "../../common/Icons/Icons";
 import { logout, emptyCart } from '../../../store/actions/auth';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 
-export default function MenuListComposition({ auth, history, openSignUpCard }) {
+
+const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
     const dispatch = useDispatch();
     const { isAuthenticated, customer } = auth;
 
@@ -73,11 +77,12 @@ export default function MenuListComposition({ auth, history, openSignUpCard }) {
             <span style={{ marginRight: "12px" }} className="material-icons-outlined font-light-black">
                 person
             </span>
-            <span className="align-self-end font-light-black d-flex">
+            <span className="align-self-end font-light-black d-flex underline-hovered " >
                 {' '}
-                {isAuthenticated ? <><span>{customer.firstname} </span>
+                {isAuthenticated ? <><span>{`Welcome ${customer.firstname}`} </span>
                     <span className="material-icons-outlined" style={{ marginTop: '-2px' }}> keyboard_arrow_down</span>
-                </> : 'Account'}
+                </> : <div >Welcome Guest, Sign in &nbsp; &nbsp;</div>}
+
             </span>
 
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
@@ -104,4 +109,5 @@ export default function MenuListComposition({ auth, history, openSignUpCard }) {
             </Popper>
         </span>
     );
-}
+})
+export default MenuListComposition

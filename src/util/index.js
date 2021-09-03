@@ -34,6 +34,7 @@ export const getStoreData = () =>
   store?.getState()?.common?.store || defaultStore;
 
 export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
+export const getCustInfo = () => store?.getState()?.auth;
 
 export const getCartId = () => store?.getState()?.cart?.cart_id;
 

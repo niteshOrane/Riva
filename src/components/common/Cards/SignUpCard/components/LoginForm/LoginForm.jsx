@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useHistory } from "react-router";
 
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import { ToastContainer, toast } from 'react-toastify';
 import { getCart } from "../../../../../../store/actions/cart";
 import {
   showSnackbar,
@@ -30,7 +34,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    mobile:""
+    mobile: ""
   });
 
   const [showforgotPassword, setforgotPassword] = useState(false);
@@ -76,7 +80,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
     customer.append("email", email);
 
     customer.append("password", password);
-    customer.append("mobile","")
+    customer.append("mobile", "")
 
     const res = await loginCustomer(customer);
 
@@ -92,18 +96,20 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
         handleSubmit();
         typeof res?.data?.data !== "string" &&
           dispatch(loginSuccess(res.data.data));
-        dispatch(
-          showSnackbar(
-            typeof res?.data?.data === "string"
-              ? res?.data?.data
-              : "Login Success",
-            "success"
-          )
-        );
-
+        toast.configure();
+        toast(`Welcome ${res?.data?.success ? res?.data.data.firstname : ' Guest'}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return typeof res?.data?.data !== "string"
           ? history.push(redirectTo || "/dashboard")
           : null;
+
       } else {
         dispatch(
           showSnackbar(
@@ -257,7 +263,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
                 )}
                 // onClick={componentClicked}
                 textButton="Connect with Facebook"
-                // callback={responseFacebook}
+              // callback={responseFacebook}
               />
             </button>
             <button

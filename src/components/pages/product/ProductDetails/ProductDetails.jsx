@@ -154,7 +154,8 @@ const ProductDetails = (props) => {
               alt={product?.name}
               type="product-details"
             />
-            <ImageDropdown />
+           { /*<ImageDropdown />*/}
+           
             <div className={styles.actionContainerTopRight}>
               <div onClick={handleWishList}>
                 <span
