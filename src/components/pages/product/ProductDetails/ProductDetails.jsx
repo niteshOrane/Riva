@@ -13,8 +13,10 @@ import OutOfStock from "./outOfStock/OutOfStock";
 import { outOfStockCheck } from "../../../../services/product/product.service";
 import SearchInStorePopup from "./SearchInStorePopup";
 import SubscribeModel from "./SubscribeModel";
+import Review from "./ReviewPopUp"
 import { URL } from '../../../../util';
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
+import ReviewModal from "./ReviewPopUp";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -451,7 +453,7 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/tshirt.png",
                     },
 
-                    { name: "Review", icon: "/assets/images/review.png" },
+                    { name: (<ReviewModal />), icon: "/assets/images/review.png" },
                     { name: (<SubscribeModel />), icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (

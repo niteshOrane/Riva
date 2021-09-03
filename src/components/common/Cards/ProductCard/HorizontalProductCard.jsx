@@ -1,56 +1,137 @@
-import React from 'react';
-import styles from './horizontalProductCard.module.scss';
+import React from "react";
+import styles from "./horizontalProductCard.module.scss";
 
-const VerticalProductCard = ({ product, index, setColorSize,getOutOfStock }) => {
-
-
+const VerticalProductCard = ({
+  product,
+  index,
+  setColorSize,
+  // getOutOfStock,
+  setSelectedColorSize,
+  selectedColorSize,
+  setAttrValue,
+  attrValue
+}) => {
   const {
-    name = 'not available',
+    id,
+    name = "not available",
     image: src,
     origprice: was,
     price: now,
-    size = 'unavailable',
+    size = "unavailable",
   } = product;
-  const colors = product?.options && product?.options.length ? Object.keys(product?.options?.filter(e => e.label === "Color")?.[0]?.values) : [];
-  const sizes = product?.options && product?.options.length ? Object.keys(product?.options?.filter(e => e.label === "Size")?.[0]?.values) : [];
+  const colors =
+    product?.options && product?.options.length
+      ? Object.keys(
+          product?.options?.filter((e) => e.label === "Color")?.[0]?.values
+        )
+      : [];
+  const sizes =
+    product?.options && product?.options.length
+      ? Object.keys(
+          product?.options?.filter((e) => e.label === "Size")?.[0]?.values
+        )
+      : [];
+
+    
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
         <img src={src} alt={name} />
       </div>
       <div>
-        <div className={styles.name}>{name || ''}</div>
+        <div className={styles.name}>{name || ""}</div>
         <div className={styles.price}>
           <div className={styles.was}>Was {was}$</div>
           <div className={styles.now}>Now {now}$</div>
         </div>
         <div className={styles.size}>
-          <div className="gap-12px d-flex align-items-center">
+          <div style={{marginBottom:"6px"}} className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Color:</span>
             {colors.map((color, index) => {
-              const colorItem = product?.options.filter(e => e.label === "Color")?.[0]?.values[color];
+              const colorItem = product?.options.filter(
+                (e) => e.label === "Color"
+              )?.[0]?.values[color];
               return (
-                <span onClick={() => setColorSize(colorItem, product, index, 'color')}
-                  className={styles.text}>{colorItem.label} {colors.length > index + 1 ? '|' : ''}</span>
-              )
+                <>
+                  <span
+                    onClick={() => {
+                      // setColorSizeWithValue(colorItem.label,color)
+                      // setColorSize(colorItem, product, index, "color")
+                      setSelectedColorSize({
+                        ...selectedColorSize,
+                        color: colorItem.label,
+                        id,
+                      });
+                      setAttrValue({...attrValue,colorValue:color})
+                    }}
+                    className={styles.text}
+                    style={{
+                      transform:
+                        colorItem.label === selectedColorSize.color &&
+                        id == selectedColorSize?.id
+                          ? "scale(1)"
+                          : "scale(.9)",
+                    }}
+                  >
+                    {colorItem.label}
+                  </span>
+                  <span>{colors.length > index + 1 ? "|" : ""}</span>
+                </>
+              );
             })}
           </div>
           <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Size:</span>
             {sizes?.map((sizeName) => {
-              const sizeItem = product?.options.filter(e => e.label === "Size")[0].values[sizeName];
+              const sizeItem = product?.options.filter(
+                (e) => e.label === "Size"
+              )[0].values[sizeName];
               return (
-                <span onClick={() => setColorSize(sizeItem, product, index, "Size")} className={styles.text}>{sizeItem.label}</span>
-              )
+                <span
+                  onClick={() => {
+                    setSelectedColorSize({
+                      ...selectedColorSize,
+                      size: sizeItem.label,
+                      id,
+                    });
+                    setAttrValue({...attrValue,sizeValue:sizeName})
+                  }}
+                  className={styles.option}
+                >
+                  {sizeItem.label}
+                </span>
+              );
             })}
           </div>
           <div
             className={`${styles.options} gap-12px d-flex align-items-center`}
           >
             {sizes?.map((color) => {
+               const sizeItem = product?.options.filter(
+                (e) => e.label === "Size"
+              )[0].values[color];
               return (
-                <span className={styles.option}>{product?.options.filter(e => e.label === "Size")[0].values[color].label}</span>
-              )
+                <span  onClick={() => {
+                  setSelectedColorSize({
+                    ...selectedColorSize,
+                    size: sizeItem.label,
+                    id,
+                  });
+                  setAttrValue({...attrValue,sizeValue:color})
+                }} style={{
+                  transform:
+                    sizeItem.label === selectedColorSize.size &&
+                    id == selectedColorSize?.id
+                      ? "scale(1)"
+                      : "scale(.9)",
+                }} className={styles.option}>
+                  {/* {
+                    product?.options.filter((e) => e.label === "Size")[0]
+                      .values[color].label
+                  } */}
+                      {sizeItem.label}
+                </span>
+              );
             })}
           </div>
           <div className={`${styles.otherOptions} d-flex`}>
