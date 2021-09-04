@@ -74,3 +74,17 @@
   color:red;
   margin-top: 8px;
 }
+
+.chooseShipping {
+  margin-top: 12px;
+  h5 {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+  label {
+    cursor: pointer;
+  }
+  input {
+    margin: 0 12px;
+  }
+}
