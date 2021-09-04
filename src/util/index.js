@@ -85,3 +85,16 @@ export const extractColorSize = (attributes = []) => {
       ) || [],
   };
 };
+
+export const getSKuId = (sku) => {
+  if (sku) {
+    const skuArray = sku?.split('-');
+    const skuFinal = [];
+    for (let i = 0; i <= skuArray.length - 1; i++) {
+      if (!isNaN(parseFloat(skuArray[i])) && isFinite(skuArray[i])) {
+        skuFinal.push(skuArray[i])
+      }
+    }
+    return skuFinal.join('-');
+  }
+};
