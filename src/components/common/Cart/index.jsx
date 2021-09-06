@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import BlackCloseBtn from '../Buttons/BlackCloseBtn/BlackCloseBtn';
 import { toggleCart, removeFromCart, editItemQntCart } from '../../../store/actions/cart';
 import style from './style.module.scss';
-import { extractColorSize } from '../../../util';
+import { extractColorSize, getSKuId } from '../../../util';
 import Image from "../LazyImage/Image";
 import { toggleSignUpCard } from '../../../store/actions/common';
 
@@ -40,6 +40,7 @@ const Cart = () => {
     window.location.href = "/";
   };
 
+
   const isAuth = auth.isAuthenticated;
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
@@ -73,11 +74,14 @@ const Cart = () => {
             {items && items.length > 0 ? <>
               <div className={style.items}>
                 {items?.map((item, index) => (
+
                   <div className={style.sideItem} key={`cart_inner_${index}`}>
                     <div id={style.bdrBtm} className="d-flex align-items-center">
-                      <div className={style.itemImg}>
-                        <Image src={item.src} width="100%" alt={item.name} type="product-details" />
-                      </div>
+                      <Link to={`product/${getSKuId(item?.sku)}`} onClick={() => { handleClose() }}>
+                        <div className={style.itemImg}>
+                          <Image src={item.src} width="100%" alt={item.name} type="product-details" />
+                        </div>
+                      </Link>
                       <div className={style.itemDetails}>
                         <h3
                           title="Name"
@@ -157,6 +161,7 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
+
                 ))}
               </div>
               <div className={style.freeDeliverOffer}>

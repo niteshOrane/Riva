@@ -1,24 +1,23 @@
 .product {
   display: grid;
   grid-template-columns: 33fr 35fr;
-    .colorItem {
-        height: 13px;
-        display: inline-block;
-        width: 13px;
-        margin-left: 5px;
-        border-radius: 50%;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        position: relative;
-        &:hover {
-          border: solid 1px #2c2a2a;
-        }
-       
-      }
-    .active {
+  .colorItem {
+    height: 13px;
+    display: inline-block;
+    width: 13px;
+    margin-left: 5px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    &:hover {
       border: solid 1px #2c2a2a;
     }
+  }
+  .active {
+    border: solid 1px #2c2a2a;
+  }
   .mainImage {
     position: relative;
     .actionContainerTopRight {
@@ -475,12 +474,125 @@
   }
 }
 
-.labelName{
+.labelName {
   margin-left: 13px;
   font-weight: normal;
   white-space: nowrap;
 }
-.labelContainer{
+.labelContainer {
   display: flex;
   margin-left: 15px;
+}
+
+//review styles
+
+.reviewTextArea {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  label {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: normal;
+    text-align: left;
+    color: #6a6565;
+    margin-bottom: "5px";
+  }
+}
+.desc {
+  width: 658px;
+  height: 113px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.reviewInput {
+  width: 658px;
+  height: 51px;
+  padding-left: 5px;
+}
+
+.reviewPro {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.reviewSubmit {
+  width: 116px;
+  height: 41px;
+  margin-top: 25px;
+  padding: 12px 31px 11px 31px;
+  background-color: #000;
+  color: white;
+}
+
+.secWrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: stretch;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.avg {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f1;
+  width: 46px;
+  height: 24px;
+  /* padding: 2px; */
+  padding-right: 54px;
+}
+.sectionWrapOne {
+  display: flex;
+  align-items: center;
+}
+.mapReview {
+  display: flex;
+  align-items: center;
+  background-color: green;
+  /* width: 10px; */
+  height: 25px;
+  padding-right: 7px;
+  border-radius: 3px;
+}
+
+.nameDateWrap{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.likeDislike{
+  display: flex;
+}
+.reviewName{
+  margin-left: 35px;
+}
+.nameDate{
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.dislikeThumb{
+  margin-left: 10px;
+  display: flex;
+}
+.dateSpan{
+  opacity: 0.36;
+}
+.numLike{
+  padding-top: 2px;
+  padding-left: 4px;
+}
+.reviewCls {
+  position: absolute;
+  right: 2%;
+  font-size: 25px;
+  border: none;
+  background: transparent;
+  cursor: pointer
 }

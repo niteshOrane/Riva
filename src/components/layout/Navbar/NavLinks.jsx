@@ -6,7 +6,7 @@ import MenuListComposition from './MenuItem';
 import { toggleCart } from '../../../store/actions/cart';
 import { toggleSignUpCard } from '../../../store/actions/common';
 
-const NavLinks = () => {
+const NavLinks = React.memo(() => {
   const history = useHistory();
   const { data = [] } = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist.data);
@@ -59,6 +59,6 @@ const NavLinks = () => {
       </li>
     </ul>
   );
-};
+});
 
 export default NavLinks;

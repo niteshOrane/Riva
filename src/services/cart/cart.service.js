@@ -67,7 +67,7 @@ export const getProductIdBySku = (sku) => {
   return axios(config);
 };
 
-export const cartPaymentAction = (token,type) => {
+export const cartPaymentAction = (token, type) => {
   const config = {
     method: "post",
     url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
@@ -79,6 +79,24 @@ export const Hypy_PaymentCart = (data, cardType) => {
   const config = {
     method: "get",
     url: `${API_URL}/webapi/processhyperpay${data}&method=${cardType}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const cartPaymentTapAction = (submethod) => {
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const finalCallTapAction = (id) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/processtap?paymentData[tap_id]=${id}`,
     silent: true,
   };
   return axios(config);

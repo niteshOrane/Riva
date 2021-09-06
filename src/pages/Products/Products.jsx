@@ -20,7 +20,7 @@ function Products(props) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
-  const [sortField, setSortField] = useState("id");
+  const [sortField, setSortField] = useState("entity_id");
   const [sortDirection, setSortDirection] = useState("desc");
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({
@@ -76,7 +76,7 @@ function Products(props) {
                 <select onChange={handleSortChange}>
                 <option
                     style={{ background: "#fff" }}
-                    value="id-desc"
+                    value="entity_id-desc"
                     id="desc"
                   >
                     Newest

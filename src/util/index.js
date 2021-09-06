@@ -34,6 +34,7 @@ export const getStoreData = () =>
   store?.getState()?.common?.store || defaultStore;
 
 export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
+export const getCustInfo = () => store?.getState()?.auth;
 
 export const getCartId = () => store?.getState()?.cart?.cart_id;
 
@@ -83,4 +84,17 @@ export const extractColorSize = (attributes = []) => {
         (s) => size_attr?.find((sr) => sr.value_index == s.value)
       ) || [],
   };
+};
+
+export const getSKuId = (sku) => {
+  if (sku) {
+    const skuArray = sku?.split('-');
+    const skuFinal = [];
+    for (let i = 0; i <= skuArray.length - 1; i++) {
+      if (!isNaN(parseFloat(skuArray[i])) && isFinite(skuArray[i])) {
+        skuFinal.push(skuArray[i])
+      }
+    }
+    return skuFinal.join('-');
+  }
 };

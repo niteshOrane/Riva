@@ -15,32 +15,51 @@ import { showSnackbar } from "../../../../store/actions/common";
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
   const [dataItems, setDataItems] = useState(data || []);
-  const [proId, setProId] = useState(null);
+  const [selectedColorSize, setSelectedColorSize] = useState({
+    id: null,
+    color: null,
+    size: null,
+  });
+  const [attrValue, setAttrValue] = useState({
+    colorValue: null,
+    sizeValue: null,
+  });
+
   const dispatch = useDispatch();
   const getOutOfStock = async (val) => {
     if (dataItems?.length > 0) {
-      const temp = dataItems?.find((li) => li.id === val);
-      const id = temp?.id;
-      const colorIndex = Object.keys(
-        temp?.options?.filter((e) => e.label === "Color")?.[0]?.values
-      );
-      const color = temp?.options.filter((e) => e.label === "Color")?.[0]
-        ?.values[colorIndex[0]]?.label;
-      const sizeIndex = Object.keys(
-        temp?.options?.filter((e) => e.label === "Size")?.[0]?.values
-      );
-      const size = temp?.options.filter((e) => e.label === "Size")?.[0]?.values[
-        sizeIndex[0]
-      ]?.label;
-      const res = await outOfStockCheck(id, color, size);
-      if (res && res.status === 200) {
-        if (res?.data?.data?.Stock) {
-          return true;
+      // const temp = dataItems?.find((li) => li.id === val);
+      // const id = temp?.id;
+      // const colorIndex = Object.keys(
+      //   temp?.options?.filter((e) => e.label === "Color")?.[0]?.values
+      // );
+      // const color = temp?.options.filter((e) => e.label === "Color")?.[0]
+      //   ?.values[colorIndex[0]]?.label;
+      // const sizeIndex = Object.keys(
+      //   temp?.options?.filter((e) => e.label === "Size")?.[0]?.values
+      // );
+      // const size = temp?.options.filter((e) => e.label === "Size")?.[0]?.values[
+      //   sizeIndex[0]
+      // ]?.label;
+
+      const { color, size, id } = selectedColorSize;
+      if (color && size) {
+        const res = await outOfStockCheck(id, color, size);
+        if (res && res?.data) {
+          if (res?.data?.data?.Stock === 1) {
+            setSelectedColorSize({ color: null, size: null, id: null });
+            return true;
+          }
+          if (res?.data?.data?.Stock === 0) {
+            dispatch(showSnackbar("Product is out of stock", "error"));
+            setSelectedColorSize({ color: null, size: null, id: null });
+            return false;
+          }
+        } else {
+          dispatch(showSnackbar("something went wrong", "error"));
         }
-        if (res?.data?.data?.Stock === 0) {
-          dispatch(showSnackbar("Product is out of stock", "error"));
-          return false;
-        }
+      } else {
+        dispatch(showSnackbar("Please select a color and size", "error"));
       }
     }
   };
@@ -76,7 +95,8 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
             src: product.image,
             qty: 1,
             price: product.price,
-            ...product.selected,
+            color: { value: attrValue?.colorValue },
+            size: { value: attrValue?.sizeValue },
           })
         );
       });
@@ -116,6 +136,10 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
                 index={index}
                 setColorSize={setColorSize}
                 getOutOfStock={getOutOfStock}
+                selectedColorSize={selectedColorSize}
+                setSelectedColorSize={setSelectedColorSize}
+                attrValue={attrValue}
+                setAttrValue={setAttrValue}
               />
               <hr className="my-10px" />
             </div>
