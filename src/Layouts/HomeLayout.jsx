@@ -32,7 +32,7 @@ const MainLayout = ({ children }) => {
 
   useEffect(() => {
     const parsed = queryString.parse(window?.location?.search);
-    if (parsed && parsed.?["tap_id"]) {
+    if (parsed && parsed?.["tap_id"]) {
       window.location.href= `${window.location.origin}/#/result/tap${window?.location?.search}`;
     }
     if (paths.includes(children?.props.location.pathname)) {
