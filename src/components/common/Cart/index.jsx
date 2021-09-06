@@ -74,92 +74,94 @@ const Cart = () => {
             {items && items.length > 0 ? <>
               <div className={style.items}>
                 {items?.map((item, index) => (
-                  <Link to={`product/${getSKuId(item?.sku)}`} onClick={() => { handleClose() }}>
-                    <div className={style.sideItem} key={`cart_inner_${index}`}>
-                      <div id={style.bdrBtm} className="d-flex align-items-center">
+
+                  <div className={style.sideItem} key={`cart_inner_${index}`}>
+                    <div id={style.bdrBtm} className="d-flex align-items-center">
+                      <Link to={`product/${getSKuId(item?.sku)}`} onClick={() => { handleClose() }}>
                         <div className={style.itemImg}>
                           <Image src={item.src} width="100%" alt={item.name} type="product-details" />
                         </div>
-                        <div className={style.itemDetails}>
-                          <h3
-                            title="Name"
-                            className={`${style.name} two-line-text`}
-                          >
-                            {item.name}
-                          </h3>
-                          <div className={style.colorPriceETC}>
-                            <div className="d-flex align-items-center justify-content-between">
-                              <div>
-                                <span className="font-weight-600">Color: </span>
-                                <span className="color-grey">
-                                  {item?.color?.label ||
-                                    getColorSize(
-                                      item?.product_option?.extension_attributes
-                                        ?.configurable_item_options || []
-                                    ).colors?.[0]?.label}
-                                </span>
-                              </div>
-                              <div>
-                                <span className="font-weight-600 color-primary">
-                                  ${parseFloat(item.price)?.toFixed(2)}
-                                </span>
-                              </div>
+                      </Link>
+                      <div className={style.itemDetails}>
+                        <h3
+                          title="Name"
+                          className={`${style.name} two-line-text`}
+                        >
+                          {item.name}
+                        </h3>
+                        <div className={style.colorPriceETC}>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Color: </span>
+                              <span className="color-grey">
+                                {item?.color?.label ||
+                                  getColorSize(
+                                    item?.product_option?.extension_attributes
+                                      ?.configurable_item_options || []
+                                  ).colors?.[0]?.label}
+                              </span>
                             </div>
-                            <div className="d-flex align-items-center justify-content-between">
-                              <div>
-                                <span className="font-weight-600">Size: </span>
-                                <span className="color-grey">
-                                  {item?.size?.label ||
-                                    getColorSize(
-                                      item?.product_option?.extension_attributes
-                                        ?.configurable_item_options || []
-                                    ).size?.[0]?.label}
-                                </span>
-                              </div>
-                              <div>
-                                {editableIndex == index ?
-                                  <span onClick={() => { setEditableIndex(null) }} className="material-icons-outlined c-pointer">
-                                    close
-                                  </span> : null
-                                }
-                                <span onClick={() => { setEditableIndex(index) }} className="material-icons-outlined c-pointer">
-                                  edit
-                                </span>
-                              </div>
+                            <div>
+                              <span className="font-weight-600 color-primary">
+                                ${parseFloat(item.price)?.toFixed(2)}
+                              </span>
                             </div>
-                            <div className="d-flex align-items-center justify-content-between">
-                              <div>
-                                <span className="font-weight-600">Qty: </span>
-                                <span className="color-grey">{editableIndex == index ?
-                                  <div className={style.counter}>
-                                    <span className="c-pointer material-icons-outlined"
-                                      onClick={() => { handleDecrementProduct(item) }}>
-                                      remove
-                                    </span>
-                                    <span>{item.qty}</span>
-                                    <span className="c-pointer material-icons-outlined" onClick={() => { handleIncrementProduct(item) }}>
-                                      add
-                                    </span>
-                                  </div>
-                                  : item.qty}</span>
-
-                              </div>
-                              <div>
-                                <span
-                                  onClick={() => dispatch(removeFromCart(item))}
-                                  style={{ cursor: 'pointer' }}
-                                >
-                                  <span className="material-icons-outlined">
-                                    close
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Size: </span>
+                              <span className="color-grey">
+                                {item?.size?.label ||
+                                  getColorSize(
+                                    item?.product_option?.extension_attributes
+                                      ?.configurable_item_options || []
+                                  ).size?.[0]?.label}
+                              </span>
+                            </div>
+                            <div>
+                              {editableIndex == index ?
+                                <span onClick={() => { setEditableIndex(null) }} className="material-icons-outlined c-pointer">
+                                  close
+                                </span> : null
+                              }
+                              <span onClick={() => { setEditableIndex(index) }} className="material-icons-outlined c-pointer">
+                                edit
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <span className="font-weight-600">Qty: </span>
+                              <span className="color-grey">{editableIndex == index ?
+                                <div className={style.counter}>
+                                  <span className="c-pointer material-icons-outlined"
+                                    onClick={() => { handleDecrementProduct(item) }}>
+                                    remove
                                   </span>
+                                  <span>{item.qty}</span>
+                                  <span className="c-pointer material-icons-outlined" onClick={() => { handleIncrementProduct(item) }}>
+                                    add
+                                  </span>
+                                </div>
+                                : item.qty}</span>
+
+                            </div>
+                            <div>
+                              <span
+                                onClick={() => dispatch(removeFromCart(item))}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <span className="material-icons-outlined">
+                                  close
                                 </span>
-                              </div>
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
+
                 ))}
               </div>
               <div className={style.freeDeliverOffer}>
