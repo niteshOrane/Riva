@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import styles from "./horizontalProductCard.module.scss";
+import Image from "../../../common/LazyImage/Image";
+import axios from "axios";
+import {
+  getProduct,
+  getProductColor,
+} from "../../../../services/product/product.service";
 
 const VerticalProductCard = ({
   product,
@@ -9,7 +15,7 @@ const VerticalProductCard = ({
   setSelectedColorSize,
   selectedColorSize,
   setAttrValue,
-  attrValue
+  attrValue,
 }) => {
   const {
     id,
@@ -19,6 +25,19 @@ const VerticalProductCard = ({
     price: now,
     size = "unavailable",
   } = product;
+
+  const [colorImg, setColorImg] = useState();
+  const getDetails = async (fnValue, fnLabel) => {
+    if(fnValue && fnLabel){
+      const res = await getProductColor(fnValue);
+      if (res.status === 200) {
+        const item = res?.data?.databind?.find((li) => li.color === fnLabel);
+        setColorImg(item);
+      }
+    }
+   
+  }
+ 
   const colors =
     product?.options && product?.options.length
       ? Object.keys(
@@ -32,11 +51,13 @@ const VerticalProductCard = ({
         )
       : [];
 
-    
+  useEffect(() => {
+    getDetails(id,colors.map(li => product?.options.filter(e => e.label==="Color")?.[0]?.values[li])?.[0]?.label)
+  },[])    
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
-        <img src={src} alt={name} />
+        <Image src={colorImg?.file || src} alt={name} />
       </div>
       <div>
         <div className={styles.name}>{name || ""}</div>
@@ -45,7 +66,10 @@ const VerticalProductCard = ({
           <div className={styles.now}>Now {now}$</div>
         </div>
         <div className={styles.size}>
-          <div style={{marginBottom:"6px"}} className="gap-12px d-flex align-items-center">
+          <div
+            style={{ marginBottom: "6px" }}
+            className="gap-12px d-flex align-items-center"
+          >
             <span className={styles.title}>Color:</span>
             {colors.map((color, index) => {
               const colorItem = product?.options.filter(
@@ -62,7 +86,8 @@ const VerticalProductCard = ({
                         color: colorItem.label,
                         id,
                       });
-                      setAttrValue({...attrValue,colorValue:color})
+                      setAttrValue({ ...attrValue, colorValue: color });
+                      getDetails(id, colorItem.label);
                     }}
                     className={styles.text}
                     style={{
@@ -94,7 +119,7 @@ const VerticalProductCard = ({
                       size: sizeItem.label,
                       id,
                     });
-                    setAttrValue({...attrValue,sizeValue:sizeName})
+                    setAttrValue({ ...attrValue, sizeValue: sizeName });
                   }}
                   className={styles.option}
                 >
@@ -107,29 +132,33 @@ const VerticalProductCard = ({
             className={`${styles.options} gap-12px d-flex align-items-center`}
           >
             {sizes?.map((color) => {
-               const sizeItem = product?.options.filter(
+              const sizeItem = product?.options.filter(
                 (e) => e.label === "Size"
               )[0].values[color];
               return (
-                <span  onClick={() => {
-                  setSelectedColorSize({
-                    ...selectedColorSize,
-                    size: sizeItem.label,
-                    id,
-                  });
-                  setAttrValue({...attrValue,sizeValue:color})
-                }} style={{
-                  transform:
-                    sizeItem.label === selectedColorSize.size &&
-                    id == selectedColorSize?.id
-                      ? "scale(1)"
-                      : "scale(.9)",
-                }} className={styles.option}>
+                <span
+                  onClick={() => {
+                    setSelectedColorSize({
+                      ...selectedColorSize,
+                      size: sizeItem.label,
+                      id,
+                    });
+                    setAttrValue({ ...attrValue, sizeValue: color });
+                  }}
+                  style={{
+                    transform:
+                      sizeItem.label === selectedColorSize.size &&
+                      id == selectedColorSize?.id
+                        ? "scale(1)"
+                        : "scale(.9)",
+                  }}
+                  className={styles.option}
+                >
                   {/* {
                     product?.options.filter((e) => e.label === "Size")[0]
                       .values[color].label
                   } */}
-                      {sizeItem.label}
+                  {sizeItem.label}
                 </span>
               );
             })}

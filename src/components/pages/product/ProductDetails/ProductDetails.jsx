@@ -24,7 +24,6 @@ const ProductDetails = (props) => {
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
-
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -453,7 +452,7 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/tshirt.png",
                     },
 
-                    { name: (<ReviewModal />), icon: "/assets/images/review.png" },
+                    { name: (<ReviewModal id={product?.id} sku = {product?.sku}/>), icon: "/assets/images/review.png" },
                     { name: (<SubscribeModel />), icon: "/assets/images/share.png" },
                   ].map((item) => {
                     return (
