@@ -4,8 +4,8 @@ import Modal from '@material-ui/core/Modal';
 
 
 function getModalStyle() {
-  const top = 50 
-  const left = 50 
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: 590,
-    height:264,
+    height: 264,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    display:"flex"
+    display: "flex"
   },
-  heading:{
-    margin:"30px 70px 21px 87px "
+  heading: {
+    margin: "30px 70px 21px 87px "
   },
   input: {
     height: 42,
@@ -32,19 +32,19 @@ const useStyles = makeStyles((theme) => ({
     padding: "3px",
     border: "2px solid black",
     outline: "none",
-    marginTop:"10px",
+    marginTop: "10px",
   },
   btn: {
-    padding:"10px",
-    backgroundColor:"#000",
-    color:"#fff",
-    marginTop:"10px",
-    border:"none",
-    cursor:"pointer"
-},
+    padding: "10px",
+    backgroundColor: "#000",
+    color: "#fff",
+    marginTop: "10px",
+    border: "none",
+    cursor: "pointer"
+  },
 }));
 
-export default function SimpleModal() {
+export default function SubscribeModel() {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -60,7 +60,7 @@ export default function SimpleModal() {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <div className="w-50">
-        <img src ="/assets/images/sub.jpg" alt="" />
+        <img src="/assets/images/sub.jpg" alt="" />
       </div>
       <div>
         <h1 className={classes.heading}>RIVA</h1>
@@ -75,8 +75,8 @@ export default function SimpleModal() {
 
   return (
     <div>
-      <span  onClick={handleOpen}>
-        Share
+      <span onClick={handleOpen}>
+        Subscribe Product
       </span>
       <Modal
         open={open}

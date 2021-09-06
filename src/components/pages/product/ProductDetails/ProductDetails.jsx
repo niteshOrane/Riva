@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
@@ -17,6 +18,8 @@ import Review from "./ReviewPopUp"
 import { URL } from '../../../../util';
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 import ReviewModal from "./ReviewPopUp";
+import ShareIcons from "./ShareIcons";
+
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage } = props;
@@ -155,8 +158,8 @@ const ProductDetails = (props) => {
               alt={product?.name}
               type="product-details"
             />
-           { /*<ImageDropdown />*/}
-           
+            { /*<ImageDropdown />*/}
+
             <div className={styles.actionContainerTopRight}>
               <div onClick={handleWishList}>
                 <span
@@ -228,15 +231,15 @@ const ProductDetails = (props) => {
                     }}
                   >
                     {typeof item?.color === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)?.toLowerCase()}.png`} 
-                      className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                        ? styles.active
-                        : ""}`} alt={item?.color} />
+                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)?.toLowerCase()}.png`}
+                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                          ? styles.active
+                          : ""}`} alt={item?.color} />
                       : <img src={item?.file} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
                         ? styles.active
                         : ""}`} alt={item?.color} />
                     }
-             
+
                   </div>
                 ))}
 
@@ -448,12 +451,18 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/shop.png",
                     },
                     {
-                      name: "Product details",
+                      name: (<SubscribeModel />),
                       icon: "/assets/images/tshirt.png",
                     },
 
-                    { name: (<ReviewModal id={product?.id} sku = {product?.sku}/>), icon: "/assets/images/review.png" },
-                    { name: (<SubscribeModel />), icon: "/assets/images/share.png" },
+                    {
+                      name: (<ReviewModal id={product?.id} sku={product?.sku} />),
+                      icon: "/assets/images/review.png"
+                    },
+                    {
+                      name: (<ShareIcons styles={styles} product={product} />),
+                      icon: "/assets/images/share.png"
+                    },
                   ].map((item) => {
                     return (
                       <div className={`${styles.labelContainer}`}>
