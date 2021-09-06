@@ -9,17 +9,22 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 
 import styles from "./OrderConfirmed.module.scss";
 
-import { Hypy_PaymentCart } from "../../services/cart/cart.service";
+import { Hypy_PaymentCart, finalCallTapAction } from "../../services/cart/cart.service";
 
 function ResultPage(props) {
   const history = useHistory();
-  
 
   const getHyperPayPayment = async () => {
     const parsed = queryString.parse(props?.location?.search);
     if (parsed) {
-      const res = await Hypy_PaymentCart(props?.location?.search, props.match.params["type"]);
-      if (res.status === 200 && res?.data && res.data?.[0]?.["order_id"]) {
+      let res = null;
+      if (parsed["tap_id"]) {
+        res = await finalCallTapAction(parsed["tap_id"]);
+      }
+      else {
+        res = await Hypy_PaymentCart(props?.location?.search, props.match.params["type"]);
+      }
+      if (res && res.status === 200 && res?.data && res.data?.[0]?.["order_id"]) {
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
@@ -31,7 +36,7 @@ function ResultPage(props) {
     getHyperPayPayment()
   }, [])
 
- 
+
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">

@@ -92,3 +92,12 @@ export const cartPaymentTapAction = (submethod) => {
   };
   return axios(config);
 };
+
+export const finalCallTapAction = (id) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/processtap?paymentData[tap_id]=${id}`,
+    silent: true,
+  };
+  return axios(config);
+};

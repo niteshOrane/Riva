@@ -12,8 +12,8 @@ function GoSellTap() {
   const history = useHistory();
   const callbackFunc = async (subType) => {
     const res = await cartPaymentTapAction(subType);
-    if (res.status === 200 && res.data?.data?.success) {
-      window.location.href= res.data?.data?.redirect_url;
+    if (res.status === 200 && res.data && res.data.length>0 && res.data[0]?.success) {
+      window.location.href= res.data?.[0]?.redirect_url;
     }
   };
   return (

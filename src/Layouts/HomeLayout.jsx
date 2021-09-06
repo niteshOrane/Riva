@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../components/layout/Footer/Footer';
 
@@ -28,7 +29,12 @@ const MainLayout = ({ children }) => {
   const openSignUpCard = (redirectTo) => {
     dispatch(toggleSignUpCard({ redirectTo }));
   };
+
   useEffect(() => {
+    const parsed = queryString.parse(window?.location?.search);
+    if (parsed && parsed.?["tap_id"]) {
+      window.location.href= `${window.location.origin}/#/result/tap${window?.location?.search}`;
+    }
     if (paths.includes(children?.props.location.pathname)) {
       if (!children.props.auth.isAuthenticated) {
         openSignUpCard('/delivery-address')
