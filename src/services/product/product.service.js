@@ -26,7 +26,6 @@ export const getProductMedia = (sku) => {
 };
 
 export const getFiltersList = (catId, color = "", size = "", price = "") => {
-
   const filterData = color ? `&categoryData[color]=${color?.value}` : "";
   const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
   const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
@@ -83,8 +82,12 @@ export const getHowToWear = (id) => {
 
 export const outOfStockCheck = (productId = 0, color = "", size = "") => {
   if (productId && color && size) {
-    const colorStock = color ? `&productinfo[1][Name]=Color&productinfo[1][Value]=${color}` : ""
-    const sizeStock = size ? `&productinfo[0][Name]=Size&productinfo[0][Value]=${size}` : ""
+    const colorStock = color
+      ? `&productinfo[1][Name]=Color&productinfo[1][Value]=${color}`
+      : "";
+    const sizeStock = size
+      ? `&productinfo[0][Name]=Size&productinfo[0][Value]=${size}`
+      : "";
     const config = {
       method: "post",
       url: `${urlPath}/rest/V1/productalertstock/productStock?productId=${productId}${sizeStock}${colorStock}`,
@@ -92,4 +95,24 @@ export const outOfStockCheck = (productId = 0, color = "", size = "") => {
     };
     return axios(config);
   }
+};
+
+// add review
+export const createReview = (title, description, review, id,firstname) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/reviews?review[title]=${title}&review[detail]=${description}&review[nickname]=${firstname}&review[entity_pk_value]=${id}&review[review_status]=1&review[review_entity]=product&review[review_type]=2&review[ratings][0][value]=${review}&review[ratings][0][rating_name]=Quality&review[store_id]=${getStoreId()}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+// get reviews
+export const getReviewList = (fnValue) => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/products/${fnValue}/reviews`,
+    silent: true,
+  };
+  return axios(config);
 };
