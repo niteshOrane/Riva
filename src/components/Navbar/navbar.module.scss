@@ -10,6 +10,15 @@
 
 .navLinksWeight{
     font-weight: 500 !important;
-    margin-left: 9px !important;
+    @include left('margin', 9px, !important);
+
+   // margin-left: 9px !important;
+}
+.personIcon{
+    @include right('margin', 12px, !important);
+    //margin-left: 12px;
+}
+.wishListicon{
+    @include right('margin', 9px, !important);
 }
 

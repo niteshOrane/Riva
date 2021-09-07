@@ -74,7 +74,7 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
             aria-haspopup="true"
             onClick={handleToggle}>
 
-            <span style={{ marginRight: "12px" }} className="material-icons-outlined font-light-black">
+            <span  className=" personIcon material-icons-outlined font-light-black">
                 person
             </span>
             <span className="align-self-end font-light-black d-flex underline-hovered " >
