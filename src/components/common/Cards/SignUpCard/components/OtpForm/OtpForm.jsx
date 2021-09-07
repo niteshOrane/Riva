@@ -25,7 +25,7 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 
-const OtpForm = ({ handleSubmit }) => {
+const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -111,42 +111,48 @@ const OtpForm = ({ handleSubmit }) => {
   }
   const verifyOTP = async (e) => {
     e.preventDefault();
-    if (!mobileOtp)
+    if (!mobileOtp) {
       return dispatch(showSnackbar("Please enter OTP", "warning"));
-    const customer = new FormData();
-    customer.append("phone", mobileNumber);
-    customer.append("otp", mobileOtp);
-    customer.append("customerInfo", "")
+    }
+    else if (onChangeMobileNumber) {
+      onChangeMobileNumber(e, mobileOtp)
+    }
+    else {
+      const customer = new FormData();
+      customer.append("phone", mobileNumber);
+      customer.append("otp", mobileOtp);
+      customer.append("customerInfo", "")
 
-    const res = await customerVerifyOtp(customer);
-    if (res.status === 200) {
-      if (res?.data?.success) {
-        if (getCartId() > 0) {
-          const customerCart = new FormData();
-          customerCart.append("guestQuoteId", getCartId());
-          customerCart.append("customerId", res.data?.data?.customerID);
-          await mergeGuestCart(customerCart);
-          dispatch(getCart());
+      const res = await customerVerifyOtp(customer);
+      if (res.status === 200) {
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : "Login Success",
+              "success"
+            )
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          return dispatch(showSnackbar(res?.data.message, "error"));
         }
-        handleSubmit();
-        typeof res?.data?.data !== "string" &&
-          dispatch(loginSuccess(res.data.data));
-        dispatch(
-          showSnackbar(
-            typeof res?.data?.data === "string"
-              ? res?.data?.data
-              : "Login Success",
-            "success"
-          )
-        );
-        return typeof res?.data?.data !== "string"
-          ? history.push(redirectTo || "/dashboard")
-          : null;
       } else {
-        return dispatch(showSnackbar(res?.data.message, "error"));
+        return dispatch(showSnackbar("Something went wrong", "error"));
       }
-    } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
     }
   }
   useEffect(() => {
@@ -235,7 +241,8 @@ const OtpForm = ({ handleSubmit }) => {
           </button>
         </form>
 
-      }<div className={styles.formLogin}>
+      }
+      {showMediaIcon ? <div className={styles.formLogin}>
         <p className={styles.or}>OR</p>
         <div>
           <button
@@ -301,6 +308,7 @@ const OtpForm = ({ handleSubmit }) => {
           </div>
         </div>
       </div>
+        : null}
     </>
   );
 };

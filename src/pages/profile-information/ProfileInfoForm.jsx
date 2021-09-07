@@ -1,23 +1,31 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./profileInformation.scss";
+import * as icons from "../../components/common/Icons/Icons";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Dialog from '@material-ui/core/Dialog';
+import OTPForm from '../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm';
+import styles from '../../components/common/Cards/SignUpCard/SignUpCard.module.scss';
 import {
   profileUpdate,
-  getProfileUpdate,
 } from "../../services/dashboard/dashboard.service";
 import { showSnackbar } from "../../store/actions/common";
 import { setCustomer } from "../../store/actions/auth";
+import {
+  customerVerifyOtp,
+
+} from "../../services/auth/auth.service";
 import { getStoreId } from "../../util";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
   const dispatch = useDispatch();
-
+  const [isEdit, setIsEdit] = useState(false);
+  const [mobileNumber, setMobileNumber] = useState('');
   const [values, setValues] = useState({
     firstname: customer?.firstname,
     lastname: customer?.lastname,
@@ -37,6 +45,14 @@ function ProfileInfoForm() {
       const { value, name } = event.target;
       setValues({ ...values, [name]: value });
     }
+  };
+  const handleChangeMobile = (event) => {
+    setMobileNumber(event.target.value)
+  };
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,6 +79,27 @@ function ProfileInfoForm() {
     }
     return dispatch(showSnackbar("Something went wrong", "error"));
   };
+  const verifyOTP = async (e, mobileOtp) => {
+    e.preventDefault();
+    if (!mobileOtp)
+      return dispatch(showSnackbar("Please enter OTP", "warning"));
+    const customerMobile = new FormData();
+    customerMobile.append("phone", mobileNumber);
+    customerMobile.append("otp", mobileOtp);
+    customerMobile.append("customerInfo", "")
+
+    const res = await customerVerifyOtp(customerMobile);
+    if (res.status === 200) {
+      if (res?.data?.success) {
+        //code goes Here
+
+      } else {
+        return dispatch(showSnackbar(res?.data.message, "error"));
+      }
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  }
   return (
     <>
       <section className="registration-form-wrapper">
@@ -99,11 +136,29 @@ function ProfileInfoForm() {
               </div>
               <div style={{ marginLeft: "2rem" }}>
                 <label className="profile-label">Mobile Number</label>
-                <input
-                  name="mobile_number"
-                  value={values?.mobile_number}
-                  onChange={handleChange}
-                />
+                <div className={`d-flex align-items-center inpContainer`}>
+
+                  <input
+                    name="mobile_number"
+                    readOnly={!isEdit}
+                    value={isEdit ? mobileNumber : values?.mobile_number}
+                    onChange={handleChangeMobile}
+                  />
+                  {isEdit ? <> <span onClick={() => { setIsEdit(false); setIsOpen(true) }} className={` underline-hovered c-pointer`}>
+                    <icons.Check className="closeIcon" />
+                  </span>
+                    <span onClick={() => { setIsEdit(false) }} className={` underline-hovered c-pointer`}>
+                      <icons.Close className="closeIcon" />
+                    </span></>
+
+                    : <span onClick={() => { setIsEdit(true) }} className={` underline-hovered c-pointer`}>
+                      <icons.Pencil />
+                    </span>
+                  }
+
+                </div>
+
+
               </div>
             </section>
             <section>
@@ -159,6 +214,25 @@ function ProfileInfoForm() {
           </section>
         </form>
       </section>
+      <Dialog
+        disableBackdropClick
+        disableEscapeKeyDown
+        aria-labelledby="simple-dialog-title"
+        onClose={handleClose}
+        open={isOpen}
+      >
+        <div className={styles.popupBody}>
+          <button
+            type="button"
+            onClick={handleClose}
+            title="Close"
+            className={`bg-transparent no-border ${styles.close}`}
+          >
+            <icons.Close />
+          </button>
+          <OTPForm handleSubmit={handleClose} onChangeMobileNumber={verifyOTP} showMediaIcon={Boolean(false)} />
+        </div>
+      </Dialog>
     </>
   );
 }

@@ -5,11 +5,14 @@ import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
 import HomeLayout from "../Layouts/HomeLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+
 const LandingHome = React.lazy(() => import("../pages/Landing/HomeLanding"));
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
 const WishList = React.lazy(() => import("../pages/WishList/WishList"));
+
+const CreatePassword = React.lazy(() => import("../components/common/Cards/SignUpCard/CreatePassword/CreatePassword"));
 
 const DeliveryAddress = React.lazy(() =>
   import("../pages/Delivery-address/DeliveryAddress")
@@ -21,6 +24,8 @@ const CancelledOrders = React.lazy(() =>
 const TrackYourOrder = React.lazy(() =>
   import("../pages/TrackYourOrder/TrackYourOrder")
 );
+
+
 const ChangePassword = React.lazy(() =>
   import("../pages/ChangePassword/ChangePassword")
 );
@@ -69,6 +74,14 @@ class AppRoutes extends Component {
         name: "Landing page",
         layout: HomeLayout,
         index: 0,
+      },
+      {
+        path: "/create-password",
+        component: CreatePassword,
+        exact: true,
+        name: "Landing page",
+        layout: HomeLayout,
+        index: 13,
       },
       {
         path: "/type/:mainCategoryId",

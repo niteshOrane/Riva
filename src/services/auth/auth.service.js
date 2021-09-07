@@ -41,6 +41,15 @@ export const loginCustomerOTP = (formData) => {
   return axios(config);
 };
 
+export const verifyUpdateProfileMobileOtp = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/verifyUpdateProfileMobileOtp`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
+};
 export const customerVerifyOtp = (formData) => {
   const config = {
     method: "post",
@@ -91,8 +100,14 @@ export const changePassword = (formData) => {
   return axios(config);
 };
 
-export const otpVerify = (formData) => {
-  // api not found
+export const resetForgotPassword = (formData) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/resetForgotPassword`,
+    silent: true,
+    data: formData,
+  };
+  return axios(config);
 };
 
 export const logoutUser = () => {

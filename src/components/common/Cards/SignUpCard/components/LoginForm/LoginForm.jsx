@@ -55,9 +55,9 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
 
     const res = await forgotPassword(customer);
 
-    if (res.status === 200) {
+    if (res && res.status === 200 && res.data?.success) {
       handleSubmit();
-      return dispatch(showSnackbar(res?.data?.data, "success"));
+      return dispatch(showSnackbar(res?.data?.message, "success"));
     }
     return dispatch(showSnackbar("Something went wrong", "error"));
   };
@@ -152,7 +152,6 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
         </div>
       </form>
     );
-
   return (
     <>
       <span className={styles.tagline}>Have an account? Sign In</span>
