@@ -124,7 +124,7 @@ const HomeHeroGrid = (props) => {
               );
             }}
           >
-            <section>
+            <section className = "some-space-bootom">
               <img
                 src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${
                   itemsImage.find((e) => e.position === "4")?.image

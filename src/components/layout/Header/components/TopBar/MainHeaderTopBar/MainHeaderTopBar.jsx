@@ -154,7 +154,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
             |&nbsp;&nbsp;
             <div
               onClick={() => setLanguageShowDropdown(!showLanguageShowDropdown)}
-              className="position-relative d-flex align-items-center justify-content-center"
+              className="position-relative d-flex align-items-center"
               style={{ width: "100px" }}
             >
               <div className={`${style.flag} d-flex`} />

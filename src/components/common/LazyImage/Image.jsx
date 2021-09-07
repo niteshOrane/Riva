@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { URL } from '../../../util';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { URL } from "../../../util";
+import {
+  Magnifier,
+  GlassMagnifier,
+  SideBySideMagnifier,
+  PictureInPictureMagnifier,
+  MOUSE_ACTIVATION,
+  TOUCH_ACTIVATION,
+} from "react-image-magnifiers";
 
 const LazyImage = (props) => {
   const {
@@ -12,20 +20,33 @@ const LazyImage = (props) => {
     classname,
     defaultImage,
     isCategory,
-    type = '',
+    isZoom,
+    type = "",
   } = props;
   const [error, setError] = useState(false);
 
   const srcImage =
-    src?.indexOf('http') > -1
+    src?.indexOf("http") > -1
       ? src
       : `${
-          type === 'product-details' ? URL.baseUrlProduct : URL.baseUrl
+          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
         }/${src}`;
 
   const onImageError = () => {
     setError(true);
   };
+  if (isZoom) {
+    return (
+      <div style={{width:width,height:height}}>
+        <SideBySideMagnifier
+          imageSrc={[srcImage,"https://via.placeholder.com/295x295?text=Image+Not+Available"]}
+          imageAlt={alt || "No image available"}
+          fillAvailableSpace
+          alwaysInPlace
+        />
+      </div>
+    );
+  }
 
   return (
     <img
@@ -34,12 +55,12 @@ const LazyImage = (props) => {
           ? srcImage
           : defaultImage
           ? defaultImage
-          : 'https://via.placeholder.com/295x295?text=Image+Not+Available'
+          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}
       height={height}
-      alt={alt || 'No image available'}
+      alt={alt || "No image available"}
       style={customeStyle}
       className={classname}
     />

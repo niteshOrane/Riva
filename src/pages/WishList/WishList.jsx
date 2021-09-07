@@ -26,7 +26,7 @@ function WishList() {
           <div className={styles.cardsContainer}>
             <span className={styles.title}>My Wishlist</span>
 
-            <div className="d-flex gap-12px f1" style={{ flexWrap: 'wrap' }}>
+            <div className="d-flex gap-12px f1" style={{ flexWrap: 'wrap',marginTop:"18px" }}>
               {wishlist?.map((product) => {
 
                 return (

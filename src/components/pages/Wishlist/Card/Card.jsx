@@ -27,7 +27,7 @@ function Card({ src, name, priceWas, priceIs, remove , sku}) {
       </div>
       </Link>
       <div className="my-12px">
-        <p className="font-size-600">{name}</p>
+        <p className={`font-size-600 ${styles.boldFont}`}>{name}</p>
       </div>
       <div className="d-flex align-items-center gap-12px">
         <s className="color-grey">was ${parseFloat(priceWas)?.toFixed(2)}</s>&nbsp; &nbsp;

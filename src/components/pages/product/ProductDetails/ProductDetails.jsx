@@ -157,6 +157,7 @@ const ProductDetails = (props) => {
               width="100%"
               alt={product?.name}
               type="product-details"
+              isZoom
             />
             { /*<ImageDropdown />*/}
 

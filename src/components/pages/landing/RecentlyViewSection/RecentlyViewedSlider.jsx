@@ -36,7 +36,7 @@ const RecentlyViewedSlider = () => {
           </div>
         </div>
       </div>
-      <div className="my-20px ">
+      <div className="">
         {recentlyViewed.length < 3 ? (
           <div className="d-flex">
             {recentlyViewed?.map((item) => (

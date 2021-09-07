@@ -38,7 +38,7 @@ const TopBrandsSlider = () => {
           </div>
         </div>
       </div>
-      <div className="my-20px">
+      <div>
         {products.length < 3 ? (
           <div className="d-flex">
             {products?.map((item) => (
