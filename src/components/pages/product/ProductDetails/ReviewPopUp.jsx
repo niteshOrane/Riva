@@ -1,4 +1,7 @@
 import React from "react";
+import moment from "moment";
+import Rating from "@material-ui/lab/Rating";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -8,10 +11,8 @@ import {
   createReview,
   getReviewList,
 } from "../../../../services/product/product.service";
-import { useDispatch, useSelector } from "react-redux";
 import { showSnackbar } from "../../../../store/actions/common";
-import moment from "moment";
-import Rating from "@material-ui/lab/Rating";
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -60,7 +61,6 @@ const dummyData = [
 export default function ReviewModal({ id, sku }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  console.log(auth)
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
@@ -82,26 +82,30 @@ export default function ReviewModal({ id, sku }) {
     }
   };
   const addReview = async (e) => {
-    if (!auth?.isAuthenticated)
-      return dispatch(showSnackbar("Please sign in to add a review", "error"));
     e.preventDefault();
-    const { firstname } = auth?.customer;
-    if (!title) {
-      return dispatch(showSnackbar("Please add title", "error"));
+
+    if (!auth?.isAuthenticated) {
+      return dispatch(showSnackbar("Please sign in to add a review", "error"));
     }
-    if (!description) {
-      return dispatch(showSnackbar("Please add description", "error"));
-    }
-    if (!value) {
-      return dispatch(showSnackbar("Please rate with star", "error"));
-    }
-    const res = await createReview(title, description, value, id, firstname);
-    if (res.status === 200 && res?.data) {
-      dispatch(showSnackbar("review added successfully", "success"));
-      getReviewListForProduct(sku);
-      setDescription("");
-      setTitle("");
-      setValue(0);
+    else {
+      const { firstname } = auth?.customer;
+      if (!title) {
+        return dispatch(showSnackbar("Please add title", "error"));
+      }
+      if (!description) {
+        return dispatch(showSnackbar("Please add description", "error"));
+      }
+      if (!value) {
+        return dispatch(showSnackbar("Please rate with star", "error"));
+      }
+      const res = await createReview(title, description, value, id, firstname);
+      if (res.status === 200 && res?.data) {
+        dispatch(showSnackbar("review added successfully", "success"));
+        getReviewListForProduct(sku);
+        setDescription("");
+        setTitle("");
+        setValue(0);
+      }
     }
   };
 
@@ -134,19 +138,12 @@ export default function ReviewModal({ id, sku }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <button onClick={handleClose} className={styles.reviewCls}>
+            <button type="submit" onClick={handleClose} className={styles.reviewCls}>
               X
             </button>
             <h2>Rate this product</h2>
             <div>
-              {/* {[1, 2, 3, 4, 5].map((_) => (
-                <span
-                  style={{ marginBottom: "20px", marginTop: "20px" }}
-                  className="material-icons-outlined"
-                >
-                  star_border
-                </span>
-              ))} */}
+              
               <Rating
                 name="simple-controlled"
                 value={value}
@@ -225,18 +222,18 @@ export default function ReviewModal({ id, sku }) {
                     </span>
                   </div>
                   <div className={styles.likeDislike}>
-                 
+
                     <div className={styles.likeDislike}>
-                      <span class="material-icons-outlined">thumb_up_alt</span>
+                      <span className="material-icons-outlined">thumb_up_alt</span>
                       <span className={styles.numLike}>{li.like}</span>
                     </div>
                     <div>
                       <div className={styles.dislikeThumb}>
-                        <span class="material-icons-outlined">thumb_down</span>
+                        <span className="material-icons-outlined">thumb_down</span>
                         <span className={styles.numLike}>{li.dislike}</span>
                       </div>
                     </div>
-                    <span  class="material-icons-outlined">delete</span>
+                    <span className="material-icons-outlined">delete</span>
                   </div>
                 </section>
                 <hr style={{ marginBottom: "15px" }} />

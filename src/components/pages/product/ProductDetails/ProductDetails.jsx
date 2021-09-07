@@ -14,7 +14,6 @@ import OutOfStock from "./outOfStock/OutOfStock";
 import { outOfStockCheck } from "../../../../services/product/product.service";
 import SearchInStorePopup from "./SearchInStorePopup";
 import SubscribeModel from "./SubscribeModel";
-import Review from "./ReviewPopUp"
 import { URL } from '../../../../util';
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 import ReviewModal from "./ReviewPopUp";
