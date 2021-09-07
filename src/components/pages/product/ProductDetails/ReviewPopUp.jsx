@@ -60,6 +60,7 @@ const dummyData = [
 export default function ReviewModal({ id, sku }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  console.log(auth)
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
@@ -85,13 +86,13 @@ export default function ReviewModal({ id, sku }) {
       return dispatch(showSnackbar("Please sign in to add a review", "error"));
     e.preventDefault();
     const { firstname } = auth?.customer;
-    if(!title){
+    if (!title) {
       return dispatch(showSnackbar("Please add title", "error"));
     }
-    if(!description){
+    if (!description) {
       return dispatch(showSnackbar("Please add description", "error"));
     }
-    if(!value){
+    if (!value) {
       return dispatch(showSnackbar("Please rate with star", "error"));
     }
     const res = await createReview(title, description, value, id, firstname);
@@ -99,8 +100,8 @@ export default function ReviewModal({ id, sku }) {
       dispatch(showSnackbar("review added successfully", "success"));
       getReviewListForProduct(sku);
       setDescription("");
-      setTitle("")
-      setValue(0)
+      setTitle("");
+      setValue(0);
     }
   };
 
@@ -111,9 +112,11 @@ export default function ReviewModal({ id, sku }) {
   }, [sku]);
 
   const calculateAvgReview = () => {
-    let sum = reviewRes?.reduce((acc,li) => acc + li?.ratings[0]?.value,0)
-    return isNaN(parseFloat(sum/reviewRes?.length)?.toFixed(1)) ? 0 :parseFloat(sum/reviewRes?.length)?.toFixed(1)
-  }
+    let sum = reviewRes?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    return isNaN(parseFloat(sum / reviewRes?.length)?.toFixed(1))
+      ? 0
+      : parseFloat(sum / reviewRes?.length)?.toFixed(1);
+  };
   return (
     <div>
       <span onClick={handleOpen}>Review</span>
@@ -191,7 +194,13 @@ export default function ReviewModal({ id, sku }) {
                   </span>
                   <b>{calculateAvgReview()}</b>
                 </div>
-                <span>{reviewRes?.reduce((acc,li) => acc + li?.ratings[0]?.value,0)} ratings and {reviewRes?.length} reviews</span>
+                <span>
+                  {reviewRes?.reduce(
+                    (acc, li) => acc + li?.ratings[0]?.value,
+                    0
+                  )}{" "}
+                  ratings and {reviewRes?.length} reviews
+                </span>
               </div>
             </section>
             {reviewRes?.map((li) => (
@@ -212,10 +221,11 @@ export default function ReviewModal({ id, sku }) {
                   <div className={styles.nameDate}>
                     <span>{li?.nickname}</span>
                     <span className={`${styles.reviewName} ${styles.dateSpan}`}>
-                      {moment().startOf('hour').fromNow()}
+                      {moment(li?.created_at)?.calendar()}
                     </span>
                   </div>
                   <div className={styles.likeDislike}>
+                 
                     <div className={styles.likeDislike}>
                       <span class="material-icons-outlined">thumb_up_alt</span>
                       <span className={styles.numLike}>{li.like}</span>
@@ -226,6 +236,7 @@ export default function ReviewModal({ id, sku }) {
                         <span className={styles.numLike}>{li.dislike}</span>
                       </div>
                     </div>
+                    <span  class="material-icons-outlined">delete</span>
                   </div>
                 </section>
                 <hr style={{ marginBottom: "15px" }} />

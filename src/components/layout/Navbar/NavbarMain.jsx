@@ -16,7 +16,7 @@ const NavbarMain = () => {
       className={`${styles.container} d-flex align-items-center justify-content-between container-with-circles`}
     >
       <Search handleChange={handleSearchChange} value={searchValue} />
-      <strong className="logo-strong d-block">
+      <strong className={`logo-strong d-block ${styles.logoImg}`}>
         <Link className="d-block" to="/">
           <img
             className="logo-image"

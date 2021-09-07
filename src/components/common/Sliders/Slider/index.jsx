@@ -74,7 +74,7 @@ const Slider = React.forwardRef((props, ref) => {
         bgImage
           ? {
               backgroundImage: `url(${bgImageUrl})`,
-              backgroundPosition: 'center',
+              // backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
             }

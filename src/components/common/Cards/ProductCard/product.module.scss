@@ -64,7 +64,7 @@
     letter-spacing: normal;
     color: #161616;
     cursor: pointer;
-    margin-top: 5px;
+    margin-top: 16px;
     align-items: center;
   }
 
@@ -74,6 +74,7 @@
     font-weight: 500;
     margin: 1px 0;
     justify-content: center;
+    margin-top: 8px;
 
     .was {
       display: inline-block;
@@ -152,6 +153,7 @@
   align-items: center;
   padding-left: 4px;
   justify-content: start;
+  margin-top: 5px;
 
   .colorContainer {
     display: flex;

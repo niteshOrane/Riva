@@ -154,7 +154,7 @@ function ProfileInfoForm() {
           </article>
           <section className="registration-submit-btn-wrapper">
             <button type="submit" className="registration-btn">
-              Submit
+              SAVE DEATILS
             </button>
           </section>
         </form>
