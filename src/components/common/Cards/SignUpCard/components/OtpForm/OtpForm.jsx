@@ -25,18 +25,18 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 
-const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true }) => {
+const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true, mobileNo = '', otpData = '' }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
   const history = useHistory();
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState(mobileNo);
   const [mobileOtp, setMobileOtp] = useState('');
   const [recivedOTPData, setRecivedOTPData] = useState('');
   const [hideMobileBox, setHideMobileBox] = useState(false);
 
-
+  let myInterval = null;
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
@@ -155,8 +155,8 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
       }
     }
   }
-  useEffect(() => {
-    const myInterval = setInterval(() => {
+  const setIntervalOTP = () => {
+    myInterval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
       }
@@ -169,10 +169,29 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         }
       }
     }, 1000)
+  }
+  useEffect(() => {
+    setIntervalOTP();
+
     return () => {
       clearInterval(myInterval);
     };
+
   });
+  useEffect(() => {
+    if (onChangeMobileNumber) {
+      setHideMobileBox(true);
+      setRecivedOTPData(otpData);
+
+      const divisor_for_minutes = otpData.expiredtime % (60 * 60);
+      const minutesTime = Math.floor(divisor_for_minutes / 60);
+
+      const divisor_for_seconds = divisor_for_minutes % 60;
+      const secondsTime = Math.ceil(divisor_for_seconds);
+      setSeconds(secondsTime);
+      setMinutes(minutesTime);
+    }
+  }, [])
   return (
     <>
       <span className={styles.tagline}>Have an account? Sign In</span>

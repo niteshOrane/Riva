@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./profileInformation.scss";
 import * as icons from "../../components/common/Icons/Icons";
@@ -16,10 +16,11 @@ import {
 import { showSnackbar } from "../../store/actions/common";
 import { setCustomer } from "../../store/actions/auth";
 import {
-  customerVerifyOtp,
+  verifyUpdateProfileMobileOtp,
+  loginCustomerOTP
 
 } from "../../services/auth/auth.service";
-import { getStoreId } from "../../util";
+import { getCustId, getStoreId } from "../../util";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
@@ -86,17 +87,50 @@ function ProfileInfoForm() {
     const customerMobile = new FormData();
     customerMobile.append("phone", mobileNumber);
     customerMobile.append("otp", mobileOtp);
-    customerMobile.append("customerInfo", "")
+    customerMobile.append("customerid", getCustId())
 
-    const res = await customerVerifyOtp(customerMobile);
+    const res = await verifyUpdateProfileMobileOtp(customerMobile);
     if (res.status === 200) {
       if (res?.data?.success) {
-        //code goes Here
+        return dispatch(showSnackbar(res?.data.message, "success"));
 
       } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
     } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  }
+
+  const [recivedOTPData, setRecivedOTPData] = useState('');
+  useEffect(() => {
+    if (recivedOTPData) {
+      setIsEdit(false);
+      setIsOpen(true);
+    }
+  }, [recivedOTPData])
+  const onSendOTP = async (e) => {
+    e.preventDefault();
+    if (!mobileNumber)
+      return dispatch(showSnackbar("Mobile Number are required", "warning"));
+    const customerSendOTP = new FormData();
+    customerSendOTP.append("phone", mobileNumber);
+    customerSendOTP.append("email", "");
+    customerSendOTP.append("name", values?.firstname)
+
+    const res = await loginCustomerOTP(customerSendOTP);
+
+    if (res.status === 200) {
+      if (res?.data?.success) {
+
+        setRecivedOTPData(res?.data.data);
+        return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
+      }
+      else {
+        return dispatch(showSnackbar(res?.data.message, "error"));
+      }
+    }
+    else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   }
@@ -144,10 +178,12 @@ function ProfileInfoForm() {
                     value={isEdit ? mobileNumber : values?.mobile_number}
                     onChange={handleChangeMobile}
                   />
-                  {isEdit ? <> <span onClick={() => { setIsEdit(false); setIsOpen(true) }} className={` underline-hovered c-pointer edit-position-check`}>
+                  {isEdit ? <> <span onClick={(e) => {
+                    onSendOTP(e)
+                  }} className={` underline-hovered c-pointer edit-position-check`}>
                     <icons.Check className="closeIcon" />
                   </span>
-                    <span onClick={() => { setIsEdit(false) }} className={` underline-hovered c-pointer edit-position-close`}>
+                    <span onClick={() => { setIsEdit(false); setMobileNumber('') }} className={` underline-hovered c-pointer edit-position-close`}>
                       <icons.Close className="closeIcon" />
                     </span></>
 
@@ -230,7 +266,7 @@ function ProfileInfoForm() {
           >
             <icons.Close />
           </button>
-          <OTPForm handleSubmit={handleClose} onChangeMobileNumber={verifyOTP} showMediaIcon={Boolean(false)} />
+          <OTPForm handleSubmit={handleClose} onChangeMobileNumber={verifyOTP} otpData={recivedOTPData} showMediaIcon={Boolean(false)} mobileNo={mobileNumber} />
         </div>
       </Dialog>
     </>

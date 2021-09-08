@@ -27,16 +27,6 @@ class AppRoot extends React.Component {
     fetch();
     wishlistInit();
     cartInit();
-    toast.configure();
-    toast(`Welcome ${getCustInfo().isAuthenticated ? getCustInfo().customer.firstname : ' Guest'}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
   }
 
   topFunction() {

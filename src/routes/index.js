@@ -76,7 +76,7 @@ class AppRoutes extends Component {
         index: 0,
       },
       {
-        path: "/create-password",
+        path: "/createpassword",
         component: CreatePassword,
         exact: true,
         name: "Landing page",
