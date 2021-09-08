@@ -150,10 +150,10 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
      
     }
   }, [paymentMode]);
+
   const renderPaymentform = () => {
     if (checkoutId) {
       const script = document.createElement("script");
-
       script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
       script.async = true;
       document.body.appendChild(script);
@@ -173,7 +173,6 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       } else if (value === 4) {
         tabName = "renderPaymentformFour";
       }
-
       let menu = document.getElementById(tabName);
 
       let child = menu?.lastElementChild;
@@ -181,12 +180,28 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         menu?.removeChild(child);
         child = menu?.lastElementChild;
       }
-
+    
       if (menu && menu != null) {
+        menu.innerHTML = ""
         menu = menu?.append(form);
       }
     }
   };
+  useEffect(() =>{
+    let tabName;
+    if (value === 1) {
+      tabName = "renderPaymentformOne";
+    } else if (value === 3) {
+      tabName = "renderPaymentformThree";
+    } else if (value === 4) {
+      tabName = "renderPaymentformFour";
+    }
+    const isEmpty = document.getElementById(tabName)?.innerHTML === "";
+    if(isEmpty){
+      const item =  document.getElementById(tabName)
+      item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>"
+    }
+  },[value])
 
   const handleChange = async (_, newValue) => {
     switch (newValue) {

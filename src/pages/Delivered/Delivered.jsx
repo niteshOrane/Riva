@@ -35,7 +35,7 @@ function Delivered({ title = "Delivered" }) {
 
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
             {orderList.length > 0 &&
-              orderList.map((li) => (
+              orderList?.filter(li => li.status !== "canceled")?.map((li) => (
                 <DeliveredOrders products={li.list} status={li.status} />
               ))}
           </div>

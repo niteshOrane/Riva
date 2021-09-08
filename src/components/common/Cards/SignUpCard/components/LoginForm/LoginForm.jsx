@@ -24,7 +24,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 
-const LoginForm = ({ handleSubmit, handleOtpForm }) => {
+const LoginForm = ({ handleSubmit, handleOtpForm,setForgetPassStyle}) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -40,6 +40,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm }) => {
   const [showforgotPassword, setforgotPassword] = useState(false);
 
   const toggleForgotPassword = () => {
+    setForgetPassStyle(true)
     setforgotPassword((f) => !f);
   };
 

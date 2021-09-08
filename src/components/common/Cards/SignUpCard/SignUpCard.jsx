@@ -16,6 +16,8 @@ const SignUpCard = () => {
     isOtp = false,
   } = useSelector((state) => state.common?.signUpCard || {});
 
+  const [forgetPassStyle,setForgetPassStyle] = useState(false)
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -34,7 +36,7 @@ const SignUpCard = () => {
       onClose={handleClose}
       open={isOpen}
     >
-      <div className={styles.popupBody}>
+      <div  className={!forgetPassStyle ? styles.popupBody : `${styles.forgetPassWrap}`}>
         <button
           type="button"
           onClick={handleClose}
@@ -47,7 +49,7 @@ const SignUpCard = () => {
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
         {!isOtp ? (
           isLogin ? (
-            <LoginForm handleOtpForm={handleOtpForm} handleSubmit={handleClose} />
+            <LoginForm setForgetPassStyle={setForgetPassStyle} handleOtpForm={handleOtpForm} handleSubmit={handleClose} />
           ) : (
             <SignUpForm handleSubmit={handleSubmit} />
           )

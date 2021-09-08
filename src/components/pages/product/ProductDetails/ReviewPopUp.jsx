@@ -10,9 +10,9 @@ import styles from "./productDetails.module.scss";
 import {
   createReview,
   getReviewList,
+  deleteReviewFromList,
 } from "../../../../services/product/product.service";
 import { showSnackbar } from "../../../../store/actions/common";
-
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -71,7 +71,7 @@ export default function ReviewModal({ id, sku }) {
   const handleOpen = () => {
     setOpen(true);
   };
-
+  console.log(auth)
   const handleClose = () => {
     setOpen(false);
   };
@@ -86,8 +86,7 @@ export default function ReviewModal({ id, sku }) {
 
     if (!auth?.isAuthenticated) {
       return dispatch(showSnackbar("Please sign in to add a review", "error"));
-    }
-    else {
+    } else {
       const { firstname } = auth?.customer;
       if (!title) {
         return dispatch(showSnackbar("Please add title", "error"));
@@ -106,6 +105,14 @@ export default function ReviewModal({ id, sku }) {
         setTitle("");
         setValue(0);
       }
+    }
+  };
+
+  const deleteReviewAction = async (fnValue) => {
+    const res = await deleteReviewFromList(fnValue);
+    if(res.status===200){
+      dispatch(showSnackbar("review deleted successfully", "success"))
+      getReviewListForProduct(sku);
     }
   };
 
@@ -138,12 +145,15 @@ export default function ReviewModal({ id, sku }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <button type="submit" onClick={handleClose} className={styles.reviewCls}>
+            <button
+              type="submit"
+              onClick={handleClose}
+              className={styles.reviewCls}
+            >
               X
             </button>
             <h2>Rate this product</h2>
             <div>
-              
               <Rating
                 name="simple-controlled"
                 value={value}
@@ -222,18 +232,28 @@ export default function ReviewModal({ id, sku }) {
                     </span>
                   </div>
                   <div className={styles.likeDislike}>
-
                     <div className={styles.likeDislike}>
-                      <span className="material-icons-outlined">thumb_up_alt</span>
+                      <span className="material-icons-outlined">
+                        thumb_up_alt
+                      </span>
                       <span className={styles.numLike}>{li.like}</span>
                     </div>
                     <div>
                       <div className={styles.dislikeThumb}>
-                        <span className="material-icons-outlined">thumb_down</span>
+                        <span className="material-icons-outlined">
+                          thumb_down
+                        </span>
                         <span className={styles.numLike}>{li.dislike}</span>
                       </div>
                     </div>
-                    <span className="material-icons-outlined">delete</span>
+                    {li?.nickname === auth?.customer?.firstname && (
+                      <span
+                        onClick={() => deleteReviewAction(li?.id)}
+                        className="material-icons-outlined c-pointer"
+                      >
+                        delete
+                      </span>
+                    )}
                   </div>
                 </section>
                 <hr style={{ marginBottom: "15px" }} />

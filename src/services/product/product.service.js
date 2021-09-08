@@ -116,3 +116,14 @@ export const getReviewList = (fnValue) => {
   };
   return axios(config);
 };
+
+
+// delete review
+export const deleteReviewFromList = (fnValue) => {
+  const config = {
+    method: "delete",
+    url: `${API_URL}/reviews/${fnValue}`,
+    silent: true,
+  };
+  return axios(config);
+};

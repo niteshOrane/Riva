@@ -136,7 +136,7 @@ function ProfileInfoForm() {
               </div>
               <div style={{ marginLeft: "2rem" }}>
                 <label className="profile-label">Mobile Number</label>
-                <div className={`d-flex align-items-center inpContainer`}>
+                <div className={`d-flex align-items-center inpContainer positionWrap`}>
 
                   <input
                     name="mobile_number"
@@ -144,14 +144,14 @@ function ProfileInfoForm() {
                     value={isEdit ? mobileNumber : values?.mobile_number}
                     onChange={handleChangeMobile}
                   />
-                  {isEdit ? <> <span onClick={() => { setIsEdit(false); setIsOpen(true) }} className={` underline-hovered c-pointer`}>
+                  {isEdit ? <> <span onClick={() => { setIsEdit(false); setIsOpen(true) }} className={` underline-hovered c-pointer edit-position-check`}>
                     <icons.Check className="closeIcon" />
                   </span>
-                    <span onClick={() => { setIsEdit(false) }} className={` underline-hovered c-pointer`}>
+                    <span onClick={() => { setIsEdit(false) }} className={` underline-hovered c-pointer edit-position-close`}>
                       <icons.Close className="closeIcon" />
                     </span></>
 
-                    : <span onClick={() => { setIsEdit(true) }} className={` underline-hovered c-pointer`}>
+                    : <span onClick={() => { setIsEdit(true) }} className={` underline-hovered c-pointer edit-position-pencil`}>
                       <icons.Pencil />
                     </span>
                   }

@@ -54,7 +54,6 @@ function OrderReview({
       }
     }
   };
-
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (activeDelivery != null) {
@@ -66,7 +65,7 @@ function OrderReview({
   useEffect(() => {
     dispatch(toggleCart(false));
     const amount =
-      items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
+      items.reduce((total, item) => parseFloat(total + item.price * item.qty), 0) || 0;
     setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
@@ -81,7 +80,7 @@ function OrderReview({
     );
     setCartPaymentInfo(cartPayment);
   }, [cartPayment]);
-  
+
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
     if (customerid) {
