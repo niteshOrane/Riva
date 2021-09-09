@@ -20,6 +20,5 @@
 
 .bestSellingProductsContainer li + li:before {
   content: " | ";
-  // padding: 0 5px;
-  padding-right: 9px;
+  @include right('padding', 9px);
 }

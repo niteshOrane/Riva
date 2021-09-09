@@ -267,7 +267,7 @@ nav.nav {
 }
 
 .logo-strong {
-  margin-left: 100px;
+  @include left('margin', 100px)
 }
 // nav circles
 .circleBg-skin {
@@ -281,12 +281,12 @@ nav.nav {
 
 // container of circles on side
 .circlesContainer {
-  margin-left: 3px;
+  @include left('margin', 3px);
   display: flex;
   flex-direction: column;
   gap: 4px;
   float: left;
-  margin-left: -65px;
+  @include left('margin', -65px);
   div {
     cursor: pointer;
   }
@@ -316,7 +316,7 @@ nav.nav {
   }
   .slick-next:before {
     content: "›" !important;
-    padding-left: 4px;
+    @include left('padding', 4px);
   }
   .slick-prev,
   .slick-next {

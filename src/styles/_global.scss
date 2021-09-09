@@ -47,4 +47,6 @@
     border-color: transparent;
   }
 }
-
+img{
+  @include flipImage();
+}

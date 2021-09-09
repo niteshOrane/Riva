@@ -45,8 +45,8 @@ function Footer() {
                     to={`/${link.href.split("/").pop()}`}
                     className={`w-100 ${style.footerLink}`}
                   >
-                    <img src="/assets/images/footerArr.svg" />
-                    <span style={{ marginLeft: "2rem" }}>{link.name}</span>
+                    <img src="/assets/images/footerArr.svg" alt={link.name} />
+                    <span className={style.footerLinkIcon}>{link.name}</span>
                   </Link>
                 </li>
               ))}
@@ -128,7 +128,7 @@ function Footer() {
 
           <div className={style.m}>
             <img src="/assets/images/footerPhn.png" alt="" />
-            <div>
+            <div className={style.text_alignmemt}>
               <span className={style.clrGrey}>Customer care:&nbsp;</span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
@@ -140,7 +140,7 @@ function Footer() {
             <span>
               <icons.FooterWhatsapp />
             </span>
-            <div>
+            <div className={style.text_alignmemt}>
               <span className={style.clrGrey}>
                 WhatsApp Customer Care:&nbsp;
               </span>
@@ -184,7 +184,7 @@ function Footer() {
         </div>
       </div>
       <CopyRightSection />
-      <div   id="myBtn" 
+      <div id="myBtn"
         className={`${style.toTopBtn} c-pointer`}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >

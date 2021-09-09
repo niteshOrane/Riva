@@ -263,7 +263,7 @@ const ProductCard = ({
           </div>
         )}
         {productItem?.sale && <div className={styles.sale}>Sale</div>}
-        <div style={{ marginLeft: "50px" }}>
+        <div className={styles.actionContainerText}>
           <div className={styles.actionContainer}>
             <div>
               <button

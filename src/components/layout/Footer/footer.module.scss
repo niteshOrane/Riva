@@ -188,3 +188,9 @@ $footer-grey-color: #737373;
   width: 130px;
   height: 25px;
 }
+.footerLinkIcon {
+  @include left('margin', 2rem);
+}
+.text_alignmemt{
+  @include left('margin', .5rem);
+}

@@ -1,13 +1,13 @@
 .filterText {
   font-size: 1.2rem;
-  margin-right: 10px;
+  @include right('margin', 10px);
 }
 .filterTextwrapper {
-  margin-right: 15px;
+  @include right('margin', 15px);
   display: flex;
 }
 .filterDots {
-  margin-left: 12px;
+  @include left('margin', 12px);
   display: flex;
   span {
     height: 10px;
@@ -16,7 +16,7 @@
     margin: 3px;
   }
   .greyDots {
-    margin-right: 10px;
+    @include right('margin', 10px);
     span {
       background-color: grey;
     }
@@ -56,7 +56,7 @@
 // CHECKBOX
 .checkBoxContainer {
   margin-top: 4px;
-  padding-left: 15px;
+  @include left('padding', 15px);
   line-height: 1.51;
 }
 
@@ -94,7 +94,7 @@
     border-radius: 8px;
   }
   span:nth-child(2) {
-    margin-left: 12px;
+    @include left('margin', 12px);
   }
 }
 
@@ -144,7 +144,7 @@
       position: absolute;
       top: 100%;
       left: 50%;
-      margin-left: -5px;
+      @include left('margin', -5px);
       border-width: 5px;
       border-style: solid;
       border-color: black transparent transparent transparent;
@@ -159,7 +159,7 @@
 
 
 .dropdownCollapse{
-  padding-right: 2rem !important;
+  @include right('padding', 2rem, !important);
 }
 
 .filterListScroll{
