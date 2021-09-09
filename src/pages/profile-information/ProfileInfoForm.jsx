@@ -7,18 +7,15 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import Dialog from '@material-ui/core/Dialog';
-import OTPForm from '../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm';
-import styles from '../../components/common/Cards/SignUpCard/SignUpCard.module.scss';
-import {
-  profileUpdate,
-} from "../../services/dashboard/dashboard.service";
+import Dialog from "@material-ui/core/Dialog";
+import OTPForm from "../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm";
+import styles from "../../components/common/Cards/SignUpCard/SignUpCard.module.scss";
+import { profileUpdate } from "../../services/dashboard/dashboard.service";
 import { showSnackbar } from "../../store/actions/common";
 import { setCustomer } from "../../store/actions/auth";
 import {
   verifyUpdateProfileMobileOtp,
-  loginCustomerOTP
-
+  loginCustomerOTP,
 } from "../../services/auth/auth.service";
 import { getCustId, getStoreId } from "../../util";
 
@@ -26,7 +23,7 @@ function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState("");
   const [values, setValues] = useState({
     firstname: customer?.firstname,
     lastname: customer?.lastname,
@@ -48,7 +45,7 @@ function ProfileInfoForm() {
     }
   };
   const handleChangeMobile = (event) => {
-    setMobileNumber(event.target.value)
+    setMobileNumber(event.target.value);
   };
   const [isOpen, setIsOpen] = useState(false);
 
@@ -87,28 +84,27 @@ function ProfileInfoForm() {
     const customerMobile = new FormData();
     customerMobile.append("phone", mobileNumber);
     customerMobile.append("otp", mobileOtp);
-    customerMobile.append("customerid", getCustId())
+    customerMobile.append("customerid", getCustId());
 
     const res = await verifyUpdateProfileMobileOtp(customerMobile);
     if (res.status === 200) {
       if (res?.data?.success) {
         return dispatch(showSnackbar(res?.data.message, "success"));
-
       } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
     } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
-  }
+  };
 
-  const [recivedOTPData, setRecivedOTPData] = useState('');
+  const [recivedOTPData, setRecivedOTPData] = useState("");
   useEffect(() => {
     if (recivedOTPData) {
       setIsEdit(false);
       setIsOpen(true);
     }
-  }, [recivedOTPData])
+  }, [recivedOTPData]);
   const onSendOTP = async (e) => {
     e.preventDefault();
     if (!mobileNumber)
@@ -116,24 +112,28 @@ function ProfileInfoForm() {
     const customerSendOTP = new FormData();
     customerSendOTP.append("phone", mobileNumber);
     customerSendOTP.append("email", "");
-    customerSendOTP.append("name", values?.firstname)
+    customerSendOTP.append("name", values?.firstname);
 
     const res = await loginCustomerOTP(customerSendOTP);
 
     if (res.status === 200) {
       if (res?.data?.success) {
-
         setRecivedOTPData(res?.data.data);
-        return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
-      }
-      else {
+        return dispatch(
+          showSnackbar(
+            `Otp-${res?.data.data.otp} Sent on ${mobileNumber}`,
+            "success"
+          )
+        );
+      } else if (res?.data.message) {
         return dispatch(showSnackbar(res?.data.message, "error"));
+      } else {
+        dispatch(showSnackbar("Something went wrong", "error"));
       }
-    }
-    else {
+    } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
-  }
+  };
   return (
     <>
       <section className="registration-form-wrapper">
@@ -170,36 +170,54 @@ function ProfileInfoForm() {
               </div>
               <div style={{ marginLeft: "2rem" }}>
                 <label className="profile-label">Mobile Number</label>
-                <div className={`d-flex align-items-center inpContainer positionWrap`}>
-
+                <div
+                  className={`d-flex align-items-center inpContainer positionWrap`}
+                >
                   <input
                     name="mobile_number"
                     readOnly={!isEdit}
                     value={isEdit ? mobileNumber : values?.mobile_number}
                     onChange={handleChangeMobile}
                   />
-                  {isEdit ? <> <span onClick={(e) => {
-                    onSendOTP(e)
-                  }} className={` underline-hovered c-pointer edit-position-check`}>
-                    <icons.Check className="closeIcon" />
-                  </span>
-                    <span onClick={() => { setIsEdit(false); setMobileNumber('') }} className={` underline-hovered c-pointer edit-position-close`}>
-                      <icons.Close className="closeIcon" />
-                    </span></>
-
-                    : <span onClick={() => { setIsEdit(true) }} className={` underline-hovered c-pointer edit-position-pencil`}>
+                  {isEdit ? (
+                    <>
+                      {" "}
+                      <span
+                        onClick={(e) => {
+                          onSendOTP(e);
+                        }}
+                        className={` underline-hovered c-pointer edit-position-check`}
+                      >
+                        <icons.Check className="closeIcon" />
+                      </span>
+                      <span
+                        onClick={() => {
+                          setIsEdit(false);
+                          setMobileNumber("");
+                        }}
+                        className={` underline-hovered c-pointer edit-position-close`}
+                      >
+                        <icons.Close className="closeIcon" />
+                      </span>
+                    </>
+                  ) : (
+                    <span
+                      onClick={() => {
+                        setIsEdit(true);
+                      }}
+                      className={` underline-hovered c-pointer edit-position-pencil`}
+                    >
                       <icons.Pencil />
                     </span>
-                  }
-
+                  )}
                 </div>
-
-
               </div>
             </section>
             <section>
               <FormControl component="fieldset">
-                <FormLabel className="profile-label" component="legend">Your Gender</FormLabel>
+                <FormLabel className="profile-label" component="legend">
+                  Your Gender
+                </FormLabel>
                 <RadioGroup
                   row
                   aria-label="position"
@@ -234,12 +252,13 @@ function ProfileInfoForm() {
               <div style={{ position: "relative" }}>
                 <label className="profile-label">Date of Birth</label>
                 <input
+                  type="date"
                   value={values.dob}
                   placeholder="Select DOB"
                   name="dob"
                   onChange={handleChange}
                 />
-                <img className="inputCalender" src="/assets/images/pfCalender.svg" />
+                {/* <img className="inputCalender" src="/assets/images/pfCalender.svg" /> */}
               </div>
             </section>
           </article>
@@ -266,7 +285,13 @@ function ProfileInfoForm() {
           >
             <icons.Close />
           </button>
-          <OTPForm handleSubmit={handleClose} onChangeMobileNumber={verifyOTP} otpData={recivedOTPData} showMediaIcon={Boolean(false)} mobileNo={mobileNumber} />
+          <OTPForm
+            handleSubmit={handleClose}
+            onChangeMobileNumber={verifyOTP}
+            otpData={recivedOTPData}
+            showMediaIcon={Boolean(false)}
+            mobileNo={mobileNumber}
+          />
         </div>
       </Dialog>
     </>

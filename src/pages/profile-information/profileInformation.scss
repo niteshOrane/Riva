@@ -95,3 +95,12 @@
   left: 92%;
   margin-right: 5px;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url("/assets/images/pfCalender.svg") no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}
