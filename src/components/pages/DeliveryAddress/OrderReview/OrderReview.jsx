@@ -8,6 +8,8 @@ import styles from "./OrderReview.module.scss";
 import { showSnackbar } from "../../../../store/actions/common";
 import { toggleCart } from "../../../../store/actions/cart";
 import { deliveryCheck } from "../../../../services/address/address.service";
+import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
+import { getCartId } from "../../../../util";
 
 function OrderReview({
   deliverySpeed,
@@ -29,6 +31,7 @@ function OrderReview({
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
+  const [freeShippingInfo, setFreeShippingInfo] = useState('');
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const handleApplyCoupon = async (e) => {
@@ -102,7 +105,12 @@ function OrderReview({
       }
     }
   };
-
+  useEffect(() => {
+    const res = await getFreeShippingInfo(getCartId());
+    if (res && res.status === 200 && res?.data) {
+      setFreeShippingInfo(res?.data.data);
+    }
+  })
   const onSpeedDeliveryRadio = async (val) => {
     if (addressItem?.name) {
       const code = `${val?.carrier_code}_${val?.method_code}`;
@@ -286,6 +294,7 @@ function OrderReview({
       >
         PLACE ORDER
       </button>
+      <div> {freeShippingInfo}</div>
       <div className={`${styles.borderBottom} my-12px`}>
         <img
           src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/da0d5827-4617-454f-ab2f-e4e970ae73e3.png"

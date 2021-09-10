@@ -101,3 +101,11 @@ export const finalCallTapAction = (id) => {
   };
   return axios(config);
 };
+export const getFreeShippingInfo = (cartId) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/getfreeshipping?quoteId=${cartId}`,
+    silent: true,
+  };
+  return axios(config);
+};
