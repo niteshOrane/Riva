@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./horizontalProductCard.module.scss";
 import Image from "../../../common/LazyImage/Image";
 import axios from "axios";
@@ -6,12 +6,17 @@ import {
   getProduct,
   getProductColor,
 } from "../../../../services/product/product.service";
+import { Link } from "react-router-dom";
+
+const TempLink = ({ children, product }) => {
+  if (product?.sku)
+    return <Link to={`/product/${product?.sku}`}>{children} </Link>;
+
+  return <a href={product?.uri}>{children}</a>;
+};
 
 const VerticalProductCard = ({
   product,
-  index,
-  setColorSize,
-  // getOutOfStock,
   setSelectedColorSize,
   selectedColorSize,
   setAttrValue,
@@ -28,16 +33,15 @@ const VerticalProductCard = ({
 
   const [colorImg, setColorImg] = useState();
   const getDetails = async (fnValue, fnLabel) => {
-    if(fnValue && fnLabel){
+    if (fnValue && fnLabel) {
       const res = await getProductColor(fnValue);
       if (res.status === 200) {
         const item = res?.data?.databind?.find((li) => li.color === fnLabel);
         setColorImg(item);
       }
     }
-   
-  }
- 
+  };
+
   const colors =
     product?.options && product?.options.length
       ? Object.keys(
@@ -52,15 +56,23 @@ const VerticalProductCard = ({
       : [];
 
   useEffect(() => {
-    getDetails(id,colors.map(li => product?.options.filter(e => e.label==="Color")?.[0]?.values[li])?.[0]?.label)
-  },[])    
+    getDetails(
+      id,
+      colors.map(
+        (li) =>
+          product?.options.filter((e) => e.label === "Color")?.[0]?.values[li]
+      )?.[0]?.label
+    );
+  }, []);
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
-        <Image src={colorImg?.file || src} alt={name} />
+        <TempLink product = {product}>
+          <Image src={colorImg?.file || src} alt={name} />
+        </TempLink>
       </div>
       <div>
-        <div className={styles.name}>{name || ""}</div>
+        <div className={styles.name}>Name: {name || "---"}</div>
         <div className={styles.price}>
           <div className={styles.was}>Was {was}$</div>
           <div className={styles.now}>Now {now}$</div>
@@ -96,6 +108,11 @@ const VerticalProductCard = ({
                         id == selectedColorSize?.id
                           ? "scale(1)"
                           : "scale(.9)",
+                      border:
+                        colorItem.label === selectedColorSize.color &&
+                        id == selectedColorSize?.id
+                          ? "1px solid red"
+                          : null,
                     }}
                   >
                     {colorItem.label}
@@ -151,6 +168,11 @@ const VerticalProductCard = ({
                       id == selectedColorSize?.id
                         ? "scale(1)"
                         : "scale(.9)",
+                    border:
+                      sizeItem.label === selectedColorSize.size &&
+                      id == selectedColorSize?.id
+                        ? "1px solid red"
+                        : null,
                   }}
                   className={styles.option}
                 >

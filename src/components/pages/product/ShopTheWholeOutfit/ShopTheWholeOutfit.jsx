@@ -6,8 +6,9 @@ import HorizontalProductCard from "../../../common/Cards/ProductCard/HorizontalP
 import Image from "../../../common/LazyImage/Image";
 import styles from "./shopTheWholeOutfit.module.scss";
 import CancelIcon from "@material-ui/icons/Cancel";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { addToCart } from "../../../../store/actions/cart";
+import { addToCart, removeFromCart } from "../../../../store/actions/cart";
 import { useEffect } from "react";
 import { outOfStockCheck } from "../../../../services/product/product.service";
 import { showSnackbar } from "../../../../store/actions/common";
@@ -15,6 +16,7 @@ import { showSnackbar } from "../../../../store/actions/common";
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
   const [dataItems, setDataItems] = useState(data || []);
+  const { data: items = [] } = useSelector((state) => state.cart);
   const [selectedColorSize, setSelectedColorSize] = useState({
     id: null,
     color: null,
@@ -24,6 +26,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
     colorValue: null,
     sizeValue: null,
   });
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const getOutOfStock = async (val) => {
@@ -41,34 +44,44 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
       // const size = temp?.options.filter((e) => e.label === "Size")?.[0]?.values[
       //   sizeIndex[0]
       // ]?.label;
-
       const { color, size, id } = selectedColorSize;
       if (color && size) {
+        setLoading(true)
         const res = await outOfStockCheck(id, color, size);
         if (res && res?.data) {
           if (res?.data?.data?.Stock === 1) {
             setSelectedColorSize({ color: null, size: null, id: null });
+            setLoading(false);
             return true;
           }
           if (res?.data?.data?.Stock === 0) {
             dispatch(showSnackbar("Product is out of stock", "error"));
             setSelectedColorSize({ color: null, size: null, id: null });
+            setLoading(false);
             return false;
           }
         } else {
           dispatch(showSnackbar("something went wrong", "error"));
+          setLoading(false);
         }
       } else {
         dispatch(showSnackbar("Please select a color and size", "error"));
+        setLoading(false);
       }
     }
   };
 
   const handleSelected = async (checked, product) => {
     const isProductInStock = await getOutOfStock(product?.id);
+    product["color"] = attrValue?.colorValue;
+    product["size"] = attrValue?.sizeValue;
+    setAttrValue({ colorValue: null, sizeValue: null });
     if (isProductInStock) {
-      if (checked) setSelected(selected.filter((c) => c.id !== product.id));
-      else setSelected((s) => [...s, product]);
+      if (checked) {
+        setSelected(selected.filter((c) => c.id !== product.id));
+        // const pro = items?.find((li) => li?.id == product?.id);
+        // dispatch(removeFromCart(pro))
+      } else setSelected((s) => [...s, product]);
     } else {
       return null;
     }
@@ -95,8 +108,8 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
             src: product.image,
             qty: 1,
             price: product.price,
-            color: { value: attrValue?.colorValue },
-            size: { value: attrValue?.sizeValue },
+            color: { value: product?.color },
+            size: { value: product?.size },
           })
         );
       });
@@ -119,17 +132,21 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
         <div>
           {dataItems.map((product, index) => (
             <div style={{ position: "relative" }}>
-              <div style={{ position: "absolute", top: -10, left: -10 }}>
                 <div className={styles.checkboxCancelBtn}>
                   <CancelIcon />
                 </div>{" "}
-                <Checkbox
-                  checked={
-                    selected.filter((s) => s.id === product.id).length > 0
-                  }
-                  color="default"
-                  onClick={(e) => handleSelected(!e.target.checked, product)}
-                />{" "}
+              <div style={{ position: "absolute", top: -10, left: -10 }}>
+                {loading && selectedColorSize?.id===product?.id ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <Checkbox
+                    checked={
+                      selected.filter((s) => s.id === product.id).length > 0
+                    }
+                    color="default"
+                    onClick={(e) => handleSelected(!e.target.checked, product)}
+                  />
+                )}{" "}
               </div>
               <HorizontalProductCard
                 product={product}
@@ -140,6 +157,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
                 setSelectedColorSize={setSelectedColorSize}
                 attrValue={attrValue}
                 setAttrValue={setAttrValue}
+                loading={loading}
               />
               <hr className="my-10px" />
             </div>

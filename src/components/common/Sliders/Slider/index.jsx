@@ -52,7 +52,7 @@ const Slider = React.forwardRef((props, ref) => {
       <div
         className={className}
         style={{
-          left: 0,
+          left: "25px",
           zIndex: 1,
           width:"37px",
           height:"115px",
