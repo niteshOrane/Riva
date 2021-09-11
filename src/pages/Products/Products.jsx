@@ -1,23 +1,20 @@
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import useProducts from "./useProducts";
 import useOnScreen from "./useOnScreen";
 import Filters from "../../components/pages/products/Filters";
 import ProductCard from "../../components/common/Cards/ProductCard";
-import * as icons from "../../components/common/Icons/Icons";
+
 import Slider from "../../components/common/Sliders/Slider";
-import { body } from "../../mockdata.json";
-import Image from "../../components/common/LazyImage/Image";
+
 import styles from "./products.module.scss";
-import { useEffect } from "react";
-import SliderCarousel from "react-slick";
+import useLanding from "../Landing/LandingHooks";
 
 function Products(props) {
-  const handleQuickView = () => {};
+  const handleQuickView = () => { };
   const refContainer = useRef();
   const refContainerLoad = useRef();
   const onScreen = useOnScreen(refContainerLoad);
-
+  const { middleBanner: categorypromotionbanner } = useLanding('categorypromotionbanner');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [sortField, setSortField] = useState("entity_id");
@@ -74,7 +71,7 @@ function Products(props) {
               <span>SORT BY:</span>
               <span>
                 <select onChange={handleSortChange}>
-                <option
+                  <option
                     style={{ background: "#fff" }}
                     value="entity_id-desc"
                     id="desc"
@@ -127,11 +124,10 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          } container-90 max-width-1600 mx-auto`}
       >
         {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -147,11 +143,10 @@ function Products(props) {
         ))}
       </div>
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -205,20 +200,15 @@ function Products(props) {
       </div>
       <div className="container-90 max-width-1600 mx-auto">
         <div className="my-50px d-flex align-items-center justify-content-between">
-          <div className={styles.bannerImg}>
-            <img
-              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/9231a77e-7404-4860-83b9-c4c1e9552e8d.png"
-              alt=""
-              width="100%"
-            />
-          </div>
-          <div className={styles.bannerImg}>
-            <img
-              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/9231a77e-7404-4860-83b9-c4c1e9552e8d.png"
-              alt=""
-              width="100%"
-            />
-          </div>
+          {categorypromotionbanner.map((item, index) => {
+            return (<div key={`divBanner_${index}`} className={styles.bannerImg}>
+              <img
+                src={item?.image}
+                alt={item?.title}
+                width="100%"
+              />
+            </div>)
+          })}
         </div>
       </div>
     </div>
