@@ -31,7 +31,7 @@ function OrderReview({
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
-  const [freeShippingInfo, setFreeShippingInfo] = useState('');
+  const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const handleApplyCoupon = async (e) => {
@@ -68,7 +68,10 @@ function OrderReview({
   useEffect(() => {
     dispatch(toggleCart(false));
     const amount =
-      items.reduce((total, item) => parseFloat(total + item.price * item.qty), 0) || 0;
+      items.reduce(
+        (total, item) => parseFloat(total + item.price * item.qty),
+        0
+      ) || 0;
     setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
@@ -105,12 +108,15 @@ function OrderReview({
       }
     }
   };
-  useEffect(() => {
+  const getShippingInfo = async () => {
     const res = await getFreeShippingInfo(getCartId());
     if (res && res.status === 200 && res?.data) {
       setFreeShippingInfo(res?.data.data);
     }
-  })
+  };
+  useEffect(() => {
+    getShippingInfo();
+  });
   const onSpeedDeliveryRadio = async (val) => {
     if (addressItem?.name) {
       const code = `${val?.carrier_code}_${val?.method_code}`;

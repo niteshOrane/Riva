@@ -95,9 +95,10 @@ export const addToCart = (data) => async (dispatch) => {
 export const removeFromCart = (data) => async (dispatch) => {
   const res = await deleteCartItem(data.item_id);
 
-  if (res && res.status === 200 && res.data)
+  if (res && res.status === 200 && res.data){
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
-  else dispatch(showSnackbar('something went wrong', 'error'));
+    dispatch(showSnackbar('item removed from cart successfully', 'success'));
+  } else dispatch(showSnackbar('something went wrong', 'error'));
 };
 export const editItemQntCart = (data) => async (dispatch) => {
   const res = await editCartService(data.item_id, data.qty);

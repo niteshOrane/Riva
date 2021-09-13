@@ -130,7 +130,7 @@
       font-style: normal;
       line-height: 0.85;
       letter-spacing: normal;
-      text-align: left;
+      // text-align: left;
       margin-top: 6px;
       margin-bottom: 7px;
       color: #181617;
@@ -472,6 +472,18 @@
       }
     }
   }
+}
+.icon{
+  @include right("margin",10px)
+}
+.now{
+  @include right("margin",5px)
+}
+.was{
+  @include right("margin",3px)
+}
+.colorItem{
+  @include left("margin",5px)
 }
 .socialMediaPopper {
   top: 300px  !important;

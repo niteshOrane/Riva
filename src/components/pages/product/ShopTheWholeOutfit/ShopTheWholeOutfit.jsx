@@ -46,24 +46,27 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
       // ]?.label;
       const { color, size, id } = selectedColorSize;
       if (color && size) {
-        setLoading(true)
+        setLoading(true);
         const res = await outOfStockCheck(id, color, size);
-        if (res && res?.data) {
-          if (res?.data?.data?.Stock === 1) {
-            setSelectedColorSize({ color: null, size: null, id: null });
-            setLoading(false);
-            return true;
-          }
-          if (res?.data?.data?.Stock === 0) {
-            dispatch(showSnackbar("Product is out of stock", "error"));
-            setSelectedColorSize({ color: null, size: null, id: null });
-            setLoading(false);
-            return false;
-          }
-        } else {
-          dispatch(showSnackbar("something went wrong", "error"));
-          setLoading(false);
-        }
+        // if (res && res?.data) {
+        //   if (res?.data?.data?.Stock === 1) {
+        //     setSelectedColorSize({ color: null, size: null, id: null });
+        //     setLoading(false);
+        //     return true;
+        //   }
+        //   if (res?.data?.data?.Stock === 0) {
+        //     dispatch(showSnackbar("Product is out of stock", "error"));
+        //     setSelectedColorSize({ color: null, size: null, id: null });
+        //     setLoading(false);
+        //     return false;
+        //   }
+        // } else {
+        //   dispatch(showSnackbar("something went wrong", "error"));
+        //   setLoading(false);
+        // }
+        setSelectedColorSize({ color: null, size: null, id: null });
+        setLoading(false);
+        return true;
       } else {
         dispatch(showSnackbar("Please select a color and size", "error"));
         setLoading(false);
@@ -79,8 +82,6 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
     if (isProductInStock) {
       if (checked) {
         setSelected(selected.filter((c) => c.id !== product.id));
-        // const pro = items?.find((li) => li?.id == product?.id);
-        // dispatch(removeFromCart(pro))
       } else setSelected((s) => [...s, product]);
     } else {
       return null;
@@ -97,21 +98,30 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
     // getOutOfStock()
   };
 
+  const handleRemoveFromCart = (product) => {
+    const pro = items?.find((li) => li?.sku.slice(0, -4) == product?.sku);
+    if (pro) {
+      dispatch(removeFromCart(pro));
+    }
+  };
+
   const addToCardHandler = () => {
     if (selected && selected.length > 0) {
       selected.map((product) => {
-        dispatch(
-          addToCart({
-            ...product,
-            id: `${product.id}`,
-            name: product.name,
-            src: product.image,
-            qty: 1,
-            price: product.price,
-            color: { value: product?.color },
-            size: { value: product?.size },
-          })
-        );
+        setTimeout(() => {
+          dispatch(
+            addToCart({
+              ...product,
+              id: `${product.id}`,
+              name: product.name,
+              src: product.image,
+              qty: 1,
+              price: product.price,
+              color: { value: product?.color },
+              size: { value: product?.size },
+            })
+          );
+        }, 2000);
       });
     }
   };
@@ -132,11 +142,14 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
         <div>
           {dataItems.map((product, index) => (
             <div style={{ position: "relative" }}>
-                <div className={styles.checkboxCancelBtn}>
-                  <CancelIcon />
-                </div>{" "}
+              <div
+                onClick={() => handleRemoveFromCart(product)}
+                className={styles.checkboxCancelBtn}
+              >
+                <CancelIcon />
+              </div>{" "}
               <div style={{ position: "absolute", top: -10, left: -10 }}>
-                {loading && selectedColorSize?.id===product?.id ? (
+                {loading && selectedColorSize?.id === product?.id ? (
                   <CircularProgress size={20} />
                 ) : (
                   <Checkbox

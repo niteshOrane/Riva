@@ -86,6 +86,9 @@
         cursor: pointer;
     }
 }
+.was{
+    @include right("margin",4px)
+}
 
 .text{
     cursor: pointer;
