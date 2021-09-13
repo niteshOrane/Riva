@@ -68,7 +68,7 @@ const VerticalProductCard = ({
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
         <TempLink product = {product}>
-          <Image src={colorImg?.file || src} alt={name} />
+          <Image src={colorImg?.file || src} alt={name} classname="c-pointer"/>
         </TempLink>
       </div>
       <div>

@@ -3,11 +3,12 @@ import useProducts from "./useProducts";
 import useOnScreen from "./useOnScreen";
 import Filters from "../../components/pages/products/Filters";
 import ProductCard from "../../components/common/Cards/ProductCard";
-
+import Image from "../../components/common/LazyImage/Image";
 import Slider from "../../components/common/Sliders/Slider";
 
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
+import { Link } from "react-router-dom";
 
 function Products(props) {
   const handleQuickView = () => { };
@@ -202,11 +203,16 @@ function Products(props) {
         <div className="my-50px d-flex align-items-center justify-content-between">
           {categorypromotionbanner.map((item, index) => {
             return (<div key={`divBanner_${index}`} className={styles.bannerImg}>
-              <img
-                src={item?.image}
-                alt={item?.title}
-                width="100%"
-              />
+              <Link to={`products/${item.title}/${item?.categories}`}>
+                <Image
+                  alt={item?.title}
+                  src={
+                    item?.image
+                  }
+                  defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                  width="100%"
+                />
+              </Link>
             </div>)
           })}
         </div>

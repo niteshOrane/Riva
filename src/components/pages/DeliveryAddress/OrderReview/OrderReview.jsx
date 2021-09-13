@@ -65,6 +65,12 @@ function OrderReview({
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
     }
   };
+  const getShippingInfo = async () => {
+    const res = await getFreeShippingInfo(getCartId());
+    if (res && res.status === 200 && res?.data && res?.data?.length && res?.data?.[0]) {
+      setFreeShippingInfo(res?.data?.[0]?.message);
+    }
+  };
   useEffect(() => {
     dispatch(toggleCart(false));
     const amount =
@@ -85,6 +91,7 @@ function OrderReview({
       cartPayment?.total_segments?.find((e) => e.code === "subtotal")?.value
     );
     setCartPaymentInfo(cartPayment);
+    getShippingInfo();
   }, [cartPayment]);
 
   const handleRemoveCoupon = async (e) => {
@@ -108,15 +115,8 @@ function OrderReview({
       }
     }
   };
-  const getShippingInfo = async () => {
-    const res = await getFreeShippingInfo(getCartId());
-    if (res && res.status === 200 && res?.data) {
-      setFreeShippingInfo(res?.data.data);
-    }
-  };
-  useEffect(() => {
-    getShippingInfo();
-  });
+
+
   const onSpeedDeliveryRadio = async (val) => {
     if (addressItem?.name) {
       const code = `${val?.carrier_code}_${val?.method_code}`;
@@ -292,6 +292,8 @@ function OrderReview({
           Sign up for Newsletter
         </span>
       </div>
+      <br/>
+      <div style={{ color: '#ff0000' }}> {freeShippingInfo}</div>
       <button
         onClick={(e) => {
           handlePlaceOrder(e);
@@ -300,7 +302,6 @@ function OrderReview({
       >
         PLACE ORDER
       </button>
-      <div> {freeShippingInfo}</div>
       <div className={`${styles.borderBottom} my-12px`}>
         <img
           src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/da0d5827-4617-454f-ab2f-e4e970ae73e3.png"
