@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
-
+import styles from "../PaymentTabs/components/Tab2Content/Tab2Content.module.scss";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,6 +13,7 @@ import Tab2Content from "./components/Tab2Content/Tab2Content";
 
 import { showSnackbar } from "../../../../store/actions/common";
 import { cartPaymentAction } from "../../../../services/cart/cart.service";
+
 
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
@@ -258,7 +259,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         ))}
       </Tabs>
       <div className={classes.tabContent}>
-        <TabPanel value={value} index={0}>
+        <TabPanel className={styles.goSellWrap} value={value} index={0}>
           {/* {paymentType && (
             <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
           )} */}

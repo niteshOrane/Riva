@@ -8,6 +8,9 @@ import {
   PictureInPictureMagnifier,
   MOUSE_ACTIVATION,
   TOUCH_ACTIVATION,
+  MagnifierContainer,
+  MagnifierPreview,
+  MagnifierZoom,
 } from "react-image-magnifiers";
 
 const LazyImage = (props) => {
@@ -37,13 +40,15 @@ const LazyImage = (props) => {
   };
   if (isZoom) {
     return (
-      <div style={{width:width,height:height}}>
+      <div style={{ width: width, height: height }}>
         <SideBySideMagnifier
           imageSrc={[srcImage,"https://via.placeholder.com/295x295?text=Image+Not+Available"]}
           imageAlt={alt || "No image available"}
-          fillAvailableSpace
+          zoomContainerBorder="1px solid black"
           alwaysInPlace
+          style={{zIndex:0}}
         />
+    
       </div>
     );
   }

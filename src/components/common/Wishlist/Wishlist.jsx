@@ -31,6 +31,7 @@ function Wishlist() {
     modalData: data = {},
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const { auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -116,9 +117,9 @@ function Wishlist() {
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ""}</div>
+              <div className={styles.was}>Was {currency_symbol}{" "}{origprice || ""}</div>
             ) : null}
-            <div className={styles.now}>Now {data?.price}</div>
+            <div className={styles.now}>Now {currency_symbol}{" "}{data?.price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           {/* <div className={`${styles.color} d-flex`}>

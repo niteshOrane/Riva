@@ -71,7 +71,6 @@ export default function ReviewModal({ id, sku }) {
   const handleOpen = () => {
     setOpen(true);
   };
-  console.log(auth)
   const handleClose = () => {
     setOpen(false);
   };

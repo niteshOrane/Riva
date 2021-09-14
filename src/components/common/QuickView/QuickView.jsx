@@ -63,6 +63,7 @@ function QuickView() {
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const {
     origpriceWithoutCurrency = 0,
     priceWithoutCurrency = 0,
@@ -70,23 +71,11 @@ function QuickView() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
-
   const setColorSize = (attr,type) => {
     data.selected[type] = attr
     setSelectedProduct({...data});
   };
   const addToCardHandler = () => {
-    console.log({
-      ...selectedProduct,
-      id: `${data?.id}`,
-      name: data?.name,
-      color: data?.selected?.color,
-      size: data?.selected?.size,
-      src: data?.image,
-      qty: productQuantity,
-      ...selectedProduct?.selected,
-      price,
-    })
 
     dispatch(
       addToCart({
@@ -213,7 +202,7 @@ function QuickView() {
             </div>
           </div>
           <div className={`${styles.price} d-flex`}>
-            <div className={styles.now}>Now ${price}</div>
+            <div className={styles.now}>Now {currency_symbol}{" "}{price}</div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>

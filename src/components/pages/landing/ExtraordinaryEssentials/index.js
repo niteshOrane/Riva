@@ -19,7 +19,7 @@ const ProductList = () => {
     const res = await getProducts("2046", 10);
     setProducts(res.data || []);
   };
-
+  
   useEffect(() => {
     fetchProducts();
   }, []);

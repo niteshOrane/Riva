@@ -3,7 +3,7 @@ import { GoSellElements } from "@tap-payments/gosell";
 import styles from "./Tab2Content.module.scss";
 import { cartPaymentTapAction } from "../../../../../../services/cart/cart.service";
 import { showSnackbar } from "../../../../../../store/actions/common";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as DATA_TYPES from "../../../../../../store/types";
 import { useHistory } from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
@@ -13,6 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 
 function GoSellTap() {
   const dispatch = useDispatch();
+  const {store_name} = useSelector(state => state?.common?.store);
   const history = useHistory();
   const callbackFunc = async (e) => {
     const subType = e.target.value;
@@ -29,17 +30,19 @@ function GoSellTap() {
     }
   };
   return (
-    <div>
+    <div className={styles.goSellWrap}>
       <FormControl component="fieldset">
         <RadioGroup onChange={callbackFunc}>
           <FormControlLabel value="card" control={<Radio />} label="card" />
-          <FormControlLabel value="mada" control={<Radio />} label="mada" />
-          <FormControlLabel value="knet" control={<Radio />} label="knet" />
-          <FormControlLabel
+          {store_name=== "Kuwait" &&  <FormControlLabel value="knet" control={<Radio />} label="knet" />}
+          {store_name==="Saudi Arabia" && <FormControlLabel value="mada" control={<Radio />} label="mada" />}
+          
+         {store_name=== "Bahrain" &&  <FormControlLabel
             value="benefit"
             control={<Radio />}
             label="benefit"
-          />
+          />}
+         
         </RadioGroup>
       </FormControl>
     </div>

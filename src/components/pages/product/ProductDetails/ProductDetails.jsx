@@ -11,20 +11,25 @@ import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
 import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
-import { outOfStockCheck } from "../../../../services/product/product.service";
+import {
+  getReviewList,
+  outOfStockCheck,
+} from "../../../../services/product/product.service";
 import SearchInStorePopup from "./SearchInStorePopup";
 import SubscribeModel from "./SubscribeModel";
-import { URL } from '../../../../util';
+import { URL } from "../../../../util";
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 import ReviewModal from "./ReviewPopUp";
 import ShareIcons from "./ShareIcons";
-
+import Rating from "@material-ui/lab/Rating";
 
 const ProductDetails = (props) => {
-  const { product, setColorSize, mediaImage, colorImage } = props;
+  const { product, setColorSize, mediaImage, colorImage ,currency_symbol} = props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
+  const [value, setValue] = React.useState(0);
+  const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
   useEffect(() => {
     if (colorImage.databind !== undefined) {
@@ -44,6 +49,19 @@ const ProductDetails = (props) => {
       color: { label: data?.color, value: data?.option_id },
     });
   };
+  const getReviewListForProduct = async (val) => {
+    const res = await getReviewList(val);
+    if (res.status === 200 && res?.data) {
+      setReviewList(res?.data);
+    }
+  };
+  const calculateAvgReview = () => {
+    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+
+    return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+      ? 0
+      : parseFloat(sum / reviewList?.length)?.toFixed(1);
+  };
   const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
   const getOutOfStock = async () => {
@@ -62,7 +80,16 @@ const ProductDetails = (props) => {
   };
   useEffect(() => {
     getOutOfStock();
+    getReviewListForProduct(product?.sku);
   }, []);
+  useEffect(() => {
+    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    setValue(
+      isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+        ? 0
+        : parseFloat(sum / reviewList?.length)?.toFixed(1)
+    );
+  }, [reviewList]);
   useEffect(() => {
     getOutOfStock();
   }, [product, colorImg]);
@@ -158,7 +185,7 @@ const ProductDetails = (props) => {
               type="product-details"
               isZoom
             />
-            { /*<ImageDropdown />*/}
+            {/*<ImageDropdown />*/}
 
             <div className={styles.actionContainerTopRight}>
               <div onClick={handleWishList}>
@@ -188,14 +215,16 @@ const ProductDetails = (props) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-                <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-                <Star style={{ fontSize: 16 }} />
-                <Star style={{ fontSize: 16 }} />
-                <Star style={{ fontSize: 16 }} />
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                />
               </div>
               <div className={`${styles.rating} d-flex-all-center`}>
-                {visibility} rating
+                {calculateAvgReview()}{" "}rating
               </div>
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
@@ -205,21 +234,28 @@ const ProductDetails = (props) => {
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
-                  Was ${parseFloat(origprice)?.toFixed(2) || ""}
+                  Was {parseFloat(origprice)?.toFixed(2) || ""}
                 </div>
               ) : null}
-              <div className={styles.now}>Now {price}</div>
+              <div className={styles.now}>Now {currency_symbol}{" "}{price}</div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
-              <div className={styles.title}>Color: {typeof productColorList?.find((item) =>
-                product.selected.color.value === item.option_id
-              )?.color === "string" ? productColorList?.find((item) =>
-                product.selected.color.value === item.option_id
-              )?.color : 'White'}{'  '}</div>
+              <div className={styles.title}>
+                Color:{" "}
+                {typeof productColorList?.find(
+                  (item) => product.selected.color.value === item.option_id
+                )?.color === "string"
+                  ? productColorList?.find(
+                      (item) => product.selected.color.value === item.option_id
+                    )?.color
+                  : "White"}
+                {"  "}
+              </div>
               {productColorList.length > 0 &&
                 productColorList?.map((item, index) => (
-                  <div title={item?.color}
+                  <div
+                    title={item?.color}
                     key={`color${index}`}
                     className={`${styles.option}  c-pointer `}
                     onClick={() => colorImageAction(item)}
@@ -230,16 +266,29 @@ const ProductDetails = (props) => {
                           : "scale(.9)",
                     }}
                   >
-                    {typeof item?.color === "string"
-                      ? <img src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(item?.color)?.toLowerCase()}.png`}
-                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                          ? styles.active
-                          : ""}`} alt={item?.color} />
-                      : <img src={item?.file} className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                        ? styles.active
-                        : ""}`} alt={item?.color} />
-                    }
-
+                    {typeof item?.color === "string" ? (
+                      <img
+                        src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                          item?.color
+                        )?.toLowerCase()}.png`}
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
+                            ? styles.active
+                            : ""
+                        }`}
+                        alt={item?.color}
+                      />
+                    ) : (
+                      <img
+                        src={item?.file}
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
+                            ? styles.active
+                            : ""
+                        }`}
+                        alt={item?.color}
+                      />
+                    )}
                   </div>
                 ))}
 
@@ -451,17 +500,17 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/shop.png",
                     },
                     {
-                      name: (<SubscribeModel />),
+                      name: <SubscribeModel />,
                       icon: "/assets/images/tshirt.png",
                     },
 
                     {
-                      name: (<ReviewModal id={product?.id} sku={product?.sku} />),
-                      icon: "/assets/images/review.png"
+                      name: <ReviewModal id={product?.id} sku={product?.sku} />,
+                      icon: "/assets/images/review.png",
                     },
                     {
-                      name: (<ShareIcons styles={styles} product={product} />),
-                      icon: "/assets/images/share.png"
+                      name: <ShareIcons styles={styles} product={product} />,
+                      icon: "/assets/images/share.png",
                     },
                   ].map((item) => {
                     return (
@@ -469,7 +518,9 @@ const ProductDetails = (props) => {
                         <div className={styles.icon}>
                           <img src={item.icon} alt={item.name} />
                         </div>
-                        <div className={`${styles.labelName} c-pointer`}>{item.name}</div>
+                        <div className={`${styles.labelName} c-pointer`}>
+                          {item.name}
+                        </div>
                       </div>
                     );
                   })}

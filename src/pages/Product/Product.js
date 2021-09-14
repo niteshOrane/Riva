@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToRecentlyViewed } from "../../store/actions/stats";
 import Slider from "../../components/common/Sliders/Slider";
 import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
@@ -29,6 +29,7 @@ const Product = (props) => {
 
   const [product, setproduct] = useState({});
   const [compositioncare, setCompositioncare] = useState({});
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -85,9 +86,9 @@ const Product = (props) => {
         p.origpriceWithoutCurrency = p.custom_attributes?.find(
           (e) => e?.attribute_code === "special_price"
         )?.value;
-        p.origprice = `$${parseFloat(p.origpriceWithoutCurrency)?.toFixed(2)}`;
+        p.origprice = `${parseFloat(p.origpriceWithoutCurrency)?.toFixed(2)}`;
         p.priceWithoutCurrency = p.price;
-        p.price = `$${parseFloat(p.price).toFixed(2)}`;
+        p.price = `${parseFloat(p.price).toFixed(2)}`;
       }
       dispatch(addToRecentlyViewed(p));
     } catch (err) {
@@ -111,6 +112,7 @@ const Product = (props) => {
         setColorSize={setColorSize}
         mediaImage={mediaImage}
         colorImage={colorImage}
+        currency_symbol={currency_symbol}
       />
       <div className="max-width-1750 mx-auto">
         <Slider

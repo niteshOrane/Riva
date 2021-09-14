@@ -31,7 +31,8 @@ const ProductCard = ({
   isProduct = false,
   extraOridnary,
   isListing,
-  isRecommended
+  isRecommended,
+  currency_symbol
 }) => {
   const { custom_attributes, id, image, name } = product;
 
@@ -45,12 +46,11 @@ const ProductCard = ({
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === "special_price"
     )?.value;
-    origprice = `$${parseFloat(origpriceWithoutCurrency)?.toFixed(2)}`;
+    origprice = `${parseFloat(origpriceWithoutCurrency)?.toFixed(2)}`;
     priceWithoutCurrency = price;
-    price = `$${parseFloat(price).toFixed(2)}`;
+    price = `${parseFloat(price).toFixed(2)}`;
   }
   const wishList = useSelector((state) => state.wishlist.data);
-
   const [attributes, setattributes] = useState({ colors: [], size: [] });
   const [productItem, setProductItem] = useState({});
   const [colorImg, setColorImg] = useState(null);
@@ -98,6 +98,7 @@ const ProductCard = ({
       )?.value,
       colors,
       size,
+      currency_symbol,
       selected: {
         color: colors?.[0] || {},
         size: size?.[0] || {},
@@ -137,6 +138,7 @@ const ProductCard = ({
       )?.value,
       name: res.data.name,
       price: res.data.price,
+      currency_symbol,
       sale:
         res.data?.custom_attributes.find(
           (attr) => attr.attribute_code === "show_sale_badge"
@@ -321,6 +323,7 @@ const ProductCard = ({
             ) : null}
             <div className={styles.now}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
+              {currency_symbol}{" "}
               {price}
             </div>
           </div>

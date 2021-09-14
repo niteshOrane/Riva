@@ -18,6 +18,7 @@ const Cart = () => {
 
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const [editableIndex, setEditableIndex] = React.useState(null);
   const dispatch = useDispatch();
   const openSignUpCard = (redirectTo) => {
@@ -103,7 +104,7 @@ const Cart = () => {
                             </div>
                             <div>
                               <span className="font-weight-600 color-primary">
-                                ${parseFloat(item.price)?.toFixed(2)}
+                                {currency_symbol}{" "}{parseFloat(item.price)?.toFixed(2)}
                               </span>
                             </div>
                           </div>

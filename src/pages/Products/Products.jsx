@@ -9,9 +9,11 @@ import Slider from "../../components/common/Sliders/Slider";
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Products(props) {
   const handleQuickView = () => { };
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const refContainer = useRef();
   const refContainerLoad = useRef();
   const onScreen = useOnScreen(refContainerLoad);
@@ -139,6 +141,7 @@ function Products(props) {
               product={product}
               isProduct={Boolean(true)}
               isListing
+              currency_symbol={currency_symbol}
             />
           </div>
         ))}

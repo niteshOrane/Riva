@@ -31,58 +31,46 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const dispatch = useDispatch();
   const getOutOfStock = async (val) => {
     if (dataItems?.length > 0) {
-      // const temp = dataItems?.find((li) => li.id === val);
-      // const id = temp?.id;
-      // const colorIndex = Object.keys(
-      //   temp?.options?.filter((e) => e.label === "Color")?.[0]?.values
-      // );
-      // const color = temp?.options.filter((e) => e.label === "Color")?.[0]
-      //   ?.values[colorIndex[0]]?.label;
-      // const sizeIndex = Object.keys(
-      //   temp?.options?.filter((e) => e.label === "Size")?.[0]?.values
-      // );
-      // const size = temp?.options.filter((e) => e.label === "Size")?.[0]?.values[
-      //   sizeIndex[0]
-      // ]?.label;
       const { color, size, id } = selectedColorSize;
-      if (color && size) {
-        setLoading(true);
-        const res = await outOfStockCheck(id, color, size);
-        // if (res && res?.data) {
-        //   if (res?.data?.data?.Stock === 1) {
-        //     setSelectedColorSize({ color: null, size: null, id: null });
-        //     setLoading(false);
-        //     return true;
-        //   }
-        //   if (res?.data?.data?.Stock === 0) {
-        //     dispatch(showSnackbar("Product is out of stock", "error"));
-        //     setSelectedColorSize({ color: null, size: null, id: null });
-        //     setLoading(false);
-        //     return false;
-        //   }
-        // } else {
-        //   dispatch(showSnackbar("something went wrong", "error"));
-        //   setLoading(false);
-        // }
+
+      setLoading(true);
+      const res = await outOfStockCheck(id, color, size);
+      if (res && res?.data?.data) {
+        if (res?.data?.data?.Stock === 1) {
+          setLoading(false);
+          setSelectedColorSize({ color: null, size: null, id: null });
+          return true;
+        }
+        if (res?.data?.data?.Stock === 0) {
+          dispatch(showSnackbar("Product is out of stock", "error"));
+          setSelectedColorSize({ color: null, size: null, id: null });
+          setLoading(false);
+          return false;
+        }
+      } else {
+        dispatch(showSnackbar("something went wrong", "error"));
         setSelectedColorSize({ color: null, size: null, id: null });
         setLoading(false);
-        return true;
-      } else {
-        dispatch(showSnackbar("Please select a color and size", "error"));
-        setLoading(false);
       }
+      setLoading(false);
     }
   };
 
   const handleSelected = async (checked, product) => {
+    if (checked) {
+      return setSelected(selected.filter((c) => c.id !== product.id));
+      // const pro = items?.find((li) => li?.sku.slice(0, -4) == product?.sku);
+      // if (pro) {
+      //   dispatch(removeFromCart(pro));
+      // }
+    }
     const isProductInStock = await getOutOfStock(product?.id);
     product["color"] = attrValue?.colorValue;
     product["size"] = attrValue?.sizeValue;
-    setAttrValue({ colorValue: null, sizeValue: null });
+    setAttrValue({ ...attrValue, colorValue: null, sizeValue: null });
     if (isProductInStock) {
-      if (checked) {
-        setSelected(selected.filter((c) => c.id !== product.id));
-      } else setSelected((s) => [...s, product]);
+      setSelectedColorSize({ color: null, size: null, id: null });
+      return setSelected((s) => [...s, product]);
     } else {
       return null;
     }
@@ -146,7 +134,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
                 onClick={() => handleRemoveFromCart(product)}
                 className={styles.checkboxCancelBtn}
               >
-                <CancelIcon />
+                {items?.find((li) => li?.sku.slice(0, -4) == product?.sku) && (
+                  <CancelIcon />
+                )}
               </div>{" "}
               <div style={{ position: "absolute", top: -10, left: -10 }}>
                 {loading && selectedColorSize?.id === product?.id ? (

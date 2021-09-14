@@ -141,7 +141,7 @@
     }
 
     .rating {
-      width: 58px;
+      width: 60px;
       font-family: Roboto;
       font-size: 14px;
       font-weight: 700;
@@ -151,6 +151,7 @@
       color: #181617;
       margin-top: 5px;
       margin-left: 14px;
+      word-wrap: break-word ;
     }
 
     .price {

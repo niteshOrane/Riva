@@ -13,7 +13,6 @@ const useProducts = ({ categoryId,
 
   const [loading, setloading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
-
   useEffect(() => {
     setloading(true);
     let currentPageGet = currentPage;

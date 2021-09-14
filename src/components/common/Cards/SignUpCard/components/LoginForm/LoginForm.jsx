@@ -82,6 +82,7 @@ const LoginForm = ({ handleSubmit, handleOtpForm,setForgetPassStyle}) => {
 
     customer.append("password", password);
     customer.append("mobile", "")
+    customer.append("action", "login")
 
     const res = await loginCustomer(customer);
 
