@@ -69,7 +69,7 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         const secondsTime = Math.ceil(divisor_for_seconds);
         setSeconds(secondsTime);
         setMinutes(minutesTime);
-        return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
+        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
       }
       else {
         return dispatch(showSnackbar(res?.data.message, "error"));
@@ -99,7 +99,7 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         const secondsTime = Math.ceil(divisor_for_seconds);
         setSeconds(secondsTime);
         setMinutes(minutesTime);
-        return dispatch(showSnackbar(`Otp-${res?.data.data.otp} Sent on ${mobileNumber}`, "success"));
+        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber} or Email`, "success"));
       }
       else {
         return dispatch(showSnackbar(res?.data.message, "error"));

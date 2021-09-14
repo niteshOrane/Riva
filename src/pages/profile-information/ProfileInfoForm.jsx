@@ -121,7 +121,7 @@ function ProfileInfoForm() {
         setRecivedOTPData(res?.data.data);
         return dispatch(
           showSnackbar(
-            `Otp-${res?.data.data.otp} Sent on ${mobileNumber}`,
+            `OTP Sent on ${mobileNumber}`,
             "success"
           )
         );

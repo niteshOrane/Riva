@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Axios from 'axios';
 import { loader, errorHandler } from '../../store/actions/common';
+import { history } from '../../util';
 
 /* Loader Show/Hide logic */
 let count = 0;
@@ -64,6 +65,7 @@ export default {
         const { data = {} } = response;
         hideLoader(store);
         if (data.status >= 400) {
+          history.push("/404");
           const err = prepareErrorObject(data);
           handleError(store, err);
         }

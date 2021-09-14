@@ -5,6 +5,7 @@ import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
 import HomeLayout from "../Layouts/HomeLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Page404 from "../pages/404/NotFound";
 
 const LandingHome = React.lazy(() => import("../pages/Landing/HomeLanding"));
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
@@ -74,6 +75,14 @@ class AppRoutes extends Component {
         name: "Landing page",
         layout: HomeLayout,
         index: 0,
+      },
+      {
+        path: "/404",
+        component: Page404,
+        exact: true,
+        name: "Landing page",
+        layout: HomeLayout,
+        index: 404,
       },
       {
         path: "/createpassword",
@@ -176,7 +185,7 @@ class AppRoutes extends Component {
         layout: MainLayout,
         index: 6,
       },
-     
+
       {
         path: "/track-your-order",
         component: TrackYourOrder,
