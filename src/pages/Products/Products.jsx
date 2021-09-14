@@ -197,6 +197,7 @@ function Products(props) {
               isRecommended
               product={item}
               index={index}
+              currency_symbol={currency_symbol}
               isProduct={Boolean(true)}
             />
           )}

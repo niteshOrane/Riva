@@ -12,6 +12,7 @@ export const defaultStore = {
   city: null,
   country_id: 'KW',
   currency: 'USD',
+  currency_symbol:"$",
   hours: null,
   language: 'English',
   merchant_vat_number: null,
