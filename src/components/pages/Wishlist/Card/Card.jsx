@@ -5,7 +5,7 @@ import * as icons from '../../../common/Icons/Icons';
 import styles from './Card.module.scss';
 import { URL } from '../../../../util';
 
-function Card({ src, name, priceWas, priceIs, remove , sku}) {
+function Card({ src, name, priceWas, priceIs, remove, sku, currency_symbol }) {
   const srcImage =
     src?.indexOf('http') > -1 ? src : `${URL.baseUrlProduct}/${src}`;
   return (
@@ -19,19 +19,19 @@ function Card({ src, name, priceWas, priceIs, remove , sku}) {
         <icons.Close />
       </button>
       <Link to={`/product/${sku}`}>
-   
-      <div className={styles.imgContainer_P} >
-        <div className={styles.imgContainer}>
-          <Image src={srcImage} width="100%" />
+
+        <div className={styles.imgContainer_P} >
+          <div className={styles.imgContainer}>
+            <Image src={srcImage} width="100%" />
+          </div>
         </div>
-      </div>
       </Link>
       <div className="my-12px">
         <p className={`font-size-600 ${styles.boldFont}`}>{name}</p>
       </div>
       <div className="d-flex align-items-center gap-12px">
-        <s className="color-grey">was ${parseFloat(priceWas)?.toFixed(2)}</s>&nbsp; &nbsp;
-        <span>Now ${parseFloat(priceIs)?.toFixed(2)}</span>
+        <s className="color-grey">Was {currency_symbol} {parseFloat(priceWas)?.toFixed(2)}</s>&nbsp; &nbsp;
+        <span>Now {currency_symbol} {parseFloat(priceIs)?.toFixed(2)}</span>
       </div>
     </div>
 

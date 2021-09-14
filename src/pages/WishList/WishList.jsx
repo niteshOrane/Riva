@@ -8,7 +8,7 @@ import CategoriesCircles from '../../components/common/CategoriesCircles/Categor
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
-
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const dispatch = useDispatch();
 
   const removeFromWishlist = (data) => {
@@ -36,6 +36,7 @@ function WishList() {
                     priceWas={product?.price}
                     priceIs={product?.special}
                     sku={product?.sku}
+                    currency_symbol={currency_symbol}
                     remove={() => removeFromWishlist(product)}
                   />
                 )

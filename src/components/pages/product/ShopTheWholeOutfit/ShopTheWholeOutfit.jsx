@@ -16,6 +16,7 @@ import { showSnackbar } from "../../../../store/actions/common";
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
   const [dataItems, setDataItems] = useState(data || []);
+
   const { data: items = [] } = useSelector((state) => state.cart);
   const [selectedColorSize, setSelectedColorSize] = useState({
     id: null,

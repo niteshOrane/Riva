@@ -4,12 +4,12 @@ import TopBrandCard from './TopBrandCard';
 import Slider from '../../../common/Sliders/Slider';
 import ArrowButton from '../../../common/Buttons/Arrow';
 import style from './TopBrandCard.module.scss';
-import { products } from '../../../../db.json';
 
-const RecentlyViewedSlider = () => {
+const RecentlyViewedSlider = ({ currency_symbol }) => {
   const refContainer = useRef();
   const { data: items = [] } = useSelector((state) => state.stats);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
+
 
   useEffect(() => {
     if (items.length) {
@@ -40,7 +40,7 @@ const RecentlyViewedSlider = () => {
         {recentlyViewed.length < 3 ? (
           <div className="d-flex">
             {recentlyViewed?.map((item) => (
-              <TopBrandCard item={item} />
+              <TopBrandCard item={item} currency_symbol={currency_symbol} />
             ))}
           </div>
         ) : (
@@ -49,7 +49,7 @@ const RecentlyViewedSlider = () => {
             ref={refContainer}
             rows={2}
             slidesToShow={2}
-            render={(item) => <TopBrandCard item={item} />}
+            render={(item) => <TopBrandCard item={item} currency_symbol={currency_symbol} />}
           />
         )}
       </div>

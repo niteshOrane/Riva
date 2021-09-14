@@ -15,12 +15,12 @@ const TempLink = ({ children, product }) => {
   return <a href={product?.uri}>{children}</a>;
 };
 
-const VerticalProductCard = ({
+const HorizontalProductCard = ({
   product,
   setSelectedColorSize,
   selectedColorSize,
   setAttrValue,
-  attrValue,
+  attrValue
 }) => {
   const {
     id,
@@ -45,14 +45,14 @@ const VerticalProductCard = ({
   const colors =
     product?.options && product?.options.length
       ? Object.keys(
-          product?.options?.filter((e) => e.label === "Color")?.[0]?.values
-        )
+        product?.options?.filter((e) => e.label === "Color")?.[0]?.values
+      )
       : [];
   const sizes =
     product?.options && product?.options.length
       ? Object.keys(
-          product?.options?.filter((e) => e.label === "Size")?.[0]?.values
-        )
+        product?.options?.filter((e) => e.label === "Size")?.[0]?.values
+      )
       : [];
 
   useEffect(() => {
@@ -67,15 +67,15 @@ const VerticalProductCard = ({
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
-        <TempLink product = {product}>
-          <Image src={colorImg?.file || src} alt={name} classname="c-pointer"/>
+        <TempLink product={product}>
+          <Image src={colorImg?.file || src} alt={name} classname="c-pointer" />
         </TempLink>
       </div>
       <div>
         <div className={styles.name}>Name: {name || "---"}</div>
         <div className={styles.price}>
-          <div className={styles.was}>Was {was}$</div>
-          <div className={styles.now}>Now {now}$</div>
+          <div className={styles.was}>Was {was}</div>
+          <div className={styles.now}>Now {now}</div>
         </div>
         <div className={styles.size}>
           <div
@@ -105,12 +105,12 @@ const VerticalProductCard = ({
                     style={{
                       transform:
                         colorItem.label === selectedColorSize.color &&
-                        id == selectedColorSize?.id
+                          id == selectedColorSize?.id
                           ? "scale(1)"
                           : "scale(.9)",
                       border:
                         colorItem.label === selectedColorSize.color &&
-                        id == selectedColorSize?.id
+                          id == selectedColorSize?.id
                           ? "1px solid red"
                           : null,
                     }}
@@ -165,12 +165,12 @@ const VerticalProductCard = ({
                   style={{
                     transform:
                       sizeItem.label === selectedColorSize.size &&
-                      id == selectedColorSize?.id
+                        id == selectedColorSize?.id
                         ? "scale(1)"
                         : "scale(.9)",
                     border:
                       sizeItem.label === selectedColorSize.size &&
-                      id == selectedColorSize?.id
+                        id == selectedColorSize?.id
                         ? "1px solid red"
                         : null,
                   }}
@@ -197,4 +197,4 @@ const VerticalProductCard = ({
   );
 };
 
-export default VerticalProductCard;
+export default HorizontalProductCard;

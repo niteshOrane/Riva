@@ -19,7 +19,7 @@ const TempLink = ({ children, product }) => {
   );
 };
 
-const TopBrandCard = ({ item }) => {
+const TopBrandCard = ({ item, currency_symbol }) => {
   const {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -37,7 +37,7 @@ const TopBrandCard = ({ item }) => {
             type="product-details"
           />
           <div className={style.cartImage}>
-            <img src = "/assets/images/homeCart.png" alt="" style={{width:"100%",height:"100%"}} alt ="" />
+            <img src="/assets/images/homeCart.png" alt="" style={{ width: "100%", height: "100%" }} />
           </div>
         </div>
         <div className={style.cardText}>
@@ -46,9 +46,9 @@ const TopBrandCard = ({ item }) => {
           </p>
           <div className="d-flex align-items-center">
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
-              <s className={style.crosedPrice}>Was {origprice || "0.00"}</s>
+              <s className={style.crosedPrice}>Was {currency_symbol} {' '} {origprice || "0.00"}</s>
             ) : null}
-            <p className={`${style.price} color-primary`}>{price || "0.00"}</p>
+            <p className={`${style.price} color-primary`}>{currency_symbol} {' '} {price || "0.00"}</p>
           </div>
         </div>
       </div>

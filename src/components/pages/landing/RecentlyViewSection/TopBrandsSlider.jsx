@@ -5,7 +5,7 @@ import ArrowButton from '../../../common/Buttons/Arrow';
 import { getProducts } from '../../../../services/layout/Layout.service';
 import style from './TopBrandCard.module.scss';
 
-const TopBrandsSlider = () => {
+const TopBrandsSlider = ({ currency_symbol }) => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
@@ -42,7 +42,7 @@ const TopBrandsSlider = () => {
         {products.length < 3 ? (
           <div className="d-flex">
             {products?.map((item) => (
-              <TopBrandCard item={item} />
+              <TopBrandCard item={item} currency_symbol={currency_symbol} />
             ))}
           </div>
         ) : (
@@ -51,7 +51,7 @@ const TopBrandsSlider = () => {
             ref={refContainer}
             slidesToShow={2}
             rows={2}
-            render={(item) => <TopBrandCard item={item} />}
+            render={(item) => <TopBrandCard item={item} currency_symbol={currency_symbol} />}
           />
         )}
       </div>
