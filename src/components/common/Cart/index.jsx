@@ -187,7 +187,7 @@ const Cart = () => {
                 <h4>
                   <strong>Total</strong>{' '}
                   <strong className="color-primary">
-                    $
+                  {currency_symbol}{" "}
                     {parseFloat(items.reduce(
                       (total, item) => total + item.price * item.qty,
                       0

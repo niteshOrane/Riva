@@ -66,8 +66,6 @@ export default {
         hideLoader(store);
         if (data.status >= 400) {
           history.push("/404");
-          const err = prepareErrorObject(data);
-          handleError(store, err);
         }
         return response;
       },

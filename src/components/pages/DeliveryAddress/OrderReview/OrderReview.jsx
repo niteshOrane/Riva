@@ -19,6 +19,7 @@ function OrderReview({
 }) {
   const history = useHistory();
 
+  const { currency_symbol } = useSelector(state => state?.common?.store);
   const { data: items = [] } = useSelector((state) => state.cart);
   const { cart_id } = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
@@ -199,15 +200,15 @@ function OrderReview({
           <span>
             <icons.Loyalty />
           </span>
-          <strong>Use Loyalty Cash ($0 Available)</strong>
+          <strong>Use Loyalty Cash ({currency_symbol} 0 Available)</strong>
         </div>
         <p className={`${styles.greyText} ${styles.smallText}`}>
-          *You have to earn a minimum of $50 Loyalty Cash before you can redeem
+          *You have to earn a minimum of {currency_symbol} 50 Loyalty Cash before you can redeem
           it in your future purchases.
         </p>
       </div>
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
-      {deliverySpeed?.map((item, index) => {
+      {deliverySpeed?.map((item) => {
         return (
           <div
             className={styles.chooseShipping}
@@ -231,42 +232,42 @@ function OrderReview({
             <label htmlFor="twoDays">
               <h5>{item?.method_title}</h5>
               <span className={styles.greyText}>
-                ${item.amount} - {item.carrier_title}
+                {currency_symbol}{" "}{item.amount} - {item.carrier_title}
               </span>
             </label>
           </div>
         );
       })}
 
-      <Products products={items} />
+      <Products products={items} currency_symbol={currency_symbol} />
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>SUBTOTAL</span>
 
-        <strong>${parseFloat(totalAmout || 0)?.toFixed(2)}</strong>
+        <strong> {currency_symbol}{" "}{parseFloat(totalAmout || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${parseFloat(totalDC || 0)?.toFixed(2)}</strong>
+        <strong>  {currency_symbol}{" "}{parseFloat(totalDC || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>${parseFloat(totalTax || 0)?.toFixed(2)}</strong>
+        <strong>  {currency_symbol}{" "}{parseFloat(totalTax || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${parseFloat(discount || 0)?.toFixed(2)}</strong>
+        <strong>  {currency_symbol}{" "}{parseFloat(discount || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
@@ -274,7 +275,7 @@ function OrderReview({
       >
         <h4 className="color-black">GRAND TOTAL </h4>
         <strong>
-          $
+          {currency_symbol}{" "}
           {discount
             ? parseFloat(totalDC + totalTax + totalAmout + discount).toFixed(2)
             : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}
@@ -292,7 +293,7 @@ function OrderReview({
           Sign up for Newsletter
         </span>
       </div>
-      <br/>
+      <br />
       <div style={{ color: '#ff0000' }}> {freeShippingInfo}</div>
       <button
         onClick={(e) => {

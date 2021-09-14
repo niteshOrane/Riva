@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Icon } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import styles from './NotFound.module.scss';
+import { useHistory } from "react-router";
 
 const NotFound = props => {
-  const { classes = {} } = props;
 
+  const history = useHistory();
+  const { classes = {} } = props;
+  useEffect(() => {
+    setTimeout(() => { history.push('/') }, 5000)
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.content}>

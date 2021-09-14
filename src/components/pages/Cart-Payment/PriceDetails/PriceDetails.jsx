@@ -1,45 +1,45 @@
 import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./PriceDetails.module.scss";
-const PriceDetails = ({ cartItem, cartPaymentInfo }) => {
+const PriceDetails = ({ cartItem, cartPaymentInfo, currency_symbol }) => {
 
   return (
     <div className={styles.container}>
-      <h4 className={styles.title}>PRICE DETAILS (2 Item)</h4>
+      <h4 className={styles.title}>PRICE DETAILS ({cartItem.length} Item)</h4>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>SUBTOTAL</span>
-        <strong>${parseFloat(cartPaymentInfo?.subtotal || 0)?.toFixed(2)}</strong>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.subtotal || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value || 0)?.toFixed(2)}</strong>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "shipping")?.value || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>${parseFloat(cartPaymentInfo?.tax_amount || 0)?.toFixed(2)}</strong>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.tax_amount || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value || 0)?.toFixed(2)}</strong>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value || 0)?.toFixed(2)}</strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <h4 className="color-black">GRAND TOTAL </h4>
-        <strong>${parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value).toFixed(2)}</strong>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "grand_total")?.value).toFixed(2)}</strong>
       </div>
 
       <div className={`${styles.borderBottom} my-12px`}>

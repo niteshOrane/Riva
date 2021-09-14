@@ -17,7 +17,8 @@ function CartPayment() {
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
-  
+
+  const { currency_symbol } = useSelector(state => state?.common?.store);
   const cartPaymentInfo = useSelector((state) => state.cart?.cartPaymentInfo || {});
   useEffect(() => {
     dispatch(getPaymentMethodlist());
@@ -53,13 +54,14 @@ function CartPayment() {
           {paymentOption && paymentOption?.data && paymentOption?.data?.length ?
             <>
               <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
-              <PaymentTabs paymentMode={paymentOption?.data} cartPaymentInfo={cartPaymentInfo}/>
+              <PaymentTabs paymentMode={paymentOption?.data} cartPaymentInfo={cartPaymentInfo} />
             </>
             : null}
         </div>
 
         <div className={styles.col2}>
-          <PriceDetails cartItem={items} customerID={customerid} cartPaymentInfo={cartPaymentInfo} />
+          <PriceDetails cartItem={items} currency_symbol={currency_symbol}
+            customerID={customerid} cartPaymentInfo={cartPaymentInfo} />
           <LetUsHear />
         </div>
       </div>
