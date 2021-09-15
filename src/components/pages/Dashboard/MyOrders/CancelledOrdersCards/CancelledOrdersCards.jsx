@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CancelledOrdersCards.module.scss";
+import * as icons from "../../../../common/Icons/Icons";
 import { extractColorSize } from "../../../../../util";
 
 const CancelledOrdersCards = ({ products, code, increment_id }) => {
@@ -25,8 +26,12 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <span className="greyText">Order Number: #{increment_id}</span>
           <br />
         </div>
-
-        <span className={styles.reorder}>Reorder</span>
+        <div className="d-flex align-items-center mt-12px">
+          <span className={styles.icon}>
+            <icons.MyOrders height='20' width='15' />
+          </span>
+          <span className={styles.reorder}>Reorder</span>
+        </div>
       </div>
       <div className={styles.carItem}>
         <div className={styles.col1}>

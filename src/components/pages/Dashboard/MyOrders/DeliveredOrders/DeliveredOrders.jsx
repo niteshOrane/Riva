@@ -24,7 +24,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
       <div className={styles.card}>
         <div className={styles.incrementWrap}>
           <span className="greyText">Order Number: #{increment_id}</span><br />
-          <span className={styles.reorder}>Reorder</span>
+
         </div>
 
         <div className={styles.carItem}>
@@ -79,6 +79,12 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
                 <icons.Undo />
               </span>
               <h4 className="c-pointer font-weight-normal greyText">Return</h4>
+            </div>
+            <div className="d-flex align-items-center mt-12px">
+              <span className={styles.icon}>
+                <icons.MyOrders height='20' width='15' />
+              </span>
+              <span className={styles.reorder}>Reorder</span>
             </div>
           </div>
         </div>
