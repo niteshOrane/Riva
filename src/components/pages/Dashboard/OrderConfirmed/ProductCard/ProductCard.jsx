@@ -31,7 +31,7 @@ function ProductCard({ product, cancelOrderFn }) {
           <span>{colorSize.size?.[0]?.label}</span>
         </div>
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
-        <p>Order ID #{product?.order_id}</p>
+        <p>Order Number: #{product?.increment_id}</p>
         <p>Payment: {product?.parent_item?.price}</p>
         {cancelOrderFn ? <div className="underline underline-hovered c-pointer font-weight-normal color-blue" onClick={(e) => { cancelOrderFn(e, product?.order_id) }}>Cancel order</div> : null}
       </div>

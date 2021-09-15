@@ -22,7 +22,7 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
     <div className={styles.card}>
       <div className={styles.incrementWrap}>
         <div>
-          <span className="greyText">Order Id {increment_id}</span>
+          <span className="greyText">Order Number: #{increment_id}</span>
           <br />
         </div>
 

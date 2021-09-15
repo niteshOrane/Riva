@@ -23,7 +23,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
     return (
       <div className={styles.card}>
         <div className={styles.incrementWrap}>
-          <span className="greyText">Order Id {increment_id}</span><br />
+          <span className="greyText">Order Number: #{increment_id}</span><br />
           <span className={styles.reorder}>Reorder</span>
         </div>
 

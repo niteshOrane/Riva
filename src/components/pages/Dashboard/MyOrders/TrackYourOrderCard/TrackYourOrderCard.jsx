@@ -5,7 +5,7 @@ const TrackYourOrderCard = ({ value, handleChange, handleSubmit }) => {
     <form onSubmit={handleSubmit}>
       <div className={styles.card}>
         <div className={styles.inpContainer}>
-          <p>Order ID</p>
+          <p>Order Number:-</p>
           <input
             type="text"
             onChange={handleChange}

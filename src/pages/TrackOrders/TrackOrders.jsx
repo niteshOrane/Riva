@@ -28,18 +28,18 @@ function TrackOrders() {
     setValue(e.target.value);
   };
   const handleSubmit = async (e) => {
-    if (!value) return dispatch(showSnackbar("Please enter order Id", "error"))
+    if (!value) return dispatch(showSnackbar("Please enter order Number", "error"))
     e.preventDefault();
     if (value) {
       const res = await getTrackYourOrder(value);
-      // if (res.status === 200 && res?.data && !res?.data?.error) {
-      //   setOrderItems(
-      //     res?.data?.items.filter((li) => li.product_type === "simple")
-      //   );
-      // }
-      // else{
-      //   return dispatch(showSnackbar(res?.data?.error, "error"))
-      // }
+      if (res.status === 200 && res?.data && res?.data.length && !res?.data?.error && res?.data[0].length) {
+        setOrderItems(
+          res?.data?.items.filter((li) => li.product_type === "simple")
+        );
+      }
+      else {
+        return dispatch(showSnackbar(res?.data?.error || `No Record found for Order Number #${value}`, "error"))
+      }
     }
   };
   const cancelOrderfn = async (e, id) => {

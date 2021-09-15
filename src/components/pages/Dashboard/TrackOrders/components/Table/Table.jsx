@@ -7,7 +7,7 @@ const Table = ({ order }) => {
     <div className="w-100">
       <h2 className={styles.title}>Track Orders</h2>
       <div className={styles.table}>
-        <p className="greyText">Order ID #{order?.orderId}</p>
+        <p className="greyText">Order Number: #{order?.increment_id}</p>
         <div className={styles.tblBody}>
           <div className="d-flex align-items-center w-100">
             <div className={styles.bgLightGrey}>Delivery Expected by:</div>
