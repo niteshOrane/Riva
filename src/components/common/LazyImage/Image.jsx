@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { URL } from "../../../util";
-import {
-  Magnifier,
-  GlassMagnifier,
-  SideBySideMagnifier,
-  PictureInPictureMagnifier,
-  MOUSE_ACTIVATION,
-  TOUCH_ACTIVATION,
-  MagnifierContainer,
-  MagnifierPreview,
-  MagnifierZoom,
-} from "react-image-magnifiers";
+// import {
+//   Magnifier,
+//   GlassMagnifier,
+//   SideBySideMagnifier,
+//   PictureInPictureMagnifier,
+//   MOUSE_ACTIVATION,
+//   TOUCH_ACTIVATION,
+//   MagnifierContainer,
+//   MagnifierPreview,
+//   MagnifierZoom,
+// } from "react-image-magnifiers";
+import ReactImageZoom from "react-image-zoom";
 
 const LazyImage = (props) => {
   const {
@@ -38,17 +39,23 @@ const LazyImage = (props) => {
   const onImageError = () => {
     setError(true);
   };
+  const propsImg = {
+    width: 500,
+    height: 600,
+    zoomWidth: 500,
+    img: !error
+      ? srcImage
+      : defaultImage
+      ? defaultImage
+      : "https://via.placeholder.com/295x295?text=Image+Not+Available",
+    zoomStyle:
+      "z-index:10;right:-31px;border:1px solid black;box-shadow: rgba(0, 0, 0) 0px 3px 8px;",
+  };
+
   if (isZoom) {
     return (
-      <div style={{ width: width, height: height }}>
-        <SideBySideMagnifier
-          imageSrc={[srcImage,"https://via.placeholder.com/295x295?text=Image+Not+Available"]}
-          imageAlt={alt || "No image available"}
-          zoomContainerBorder="1px solid black"
-          alwaysInPlace
-          style={{zIndex:0}}
-        />
-    
+      <div>
+        <ReactImageZoom {...propsImg} />
       </div>
     );
   }

@@ -24,6 +24,8 @@ function CancelledOrders() {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
       const temp = res?.data?.items?.map((li) => ({
+        increment_id: li?.increment_id,
+        currency_code: li?.base_currency_code,
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
@@ -44,7 +46,11 @@ function CancelledOrders() {
           <div className="w-100">
             <h2 className="font-weight-normal">Order Cancelled</h2>
             {orderList?.map((li) => (
-              <CancelledOrdersCards products={li?.list} />
+              <CancelledOrdersCards
+                products={li?.list}
+                code={li?.currency_code}
+                increment_id={li?.increment_id}
+              />
             ))}
           </div>
         </div>

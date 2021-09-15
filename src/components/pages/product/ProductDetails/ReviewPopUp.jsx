@@ -13,6 +13,7 @@ import {
   deleteReviewFromList,
 } from "../../../../services/product/product.service";
 import { showSnackbar } from "../../../../store/actions/common";
+import { setAttributeFormatter } from "validatorjs";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -29,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     position: "relative",
   },
+  viewAll:{
+    fontSize:"13px",
+    cursor:"pointer",
+    textDecoration:"underline"
+  }
 }));
 
 const dummyData = [
@@ -58,7 +64,7 @@ const dummyData = [
   },
 ];
 
-export default function ReviewModal({ id, sku }) {
+export default function ReviewModal({ id, sku,isDetail}) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
@@ -66,7 +72,7 @@ export default function ReviewModal({ id, sku }) {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [reviewRes, setReviewRes] = React.useState(null);
-  const [value, setValue] = React.useState(0);
+  const [rate, setRate] = React.useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -74,6 +80,9 @@ export default function ReviewModal({ id, sku }) {
   const handleClose = () => {
     setOpen(false);
   };
+  const onChange = (event,newValue) => {
+    setRate(newValue)
+  }
   const getReviewListForProduct = async (val) => {
     const res = await getReviewList(val);
     if (res.status === 200 && res?.data) {
@@ -93,16 +102,16 @@ export default function ReviewModal({ id, sku }) {
       if (!description) {
         return dispatch(showSnackbar("Please add description", "error"));
       }
-      if (!value) {
+      if (!rate) {
         return dispatch(showSnackbar("Please rate with star", "error"));
       }
-      const res = await createReview(title, description, value, id, firstname);
+      const res = await createReview(title, description, rate, id, firstname);
       if (res.status === 200 && res?.data) {
         dispatch(showSnackbar("review added successfully", "success"));
         getReviewListForProduct(sku);
         setDescription("");
         setTitle("");
-        setValue(0);
+        setRate(0);
       }
     }
   };
@@ -129,7 +138,7 @@ export default function ReviewModal({ id, sku }) {
   };
   return (
     <div>
-      <span onClick={handleOpen}>Review</span>
+      <span onClick={handleOpen}>{isDetail ? "Review" : <span className = {classes.viewAll}>Rate this product</span> }</span>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -155,10 +164,8 @@ export default function ReviewModal({ id, sku }) {
             <div>
               <Rating
                 name="simple-controlled"
-                value={value}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
+                value={rate}
+                onChange={(event, newValue) => onChange(event,newValue)}
               />
             </div>
             <hr />

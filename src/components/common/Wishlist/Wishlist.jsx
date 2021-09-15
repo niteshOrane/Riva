@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Dialog from "@material-ui/core/Dialog";
@@ -13,6 +13,9 @@ import styles from "./Wishlist.module.scss";
 import { toggleSignUpCard } from "../../../store/actions/common";
 import { colorRegexFilter } from "../colorRegex/colorRegex";
 import { URL } from "../../../util";
+import ReviewModal from "../../pages/product/ProductDetails/ReviewPopUp";
+import { getReviewList } from "../../../services/product/product.service";
+import { Rating } from "@material-ui/lab";
 
 const closeStyle = {
   position: "absolute",
@@ -26,6 +29,8 @@ function Wishlist() {
     color: null,
     size: null,
   });
+  const [reviewList, setReviewList] = useState([]);
+  const [value, setValue] = React.useState(0);
   const {
     isOpen,
     modalData: data = {},
@@ -51,6 +56,29 @@ function Wishlist() {
     }
     handleClose();
   };
+  const getReviewListForProduct = async (val) => {
+    if (val) {
+      const res = await getReviewList(val);
+      if (res.status === 200 && res?.data) {
+        setReviewList(res?.data);
+      }
+    }
+  };
+  const calculateAvgReview = () => {
+    const sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+      ? 0
+      : parseFloat(sum / reviewList?.length)?.toFixed(1);
+  };
+
+  useEffect(() => {
+    const sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    setValue(
+      isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+        ? 0
+        : parseFloat(sum / reviewList?.length)?.toFixed(1)
+    );
+  }, [reviewList]);
 
   const setColorSize = (attr, type) => {
     setSelectedColor({ ...selectedColor, [type]: attr });
@@ -58,6 +86,7 @@ function Wishlist() {
   React.useEffect(() => {
     if (data) {
       setSelectedColor({ ...selectedColor, color: data?.selected?.color });
+      getReviewListForProduct(data?.sku);
     }
   }, [data]);
 
@@ -102,18 +131,17 @@ function Wishlist() {
           <div className={styles.bestSeller}>BEST SELLER</div>
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
-            <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
+          <div className={`${styles.stars} d-flex-all-center`}>
+              <Rating name="read-only" readOnly value={value} size="small" />
             </div>
-            <div className={`${styles.rating} d-flex-all-center`}>4 rating</div>
+            <div className={`${styles.rating} d-flex-all-center`}>{calculateAvgReview()} rating</div>
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
+          </div>
+          <div>
+            <ReviewModal id={data?.id} sku={data?.sku} />
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (

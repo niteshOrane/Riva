@@ -7,6 +7,7 @@ import style from './ShoppingCart.module.scss';
 
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,8 +22,8 @@ const ShoppingCart = () => {
         <h1 className={style.pageTitle}>Shopping Cart</h1>
       </div>
       {items.length > 0 ? <div className="d-flex">
-        <Products products={items} />
-        <Summary />
+        <Products currency_symbol={currency_symbol} products={items} />
+        <Summary currency_symbol={currency_symbol} />
       </div> :  <div className="text-center"> SHOPPING CART IS EMPTY
                 You have no items in your shopping cart.
                 Click <a onClick={() => { handleContinueShopping() }}  href="#"

@@ -6,17 +6,22 @@ import {
   toggleQuickView,
   toggleSignUpCard,
 } from "../../../store/actions/common";
+import Rating from "@material-ui/lab/Rating";
 import { addToCart } from "../../../store/actions/cart";
 import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 import { colorRegexFilter } from "../colorRegex/colorRegex";
 import Image from "../LazyImage/Image";
+import ReviewModal from "../../pages/product/ProductDetails/ReviewPopUp";
 
 import styles from "./QuickView.module.scss";
 import * as icons from "../Icons/Icons";
 import { extractColorSize, URL } from "../../../util";
 import SizeCard from "../../pages/product/ProductDetails/components/SizeCard/SizeCard";
 import SizeGuide from "../../pages/product/ProductDetails/components/SizeGuide/SizeGuide";
-import { outOfStockCheck } from "../../../services/product/product.service";
+import {
+  getReviewList,
+  outOfStockCheck,
+} from "../../../services/product/product.service";
 import {
   addWishlist,
   removeWishlist,
@@ -41,6 +46,8 @@ function QuickView() {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [reviewList, setReviewList] = useState([]);
+  const [value, setValue] = React.useState(0);
 
   const handleIncrementProduct = () => {
     setProductQuantity((prevState) => prevState + 1);
@@ -60,10 +67,34 @@ function QuickView() {
   //   dispatch(toggleWishlist(selectedProduct));
   // };
 
+  const getReviewListForProduct = async (val) => {
+    if (val) {
+      const res = await getReviewList(val);
+      if (res.status === 200 && res?.data) {
+        setReviewList(res?.data);
+      }
+    }
+  };
+  const calculateAvgReview = () => {
+    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+      ? 0
+      : parseFloat(sum / reviewList?.length)?.toFixed(1);
+  };
+
+  useEffect(() => {
+    const sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    setValue(
+      isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
+        ? 0
+        : parseFloat(sum / reviewList?.length)?.toFixed(1)
+    );
+  }, [reviewList]);
+
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   const {
     origpriceWithoutCurrency = 0,
     priceWithoutCurrency = 0,
@@ -71,12 +102,11 @@ function QuickView() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
-  const setColorSize = (attr,type) => {
-    data.selected[type] = attr
-    setSelectedProduct({...data});
+  const setColorSize = (attr, type) => {
+    data.selected[type] = attr;
+    setSelectedProduct({ ...data });
   };
   const addToCardHandler = () => {
-
     dispatch(
       addToCart({
         ...selectedProduct,
@@ -109,9 +139,8 @@ function QuickView() {
   };
   useEffect(() => {
     getOutOfStock();
-    
+    getReviewListForProduct(data?.sku);
   }, [data]);
-
   const srcImage =
     data?.image?.indexOf("http") > -1
       ? data?.image
@@ -120,6 +149,7 @@ function QuickView() {
   useEffect(() => {
     setSelectedProduct(data);
     getOutOfStock();
+    getReviewListForProduct(data?.sku);
   }, []);
   useEffect(() => {
     if (data?.extension_attributes?.configurable_product_options) {
@@ -187,22 +217,24 @@ function QuickView() {
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
             <div className={`${styles.stars} d-flex-all-center`}>
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fill: "#FFD700", fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
-              <Star style={{ fontSize: 16 }} />
+              <Rating name="read-only" readOnly value={value} size="small" />
             </div>
             <div className={`${styles.rating} d-flex-all-center`}>
-              {visibility} rating
+              {calculateAvgReview()} rating <br />
             </div>
+            <br />
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
+          <div>
+            <ReviewModal id={data?.id} sku={data?.sku} />
+          </div>
           <div className={`${styles.price} d-flex`}>
-            <div className={styles.now}>Now {currency_symbol}{" "}{price}</div>
+            <div className={styles.now}>
+              Now {currency_symbol} {price}
+            </div>
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
           </div>
           <div className={`${styles.color} d-flex`}>
@@ -223,7 +255,9 @@ function QuickView() {
             </div> */}
             <div className={styles.title}>Color:&nbsp;</div>
             <span>
-              {data?.selected?.color?.label === false ? "WHITE" : data?.selected?.color?.label}
+              {data?.selected?.color?.label === false
+                ? "WHITE"
+                : data?.selected?.color?.label}
             </span>
             {data?.colors?.length > 0 &&
               data?.colors?.map((item) => (
@@ -233,7 +267,7 @@ function QuickView() {
                   className={`${styles.option}  c-pointer `}
                   onClick={() => {
                     // colorImageAction(item)
-                    setColorSize(item,"color");
+                    setColorSize(item, "color");
                   }}
                   style={{
                     transform:
@@ -294,9 +328,7 @@ function QuickView() {
                         ? "scale(1.2)"
                         : "scale(1)",
                   }}
-                  onClick={() =>
-                    setColorSize(c,"size")
-                  }
+                  onClick={() => setColorSize(c, "size")}
                 >
                   {c.label}{" "}
                 </div>

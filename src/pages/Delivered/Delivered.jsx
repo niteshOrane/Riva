@@ -5,7 +5,6 @@ import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/Delivered
 import { useSelector } from "react-redux";
 import { getOrderList } from "../../services/order/order.services";
 
-
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
   const [orderList, setOrderList] = React.useState([]);
@@ -13,6 +12,8 @@ function Delivered({ title = "Delivered" }) {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
       const temp = res?.data?.items?.map((li) => ({
+        increment_id: li?.increment_id,
+        currency_code: li?.base_currency_code,
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
@@ -35,9 +36,16 @@ function Delivered({ title = "Delivered" }) {
 
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
             {orderList.length > 0 &&
-              orderList?.filter(li => li.status !== "canceled")?.map((li) => (
-                <DeliveredOrders products={li.list} status={li.status} />
-              ))}
+              orderList
+                ?.filter((li) => li.status !== "canceled")
+                ?.map((li) => (
+                  <DeliveredOrders
+                    products={li.list}
+                    status={li.status}
+                    code={li?.currency_code}
+                    increment_id={li?.increment_id}
+                  />
+                ))}
           </div>
         </div>
       </div>

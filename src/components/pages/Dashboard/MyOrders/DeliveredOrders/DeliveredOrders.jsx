@@ -2,14 +2,14 @@ import React from "react";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
 import { extractColorSize } from "../../../../../util";
-const DeliveredOrders = ({ products, status }) => {
+const DeliveredOrders = ({ products, status, code, increment_id }) => {
   return products?.map((product) => {
     const getColorSize = (options) => {
       const { colors, size } = extractColorSize(
         options.map((o) => ({
           label: o.option_id === "92" ? "Color" : "Size",
           values: [{ value_index: o.option_value }],
-          attribute_id: o.option_id
+          attribute_id: o.option_id,
         }))
       );
 
@@ -22,7 +22,11 @@ const DeliveredOrders = ({ products, status }) => {
 
     return (
       <div className={styles.card}>
-        <span className="greyText">Order Id {product?.order_id}</span>
+        <div className={styles.incrementWrap}>
+          <span className="greyText">Order Id {increment_id}</span><br />
+          <span className={styles.reorder}>Reorder</span>
+        </div>
+
         <div className={styles.carItem}>
           <div className={styles.col1}>
             <div className={styles.img}>
@@ -56,7 +60,10 @@ const DeliveredOrders = ({ products, status }) => {
             </div>
           </div>
           <div className="text-center">
-            <strong>${product?.parent_item?.price}</strong>
+            <strong>
+              {code}
+              {product?.parent_item?.price}
+            </strong>
           </div>
           <div>
             <div className="d-flex align-items-center mt-12px">

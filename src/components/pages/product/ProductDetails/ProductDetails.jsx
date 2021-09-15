@@ -24,7 +24,8 @@ import ShareIcons from "./ShareIcons";
 import Rating from "@material-ui/lab/Rating";
 
 const ProductDetails = (props) => {
-  const { product, setColorSize, mediaImage, colorImage, currency_symbol } = props;
+  const { product, setColorSize, mediaImage, colorImage, currency_symbol } =
+    props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
@@ -155,7 +156,6 @@ const ProductDetails = (props) => {
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
   };
-
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
 
   return (
@@ -215,29 +215,29 @@ const ProductDetails = (props) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Rating
-                  name="simple-controlled"
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                />
+                <Rating name="read-only"readOnly value={value} />
               </div>
               <div className={`${styles.rating} d-flex-all-center`}>
-                {calculateAvgReview()}{" "}rating
+                {calculateAvgReview()} rating
               </div>
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
                 <div className={styles.text}>{product?.sku}</div>
               </div>
             </div>
+            <div>
+              <ReviewModal id={product?.id} sku={product?.sku} />
+            </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
-                  Was {currency_symbol}{" "}{parseFloat(origprice)?.toFixed(2) || ""}
+                  Was {currency_symbol}{" "}
+                  {parseFloat(origprice)?.toFixed(2) || ""}
                 </div>
               ) : null}
-              <div className={styles.now}>Now {currency_symbol}{" "}{price}</div>
+              <div className={styles.now}>
+                Now {currency_symbol} {price}
+              </div>
               <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
             </div>
             <div className={`${styles.color} d-flex`}>
@@ -247,8 +247,8 @@ const ProductDetails = (props) => {
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
                   ? productColorList?.find(
-                    (item) => product.selected.color.value === item.option_id
-                  )?.color
+                      (item) => product.selected.color.value === item.option_id
+                    )?.color
                   : "White"}
                 {"  "}
               </div>
@@ -271,19 +271,21 @@ const ProductDetails = (props) => {
                         src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
                           item?.color
                         )?.toLowerCase()}.png`}
-                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
                             ? styles.active
                             : ""
-                          }`}
+                        }`}
                         alt={item?.color}
                       />
                     ) : (
                       <img
                         src={item?.file}
-                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
                             ? styles.active
                             : ""
-                          }`}
+                        }`}
                         alt={item?.color}
                       />
                     )}
@@ -503,7 +505,13 @@ const ProductDetails = (props) => {
                     },
 
                     {
-                      name: <ReviewModal id={product?.id} sku={product?.sku} />,
+                      name: (
+                        <ReviewModal
+                          id={product?.id}
+                          sku={product?.sku}
+                          isDetail
+                        />
+                      ),
                       icon: "/assets/images/review.png",
                     },
                     {

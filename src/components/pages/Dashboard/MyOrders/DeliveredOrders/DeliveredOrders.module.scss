@@ -51,3 +51,13 @@
     margin-right: 12px;
   }
 }
+.incrementWrap{
+  display: flex;
+  justify-content: space-between;
+}
+.reorder{
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+}
+

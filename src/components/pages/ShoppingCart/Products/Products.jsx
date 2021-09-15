@@ -8,7 +8,7 @@ import Image from "../../../common/LazyImage/Image";
 import { editItemQntCart } from '../../../../store/actions/cart';
 
 
-const Products = ({ products }) => {
+const Products = ({ products,currency_symbol }) => {
 
   const dispatch = useDispatch();
 
@@ -95,7 +95,7 @@ const Products = ({ products }) => {
                       <div className={style.productPricing}>
                         <div className="d-flex align-items-center justify-content-between">
                           <strong className="f1 text-center color-primary">
-                            ${product.price}
+                            {currency_symbol}{product.price}
                           </strong>
                           <div className={style.counter}>
                             <span className="c-pointer material-icons-outlined" onClick={() => { handleDecrementProduct(product) }}>
@@ -107,11 +107,11 @@ const Products = ({ products }) => {
                             </span>
                           </div>
                           <strong className="f1 text-center  color-primary">
-                            ${product.price * product.qty}
+                            {currency_symbol}{product.price * product.qty}
                           </strong>
                         </div>
                         <div className={`text-right ${style.loyaltyPoints}`}>
-                          <span>Earn Loyalty Points: $2 ?</span>
+                          <span>Earn Loyalty Points: {currency_symbol}2 ?</span>
                         </div>
                       </div>
                     </div>
