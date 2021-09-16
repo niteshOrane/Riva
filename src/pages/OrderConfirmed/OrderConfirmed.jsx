@@ -38,7 +38,7 @@ function OrderConfirmed(props) {
   };
   useEffect(() => {
     if (orderId) {
-      dispatch(emptyCart());
+      dispatch(emptyCart())
       dispatch(emptyCartItem());
       getOrderDetails(orderId);
     }

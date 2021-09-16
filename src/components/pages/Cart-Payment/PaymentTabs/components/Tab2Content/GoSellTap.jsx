@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoSellElements } from "@tap-payments/gosell";
 import styles from "./Tab2Content.module.scss";
 import { cartPaymentTapAction } from "../../../../../../services/cart/cart.service";
@@ -13,11 +13,13 @@ import FormControl from "@material-ui/core/FormControl";
 
 function GoSellTap() {
   const dispatch = useDispatch();
-  const {store_name} = useSelector(state => state?.common?.store);
+  const { store_name } = useSelector((state) => state?.common?.store);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const callbackFunc = async (e) => {
     const subType = e.target.value;
     if (subType) {
+      setLoading(true);
       const res = await cartPaymentTapAction(subType);
       if (
         res.status === 200 &&
@@ -25,27 +27,42 @@ function GoSellTap() {
         res.data.length > 0 &&
         res.data[0]?.success
       ) {
+        setLoading(false);
         window.location.href = res.data?.[0]?.redirect_url;
+      } else {
+        return setLoading(false);
       }
     }
+    setLoading(false);
   };
   return (
-    <div className={styles.goSellWrap}>
-      <FormControl component="fieldset">
-        <RadioGroup onChange={callbackFunc}>
-          <FormControlLabel value="card" control={<Radio />} label="card" />
-          {store_name=== "Kuwait" &&  <FormControlLabel value="knet" control={<Radio />} label="knet" />}
-          {store_name==="Saudi Arabia" && <FormControlLabel value="mada" control={<Radio />} label="mada" />}
-          
-         {store_name=== "Bahrain" &&  <FormControlLabel
-            value="benefit"
-            control={<Radio />}
-            label="benefit"
-          />}
-         
-        </RadioGroup>
-      </FormControl>
-    </div>
+    <>
+      <div className={styles.goSellWrap}>
+        <FormControl component="fieldset">
+          <RadioGroup onChange={callbackFunc}>
+            <FormControlLabel value="card" control={<Radio />} label="card" />
+            {store_name === "Kuwait" && (
+              <FormControlLabel value="knet" control={<Radio />} label="knet" />
+            )}
+            {store_name === "Saudi Arabia" && (
+              <FormControlLabel value="mada" control={<Radio />} label="mada" />
+            )}
+
+            {store_name === "Bahrain" && (
+              <FormControlLabel
+                value="benefit"
+                control={<Radio />}
+                label="benefit"
+              />
+            )}
+          </RadioGroup>
+        </FormControl>
+        <br />
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        {loading && <strong>Redirecting to payments page...</strong>}
+      </div>
+    </>
   );
 }
 
