@@ -63,7 +63,7 @@
   margin-right: auto;
   margin-left: auto;
   width: 90vw;
-  padding-left: 12px;
+  @include left('padding', 12px);
 }
 
 .w-100 {
@@ -267,7 +267,7 @@ nav.nav {
 }
 
 .logo-strong {
-  @include left('margin', 100px)
+  @include left('margin', 100px);
 }
 // nav circles
 .circleBg-skin {

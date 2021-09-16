@@ -11,7 +11,7 @@ const Search = ({ handleChange, value = "Search" }) => (
       onChange={handleChange}
       startAdornment={
         <img
-          style={{ marginRight: "3px" }}
+          className="searchBox" alt="Enter to Search"
           src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/88518f18-5a2c-4c12-adce-66736037ca22.svg"
         />
       }

@@ -47,3 +47,6 @@
     border-color: transparent;
   }
 }
+.searchBox{
+  @include right('margin', 3px);
+}
