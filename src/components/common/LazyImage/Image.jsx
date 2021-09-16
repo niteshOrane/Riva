@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
 import { URL } from "../../../util";
 // import {
@@ -12,7 +14,6 @@ import { URL } from "../../../util";
 //   MagnifierPreview,
 //   MagnifierZoom,
 // } from "react-image-magnifiers";
-import ReactImageZoom from "react-image-zoom";
 
 const LazyImage = (props) => {
   const {
@@ -32,32 +33,27 @@ const LazyImage = (props) => {
   const srcImage =
     src?.indexOf("http") > -1
       ? src
-      : `${
-          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
-        }/${src}`;
+      : `${type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
+      }/${src}`;
 
   const onImageError = () => {
     setError(true);
   };
   const propsImg = {
-    width: 500,
-    height: 600,
-    zoomWidth: 500,
-    onError:() => alert("loaded"),
     img: !error
       ? srcImage
       : defaultImage
-      ? defaultImage
-      : "https://via.placeholder.com/295x295?text=Image+Not+Available",
+        ? defaultImage
+        : "https://via.placeholder.com/295x295?text=Image+Not+Available",
     zoomStyle:
-      "z-index:10;right:-31px;border:1px solid black;box-shadow: rgba(0, 0, 0) 0px 3px 8px;",
+      "z-index:10;right:-11px;border:1px solid black",
   };
   React.useEffect(() => {
-  //   window.addEventListener("load", event => {
-  //     var image = document.querySelector('img');
-  //     var isLoaded = image.complete && image.naturalHeight !== 0;
-  //     alert(isLoaded);
-  // });
+    //   window.addEventListener("load", event => {
+    //     var image = document.querySelector('img');
+    //     var isLoaded = image.complete && image.naturalHeight !== 0;
+    //     alert(isLoaded);
+    // });
   }, [srcImage])
 
   if (isZoom) {
@@ -77,8 +73,8 @@ const LazyImage = (props) => {
         !error
           ? srcImage
           : defaultImage
-          ? defaultImage
-          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
+            ? defaultImage
+            : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}

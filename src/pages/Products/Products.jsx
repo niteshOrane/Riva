@@ -203,7 +203,7 @@ function Products(props) {
           )}
         />
       </div>
-      <div className="container-90 max-width-1600 mx-auto">
+      <div className="container-90 container-row max-width-1600 mx-auto">
         <div className="my-50px d-flex align-items-center justify-content-between">
           {categorypromotionbanner.map((item, index) => {
             return (<div key={`divBanner_${index}`} className={styles.bannerImg}>

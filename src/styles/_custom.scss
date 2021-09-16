@@ -51,6 +51,10 @@
   margin-right: auto;
   margin-left: auto;
 }
+.container-row {
+  width: 76vw;
+  display: grid
+}
 .max-width-1750 {
   max-width: 1750px;
 }
@@ -63,7 +67,7 @@
   margin-right: auto;
   margin-left: auto;
   width: 90vw;
-  @include left('padding', 12px);
+  @include left('padding', 0px);
 }
 
 .w-100 {

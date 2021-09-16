@@ -32,7 +32,8 @@ const NavLinks = React.memo(() => {
           </span>
           <span className="align-self-end font-light-black">
             Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
-          </span>{' '}
+            &nbsp; &nbsp;
+          </span>{'   '}
         </span>
       </li>
 

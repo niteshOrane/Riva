@@ -4,7 +4,7 @@ import style from "./navbar.module.scss";
 const NavLinks = () => {
   return (
     <ul className="nav-list d-flex align-items-center gap-12px">
-      <li className="gap-12px nav-li">
+      <li className="nav-li">
         <span className="material-icons-outlined font-light-black">search</span>
         <span className="align-self-end font-light-black">Search </span>
       </li>

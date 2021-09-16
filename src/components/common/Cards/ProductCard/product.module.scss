@@ -12,7 +12,6 @@
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
     .productBtn {
       display: block;
     }
@@ -37,17 +36,14 @@
       display: flex;
       .imgContainer {
         position: relative;
-        padding-bottom: 100%;
-        position: relative;
         -webkit-box-flex: 1;
         flex-grow: 1;
         img {
-          position: absolute;
           inset: 0px;
           margin: auto;
           max-width: 100%;
           max-height: 100%;
-          background-color: rgb(255, 255, 255);
+          background-color: transparent;
           filter: brightness(0.975);
           object-fit: contain;
         }
@@ -301,5 +297,5 @@ border: solid 1px #2c2a2a;
   height: 100%;
 }
 .actionContainerText{
-  @include left('margin', 50px)
+  @include left('margin', 0px)
 }

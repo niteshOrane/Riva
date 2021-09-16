@@ -34,7 +34,7 @@ function CategoriesCircles({ isHomePage }) {
   }, [links, defaultCategory]);
 
   return (
-    <div style={{ margin: `0 ${isHomePage ? '10px' : 'auto'}` }}>
+    <div style={{ margin: `0 ${isHomePage ? '5px' : 'auto'}` }}>
       {links?.children_data?.map(
         (item) =>
           item.is_active == 1 && (
