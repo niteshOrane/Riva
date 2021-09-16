@@ -131,7 +131,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
           </div>
           {/* <div className={styles.description}>{data.mainCard.description}</div> */}
         </div>
-        <div>
+        <div className={styles.checkboxWrap}>
           {dataItems.map((product, index) => (
             <div style={{ position: "relative" }}>
               <div
