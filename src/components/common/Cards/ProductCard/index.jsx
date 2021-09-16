@@ -32,10 +32,9 @@ const ProductCard = ({
   extraOridnary,
   isListing,
   isRecommended,
-  currency_symbol
 }) => {
   const { custom_attributes, id, image, name } = product;
-
+  const {currency_symbol} = useSelector(state => state?.common?.store);
   let {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -184,7 +183,6 @@ const ProductCard = ({
       </div>
     );
   }
-
   function SamplePrevArrow(props) {
     const { className, onClick } = props;
     return (
@@ -319,7 +317,7 @@ const ProductCard = ({
             }`}
           >
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
-              <div className={styles.was}>Was {origprice || ""}</div>
+              <div className={styles.was}>Was  {currency_symbol}{origprice || ""}</div>
             ) : null}
             <div className={styles.now}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}

@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     position: "relative",
   },
-  viewAll:{
-    fontSize:"13px",
-    cursor:"pointer",
-    textDecoration:"underline"
-  }
+  viewAll: {
+    fontSize: "13px",
+    cursor: "pointer",
+    textDecoration: "underline",
+  },
 }));
 
 const dummyData = [
@@ -64,7 +64,7 @@ const dummyData = [
   },
 ];
 
-export default function ReviewModal({ id, sku,isDetail}) {
+export default function ReviewModal({ id, sku, isDetail }) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
@@ -80,9 +80,9 @@ export default function ReviewModal({ id, sku,isDetail}) {
   const handleClose = () => {
     setOpen(false);
   };
-  const onChange = (event,newValue) => {
-    setRate(newValue)
-  }
+  const onChange = (event, newValue) => {
+    setRate(newValue);
+  };
   const getReviewListForProduct = async (val) => {
     const res = await getReviewList(val);
     if (res.status === 200 && res?.data) {
@@ -118,8 +118,8 @@ export default function ReviewModal({ id, sku,isDetail}) {
 
   const deleteReviewAction = async (fnValue) => {
     const res = await deleteReviewFromList(fnValue);
-    if(res.status===200){
-      dispatch(showSnackbar("review deleted successfully", "success"))
+    if (res.status === 200) {
+      dispatch(showSnackbar("review deleted successfully", "success"));
       getReviewListForProduct(sku);
     }
   };
@@ -138,7 +138,13 @@ export default function ReviewModal({ id, sku,isDetail}) {
   };
   return (
     <div>
-      <span onClick={handleOpen}>{isDetail ? "Review" : <span className = {classes.viewAll}>Rate this product</span> }</span>
+      <span onClick={handleOpen}>
+        {isDetail ? (
+          "Review"
+        ) : (
+          <span className={classes.viewAll}>Rate this product</span>
+        )}
+      </span>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -165,7 +171,7 @@ export default function ReviewModal({ id, sku,isDetail}) {
               <Rating
                 name="simple-controlled"
                 value={rate}
-                onChange={(event, newValue) => onChange(event,newValue)}
+                onChange={(event, newValue) => onChange(event, newValue)}
               />
             </div>
             <hr />
@@ -205,13 +211,22 @@ export default function ReviewModal({ id, sku,isDetail}) {
                   >
                     star_border
                   </span>
-                  <b>{calculateAvgReview()}</b>
+                  <b>
+                    {calculateAvgReview()}
+                  </b>
                 </div>
                 <span>
-                  {reviewRes?.reduce(
-                    (acc, li) => acc + li?.ratings[0]?.value,
-                    0
-                  )}{" "}
+                  {isNaN(
+                    reviewRes?.reduce(
+                      (acc, li) => acc + li?.ratings[0]?.value,
+                      0
+                    )
+                  )
+                    ? 0
+                    : reviewRes?.reduce(
+                        (acc, li) => acc + li?.ratings[0]?.value,
+                        0
+                      )}{" "}
                   ratings and {reviewRes?.length} reviews
                 </span>
               </div>

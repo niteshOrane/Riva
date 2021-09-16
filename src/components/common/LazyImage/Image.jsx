@@ -43,6 +43,7 @@ const LazyImage = (props) => {
     width: 500,
     height: 600,
     zoomWidth: 500,
+    onError:() => alert("loaded"),
     img: !error
       ? srcImage
       : defaultImage
@@ -51,14 +52,24 @@ const LazyImage = (props) => {
     zoomStyle:
       "z-index:10;right:-31px;border:1px solid black;box-shadow: rgba(0, 0, 0) 0px 3px 8px;",
   };
+  React.useEffect(() => {
+  //   window.addEventListener("load", event => {
+  //     var image = document.querySelector('img');
+  //     var isLoaded = image.complete && image.naturalHeight !== 0;
+  //     alert(isLoaded);
+  // });
+  }, [srcImage])
 
   if (isZoom) {
     return (
       <div>
-        <ReactImageZoom {...propsImg} />
+        <ReactImageZoom
+          {...propsImg}
+        />
       </div>
     );
   }
+
 
   return (
     <img

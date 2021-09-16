@@ -33,27 +33,30 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const getOutOfStock = async (val) => {
     if (dataItems?.length > 0) {
       const { color, size, id } = selectedColorSize;
-
-      setLoading(true);
-      const res = await outOfStockCheck(id, color, size);
-      if (res && res?.data?.data) {
-        if (res?.data?.data?.Stock === 1) {
-          setLoading(false);
+      if ((color, size, id)) {
+        setLoading(true);
+        const res = await outOfStockCheck(id, color, size);
+        if (res && res?.data?.data) {
+          if (res?.data?.data?.Stock === 1) {
+            setLoading(false);
+            setSelectedColorSize({ color: null, size: null, id: null });
+            return true;
+          }
+          if (res?.data?.data?.Stock === 0) {
+            dispatch(showSnackbar("Product is out of stock", "error"));
+            setSelectedColorSize({ color: null, size: null, id: null });
+            setLoading(false);
+            return false;
+          }
+        } else {
+          dispatch(showSnackbar("something went wrong", "error"));
           setSelectedColorSize({ color: null, size: null, id: null });
-          return true;
-        }
-        if (res?.data?.data?.Stock === 0) {
-          dispatch(showSnackbar("Product is out of stock", "error"));
-          setSelectedColorSize({ color: null, size: null, id: null });
           setLoading(false);
-          return false;
         }
-      } else {
-        dispatch(showSnackbar("something went wrong", "error"));
-        setSelectedColorSize({ color: null, size: null, id: null });
         setLoading(false);
+      } else {
+        dispatch(showSnackbar("Please select one color and size", "error"));
       }
-      setLoading(false);
     }
   };
 

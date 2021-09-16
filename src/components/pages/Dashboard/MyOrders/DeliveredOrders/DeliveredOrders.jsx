@@ -1,8 +1,10 @@
 import React from "react";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
+import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
 import { extractColorSize } from "../../../../../util";
 const DeliveredOrders = ({ products, status, code, increment_id }) => {
+  console.log({products})
   return products?.map((product) => {
     const getColorSize = (options) => {
       const { colors, size } = extractColorSize(
@@ -71,7 +73,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
                 <icons.Star />
               </span>
               <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                Rate & Review Product
+                <ReviewModal id = {product?.product_id} sku = {product?.sku} />
               </h4>
             </div>
             <div className="d-flex align-items-center mt-12px">
