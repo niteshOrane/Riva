@@ -221,9 +221,9 @@ function OrderReview({
               <input
                 onChange={() => onSpeedDeliveryRadio(item)}
                 type="radio"
-                checked={
+                checked={activeDelivery ?
                   `${item?.carrier_code}_${item?.method_code}` ===
-                  activeDelivery
+                  activeDelivery : false
                 }
                 name={item.method_code}
                 id={item.method_code}

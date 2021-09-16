@@ -9,8 +9,7 @@ import Congratulations from "../../components/pages/Dashboard/OrderConfirmed/Con
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
 import styles from "./OrderConfirmed.module.scss";
-import { emptyCart } from '../../store/actions/auth';
-import { getCart } from '../../store/actions/cart';
+import { emptyCart , emptyCartItem} from '../../store/actions/auth';
 import { orderConfirmed } from "../../services/order/order.services";
 
 import { showSnackbar } from "../../store/actions/common";
@@ -40,7 +39,7 @@ function OrderConfirmed(props) {
   useEffect(() => {
     if (orderId) {
       dispatch(emptyCart());
-      dispatch(getCart());
+      dispatch(emptyCartItem());
       getOrderDetails(orderId);
     }
   }, [orderId]);
