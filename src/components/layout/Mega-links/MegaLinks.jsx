@@ -117,7 +117,7 @@ const MegaLinks = ({ links }) => {
                     </div>
                   </div>
                   <div className={style.megaImg}>
-                    <Image src={link.image} width="100%" alt="change me" />
+                    <Image src={link?.image?.replace('index.php', '')} width="100%" alt="change me" />
                     <Link onClick={()=>{onSelectCaegory(link.name)}}
                       to={`/products/${link.url_key}/${link.id}`}
                       className={`${style.megaLink} p-12px d-block`}

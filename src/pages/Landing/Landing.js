@@ -39,7 +39,7 @@ function Landing() {
     <>
       <div>
         <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
-        <div className="container-with-circles">
+        <div >
           <Slider
             className="categoriesSlider"
             items={selectedCategory}
@@ -54,10 +54,10 @@ function Landing() {
               >
                 <div className="catSliderImgsSpace">
                   <Image
-                    src={`${URL.baseUrl}${item?.image}`}
+                    src={item?.image?.replace('index.php', '')}
                     width="100%"
                     alt={item?.name}
-                    customeStyle = {{borderRadius:"50%"}}
+                    customeStyle={{ borderRadius: "50%" }}
                   />
                 </div>
                 <div>
