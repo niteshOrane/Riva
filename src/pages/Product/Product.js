@@ -141,7 +141,7 @@ const Product = (props) => {
               slidesToShow={4}
               arrows
               ref={refContainer}
-              render={(item) => <ProductCard product={item} />}
+              render={(item) => <ProductCard isComplete product={item} />}
             />
           </div>
           <hr style={{marginTop:"100px",marginBottom:"60px"}} />

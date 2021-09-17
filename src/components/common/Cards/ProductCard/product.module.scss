@@ -302,3 +302,33 @@ border: solid 1px #2c2a2a;
 .actionContainerText{
   @include left('margin', 0px)
 }
+
+.sizeType{
+  display: flex;
+  justify-content: center;
+  span{
+    margin: 0 28px 0 0;
+    font-family: Jost;
+    font-size: 18px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #161616;
+  }
+}
+.sizeWrap{
+ p{
+  margin: 0 72px 4px;
+  padding-bottom: 10px;
+  font-family: Jost;
+  font-size: 21px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.95;
+  letter-spacing: normal;
+  color: black;
+ }
+}

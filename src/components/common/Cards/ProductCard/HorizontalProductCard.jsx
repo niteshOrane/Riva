@@ -20,7 +20,7 @@ const HorizontalProductCard = ({
   setSelectedColorSize,
   selectedColorSize,
   setAttrValue,
-  attrValue
+  attrValue,
 }) => {
   const {
     id,
@@ -32,6 +32,7 @@ const HorizontalProductCard = ({
   } = product;
 
   const [colorImg, setColorImg] = useState();
+  const [sizeIndex,setSizeIndex] = useState(0)
   const getDetails = async (fnValue, fnLabel) => {
     if (fnValue && fnLabel) {
       const res = await getProductColor(fnValue);
@@ -45,16 +46,15 @@ const HorizontalProductCard = ({
   const colors =
     product?.options && product?.options.length
       ? Object.keys(
-        product?.options?.filter((e) => e.label === "Color")?.[0]?.values
-      )
+          product?.options?.filter((e) => e.label === "Color")?.[0]?.values
+        )
       : [];
   const sizes =
     product?.options && product?.options.length
       ? Object.keys(
-        product?.options?.filter((e) => e.label === "Size")?.[0]?.values
-      )
+          product?.options?.filter((e) => e.label === "Size")?.[0]?.values
+        )
       : [];
-
   useEffect(() => {
     getDetails(
       id,
@@ -105,12 +105,12 @@ const HorizontalProductCard = ({
                     style={{
                       transform:
                         colorItem.label === selectedColorSize.color &&
-                          id == selectedColorSize?.id
+                        id == selectedColorSize?.id
                           ? "scale(1)"
                           : "scale(.9)",
                       border:
                         colorItem.label === selectedColorSize.color &&
-                          id == selectedColorSize?.id
+                        id == selectedColorSize?.id
                           ? "1px solid red"
                           : null,
                     }}
@@ -124,26 +124,9 @@ const HorizontalProductCard = ({
           </div>
           <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Size:</span>
-            {sizes?.map((sizeName) => {
-              const sizeItem = product?.options.filter(
+          <span>{product?.options.filter(
                 (e) => e.label === "Size"
-              )[0].values[sizeName];
-              return (
-                <span
-                  onClick={() => {
-                    setSelectedColorSize({
-                      ...selectedColorSize,
-                      size: sizeItem.label,
-                      id,
-                    });
-                    setAttrValue({ ...attrValue, sizeValue: sizeName });
-                  }}
-                  className={styles.option}
-                >
-                  {sizeItem.label}
-                </span>
-              );
-            })}
+              )[0].values[sizes[sizeIndex]]?.label}</span>
           </div>
           <div
             className={`${styles.options} gap-12px d-flex align-items-center`}
@@ -161,16 +144,17 @@ const HorizontalProductCard = ({
                       id,
                     });
                     setAttrValue({ ...attrValue, sizeValue: color });
+                   setSizeIndex(sizes?.indexOf(color))
                   }}
                   style={{
                     transform:
                       sizeItem.label === selectedColorSize.size &&
-                        id == selectedColorSize?.id
+                      id == selectedColorSize?.id
                         ? "scale(1)"
                         : "scale(.9)",
                     border:
                       sizeItem.label === selectedColorSize.size &&
-                        id == selectedColorSize?.id
+                      id == selectedColorSize?.id
                         ? "1px solid red"
                         : null,
                   }}

@@ -164,7 +164,6 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
                 setSelectedColorSize={setSelectedColorSize}
                 attrValue={attrValue}
                 setAttrValue={setAttrValue}
-                loading={loading}
               />
               <hr className="my-10px" />
             </div>

@@ -183,3 +183,17 @@ h6 {
 .MuiDialog-paperWidthSm {
   max-width: 704px !important;
 }
+.legend{
+  width: 100% !important;
+  height: 71px;
+  padding: 0;
+  margin: 0;
+  bottom: 0px !important;
+  margin-left: -50% !important;
+  border-radius: 0px !important;
+  background-color: #fff !important;
+  color: black !important;
+  opacity: 0.65 !important;}
+.legend:hover{
+  opacity: 1;
+}

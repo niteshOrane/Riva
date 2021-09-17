@@ -22,6 +22,7 @@ import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 import ReviewModal from "./ReviewPopUp";
 import ShareIcons from "./ShareIcons";
 import Rating from "@material-ui/lab/Rating";
+import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 
 const ProductDetails = (props) => {
   const { product, setColorSize, mediaImage, colorImage, currency_symbol } =
@@ -185,6 +186,9 @@ const ProductDetails = (props) => {
               type="product-details"
               isZoom
             />
+            <div className={styles.circlesContainer}>
+              <CategoriesCircles />
+            </div>
             {/*<ImageDropdown />*/}
 
             <div className={styles.actionContainerTopRight}>
@@ -215,7 +219,7 @@ const ProductDetails = (props) => {
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
-                <Rating name="read-only"readOnly value={value} />
+                <Rating name="read-only" readOnly value={value} />
               </div>
               <div className={`${styles.rating} d-flex-all-center`}>
                 {calculateAvgReview()} rating

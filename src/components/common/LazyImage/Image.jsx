@@ -33,39 +33,31 @@ const LazyImage = (props) => {
   const srcImage =
     src?.indexOf("http") > -1
       ? src
-      : `${type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
-      }/${src}`;
+      : `${
+          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
+        }/${src}`;
 
   const onImageError = () => {
     setError(true);
   };
   const propsImg = {
+    width: 660,
+    height: 874,
     img: !error
       ? srcImage
       : defaultImage
-        ? defaultImage
-        : "https://via.placeholder.com/295x295?text=Image+Not+Available",
-    zoomStyle:
-      "z-index:10;right:-11px;border:1px solid black",
+      ? defaultImage
+      : "https://via.placeholder.com/295x295?text=Image+Not+Available",
+    zoomStyle: "z-index:10;right:-11px;border:1px solid black",
   };
-  React.useEffect(() => {
-    //   window.addEventListener("load", event => {
-    //     var image = document.querySelector('img');
-    //     var isLoaded = image.complete && image.naturalHeight !== 0;
-    //     alert(isLoaded);
-    // });
-  }, [srcImage])
 
   if (isZoom) {
     return (
       <div>
-        <ReactImageZoom
-          {...propsImg}
-        />
+        <ReactImageZoom {...propsImg} />
       </div>
     );
   }
-
 
   return (
     <img
@@ -73,8 +65,8 @@ const LazyImage = (props) => {
         !error
           ? srcImage
           : defaultImage
-            ? defaultImage
-            : "https://via.placeholder.com/295x295?text=Image+Not+Available"
+          ? defaultImage
+          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}

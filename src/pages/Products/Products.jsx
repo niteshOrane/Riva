@@ -10,14 +10,17 @@ import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 
 function Products(props) {
-  const handleQuickView = () => { };
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const handleQuickView = () => {};
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   const refContainer = useRef();
   const refContainerLoad = useRef();
   const onScreen = useOnScreen(refContainerLoad);
-  const { middleBanner: categorypromotionbanner } = useLanding('categorypromotionbanner');
+  const { middleBanner: categorypromotionbanner } = useLanding(
+    "categorypromotionbanner"
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [sortField, setSortField] = useState("entity_id");
@@ -58,7 +61,9 @@ function Products(props) {
   return (
     <div>
       <div className="container-90 max-width-1600">
-        <div className={styles.essentials}>{sessionStorage.getItem("selectedCategory")}</div>
+        <div className={styles.essentials}>
+          {sessionStorage.getItem("selectedCategory")}
+        </div>
         <div className={styles.header}>
           <div className="d-flex align-items-center">
             <span className="color-grey">
@@ -121,16 +126,20 @@ function Products(props) {
             categoryId={props.match.params.categoryId}
           />
         </div>
+        <div className={styles.circlesContainer}>
+          <CategoriesCircles />
+        </div>
       </div>
       {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
       {!loading && !products.length && (
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        }`}
       >
         {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -147,10 +156,11 @@ function Products(props) {
         ))}
       </div>
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -206,18 +216,18 @@ function Products(props) {
       <div className="container-90 container-row max-width-1600 mx-auto">
         <div className="my-50px d-flex align-items-center justify-content-between">
           {categorypromotionbanner.map((item, index) => {
-            return (<div key={`divBanner_${index}`} className={styles.bannerImg}>
-              <Link to={`/products/${item.title}/${item?.categories}`}>
-                <Image
-                  alt={item?.title}
-                  src={
-                    item?.image
-                  }
-                  defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                  width="100%"
-                />
-              </Link>
-            </div>)
+            return (
+              <div key={`divBanner_${index}`} className={styles.bannerImg}>
+                <Link to={`/products/${item.title}/${item?.categories}`}>
+                  <Image
+                    alt={item?.title}
+                    src={item?.image}
+                    defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                    width="100%"
+                  />
+                </Link>
+              </div>
+            );
           })}
         </div>
       </div>

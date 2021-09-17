@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
-import { setAttributes, toggleQuickView } from "../../../../store/actions/common";
+import {
+  setAttributes,
+  toggleQuickView,
+} from "../../../../store/actions/common";
 import { extractColorSize, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
@@ -13,10 +15,9 @@ import {
   getProductColor,
 } from "../../../../services/product/product.service";
 import styles from "./product.module.scss";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import wishlist from "../../../../store/reducers/wishlist/wishlist";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 const TempLink = ({ children, product }) => {
   if (product?.sku)
@@ -32,9 +33,10 @@ const ProductCard = ({
   extraOridnary,
   isListing,
   isRecommended,
+  isComplete,
 }) => {
   const { custom_attributes, id, image, name } = product;
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   let {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -53,9 +55,6 @@ const ProductCard = ({
   const [attributes, setattributes] = useState({ colors: [], size: [] });
   const [productItem, setProductItem] = useState({});
   const [colorImg, setColorImg] = useState(null);
-
-
-
   useEffect(() => {
     if (product?.extension_attributes?.configurable_product_options) {
       const { colors, size } = extractColorSize(
@@ -63,9 +62,17 @@ const ProductCard = ({
       );
 
       setattributes({ colors, size });
-      
-     
+
       product["selected"] = { color: colors[0], size: size[0] };
+    }
+
+    setProductItem(product);
+  }, [product]);
+  useEffect(() => {
+    if (isComplete) {
+      const colors = Object.values(product?.options?.[0]?.values);
+
+      setattributes({ colors });
     }
 
     setProductItem(product);
@@ -204,46 +211,55 @@ const ProductCard = ({
     );
   }
   const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
-  const settings = {
-    infinite: true,
-    adaptiveHeight: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    className: "notes-slider",
-    nextArrow: <SampleNextArrow onClick={handleChange} />,
-    prevArrow: <SamplePrevArrow onClick={handleChange} />,
-  };
+
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
   return (
     <>
-      <div style={isRecommended ? {padding:"0px"} : null} key={id} className={styles.productCard}>
+      <div
+        style={isRecommended ? { padding: "2px" } : null}
+        key={id}
+        className={styles.productCard}
+      >
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
-          <div className={styles.listingSlider}>
-            <div className={styles.imgContainer_P}>
-              <Slider {...settings}>
-                {productItem?.media_gallery_entries?.map((item, indexitem) => (
-                  <TempLink product={productItem}>
-                    <Image
-                      src={
-                        colorImg ||
-                        `${
-                          !productItem?.productColorImage
-                            ? URL.baseUrlProduct
-                            : ""
-                        }/${item?.file}`
-                      }
-                      defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                      width="100%"
-                    />
-                  </TempLink>
-                ))}
-              </Slider>
-            </div>
-          </div>
+          <TempLink product={productItem}>
+          <Carousel
+            showThumbs={false}
+            showStatus={false}
+            showArrows={false}
+            autoPlay
+            showIndicators={false}
+            interval={2000}
+          >
+            {productItem?.media_gallery_entries?.map((item, indexitem) => (
+              <div>
+                <TempLink product={productItem}>
+                  <Image
+                    src={
+                      colorImg ||
+                      `${
+                        !productItem?.productColorImage
+                          ? URL.baseUrlProduct
+                          : ""
+                      }/${item?.file}`
+                    }
+                    defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                    width="100%"
+                  />
+                  <div className={`legend ${styles.sizeWrap}`}>
+                    <p>SIZE</p>
+                    <div className={styles.sizeType}>
+                      {attributes?.size?.map((li) => (
+                        <span>{li?.label}</span>
+                      ))}
+                    </div>
+                  </div>
+                </TempLink>
+              </div>
+            ))}
+          </Carousel>
+          </TempLink>
         )}
         {!isListing && (
           <div className={styles.imageContainer}>
@@ -317,12 +333,14 @@ const ProductCard = ({
             }`}
           >
             {origpriceWithoutCurrency > priceWithoutCurrency ? (
-              <div className={styles.was}>Was  {currency_symbol}{origprice || ""}</div>
+              <div className={styles.was}>
+                Was {currency_symbol}
+                {origprice || ""}
+              </div>
             ) : null}
             <div className={styles.now}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
-              {currency_symbol}{" "}
-              {price}
+              {currency_symbol} {price}
             </div>
           </div>
           <div
@@ -360,7 +378,7 @@ const ProductCard = ({
                         src={item?.file}
                         className={`${styles.colorItem} 
                         ${
-                          product.selected.color.value === item.value
+                          product?.selected?.color?.value === item?.value
                             ? styles.active
                             : ""
                         }`}

@@ -52,6 +52,8 @@
   grid-auto-flow: dense;
   grid-gap: 12px;
   min-height: 90vh;
+  margin-left: 3rem;
+  margin-right: 4.2rem;
   @include tablet {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -136,6 +138,7 @@
 
 .twoColumnsLayOut {
   grid-template-columns: repeat(2, 1fr);
+  // margin-right: 70px;
 }
 .threeColumnsLayOut {
   grid-template-columns: repeat(3, 1fr);
@@ -145,4 +148,7 @@
   text-align: center;
   font-size: 1.2rem;
   margin: 20px auto;
+}
+.circlesContainer{
+  padding-left: 15px;
 }
