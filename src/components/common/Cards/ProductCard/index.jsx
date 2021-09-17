@@ -228,7 +228,7 @@ const ProductCard = ({
             showThumbs={false}
             showStatus={false}
             showArrows={false}
-            autoPlay
+            autoPlay={false}
             showIndicators={false}
             interval={2000}
           >
