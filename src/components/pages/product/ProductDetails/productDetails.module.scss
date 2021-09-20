@@ -223,7 +223,8 @@
       }
 
       .options {
-        margin-left: 27px;
+        
+        @include left("margin", 27px);
         .option {
           display: inline-block;
           width: 13px;
@@ -397,7 +398,7 @@
         color: #161616;
 
         .title {
-          margin-right: 18px;
+          @include right("margin", 18px);
         }
 
         .counter {

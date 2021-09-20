@@ -150,5 +150,5 @@
   margin: 20px auto;
 }
 .circlesContainer{
-  padding-left: 15px;
+  @include left("padding", 15px);
 }

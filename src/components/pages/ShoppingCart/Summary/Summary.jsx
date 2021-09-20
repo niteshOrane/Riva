@@ -43,7 +43,7 @@ const Summary = ({ currency_symbol }) => {
         </div>
 
         <div className={style.checkoutBtn}>
-          <Link to="/cart-payment">
+          <Link to="/delivery-address">
             <button type="button">SECURE CHECKOUT</button>
           </Link>
         </div>

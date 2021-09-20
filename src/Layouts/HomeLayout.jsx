@@ -33,7 +33,7 @@ const MainLayout = ({ children }) => {
   useEffect(() => {
     const parsed = queryString.parse(window?.location?.search);
     if (parsed && parsed?.["tap_id"]) {
-      window.location.href= `${window.location.origin}/#/result/tap${window?.location?.search}`;
+      window.location.href = `${window.location.origin}/#/result/tap${window?.location?.search}`;
     }
     if (paths.includes(children?.props.location.pathname)) {
       if (!children.props.auth.isAuthenticated) {
@@ -47,17 +47,19 @@ const MainLayout = ({ children }) => {
   });
 
   return (
-    <div dir={store.language === 'Arabic' ? 'rtl' : 'ltr'}>
-      {mainHeader &&
-        <MainHeader mainHeade={mainHeader} disableMegicLink={Boolean(true)} />}
-      <SignUpCard />
-      {childRender ? <>{paths.includes(children?.props.location.pathname) && !children.props.auth.isAuthenticated ? <ShoppingCart /> : children}</> : <Landing />}
-      <Cart />
-      <Footer />
-      <ChatButton />
-      <Wishlist />
-      <QuickView />
-    </div>
+    <bdo dir={store.language === 'Arabic' ? 'rtl' : 'ltr'}>
+      <div >
+        {mainHeader &&
+          <MainHeader mainHeade={mainHeader} disableMegicLink={Boolean(true)} />}
+        <SignUpCard />
+        {childRender ? <>{paths.includes(children?.props.location.pathname) && !children.props.auth.isAuthenticated ? <ShoppingCart /> : children}</> : <Landing />}
+        <Cart />
+        <Footer />
+        <ChatButton />
+        <Wishlist />
+        <QuickView />
+      </div>
+    </bdo>
   );
 };
 

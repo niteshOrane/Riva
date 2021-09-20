@@ -3,26 +3,26 @@
 }
 
 .circlesContainer {
-  margin-left: 3px;
+  @include left("margin", 3px);
   display: flex;
   flex-direction: column;
   gap: 4px;
   float: left;
-  margin-left: -65px;
+  @include left("margin", -65px);
   div {
     cursor: pointer;
   }
 }
 .grid {
-  padding-left: 4px;
+  @include left("padding", 4px);
   margin-top: 30px;
   .col1 {
-    margin-left: 10px;
+    @include left("margin", 10px);
     cursor: pointer;
   }
   .col2 {
     width: 50%;
-    margin-right: 30px;
+    @include right("margin", 30px);
   }
   .col2Grid {
     display: grid;

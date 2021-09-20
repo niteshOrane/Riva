@@ -60,7 +60,7 @@ function OrderReview({
   };
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    if (activeDelivery != null) {
+    if (activeDelivery && activeDelivery != null) {
       history.push("/cart-payment");
     } else {
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
@@ -93,8 +93,20 @@ function OrderReview({
     );
     setCartPaymentInfo(cartPayment);
     getShippingInfo();
-  }, [cartPayment]);
 
+  }, [cartPayment]);
+  useEffect(() => {  return () => {
+      setTotalAmout(0);
+      setCouponCode("");
+      setCouponDiscount(false);
+      setDiscount(0);
+      setActiveDelivery(null);
+      setTotalDC(0);
+      setTotalTax(0);
+      setTotalAmout(0);
+      setCartPaymentInfo({});
+    }
+  }, [])
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
     if (customerid) {

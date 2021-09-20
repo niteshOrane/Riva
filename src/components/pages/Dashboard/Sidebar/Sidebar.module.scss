@@ -1,5 +1,5 @@
 .sidebar {
-  margin-right: 40px;
+ @include right('margin', 40px);
   height: 100%;
   max-width: 300px;
   width: 100%;
@@ -33,9 +33,9 @@
     #sec {
       border-bottom: 1px solid #ddd;
       padding: 12px;
-      padding-left: 20px;
+      @include left('padding', 20px);
       .title {
-        margin-left: 20px;
+        @include left('margin', 20px);
         margin-bottom: 7px;
         font-weight: normal;
         font-size: 1.2rem;
@@ -44,7 +44,7 @@
     .children {
       .child {
         font-size: 14px;
-        margin-left: 17px;
+        @include left('margin', 17px);
         margin-top: 3px;
         display: block;
         color: #6e6e6e;
