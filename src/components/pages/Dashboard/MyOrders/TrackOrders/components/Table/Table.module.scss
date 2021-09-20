@@ -33,3 +33,21 @@
     }
   }
 }
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  line-height: 20px;
+}
+
+.trackTable {
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  th {
+    background-color: #dddddd;
+  }
+}

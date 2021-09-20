@@ -233,7 +233,7 @@ const ProductCard = ({
             interval={2000}
           >
             {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <div>
+              <div className ={styles.legendWrapper}>
                 <TempLink product={productItem}>
                   <Image
                     src={
@@ -251,7 +251,7 @@ const ProductCard = ({
                     <p>SIZE</p>
                     <div className={styles.sizeType}>
                       {attributes?.size?.map((li) => (
-                        <span>{li?.label}</span>
+                        <span className={attributes?.size?.length===1 ? styles.single : null}>{li?.label}</span>
                       ))}
                     </div>
                   </div>

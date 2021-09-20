@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./TrackYourOrderCard.module.scss";
-const TrackYourOrderCard = ({ value, handleChange, handleSubmit }) => {
+const TrackYourOrderCard = ({ value, handleChange, handleSubmit,loading }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.card}>
@@ -16,7 +16,7 @@ const TrackYourOrderCard = ({ value, handleChange, handleSubmit }) => {
         </div>
       </div>
       <button type="submit" className={styles.trackOrderBtn}>
-        TRACK ORDER
+       {!loading ? "TRACK ORDER" : "TRACKING..." } 
       </button>
     </form>
   );

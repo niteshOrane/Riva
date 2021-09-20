@@ -332,3 +332,12 @@ border: solid 1px #2c2a2a;
   color: black;
  }
 }
+
+.productCard:hover{
+  .sizeWrap{
+    opacity: 0.65 !important;
+  }
+}
+.single{
+  padding-left: 1.6rem;
+}
