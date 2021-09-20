@@ -72,3 +72,14 @@ export const getTrackYourOrder = (id) => {
   };
   return axios(config);
 };
+
+// get order details
+
+export const getYourOrderDetails = (id) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/orders/${id}`,
+    silent: true,
+  };
+  return axios(config);
+};
