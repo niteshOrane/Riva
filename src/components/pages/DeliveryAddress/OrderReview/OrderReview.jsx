@@ -83,7 +83,6 @@ function OrderReview({
     setCouponCode(cartPayment?.coupon_code || "");
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
-    setActiveDelivery(cartPayment?.shipping_method);
     setTotalDC(
       cartPayment?.total_segments?.find((e) => e.code === "shipping")?.value
     );
@@ -95,18 +94,6 @@ function OrderReview({
     getShippingInfo();
 
   }, [cartPayment]);
-  useEffect(() => {  return () => {
-      setTotalAmout(0);
-      setCouponCode("");
-      setCouponDiscount(false);
-      setDiscount(0);
-      setActiveDelivery(null);
-      setTotalDC(0);
-      setTotalTax(0);
-      setTotalAmout(0);
-      setCartPaymentInfo({});
-    }
-  }, [])
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
     if (customerid) {
@@ -156,6 +143,8 @@ function OrderReview({
         region
       );
       if (res.status === 200) {
+        setActiveDelivery(`${val?.carrier_code}_${val?.method_code}`);
+        setTotalDC(val?.price_incl_tax);
         dispatch(showSnackbar("Delivery speed added successfully", "success"));
         callBackAfterApplyCoupan();
       } else {
@@ -224,10 +213,6 @@ function OrderReview({
         return (
           <div
             className={styles.chooseShipping}
-            onClick={() => {
-              setActiveDelivery(`${item?.carrier_code}_${item?.method_code}`);
-              setTotalDC(item?.price_incl_tax);
-            }}
           >
             <div>
               <input

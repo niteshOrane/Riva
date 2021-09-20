@@ -80,7 +80,6 @@ const Cart = () => {
                       <Link to={`product/${getSKuId(item?.sku)}`} onClick={() => { handleClose() }}>
                         <div className={style.itemImg}>
                           <Image src={item.src} width="100%" alt={item.name} type="product-details" />
-                          hello
                         </div>
                       </Link>
                       <div className={style.itemDetails}>

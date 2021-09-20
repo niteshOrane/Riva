@@ -73,7 +73,7 @@ function Products({ products, currency_symbol }) {
                 <div className={styles.colorSize}>
                   <span>Price: </span>
                   <span className={styles.greyText}>
-                    <strong>{currency_symbol} {product?.price * product?.qty}</strong>
+                    <strong>{currency_symbol} {parseFloat(product?.price * product?.qty).toFixed(2)}</strong>
                   </span>
                 </div>
               </div>
