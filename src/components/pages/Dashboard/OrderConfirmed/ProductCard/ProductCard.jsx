@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ProductCard.module.scss";
 import { extractColorSize } from "../../../../../util";
 
-function ProductCard({ product, cancelOrderFn,trackOrder,value }) {
+function ProductCard({ product, cancelOrderFn, trackOrder, value, displayOrderNumber }) {
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options?.map((o) => ({
@@ -40,7 +40,7 @@ function ProductCard({ product, cancelOrderFn,trackOrder,value }) {
           <span>{colorSize.size?.[0]?.label}</span>
         </div>
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
-        <p>Order Number: #{trackOrder ? value : product?.increment_id}</p>
+        <p>Order Number: #{trackOrder ? value : displayOrderNumber || product?.increment_id}</p>
         <p>Payment: {product?.parent_item?.price}</p>
         {cancelOrderFn ? (
           <div

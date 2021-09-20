@@ -9,14 +9,14 @@ import Congratulations from "../../components/pages/Dashboard/OrderConfirmed/Con
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
 import styles from "./OrderConfirmed.module.scss";
-import { emptyCart , emptyCartItem} from '../../store/actions/auth';
+import { emptyCart, emptyCartItem } from '../../store/actions/auth';
 import { orderConfirmed } from "../../services/order/order.services";
 
 import { showSnackbar } from "../../store/actions/common";
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
-  const { orderId } = useParams();
+  const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
   const [amount, setAmount] = useState(null);
   const [orderItems, setOrderItems] = useState(null)
@@ -32,7 +32,7 @@ function OrderConfirmed(props) {
         totalPaid: res?.data?.grand_total
       });
     }
-    else{
+    else {
       return dispatch(showSnackbar(res?.data?.error, "error"))
     }
   };
@@ -40,7 +40,7 @@ function OrderConfirmed(props) {
     if (orderId) {
       dispatch(emptyCart())
       dispatch(emptyCartItem());
-      getOrderDetails(orderId);
+      getOrderDetails(displayOrderNumber);
     }
   }, [orderId]);
   return (
@@ -56,7 +56,7 @@ function OrderConfirmed(props) {
             <div className="py-20px d-flex w-100 justify-content-between">
               <Congratulations {...props?.match?.params} />
               {orderItems?.map(li => (
-                <ProductCard product={li} />
+                <ProductCard product={li} displayOrderNumber={displayOrderNumber} />
               ))}
             </div>
             {deliveryAddress && amount && <Details deliveryAddress={deliveryAddress} amount={amount} />}
