@@ -24,9 +24,10 @@ export const getCartPaymentInfo = () => {
 
 export const getCartService = () => {
   const config = {
-    method: "get",
-    url: `${API_URL}/carts/${getCartId()}/items`,
+    method: "post",
+    url: `${API_URL}/cartlisting`,
     silent: true,
+    data: { quoteId: getCartId() },
   };
   return axios(config);
 };
