@@ -44,6 +44,7 @@ const MegaLinks = ({ links }) => {
               <div
                 className={`${style.megaContainer} ${
                   showMegaMenue === link.url_key ? style.show : ''
+                  // style.show
                 } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />

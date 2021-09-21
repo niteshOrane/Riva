@@ -15,6 +15,7 @@ import styles from "./TrackOrders.module.scss";
 
 import { showSnackbar } from "../../store/actions/common";
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const randomOrder = {
   orderId: "R0374915036",
@@ -56,16 +57,12 @@ function TrackOrders() {
       return dispatch(showSnackbar("Please enter order Number", "error"));
     e.preventDefault();
     if (value) {
+      setError(false)
       setLoading(true);
       getOrderDetail();
       const res = await getTrackYourOrder(value);
-      if (
-        res.status === 200 &&
-        res?.data
-      ) {
-        setOrderItems(
-          res?.data
-        );
+      if (res.status === 200 && !Array.isArray(res?.data?.[0])) {
+        setOrderItems(res?.data);
         setLoading(false);
       } else {
         dispatch(
@@ -76,6 +73,7 @@ function TrackOrders() {
         );
         setError(true);
         setLoading(false);
+        setOrderItems([])
       }
     }
   };
@@ -91,6 +89,7 @@ function TrackOrders() {
       }
     }
   };
+  console.log(orderDetails)
   return (
     <div className="container-with-circles my-20px">
       <div className="circlesContainer">
@@ -103,8 +102,8 @@ function TrackOrders() {
             value={value}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
-            loading={loading}
           />
+         
           {orderDetails && (
             <div>
               <section className={styles.detailsWrap}>Order Details</section>
@@ -128,7 +127,12 @@ function TrackOrders() {
               </div>
             </section>
           )}
-          {orderItems.length>0 && <TrackOrderDetails order={orderItems[0]} />}
+          {orderItems.length > 0 && <TrackOrderDetails order={orderItems[0]} />}
+          {loading && (
+            <div className = {styles.progress}>
+              <CircularProgress size={50} />
+            </div>
+          )}
         </section>
       </div>
     </div>

@@ -295,12 +295,6 @@ const ProductDetails = (props) => {
                     )}
                   </div>
                 ))}
-
-              {/* <div className={`${styles.options} d-flex-all-center`}>
-                <div className={`${styles.option} ${styles.option_red}`} />
-                <div className={`${styles.option} ${styles.option_oranage}`} />
-                <div className={`${styles.option} ${styles.option_blue}`} />
-              </div> */}
             </div>
             <div
               className={`${styles.size} gap-12px d-flex align-items-center`}
@@ -354,7 +348,7 @@ const ProductDetails = (props) => {
                       className="bg-transparent no-border c-pointer"
                       onClick={() => setGuideCardOpen(true)}
                     >
-                      <span className="align-self-end font-light-black">
+                      <span className={`${styles.sizeGuide} align-self-end font-light-black`}>
                         Size Guide
                       </span>
                     </button>
@@ -371,7 +365,7 @@ const ProductDetails = (props) => {
                       className="bg-transparent no-border c-pointer"
                       onClick={() => setSizeCardOpen(true)}
                     >
-                      <span className="align-self-end font-light-black">
+                      <span className={`${styles.sizeGuide} align-self-end font-light-black`}>
                         Find your size
                       </span>
                     </button>

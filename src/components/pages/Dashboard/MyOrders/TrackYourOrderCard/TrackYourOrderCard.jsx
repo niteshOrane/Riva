@@ -16,7 +16,7 @@ const TrackYourOrderCard = ({ value, handleChange, handleSubmit,loading }) => {
         </div>
       </div>
       <button type="submit" className={styles.trackOrderBtn}>
-       {!loading ? "TRACK ORDER" : "TRACKING..." } 
+       TRACK ORDER
       </button>
     </form>
   );
