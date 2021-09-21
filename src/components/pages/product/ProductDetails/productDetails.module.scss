@@ -483,9 +483,9 @@
 .reviewStars{
   color: #FF9529;
 }
-.icon{
-  @include right("margin",10px)
-}
+// .icon{
+//   @include right("margin",10px)
+// }
 .now{
   @include right("margin",5px)
 }
@@ -512,7 +512,9 @@
   display: flex;
   margin-left: 15px;
 }
-
+.sizeGuide{
+  text-decoration: underline;
+}
 //review styles
 
 .reviewTextArea {

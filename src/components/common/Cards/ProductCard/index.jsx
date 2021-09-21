@@ -348,7 +348,7 @@ const ProductCard = ({
               !isProduct ? "text-center justify-content-center" : ""
             }`}
           >
-            <div className={`${styles.color} d-flex`}>
+            <div className={`${ !isRecommended ? styles.color : `${styles.color} ${styles.recomm}`} d-flex`}>
               {attributes?.colors?.length > 0 &&
                 attributes?.colors?.map((item) => (
                   <div
