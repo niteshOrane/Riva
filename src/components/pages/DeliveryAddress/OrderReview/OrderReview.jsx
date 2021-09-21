@@ -158,10 +158,12 @@ function OrderReview({
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <div className={styles.title}>ORDER REVIEW</div>
-        <div className="d-flex align-items-center">
-          <span className="material-icons-outlined">edit</span>
-          <span className="underline underline-hovered c-pointer">Edit</span>
-        </div>
+        <Link to="/shopping-cart" className="c-pointer">
+          <div className="d-flex align-items-center c-pointer">
+            <span className="material-icons-outlined">edit</span>
+            <span className="underline underline-hovered c-pointer">Edit</span>
+          </div>
+        </Link>
       </div>
       <div className="mt-20px d-flex align-items-center">
         <span style={{ margin: "4px" }}>

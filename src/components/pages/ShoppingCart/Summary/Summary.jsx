@@ -24,7 +24,7 @@ const Summary = ({ currency_symbol }) => {
         </div>
         <div className="my-10px d-flex align-items-center justify-content-between">
           <p className="font-light-black">SUBTOTAL</p>
-          <span className="color-primary">
+          <span>
             {currency_symbol}
             {items.reduce((total, item) => total + item.price * item.qty, 0) ||
               0}
@@ -34,7 +34,7 @@ const Summary = ({ currency_symbol }) => {
           className={`${style.greandTotal} my-10px d-flex align-items-center justify-content-between`}
         >
           <h4 className="font-weight-600">GRAND TOTAL</h4>
-          <h4 className="font-weight-600 color-primary">
+          <h4 className="font-weight-600">
             {currency_symbol}
             {parseFloat(
               items.reduce((total, item) => total + item.price * item.qty, 0)
@@ -46,19 +46,6 @@ const Summary = ({ currency_symbol }) => {
           <Link to="/delivery-address">
             <button type="button">SECURE CHECKOUT</button>
           </Link>
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              isAuth
-                ? history.push("/delivery-address")
-                : openSignUpCard("/delivery-address");
-            }}
-            type="button"
-            className="bg-black color-white p-12px w-100 d-block c-pointer"
-          >
-            Change Delivery Address
-          </button>
         </div>
         <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>

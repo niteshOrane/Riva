@@ -94,7 +94,7 @@ const Products = ({ products,currency_symbol }) => {
                       </div>
                       <div className={style.productPricing}>
                         <div className="d-flex align-items-center justify-content-between">
-                          <strong className="f1 text-center color-primary">
+                          <strong className="f1 text-center">
                             {currency_symbol}{product.price}
                           </strong>
                           <div className={style.counter}>
@@ -106,7 +106,7 @@ const Products = ({ products,currency_symbol }) => {
                               add
                             </span>
                           </div>
-                          <strong className="f1 text-center  color-primary">
+                          <strong className="f1 text-center">
                             {currency_symbol}{product.price * product.qty}
                           </strong>
                         </div>
