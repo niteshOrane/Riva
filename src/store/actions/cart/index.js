@@ -32,26 +32,29 @@ export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
 
     const res = await getCartService();
+    if (res && res.data.success) {
+      const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
+      const productIds = await Promise.allSettled(productIdPromises);
+      const products = res.data.map((r, i) => ({
+        ...r,
+        id: productIds?.[i]?.value?.data?.data?.product_id ?
+          parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+          : 0,
+        src: r?.extension_attributes?.image
+      }));
 
-    const productIdPromises = res.data.map((r) => getProductIdBySku(r.sku));
-
-    const productIds = await Promise.allSettled(productIdPromises);
-
-
-    const products = res.data.map((r, i) => ({
-      ...r,
-      id: productIds?.[i]?.value?.data?.data?.product_id ?
-        parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
-        : 0,
-      src: r?.extension_attributes?.image
-    }));
-
-    if (res.data)
+      if (res.data)
+        dispatch({
+          type: DATA_TYPES.SET_BULK_CART,
+          payload: products,
+        });
+    }
+    else {
       dispatch({
         type: DATA_TYPES.SET_BULK_CART,
-        payload: products,
+        payload: [],
       });
-
+    }
   }
   else {
     dispatch({
@@ -95,7 +98,7 @@ export const addToCart = (data) => async (dispatch) => {
 export const removeFromCart = (data) => async (dispatch) => {
   const res = await deleteCartItem(data.item_id);
 
-  if (res && res.status === 200 && res.data){
+  if (res && res.status === 200 && res.data) {
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
     dispatch(showSnackbar('item removed from cart successfully', 'success'));
   } else dispatch(showSnackbar('something went wrong', 'error'));
