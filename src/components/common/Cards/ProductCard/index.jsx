@@ -224,41 +224,59 @@ const ProductCard = ({
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
           <TempLink product={productItem}>
-          <Carousel
-            showThumbs={false}
-            showStatus={false}
-            showArrows={false}
-            autoPlay={false}
-            showIndicators={false}
-            interval={2000}
-          >
-            {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <div className ={styles.legendWrapper}>
-                <TempLink product={productItem}>
-                  <Image
-                    src={
-                      colorImg ||
-                      `${
-                        !productItem?.productColorImage
-                          ? URL.baseUrlProduct
-                          : ""
-                      }/${item?.file}`
-                    }
-                    defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                    width="100%"
-                  />
-                  <div className={`legend ${styles.sizeWrap}`}>
-                    <p>SIZE</p>
-                    <div className={styles.sizeType}>
-                      {attributes?.size?.map((li) => (
-                        <span className={attributes?.size?.length===1 ? styles.single : null}>{li?.label}</span>
-                      ))}
-                    </div>
-                  </div>
-                </TempLink>
+            <section className="d-flex justify-content-between">
+              <div className = {styles.sliderArrowIcon}>
+                <img src="/assets/images/recomended.svg" alt="" />
               </div>
-            ))}
-          </Carousel>
+              <div className = {styles.sliderArrowIconNext}>
+                <img src="/assets/images/recomended2.svg" alt="" />
+              </div>
+            </section>
+
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+              showArrows={false}
+              autoPlay={false}
+              showIndicators={false}
+              interval={2000}
+            >
+              {productItem?.media_gallery_entries?.map((item, indexitem) => (
+                <div className={styles.legendWrapper}>
+                  <TempLink product={productItem}>
+                    <Image
+                      src={
+                        colorImg ||
+                        `${
+                          !productItem?.productColorImage
+                            ? URL.baseUrlProduct
+                            : ""
+                        }/${item?.file}`
+                      }
+                      defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                      width="100%"
+                    />
+
+                    <div className={`legend ${styles.sizeWrap}`}>
+                      <p>SIZE</p>
+                      <div className={styles.sizeType}>
+                        {attributes?.size?.map((li) => (
+                          <span
+                            className={
+                              attributes?.size?.length === 1
+                                ? styles.single
+                                : null
+                            }
+                          >
+                            {li?.label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </TempLink>
+                </div>
+              ))}
+            </Carousel>
           </TempLink>
         )}
         {!isListing && (
@@ -348,7 +366,13 @@ const ProductCard = ({
               !isProduct ? "text-center justify-content-center" : ""
             }`}
           >
-            <div className={`${ !isRecommended ? styles.color : `${styles.color} ${styles.recomm}`} d-flex`}>
+            <div
+              className={`${
+                !isRecommended
+                  ? styles.color
+                  : `${styles.color} ${styles.recomm}`
+              } d-flex`}
+            >
               {attributes?.colors?.length > 0 &&
                 attributes?.colors?.map((item) => (
                   <div

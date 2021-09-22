@@ -9,6 +9,7 @@
     box-shadow: 0.4px 5px 16px 0 rgba(0, 0, 0, 0.1);
     min-height: 125px;
     margin: 12px;
+    margin-left: 0px;
     max-height: 125px;
     &:hover {
       .cartImage {
@@ -73,7 +74,7 @@
 }
 .titelMrgn {
   font-size: 1.375rem;
-  margin-left: 12px;
+  // margin-left: 12px;
 }
 .arrowBtn {
   display: flex;

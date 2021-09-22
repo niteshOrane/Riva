@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
 import { URL } from "../../../util";
+import styles from "./lazyImage.module.scss";
 // import {
 //   Magnifier,
 //   GlassMagnifier,
@@ -29,6 +30,7 @@ const LazyImage = (props) => {
     type = "",
   } = props;
   const [error, setError] = useState(false);
+ 
 
   const srcImage =
     src?.indexOf("http") > -1
@@ -73,7 +75,7 @@ const LazyImage = (props) => {
       height={height}
       alt={alt || "No image available"}
       style={customeStyle}
-      className={classname}
+      className={isCategory ? `${styles.hoverCat}` : classname}
     />
   );
 };

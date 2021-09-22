@@ -30,7 +30,7 @@
   .name {
     font-family: Jost;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: 0.85;
@@ -222,29 +222,7 @@
     margin-bottom: 17px;
   }
 
-  .sku {
-    margin-top: 5px;
-    font-family: Jost;
-    font-size: 14px;
-    font-weight: 700;
-    font-stretch: normal;
-    font-style: normal;
-    letter-spacing: normal;
-    text-align: left;
-    margin-left: auto;
-
-    .title {
-      font-weight: 500;
-      color: #161616;
-      display: flex;
-    justify-content: center;
-    align-items: center
-    }
-
-    .text {
-      color: #8f8c8c;
-    }
-  }
+ 
 
   .stats {
     margin: 17px 0px 17px 0px;
@@ -348,7 +326,7 @@
       }
 
       .counter {
-        width: 170px;
+        width: 100px;
         height: 35px;
         padding: 7.1px 17px 3.9px 15px;
         border: solid 1px #dfdddd;
@@ -423,7 +401,34 @@
     }
   }
 }
+.sku {
+  margin-top: 5px;
+  font-family: Jost;
+  font-size: 14px;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  margin-left: auto;
 
+  .title {
+    font-weight: normal;
+    color: #161616;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text {
+    color: #8f8c8c;
+    font-weight: normal;
+    border: none !important;
+  }
+}
+.sizeLabel{
+  font-weight: normal !important;
+}
 .sizeGuideDecoration {
   text-decoration: underline;
   margin-left: 11.3px;
@@ -446,3 +451,8 @@
     border: solid 1px #2c2a2a;
   }
 }
+.info{
+  border: none !important;
+  padding: 0px !important;
+}
+

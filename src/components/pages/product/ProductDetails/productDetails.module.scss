@@ -118,7 +118,7 @@
       height: 19px;
       font-family: Jost;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: normal;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.69;
@@ -149,7 +149,7 @@
       width: 60px;
       font-family: Roboto;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: normal;
       font-stretch: normal;
       font-style: normal;
       letter-spacing: normal;
@@ -342,6 +342,7 @@
 
       .text {
         color: #8f8c8c;
+        font-weight: normal;
       }
     }
     .w80 {

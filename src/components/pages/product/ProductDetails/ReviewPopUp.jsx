@@ -124,11 +124,11 @@ export default function ReviewModal({ id, sku, isDetail }) {
     }
   };
 
-  React.useEffect(() => {
+  const getAllReviews = () => {
     if (sku) {
       getReviewListForProduct(sku);
     }
-  }, [sku]);
+  };
 
   const calculateAvgReview = () => {
     let sum = reviewRes?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
@@ -138,7 +138,12 @@ export default function ReviewModal({ id, sku, isDetail }) {
   };
   return (
     <div>
-      <span onClick={handleOpen}>
+      <span
+        onClick={() => {
+          handleOpen(); 
+          getAllReviews()
+        }}
+      >
         {isDetail ? (
           "Review"
         ) : (
@@ -211,9 +216,7 @@ export default function ReviewModal({ id, sku, isDetail }) {
                   >
                     star_border
                   </span>
-                  <b>
-                    {calculateAvgReview()}
-                  </b>
+                  <b>{calculateAvgReview()}</b>
                 </div>
                 <span>
                   {isNaN(

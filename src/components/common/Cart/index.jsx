@@ -15,7 +15,6 @@ const Cart = () => {
     (state) => state.cart
   );
 
-
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
   const {currency_symbol} = useSelector(state => state?.common?.store);
@@ -60,7 +59,7 @@ const Cart = () => {
         <div className={style.sidebarContainer}>
           <div className="d-flex align-items-end justify-content-between p-12px">
             <h3 className={style.addedMsg}>Added To Cart ({items.length})</h3>
-            <BlackCloseBtn handleClose={handleClose} drawerPosition="right" />
+            <BlackCloseBtn handleClose={handleClose}  drawerPosition="right" filter/>
           </div>
           <div className={style.sideMsg}>
             {/* <div className="d-flex align-items-center bg-grey p-12px">
@@ -83,16 +82,16 @@ const Cart = () => {
                         </div>
                       </Link>
                       <div className={style.itemDetails}>
-                        <h3
+                        <p
                           title="Name"
                           className={`${style.name} two-line-text`}
                         >
                           {item.name}
-                        </h3>
+                        </p>
                         <div className={style.colorPriceETC}>
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
-                              <span className="font-weight-600">Color: </span>
+                              <span>Color: </span>
                               <span className="color-grey">
                                 {item?.color?.label ||
                                   getColorSize(
@@ -109,7 +108,7 @@ const Cart = () => {
                           </div>
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
-                              <span className="font-weight-600">Size: </span>
+                              <span>Size: </span>
                               <span className="color-grey">
                                 {item?.size?.label ||
                                   getColorSize(
@@ -131,7 +130,7 @@ const Cart = () => {
                           </div>
                           <div className="d-flex align-items-center justify-content-between">
                             <div>
-                              <span className="font-weight-600">Qty: </span>
+                              <span>Qty: </span>
                               <span className="color-grey">{editableIndex == index ?
                                 <div className={style.counter}>
                                   <span className="c-pointer material-icons-outlined"

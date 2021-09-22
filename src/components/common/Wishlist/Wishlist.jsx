@@ -230,7 +230,7 @@ function Wishlist() {
                       onClick={() => setColorSize(size, "size")}
                       className={`${styles.option} d-flex-all-center`}
                     >
-                      {size.label}
+                      <span className  = {styles.sizeLabel}>{size.label}</span>
                     </div>
                   );
                 })}

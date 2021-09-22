@@ -131,9 +131,9 @@ const Product = (props) => {
         < div id="complete-your-look" >
           <div className="max-width-1750 mx-auto my-20px">
             <div>
-              <h4 className="section-title text-center my-20px">
+              <p className="section-title text-center my-20px">
                 Complete Your Look
-              </h4>
+              </p>
             </div>
             <Slider
               className="simpleGreyArrow"

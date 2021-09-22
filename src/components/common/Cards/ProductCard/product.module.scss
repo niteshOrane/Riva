@@ -18,6 +18,7 @@
     .productBtn {
       display: block;
     }
+  
   }
 
   .outOfStock {
@@ -146,6 +147,22 @@
       }
     }
   }
+}
+
+.sliderArrowIcon{
+  position: absolute;
+  z-index: 10;
+  top: 40%;
+  left: 3%;
+  opacity: 0;
+}
+.sliderArrowIconNext{
+  position: absolute;
+    z-index: 10;
+    left: 94%;
+    top: 40%;
+    opacity: 0;
+
 }
 .productColors {
   display: flex;
@@ -340,6 +357,12 @@ border: solid 1px #2c2a2a;
 .productCard:hover{
   .sizeWrap{
     opacity: 0.65 !important;
+  }
+  .sliderArrowIcon {
+    opacity: 1;
+  }
+  .sliderArrowIconNext {
+    opacity: 1;
   }
 }
 .single{

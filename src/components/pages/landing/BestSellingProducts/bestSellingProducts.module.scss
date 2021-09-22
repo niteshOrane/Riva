@@ -21,4 +21,5 @@
 .bestSellingProductsContainer li + li:before {
   content: " | ";
   @include right('padding', 9px);
+  @include left("padding",9px)
 }

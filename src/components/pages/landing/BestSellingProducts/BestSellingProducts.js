@@ -52,6 +52,7 @@ const BestSellingProducts = () => {
   useEffect(() => {
     setProducts(dataSet[categoryId]);
   }, [dataSet, categoryId]);
+
   return (
     <div
       className={`container-with-circles ${styles.bestSellingProductsContainer}`}

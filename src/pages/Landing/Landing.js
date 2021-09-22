@@ -58,6 +58,7 @@ function Landing() {
                     width="100%"
                     alt={item?.name}
                     customeStyle={{ borderRadius: "50%" }}
+                    isCategory
                   />
                 </div>
                 <div>

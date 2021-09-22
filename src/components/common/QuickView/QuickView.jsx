@@ -330,7 +330,7 @@ function QuickView() {
                   }}
                   onClick={() => setColorSize(c, "size")}
                 >
-                  {c.label}{" "}
+                  <span className={styles.sizeLabel}>{c.label}{" "}</span>
                 </div>
               ))}
             </div>
@@ -439,9 +439,9 @@ function QuickView() {
                 className={`${styles.demand} d-flex gap-12px align-items-center`}
               >
                 <div className="d-flex align-items-center">
-                  <div className={styles.title}>Availability: </div>
+                  <div className={`${styles.title} ${styles.avail}`}>Availability: </div>
                   &nbsp;
-                  <div className={styles.text}>
+                  <div className={`${styles.text} ${styles.info}`}>
                     {outOfStock ? "Out Of Stock" : "In Stock"}
                   </div>
                 </div>
