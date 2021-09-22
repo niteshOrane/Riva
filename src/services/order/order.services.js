@@ -29,6 +29,14 @@ export const cancelOrder = (id) => {
   return axios(config);
 };
 
+export const buyAgainOrder = (id) => {
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_DEV}/webapi/reorder/${id}`,
+    silent: true,
+  };
+  return axios(config);
+};
 export const deleteNotification = (id) => {
   const customer = new FormData();
   customer.append("customerId", getCustId());

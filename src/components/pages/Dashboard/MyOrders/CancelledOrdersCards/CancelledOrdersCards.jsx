@@ -1,9 +1,24 @@
 import React from "react";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 import styles from "./CancelledOrdersCards.module.scss";
 import * as icons from "../../../../common/Icons/Icons";
 import { extractColorSize } from "../../../../../util";
+import { addCartId } from '../../../../../store/actions/auth';
+
+import { getCart } from "../../../../../store/actions/cart";
+
+import {
+  buyAgainOrder
+} from "../../../../../services/order/order.services";
+
+
+import { showSnackbar } from "../../../../../store/actions/common";
+
 
 const CancelledOrdersCards = ({ products, code, increment_id }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -14,6 +29,22 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
     );
 
     return { colors, size };
+  };
+  const reOrder = async (orderId) => {
+    if (orderId) {
+      const response = await buyAgainOrder(orderId);
+
+      if (typeof response.data === "string") {
+        response.data = JSON.parse(response.data);
+      }
+      if (response.status === 200 && !response?.data?.error) {
+        dispatch(addCartId(response?.data?.quote_id));
+        await dispatch(getCart());
+        history.push("/shopping-cart");
+      } else {
+        dispatch(showSnackbar(response?.data?.message, "error"));
+      }
+    }
   };
   const colorSize = getColorSize(
     products[0]?.parent_item?.product_option.extension_attributes
@@ -26,7 +57,7 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <span className="greyText">Order Number: #{increment_id}</span>
           <br />
         </div>
-        <div className="d-flex align-items-center mt-12px">
+        <div className="d-flex align-items-center mt-12px" onClick={() => { reOrder(product?.order_id) }}>
           <span className={styles.icon}>
             <icons.MyOrders height='20' width='15' />
           </span>

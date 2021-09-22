@@ -32,7 +32,8 @@ export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
 
     const res = await getCartService();
-    if (res && res.data.success) {
+    
+    if (res && res.data && res.data.length) {
       const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
       const productIds = await Promise.allSettled(productIdPromises);
       const products = res.data.map((r, i) => ({

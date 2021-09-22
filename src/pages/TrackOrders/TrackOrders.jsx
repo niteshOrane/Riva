@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
@@ -10,21 +13,11 @@ import {
   getOrderList,
 } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
-import { useHistory } from "react-router";
+
 import styles from "./TrackOrders.module.scss";
 
 import { showSnackbar } from "../../store/actions/common";
-import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
-const randomOrder = {
-  orderId: "R0374915036",
-  deliveryExpectedDate: "24 May 2021",
-  shipperName: "FedEx",
-  shipperPhone: "+15785685",
-  status: "Picked by the courier",
-  trackingId: "BD045903594059",
-};
 
 function TrackOrders() {
   const { customer } = useSelector((state) => state.auth);

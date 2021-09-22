@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     textAlign: "left",
     paddingLeft: "12px",
-    fontWeight: "600",
     maxWidth: "fit-content",
     fontSize: ".9rem",
   },

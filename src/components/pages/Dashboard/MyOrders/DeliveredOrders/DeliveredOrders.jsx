@@ -1,10 +1,36 @@
 import React from "react";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
 import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
 import { extractColorSize } from "../../../../../util";
+import { addCartId } from '../../../../../store/actions/auth';
+import { getCart } from "../../../../../store/actions/cart";
+import {
+  buyAgainOrder
+} from "../../../../../services/order/order.services";
+import { showSnackbar } from "../../../../../store/actions/common";
+
 const DeliveredOrders = ({ products, status, code, increment_id }) => {
-  console.log({products})
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const reOrder = async (orderId) => {
+    if (orderId) {
+      const response = await buyAgainOrder(orderId);
+
+      if (typeof response.data === "string") {
+        response.data = JSON.parse(response.data);
+      }
+      if (response.status === 200 && !response?.data?.error) {
+        dispatch(addCartId(response?.data?.quote_id));
+        await dispatch(getCart());
+        history.push("/shopping-cart");
+      } else {
+        dispatch(showSnackbar(response?.data?.message, "error"));
+      }
+    }
+  };
   return products?.map((product) => {
     const getColorSize = (options) => {
       const { colors, size } = extractColorSize(
@@ -73,7 +99,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
                 <icons.Star />
               </span>
               <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                <ReviewModal id = {product?.product_id} sku = {product?.sku} />
+                <ReviewModal id={product?.product_id} sku={product?.sku} />
               </h4>
             </div>
             <div className="d-flex align-items-center mt-12px">
@@ -82,7 +108,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
               </span>
               <h4 className="c-pointer font-weight-normal greyText">Return</h4>
             </div>
-            <div className="d-flex align-items-center mt-12px">
+            <div className="d-flex align-items-center mt-12px" onClick={() => { reOrder(product?.order_id) }}>
               <span className={styles.icon}>
                 <icons.MyOrders height='20' width='15' />
               </span>
