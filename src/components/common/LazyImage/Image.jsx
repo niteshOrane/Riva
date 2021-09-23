@@ -4,17 +4,7 @@ import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
 import { URL } from "../../../util";
 import styles from "./lazyImage.module.scss";
-// import {
-//   Magnifier,
-//   GlassMagnifier,
-//   SideBySideMagnifier,
-//   PictureInPictureMagnifier,
-//   MOUSE_ACTIVATION,
-//   TOUCH_ACTIVATION,
-//   MagnifierContainer,
-//   MagnifierPreview,
-//   MagnifierZoom,
-// } from "react-image-magnifiers";
+
 
 const LazyImage = (props) => {
   const {
@@ -75,7 +65,7 @@ const LazyImage = (props) => {
       height={height}
       alt={alt || "No image available"}
       style={customeStyle}
-      className={isCategory ? `${styles.hoverCat}` : classname}
+      className={isCategory ? `${styles.category}` : classname}
     />
   );
 };

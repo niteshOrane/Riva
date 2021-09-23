@@ -78,7 +78,7 @@
       padding: 8px;
       font-weight: bold;
       margin: 12px;
-      border: 1px solid $color-grey;
+      border: 2px solid $color-grey;
       div {
         .exclamation {
           width: 30px;
@@ -98,4 +98,10 @@
       }
     }
   }
+}
+.cartBtn{
+  background: transparent;
+  border: 2px solid gray !important;
+  transition: 0.2s ease;
+  font-weight: normal !important;
 }

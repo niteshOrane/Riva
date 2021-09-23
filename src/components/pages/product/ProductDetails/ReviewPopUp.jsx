@@ -14,6 +14,7 @@ import {
 } from "../../../../services/product/product.service";
 import { showSnackbar } from "../../../../store/actions/common";
 import { setAttributeFormatter } from "validatorjs";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -73,6 +74,7 @@ export default function ReviewModal({ id, sku, isDetail }) {
   const [description, setDescription] = React.useState("");
   const [reviewRes, setReviewRes] = React.useState(null);
   const [rate, setRate] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -105,6 +107,7 @@ export default function ReviewModal({ id, sku, isDetail }) {
       if (!rate) {
         return dispatch(showSnackbar("Please rate with star", "error"));
       }
+      setLoading(true);
       const res = await createReview(title, description, rate, id, firstname);
       if (res.status === 200 && res?.data) {
         dispatch(showSnackbar("review added successfully", "success"));
@@ -112,15 +115,22 @@ export default function ReviewModal({ id, sku, isDetail }) {
         setDescription("");
         setTitle("");
         setRate(0);
+        setLoading(false);
+      } else {
+        setLoading(false);
       }
     }
   };
 
   const deleteReviewAction = async (fnValue) => {
+    setLoading(true);
     const res = await deleteReviewFromList(fnValue);
     if (res.status === 200) {
       dispatch(showSnackbar("review deleted successfully", "success"));
       getReviewListForProduct(sku);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   };
 
@@ -140,8 +150,8 @@ export default function ReviewModal({ id, sku, isDetail }) {
     <div>
       <span
         onClick={() => {
-          handleOpen(); 
-          getAllReviews()
+          handleOpen();
+          getAllReviews();
         }}
       >
         {isDetail ? (
@@ -201,7 +211,11 @@ export default function ReviewModal({ id, sku, isDetail }) {
                 />
               </div>
               <div className={styles.submitBtn}>
-                <button type="submit" className={styles.reviewSubmit}>
+                <button
+                  disabled={loading ? true : false}
+                  type="submit"
+                  className={styles.reviewSubmit}
+                >
                   Submit
                 </button>
               </div>
@@ -270,14 +284,16 @@ export default function ReviewModal({ id, sku, isDetail }) {
                         <span className={styles.numLike}>{li.dislike}</span>
                       </div>
                     </div>
-                    {li?.nickname === auth?.customer?.firstname && (
+                    {li?.nickname === auth?.customer?.firstname ? !loading ? (
                       <span
                         onClick={() => deleteReviewAction(li?.id)}
                         className="material-icons-outlined c-pointer"
                       >
                         delete
                       </span>
-                    )}
+                    ) : (
+                      <CircularProgress size={10} />
+                    ):null}
                   </div>
                 </section>
                 <hr style={{ marginBottom: "15px" }} />

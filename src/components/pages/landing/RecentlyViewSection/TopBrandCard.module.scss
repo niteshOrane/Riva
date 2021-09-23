@@ -6,11 +6,12 @@
   .cardBody {
     padding-top: 7px;
     padding-bottom: 7px;
-    box-shadow: 0.4px 5px 16px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0.4px 5px 16px 0 rgba(186, 180, 180, 0.27);
     min-height: 125px;
     margin: 12px;
     margin-left: 0px;
-    max-height: 125px;
+    height: 114px;
+    width: 270px;
     &:hover {
       .cartImage {
         opacity: 1;
@@ -35,10 +36,16 @@
         color: #535353;
         margin-bottom: 6px;
         font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
       }
 
       .crosedPrice {
-        margin-right: 12px;
+        margin-right: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
         color: #535353;
       }
     }

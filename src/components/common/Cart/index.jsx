@@ -171,7 +171,7 @@ const Cart = () => {
                     </span>
                   </div>
                   <p>
-                    <span className="color-primary">Spend %18.20</span> to quality
+                    <span>Spend %18.20</span> to quality
                     for free standard delivery
                   </p>
                   <div
@@ -194,7 +194,7 @@ const Cart = () => {
                 </h4>
               </div>
               <div className="text-left p-12px">
-                <h4 className="color-grey">*Before taxes</h4>
+                <span className="color-grey">*Before taxes</span>
               </div>
               <div className={style.processBtns}>
                 <button onClick={() => {
@@ -208,7 +208,7 @@ const Cart = () => {
                 <Link to="/shopping-cart" href="/shopping-cart">
                   <button
                     type="button"
-                    className="bg-primary color-white p-12px w-100 d-block c-pointer"
+                    className={`p-12px w-100 d-block c-pointer ${style.cartBtn}`}
                   >
                     SEE SHOPPING CART
                   </button>
