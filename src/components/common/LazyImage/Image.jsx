@@ -18,16 +18,16 @@ const LazyImage = (props) => {
     isCategory,
     isZoom,
     type = "",
+    zoomPos
   } = props;
   const [error, setError] = useState(false);
- 
+
 
   const srcImage =
     src?.indexOf("http") > -1
       ? src
-      : `${
-          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
-        }/${src}`;
+      : `${type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
+      }/${src}`;
 
   const onImageError = () => {
     setError(true);
@@ -41,6 +41,7 @@ const LazyImage = (props) => {
       ? defaultImage
       : "https://via.placeholder.com/295x295?text=Image+Not+Available",
     zoomStyle: "z-index:10;right:-11px;border:1px solid black",
+    zoomPosition: zoomPos
   };
 
   if (isZoom) {
@@ -57,8 +58,8 @@ const LazyImage = (props) => {
         !error
           ? srcImage
           : defaultImage
-          ? defaultImage
-          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
+            ? defaultImage
+            : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}

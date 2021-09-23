@@ -25,7 +25,7 @@ import Rating from "@material-ui/lab/Rating";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 
 const ProductDetails = (props) => {
-  const { product, setColorSize, mediaImage, colorImage, currency_symbol } =
+  const { product, setColorSize, mediaImage, colorImage, currency_symbol, language } =
     props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
@@ -165,11 +165,13 @@ const ProductDetails = (props) => {
         imageSelected={colorImg || product?.image}
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
+        language={language}
       />
       <SizeGuide
         imageSelected={colorImg || product?.image}
         open={guideCardOpen}
         handleClose={() => setGuideCardOpen(false)}
+        language={language}
       />
       <div
         className={`${styles.product} gap-12px my-10px max-width-1750 mx-auto`}
@@ -183,6 +185,7 @@ const ProductDetails = (props) => {
               className="object-fit-fill h-100"
               width="100%"
               alt={product?.name}
+              zoomPos={language === 'Arabic' ? 'left' : 'right'}
               type="product-details"
               isZoom
             />
@@ -230,7 +233,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div>
-              <ReviewModal id={product?.id} sku={product?.sku} />
+              <ReviewModal id={product?.id} sku={product?.sku}  language={language}  />
             </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
@@ -251,8 +254,8 @@ const ProductDetails = (props) => {
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
                   ? productColorList?.find(
-                      (item) => product.selected.color.value === item.option_id
-                    )?.color
+                    (item) => product.selected.color.value === item.option_id
+                  )?.color
                   : "White"}
                 {"  "}
               </div>
@@ -275,21 +278,19 @@ const ProductDetails = (props) => {
                         src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
                           item?.color
                         )?.toLowerCase()}.png`}
-                        className={`${styles.colorItem} ${
-                          product.selected.color.value === item.option_id
-                            ? styles.active
-                            : ""
-                        }`}
+                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                          ? styles.active
+                          : ""
+                          }`}
                         alt={item?.color}
                       />
                     ) : (
                       <img
                         src={item?.file}
-                        className={`${styles.colorItem} ${
-                          product.selected.color.value === item.option_id
-                            ? styles.active
-                            : ""
-                        }`}
+                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
+                          ? styles.active
+                          : ""
+                          }`}
                         alt={item?.color}
                       />
                     )}
@@ -492,6 +493,7 @@ const ProductDetails = (props) => {
                         <SearchInStorePopup
                           image={colorImg || product?.image}
                           sizes={product?.size}
+                          language={language}
                         />
                         // <SubscribeModel />
                       ),
@@ -513,7 +515,7 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/review.png",
                     },
                     {
-                      name: <ShareIcons styles={styles} product={product} />,
+                      name: <ShareIcons styles={styles} product={product} language={language} />,
                       icon: "/assets/images/share.png",
                     },
                   ].map((item) => {

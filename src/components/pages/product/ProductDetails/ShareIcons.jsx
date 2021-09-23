@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     textAlign: 'center'
   },
- 
+
 }));
 
-export default function ShareIcons({ styles, product }) {
+export default function ShareIcons({ styles, product, language }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -95,11 +95,12 @@ export default function ShareIcons({ styles, product }) {
   );
 
   return (
-    <div>
+    <div dir={language === 'Arabic' ? 'rtl' : 'ltr'}>
       <span onClick={handleOpen}>
         Share
       </span>
       <Modal
+        dir={language === 'Arabic' ? 'rtl' : 'ltr'}
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"

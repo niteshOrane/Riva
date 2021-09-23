@@ -5,8 +5,7 @@
   display: flex;
   padding: 12px;
   .img {
-    margin-right: 20px;
-    @include left("margin",22px);
+    @include right("margin",22px);
     img {
       max-width: 260px;
     }
@@ -33,7 +32,6 @@
     font-style: normal;
     line-height: 0.85;
     letter-spacing: normal;
-    text-align: left;
     margin-top: 6px;
     margin-bottom: 7px;
     color: #181617;
@@ -53,7 +51,7 @@
     letter-spacing: normal;
     color: #181617;
     margin-top: 5px;
-    margin-left: 14px;
+    @include left('margin', 14px);
   }
 
   .price {
@@ -66,8 +64,7 @@
       font-style: normal;
       line-height: 1.1;
       letter-spacing: normal;
-      text-align: left;
-      color: #5c5959;
+       color: #5c5959;
       text-decoration: line-through;
       margin-right: 25px;
     }
@@ -120,7 +117,7 @@
     }
 
     .options {
-      margin-left: 27px;
+      @include left('margin', 27px);
       .option {
         display: inline-block;
         width: 13px;
@@ -361,7 +358,6 @@
       font-style: normal;
       line-height: 1.44;
       letter-spacing: normal;
-      text-align: left;
       color: #151515;
 
       .icon {
@@ -375,7 +371,7 @@
 .productColors {
   display: flex;
   align-items: center;
-  padding-left: 4px;
+  @include left("padding", 4px);
   justify-content: start;
 
   .colorContainer {
@@ -416,8 +412,8 @@
           content: "";
           position: absolute;
           top: 100%;
-          left: 50%;
-          margin-left: -5px;
+          @include leftpos(50%);
+          @include left("margin", -5px);
           border-width: 5px;
           border-style: solid;
           border-color: black transparent transparent transparent;
@@ -445,7 +441,7 @@
   height: 13px;
   display: inline-block;
   width: 13px;
-  margin-left: 5px;
+  @include left("margin", 5px);
   border-radius: 50%;
   align-items: center;
   justify-content: center;
@@ -478,7 +474,7 @@ border: solid 1px #2c2a2a;
   }
 
   .options {
-    margin-left: 27px;
+    @include left("margin", 27px);
     .option {
       display: inline-block;
       width: 13px;
@@ -509,7 +505,7 @@ border: solid 1px #2c2a2a;
 }
 .sizeGuideDecoration{
   text-decoration: underline;
-  margin-left: 11.3px;
+  @include left("margin", 11.3px);
 }
 .sizeLabel{
   font-weight: normal;

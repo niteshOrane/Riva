@@ -29,7 +29,7 @@ const Product = (props) => {
 
   const [product, setproduct] = useState({});
   const [compositioncare, setCompositioncare] = useState({});
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const {currency_symbol, language} = useSelector(state => state?.common?.store);
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -113,6 +113,7 @@ const Product = (props) => {
         mediaImage={mediaImage}
         colorImage={colorImage}
         currency_symbol={currency_symbol}
+        language={language}
       />
       <div className="max-width-1750 mx-auto">
         <Slider

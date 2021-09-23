@@ -12,7 +12,7 @@ import {
 } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
-const DeliveredOrders = ({ products, status, code, increment_id }) => {
+const DeliveredOrders = ({ products, status, code, increment_id, language }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -99,7 +99,7 @@ const DeliveredOrders = ({ products, status, code, increment_id }) => {
                 <icons.Star />
               </span>
               <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                <ReviewModal id={product?.product_id} sku={product?.sku} />
+                <ReviewModal id={product?.product_id} sku={product?.sku}  language={language} />
               </h4>
             </div>
             <div className="d-flex align-items-center mt-12px">

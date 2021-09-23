@@ -28,18 +28,12 @@ import {
   toggleWishlist,
 } from "../../../store/actions/wishlist";
 
-const closeStyle = {
-  position: "absolute",
-  top: 4,
-  right: 4,
-  paddingTop: 8,
-  paddingRight: 8,
-};
+
 
 function QuickView() {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
-  const [selectedColor, setSelectedColor] = React.useState("");
+
   const [outOfStock, setOutOfStock] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(1);
   const [attributes, setattributes] = useState({ colors: [], size: [] });
@@ -60,12 +54,6 @@ function QuickView() {
     dispatch(toggleQuickView(null));
   };
 
-  // const setColorSize = (attr) => {
-  //   setSelectedColor(attr);
-  // };
-  // const handleWishlist = () => {
-  //   dispatch(toggleWishlist(selectedProduct));
-  // };
 
   const getReviewListForProduct = async (val) => {
     if (val) {
@@ -94,7 +82,21 @@ function QuickView() {
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
-  const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { currency_symbol, language } = useSelector((state) => state?.common?.store);
+  const closeStyle = language === 'Arabic' ? {
+    position: "absolute",
+    top: 4,
+    left: 4,
+    paddingTop: 8,
+    paddingLeft: 8,
+  } : {
+    position: "absolute",
+    top: 4,
+    right: 4,
+    paddingTop: 8,
+    paddingRight: 8,
+  };
+
   const {
     origpriceWithoutCurrency = 0,
     priceWithoutCurrency = 0,
@@ -179,19 +181,23 @@ function QuickView() {
   return (
     <Dialog
       fullWidth
+      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
       open={isOpen}
     >
       <SizeCard
         imageSelected={srcImage}
+        dir={language === 'Arabic' ? 'rtl' : 'ltr'} 
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
+        language={language}
       />
       <SizeGuide
         imageSelected={srcImage}
         open={guideCardOpen}
         handleClose={() => setGuideCardOpen(false)}
+        language={language}
       />
       <button
         type="button"
@@ -220,8 +226,9 @@ function QuickView() {
               <Rating name="read-only" readOnly value={value} size="small" />
             </div>
             <div className={`${styles.rating} d-flex-all-center`}>
-              {calculateAvgReview()} rating <br />
+              {calculateAvgReview()} Rating <br />
             </div>
+            <br />
             <br />
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
@@ -284,11 +291,10 @@ function QuickView() {
                         )
                           ?.toLowerCase()
                           .trim()}.png`}
-                        className={`${styles.colorItem} ${
-                          data?.selected?.color?.value === item?.value
+                        className={`${styles.colorItem} ${data?.selected?.color?.value === item?.value
                             ? styles.active
                             : ""
-                        }`}
+                          }`}
                         style={{
                           height: "13px",
                           width: "13px",
@@ -302,10 +308,9 @@ function QuickView() {
                     <div
                       src={item?.file}
                       className={`${styles.colorItem} 
-                        ${
-                          data?.selected?.color?.value === item.value
-                            ? styles.active
-                            : ""
+                        ${data?.selected?.color?.value === item.value
+                          ? styles.active
+                          : ""
                         }`}
                       title={item?.label}
                     />

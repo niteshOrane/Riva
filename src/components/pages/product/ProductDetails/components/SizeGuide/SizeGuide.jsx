@@ -3,12 +3,12 @@ import { Drawer } from "@material-ui/core";
 import * as icons from "../../../../../common/Icons/Icons";
 import styles from "./SizeGuide.module.scss";
 
-function SizeGuide({ handleClose, open, imageSelected }) {
+function SizeGuide({ handleClose, open, imageSelected, language }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const sizes = ["M", "L", "S"];
   const [selectedSize, setSelectedSize] = useState(sizes?.[0]);
   return (
-    <Drawer anchor="right" onClose={handleClose} open={open}>
+    <Drawer anchor={language === 'Arabic' ? 'left' : 'right'} dir={language === 'Arabic' ? 'rtl' : 'ltr'} onClose={handleClose} open={open}>
       <button
         type="button"
         onClick={handleClose}
@@ -27,11 +27,11 @@ function SizeGuide({ handleClose, open, imageSelected }) {
           <div className={styles.arrows}>
             <div className={styles.arrow}>
               <div className={styles.unit}>90 cm</div>
-              <div className={styles.arrowLine}/>
+              <div className={styles.arrowLine} />
             </div>
             <div className={styles.arrow}>
               <div className={styles.unit}>70 cm</div>
-              <div className={styles.arrowLine}/>
+              <div className={styles.arrowLine} />
             </div>
           </div>
           <img
@@ -56,9 +56,8 @@ function SizeGuide({ handleClose, open, imageSelected }) {
           </div>
 
           <div
-            className={`${showDropdown ? styles.show : ""} ${
-              styles.dropdownBody
-            }`}
+            className={`${showDropdown ? styles.show : ""} ${styles.dropdownBody
+              }`}
           >
             {sizes.map((size) => (
               <div

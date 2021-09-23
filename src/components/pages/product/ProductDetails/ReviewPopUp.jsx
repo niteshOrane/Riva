@@ -65,8 +65,9 @@ const dummyData = [
   },
 ];
 
-export default function ReviewModal({ id, sku, isDetail }) {
+export default function ReviewModal({ id, sku, isDetail, language }) {
   const dispatch = useDispatch();
+
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -160,9 +161,11 @@ export default function ReviewModal({ id, sku, isDetail }) {
           <span className={classes.viewAll}>Rate this product</span>
         )}
       </span>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
+        dir={language === 'Arabic' ? 'rtl' : 'ltr'}
         className={classes.modal}
         open={open}
         onClose={handleClose}
@@ -173,6 +176,7 @@ export default function ReviewModal({ id, sku, isDetail }) {
         }}
       >
         <Fade in={open}>
+         
           <div className={classes.paper}>
             <button
               type="submit"

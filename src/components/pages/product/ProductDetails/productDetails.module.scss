@@ -5,7 +5,7 @@
     height: 13px;
     display: inline-block;
     width: 13px;
-    margin-left: 5px;
+    @include left('margin',  5px);
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -23,7 +23,7 @@
     .actionContainerTopRight {
       position: absolute;
       top: 4px;
-      right: 4px;
+      @include rightpos(4px);
       font-size: 15px;
       font-weight: 500;
       background-color: transparent;
@@ -47,7 +47,7 @@
     .circlesContainer{
       position: absolute;
       top: 1%;
-      left: 11%;
+      @include leftpos(11%)
     }
 
     .actionContainerTopLeft {
@@ -88,7 +88,7 @@
     .actionContainerBottomRight {
       position: absolute;
       bottom: 4px;
-      right: 4px;
+      @include rightpos(4px);
       font-size: 15px;
       font-weight: 500;
       background-color: transparent;
@@ -155,7 +155,7 @@
       letter-spacing: normal;
       color: #181617;
       margin-top: 5px;
-      margin-left: 14px;
+      @include left('margin',  14px);
       word-wrap: break-word ;
     }
 
@@ -172,7 +172,7 @@
         text-align: left;
         color: #5c5959;
         text-decoration: line-through;
-        margin-right: 25px;
+        @include right('margin',  25px);
       }
 
       .now {
@@ -499,19 +499,19 @@
 .socialMediaPopper {
   top: 300px  !important;
   left: unset !important;
-  right: 0px !important;
+  @include rightpos(0px !important);
   padding: 10px !important;
   cursor: pointer;
 }
 
 .labelName {
-  margin-left: 13px;
+  @include left('margin',  13px);
   font-weight: normal;
   white-space: nowrap;
 }
 .labelContainer {
   display: flex;
-  margin-left: 15px;
+  @include left('margin',  15px);
 }
 .sizeGuide{
   text-decoration: underline;
@@ -530,7 +530,7 @@
     font-style: normal;
     line-height: 1.47;
     letter-spacing: normal;
-    text-align: left;
+    @include textAlign('text-align');
     color: #6a6565;
     margin-bottom: "5px";
   }
@@ -578,7 +578,7 @@
   width: 46px;
   height: 24px;
   /* padding: 2px; */
-  padding-right: 54px;
+  @include right('padding',  54px);
 }
 .sectionWrapOne {
   display: flex;
@@ -590,7 +590,7 @@
   background-color: green;
   /* width: 10px; */
   height: 25px;
-  padding-right: 7px;
+  @include right('padding',  7px);
   border-radius: 3px;
 }
 
@@ -604,14 +604,14 @@
   display: flex;
 }
 .reviewName{
-  margin-left: 35px;
+  @include left('margin',  35px);
 }
 .nameDate{
   margin-top: 18px;
   margin-bottom: 18px;
 }
 .dislikeThumb{
-  margin-left: 10px;
+  @include left('margin',  10px);
   display: flex;
 }
 .dateSpan{
@@ -623,7 +623,7 @@
 }
 .reviewCls {
   position: absolute;
-  right: 2%;
+  @include rightpos(2%);
   font-size: 25px;
   border: none;
   background: transparent;

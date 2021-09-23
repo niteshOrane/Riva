@@ -7,6 +7,8 @@ import { getOrderList } from "../../services/order/order.services";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
+
+  const { language } = useSelector(state => state?.common?.store);
   const [orderList, setOrderList] = React.useState([]);
   const getOrders = async (id) => {
     const res = await getOrderList(id);
@@ -44,6 +46,7 @@ function Delivered({ title = "Delivered" }) {
                     status={li.status}
                     code={li?.currency_code}
                     increment_id={li?.increment_id}
+                    language={language}
                   />
                 ))}
           </div>

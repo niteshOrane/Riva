@@ -44,7 +44,13 @@ $desktop-width: 1024px;
     #{$property}: $rtl-value;
   }
 }
+@mixin textAlign($property) {
+  #{$property}: 'left';
 
+  [dir='rtl'] & {
+    #{$property}: 'right';
+  }
+}
 @mixin right($property, $value, $important: null) {
   [dir='rtl'] & {
     #{$property}-left: $value $important;

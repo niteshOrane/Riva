@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,13 +17,6 @@ import ReviewModal from "../../pages/product/ProductDetails/ReviewPopUp";
 import { getReviewList } from "../../../services/product/product.service";
 import { Rating } from "@material-ui/lab";
 
-const closeStyle = {
-  position: "absolute",
-  top: 4,
-  right: 4,
-  paddingTop: 8,
-  paddingRight: 8,
-};
 function Wishlist() {
   const [selectedColor, setSelectedColor] = React.useState({
     color: null,
@@ -36,10 +29,24 @@ function Wishlist() {
     modalData: data = {},
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(state => state?.common?.store);
   const { auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
+
+  const closeStyle = language === 'Arabic' ? {
+    position: "absolute",
+    top: 4,
+    left: 4,
+    paddingTop: 8,
+    paddingLeft: 8,
+  } : {
+    position: "absolute",
+    top: 4,
+    right: 4,
+    paddingTop: 8,
+    paddingRight: 8,
+  };
 
   const handleClose = () => {
     dispatch(toggleWishlist(null));
@@ -102,6 +109,7 @@ function Wishlist() {
 
   return (
     <Dialog
+      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
       width="975px"
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
@@ -131,7 +139,7 @@ function Wishlist() {
           <div className={styles.bestSeller}>BEST SELLER</div>
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
-          <div className={`${styles.stars} d-flex-all-center`}>
+            <div className={`${styles.stars} d-flex-all-center`}>
               <Rating name="read-only" readOnly value={value} size="small" />
             </div>
             <div className={`${styles.rating} d-flex-all-center`}>{calculateAvgReview()} rating</div>
@@ -141,7 +149,7 @@ function Wishlist() {
             </div>
           </div>
           <div>
-            <ReviewModal id={data?.id} sku={data?.sku} />
+            <ReviewModal id={data?.id} sku={data?.sku}  language={language} />
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
@@ -188,11 +196,10 @@ function Wishlist() {
                           )
                             ?.toLowerCase()
                             .trim()}.png`}
-                          className={`${styles.colorItem} ${
-                            data?.selected?.color?.value === item?.value
-                              ? styles.active
-                              : ""
-                          }`}
+                          className={`${styles.colorItem} ${data?.selected?.color?.value === item?.value
+                            ? styles.active
+                            : ""
+                            }`}
                           alt={item?.label}
                         />
                       </>
@@ -200,11 +207,10 @@ function Wishlist() {
                       <div
                         src={item?.file}
                         className={`${styles.colorItem} 
-                        ${
-                          data?.selected.color.value === item.value
+                        ${data?.selected.color.value === item.value
                             ? styles.active
                             : ""
-                        }`}
+                          }`}
                         title={item?.label}
                       />
                     )}
@@ -230,7 +236,7 @@ function Wishlist() {
                       onClick={() => setColorSize(size, "size")}
                       className={`${styles.option} d-flex-all-center`}
                     >
-                      <span className  = {styles.sizeLabel}>{size.label}</span>
+                      <span className={styles.sizeLabel}>{size.label}</span>
                     </div>
                   );
                 })}

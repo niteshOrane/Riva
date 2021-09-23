@@ -1,7 +1,7 @@
 .close {
   position: absolute;
   top: 12px;
-  right: 12px;
+  @include rightpos(12px);
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
@@ -13,14 +13,14 @@
 
 .img {
   padding: 5px;
-  margin-right: 15px;
+  @include right('margin', 15px);
   img {
     max-width: 200px;
   }
 }
 
 .details {
-  padding-right: 20px;
+  @include right('padding', 20px);
   * {
     font-family: Jost;
   }
@@ -46,7 +46,7 @@
       font-style: normal;
       line-height: 1;
       letter-spacing: normal;
-      text-align: left;
+      @include textAlign('text-align');
       color: #181617;
       margin: 0;
     }
