@@ -188,10 +188,9 @@ function QuickView() {
     >
       <SizeCard
         imageSelected={srcImage}
-        dir={language === 'Arabic' ? 'rtl' : 'ltr'} 
+        language={language}
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
-        language={language}
       />
       <SizeGuide
         imageSelected={srcImage}
@@ -236,7 +235,7 @@ function QuickView() {
             </div>
           </div>
           <div>
-            <ReviewModal id={data?.id} sku={data?.sku} />
+            <ReviewModal id={data?.id} sku={data?.sku} language={language} />
           </div>
           <div className={`${styles.price} d-flex`}>
             <div className={styles.now}>
@@ -292,8 +291,8 @@ function QuickView() {
                           ?.toLowerCase()
                           .trim()}.png`}
                         className={`${styles.colorItem} ${data?.selected?.color?.value === item?.value
-                            ? styles.active
-                            : ""
+                          ? styles.active
+                          : ""
                           }`}
                         style={{
                           height: "13px",
