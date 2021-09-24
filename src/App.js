@@ -6,14 +6,12 @@ import Loader from './components/common/Loader';
 import { getCart } from './store/actions/cart';
 import SnackBar from './components/common/Snakbar';
 import AlertComponent from './components/common/Alert';
-
-import { ToastContainer, toast } from 'react-toastify';
 import AppRoutes from './routes';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import { deepEqual, hardReload, getCustInfo } from './util';
+import { deepEqual, hardReload } from './util';
 
 
 
