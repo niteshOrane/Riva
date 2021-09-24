@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-
+import { useSelector } from "react-redux";
 
 function getModalStyle() {
   const top = 50
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SubscribeModel() {
   const classes = useStyles();
+  const {language} = useSelector(state => state?.common?.store);
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -80,6 +81,7 @@ export default function SubscribeModel() {
       </span>
       <Modal
         open={open}
+        dir={language === 'Arabic' ? 'rtl' : 'ltr'}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"

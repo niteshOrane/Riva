@@ -37,14 +37,17 @@ export default function SimpleModal({ image, sizes, language }) {
     box2: {
       width: "50%",
       height: "100%",
-      paddingLeft: "10px",
+      paddingLeft: language === 'Arabic' ? '0' : "10px",
+      paddingRight: language === 'Arabic' ? '10px' : "0",
     },
     para: {
       marginTop: "10px",
       marginBottom: "5px",
     },
     size: {
-      marginLeft: "5px",
+    
+      marginLeft: language === 'Arabic' ? '0' : "5px",
+      marginRight: language === 'Arabic' ? '5px' : "0",
       border: "1px solid #c8c0c0",
       padding: "2px",
       marginTop: "50px",
