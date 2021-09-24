@@ -17,7 +17,7 @@ const Cart = () => {
 
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(state => state?.common?.store);
   const [editableIndex, setEditableIndex] = React.useState(null);
   const dispatch = useDispatch();
   const openSignUpCard = (redirectTo) => {
@@ -54,12 +54,12 @@ const Cart = () => {
     return { colors, size };
   };
   return (
-    <div key="cartlist">
-      <Drawer anchor="right" onClose={handleClose} open={isOpen}>
+    <div key="cartlist" dir={language === 'Arabic' ? 'rtl' : 'ltr'}>
+      <Drawer anchor={language === 'Arabic' ? 'left' : 'right'} onClose={handleClose} open={isOpen}>
         <div className={style.sidebarContainer}>
           <div className="d-flex align-items-end justify-content-between p-12px">
             <h3 className={style.addedMsg}>Added To Cart ({items.length})</h3>
-            <BlackCloseBtn handleClose={handleClose}  drawerPosition="right" filter/>
+            <BlackCloseBtn handleClose={handleClose} drawerPosition={language === 'Arabic' ? 'left' : 'right'} filter />
           </div>
           <div className={style.sideMsg}>
             {/* <div className="d-flex align-items-center bg-grey p-12px">
@@ -170,7 +170,7 @@ const Cart = () => {
                       local_shipping
                     </span>
                   </div>
-                  <p className = {style.spend}>
+                  <p className={style.spend}>
                     <span>Spend %18.20</span> to quality
                     for free standard delivery
                   </p>
@@ -185,7 +185,7 @@ const Cart = () => {
                 <h4>
                   <strong>Total</strong>{' '}
                   <strong className="color-primary">
-                  {currency_symbol}{" "}
+                    {currency_symbol}{" "}
                     {parseFloat(items.reduce(
                       (total, item) => total + item.price * item.qty,
                       0

@@ -65,9 +65,10 @@ const dummyData = [
   },
 ];
 
-export default function ReviewModal({ id, sku, isDetail, language }) {
+export default function ReviewModal({ id, sku, isDetail }) {
   const dispatch = useDispatch();
 
+  const {language} = useSelector(state => state?.common?.store);
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);

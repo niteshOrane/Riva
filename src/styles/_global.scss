@@ -73,3 +73,8 @@
 .slick-arrow{
   display: none;
 }
+.MuiAlert-action{
+    @include right('margin', auto);
+    @include left('margin', 8px);
+    @include right('padding', 16px);
+}

@@ -233,7 +233,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div>
-              <ReviewModal id={product?.id} sku={product?.sku}  language={language}  />
+              <ReviewModal id={product?.id} sku={product?.sku} language={language} />
             </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
@@ -500,7 +500,7 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/shop.png",
                     },
                     {
-                      name: <SubscribeModel />,
+                      name: <SubscribeModel language={language} />,
                       icon: "/assets/images/tshirt.png",
                     },
 

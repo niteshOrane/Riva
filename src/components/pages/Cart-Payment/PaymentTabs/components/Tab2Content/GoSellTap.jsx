@@ -40,19 +40,19 @@ function GoSellTap() {
       <div className={styles.goSellWrap}>
         <FormControl component="fieldset">
           <RadioGroup onChange={callbackFunc}>
-            <FormControlLabel value="card" control={<Radio />} label="card" />
+            <FormControlLabel value="card" control={<Radio />} label="Card" />
             {store_name === "Kuwait" && (
-              <FormControlLabel value="knet" control={<Radio />} label="knet" />
+              <FormControlLabel value="knet" control={<Radio />} label="Knet" />
             )}
             {store_name === "Saudi Arabia" && (
-              <FormControlLabel value="mada" control={<Radio />} label="mada" />
+              <FormControlLabel value="mada" control={<Radio />} label="Mada" />
             )}
 
             {store_name === "Bahrain" && (
               <FormControlLabel
                 value="benefit"
                 control={<Radio />}
-                label="benefit"
+                label="Benefit"
               />
             )}
           </RadioGroup>
