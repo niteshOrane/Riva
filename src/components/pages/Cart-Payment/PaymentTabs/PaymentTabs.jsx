@@ -14,12 +14,12 @@ import Tab2Content from "./components/Tab2Content/Tab2Content";
 import { showSnackbar } from "../../../../store/actions/common";
 import { cartPaymentAction } from "../../../../services/cart/cart.service";
 
-
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 import { compose } from "redux";
 import { getCartId } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
+import GooglePay from "./components/GooglePay";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,7 +101,7 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
-      const res = await cartPaymentAction(e,"checkoutcom_card_payment");
+      const res = await cartPaymentAction(e, "checkoutcom_card_payment");
       if (res.status === 200) {
         setLoading(false);
         dispatch(showSnackbar("Payment success", "success"));
@@ -147,7 +147,6 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
-     
     }
   }, [paymentMode]);
 
@@ -180,14 +179,14 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         menu?.removeChild(child);
         child = menu?.lastElementChild;
       }
-    
+
       if (menu && menu != null) {
-        menu.innerHTML = ""
+        menu.innerHTML = "";
         menu = menu?.append(form);
       }
     }
   };
-  useEffect(() =>{
+  useEffect(() => {
     let tabName;
     if (value === 1) {
       tabName = "renderPaymentformOne";
@@ -197,11 +196,11 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       tabName = "renderPaymentformFour";
     }
     const isEmpty = document.getElementById(tabName)?.innerHTML === "";
-    if(isEmpty){
-      const item =  document.getElementById(tabName)
-      item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>"
+    if (isEmpty) {
+      const item = document.getElementById(tabName);
+      item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
     }
-  },[value])
+  }, [value]);
 
   const handleChange = async (_, newValue) => {
     switch (newValue) {
@@ -263,7 +262,6 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
             <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
           )} */}
           <GoSellTap />
-
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>
@@ -278,6 +276,10 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         </TabPanel>
         <TabPanel value={value} index={4}>
           <div id="renderPaymentformFour">{renderPaymentform()}</div>
+        </TabPanel>
+
+        <TabPanel value={value} index={5}>
+          <GooglePay cartPaymentInfo={cartPaymentInfo} />
         </TabPanel>
       </div>
     </div>
