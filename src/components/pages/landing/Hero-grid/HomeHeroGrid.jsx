@@ -67,7 +67,6 @@ const HomeHeroGrid = (props) => {
                     itemsImage.find((e) => e.position === "2")?.image
                   }`}
                   alt=""
-                  style={{paddingBottom:"5px"}}
                 />
                 <div className="banner-wrapper-text">
                   <h3>{items?.[1]?.title ?? "TEENS"}</h3>
@@ -97,7 +96,7 @@ const HomeHeroGrid = (props) => {
                     itemsImage.find((e) => e.position === "3")?.image
                   }`}
                   alt=""
-                  style={{paddingTop:"5px"}}
+                  style={{paddingTop:"8px"}}
                 />
                 <div className="banner-wrapper-text">
                   <h3>{items?.[2]?.title ?? "KIDS"}</h3>
