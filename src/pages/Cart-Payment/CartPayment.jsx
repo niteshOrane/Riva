@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PaymentTabs from '../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs';
-import * as icons from '../../components/common/Icons/Icons';
-import PriceDetails from '../../components/pages/Cart-Payment/PriceDetails/PriceDetails';
-import LetUsHear from '../../components/common/Cards/LetUsHear/LetUsHear';
-import { getPaymentMethodlist } from '../../store/actions/payment';
-import styles from './CartPayment.module.scss';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import PaymentTabs from "../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs";
+import * as icons from "../../components/common/Icons/Icons";
+import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
+import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
+import { getPaymentMethodlist } from "../../store/actions/payment";
+import styles from "./CartPayment.module.scss";
 
-import { toggleCart } from '../../store/actions/cart';
+import { toggleCart } from "../../store/actions/cart";
 
 function CartPayment() {
   const dispatch = useDispatch();
@@ -18,15 +18,17 @@ function CartPayment() {
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
 
-  const { currency_symbol } = useSelector(state => state?.common?.store);
-  const cartPaymentInfo = useSelector((state) => state.cart?.cartPaymentInfo || {});
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const cartPaymentInfo = useSelector(
+    (state) => state.cart?.cartPaymentInfo || {}
+  );
   useEffect(() => {
     dispatch(getPaymentMethodlist());
     dispatch(toggleCart(false));
   }, [customerid]);
 
   useEffect(() => {
-    setPaymentOption(paymentMode)
+    setPaymentOption(paymentMode);
   }, [paymentMode]);
 
   return (
@@ -49,19 +51,31 @@ function CartPayment() {
         </div>
       </div>
       <div className={styles.container}>
-
         <div className={styles.col1}>
-          {paymentOption && paymentOption?.data && paymentOption?.data?.length ?
+          {paymentOption &&
+          paymentOption?.data &&
+          paymentOption?.data?.length ? (
             <>
-              <h2 className="font-weight-normal my-20px">Choose Payment Mode</h2>
-              <PaymentTabs paymentMode={paymentOption?.data} cartPaymentInfo={cartPaymentInfo} />
+              <h2 className="font-weight-normal my-20px">
+                Choose Payment Mode
+              </h2>
+              <PaymentTabs
+                cartItem={items}
+                customerID={customerid}
+                cartPaymentInfo={cartPaymentInfo}
+                paymentMode={paymentOption?.data}
+              />
             </>
-            : null}
+          ) : null}
         </div>
 
         <div className={styles.col2}>
-          <PriceDetails cartItem={items} currency_symbol={currency_symbol}
-            customerID={customerid} cartPaymentInfo={cartPaymentInfo} />
+          <PriceDetails
+            cartItem={items}
+            currency_symbol={currency_symbol}
+            customerID={customerid}
+            cartPaymentInfo={cartPaymentInfo}
+          />
           <LetUsHear />
         </div>
       </div>
