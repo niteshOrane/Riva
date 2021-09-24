@@ -1,14 +1,18 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 20px 0;
   .sortByText {
+   
     @include left('margin', 17px);
     span:nth-child(2) {
       margin-left: 9px;
     }
   }
+}
+.total{
+  margin-top: 3.2rem;
 }
 .listingWrapper{
   display: flex;
@@ -28,6 +32,12 @@
     max-width: 100%;
     flex-basis: 100%;
   }
+}
+
+.catNumber{
+  display: flex;
+  // justify-content: center;
+  align-items: flex-start;
 }
 .essentials {
   margin-top: 30px;

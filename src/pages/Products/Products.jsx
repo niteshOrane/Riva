@@ -5,7 +5,6 @@ import Filters from "../../components/pages/products/Filters";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import Image from "../../components/common/LazyImage/Image";
 import Slider from "../../components/common/Sliders/Slider";
-
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import { Link } from "react-router-dom";
@@ -65,69 +64,72 @@ function Products(props) {
           {sessionStorage.getItem("selectedCategory")}
         </div>
         <div className={styles.header}>
-          <div className="d-flex align-items-center">
-            <span className="color-grey">
-              {products.length ? (
-                <>
-                  Showing {1}-{products.length} out of {totalCount}
-                </>
-              ) : (
-                ""
-              )}
-            </span>
-            <div className={styles.sortByText}>
-              <span>SORT BY:</span>
-              <span>
-                <select onChange={handleSortChange}>
-                  <option
-                    style={{ background: "#fff" }}
-                    value="entity_id-desc"
-                    id="desc"
-                  >
-                    Newest
-                  </option>
-                  <option
-                    style={{ background: "#fff" }}
-                    value="position-desc"
-                    id="desc"
-                  >
-                    Relevance
-                  </option>
-                  <option
-                    style={{ background: "#fff" }}
-                    value="price-asc"
-                    id="asc"
-                  >
-                    Lowest price
-                  </option>
-                  <option
-                    style={{ background: "#fff" }}
-                    value="price-desc"
-                    id="desc"
-                  >
-                    Highest price
-                  </option>
-                  <option
-                    style={{ background: "#fff" }}
-                    value="created_at-desc"
-                    id="desc"
-                  >
-                    Most Popular
-                  </option>
-                </select>
+          <div className={styles.catNumber}>
+            <div className={styles.circlesContainer}>
+              <CategoriesCircles />
+            </div>
+            <div className={`d-flex align-items-center ${styles.total}`}>
+              <span className="color-grey">
+                {products.length ? (
+                  <>
+                    Showing {1}-{products.length} out of {totalCount}
+                  </>
+                ) : (
+                  ""
+                )}
               </span>
+              <div className={styles.sortByText}>
+                <span>SORT BY:</span>
+                <span>
+                  <select onChange={handleSortChange}>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="entity_id-desc"
+                      id="desc"
+                    >
+                      Newest
+                    </option>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="position-desc"
+                      id="desc"
+                    >
+                      Relevance
+                    </option>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="price-asc"
+                      id="asc"
+                    >
+                      Lowest price
+                    </option>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="price-desc"
+                      id="desc"
+                    >
+                      Highest price
+                    </option>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="created_at-desc"
+                      id="desc"
+                    >
+                      Most Popular
+                    </option>
+                  </select>
+                </span>
+              </div>
             </div>
           </div>
-
-          <Filters
-            handleThreeColumns={handleThreeColumns}
-            handleTwoColumns={handleTwoColumns}
-            pageColumns={pageColumns}
-            categoryId={props.match.params.categoryId}
-          />
-        </div>
-        <div className={styles.circlesContainer}>
-          <CategoriesCircles />
+          <section className = {styles.total}>
+            <Filters
+              handleThreeColumns={handleThreeColumns}
+              handleTwoColumns={handleTwoColumns}
+              pageColumns={pageColumns}
+              categoryId={props.match.params.categoryId}
+            />
+          </section>
         </div>
       </div>
       {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}

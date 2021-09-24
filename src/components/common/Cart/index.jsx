@@ -170,7 +170,7 @@ const Cart = () => {
                       local_shipping
                     </span>
                   </div>
-                  <p>
+                  <p className = {style.spend}>
                     <span>Spend %18.20</span> to quality
                     for free standard delivery
                   </p>

@@ -7,7 +7,7 @@
     padding-top: 7px;
     padding-bottom: 7px;
     box-shadow: 0.4px 5px 16px 0 rgba(186, 180, 180, 0.27);
-    min-height: 125px;
+    // min-height: 125px;
     margin: 12px;
     margin-left: 0px;
     height: 114px;
@@ -24,6 +24,7 @@
         min-height: 87px;
         border-radius: 8px;
         object-fit: contain;
+        border-radius: 5%;
       }
     }
     .cardText {
