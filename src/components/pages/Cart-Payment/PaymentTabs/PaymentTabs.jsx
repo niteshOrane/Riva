@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router";
-import styles from "../PaymentTabs/components/Tab2Content/Tab2Content.module.scss";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+
+import { useHistory } from "react-router";
+
+import styles from "./components/Tab2Content/Tab2Content.module.scss";
+
 import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
 
@@ -16,7 +19,7 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
-import { compose } from "redux";
+
 import { getCartId } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
@@ -89,7 +92,7 @@ function a11yProps(index) {
   };
 }
 
-export default React.memo(({ paymentMode, cartPaymentInfo }) => {
+const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -135,9 +138,8 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
+        }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -169,8 +171,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         tabName = "renderPaymentformOne";
       } else if (value === 3) {
         tabName = "renderPaymentformThree";
-      } else if (value === 4) {
-        tabName = "renderPaymentformFour";
+      }
+      else if (value === 5) {
+        tabName = "renderPaymentformFive";
       }
       let menu = document.getElementById(tabName);
 
@@ -192,8 +195,9 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
       tabName = "renderPaymentformOne";
     } else if (value === 3) {
       tabName = "renderPaymentformThree";
-    } else if (value === 4) {
-      tabName = "renderPaymentformFour";
+    }
+    else if (value === 5) {
+      tabName = "renderPaymentformFive";
     }
     const isEmpty = document.getElementById(tabName)?.innerHTML === "";
     if (isEmpty) {
@@ -213,8 +217,11 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         break;
       case 3:
       case 1:
-      case 4:
+      case 5:
         getPaymentForHyperPay(newValue);
+        setValue(newValue);
+        break;
+      case 4:
         setValue(newValue);
         break;
       default:
@@ -238,9 +245,8 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
@@ -274,14 +280,19 @@ export default React.memo(({ paymentMode, cartPaymentInfo }) => {
         <TabPanel value={value} index={3}>
           <div id="renderPaymentformThree">{renderPaymentform()}</div>
         </TabPanel>
-        <TabPanel value={value} index={4}>
-          <div id="renderPaymentformFour">{renderPaymentform()}</div>
-        </TabPanel>
 
+        <TabPanel value={value} index={4}>
+          <GooglePay style={styles} id="renderPaymentformFour" cartPaymentInfo={cartPaymentInfo} store={store} />
+        </TabPanel>
         <TabPanel value={value} index={5}>
-          <GooglePay cartPaymentInfo={cartPaymentInfo} />
+          <div id="renderPaymentformFive">{renderPaymentform()}</div>
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          <GooglePay cartPaymentInfo={cartPaymentInfo} store={store} />
         </TabPanel>
       </div>
     </div>
   );
 });
+
+export default PaymentTabs;

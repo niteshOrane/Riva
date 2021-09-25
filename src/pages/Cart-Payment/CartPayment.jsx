@@ -18,7 +18,7 @@ function CartPayment() {
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
 
-  const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const store = useSelector((state) => state?.common?.store);
   const cartPaymentInfo = useSelector(
     (state) => state.cart?.cartPaymentInfo || {}
   );
@@ -53,8 +53,8 @@ function CartPayment() {
       <div className={styles.container}>
         <div className={styles.col1}>
           {paymentOption &&
-          paymentOption?.data &&
-          paymentOption?.data?.length ? (
+            paymentOption?.data &&
+            paymentOption?.data?.length ? (
             <>
               <h2 className="font-weight-normal my-20px">
                 Choose Payment Mode
@@ -63,6 +63,7 @@ function CartPayment() {
                 cartItem={items}
                 customerID={customerid}
                 cartPaymentInfo={cartPaymentInfo}
+                store={store}
                 paymentMode={paymentOption?.data}
               />
             </>
@@ -72,7 +73,7 @@ function CartPayment() {
         <div className={styles.col2}>
           <PriceDetails
             cartItem={items}
-            currency_symbol={currency_symbol}
+            store={store}
             customerID={customerid}
             cartPaymentInfo={cartPaymentInfo}
           />

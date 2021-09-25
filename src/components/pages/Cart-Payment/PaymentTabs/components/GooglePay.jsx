@@ -1,8 +1,8 @@
 import React from "react";
 import GooglePayButton from "@google-pay/button-react";
-import style from "../components/Tab2Content/Tab2Content.module.scss"
 
-function GooglePay({ cartPaymentInfo }) {
+function GooglePay({ cartPaymentInfo, store, style }) {
+  const { currency, country_id} = store;
   return (
     <section  className = {style.gPay}>
       <GooglePayButton
@@ -38,8 +38,8 @@ function GooglePay({ cartPaymentInfo }) {
                 (e) => e.code === "grand_total"
               )?.value
             ).toFixed(2),
-            currencyCode: "USD",
-            countryCode: "US",
+            currencyCode: currency,
+            countryCode: country_id,
           },
         }}
         onLoadPaymentData={(paymentRequest) => {
