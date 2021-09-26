@@ -1,11 +1,8 @@
 import React from "react";
 import style from "./navbar.module.scss";
-const Circle = ({ bg, children, onClick, id, ...props }) => {
+const Circle = ({ bg, children, onClick, id }) => {
   return (
     <div
-      onClick={() => {
-        onClick(id);
-      }}
       className={`c-pointer circleBg-${bg} ${style.circle} d-flex-all-center`}
     >
       {children}

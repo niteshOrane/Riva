@@ -7,7 +7,7 @@ import storeData from "../../../../../../store/index";
 
 const ProductsHeaderTopBar = () => {
   const links = useSelector((state) => state.common.category)[0];
-  const [defaultCategory, setCategory] = useState("1241"); //woman
+  const [defaultCategory, setCategory] = useState(0); //woman
   const dispatch = useDispatch();
   const [languageItem, setLanguageItem] = useState(" العربية");
   const [storeDropDown, setStoreDropDown] = useState([]);
