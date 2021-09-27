@@ -16,6 +16,8 @@ const rootElement = document.getElementById('root');
 
 NetworkInterceptor.setupInterceptors(store);
 
+
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

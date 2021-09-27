@@ -23,6 +23,7 @@ import Loader from "../../../common/Loader";
 import { getCartId } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
+import ApplePay from "./components/ApplePay";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -288,7 +289,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
           <div id="renderPaymentformFive">{renderPaymentform()}</div>
         </TabPanel>
         <TabPanel value={value} index={6}>
-          <GooglePay cartPaymentInfo={cartPaymentInfo} store={store} />
+          <ApplePay />
         </TabPanel>
       </div>
     </div>
