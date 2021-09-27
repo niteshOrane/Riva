@@ -2,6 +2,13 @@ import { createBrowserHistory } from 'history';
 
 import store from '../store/index';
 
+export const ALERT = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+  WARN: 'warning',
+  INFO: 'info',
+};
+
 export const URL = {
   baseUrl: `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image`,
   baseUrlColorSwitcher: `http://65.0.141.49/shop/pub/media/wysiwyg/swatches`,

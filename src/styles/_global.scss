@@ -49,6 +49,7 @@
 }
 .searchBox{
   @include right('margin', 3px);
+  cursor: pointer;
 }
 
 .material-icons-outlined{

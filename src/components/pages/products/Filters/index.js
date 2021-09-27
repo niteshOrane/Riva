@@ -82,9 +82,11 @@ function Filters({
   };
   // console.log(filtersAttr)
   useEffect(() => {
-    filterList(categoryId);
+    if (categoryId && categoryId > 0) {
+      filterList(categoryId);
+    }
   }, []);
-  let categoryList = [
+  const categoryList = [
     {
       id: filtersAttr?.find((v) => v.attr_code === "cat")?.attr_code,
       title: filtersAttr?.find((v) => v.attr_code === "cat")?.attr_label,
@@ -278,10 +280,10 @@ function Filters({
               style={
                 items?.children?.length > 10
                   ? {
-                      height: "25rem",
-                      overflowY: "scroll",
-                      paddingRight: "1rem",
-                    }
+                    height: "25rem",
+                    overflowY: "scroll",
+                    paddingRight: "1rem",
+                  }
                   : null
               }
             >
@@ -312,18 +314,16 @@ function Filters({
             <div className={style.filterDots}>
               <div
                 onClick={handleTwoColumns}
-                className={`${pageColumns === 2 ? style.blackDots : ""} ${
-                  style.greyDots
-                }`}
+                className={`${pageColumns === 2 ? style.blackDots : ""} ${style.greyDots
+                  }`}
               >
                 <span />
                 <span />
               </div>
               <div
                 onClick={handleThreeColumns}
-                className={`${pageColumns === 3 ? style.blackDots : ""} ${
-                  style.greyDots
-                }`}
+                className={`${pageColumns === 3 ? style.blackDots : ""} ${style.greyDots
+                  }`}
               >
                 <span />
                 <span />

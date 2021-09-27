@@ -12,15 +12,20 @@ export const getPaymentMode = () => {
   return axios(config);
 };
 export const getShippingMethod = (addressId) => {
-  const config = {
-    method: "post",
-    url: `${API_URL}/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,
-    silent: true,
-    data: {
-      "addressId": addressId
-    }
-  };
-  return axios(config);
+  try {
+    const config = {
+      method: "post",
+      url: `${API_URL}/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,
+      silent: true,
+      data: {
+        "addressId": addressId
+      }
+    };
+    return axios(config);
+  }
+  catch {
+    return { data: [], success: false };
+  }
 };
 
 

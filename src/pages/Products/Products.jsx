@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import queryString from 'query-string';
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import useProducts from "./useProducts";
 import useOnScreen from "./useOnScreen";
 import Filters from "../../components/pages/products/Filters";
@@ -7,31 +10,34 @@ import Image from "../../components/common/LazyImage/Image";
 import Slider from "../../components/common/Sliders/Slider";
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 
 function Products(props) {
-  const handleQuickView = () => {};
+  const handleQuickView = () => { };
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const refContainer = useRef();
+
   const refContainerLoad = useRef();
   const onScreen = useOnScreen(refContainerLoad);
   const { middleBanner: categorypromotionbanner } = useLanding(
     "categorypromotionbanner"
   );
+  const { location, match } = props
+  const parsed = queryString.parse(location?.search);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [sortField, setSortField] = useState("entity_id");
   const [sortDirection, setSortDirection] = useState("desc");
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({
-    categoryId: props.match.params.categoryId,
+    categoryId: match.params.categoryId,
     currentPage,
     pageSize,
     sortDirection,
     sortField,
     onScreen,
+    serachTerm: parsed?.serachTerm
   });
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
@@ -122,7 +128,7 @@ function Products(props) {
               </div>
             </div>
           </div>
-          <section className = {styles.total}>
+          <section className={styles.total}>
             <Filters
               handleThreeColumns={handleThreeColumns}
               handleTwoColumns={handleTwoColumns}
@@ -137,11 +143,10 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        }`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          }`}
       >
         {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -158,11 +163,10 @@ function Products(props) {
         ))}
       </div>
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>

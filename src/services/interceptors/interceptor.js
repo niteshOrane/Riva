@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import Axios from 'axios';
-import { loader, errorHandler } from '../../store/actions/common';
-import { history } from '../../util';
+import { loader, errorHandler, showSnackbar } from '../../store/actions/common';
+import { history, ALERT } from '../../util';
+
 
 /* Loader Show/Hide logic */
 let count = 0;
@@ -20,9 +21,28 @@ const hideLoader = (store) => {
 };
 
 /* Error Show/Hide logic */
+
+/* Error Show/Hide logic */
 const handleError = (store, err = null) => {
   if (err) {
-    store.dispatch(errorHandler(err));
+    if (err?.config?.url.includes('/login')) {
+      const errorMsgToIgnore = [
+        'Invalid Credentials',
+        'User not found',
+        'Invalid parameters',
+      ];
+      const { data = {} } = err;
+      store.dispatch(
+        showSnackbar(
+          !data.message || errorMsgToIgnore.includes(data.message)
+            ? 'Incorrect username or password'
+            : data.message,
+          ALERT.ERROR,
+        ),
+      );
+    } else {
+      store.dispatch(errorHandler(err));
+    }
   }
 };
 
@@ -47,6 +67,7 @@ export default {
     Axios.interceptors.request.use(
       (config) => {
         const { silent = false } = config;
+
         if (!silent) showLoader(store);
         config.headers.Authorization = `Bearer ${process.env.REACT_APP_TOKEN}`;
         config.headers['Access-Control-Allow-Origin'] = '*';
@@ -62,16 +83,27 @@ export default {
     // Response interceptor
     Axios.interceptors.response.use(
       (response) => {
-        const { data = {} } = response;
+        const { data = {}, config = {} } = response;
+        const { skipErrorHandler = false } = config;
+
+
         hideLoader(store);
         if (data.status >= 400) {
+          const err = prepareErrorObject(data);
           history.push("/404");
+          if (!skipErrorHandler) {
+            handleError(store, err);
+          }
         }
         return response;
       },
       (error) => {
         const err = prepareErrorObject(error);
-        handleError(store, err);
+        const skipErrorHandler = error?.config?.skipErrorHandler;
+
+        if (!skipErrorHandler) {
+          handleError(store, err);
+        }
         hideLoader(store);
         return Promise.reject(error ? error['response'] : null);
       }

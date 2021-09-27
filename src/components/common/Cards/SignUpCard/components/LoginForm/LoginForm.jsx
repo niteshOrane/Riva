@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useHistory } from "react-router";
 
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { getCart } from "../../../../../../store/actions/cart";
 import {
   showSnackbar,
@@ -19,12 +21,10 @@ import {
   mergeGuestCart,
 } from "../../../../../../services/auth/auth.service";
 import { loginSuccess } from "../../../../../../store/actions/auth";
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 
-const LoginForm = ({ handleSubmit, handleOtpForm,setForgetPassStyle}) => {
+const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
