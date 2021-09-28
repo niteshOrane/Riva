@@ -35,6 +35,7 @@ function DeliveryAddress() {
     checkedB: false,
     indexItem: null,
   });
+  const {  language } = useSelector(state => state?.common?.store);
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -129,7 +130,7 @@ function DeliveryAddress() {
     }
   };
   return (
-    <div className="container-90 max-width-1600">
+    <div  className="container-90 max-width-1600">
       <div className={styles.header}>
         <div className={styles.breadCrumb}>
           <div className={styles.bcLinks}>
@@ -155,7 +156,7 @@ function DeliveryAddress() {
       </div>
 
       <div className={styles.container}>
-        <div className={styles.columnLeft}>
+        <div  className={styles.columnLeft}>
           <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: "10px" }}>
             {showList ? <>
               <AddressCard
@@ -262,7 +263,7 @@ function DeliveryAddress() {
             </Link>
           </div>
         </div>
-        <div>
+        <div style = {{marginRight: language==="Arabic" ? "10px":null}}>
           <div className={styles.columnRight}>
             <OrderReview
               cartPayment={cartPaymentInfo}

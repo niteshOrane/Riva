@@ -9,19 +9,22 @@ import {
 
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
-import { createCustomer,createCustomerSocial } from "../../../../../../services/auth/auth.service";
+import {
+  createCustomer,
+  createCustomerSocial,
+} from "../../../../../../services/auth/auth.service";
 import { getStoreId } from "../../../../../../util";
-import SignUpOtp from "./SignUpOtp"
+import SignUpOtp from "./SignUpOtp";
 
-const SignUpForm = ({ handleSubmit }) => {
+const SignUpForm = ({ handleSubmit, language }) => {
   const dispatch = useDispatch();
-  
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
-    phone:"",
-    lastName:""
+    phone: "",
+    lastName: "",
   });
 
   const handleChange = (e) => {
@@ -49,9 +52,6 @@ const SignUpForm = ({ handleSubmit }) => {
 
     if (!email || !name || !phone)
       return dispatch(showSnackbar("All fields are required", "warning"));
-
-
-
 
     // const customer = new FormData();
 
@@ -81,8 +81,8 @@ const SignUpForm = ({ handleSubmit }) => {
       customer.append("email", userEmail);
       customer.append("firstname", firstName || "");
       customer.append("lastname", lName || "");
-      customer.append("password",  "hello@123");
-      customer.append('resource',"Facebook")
+      customer.append("password", "hello@123");
+      customer.append("resource", "Facebook");
       const res = await createCustomer(customer);
 
       if (res.status === 200) {
@@ -104,8 +104,8 @@ const SignUpForm = ({ handleSubmit }) => {
       customer.append("email", userEmail);
       customer.append("lastname", lname || "");
       customer.append("firstname", firstName || "");
-      customer.append("password",  "hello@123");
-      customer.append('resource',"Google")
+      customer.append("password", "hello@123");
+      customer.append("resource", "Google");
       const res = await createCustomerSocial(customer);
       if (res.status === 200) {
         handleSubmit();
@@ -138,7 +138,7 @@ const SignUpForm = ({ handleSubmit }) => {
       </div>
       <div className={styles.container}>
         <p className="mt-12px">
-         Last Name <span className={styles.star}>*</span>
+          Last Name <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
           <span className="material-icons-outlined">account_circle</span>
@@ -217,7 +217,7 @@ const SignUpForm = ({ handleSubmit }) => {
         </p>
 
         {/* <input value="SIGN UP" type="submit" className={styles.signUpBtn} /> */}
-        <SignUpOtp formData={formData} handleSubmit = {handleSubmit} />
+        <SignUpOtp formData={formData} handleSubmit={handleSubmit} language = {language}/>
 
         <p className={styles.or}>OR</p>
 
@@ -232,7 +232,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </a>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
+            }
           >
             <span className={styles.btnIcon}>
               <icons.Apple />
@@ -241,7 +245,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               <icons.Facebook />
@@ -260,7 +268,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone

@@ -5,10 +5,9 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useHistory } from "react-router";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { getCart } from "../../../../../../store/actions/cart";
 import {
   showSnackbar,
@@ -23,24 +22,31 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
+import { Language } from "@material-ui/icons";
 
-const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
+const LoginForm = ({
+  handleSubmit,
+  handleOtpForm,
+  setForgetPassStyle,
+  language,
+}) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
   const history = useHistory();
+  console.log("login",language)
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    mobile: ""
+    mobile: "",
   });
 
   const [showforgotPassword, setforgotPassword] = useState(false);
 
   const toggleForgotPassword = () => {
-    setForgetPassStyle(true)
+    setForgetPassStyle(true);
     setforgotPassword((f) => !f);
   };
 
@@ -81,8 +87,8 @@ const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
     customer.append("email", email);
 
     customer.append("password", password);
-    customer.append("mobile", "")
-    customer.append("action", "login")
+    customer.append("mobile", "");
+    customer.append("action", "login");
 
     const res = await loginCustomer(customer);
 
@@ -99,19 +105,21 @@ const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
         typeof res?.data?.data !== "string" &&
           dispatch(loginSuccess(res.data.data));
         toast.configure();
-        toast(`Welcome ${res?.data?.success ? res?.data.data.firstname : ' Guest'}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast(
+          `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"}`,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
         return typeof res?.data?.data !== "string"
           ? history.push(redirectTo || "/dashboard")
           : null;
-
       } else {
         dispatch(
           showSnackbar(
@@ -241,7 +249,11 @@ const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
           <div>
             <button
               type="button"
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
+              }
             >
               <span className={styles.btnIcon}>
                 <icons.Apple />
@@ -250,7 +262,11 @@ const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
             </button>
             <button
               type="button"
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
+              }
             >
               <span className={`material-icons-outlined ${styles.btnIcon}`}>
                 <icons.Facebook />
@@ -264,12 +280,16 @@ const LoginForm = ({ handleSubmit, handleOtpForm, setForgetPassStyle }) => {
                 )}
                 // onClick={componentClicked}
                 textButton="Connect with Facebook"
-              // callback={responseFacebook}
+                // callback={responseFacebook}
               />
             </button>
             <button
               type="button"
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
+              }
             >
               <span className={`material-icons-outlined ${styles.btnIcon}`}>
                 phone_iphone

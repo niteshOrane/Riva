@@ -17,6 +17,7 @@ const SignUpCard = () => {
   } = useSelector((state) => state.common?.signUpCard || {});
 
   const [forgetPassStyle,setForgetPassStyle] = useState(false)
+  const {  language } = useSelector(state => state?.common?.store);
 
   const dispatch = useDispatch();
 
@@ -34,6 +35,7 @@ const SignUpCard = () => {
     <Dialog
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
+      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
       open={isOpen}
     >
       <div  className={!forgetPassStyle ? styles.popupBody : `${styles.forgetPassWrap}`}>
@@ -49,12 +51,12 @@ const SignUpCard = () => {
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
         {!isOtp ? (
           isLogin ? (
-            <LoginForm setForgetPassStyle={setForgetPassStyle} handleOtpForm={handleOtpForm} handleSubmit={handleClose} />
+            <LoginForm  setForgetPassStyle={setForgetPassStyle} handleOtpForm={handleOtpForm} handleSubmit={handleClose} language={language}/>
           ) : (
-            <SignUpForm handleSubmit={handleSubmit} />
+            <SignUpForm handleSubmit={handleSubmit} language={language} />
           )
         ) : (
-          <OtpForm handleSubmit={handleClose} />
+          <OtpForm handleSubmit={handleClose} language = {language} />
         )}
       </div>
     </Dialog>

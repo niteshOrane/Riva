@@ -4,10 +4,11 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import DashboardData from "../../components/pages/Dashboard/DashboardData/DashboardData";
 
 function Dashboard() {
+  
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className="circlesContainer">
+        <div  className="circlesContainer">
           <CategoriesCircles />
         </div>
         <div className="d-flex h-100">

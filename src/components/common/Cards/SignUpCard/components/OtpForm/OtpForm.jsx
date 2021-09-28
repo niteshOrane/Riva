@@ -25,7 +25,7 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 
-const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true, mobileNo = '', otpData = '' }) => {
+const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true, mobileNo = '', otpData = '',language }) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -266,7 +266,11 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         <div>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
+            }
           >
             <span className={styles.btnIcon}>
               <icons.Apple />
@@ -275,7 +279,11 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               <icons.Facebook />
@@ -294,7 +302,11 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone

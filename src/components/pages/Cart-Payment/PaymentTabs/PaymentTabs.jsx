@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #ddd",
     borderLeft: "0",
   },
+  arabicIcon:{
+    marginLeft:"10px",
+    whiteSpace:"noWrap"
+  }
 }));
 const selectedIndicatorStyle = {
   width: "4px",
@@ -102,6 +106,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([]);
+  const {  language } = useSelector(state => state?.common?.store);
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
@@ -139,8 +144,9 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
-        }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -172,8 +178,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         tabName = "renderPaymentformOne";
       } else if (value === 3) {
         tabName = "renderPaymentformThree";
-      }
-      else if (value === 5) {
+      } else if (value === 5) {
         tabName = "renderPaymentformFive";
       }
       let menu = document.getElementById(tabName);
@@ -196,8 +201,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
       tabName = "renderPaymentformOne";
     } else if (value === 3) {
       tabName = "renderPaymentformThree";
-    }
-    else if (value === 5) {
+    } else if (value === 5) {
       tabName = "renderPaymentformFive";
     }
     const isEmpty = document.getElementById(tabName)?.innerHTML === "";
@@ -246,15 +250,16 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
-                <span id={tab.code} className={classes.icon}>
+                <span id={tab.code} className={language==="Arabic" ? `${classes.icon} ${classes.arabicIcon}`:`${classes.icon}`}>
                   {tab?.icon || <tabIcons.Icon2 />}
                 </span>{" "}
-                <span id={tab.code} className={classes.tbText}>
+                <span id={tab.code} className={language==="Arabic" ? `${classes.tbText} ${classes.arabicIcon}`:`${classes.tbText}`}>
                   {tab.title}
                 </span>
               </div>
@@ -283,7 +288,12 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         </TabPanel>
 
         <TabPanel value={value} index={4}>
-          <GooglePay style={styles} id="renderPaymentformFour" cartPaymentInfo={cartPaymentInfo} store={store} />
+          <GooglePay
+            style={styles}
+            id="renderPaymentformFour"
+            cartPaymentInfo={cartPaymentInfo}
+            store={store}
+          />
         </TabPanel>
         <TabPanel value={value} index={5}>
           <div id="renderPaymentformFive">{renderPaymentform()}</div>

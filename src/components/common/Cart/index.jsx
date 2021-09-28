@@ -55,7 +55,7 @@ const Cart = () => {
   };
   return (
     <div key="cartlist" dir={language === 'Arabic' ? 'rtl' : 'ltr'}>
-      <Drawer anchor={language === 'Arabic' ? 'left' : 'right'} onClose={handleClose} open={isOpen}>
+      <Drawer anchor={language === 'Arabic' ? 'rtl' : 'ltr'} onClose={handleClose} open={isOpen}>
         <div className={style.sidebarContainer}>
           <div className="d-flex align-items-end justify-content-between p-12px">
             <h3 className={style.addedMsg}>Added To Cart ({items.length})</h3>
