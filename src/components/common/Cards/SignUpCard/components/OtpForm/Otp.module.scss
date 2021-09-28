@@ -1,5 +1,5 @@
 .mobileIcon {
-  margin-right: 10px;
+  @include right('margin', 10px);
 }
 .inpContainer {
   border: 1px solid black;
@@ -12,6 +12,7 @@
     width: 100%;
     font-size: 1.1rem;
     padding-left: 7px;
+    @include left('padding', 7px);
     &:focus {
       outline: none;
     }
@@ -47,14 +48,14 @@
   }
 }
 .resend {
-  margin-left: 6rem;
+  @include left('margin', 6rem);
   margin-top: 1rem;
   font-size: 15px;
   text-decoration: underline;
   cursor: pointer;
 }
 .resendSignup {
-  margin-left: 5rem;
+  @include left('margin', 5rem);
   margin-top: 1rem;
   font-size: 15px;
   text-decoration: underline;
