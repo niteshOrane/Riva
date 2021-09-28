@@ -19,7 +19,7 @@ export const defaultStore = {
   city: null,
   country_id: 'KW',
   currency: 'USD',
-  currency_symbol:"$",
+  currency_symbol: "$",
   hours: null,
   language: 'English',
   merchant_vat_number: null,
@@ -37,6 +37,9 @@ export const defaultStore = {
 
 export const getStoreId = () =>
   store?.getState()?.common?.store?.store_id || '1';
+
+export const getCurrencyCode = () =>
+  store?.getState()?.common?.store?.currency || 'USD';
 
 export const getStoreData = () =>
   store?.getState()?.common?.store || defaultStore;

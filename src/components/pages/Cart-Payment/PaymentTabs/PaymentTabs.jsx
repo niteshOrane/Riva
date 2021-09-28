@@ -20,7 +20,7 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 
-import { getCartId } from "../../../../util";
+import { getCartId, getCurrencyCode } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
@@ -60,9 +60,9 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #ddd",
     borderLeft: "0",
   },
-  arabicIcon:{
-    marginLeft:"10px",
-    whiteSpace:"noWrap"
+  arabicIcon: {
+    marginLeft: "10px",
+    whiteSpace: "noWrap"
   }
 }));
 const selectedIndicatorStyle = {
@@ -106,7 +106,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([]);
-  const {  language } = useSelector(state => state?.common?.store);
+  const { language } = useSelector(state => state?.common?.store);
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
@@ -144,9 +144,8 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=EUR&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
+        }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -250,16 +249,15 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
+            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
+              }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
-                <span id={tab.code} className={language==="Arabic" ? `${classes.icon} ${classes.arabicIcon}`:`${classes.icon}`}>
+                <span id={tab.code} className={language === "Arabic" ? `${classes.icon} ${classes.arabicIcon}` : `${classes.icon}`}>
                   {tab?.icon || <tabIcons.Icon2 />}
                 </span>{" "}
-                <span id={tab.code} className={language==="Arabic" ? `${classes.tbText} ${classes.arabicIcon}`:`${classes.tbText}`}>
+                <span id={tab.code} className={language === "Arabic" ? `${classes.tbText} ${classes.arabicIcon}` : `${classes.tbText}`}>
                   {tab.title}
                 </span>
               </div>
