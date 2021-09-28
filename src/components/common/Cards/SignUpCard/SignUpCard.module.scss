@@ -58,6 +58,7 @@
       padding: 12px 30px;
       transition: all 0.4s ease;
       cursor: pointer;
+      
       &:hover {
         background-color: #181617;
         color: white;
@@ -107,18 +108,21 @@
     }
     .appleBtn {
       background: #272727;
+     
       .btnIcon {
         background-color: #181617;
       }
     }
     .fbBtn {
       background-color: #5a6fa5;
+      
       .btnIcon {
         background-color: #405895;
       }
     }
     .googleBtn {
       background-color: #fe4b69;
+      
       .btnIcon {
         background-color: #ec1e40;
       }
