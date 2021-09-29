@@ -25,13 +25,14 @@ export const getProductMedia = (sku) => {
   return axios(config);
 };
 
-export const getFiltersList = (catId, color = "", size = "", price = "") => {
+export const getFiltersList = ({ catId, color = "", size = "", price = "", qTerm = '' }) => {
   const filterData = color ? `&categoryData[color]=${color?.value}` : "";
   const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
   const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
+  const querySearch = qTerm ? `&categoryData[q] = ${qTerm}` : "";
   const config = {
     method: "get",
-    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${sizeData}${priceData}`,
+    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${sizeData}${priceData}${querySearch}`,
     silent: true,
   };
   return axios(config);
@@ -98,7 +99,7 @@ export const outOfStockCheck = (productId = 0, color = "", size = "") => {
 };
 
 // add review
-export const createReview = (title, description, review, id,firstname) => {
+export const createReview = (title, description, review, id, firstname) => {
   const config = {
     method: "post",
     url: `${API_URL}/reviews?review[title]=${title}&review[detail]=${description}&review[nickname]=${firstname}&review[entity_pk_value]=${id}&review[review_status]=1&review[review_entity]=product&review[review_type]=2&review[ratings][0][value]=${review}&review[ratings][0][rating_name]=Quality&review[store_id]=${getStoreId()}`,

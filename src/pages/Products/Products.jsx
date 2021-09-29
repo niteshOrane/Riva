@@ -133,7 +133,8 @@ function Products(props) {
               handleThreeColumns={handleThreeColumns}
               handleTwoColumns={handleTwoColumns}
               pageColumns={pageColumns}
-              categoryId={props.match.params.categoryId}
+              categoryId={match.params.categoryId}
+              serachTerm={parsed?.serachTerm}
             />
           </section>
         </div>

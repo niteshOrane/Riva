@@ -57,12 +57,14 @@ const Tags = (tag) => {
   );
 };
 
-function Filters({
-  handleThreeColumns,
-  handleTwoColumns,
-  pageColumns,
-  categoryId,
-}) {
+function Filters(props) {
+  const {
+    handleThreeColumns,
+    handleTwoColumns,
+    pageColumns,
+    categoryId,
+    serachTerm
+  } = props;
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
   const [filtersAttr, setFiltersAttr] = useState(null);
@@ -72,12 +74,13 @@ function Filters({
   const handleRemoveTags = async (tag) => {
     let temp = [...selectedTags];
     temp = temp.filter((li) => li?.val?.title !== tag?.val?.title);
-    // let list = await getFiltersList(categoryId,"","","")
-    // setFiltersAttr(list?.data[0]?.filters);
+    let list = await getFiltersList(categoryId,"","","")
+    setFiltersAttr(list?.data[0]?.filters);
     setSelectedTags(temp);
   };
   const filterList = async (catId) => {
-    const list = await getFiltersList(catId);
+
+    const list = await getFiltersList({ catId, serachTerm });
     setFiltersAttr(list?.data[0]?.filters);
   };
   // console.log(filtersAttr)
@@ -243,9 +246,9 @@ function Filters({
         handleCheck(val)
           ? ""
           : setSelectedTags([...selectedTags, { checked: true, val }]);
-        // let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
-        // const list = await getFiltersList(categoryId, val,val,val);
-        // setFiltersAttr(list?.data[0]?.filters);
+         let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
+        const list = await getFiltersList(categoryId, val,val,val);
+         setFiltersAttr(list?.data[0]?.filters);
       };
 
       switch (item.type) {
