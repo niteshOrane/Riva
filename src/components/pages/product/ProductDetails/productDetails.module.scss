@@ -583,6 +583,7 @@
 .sectionWrapOne {
   display: flex;
   align-items: center;
+  margin-bottom: 7px;
 }
 .mapReview {
   display: flex;
@@ -607,8 +608,11 @@
   @include left('margin',  35px);
 }
 .nameDate{
-  margin-top: 18px;
+  margin-top: 7px;
   margin-bottom: 18px;
+}
+.reviewDesc{
+  margin-top: 7px;
 }
 .dislikeThumb{
   @include left('margin',  10px);

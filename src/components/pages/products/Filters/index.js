@@ -71,7 +71,7 @@ function Filters({
   const [open, setOpen] = useState(false);
   const handleRemoveTags = async (tag) => {
     let temp = [...selectedTags];
-    temp = temp.filter((li) => li.val.value !== tag.val.value);
+    temp = temp.filter((li) => li?.val?.title !== tag?.val?.title);
     // let list = await getFiltersList(categoryId,"","","")
     // setFiltersAttr(list?.data[0]?.filters);
     setSelectedTags(temp);

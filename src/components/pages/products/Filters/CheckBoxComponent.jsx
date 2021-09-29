@@ -9,7 +9,7 @@ const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
         type="checkbox"
         id={item.id}
         onChange={() => handleCheckboxChange(item)}
-        checked={selectedTags.filter(li => li.val.label===item.label && li.val.id===item.id).length>0  ? true : false}
+        checked={selectedTags?.filter(li => li.val?.label===item.label && li.val?.id===item.id).length>0  ? true : false}
       />
       <label
         className="c-pointer w-100"

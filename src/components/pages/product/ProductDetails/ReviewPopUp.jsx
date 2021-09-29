@@ -267,7 +267,9 @@ export default function ReviewModal({ id, sku, isDetail }) {
                   </div>
                   <h4 className={styles.reviewName}>{li?.title}</h4>
                 </section>
+                <span className = {styles.reviewDesc}>{li?.detail}</span>
                 <section className={styles.nameDateWrap}>
+             
                   <div className={styles.nameDate}>
                     <span>{li?.nickname}</span>
                     <span className={`${styles.reviewName} ${styles.dateSpan}`}>
