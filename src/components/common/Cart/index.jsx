@@ -171,7 +171,7 @@ const Cart = () => {
                     </span>
                   </div>
                   <p className={style.spend}>
-                    <span>Spend %18.20</span> to quality
+                    <span>Spend {currency_symbol}18.20</span> to quality
                     for free standard delivery
                   </p>
                   <div

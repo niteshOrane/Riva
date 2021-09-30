@@ -7,7 +7,7 @@ import {
   setAttributes,
   toggleQuickView,
 } from "../../../../store/actions/common";
-import { extractColorSize, URL } from "../../../../util";
+import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
 import {
@@ -34,6 +34,7 @@ const ProductCard = ({
   isListing,
   isRecommended,
   isComplete,
+  landing,
 }) => {
   const { custom_attributes, id, image, name } = product;
   const { currency_symbol } = useSelector((state) => state?.common?.store);
@@ -60,7 +61,6 @@ const ProductCard = ({
       const { colors, size } = extractColorSize(
         product?.extension_attributes?.configurable_product_options || []
       );
-
       setattributes({ colors, size });
 
       product["selected"] = { color: colors[0], size: size[0] };
@@ -77,7 +77,19 @@ const ProductCard = ({
 
     setProductItem(product);
   }, [product]);
+  useEffect(() => {
+    if (landing) {
+      if (product?.options) {
+        const colors = getColorsForHomePage(product?.options);
+        setattributes({
+          ...attributes,
+          colors: colors?.filter((li) => li?.label !== undefined),
+        });
+      }
+    }
 
+    setProductItem(product);
+  }, [product]);
   const dispatch = useDispatch();
 
   const handleWishList = async () => {
@@ -225,10 +237,10 @@ const ProductCard = ({
         {isListing && (
           <TempLink product={productItem}>
             <section className="d-flex justify-content-between">
-              <div className = {styles.sliderArrowIcon}>
+              <div className={styles.sliderArrowIcon}>
                 <img src="/assets/images/recomended.svg" alt="" />
               </div>
-              <div className = {styles.sliderArrowIconNext}>
+              <div className={styles.sliderArrowIconNext}>
                 <img src="/assets/images/recomended2.svg" alt="" />
               </div>
             </section>

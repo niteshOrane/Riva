@@ -25,8 +25,9 @@ function TrackOrders() {
   const history = useHistory();
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState([]);
-  const [orderDetails, setOrderDetails] = React.useState(null);
+  const [orderDetails, setOrderDetails] = React.useState({product:null,status:null});
   const [loading, setLoading] = React.useState(false);
+  const [cancelLoading,setCancelLoading] = React.useState(false)
   const [error, setError] = React.useState(false);
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -36,9 +37,15 @@ function TrackOrders() {
       const res2 = await getOrderList(customer?.customerID);
       if (res2.status === 200 && res2?.data?.items) {
         setOrderDetails(
-          res2?.data?.items
-            ?.find((li) => li?.increment_id === value)
-            ?.items?.find((li) => li.product_type === "simple")
+          {
+            ...orderDetails,
+            product:
+            res2?.data?.items
+              ?.find((li) => li?.increment_id === value)
+              ?.items?.find((li) => li.product_type === "simple"),
+              status: res2?.data?.items
+              ?.find((li) => li?.increment_id === value)?.status
+          }
         );
       } else {
         dispatch(showSnackbar("No product found"), "error");
@@ -73,16 +80,18 @@ function TrackOrders() {
   const cancelOrderfn = async (e, id) => {
     e.preventDefault();
     if (value) {
+      setCancelLoading(true)
       const res = await cancelOrder(id);
       if (res.status === 200) {
         dispatch(showSnackbar("Order Canceled", "Success"));
+        setCancelLoading(false)
         history.push("/cancelled-orders");
       } else {
         dispatch(showSnackbar("Order Cancelation failed", "error"));
+        setCancelLoading(false)
       }
     }
   };
-  console.log(orderDetails)
   return (
     <div className="container-with-circles my-20px">
       <div className="circlesContainer">
@@ -97,11 +106,13 @@ function TrackOrders() {
             handleChange={handleChange}
           />
          
-          {orderDetails && (
+          {orderDetails?.product && (
             <div>
               <section className={styles.detailsWrap}>Order Details</section>
               <ProductCard
-                product={orderDetails}
+                product={orderDetails?.product}
+                status = {orderDetails?.status}
+                loading = {cancelLoading}
                 cancelOrderFn={cancelOrderfn}
                 trackOrder
                 value={value}

@@ -65,6 +65,7 @@ function Filters(props) {
     categoryId,
     serachTerm
   } = props;
+  console.log(categoryId)
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
   const [filtersAttr, setFiltersAttr] = useState(null);
@@ -83,7 +84,6 @@ function Filters(props) {
     const list = await getFiltersList({ catId, serachTerm });
     setFiltersAttr(list?.data[0]?.filters);
   };
-  // console.log(filtersAttr)
   useEffect(() => {
     if (categoryId && categoryId > 0) {
       filterList(categoryId);
@@ -367,7 +367,6 @@ function Filters(props) {
             </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
-                // console.log($item);
                 return <div key={i}>{$item?.map((item) => menu(item, 0))}</div>;
               })}
             </div>

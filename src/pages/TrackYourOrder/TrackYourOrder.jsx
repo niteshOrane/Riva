@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../store/actions/common";
 
 function TrackYourOrder() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const [orderItems, setOrderItems] = useState();
   const handleChange = (e) => {
@@ -19,12 +19,14 @@ function TrackYourOrder() {
     if (value) {
       const res = await orderConfirmed(value);
       if (res.status === 200 && res?.data && !res?.data?.error) {
-        setOrderItems(
-          res?.data?.items.filter((li) => li.product_type === "simple")
-        );
-      }
-      else{
-        return dispatch(showSnackbar(res?.data?.error, "error"))
+        setOrderItems({
+          product: res?.data?.items.filter(
+            (li) => li.product_type === "simple"
+          ),
+          status: res?.data?.status,
+        });
+      } else {
+        return dispatch(showSnackbar(res?.data?.error, "error"));
       }
     }
   };
@@ -44,8 +46,8 @@ function TrackYourOrder() {
               handleChange={handleChange}
             />
             <div className="mt-5">
-              {orderItems?.map((li) => (
-                <ProductCard product={li} />
+              {orderItems?.product?.map((li) => (
+                <ProductCard product={li} status={orderItems?.status} />
               ))}
             </div>
           </div>

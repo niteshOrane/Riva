@@ -121,7 +121,7 @@ const BestSellingProducts = () => {
           slidesToShow={6}
           arrows={false}
           ref={refContainer}
-          render={(item) => <ProductCard product={item} />}
+          render={(item) => <ProductCard landing product={item} />}
         />
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { colors } from '@material-ui/core';
 import { createBrowserHistory } from 'history';
 
 import store from '../store/index';
@@ -97,6 +98,8 @@ export const extractColorSize = (attributes = []) => {
   };
 };
 
+
+
 export const getSKuId = (sku) => {
   if (sku) {
     const skuArray = sku?.split('-');
@@ -109,3 +112,12 @@ export const getSKuId = (sku) => {
     return skuFinal.join('-');
   }
 };
+
+
+export const getColorsForHomePage = (options) => {
+  const { size = [], color = [] } = store.getState()?.common?.attributes || {};
+  let colorLabel = options["92"]?.values?.map(li => (
+    {label : color?.find(c => c.value===li?.value_index)?.label,value:li?.value_index}
+  ))
+  return colorLabel
+}
