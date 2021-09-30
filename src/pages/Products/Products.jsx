@@ -67,7 +67,7 @@ function Products(props) {
     <div>
       <div className="container-90 max-width-1600">
         <div className={styles.essentials}>
-          {sessionStorage.getItem("selectedCategory")}
+          {sessionStorage.getItem("selectedCategory") || `Search Results for ${parsed?.serachTerm}`}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>

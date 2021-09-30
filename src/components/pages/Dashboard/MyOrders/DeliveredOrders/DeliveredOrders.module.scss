@@ -9,13 +9,8 @@
     .col1 {
       display: flex;
       .img {
-        margin-right: 12px;
-        width: 11rem;
-        img {
-          max-width: 150px;
-          height: 100px;
-          object-fit: contain;
-        }
+        margin-right: 0px;
+        width: 10rem;
       }
       .colorSize {
         display: flex;
@@ -30,25 +25,31 @@
       }
     }
     .deliveredIcon {
-      display: inline-block;
-      width: 12.5px;
-      height: 12.5px;
+      width: 100px;
+      height: 100px;
+      font-size: 1rem;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
       border: solid 2px #26a541;
       background-color: #26a541;
-      border-radius: 50%;
     }
     .processIcon {
-      display: inline-block;
-      width: 12.5px;
-      height: 12.5px;
+      width: 100px;
+      height: 100px;
+      font-size: 1rem;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
       border: solid 2px orange;
       background-color: orange;
-      border-radius: 50%;
     }
   }
   
   .icon {
-    margin-right: 12px;
+    margin-right: 0px;
   }
 }
 .incrementWrap{

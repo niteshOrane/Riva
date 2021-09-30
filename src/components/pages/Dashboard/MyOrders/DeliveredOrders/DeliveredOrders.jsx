@@ -58,16 +58,15 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
         <div className={styles.carItem}>
           <div className={styles.col1}>
             <div className={styles.img}>
-              <h4 className="greyText">
-                <span
-                  className={
-                    status === "processing"
-                      ? styles.processIcon
-                      : styles.deliveredIcon
-                  }
-                ></span>{" "}
-                {status} {product.deliveryDate}
-              </h4>
+              <span
+                className={
+                  status === "processing"
+                    ? styles.processIcon
+                    : styles.deliveredIcon
+                }
+
+              > {status} </span>{" "}
+              {product.deliveryDate}
             </div>
             <div>
               <h3 className="font-weight-normal">{product?.name}</h3>
@@ -99,7 +98,7 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
                 <icons.Star />
               </span>
               <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                <ReviewModal id={product?.product_id} sku={product?.sku}  language={language} />
+                <ReviewModal id={product?.product_id} sku={product?.sku} language={language} />
               </h4>
             </div>
             <div className="d-flex align-items-center mt-12px">

@@ -2,7 +2,7 @@ import React from "react";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 
-const Search = ({ handleChange, value = "", onSearch }) => (
+const Search = ({ handleChange, value = "", onSearch, handleKeyDown }) => (
 
   <FormControl>
     <Input
@@ -10,6 +10,7 @@ const Search = ({ handleChange, value = "", onSearch }) => (
       id="standard-adornment-weight"
       value={value}
       onChange={handleChange}
+      onKeyDown={handleKeyDown}
       startAdornment={
         <img
           onClick={() => { onSearch(value) }}

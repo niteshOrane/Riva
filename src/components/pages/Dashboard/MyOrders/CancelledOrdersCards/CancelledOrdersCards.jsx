@@ -69,7 +69,7 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <div className={styles.img}>
             {/* <img src={product?.image} width="100%" alt={product?.name} /> */}
             <h4 className="greyText">
-              <span className={styles.deliveredIcon}></span> Cancelled
+              <span className={styles.deliveredIcon}>Cancelled</span> 
             </h4>
           </div>
           <div>

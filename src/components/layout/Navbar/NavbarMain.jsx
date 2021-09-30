@@ -17,12 +17,18 @@ const NavbarMain = () => {
       history.push(`/products/all-product/0?serachTerm=${searchValue}`)
     }
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (searchValue && searchValue.trim().length > 0) {
+        history.push(`/products/all-product/0?serachTerm=${searchValue}`)
+      }
+    }
+  }
   return (
     <nav
       className={`${styles.container} d-flex align-items-center justify-content-between container-with-circles`}
     >
-      <Search handleChange={handleSearchChange} value={searchValue} onSearch={handleOnSearch} />
+      <Search handleChange={handleSearchChange} handleKeyDown={handleKeyDown} value={searchValue} onSearch={handleOnSearch} />
       <strong className={`logo-strong d-block ${styles.logoImg}`}>
         <Link className="d-block" to="/">
           <img

@@ -46,7 +46,7 @@ const CancelledOrdersCards = ({ products }) => {
         </div>
         <div>
           <h4 className="greyText">
-            <span className={styles.deliveredIcon}></span> Cancelled
+            <span className={styles.deliveredIcon}>Cancelled</span> 
           </h4>
           <p className={`mt-12px greyText ${styles.fontSmall}`}>
             You requested a cancellation because you changed your mind about

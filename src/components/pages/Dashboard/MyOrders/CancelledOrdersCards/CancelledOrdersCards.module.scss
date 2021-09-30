@@ -35,12 +35,15 @@
       }
     }
     .deliveredIcon {
-      display: inline-block;
-      width: 12.5px;
-      height: 12.5px;
+      width:100px;
+      height:100px;
+      font-size: 1rem;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
       border: solid 2px #d12003;
       background-color: #d12003;
-      border-radius: 50%;
     }
   }
   .icon {
