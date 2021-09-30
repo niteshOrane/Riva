@@ -9,7 +9,7 @@
     .col1 {
       display: flex;
       .img {
-        margin-right: 0px;
+        @include right('margin', 0px);
         width: 10rem;
       }
       .colorSize {
@@ -49,7 +49,7 @@
   }
   
   .icon {
-    margin-right: 0px;
+    @include right('margin', 12px);
   }
 }
 .incrementWrap{
