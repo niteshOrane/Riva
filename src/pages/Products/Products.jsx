@@ -15,7 +15,7 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import { extractColorSize } from "../../util";
 
 function Products(props) {
-  const handleQuickView = () => {};
+  const handleQuickView = () => { };
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const filterAttr = useSelector((state) => state?.common?.filtersParams);
   const refContainer = useRef();
@@ -90,12 +90,15 @@ function Products(props) {
       }
     }
   };
+  useEffect(() => {
+    return () => { sessionStorage.removeItem("selectedCategory"); }
+  })
   return (
     <div>
       <div className="container-90 max-width-1600">
         <div className={styles.essentials}>
-          {sessionStorage.getItem("selectedCategory") ||
-            `Search Results for ${parsed?.serachTerm}`}
+          {sessionStorage.getItem("selectedCategory") ?? (
+            parsed?.serachTerm && parsed?.serachTerm !== "undefined" ? `Search Results for ${parsed?.serachTerm}` : match.params.category)}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
@@ -172,47 +175,45 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        }`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          }`}
       >
-     
+
         {filteredData.length === 0
           ? products?.map((product, i) => (
-              <div className={getClassOfBigCard(i)}>
-                <ProductCard
-                  index={i}
-                  pageColumns={pageColumns}
-                  handleQuickView={handleQuickView}
-                  product={product}
-                  isProduct={Boolean(true)}
-                  isListing
-                  currency_symbol={currency_symbol}
-                />
-              </div>
-            ))
+            <div className={getClassOfBigCard(i)}>
+              <ProductCard
+                index={i}
+                pageColumns={pageColumns}
+                handleQuickView={handleQuickView}
+                product={product}
+                isProduct={Boolean(true)}
+                isListing
+                currency_symbol={currency_symbol}
+              />
+            </div>
+          ))
           : filteredData?.map((product, i) => (
-              <div className={getClassOfBigCard(i)}>
-                <ProductCard
-                  index={i}
-                  pageColumns={pageColumns}
-                  handleQuickView={handleQuickView}
-                  product={product}
-                  isProduct={Boolean(true)}
-                  isListing
-                  currency_symbol={currency_symbol}
-                />
-              </div>
-            ))}
+            <div className={getClassOfBigCard(i)}>
+              <ProductCard
+                index={i}
+                pageColumns={pageColumns}
+                handleQuickView={handleQuickView}
+                product={product}
+                isProduct={Boolean(true)}
+                isListing
+                currency_symbol={currency_symbol}
+              />
+            </div>
+          ))}
       </div>
       <div
-        className={`${styles.productsPage} ${
-          pageColumns === 3
-            ? styles.threeColumnsLayOut
-            : styles.twoColumnsLayOut
-        } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${pageColumns === 3
+          ? styles.threeColumnsLayOut
+          : styles.twoColumnsLayOut
+          } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>

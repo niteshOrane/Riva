@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";

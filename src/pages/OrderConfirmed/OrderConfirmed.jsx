@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router";
 import { useDispatch } from 'react-redux';
 
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";

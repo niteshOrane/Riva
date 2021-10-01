@@ -95,7 +95,7 @@ function Filters(props) {
     if (categoryId && categoryId > 0) {
       filterList(categoryId);
     }
-  }, []);
+  }, [categoryId]);
   const categoryList = [
     {
       id: filtersAttr?.find((v) => v.attr_code === "cat")?.attr_code,

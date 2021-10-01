@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import styles from "./components/Tab2Content/Tab2Content.module.scss";
 

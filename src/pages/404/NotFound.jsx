@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, Icon } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from "react-router-dom";
 import styles from './NotFound.module.scss';
-import { useHistory } from "react-router";
 
 const NotFound = props => {
 

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import queryString from 'query-string';
 
-import { useHistory } from "react-router";
-import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";

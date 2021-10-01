@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useHistory } from "react-router";
+import { Link, useHistory } from 'react-router-dom';
 
 import NavLinks from './NavLinks';
 import Search from '../../pages/products/Search';
@@ -14,12 +13,14 @@ const NavbarMain = () => {
   };
   const handleOnSearch = (e) => {
     if (searchValue && searchValue.trim().length > 0) {
+      sessionStorage.removeItem("selectedCategory");
       history.push(`/products/all-product/0?serachTerm=${searchValue}`)
     }
   };
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       if (searchValue && searchValue.trim().length > 0) {
+        sessionStorage.removeItem("selectedCategory");
         history.push(`/products/all-product/0?serachTerm=${searchValue}`)
       }
     }

@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useHistory } from "react-router";
-
+import { useHistory } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import { toast } from "react-toastify";
@@ -22,7 +21,6 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
-import { Language } from "@material-ui/icons";
 
 const LoginForm = ({
   handleSubmit,
@@ -35,7 +33,6 @@ const LoginForm = ({
     (state) => state.common.signUpCard?.redirectTo
   );
   const history = useHistory();
-  console.log("login",language)
 
   const [formData, setFormData] = useState({
     email: "",

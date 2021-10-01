@@ -217,7 +217,8 @@ const Cart = () => {
             </>
               : <div className="text-center"> SHOPPING CART IS EMPTY
                 You have no items in your shopping cart.
-                Click <a onClick={() => { handleContinueShopping() }} className="color-red c-pointer">here</a> to continue shopping.</div>}</div>
+                Click <a onClick={() => { handleContinueShopping() }}
+                 className="color-red c-pointer">here</a> to continue shopping.</div>}</div>
         </div>
       </Drawer>
     </div>

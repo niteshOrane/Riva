@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import { useHistory } from "react-router";
-import * as icons from "../../../../Icons/Icons";
-import styles from "./Otp.module.scss";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import * as icons from "../../../../Icons/Icons";
+import styles from "./Otp.module.scss";
+
 import {
   showSnackbar,
-  toggleSignUpCard,
 } from "../../../../../../store/actions/common";
 
 
