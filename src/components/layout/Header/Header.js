@@ -3,17 +3,18 @@ import { useSelector } from 'react-redux';
 import MegaLinks from '../Mega-links/MegaLinks';
 import NavbarMain from '../Navbar/NavbarMain';
 import TopBar from '../TopBar/TopBar';
-import {header} from '../../../mockdata.json';
+import { header } from '../../../mockdata.json';
 import styles from './header.module.scss';
 
 function Header() {
   // const links = useSelector((state) => state.common.header);
+  const { language } = useSelector(state => state?.common?.store);
   const selectedCategoryItem = useSelector((state) => state.common.selectedCategoryItem);
   return (
     <header className={styles.sticky}>
       <TopBar />
       <NavbarMain />
-      <MegaLinks links={selectedCategoryItem?.data} />
+      <MegaLinks links={selectedCategoryItem?.data} language={language} />
     </header>
   );
 }

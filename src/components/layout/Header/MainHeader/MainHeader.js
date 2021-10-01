@@ -8,6 +8,7 @@ import styles from './MainHeader.module.scss';
 
 function MainHeader({ mainHeader, disableMegicLink }) {
   // const links = useSelector((state) => state.common.header);
+  const { language } = useSelector(state => state?.common?.store);
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
   );
@@ -16,7 +17,7 @@ function MainHeader({ mainHeader, disableMegicLink }) {
       <MainHeaderTopBar mainHeader={mainHeader} />
       <NavbarMain disableMegicLink={disableMegicLink} />
 
-      {!disableMegicLink ? <MegaLinks links={selectedCategoryItem?.data} /> : <div className="container-with-circles">
+      {!disableMegicLink ? <MegaLinks language={language} links={selectedCategoryItem?.data} /> : <div className="container-with-circles">
         <div className={styles.titleDoubleLine} />
         <div className={styles.titleDoubleLine_Second} />
       </div>}

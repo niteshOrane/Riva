@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import Image from '../../common/LazyImage/Image';
 import style from './megalinks.module.scss';
 
-const MegaLinks = ({ links }) => {
+const MegaLinks = ({ links, language }) => {
+
   const [showMegaMenue, setShowMegaMenue] = useState(null);
   const [childLinks, setChildLinks] = useState({});
   const handleMouseOver = (link) => {
@@ -61,7 +62,8 @@ const MegaLinks = ({ links }) => {
                         <div
                           style={{
                             display: child.children_data.length > 0 && 'flex',
-                            paddingRight: 60,
+                            paddingRight: language === 'Arabic' ? '0' : '60',
+                            paddingLeft: language === 'Arabic' ? '60' : '0',
                           }}
                         >
 
