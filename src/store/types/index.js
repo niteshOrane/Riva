@@ -36,3 +36,9 @@ export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';
 export const PAYMENT_MODE = 'PAYMENT_MODE';
 export const SHIPPING_METHOD = 'SHIPPING_METHOD';
 export const CART_INFO = 'CART_INFO';
+
+// filters
+
+export const FILTER_PARAMS = "FILTER_PARAMS"
+export const CLEAR_FILTER_PARAMS = "CLEAR_FILTER_PARAMS"
+export const CLEAR_SINGLE_VALUE = "CLEAR_SINGLE_VALUE"

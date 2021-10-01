@@ -86,7 +86,7 @@ const Slider = React.forwardRef((props, ref) => {
         </div>
       )}
       <SlickCarousel {...carouselOptions} ref={ref}>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <div key={index}>{render(item, index)}</div>
         ))}
       </SlickCarousel>

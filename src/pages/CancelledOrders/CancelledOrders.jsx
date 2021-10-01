@@ -5,6 +5,7 @@ import styles from "./CancelledOrders.module.scss";
 import { useSelector } from "react-redux";
 import CancelledOrdersCards from "../../components/pages/Dashboard/MyOrders/CancelledOrdersCards/CancelledOrdersCards";
 import { getOrderList } from "../../services/order/order.services";
+import CircularProgress from "@material-ui/core/CircularProgress";
 const randomProducts = [
   {
     image:
@@ -45,13 +46,19 @@ function CancelledOrders() {
           <Sidebar />
           <div className="w-100">
             <h2 className="font-weight-normal">Order Cancelled</h2>
-            {orderList?.map((li) => (
-              <CancelledOrdersCards
-                products={li?.list}
-                code={li?.currency_code}
-                increment_id={li?.increment_id}
-              />
-            ))}
+            {orderList.length ? (
+              orderList?.map((li) => (
+                <CancelledOrdersCards
+                  products={li?.list}
+                  code={li?.currency_code}
+                  increment_id={li?.increment_id}
+                />
+              ))
+            ) : (
+              <div className = {styles.progress}>
+                <CircularProgress size={50} />
+              </div>
+            )}
           </div>
         </div>
       </div>

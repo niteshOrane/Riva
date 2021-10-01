@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import queryString from 'query-string';
+import queryString from "query-string";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useProducts from "./useProducts";
@@ -12,10 +12,12 @@ import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
+import { extractColorSize } from "../../util";
 
 function Products(props) {
-  const handleQuickView = () => { };
+  const handleQuickView = () => {};
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const filterAttr = useSelector((state) => state?.common?.filtersParams);
   const refContainer = useRef();
 
   const refContainerLoad = useRef();
@@ -23,12 +25,13 @@ function Products(props) {
   const { middleBanner: categorypromotionbanner } = useLanding(
     "categorypromotionbanner"
   );
-  const { location, match } = props
+  const { location, match } = props;
   const parsed = queryString.parse(location?.search);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [sortField, setSortField] = useState("entity_id");
   const [sortDirection, setSortDirection] = useState("desc");
+  const [filteredData, setFilteredData] = useState([]);
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({
     categoryId: match.params.categoryId,
@@ -37,7 +40,7 @@ function Products(props) {
     sortDirection,
     sortField,
     onScreen,
-    serachTerm: parsed?.serachTerm
+    serachTerm: parsed?.serachTerm,
   });
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
@@ -51,9 +54,33 @@ function Products(props) {
     }
   }, [onScreen]);
 
+  useEffect(() => {
+    if (filterAttr?.Color.length || filterAttr?.Size.length) {
+      const temp = products?.filter((pro) => {
+        if (pro?.extension_attributes?.configurable_product_options) {
+          const { colors, size } = extractColorSize(
+            pro?.extension_attributes?.configurable_product_options || []
+          );
+          const tempColor = colors?.filter((li) =>
+            filterAttr?.Color?.includes(li?.label)
+          );
+          const tempSize = size?.filter((si) =>
+            filterAttr?.Size?.includes(si?.label)
+          );
+          if (tempColor.length || tempSize.length) {
+            return pro;
+          }
+        }
+      });
+
+      if (temp.length) {
+        setFilteredData(temp);
+      }
+    }
+  }, [products]);
+
   const handleThreeColumns = () => setPageColumns(3);
   const handleTwoColumns = () => setPageColumns(2);
-
   const getClassOfBigCard = (index) => {
     if (index === 0 || index === 5) {
       if (pageColumns === 3) {
@@ -67,7 +94,8 @@ function Products(props) {
     <div>
       <div className="container-90 max-width-1600">
         <div className={styles.essentials}>
-          {sessionStorage.getItem("selectedCategory") || `Search Results for ${parsed?.serachTerm}`}
+          {sessionStorage.getItem("selectedCategory") ||
+            `Search Results for ${parsed?.serachTerm}`}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
@@ -144,30 +172,47 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          }`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        }`}
       >
-        {products?.map((product, i) => (
-          <div className={getClassOfBigCard(i)}>
-            <ProductCard
-              index={i}
-              pageColumns={pageColumns}
-              handleQuickView={handleQuickView}
-              product={product}
-              isProduct={Boolean(true)}
-              isListing
-              currency_symbol={currency_symbol}
-            />
-          </div>
-        ))}
+     
+        {filteredData.length === 0
+          ? products?.map((product, i) => (
+              <div className={getClassOfBigCard(i)}>
+                <ProductCard
+                  index={i}
+                  pageColumns={pageColumns}
+                  handleQuickView={handleQuickView}
+                  product={product}
+                  isProduct={Boolean(true)}
+                  isListing
+                  currency_symbol={currency_symbol}
+                />
+              </div>
+            ))
+          : filteredData?.map((product, i) => (
+              <div className={getClassOfBigCard(i)}>
+                <ProductCard
+                  index={i}
+                  pageColumns={pageColumns}
+                  handleQuickView={handleQuickView}
+                  product={product}
+                  isProduct={Boolean(true)}
+                  isListing
+                  currency_symbol={currency_symbol}
+                />
+              </div>
+            ))}
       </div>
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
