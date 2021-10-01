@@ -4,11 +4,14 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/DeliveredOrders/DeliveredOrders";
 import { useSelector } from "react-redux";
 import { getOrderList } from "../../services/order/order.services";
+import styles from "./Delivered.module.scss"
+
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
 
-  const { language } = useSelector(state => state?.common?.store);
+  const { language } = useSelector((state) => state?.common?.store);
   const [orderList, setOrderList] = React.useState([]);
   const getOrders = async (id) => {
     const res = await getOrderList(id);
@@ -37,7 +40,7 @@ function Delivered({ title = "Delivered" }) {
             <h2 className="font-weight-normal">{title}</h2>
 
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
-            {orderList.length > 0 &&
+            {orderList.length > 0 ? (
               orderList
                 ?.filter((li) => li.status !== "canceled")
                 ?.map((li) => (
@@ -48,7 +51,12 @@ function Delivered({ title = "Delivered" }) {
                     increment_id={li?.increment_id}
                     language={language}
                   />
-                ))}
+                ))
+            ) : (
+              <div className = {styles.progress}>
+                <CircularProgress size={50} />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 
 export const loader = (state) => ({
   type: DATA_TYPES.LOADER,
@@ -55,7 +55,7 @@ export const setAttributes = (data) => ({
   payload: { data },
 });
 
-export const showSnackbar = (message = null, severity = '', open = true) => ({
+export const showSnackbar = (message = null, severity = "", open = true) => ({
   type: DATA_TYPES.SNACKBAR,
   payload: { message, severity, open },
 });
@@ -69,3 +69,18 @@ export const toggleSignUpCard = ({
   type: DATA_TYPES.TOGGLE_SIGNUP_CARD,
   payload: { isOpen, isLogin, isOtp, ...rest },
 });
+
+export const addFilterParams = (name, param) => ({
+  type: DATA_TYPES.FILTER_PARAMS,
+  payload: { name, param },
+});
+
+export const removeFilterParams = (all) => ({
+  type: DATA_TYPES.CLEAR_FILTER_PARAMS,
+  payload: all,
+});
+
+export const clearSingleFilterValue = (name,value) => ({
+  type:DATA_TYPES.CLEAR_SINGLE_VALUE,
+  payload: {name,value}
+})

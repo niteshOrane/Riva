@@ -8,6 +8,12 @@ import { data } from "./RandomData";
 import RangeSlider from "./RangeSlider";
 import style from "./filters.module.scss";
 import { getFiltersList } from "../../../../services/product/product.service";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFilterParams,
+  clearSingleFilterValue,
+  removeFilterParams,
+} from "../../../../store/actions/common";
 
 // SMALL COMPONENTS
 const List = ({ item }) => (
@@ -63,24 +69,25 @@ function Filters(props) {
     handleTwoColumns,
     pageColumns,
     categoryId,
-    serachTerm
+    serachTerm,
   } = props;
-  console.log(categoryId)
+
   const drawerPosition = "top";
   const [searchValue, setSearchValue] = useState("");
   const [filtersAttr, setFiltersAttr] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
+  const filterAttr = useSelector((state) => state?.common?.filtersParams);
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const handleRemoveTags = async (tag) => {
     let temp = [...selectedTags];
     temp = temp.filter((li) => li?.val?.title !== tag?.val?.title);
-    let list = await getFiltersList(categoryId,"","","")
+    let list = await getFiltersList(categoryId, "", "", "");
     setFiltersAttr(list?.data[0]?.filters);
     setSelectedTags(temp);
   };
   const filterList = async (catId) => {
-
     const list = await getFiltersList({ catId, serachTerm });
     setFiltersAttr(list?.data[0]?.filters);
   };
@@ -231,6 +238,14 @@ function Filters(props) {
     setOpen(true);
   };
 
+  const seeResultsAction = () => {
+    window.location.reload();
+  };
+
+  const removeSingleAttr = (label, value) => {
+    dispatch(clearSingleFilterValue(label, value));
+  };
+
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
@@ -240,15 +255,36 @@ function Filters(props) {
         li?.val?.id === entry?.val?.id && li?.val?.label === entry?.val?.label
     );
   };
+  const resetFilters = () => {
+    dispatch(removeFilterParams("all"));
+  };
   const renderFilters = () => {
     const renderComponent = (item) => {
-      const handleCheckboxChange = async (val) => {
+      const handleCheckboxChange = async (val, e) => {
         handleCheck(val)
           ? ""
           : setSelectedTags([...selectedTags, { checked: true, val }]);
-         let color = selectedTags.filter(li => li?.val.label==="Color").length>0 && true
-        const list = await getFiltersList(categoryId, val,val,val);
-         setFiltersAttr(list?.data[0]?.filters);
+        if (e.target.checked) {
+          if (val?.label && val?.title) {
+            dispatch(
+              addFilterParams(
+                val?.label,
+                val?.label === "Color"
+                  ? val?.title.replace(/[0-9]/g, "")?.toUpperCase()?.trim()
+                  : val?.title
+              )
+            );
+          } else {
+            dispatch(addFilterParams("Options", val?.title));
+          }
+        } else {
+          null;
+        }
+        let color =
+          selectedTags.filter((li) => li?.val.label === "Color").length > 0 &&
+          true;
+        // const list = await getFiltersList(categoryId, val,val,val);
+        //  setFiltersAttr(list?.data[0]?.filters);
       };
 
       switch (item.type) {
@@ -283,10 +319,10 @@ function Filters(props) {
               style={
                 items?.children?.length > 10
                   ? {
-                    height: "25rem",
-                    overflowY: "scroll",
-                    paddingRight: "1rem",
-                  }
+                      height: "25rem",
+                      overflowY: "scroll",
+                      paddingRight: "1rem",
+                    }
                   : null
               }
             >
@@ -317,16 +353,18 @@ function Filters(props) {
             <div className={style.filterDots}>
               <div
                 onClick={handleTwoColumns}
-                className={`${pageColumns === 2 ? style.blackDots : ""} ${style.greyDots
-                  }`}
+                className={`${pageColumns === 2 ? style.blackDots : ""} ${
+                  style.greyDots
+                }`}
               >
                 <span />
                 <span />
               </div>
               <div
                 onClick={handleThreeColumns}
-                className={`${pageColumns === 3 ? style.blackDots : ""} ${style.greyDots
-                  }`}
+                className={`${pageColumns === 3 ? style.blackDots : ""} ${
+                  style.greyDots
+                }`}
               >
                 <span />
                 <span />
@@ -350,20 +388,28 @@ function Filters(props) {
             />
             {/* <Search handleChange={handleSearchChange} value={searchValue} /> */}
             <div className={style.tagsFlex}>
-              {selectedTags.length > 0 &&
-                selectedTags?.map((tag) => (
-                  <div className="d-flex flex-wrap">
-                    <div key={tag.id} className={style.tag}>
-                      <span>{tag.val.title}</span>
-                      <span
-                        onClick={() => handleRemoveTags(tag)}
-                        className="material-icons-outlined"
-                      >
-                        close
-                      </span>
-                    </div>
+              {[...new Set(filterAttr?.Color)]?.map((li) => (
+                <div className="d-flex flex-wrap">
+                  <div
+                    onClick={() => removeSingleAttr("Color", li)}
+                    className={style.tag}
+                  >
+                    <span>{li}</span>
+                    <span className="material-icons-outlined">close</span>
                   </div>
-                ))}
+                </div>
+              ))}
+              {[...new Set(filterAttr?.Size)]?.map((li) => (
+                <div className="d-flex flex-wrap">
+                  <div
+                    onClick={() => removeSingleAttr("Size", li)}
+                    className={style.tag}
+                  >
+                    <span>{li}</span>
+                    <span className="material-icons-outlined">close</span>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
@@ -371,9 +417,14 @@ function Filters(props) {
               })}
             </div>
           </div>
-          <section className={`${style.seeResult}`}>
-            <button>SEE RESULTS</button>
-          </section>
+          <div>
+            <section className={`${style.seeResult}`}>
+              <button onClick={seeResultsAction}>SEE RESULTS</button>
+            </section>
+            <section className={`${style.seeResult}`}>
+              <button onClick={resetFilters}>RESET ALL</button>
+            </section>
+          </div>
         </Drawer>
       </>
     );
