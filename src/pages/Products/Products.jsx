@@ -270,7 +270,7 @@ function Products(props) {
         <div className="my-50px d-flex align-items-center justify-content-between">
           {categorypromotionbanner.map((item, index) => {
             return (
-              <div key={`divBanner_${index}`} className={styles.bannerImg}>
+              <div style={{ marginLeft: '8px' }} key={`divBanner_${index}`} className={styles.bannerImg}>
                 <Link to={`/products/${item.title}/${item?.categories}`}>
                   <Image
                     alt={item?.title}
