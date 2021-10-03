@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Star from "@material-ui/icons/StarBorderOutlined";
 import Dialog from "@material-ui/core/Dialog";
+import Rating from "@material-ui/lab/Rating";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   toggleQuickView,
   toggleSignUpCard,
 } from "../../../store/actions/common";
-import Rating from "@material-ui/lab/Rating";
 import { addToCart } from "../../../store/actions/cart";
 import OutOfStock from "../../pages/product/ProductDetails/outOfStock/OutOfStock";
 import { colorRegexFilter } from "../colorRegex/colorRegex";
@@ -25,7 +26,6 @@ import {
 import {
   addWishlist,
   removeWishlist,
-  toggleWishlist,
 } from "../../../store/actions/wishlist";
 
 
@@ -209,6 +209,7 @@ function QuickView() {
 
       <div className={styles.details}>
         <div className={styles.img}>
+         <Link to={`/product/${data?.sku}`}>
           <Image
             src={srcImage}
             classname="object-fit-fill h-100"
@@ -216,6 +217,7 @@ function QuickView() {
             alt=""
             customeStyle={{ objectFit: "cover" }}
           />
+          </Link>
         </div>
         <form>
           <div className={styles.bestSeller}>BEST SELLER</div>
@@ -453,7 +455,7 @@ function QuickView() {
             </div>
             <div className="d-flex w-100 align-items-center ">
               {outOfStock ? (
-                <OutOfStock />
+                <OutOfStock productId={data?.id} />
               ) : (
                 <div className={styles.addToCart}>
                   <button
