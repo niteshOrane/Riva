@@ -2,8 +2,6 @@
   padding-left: 0rem;
 }
 .base-image-wrapper {
-  max-width: 39.2rem;
-  max-height: 40rem;
   position: relative;
 }
 .banner-wrapper-text {
@@ -22,6 +20,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
+    width: 90vw;
 }
 .base-image-wrapper img {
   width: 100%;
