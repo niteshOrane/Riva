@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extractColorSize, getSKuId } from "../../../../util";
@@ -10,7 +10,7 @@ import {
   removeFromCart,
 } from "../../../../store/actions/cart";
 
-const Products = ({ products, currency_symbol }) => {
+const ProductsData = ({ products, currency_symbol }) => {
   const dispatch = useDispatch();
 
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
@@ -37,9 +37,9 @@ const Products = ({ products, currency_symbol }) => {
   const handleWishList = (product) => {
     dispatch(toggleWishlist(product));
   };
-  const removeProduct = (product) => {
+  const removeProduct = useCallback((product) => {
     dispatch(removeFromCart(product));
-  };
+  });
   return (
     <div className={style.products}>
       <div className={style.header}>
@@ -202,4 +202,4 @@ const Products = ({ products, currency_symbol }) => {
   );
 };
 
-export default Products;
+export default React.memo(ProductsData);

@@ -69,9 +69,6 @@ function ChangePassword() {
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className={styles.circlesContainer}>
-          <CategoriesCircles />
-        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">

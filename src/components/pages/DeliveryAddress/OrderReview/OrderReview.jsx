@@ -26,7 +26,6 @@ function OrderReview({
   const dispatch = useDispatch();
   const [activeDelivery, setActiveDelivery] = React.useState(null);
   const [news, setNews] = React.useState(true);
-  const [cartPaymentInfo, setCartPaymentInfo] = React.useState({});
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(null);
   const [discount, setDiscount] = useState(null);
@@ -90,7 +89,6 @@ function OrderReview({
     setTotalAmout(
       cartPayment?.total_segments?.find((e) => e.code === "subtotal")?.value
     );
-    setCartPaymentInfo(cartPayment);
     getShippingInfo();
 
   }, [cartPayment]);
@@ -178,16 +176,16 @@ function OrderReview({
           name="coupon"
           onChange={(event) => setCouponCode(event.target.value)}
           type="text"
+          readOnly={couponDiscount}
           value={couponCode}
         />
-        <button
+        {!couponDiscount ? <button
           type="button"
           onClick={handleApplyCoupon}
           className={`${styles.applyBtn} c-pointer`}
         >
           APPLY
-        </button>
-        {couponDiscount && (
+        </button> :
           <button
             type="button"
             onClick={handleRemoveCoupon}
@@ -196,7 +194,8 @@ function OrderReview({
           >
             REMOVE
           </button>
-        )}
+        }
+
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">

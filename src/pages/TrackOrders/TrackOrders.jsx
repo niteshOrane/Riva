@@ -94,9 +94,6 @@ function TrackOrders() {
   };
   return (
     <div className="container-with-circles my-20px">
-      <div className="circlesContainer">
-        <CategoriesCircles />
-      </div>
       <div className="d-flex h-100">
         <Sidebar />
         <section className="d-flex flex-column h-100 w-100">

@@ -36,14 +36,14 @@ class AppRoot extends React.Component {
     const { store } = this.props;
     window.addEventListener("scroll", () => {
       const mybutton = document.getElementById("myBtn");
-
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-
-        mybutton.style.display = "block";
-        mybutton.style.bottom = `100px`;
-      } else {
-        mybutton.style.display = "none";
-        mybutton.style.bottom = "10px";
+      if (mybutton) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          mybutton.style.display = "block";
+          mybutton.style.bottom = `100px`;
+        } else {
+          mybutton.style.display = "none";
+          mybutton.style.bottom = "10px";
+        }
       }
     });
     if (deepEqual(store, prevProps.store)) return;
