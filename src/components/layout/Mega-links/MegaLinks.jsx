@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import Image from '../../common/LazyImage/Image';
 import style from './megalinks.module.scss';
 
 const MegaLinks = ({ links, language }) => {
-
+  const history = useHistory()
   const [showMegaMenue, setShowMegaMenue] = useState(null);
   const [childLinks, setChildLinks] = useState({});
   const handleMouseOver = (link) => {
@@ -19,6 +19,9 @@ const MegaLinks = ({ links, language }) => {
   const onSelectCaegory = (link) => {
     sessionStorage.setItem("selectedCategory", link);
   };
+  const redirectPath = (link,id) => {
+    history.push(`/products/${link}/${id}`)
+  }
   return (
     <>
       <div
@@ -104,14 +107,14 @@ const MegaLinks = ({ links, language }) => {
                     </div>
                   </div>
                   <div className={style.megaImg}>
-                    <Image src={link?.image?.replace('index.php', '')} width="100%" alt="change me" />
+                    <Image onClick = {() => redirectPath(link.url_key,link.id)} src={link?.image?.replace('index.php', '')} width="100%" alt="change me" />
                     <Link onClick={() => { onSelectCaegory(link.name) }}
                       to={`/products/${link.url_key}/${link.id}`}
                       className={`${style.megaLink} p-12px d-block`}
                     >
                       <button
                         type="button"
-                        className="bg-black my-12px no-border p-12px color-white"
+                        className="bg-black my-12px no-border p-12px color-white c-pointer"
                         onClick={() => setShowMegaMenue(null)}
                       >
                         Shop Now

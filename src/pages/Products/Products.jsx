@@ -15,9 +15,10 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import { extractColorSize } from "../../util";
 
 function Products(props) {
-  const handleQuickView = () => { };
+  const handleQuickView = () => {};
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const filterAttr = useSelector((state) => state?.common?.filtersParams);
+
   const refContainer = useRef();
 
   const refContainerLoad = useRef();
@@ -42,6 +43,7 @@ function Products(props) {
     onScreen,
     serachTerm: parsed?.serachTerm,
   });
+
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
     setSortDirection(event.target.value.split("-")?.[1]);
@@ -55,7 +57,11 @@ function Products(props) {
   }, [onScreen]);
 
   useEffect(() => {
-    if (filterAttr?.Color.length || filterAttr?.Size.length) {
+    if (
+      filterAttr?.Color.length ||
+      filterAttr?.Size.length ||
+      filterAttr?.Price?.length
+    ) {
       const temp = products?.filter((pro) => {
         if (pro?.extension_attributes?.configurable_product_options) {
           const { colors, size } = extractColorSize(
@@ -67,7 +73,53 @@ function Products(props) {
           const tempSize = size?.filter((si) =>
             filterAttr?.Size?.includes(si?.label)
           );
-          if (tempColor.length || tempSize.length) {
+          const tempPrice = [];
+
+          if (filterAttr?.Price.length === 1) {
+            const value = filterAttr?.Price[0];
+            const limit1 = value?.slice(2, 5);
+            const limit2 = value.slice(-6).slice(0, 3);
+            if (pro.price < limit1 || pro.price > limit2) {
+              tempPrice.push(pro);
+            }
+          } else if (filterAttr?.Price.length === 2) {
+            const value = filterAttr?.Price[0];
+            const value1 = filterAttr?.Price[1];
+            const limit1 = value?.slice(2, 5);
+            const limit2 = value?.slice(-6).slice(0, 3);
+            const limit3 = value1?.slice(2, 5);
+            const limit4 = value1?.slice(-6).slice(0, 3);
+            if (
+              pro.price < limit1 ||
+              pro.price > limit2 ||
+              pro.price < limit3 ||
+              pro.price > limit4
+            ) {
+              tempPrice.push(pro);
+            }
+          } else if (filterAttr?.Price.length === 3) {
+            const value = filterAttr?.Price[0];
+            const value1 = filterAttr?.Price[1];
+            const value2 = filterAttr?.Price[2];
+            const limit1 = value?.slice(2, 5);
+            const limit2 = value?.slice(-6).slice(0, 3);
+            const limit3 = value1?.slice(2, 5);
+            const limit4 = value1?.slice(-6).slice(0, 3);
+            const limit5 = value2?.slice(2, 5);
+            const limit6 = value2?.slice(-6).slice(0, 3);
+            if (
+              pro.price < limit1 ||
+              pro.price > limit2 ||
+              pro.price < limit3 ||
+              pro.price > limit4 ||
+              pro.price < limit5 ||
+              pro.price > limit6
+            ) {
+              tempPrice.push(pro);
+            }
+          }
+
+          if (tempColor.length || tempSize.length || tempPrice.length) {
             return pro;
           }
         }
@@ -91,14 +143,18 @@ function Products(props) {
     }
   };
   useEffect(() => {
-    return () => { sessionStorage.removeItem("selectedCategory"); }
-  })
+    return () => {
+      sessionStorage.removeItem("selectedCategory");
+    };
+  });
   return (
     <div>
       <div className="container-90 max-width-1600">
         <div className={styles.essentials}>
-          {sessionStorage.getItem("selectedCategory") ?? (
-            parsed?.serachTerm && parsed?.serachTerm !== "undefined" ? `Search Results for ${parsed?.serachTerm}` : match.params.category)}
+          {sessionStorage.getItem("selectedCategory") ??
+            (parsed?.serachTerm && parsed?.serachTerm !== "undefined"
+              ? `Search Results for ${parsed?.serachTerm}`
+              : match.params.category)}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
@@ -175,45 +231,46 @@ function Products(props) {
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          }`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        }`}
       >
-
         {filteredData.length === 0
           ? products?.map((product, i) => (
-            <div className={getClassOfBigCard(i)}>
-              <ProductCard
-                index={i}
-                pageColumns={pageColumns}
-                handleQuickView={handleQuickView}
-                product={product}
-                isProduct={Boolean(true)}
-                isListing
-                currency_symbol={currency_symbol}
-              />
-            </div>
-          ))
+              <div className={getClassOfBigCard(i)}>
+                <ProductCard
+                  index={i}
+                  pageColumns={pageColumns}
+                  handleQuickView={handleQuickView}
+                  product={product}
+                  isProduct={Boolean(true)}
+                  isListing
+                  currency_symbol={currency_symbol}
+                />
+              </div>
+            ))
           : filteredData?.map((product, i) => (
-            <div className={getClassOfBigCard(i)}>
-              <ProductCard
-                index={i}
-                pageColumns={pageColumns}
-                handleQuickView={handleQuickView}
-                product={product}
-                isProduct={Boolean(true)}
-                isListing
-                currency_symbol={currency_symbol}
-              />
-            </div>
-          ))}
+              <div className={getClassOfBigCard(i)}>
+                <ProductCard
+                  index={i}
+                  pageColumns={pageColumns}
+                  handleQuickView={handleQuickView}
+                  product={product}
+                  isProduct={Boolean(true)}
+                  isListing
+                  currency_symbol={currency_symbol}
+                />
+              </div>
+            ))}
       </div>
       <div
-        className={`${styles.productsPage} ${pageColumns === 3
-          ? styles.threeColumnsLayOut
-          : styles.twoColumnsLayOut
-          } container-90 max-width-1600 mx-auto`}
+        className={`${styles.productsPage} ${
+          pageColumns === 3
+            ? styles.threeColumnsLayOut
+            : styles.twoColumnsLayOut
+        } container-90 max-width-1600 mx-auto`}
       >
         {/* {products?.map((product, i) => (
           <div className={getClassOfBigCard(i)}>
@@ -270,7 +327,11 @@ function Products(props) {
         <div className="my-50px d-flex align-items-center justify-content-between">
           {categorypromotionbanner.map((item, index) => {
             return (
-              <div style={{ marginLeft: '8px' }} key={`divBanner_${index}`} className={styles.bannerImg}>
+              <div
+                style={{ marginLeft: "8px" }}
+                key={`divBanner_${index}`}
+                className={styles.bannerImg}
+              >
                 <Link to={`/products/${item.title}/${item?.categories}`}>
                   <Image
                     alt={item?.title}
