@@ -2,6 +2,7 @@ import React from "react";
 import style from "./filters.module.scss";
 
 const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
+  console.log({item})
   return (
     <div className={`d-flex align-items-center ${style.checkBoxContainer}`}>
       <input

@@ -257,6 +257,7 @@ function Filters(props) {
   };
   const resetFilters = () => {
     dispatch(removeFilterParams("all"));
+    window.location.reload()
   };
   const renderFilters = () => {
     const renderComponent = (item) => {
@@ -410,6 +411,17 @@ function Filters(props) {
                   </div>
                 </div>
               ))}
+                {[...new Set(filterAttr?.Price)]?.map((li) => (
+                <div className="d-flex flex-wrap">
+                  <div
+                    onClick={() => removeSingleAttr("Price", li)}
+                    className={style.tag}
+                  >
+                    <span>{li}</span>
+                    <span className="material-icons-outlined">close</span>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
@@ -419,10 +431,10 @@ function Filters(props) {
           </div>
           <div>
             <section className={`${style.seeResult}`}>
-              <button onClick={seeResultsAction}>SEE RESULTS</button>
+              <button className = "c-pointer" onClick={seeResultsAction}>SEE RESULTS</button>
             </section>
             <section className={`${style.seeResult}`}>
-              <button onClick={resetFilters}>RESET ALL</button>
+              <button className = "c-pointer" onClick={resetFilters}>RESET ALL</button>
             </section>
           </div>
         </Drawer>

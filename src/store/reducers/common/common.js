@@ -3,6 +3,13 @@ import { defaultStore } from "../../../util/index";
 import { act } from "react-test-renderer";
 
 const initialState = {
+  filtersParams: {
+    status:false,
+    Color: [],
+    Size: [],
+    Options: [],
+    Price:[]
+  },
   header: [],
   footer: [],
   topBrands: [],
@@ -19,13 +26,7 @@ const initialState = {
   },
   attributes: { color: [], size: [] },
   signUpCard: { isOpen: false, isLogin: false, isOtp: false },
-  filtersParams: {
-    status:false,
-    Color: [],
-    Size: [],
-    Options: [],
-    Price:[]
-  },
+
 };
 
 export default function common(state = initialState, action) {

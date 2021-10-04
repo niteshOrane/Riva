@@ -10,7 +10,8 @@
   }
   .megaLink {
     padding: 0px 5px;
-    cursor: pointer;
+    cursor:pointer;
+   
     span {
       font-family: Roboto;
       font-size: 15px;
@@ -86,6 +87,10 @@
       max-width: 380px;
       max-height: 380px;
       object-fit: contain;
+      cursor: pointer;
+    }
+    a {
+      cursor: context-menu !important;
     }
   }
 }
