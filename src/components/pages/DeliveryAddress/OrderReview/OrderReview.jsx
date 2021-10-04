@@ -299,7 +299,7 @@ function OrderReview({
         }}
         className={styles.placeOrderBtn}
       >
-        PLACE ORDER
+        Continue
       </button>
       <div className={`${styles.borderBottom} my-12px`}>
         <img

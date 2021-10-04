@@ -156,7 +156,9 @@ function Wishlist() {
               <div className={styles.was}>Was {currency_symbol}{" "}{origprice || ""}</div>
             ) : null}
             <div className={styles.now}>Now {currency_symbol}{" "}{data?.price}</div>
+           {/*
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
+           */}
           </div>
           {/* <div className={`${styles.color} d-flex`}>
             <div className={styles.title}>Color:&nbsp;</div>

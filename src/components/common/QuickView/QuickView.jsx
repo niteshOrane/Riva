@@ -209,14 +209,14 @@ function QuickView() {
 
       <div className={styles.details}>
         <div className={styles.img}>
-         <Link to={`/product/${data?.sku}`}>
-          <Image
-            src={srcImage}
-            classname="object-fit-fill h-100"
-            width="100%"
-            alt=""
-            customeStyle={{ objectFit: "cover" }}
-          />
+          <Link to={`/product/${data?.sku}`}>
+            <Image
+              src={srcImage}
+              classname="object-fit-fill h-100"
+              width="100%"
+              alt=""
+              customeStyle={{ objectFit: "cover" }}
+            />
           </Link>
         </div>
         <form>
@@ -243,7 +243,8 @@ function QuickView() {
             <div className={styles.now}>
               Now {currency_symbol} {price}
             </div>
-            <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
+            {/* <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
+           */}
           </div>
           <div className={`${styles.color} d-flex`}>
             {/* <div className={styles.title}>Color:&nbsp;</div> */}

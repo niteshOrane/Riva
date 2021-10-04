@@ -245,7 +245,9 @@ const ProductDetails = (props) => {
               <div className={styles.now}>
                 Now {currency_symbol} {price}
               </div>
-              <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
+              {/*
+                <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
+              */}
             </div>
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>
