@@ -36,7 +36,7 @@
       border: 1px solid #1f1f1f;
     }
     .mobileInput {
-      padding-left: 50px;
+      @include left('padding', 50px);
     }
     .mobileCode {
       border-right: 1px solid rgb(194, 194, 194);
@@ -49,7 +49,7 @@
     }
   }
   .useDefaultText {
-    margin-left: 12px;
+    @include left('margin', 12px);
     cursor: pointer;
   }
 }
@@ -69,5 +69,5 @@
   height: 41px;
   border: none;
   cursor: pointer;
-  margin-left: 10px;
+  @include left('margin', 10px)
 }
