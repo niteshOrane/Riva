@@ -286,6 +286,7 @@ function OrderReview({
           name=""
           className={styles.inp}
           id=""
+          onChange = {() => setNews(prev => !prev)}
         />
         <span onClick={() => setNews(!news)} className="c-pointer">
           Sign up for Newsletter

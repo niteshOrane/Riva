@@ -23,12 +23,7 @@ import {
   getReviewList,
   outOfStockCheck,
 } from "../../../services/product/product.service";
-import {
-  addWishlist,
-  removeWishlist,
-} from "../../../store/actions/wishlist";
-
-
+import { addWishlist, removeWishlist } from "../../../store/actions/wishlist";
 
 function QuickView() {
   const dispatch = useDispatch();
@@ -53,7 +48,6 @@ function QuickView() {
   const handleClose = () => {
     dispatch(toggleQuickView(null));
   };
-
 
   const getReviewListForProduct = async (val) => {
     if (val) {
@@ -82,20 +76,25 @@ function QuickView() {
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
   );
-  const { currency_symbol, language } = useSelector((state) => state?.common?.store);
-  const closeStyle = language === 'Arabic' ? {
-    position: "absolute",
-    top: 4,
-    left: 4,
-    paddingTop: 8,
-    paddingLeft: 8,
-  } : {
-    position: "absolute",
-    top: 4,
-    right: 4,
-    paddingTop: 8,
-    paddingRight: 8,
-  };
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
+  const closeStyle =
+    language === "Arabic"
+      ? {
+          position: "absolute",
+          top: 4,
+          left: 4,
+          paddingTop: 8,
+          paddingLeft: 8,
+        }
+      : {
+          position: "absolute",
+          top: 4,
+          right: 4,
+          paddingTop: 8,
+          paddingRight: 8,
+        };
 
   const {
     origpriceWithoutCurrency = 0,
@@ -181,7 +180,7 @@ function QuickView() {
   return (
     <Dialog
       fullWidth
-      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
+      dir={language === "Arabic" ? "rtl" : "ltr"}
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
       open={isOpen}
@@ -244,7 +243,7 @@ function QuickView() {
               Now {currency_symbol} {price}
             </div>
             {/* <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
-           */}
+             */}
           </div>
           <div className={`${styles.color} d-flex`}>
             {/* <div className={styles.title}>Color:&nbsp;</div> */}
@@ -293,10 +292,11 @@ function QuickView() {
                         )
                           ?.toLowerCase()
                           .trim()}.png`}
-                        className={`${styles.colorItem} ${data?.selected?.color?.value === item?.value
-                          ? styles.active
-                          : ""
-                          }`}
+                        className={`${styles.colorItem} ${
+                          data?.selected?.color?.value === item?.value
+                            ? styles.active
+                            : ""
+                        }`}
                         style={{
                           height: "13px",
                           width: "13px",
@@ -310,9 +310,10 @@ function QuickView() {
                     <div
                       src={item?.file}
                       className={`${styles.colorItem} 
-                        ${data?.selected?.color?.value === item.value
-                          ? styles.active
-                          : ""
+                        ${
+                          data?.selected?.color?.value === item.value
+                            ? styles.active
+                            : ""
                         }`}
                       title={item?.label}
                     />
@@ -328,16 +329,22 @@ function QuickView() {
             >
               {attributes.size?.map((c) => (
                 <div
-                  className={`c-pointer ${styles.text} d-flex-all-center`}
+                  className={`c-pointer ${styles.text} ${styles.quickBorder} d-flex-all-center`}
                   style={{
                     transform:
                       selectedProduct?.selected?.size?.value === c.value
                         ? "scale(1.2)"
                         : "scale(1)",
+                    background:
+                      selectedProduct?.selected?.size?.value === c?.value &&
+                      "#EADEB8",
+                    border:
+                      selectedProduct?.selected?.size?.value === c?.value &&
+                      "1px solid #EADEB8",
                   }}
                   onClick={() => setColorSize(c, "size")}
                 >
-                  <span className={styles.sizeLabel}>{c.label}{" "}</span>
+                  <span className={styles.sizeLabel}>{c.label} </span>
                 </div>
               ))}
             </div>
@@ -446,7 +453,9 @@ function QuickView() {
                 className={`${styles.demand} d-flex gap-12px align-items-center`}
               >
                 <div className="d-flex align-items-center">
-                  <div className={`${styles.title} ${styles.avail}`}>Availability: </div>
+                  <div className={`${styles.title} ${styles.avail}`}>
+                    Availability:{" "}
+                  </div>
                   &nbsp;
                   <div className={`${styles.text} ${styles.info}`}>
                     {outOfStock ? "Out Of Stock" : "In Stock"}

@@ -7,9 +7,13 @@ import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
 import style from "./HeroGrid.module.scss";
 
 const HeroGrid = ({ btfLeft, btfRight }) => {
+  const { language } = useSelector((state) => state?.common?.store);
   return (
     <div className={`${style.grid} container-with-circles`}>
-      <div className={style.circlesContainer}>
+      <div
+        dir={language === "Arabic" ? "rtl" : "ltr"}
+        className={style.circlesContainer}
+      >
         <CategoriesCircles />
       </div>
       <div className="d-flex">

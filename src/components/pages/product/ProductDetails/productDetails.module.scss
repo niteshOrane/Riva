@@ -2,9 +2,10 @@
   display: grid;
   grid-template-columns: 33fr 35fr;
   .colorItem {
-    height: 13px;
+    height: 18px;
     display: inline-block;
-    width: 13px;
+    width: 18px;
+    padding: 2px;
     @include left('margin',  5px);
     border-radius: 50%;
     align-items: center;

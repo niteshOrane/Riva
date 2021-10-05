@@ -228,7 +228,7 @@ function Filters(props) {
     sizeList,
     discountPercentage,
     manufacturer,
-    colorSwatch,
+    // colorSwatch,
     // selectedTags
   ];
   const closeDrawer = () => {
@@ -425,7 +425,8 @@ function Filters(props) {
             </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
-                return <div key={i}>{$item?.map((item) => menu(item, 0))}</div>;
+                console.log($item)
+                return $item?.[0]?.children?.length !==0 && <div key={i}>{$item?.map((item) => menu(item, 0))}</div>;
               })}
             </div>
           </div>

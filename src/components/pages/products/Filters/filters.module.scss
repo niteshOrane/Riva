@@ -38,9 +38,10 @@
   }
   .filtersGrid {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    // display: flex;
+    // display: grid;
+    // grid-template-columns: repeat(7, 1fr);
+    display: flex;
+    justify-content: space-between;
     // gap: 12px;
     // flex-direction: column;
     max-height: 500px;

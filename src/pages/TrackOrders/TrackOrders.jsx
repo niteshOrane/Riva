@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import TrackOrderDetails from "../../components/pages/Dashboard/MyOrders/TrackOrders/TrackOrderDetails/TrackOrderDetails";
@@ -13,9 +12,7 @@ import {
   getOrderList,
 } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
-
 import styles from "./TrackOrders.module.scss";
-
 import { showSnackbar } from "../../store/actions/common";
 
 

@@ -29,24 +29,29 @@ function Wishlist() {
     modalData: data = {},
     data: wishlist = [],
   } = useSelector((state) => state.wishlist);
-  const { currency_symbol, language } = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
   const { auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
-  const closeStyle = language === 'Arabic' ? {
-    position: "absolute",
-    top: 4,
-    left: 4,
-    paddingTop: 8,
-    paddingLeft: 8,
-  } : {
-    position: "absolute",
-    top: 4,
-    right: 4,
-    paddingTop: 8,
-    paddingRight: 8,
-  };
+  const closeStyle =
+    language === "Arabic"
+      ? {
+          position: "absolute",
+          top: 4,
+          left: 4,
+          paddingTop: 8,
+          paddingLeft: 8,
+        }
+      : {
+          position: "absolute",
+          top: 4,
+          right: 4,
+          paddingTop: 8,
+          paddingRight: 8,
+        };
 
   const handleClose = () => {
     dispatch(toggleWishlist(null));
@@ -109,7 +114,7 @@ function Wishlist() {
 
   return (
     <Dialog
-      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
+      dir={language === "Arabic" ? "rtl" : "ltr"}
       width="975px"
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
@@ -142,21 +147,27 @@ function Wishlist() {
             <div className={`${styles.stars} d-flex-all-center`}>
               <Rating name="read-only" readOnly value={value} size="small" />
             </div>
-            <div className={`${styles.rating} d-flex-all-center`}>{calculateAvgReview()} rating</div>
+            <div className={`${styles.rating} d-flex-all-center`}>
+              {calculateAvgReview()} rating
+            </div>
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
           <div>
-            <ReviewModal id={data?.id} sku={data?.sku}  language={language} />
+            <ReviewModal id={data?.id} sku={data?.sku} language={language} />
           </div>
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>Was {currency_symbol}{" "}{origprice || ""}</div>
+              <div className={styles.was}>
+                Was {currency_symbol} {origprice || ""}
+              </div>
             ) : null}
-            <div className={styles.now}>Now {currency_symbol}{" "}{data?.price}</div>
-           {/*
+            <div className={styles.now}>
+              Now {currency_symbol} {data?.price}
+            </div>
+            {/*
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
            */}
           </div>
@@ -198,10 +209,11 @@ function Wishlist() {
                           )
                             ?.toLowerCase()
                             .trim()}.png`}
-                          className={`${styles.colorItem} ${data?.selected?.color?.value === item?.value
-                            ? styles.active
-                            : ""
-                            }`}
+                          className={`${styles.colorItem} ${
+                            data?.selected?.color?.value === item?.value
+                              ? styles.active
+                              : ""
+                          }`}
                           alt={item?.label}
                         />
                       </>
@@ -209,10 +221,11 @@ function Wishlist() {
                       <div
                         src={item?.file}
                         className={`${styles.colorItem} 
-                        ${data?.selected.color.value === item.value
+                        ${
+                          data?.selected.color.value === item.value
                             ? styles.active
                             : ""
-                          }`}
+                        }`}
                         title={item?.label}
                       />
                     )}
@@ -234,6 +247,11 @@ function Wishlist() {
                           selectedColor?.size?.value === size?.value
                             ? "scale(1)"
                             : "scale(.9)",
+                        background:
+                          selectedColor?.size?.value === size?.value && "#EADEB8",
+                        border:
+                          selectedColor?.size?.value === size?.value &&
+                          "1px solid #EADEB8",
                       }}
                       onClick={() => setColorSize(size, "size")}
                       className={`${styles.option} d-flex-all-center`}

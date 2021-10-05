@@ -25,8 +25,14 @@ import Rating from "@material-ui/lab/Rating";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 
 const ProductDetails = (props) => {
-  const { product, setColorSize, mediaImage, colorImage, currency_symbol, language } =
-    props;
+  const {
+    product,
+    setColorSize,
+    mediaImage,
+    colorImage,
+    currency_symbol,
+    language,
+  } = props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
@@ -185,7 +191,7 @@ const ProductDetails = (props) => {
               className="object-fit-fill h-100"
               width="100%"
               alt={product?.name}
-              zoomPos={language === 'Arabic' ? 'left' : 'right'}
+              zoomPos={language === "Arabic" ? "left" : "right"}
               type="product-details"
               isZoom
             />
@@ -233,7 +239,11 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div>
-              <ReviewModal id={product?.id} sku={product?.sku} language={language} />
+              <ReviewModal
+                id={product?.id}
+                sku={product?.sku}
+                language={language}
+              />
             </div>
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
@@ -256,8 +266,8 @@ const ProductDetails = (props) => {
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
                   ? productColorList?.find(
-                    (item) => product.selected.color.value === item.option_id
-                  )?.color
+                      (item) => product.selected.color.value === item.option_id
+                    )?.color
                   : "White"}
                 {"  "}
               </div>
@@ -280,19 +290,26 @@ const ProductDetails = (props) => {
                         src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
                           item?.color
                         )?.toLowerCase()}.png`}
-                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                          ? styles.active
-                          : ""
-                          }`}
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
+                            ? styles.active
+                            : ""
+                        }`}
                         alt={item?.color}
+                        style={{
+                          border:
+                            product.selected.color.value === item.option_id &&
+                            `1px solid ${item?.color}`,
+                        }}
                       />
                     ) : (
                       <img
                         src={item?.file}
-                        className={`${styles.colorItem} ${product.selected.color.value === item.option_id
-                          ? styles.active
-                          : ""
-                          }`}
+                        className={`${styles.colorItem} ${
+                          product.selected.color.value === item.option_id
+                            ? styles.active
+                            : ""
+                        }`}
                         alt={item?.color}
                       />
                     )}
@@ -318,6 +335,7 @@ const ProductDetails = (props) => {
                           product.selected.size.value === size.value
                             ? "scale(1.2)"
                             : "scale(1)",
+                        background:  product.selected.size.value === size.value && "#EADEB8"
                       }}
                     >
                       {size.label}
@@ -351,7 +369,9 @@ const ProductDetails = (props) => {
                       className="bg-transparent no-border c-pointer"
                       onClick={() => setGuideCardOpen(true)}
                     >
-                      <span className={`${styles.sizeGuide} align-self-end font-light-black`}>
+                      <span
+                        className={`${styles.sizeGuide} align-self-end font-light-black`}
+                      >
                         Size Guide
                       </span>
                     </button>
@@ -368,7 +388,9 @@ const ProductDetails = (props) => {
                       className="bg-transparent no-border c-pointer"
                       onClick={() => setSizeCardOpen(true)}
                     >
-                      <span className={`${styles.sizeGuide} align-self-end font-light-black`}>
+                      <span
+                        className={`${styles.sizeGuide} align-self-end font-light-black`}
+                      >
                         Find your size
                       </span>
                     </button>
@@ -517,7 +539,13 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/review.png",
                     },
                     {
-                      name: <ShareIcons styles={styles} product={product} language={language} />,
+                      name: (
+                        <ShareIcons
+                          styles={styles}
+                          product={product}
+                          language={language}
+                        />
+                      ),
                       icon: "/assets/images/share.png",
                     },
                   ].map((item) => {
