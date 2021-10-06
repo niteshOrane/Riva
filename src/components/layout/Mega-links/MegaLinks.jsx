@@ -17,6 +17,7 @@ const MegaLinks = ({ links, language }) => {
     setChildLinks(childLink ?? {});
   }, [showMegaMenue]);
   const onSelectCaegory = (link) => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
     sessionStorage.setItem("selectedCategory", link);
   };
   const redirectPath = (link, id) => {
