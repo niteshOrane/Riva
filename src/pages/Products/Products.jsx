@@ -75,14 +75,14 @@ function Products(props) {
           );
           const tempPrice = [];
 
-          if (filterAttr?.Price.length === 1) {
+          if (filterAttr?.Price?.length === 1) {
             const value = filterAttr?.Price[0];
             const limit1 = value?.slice(2, 5);
             const limit2 = value.slice(-6).slice(0, 3);
             if (pro.price < limit1 || pro.price > limit2) {
               tempPrice.push(pro);
             }
-          } else if (filterAttr?.Price.length === 2) {
+          } else if (filterAttr?.Price?.length === 2) {
             const value = filterAttr?.Price[0];
             const value1 = filterAttr?.Price[1];
             const limit1 = value?.slice(2, 5);
@@ -97,7 +97,7 @@ function Products(props) {
             ) {
               tempPrice.push(pro);
             }
-          } else if (filterAttr?.Price.length === 3) {
+          } else if (filterAttr?.Price?.length === 3) {
             const value = filterAttr?.Price[0];
             const value1 = filterAttr?.Price[1];
             const value2 = filterAttr?.Price[2];

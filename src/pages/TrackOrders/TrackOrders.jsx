@@ -14,7 +14,8 @@ import {
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import styles from "./TrackOrders.module.scss";
 import { showSnackbar } from "../../store/actions/common";
-
+import InformationGrid from "../../components/pages/OrderInformation/InformationGrid";
+import InformationTable from "../../components/pages/OrderInformation/InformationTable";
 
 function TrackOrders() {
   const { customer } = useSelector((state) => state.auth);
@@ -22,9 +23,13 @@ function TrackOrders() {
   const history = useHistory();
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState([]);
-  const [orderDetails, setOrderDetails] = React.useState({product:null,status:null});
+  const [orderDetails, setOrderDetails] = React.useState({
+    product: null,
+    status: null,
+  });
+  const [orderInfo, setOrderInfo] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  const [cancelLoading,setCancelLoading] = React.useState(false)
+  const [cancelLoading, setCancelLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -33,28 +38,39 @@ function TrackOrders() {
     if (value) {
       const res2 = await getOrderList(customer?.customerID);
       if (res2.status === 200 && res2?.data?.items) {
-        setOrderDetails(
-          {
-            ...orderDetails,
-            product:
-            res2?.data?.items
-              ?.find((li) => li?.increment_id === value)
-              ?.items?.find((li) => li.product_type === "simple"),
-              status: res2?.data?.items
-              ?.find((li) => li?.increment_id === value)?.status
-          }
-        );
+        setOrderDetails({
+          ...orderDetails,
+          product: res2?.data?.items
+            ?.find((li) => li?.increment_id === value)
+            ?.items?.find((li) => li.product_type === "simple"),
+          status: res2?.data?.items?.find((li) => li?.increment_id === value)
+            ?.status,
+        });
+        setOrderInfo({
+          shippingAddress: res2?.data?.items?.find(
+            (li) => li?.increment_id === value
+          )?.billing_address,
+          shippingDescription: res2?.data?.items?.find(
+            (li) => li?.increment_id === value
+          )?.shipping_description,
+          billingAddress: res2?.data?.items?.find(
+            (li) => li?.increment_id === value
+          )?.billing_address,
+          payment: res2?.data?.items?.find((li) => li?.increment_id === value)
+            ?.payment,
+        });
       } else {
         dispatch(showSnackbar("No product found"), "error");
       }
     }
   };
+  console.log(orderInfo);
   const handleSubmit = async (e) => {
     if (!value)
       return dispatch(showSnackbar("Please enter order Number", "error"));
     e.preventDefault();
     if (value) {
-      setError(false)
+      setError(false);
       setLoading(true);
       getOrderDetail();
       const res = await getTrackYourOrder(value);
@@ -70,22 +86,22 @@ function TrackOrders() {
         );
         setError(true);
         setLoading(false);
-        setOrderItems([])
+        setOrderItems([]);
       }
     }
   };
   const cancelOrderfn = async (e, id) => {
     e.preventDefault();
     if (value) {
-      setCancelLoading(true)
+      setCancelLoading(true);
       const res = await cancelOrder(id);
       if (res.status === 200) {
         dispatch(showSnackbar("Order Canceled", "Success"));
-        setCancelLoading(false)
+        setCancelLoading(false);
         history.push("/cancelled-orders");
       } else {
         dispatch(showSnackbar("Order Cancelation failed", "error"));
-        setCancelLoading(false)
+        setCancelLoading(false);
       }
     }
   };
@@ -99,20 +115,24 @@ function TrackOrders() {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
           />
-         
+          {orderInfo && (
+            <InformationGrid orderNumber={value} infoList={orderInfo} />
+          )}
+          {orderInfo && <InformationTable />}
           {orderDetails?.product && (
             <div>
               <section className={styles.detailsWrap}>Order Details</section>
               <ProductCard
                 product={orderDetails?.product}
-                status = {orderDetails?.status}
-                loading = {cancelLoading}
+                status={orderDetails?.status}
+                loading={cancelLoading}
                 cancelOrderFn={cancelOrderfn}
                 trackOrder
                 value={value}
               />
             </div>
           )}
+
           {error && (
             <section className={styles.noRecord}>
               <div>
@@ -127,7 +147,7 @@ function TrackOrders() {
           )}
           {orderItems.length > 0 && <TrackOrderDetails order={orderItems[0]} />}
           {loading && (
-            <div className = {styles.progress}>
+            <div className={styles.progress}>
               <CircularProgress size={50} />
             </div>
           )}

@@ -1,0 +1,127 @@
+.heading {
+  width: 125px;
+  height: 19px;
+  margin: 0 219.1px 9.8px 2px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #3f3e3e;
+}
+.divider {
+  width: 345px;
+  height: 0;
+  margin: 9.8px 0 0 1.1px;
+  border: solid 1px #cfcece;
+}
+.addr {
+  width: 225px;
+  height: 66px;
+  margin: 11.3px 121.1px 6.5px 0;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.27;
+  letter-spacing: normal;
+  text-align: left;
+  color: #393838;
+}
+.grid {
+  width: 394px;
+  height: 148px;
+  margin-top: 20px;
+  padding: 17.8px 20.5px 17.8px 27.4px;
+  background-color: #f6f7f9;
+}
+.mainBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 12px !important;
+}
+.title {
+  margin-top: 15px;
+  p {
+    margin-top: 5px;
+    font-size: 17px;
+    color: #6d6767;
+  }
+  h2 {
+    font-size: 28px;
+  }
+}
+.pad{
+  margin-top: 8px;
+}
+
+.title {
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+  margin-top: 2rem;
+}
+.table {
+  margin-top: 10px;
+  .tblBody {
+    padding: 8px;
+    margin-top: 12px;
+    border: 2px solid #ddd;
+    .bgLightGrey {
+      background-color: #cccccc;
+      padding: 12px;
+      color: #000;
+      flex: 1;
+      margin: 0 3px;
+    }
+    .bgDarkGrey {
+      background-color: #686869;
+      padding: 12px;
+      color: #fff;
+      flex: 1;
+      margin: 0 3px;
+    }
+    #orderInfo {
+      div {
+        flex: 1;
+        // padding: 12px;
+        // margin: 0 3px;
+        color: #7e7e7e;
+      }
+    }
+  }
+}
+.high {
+ width: 200px;
+ height: 100px;
+  background-color: #fff;
+  margin-top: 8px;
+}
+.highWrap{
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+.line{
+
+    width: 794px;
+    height: 0;
+    margin: 23.9px 0 0 15.1px;
+    border: solid 1px #c2bfbf;
+}
+.pay{
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+.payBox{
+  display: flex;
+  margin-top: 8px;
+}
+.price{
+  padding-left: 5px;
+  font-weight: bold;
+}

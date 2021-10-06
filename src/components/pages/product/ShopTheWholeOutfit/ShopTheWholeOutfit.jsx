@@ -49,7 +49,7 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
             return false;
           }
         } else {
-          dispatch(showSnackbar("something went wrong", "error"));
+          dispatch(showSnackbar("This product is not available", "error"));
           setSelectedColorSize({ color: null, size: null, id: null });
           setLoading(false);
         }
