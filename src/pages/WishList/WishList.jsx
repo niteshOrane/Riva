@@ -8,7 +8,7 @@ import CategoriesCircles from '../../components/common/CategoriesCircles/Categor
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
-  const {currency_symbol} = useSelector(state => state?.common?.store);
+  const { currency_symbol } = useSelector(state => state?.common?.store);
   const dispatch = useDispatch();
 
   const removeFromWishlist = (data) => {
@@ -23,7 +23,7 @@ function WishList() {
           <div className={styles.cardsContainer}>
             <span className={styles.title}>My Wishlist</span>
 
-            <div className="d-flex gap-12px f1" style={{ flexWrap: 'wrap',marginTop:"18px" }}>
+            <div className="d-flex gap-12px f1" style={{ flexWrap: 'wrap', marginTop: "18px" }}>
               {wishlist?.map((product) => {
 
                 return (
