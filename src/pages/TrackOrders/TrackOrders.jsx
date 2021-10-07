@@ -38,33 +38,32 @@ function TrackOrders() {
     if (value) {
       const res2 = await getOrderList(customer?.customerID);
       if (res2.status === 200 && res2?.data?.items) {
+        const property = res2?.data?.items?.find(
+          (li) => li?.increment_id === value
+        );
         setOrderDetails({
           ...orderDetails,
-          product: res2?.data?.items
-            ?.find((li) => li?.increment_id === value)
-            ?.items?.find((li) => li.product_type === "simple"),
-          status: res2?.data?.items?.find((li) => li?.increment_id === value)
-            ?.status,
+          product: property?.items?.find((li) => li.product_type === "simple"),
+          status:property?.status,
+          currency: property?.base_currency_code,
+          paymentInfo:{
+            price: property?.items?.find((li) => li.product_type === "simple")?.price,
+            grandTotal:property?.grand_total,
+            shippingAmount: property?.shipping_amount,
+            subtotal:property?.subtotal
+          }
         });
         setOrderInfo({
-          shippingAddress: res2?.data?.items?.find(
-            (li) => li?.increment_id === value
-          )?.billing_address,
-          shippingDescription: res2?.data?.items?.find(
-            (li) => li?.increment_id === value
-          )?.shipping_description,
-          billingAddress: res2?.data?.items?.find(
-            (li) => li?.increment_id === value
-          )?.billing_address,
-          payment: res2?.data?.items?.find((li) => li?.increment_id === value)
-            ?.payment,
+          shippingAddress: property?.billing_address,
+          shippingDescription: property?.shipping_description,
+          billingAddress: property?.billing_address,
+          payment: property?.payment,
         });
       } else {
         dispatch(showSnackbar("No product found"), "error");
       }
     }
   };
-  console.log(orderInfo);
   const handleSubmit = async (e) => {
     if (!value)
       return dispatch(showSnackbar("Please enter order Number", "error"));
@@ -118,7 +117,7 @@ function TrackOrders() {
           {orderInfo && (
             <InformationGrid orderNumber={value} infoList={orderInfo} />
           )}
-          {orderInfo && <InformationTable />}
+          {orderInfo && <InformationTable orderDetails={orderDetails} />}
           {orderDetails?.product && (
             <div>
               <section className={styles.detailsWrap}>Order Details</section>

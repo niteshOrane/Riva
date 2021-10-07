@@ -8,7 +8,7 @@ function InformationGrid({ orderNumber, infoList }) {
     <div>
       <section className = {styles.title}>
         <h2>Order Information</h2>
-        <p>Order ID {orderNumber}</p>
+        <p>Order ID #{orderNumber}</p>
       </section>
       <div className = {styles.mainBox}>
         <section className={styles.grid}>
@@ -16,9 +16,9 @@ function InformationGrid({ orderNumber, infoList }) {
             <span className={styles.heading}>Shipping Address</span>
             <hr className={styles.divider} />
             <div className={styles.addr}>
-              <p>{street?.[0]}</p>
-              <p>{city}</p>
-              <p>{region}</p>
+              <p>{street?.[0]},</p>
+              <p>{city},</p>
+              <p>{region},</p>
               <p>{postcode}</p>
             </div>
           </div>
@@ -37,9 +37,9 @@ function InformationGrid({ orderNumber, infoList }) {
             <span className={styles.heading}>Billing Address</span>
             <hr className={styles.divider} />
             <div className={styles.addr}>
-              <p>{street?.[0]}</p>
-              <p>{city}</p>
-              <p>{region}</p>
+              <p>{street?.[0]},</p>
+              <p>{city},</p>
+              <p>{region},</p>
               <p>{postcode}</p>
             </div>
           </div>

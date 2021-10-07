@@ -17,7 +17,7 @@ const SimpleDropdown = ({ depth, children, item }) => {
       >
         {item?.isParent ? <h4>{item.title}</h4> : <h5>{item.title}</h5>}
         {item?.isParent ? (
-          <span className="material-icons">{`keyboard_arrow_${
+          <span className={`material-icons ${style.icon}`}>{`keyboard_arrow_${
             open ? "up" : "down"
           }`}</span>
         ) : (

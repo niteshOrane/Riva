@@ -322,7 +322,7 @@ function Filters(props) {
                   ? {
                       height: "25rem",
                       overflowY: "scroll",
-                      paddingRight: "1rem",
+                      // paddingRight: "1rem",
                     }
                   : null
               }
@@ -425,7 +425,6 @@ function Filters(props) {
             </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
-                console.log($item)
                 return $item?.[0]?.children?.length !==0 && <div key={i}>{$item?.map((item) => menu(item, 0))}</div>;
               })}
             </div>

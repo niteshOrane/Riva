@@ -55,8 +55,9 @@
     font-size: 28px;
   }
 }
-.pad{
+.pad {
   margin-top: 8px;
+  padding-left: 10px;
 }
 
 .title {
@@ -95,33 +96,52 @@
   }
 }
 .high {
- width: 200px;
- height: 100px;
   background-color: #fff;
   margin-top: 8px;
+  margin-bottom: 5px;
 }
-.highWrap{
+.highWrap {
   display: flex;
-  flex-direction: column;
   margin-top: 8px;
+  padding-left: 8px;
 }
-.line{
-
-    width: 794px;
-    height: 0;
-    margin: 23.9px 0 0 15.1px;
-    border: solid 1px #c2bfbf;
+.line {
+  width: 794px;
+  height: 0;
+  margin: 23.9px 0 0 15.1px;
+  border: solid 1px #c2bfbf;
 }
-.pay{
+.pay {
   display: flex;
   justify-content: flex-end;
   padding-right: 2rem;
 }
-.payBox{
+.payBox {
   display: flex;
   margin-top: 8px;
 }
-.price{
-  padding-left: 5px;
+.price {
+  padding-right: 23px;
   font-weight: bold;
+}
+.statusBox {
+  height: 6rem;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: bold;
+}
+.qty{
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+.payTitle{
+  margin-right: 25px;
+  font-size: 15px;
+  color: #393838;
 }
