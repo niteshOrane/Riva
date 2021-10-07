@@ -26,7 +26,6 @@ export const getProductMedia = (sku) => {
 };
 
 export const getFiltersList = ({ catId, color = "", size = "", price = "", qTerm = '' }) => {
-  console.log({catId})
   const filterData = color ? `&categoryData[color]=${color?.value}` : "";
   const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
   const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
