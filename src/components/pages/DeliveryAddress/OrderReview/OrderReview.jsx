@@ -212,12 +212,11 @@ function OrderReview({
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
       {deliverySpeed?.map((item) => {
         return (
-          <div
+          <div onClick={() => onSpeedDeliveryRadio(item)}
             className={styles.chooseShipping}
           >
             <div>
               <input
-                onChange={() => onSpeedDeliveryRadio(item)}
                 type="radio"
                 checked={activeDelivery ?
                   `${item?.carrier_code}_${item?.method_code}` ===
@@ -286,7 +285,7 @@ function OrderReview({
           name=""
           className={styles.inp}
           id=""
-          onChange = {() => setNews(prev => !prev)}
+          onChange={() => setNews(prev => !prev)}
         />
         <span onClick={() => setNews(!news)} className="c-pointer">
           Sign up for Newsletter
