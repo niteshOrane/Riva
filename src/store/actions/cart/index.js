@@ -7,6 +7,7 @@ import {
   getProductIdBySku,
   getCartPaymentInfo
 } from '../../../services/cart/cart.service';
+import { emptyCartItem, emptyCart } from '../auth';
 
 import { getCartId, getCustId } from '../../../util';
 import { showSnackbar } from '../common';
@@ -32,7 +33,7 @@ export const getCart = () => async (dispatch) => {
   if (getCartId() && getCartId() !== '0') {
 
     const res = await getCartService();
-    
+
     if (res && res.data && res.data.length) {
       const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
       const productIds = await Promise.allSettled(productIdPromises);
@@ -43,25 +44,19 @@ export const getCart = () => async (dispatch) => {
           : 0,
         src: r?.extension_attributes?.image
       }));
-
-      if (res.data)
-        dispatch({
-          type: DATA_TYPES.SET_BULK_CART,
-          payload: products,
-        });
-    }
-    else {
       dispatch({
         type: DATA_TYPES.SET_BULK_CART,
-        payload: [],
+        payload: products,
       });
+    }
+    else {
+      dispatch(emptyCart());
+      dispatch(emptyCartItem());
     }
   }
   else {
-    dispatch({
-      type: DATA_TYPES.SET_BULK_CART,
-      payload: [],
-    });
+    dispatch(emptyCart());
+    dispatch(emptyCartItem());
   }
 };
 

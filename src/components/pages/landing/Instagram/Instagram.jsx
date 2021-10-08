@@ -9,7 +9,7 @@ const Instagram = ({ instagramBanners }) => {
         <div>
           <p className="d-flex-all-center my-20px">
             {" "}
-            <img
+            <img alt="As Seen on Instagram"
               src="./assets/images/insta.png"
               width="25px"
               height="25px"
@@ -25,7 +25,9 @@ const Instagram = ({ instagramBanners }) => {
         {instagramBanners?.data?.map((product, index) => {
           return (
             <div key={index}>
-              <InstaCard product={product} />
+              <a href={product?.permalink} rel="noreferrer" target="_blank">
+                <InstaCard product={product} />
+              </a>
             </div>
           );
         })}

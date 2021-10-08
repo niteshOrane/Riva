@@ -27,7 +27,7 @@ export const getCartService = () => {
     method: "post",
     url: `${API_URL}/cartlisting`,
     silent: true,
-    data: { quoteId: getCartId() },
+    data: { quoteId: getCartId(), storeId: getStoreId() },
   };
   return axios(config);
 };
