@@ -7,6 +7,7 @@ import {
   getProductColor,
 } from "../../../../services/product/product.service";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const TempLink = ({ children, product }) => {
   if (product?.sku)
@@ -32,7 +33,8 @@ const HorizontalProductCard = ({
   } = product;
 
   const [colorImg, setColorImg] = useState();
-  const [sizeIndex,setSizeIndex] = useState(0)
+  const [sizeIndex,setSizeIndex] = useState(0);
+  const { currency_symbol } = useSelector(state => state?.common?.store);
   const getDetails = async (fnValue, fnLabel) => {
     if (fnValue && fnLabel) {
       const res = await getProductColor(fnValue);
@@ -74,8 +76,8 @@ const HorizontalProductCard = ({
       <div>
         <div className={styles.name}>Name: {name || "---"}</div>
         <div className={styles.price}>
-          <div className={styles.was}>Was {was}</div>
-          <div className={styles.now}>Now {now}</div>
+          <div className={styles.was}>Was {currency_symbol}{was}</div>
+          <div className={styles.now}>Now {currency_symbol}{now}</div>
         </div>
         <div className={styles.size}>
           <div

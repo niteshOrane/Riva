@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Image from "../../LazyImage/Image";
-import "./InstaCard.module.scss";
+import styles from  "./InstaCard.module.scss";
 
 const InstaCard = ({ product }) => {
-  const [color, setColor] = useState("");
 
-  const { id, src, name, wasPrice, nowPrice } = product;
+  const { media_url} = product;
   return (
-    <div key={id} className="product-card">
-      <Image width="100%" src={src} />
+    <div className={styles.productCard}>
+      <Image width="100%" height="100%" src={media_url} />
     </div>
   );
 };
@@ -18,8 +17,5 @@ InstaCard.propTypes = {
   product: PropTypes.object.isRequired,
 };
 
-InstaCard.defaultProps = {
-  products: {},
-};
 
 export default InstaCard;

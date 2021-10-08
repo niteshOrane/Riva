@@ -16,14 +16,29 @@ import VideoPlayer from "../../components/pages/landing/VideoPlayer/VideoPlayer"
 import Instagram from "../../components/pages/landing/Instagram/Instagram";
 import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks";
 import { Link } from "react-router-dom";
+import { getInstagramBanners } from "../../services/layout/Layout.service";
 
 function Landing() {
-  const { middleBanner } = useLanding('topbrands');
+  const { middleBanner } = useLanding("topbrands");
   const { btfLeft, btfRight, videoBanner } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
   );
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [instagramBanners, setInstagramBanners] = useState(null);
+
+  const getIgBanners = async () => {
+    const size = new FormData();
+    size.append("limit", 8);
+    const res = await getInstagramBanners(size);
+    if(res?.status===200 && res?.data){
+      setInstagramBanners(res?.data)
+    }
+  };
+
+  useEffect(() => {
+    getIgBanners();
+  }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
       ?.find(
@@ -39,7 +54,7 @@ function Landing() {
     <>
       <div>
         <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
-        <div >
+        <div>
           <Slider
             className="categoriesSlider"
             items={selectedCategory}
@@ -54,7 +69,7 @@ function Landing() {
               >
                 <div className="catSliderImgsSpace">
                   <Image
-                    src={item?.image?.replace('index.php', '')}
+                    src={item?.image?.replace("index.php", "")}
                     width="100%"
                     alt={item?.name}
                     customeStyle={{ borderRadius: "50%" }}
@@ -62,7 +77,9 @@ function Landing() {
                   />
                 </div>
                 <div>
-                  <span className="my-12px d-inline-block">{item?.name?.toUpperCase()}</span>
+                  <span className="my-12px d-inline-block">
+                    {item?.name?.toUpperCase()}
+                  </span>
                 </div>
               </Link>
             )}
@@ -80,7 +97,7 @@ function Landing() {
           link={middleBanner?.[0]?.url_banner}
         />
         <TopBrand />
-        <Instagram products={body.instaProducts} />
+        {instagramBanners && <Instagram instagramBanners = {instagramBanners} /> }
       </div>
     </>
   );

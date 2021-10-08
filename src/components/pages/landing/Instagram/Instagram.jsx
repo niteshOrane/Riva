@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import InstaCard from "../../../common/Cards/InstaCard";
 import style from "./Instagram.module.scss";
 
-const Instagram = ({ products }) => {
+const Instagram = ({ instagramBanners }) => {
   return (
     <div className="container-with-circles my-20px">
       <div className="">
@@ -20,9 +20,9 @@ const Instagram = ({ products }) => {
       </div>
       <div
         id={style.p_mrgn}
-        className="d-flex align-items-center justify-content-between gap-12px"
+        className={`d-flex gap-12px ${style.igCard}`}
       >
-        {products.map((product, index) => {
+        {instagramBanners?.data?.map((product, index) => {
           return (
             <div key={index}>
               <InstaCard product={product} />

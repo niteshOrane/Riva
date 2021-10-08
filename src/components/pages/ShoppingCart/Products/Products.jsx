@@ -108,7 +108,7 @@ const ProductsData = ({ products, currency_symbol }) => {
                         <div className="d-flex align-items-center justify-content-between">
                           <strong className="f1 text-center">
                             {currency_symbol}
-                            {product.price}
+                            {parseFloat(product.price)?.toFixed(2)}
                           </strong>
                           <div className={style.counter}>
                             <span
@@ -131,7 +131,7 @@ const ProductsData = ({ products, currency_symbol }) => {
                           </div>
                           <strong className="f1 text-center">
                             {currency_symbol}
-                            {product.price * product.qty}
+                            {parseFloat(product.price * product.qty)?.toFixed(2)}
                           </strong>
                         </div>
                         {/*<div className={`text-right ${style.loyaltyPoints}`}>

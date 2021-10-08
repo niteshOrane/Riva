@@ -31,7 +31,7 @@ function Card({ src, name, priceWas, priceIs, remove, sku, currency_symbol }) {
       </div>
       <div className="d-flex align-items-center gap-12px">
         <s className="color-grey">Was {currency_symbol} {parseFloat(priceWas)?.toFixed(2)}</s>&nbsp; &nbsp;
-        <span>Now {currency_symbol} {parseFloat(priceIs)?.toFixed(2)}</span>
+        <span>Now {currency_symbol} {isNaN(parseFloat(priceIs)?.toFixed(2)) ? 0 : parseFloat(priceIs)?.toFixed(2)}</span>
       </div>
     </div>
 

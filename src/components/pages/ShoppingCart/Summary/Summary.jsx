@@ -26,8 +26,8 @@ const Summary = ({ currency_symbol }) => {
           <p className="font-light-black">SUBTOTAL</p>
           <span>
             {currency_symbol}
-            {items.reduce((total, item) => total + item.price * item.qty, 0) ||
-              0}
+            {parseFloat(items.reduce((total, item) => total + item.price * item.qty, 0) ||
+              0)?.toFixed(2)}
           </span>
         </div>
         <div

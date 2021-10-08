@@ -99,6 +99,7 @@ function Wishlist() {
     if (data) {
       setSelectedColor({ ...selectedColor, color: data?.selected?.color });
       getReviewListForProduct(data?.sku);
+      setSelectedColor({...selectedColor,size:data?.size?.[0],color:data?.colors?.[0]})
     }
   }, [data]);
 

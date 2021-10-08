@@ -15,3 +15,9 @@
     font-weight: normal;
   }
 }
+.confirmCard{
+  display: flex;
+  flex-direction: column;
+  height: 13rem;
+  overflow: auto;
+}

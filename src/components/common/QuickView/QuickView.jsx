@@ -141,6 +141,7 @@ function QuickView() {
   useEffect(() => {
     getOutOfStock();
     getReviewListForProduct(data?.sku);
+    setSelectedProduct(data)
   }, [data]);
   const srcImage =
     data?.image?.indexOf("http") > -1
