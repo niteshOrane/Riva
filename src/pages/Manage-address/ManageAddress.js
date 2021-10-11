@@ -4,6 +4,7 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import "./manageAddress.scss";
 import * as icons from "../../components/common/Icons/Icons";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
+import DeliveryAddress from "../Delivery-address/DeliveryAddress";
 import DeliveryAddressForm from "../../components/pages/DeliveryAddress/DeliveryAddressForm/DeliveryAddressForm";
 import { getAddressByLocation } from "../../services/address/address.service";
 
@@ -12,26 +13,26 @@ function ManageAddress() {
     lat: "",
     lng: "",
   });
-  const [userAddress, setUserAddress] = useState(null)
+  const [userAddress, setUserAddress] = useState(null);
   const getLatLng = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCurrentPosition({
         ...currentPosition,
         lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lng: position.coords.longitude,
       });
     });
-  }
+  };
   const getAddress = async (lat, lng) => {
-    const res = await getAddressByLocation(lat, lng)
+    const res = await getAddressByLocation(lat, lng);
     if (res.status === 200) {
-      setUserAddress(res?.data?.data[0])
+      setUserAddress(res?.data?.data[0]);
     }
-  }
+  };
   useEffect(() => {
-    const { lat, lng } = currentPosition
+    const { lat, lng } = currentPosition;
     if (currentPosition.lat && currentPosition.lng) {
-      getAddress(lat, lng)
+      getAddress(lat, lng);
     }
   }, [currentPosition]);
 
@@ -43,15 +44,8 @@ function ManageAddress() {
         </div>
         <div className="d-flex h-100">
           <Sidebar />
-          <div className="w-100">
-            {/* <h2 className="font-weight-normal">Add Address</h2>
-            <div style={{ cursor: "pointer" }} onClick={() => { getLatLng(e) }} className="font-weight-normal d-flex">
-              <div className="location-icon">
-                <icons.LocationFlag />
-              </div>
-              <div className="location-map">USE MY CURRENT LOCATION</div>
-            </div> */}
-            <DeliveryAddressForm userAddress={userAddress} />
+          <div className="w-50">
+            <DeliveryAddress isManageScreen />
           </div>
         </div>
       </div>

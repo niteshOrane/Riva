@@ -29,13 +29,13 @@ import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 
-function DeliveryAddress() {
+function DeliveryAddress({ isManageScreen }) {
   const [stateCheck, setState] = React.useState({
     checkedA: false,
     checkedB: false,
     indexItem: null,
   });
-  const {  language } = useSelector(state => state?.common?.store);
+  const { language } = useSelector((state) => state?.common?.store);
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -75,8 +75,7 @@ function DeliveryAddress() {
       dispatch(getShippingMethodlist(defaultAddressIds.Shippingid));
     }
   }, [defaultAddressIds]);
-  useEffect(() => {
-  }, [customerDeliverySpeed]);
+  useEffect(() => {}, [customerDeliverySpeed]);
   const handleOnEdit = (record) => {
     setrecordToEdit(record);
     setShowList(false);
@@ -130,104 +129,107 @@ function DeliveryAddress() {
     }
   };
   return (
-    <div  className="container-90 max-width-1600">
-      <div className={styles.header}>
-        <div className={styles.breadCrumb}>
-          <div className={styles.bcLinks}>
-            <Link to="/">
-              <strong className="color-black">
-                <icons.Home />
-                &nbsp;
-              </strong>
-              <span className="color-grey">
-                Home <icons.AngleRight />
-              </span>
-            </Link>
+    <div className="container-90 max-width-1600">
+      {!isManageScreen && (
+        <div className={styles.header}>
+          <div className={styles.breadCrumb}>
+            <div className={styles.bcLinks}>
+              <Link to="/">
+                <strong className="color-black">
+                  <icons.Home />
+                  &nbsp;
+                </strong>
+                <span className="color-grey">
+                  Home <icons.AngleRight />
+                </span>
+              </Link>
 
-            <strong>Select a Delivery Address</strong>
-          </div>
-          <Link to="/shopping-cart">
-            <div className={styles.backBtn}>
-              <span class="material-icons-outlined">arrow_back_ios</span>
-              Back
+              <strong>Select a Delivery Address</strong>
             </div>
-          </Link>
+            <Link to="/shopping-cart">
+              <div className={styles.backBtn}>
+                <span class="material-icons-outlined">arrow_back_ios</span>
+                Back
+              </div>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.container}>
-        <div  className={styles.columnLeft}>
-          <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: "10px" }}>
-            {showList ? <>
-              <AddressCard
-                className={styles.defualtAddressArea}
-                onEdit={handleOnEdit}
-                onDelete={handleOnDelete}
-                addressItem={
-                  dataList && dataList.length > 0
-                    ? dataList?.find(
-                      (e) => e.id === defaultAddressIds?.Shippingid
-                    )
-                    : {}
-                }
-                setDefaultAddress={setDefaultAddress}
-                isDefault={
-                  dataList && dataList.length > 0
-                    ? dataList?.find(
-                      (e) => e.id === defaultAddressIds?.Shippingid
-                    )?.Shippingid?.length > 0
-                    : {}
-                }
-                isBillingDefault={false}
-              />
+        <div className={styles.columnLeft}>
+          <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridGap: "10px",
+            }}
+          >
+            {showList ? (
+              <>
+                <AddressCard
+                  className={styles.defualtAddressArea}
+                  onEdit={handleOnEdit}
+                  onDelete={handleOnDelete}
+                  addressItem={
+                    dataList && dataList.length > 0
+                      ? dataList?.find(
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )
+                      : {}
+                  }
+                  setDefaultAddress={setDefaultAddress}
+                  isDefault={
+                    dataList && dataList.length > 0
+                      ? dataList?.find(
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )?.Shippingid?.length > 0
+                      : {}
+                  }
+                  isBillingDefault={false}
+                  isManageScreen ={isManageScreen}
+                />
 
-              <AddressCard
-                className={styles.defualtAddressArea}
-                onEdit={handleOnEdit}
-                onDelete={handleOnDelete}
-                addressItem={
-                  dataList && dataList.length > 0
-                    ? dataList?.find(
-                      (e) => e.id === defaultAddressIds?.Billingid
-                    )
-                    : {}
-                }
-                setDefaultAddress={setDefaultAddress}
-                isDefault={
-                  false
-                }
-                isBillingDefault={
-                  dataList && dataList.length > 0
-                    ? dataList?.find(
-                      (e) => e.id === defaultAddressIds?.Billingid
-                    )?.Billingid?.length > 0
-                    : {}
-                }
-              />
-            </> : null}
+                <AddressCard
+                  className={styles.defualtAddressArea}
+                  onEdit={handleOnEdit}
+                  onDelete={handleOnDelete}
+                  addressItem={
+                    dataList && dataList.length > 0
+                      ? dataList?.find(
+                          (e) => e.id === defaultAddressIds?.Billingid
+                        )
+                      : {}
+                  }
+                  setDefaultAddress={setDefaultAddress}
+                  isDefault={false}
+                  isBillingDefault={
+                    dataList && dataList.length > 0
+                      ? dataList?.find(
+                          (e) => e.id === defaultAddressIds?.Billingid
+                        )?.Billingid?.length > 0
+                      : {}
+                  }
+                  isManageScreen = {isManageScreen}
+                />
+              </>
+            ) : null}
             {showList &&
-              dataList.filter(e => e.Billingid === "" && e.Shippingid === "").map((addr, index) => {
-                return (
-                  // <AddressItem
-                  //   addressItem={addr}
-                  //   state={stateCheck}
-                  //   handleChange={handleChange}
-                  //   setDefaultAddress={setDefaultAddress}
-                  //   index={index}
-                  //   onEdit={handleOnEdit}
-                  //   onDelete={handleOnDelete}
-                  // />
-
-                  <AddressCard
-                    onEdit={handleOnEdit}
-                    onDelete={handleOnDelete}
-                    addressItem={addr}
-                    setDefaultAddress={setDefaultAddress}
-                    isDefault={false}
-                    isBillingDefault={false}
-                  />
-                );
-              })}
+              dataList
+                .filter((e) => e.Billingid === "" && e.Shippingid === "")
+                .map((addr, index) => {
+                  return (
+                    <AddressCard
+                      onEdit={handleOnEdit}
+                      onDelete={handleOnDelete}
+                      addressItem={addr}
+                      setDefaultAddress={setDefaultAddress}
+                      isDefault={false}
+                      isBillingDefault={false}
+                      isManageScreen = {isManageScreen}
+                    />
+                  );
+                })}
           </section>
           <div className={styles.addAddress}>
             <p className={styles.title}>
@@ -242,51 +244,61 @@ function DeliveryAddress() {
               recordUpdated();
             }}
           />
-          <div className={styles.shippingMethod}>
-            <h3 className="font-weight-normal">SHIPPING METHOD</h3>
-            <p className={styles.greyText}>
-              Please specify the shipping address to see available options.
-            </p>
-          </div>
+          {!isManageScreen && (
+            <>
+              <div className={styles.shippingMethod}>
+                <h3 className="font-weight-normal">SHIPPING METHOD</h3>
+                <p className={styles.greyText}>
+                  Please specify the shipping address to see available options.
+                </p>
+              </div>
 
-          <div className={styles.subBtns}>
-            <Link to="/shopping-cart">
-              <button className={styles.returnBtn} type="button">
-                <span className="material-icons-outlined">arrow_back_ios</span>
-                <span>RETURN TO CART</span>
-              </button>
-            </Link>
-            <Link to="/">
-              <button className={styles.continueBtn} type="button">
-                CONTINUE SHOPPING
-              </button>
-            </Link>
-          </div>
+              <div className={styles.subBtns}>
+                <Link to="/shopping-cart">
+                  <button className={styles.returnBtn} type="button">
+                    <span className="material-icons-outlined">
+                      arrow_back_ios
+                    </span>
+                    <span>RETURN TO CART</span>
+                  </button>
+                </Link>
+                <Link to="/">
+                  <button className={styles.continueBtn} type="button">
+                    CONTINUE SHOPPING
+                  </button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
-        <div style = {{marginRight: language==="Arabic" ? "10px":null}}>
-          <div className={styles.columnRight}>
-            <OrderReview
-              cartPayment={cartPaymentInfo}
-              deliverySpeed={customerDeliverySpeed}
-              callBackAfterApplyCoupan={callBackAfterApplyCoupan}
-              addressItem={
-                dataList && dataList.length > 0
-                  ? dataList?.find(
-                    (e) => e.id === defaultAddressIds?.Shippingid
-                  )
-                  : {}
-              }
-            />
-          </div>
-          <div className="my-20px">
-            <img
-              src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/7ff29082-fdcb-41b5-97d7-e87fe5d767e7.png"
-              width="100%"
-              alt=""
-            />
-          </div>
-          <LetUsHear />
-        </div>
+        {!isManageScreen && (
+          <>
+            <div style={{ marginRight: language === "Arabic" ? "10px" : null }}>
+              <div className={styles.columnRight}>
+                <OrderReview
+                  cartPayment={cartPaymentInfo}
+                  deliverySpeed={customerDeliverySpeed}
+                  callBackAfterApplyCoupan={callBackAfterApplyCoupan}
+                  addressItem={
+                    dataList && dataList.length > 0
+                      ? dataList?.find(
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )
+                      : {}
+                  }
+                />
+              </div>
+              <div className="my-20px">
+                <img
+                  src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/7ff29082-fdcb-41b5-97d7-e87fe5d767e7.png"
+                  width="100%"
+                  alt=""
+                />
+              </div>
+              <LetUsHear />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

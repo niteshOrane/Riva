@@ -150,6 +150,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
     };
     await axios(config).then((res) => {
       setCheckoutId(JSON.parse(res.data).id);
+      console.log({res})
     });
   };
   useEffect(() => {

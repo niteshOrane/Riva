@@ -16,3 +16,14 @@
     font-size: 1.8rem;
   }
 }
+.noWishlist{
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  span{
+    font-size: 20px;
+    color: gray;
+  }
+}

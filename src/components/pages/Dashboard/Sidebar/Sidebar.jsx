@@ -98,7 +98,7 @@ function Sidebar() {
               </Link>
             </div>
           </div>
-          <div className="d-flex" id={styles.sec}>
+          {/* <div className="d-flex" id={styles.sec}>
             <icons.DashboardPayments />
             <div className={styles.children}>
               <p className={styles.title}>Payments</p>
@@ -108,8 +108,8 @@ function Sidebar() {
                 &nbsp; Saved Cards
               </Link>
             </div>
-          </div>
-          <div className="d-flex" id={styles.sec}>
+          </div> */}
+          {/* <div className="d-flex" id={styles.sec}>
             <icons.MyStuf />
             <div className={styles.children}>
               <p className={styles.title}>My Stuff</p>
@@ -126,7 +126,7 @@ function Sidebar() {
                 &nbsp; Refer & Earn Credit
               </Link>
             </div>
-          </div>
+          </div> */}
           <div className="d-flex align-items-center" id={styles.sec}>
             <icons.Notification />
             <Link to="/notify-me">
