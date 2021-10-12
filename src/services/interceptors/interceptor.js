@@ -105,7 +105,7 @@ export default {
           handleError(store, err);
         }
         hideLoader(store);
-        return Promise.reject(error ? error['response'] : null);
+        return Promise.resolve({ data: [], success: false, message: err.message });
       }
     );
   },
