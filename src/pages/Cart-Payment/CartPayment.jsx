@@ -9,11 +9,13 @@ import { getPaymentMethodlist } from "../../store/actions/payment";
 import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
+import Loader from "../../components/common/Loader";
 
 function CartPayment() {
   const dispatch = useDispatch();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
@@ -30,6 +32,14 @@ function CartPayment() {
   useEffect(() => {
     setPaymentOption(paymentMode);
   }, [paymentMode]);
+  if (loading)
+    return (
+      <div className={styles.tapLoader}>
+        <div className={styles.loaderContainer}>
+          <Loader />
+        </div>
+      </div>
+    );
 
   return (
     <div className="container-90 max-width-1600">
@@ -53,8 +63,8 @@ function CartPayment() {
       <div className={styles.container}>
         <div className={styles.col1}>
           {paymentOption &&
-            paymentOption?.data &&
-            paymentOption?.data?.length ? (
+          paymentOption?.data &&
+          paymentOption?.data?.length ? (
             <>
               <h2 className="font-weight-normal my-20px">
                 Choose Payment Mode
@@ -65,6 +75,8 @@ function CartPayment() {
                 cartPaymentInfo={cartPaymentInfo}
                 store={store}
                 paymentMode={paymentOption?.data}
+                loading={loading}
+                setLoading={setLoading}
               />
             </>
           ) : null}

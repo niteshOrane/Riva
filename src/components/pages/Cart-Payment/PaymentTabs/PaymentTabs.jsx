@@ -62,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
   },
   arabicIcon: {
     marginLeft: "10px",
-    whiteSpace: "noWrap"
-  }
+    whiteSpace: "noWrap",
+  },
 }));
 const selectedIndicatorStyle = {
   width: "4px",
@@ -97,16 +97,15 @@ function a11yProps(index) {
   };
 }
 
-const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
+const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store,loading,setLoading }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
   const [paymentType, setPaymentType] = React.useState(null);
   const [value, setValue] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([]);
-  const { language } = useSelector(state => state?.common?.store);
+  const { language } = useSelector((state) => state?.common?.store);
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
@@ -144,13 +143,14 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
-        }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
       setCheckoutId(JSON.parse(res.data).id);
-      console.log({res})
+      console.log({ res });
     });
   };
   useEffect(() => {
@@ -234,7 +234,12 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         break;
     }
   };
-  if (loading) return <Loader />;
+  if (loading)
+    return (
+      <div className={styles.tapLoader}>
+        <Loader />
+      </div>
+    );
   return (
     <div className="d-flex my-20px w-80">
       <Tabs
@@ -250,15 +255,30 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
         {paymentMethod?.map((tab, i) => (
           <Tab
             id={tab.code}
-            className={`${classes.tab} ${value === i ? classes.selectedTabLink : ""
-              }`}
+            className={`${classes.tab} ${
+              value === i ? classes.selectedTabLink : ""
+            }`}
             disableRipple
             label={
               <div className="d-flex align-items-center w-100" id={tab.code}>
-                <span id={tab.code} className={language === "Arabic" ? `${classes.icon} ${classes.arabicIcon}` : `${classes.icon}`}>
+                <span
+                  id={tab.code}
+                  className={
+                    language === "Arabic"
+                      ? `${classes.icon} ${classes.arabicIcon}`
+                      : `${classes.icon}`
+                  }
+                >
                   {tab?.icon || <tabIcons.Icon2 />}
                 </span>{" "}
-                <span id={tab.code} className={language === "Arabic" ? `${classes.tbText} ${classes.arabicIcon}` : `${classes.tbText}`}>
+                <span
+                  id={tab.code}
+                  className={
+                    language === "Arabic"
+                      ? `${classes.tbText} ${classes.arabicIcon}`
+                      : `${classes.tbText}`
+                  }
+                >
                   {tab.title}
                 </span>
               </div>
@@ -272,7 +292,7 @@ const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store }) => {
           {/* {paymentType && (
             <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
           )} */}
-          <GoSellTap />
+          <GoSellTap loading={loading} setLoading={setLoading} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div id="renderPaymentformOne">{renderPaymentform()}</div>
