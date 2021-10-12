@@ -10,11 +10,12 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import Loader from "../../../../../../components/common/Loader/index";
 
 function GoSellTap() {
   const dispatch = useDispatch();
   const { store_name } = useSelector((state) => state?.common?.store);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
   const callbackFunc = async (e) => {
     const subType = e.target.value;
@@ -27,14 +28,21 @@ function GoSellTap() {
         res.data.length > 0 &&
         res.data[0]?.success
       ) {
-        setLoading(false);
         window.location.href = res.data?.[0]?.redirect_url;
+        setLoading(false);
       } else {
         return setLoading(false);
       }
     }
     setLoading(false);
   };
+  if (loading) {
+    return (
+      <div className = {styles.tapLoader}>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <>
       <div className={styles.goSellWrap}>
@@ -59,9 +67,9 @@ function GoSellTap() {
         </FormControl>
         <br />
       </div>
-      <div style={{ marginTop: "20px" }}>
+      {/* <div style={{ marginTop: "20px" }}>
         {loading && <strong>Redirecting to payments page...</strong>}
-      </div>
+      </div> */}
     </>
   );
 }

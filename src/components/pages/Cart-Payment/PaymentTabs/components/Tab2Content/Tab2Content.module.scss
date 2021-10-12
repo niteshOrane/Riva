@@ -104,3 +104,9 @@
 .arabicIcon{
   margin-left: 10px !important;
 }
+.tapLoader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
