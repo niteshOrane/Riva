@@ -154,7 +154,7 @@ function Products(props) {
           {sessionStorage.getItem("selectedCategory") ??
             (parsed?.serachTerm && parsed?.serachTerm !== "undefined"
               ? `Search Results for ${parsed?.serachTerm}`
-              : match.params.category)}
+              : match.params.category?.[0]?.toUpperCase() + match.params.category?.slice(1))}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>

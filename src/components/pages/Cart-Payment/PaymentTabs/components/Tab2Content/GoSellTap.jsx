@@ -10,12 +10,10 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-function GoSellTap() {
-  const dispatch = useDispatch();
+function GoSellTap({setLoading}) {
   const { store_name } = useSelector((state) => state?.common?.store);
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
   const callbackFunc = async (e) => {
     const subType = e.target.value;
     if (subType) {
@@ -27,8 +25,8 @@ function GoSellTap() {
         res.data.length > 0 &&
         res.data[0]?.success
       ) {
+        // window.location.href = res.data?.[0]?.redirect_url;
         setLoading(false);
-        window.location.href = res.data?.[0]?.redirect_url;
       } else {
         return setLoading(false);
       }
@@ -59,9 +57,9 @@ function GoSellTap() {
         </FormControl>
         <br />
       </div>
-      <div style={{ marginTop: "20px" }}>
+      {/* <div style={{ marginTop: "20px" }}>
         {loading && <strong>Redirecting to payments page...</strong>}
-      </div>
+      </div> */}
     </>
   );
 }

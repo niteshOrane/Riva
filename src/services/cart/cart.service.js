@@ -5,9 +5,11 @@ import { getCustId, getCartId, getStoreId } from "../../util";
 export const addToCartService = (id, color, size, qty) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${getCartId() || 0
-      }&productInfo[customer_id]=${getCustId() || 0
-      }&productInfo[store_id]=${getStoreId()}`,
+    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
+      getCartId() || 0
+    }&productInfo[customer_id]=${
+      getCustId() || 0
+    }&productInfo[store_id]=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -27,7 +29,11 @@ export const getCartService = () => {
     method: "post",
     url: `${API_URL}/cartlisting`,
     silent: true,
-    data: { quoteId: getCartId(), storeId: getStoreId() },
+    data: {
+      storeId: getStoreId(),
+      customerId: getCustId(),
+      quoteId: getCartId(),
+    },
   };
   return axios(config);
 };
@@ -71,7 +77,11 @@ export const getProductIdBySku = (sku) => {
 export const cartPaymentAction = (token, type) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(
+      token
+    )}`,
     silent: true,
   };
   return axios(config);
@@ -88,7 +98,9 @@ export const Hypy_PaymentCart = (data, cardType) => {
 export const cartPaymentTapAction = (submethod) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
     silent: true,
   };
   return axios(config);
