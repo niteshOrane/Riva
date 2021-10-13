@@ -30,34 +30,31 @@ export const getCustomerCartPayments = () => async (dispatch) => {
 
 
 export const getCart = () => async (dispatch) => {
-  if (getCartId() && getCartId() !== '0') {
+  //if (getCartId() && getCartId() !== '0') {
 
-    const res = await getCartService();
+  const res = await getCartService();
 
-    if (res && res.data && res.data.length) {
-      const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
-      const productIds = await Promise.allSettled(productIdPromises);
-      const products = res.data.map((r, i) => ({
-        ...r,
-        id: productIds?.[i]?.value?.data?.data?.product_id ?
-          parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
-          : 0,
-        src: r?.extension_attributes?.image
-      }));
-      dispatch({
-        type: DATA_TYPES.SET_BULK_CART,
-        payload: products,
-      });
-    }
-    else {
-      dispatch(emptyCart());
-      dispatch(emptyCartItem());
-    }
+  if (res && res.data && res.data.length) {
+    const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
+    const productIds = await Promise.allSettled(productIdPromises);
+    const products = res.data.map((r, i) => ({
+      ...r,
+      id: productIds?.[i]?.value?.data?.data?.product_id ?
+        parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+        : 0,
+      src: r?.extension_attributes?.image
+    }));
+    dispatch({
+      type: DATA_TYPES.SET_BULK_CART,
+      payload: products,
+    });
   }
   else {
     dispatch(emptyCart());
     dispatch(emptyCartItem());
   }
+ // }
+
 };
 
 export const addToCart = (data) => async (dispatch) => {
