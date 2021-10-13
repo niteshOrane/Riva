@@ -165,7 +165,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             type="email"
             name="email"
             id="email"
-            maxLength={25}
+            maxLength={256}
             onChange={handleChange}
           />
         </div>

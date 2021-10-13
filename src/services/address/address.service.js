@@ -14,7 +14,7 @@ export const getCustomerAddress = (customerid) => {
 export const addCustomerAddress = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/addAddressBook`,
+    url: `${API_URL}/addCustomerAddressBook`,
     silent: true,
     data: formData,
   };
@@ -24,7 +24,7 @@ export const addCustomerAddress = (formData) => {
 export const updateCustomerAddress = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/updateAddressBook`,
+    url: `${API_URL}/updateCustomerAddressBook`,
     silent: true,
     data: formData,
   };

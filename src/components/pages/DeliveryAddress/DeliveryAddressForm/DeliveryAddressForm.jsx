@@ -29,6 +29,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     block: "",
     houseName: "",
     defaultAddess: true,
+    judda:"",
+    floorNumber:"",
+    buildingName:"",
     id: 0,
     country: "",
   });
@@ -145,6 +148,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.houseName = customerData?.street?.split(" ")?.[1];
     formData.country = customerData?.country;
     formData.defaultAddess = customerData?.Shippingid !== "";
+    formData.judda = customerData?.judda;
+    formData.buildingName = customerData?.buildingName;
+    formData.buildingName = customerData?.buildingName;
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
   const handleChange = (e) => {
@@ -168,6 +174,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     id,
     email,
     country,
+    judda,
+    buildingName,
+    floorNumber,
   } = formData;
 
   const addAddressHandler = () => {
@@ -205,6 +214,15 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!mobile) {
       return dispatch(showSnackbar("mobile Require", "error"));
     }
+    if (!judda) {
+      return dispatch(showSnackbar("judda is required", "error"));
+    }
+    if (!floorNumber) {
+      return dispatch(showSnackbar("Floor Number is required", "error"));
+    }
+    if (!buildingName) {
+      return dispatch(showSnackbar("building name is required", "error"));
+    }
     if (mobile.length !== 10) {
       return dispatch(
         showSnackbar("Mobile number must be 10 numbers long", "error")
@@ -215,14 +233,19 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (id) {
       form.append("addressid", id);
     }
-    form.append("name", `${firstName} ${lastName}`);
-    form.append("pincode", pincode);
-    form.append("city", city);
-    form.append("state", state);
-    form.append("telephone", mobile);
-    form.append("street", `${block} ${houseName}`);
-    form.append("street1", street);
-    form.append("country", country);
+    form.append("customerAddress[name]", `${firstName} ${lastName}`);
+    form.append("customerAddress[pincode]", pincode);
+    form.append("customerAddress[city]", city);
+    form.append("customerAddress[state]", state);
+    form.append("customerAddress[telephone]", mobile);
+    form.append("customerAddress[street]", `${block} ${houseName}`);
+    form.append("customerAddress[street1]", street);
+    form.append("customerAddress[country]", country);
+    form.append("customerAddress[block]", block);
+    form.append("customerAddress[house_name_number]", houseName);
+    form.append("customerAddress[judda]", judda);
+    form.append("customerAddress[floor_number]", floorNumber);
+    form.append("customerAddress[building_name_number]", buildingName);
     form.append("setDefaultAddress", defaultAddess ? 1 : 0);
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
@@ -354,6 +377,49 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
               value={block}
               name="block"
               id="block"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className={styles.inpContainer}>
+          <div className="w-100">
+            <p className={styles.inpLable}>
+              Judda<span className={styles.star}>*</span>
+            </p>
+            <input
+              type="text"
+              className={styles.input}
+              name="judda"
+              value={judda}
+              id="judda"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-100">
+            <p className={styles.inpLable}>
+              Floor Number<span className={styles.star}>*</span>
+            </p>
+            <input
+              type="block"
+              className={styles.input}
+              value={floorNumber}
+              name="floorNumber"
+              id="floorNumber"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className={styles.inpContainer}>
+          <div className="w-100">
+            <p className={styles.inpLable}>
+              Building Name/Number<span className={styles.star}>*</span>
+            </p>
+            <input
+              type="text"
+              className={styles.input}
+              name="buildingName"
+              value={buildingName}
+              id="buildingName"
               onChange={handleChange}
             />
           </div>
