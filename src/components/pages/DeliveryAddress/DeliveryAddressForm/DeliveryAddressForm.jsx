@@ -35,6 +35,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     id: 0,
     country: "",
   });
+  const [loading,setLoading] = useState(false)
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
 
@@ -120,12 +121,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     }
   };
   const addAddress = (item, id) => async () => {
+    setLoading(true)
     const res = await (id
       ? updateCustomerAddress(item)
       : addCustomerAddress(item));
     if (res.data.success) {
       dispatch(addNewAddress(res, item));
       clearAll();
+      setLoading(false)
       if (onAfterSaveEdit) {
         onAfterSaveEdit();
       }
@@ -136,6 +139,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           "error"
         )
       );
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -233,7 +237,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (id) {
       form.append("addressid", id);
     }
-    form.append("customerAddress[name]", `${firstName} ${lastName}`);
+    form.append("customerAddress[name]", `${firstName}${lastName}`);
     form.append("customerAddress[pincode]", pincode);
     form.append("customerAddress[city]", city);
     form.append("customerAddress[state]", state);
@@ -491,6 +495,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           className={styles.addAddressBtn}
           type="button"
           onClick={addAddressHandler}
+          disabled = {loading}
         >
           {id ? "UPDATE" : "ADD"} ADDRESS
         </button>

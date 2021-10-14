@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extractColorSize, getSKuId } from "../../../../util";
@@ -12,7 +13,7 @@ import {
 
 const ProductsData = ({ products, currency_symbol }) => {
   const dispatch = useDispatch();
-
+  const [loading,setLoading] = useState(false)
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
   const handleIncrementProduct = (product) => {
     product.qty = product.qty + 1;
@@ -120,7 +121,8 @@ const ProductsData = ({ products, currency_symbol }) => {
                               remove
                             </span>
                             <span>{product.qty}</span>
-                            <span
+                            {!loading ? (
+                              <span
                               className="c-pointer material-icons-outlined"
                               onClick={() => {
                                 handleIncrementProduct(product);
@@ -128,6 +130,7 @@ const ProductsData = ({ products, currency_symbol }) => {
                             >
                               add
                             </span>
+                            ): <CircularProgress size={10} />}
                           </div>
                           <strong className="f1 text-center">
                             {currency_symbol}

@@ -25,7 +25,7 @@ function GoSellTap({setLoading}) {
         res.data.length > 0 &&
         res.data[0]?.success
       ) {
-        // window.location.href = res.data?.[0]?.redirect_url;
+        window.location.href = res.data?.[0]?.redirect_url;
         setLoading(false);
       } else {
         return setLoading(false);

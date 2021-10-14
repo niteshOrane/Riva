@@ -97,232 +97,231 @@ function a11yProps(index) {
   };
 }
 
-const PaymentTabs = React.memo(({ paymentMode, cartPaymentInfo, store,loading,setLoading }) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [checkoutId, setCheckoutId] = React.useState(0);
-  const [paymentType, setPaymentType] = React.useState(null);
-  const [value, setValue] = React.useState(0);
-  const classes = useStyles();
-  const [paymentMethod, setPaymentMethod] = useState([]);
-  const { language } = useSelector((state) => state?.common?.store);
-  const onPayNow = async (e) => {
-    if (e) {
-      setLoading(true);
-      const res = await cartPaymentAction(e, "checkoutcom_card_payment");
-      if (res.status === 200) {
-        setLoading(false);
-        dispatch(showSnackbar("Payment success", "success"));
-        dispatch({
-          type: DATA_TYPES.SET_CART_ID,
-          payload: { cart_id: 0 },
-        });
-        dispatch({
-          type: DATA_TYPES.SET_BULK_CART,
-          payload: [],
-        });
-        history.push(
-          `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
-        );
-      } else {
-        setLoading(false);
-        dispatch(showSnackbar("Payment Failed", "error"));
+
+
+const PaymentTabs = React.memo(
+  ({ paymentMode, cartPaymentInfo, store, loading, setLoading }) => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const [checkoutId, setCheckoutId] = React.useState(0);
+    const [paymentType, setPaymentType] = React.useState(null);
+    const [value, setValue] = React.useState(0);
+    const classes = useStyles();
+    const [paymentMethod, setPaymentMethod] = useState([]);
+    const { language } = useSelector((state) => state?.common?.store);
+    const onPayNow = async (e) => {
+      if (e) {
+        setLoading(true);
+        const res = await cartPaymentAction(e, "checkoutcom_card_payment");
+        if (res.status === 200) {
+          setLoading(false);
+          dispatch(showSnackbar("Payment success", "success"));
+          dispatch({
+            type: DATA_TYPES.SET_CART_ID,
+            payload: { cart_id: 0 },
+          });
+          dispatch({
+            type: DATA_TYPES.SET_BULK_CART,
+            payload: [],
+          });
+          history.push(
+            `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
+          );
+        } else {
+          setLoading(false);
+          dispatch(showSnackbar("Payment Failed", "error"));
+        }
       }
-    }
-  };
-  const getPaymentForTapCheckout = async (fnValue) => {
-    const configTap = {
-      method: "get",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${fnValue}`,
-      silent: true,
     };
-    await axios(configTap).then((res) => {
-      setPaymentType(res?.data[0]?.[fnValue]?.active_pk);
-    });
-  };
-  const getPaymentForHyperPay = async (fnValue) => {
-    const config = {
-      method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
-      silent: true,
+    const getPaymentForTapCheckout = async (fnValue) => {
+      const configTap = {
+        method: "get",
+        url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+        silent: true,
+      };
+      await axios(configTap).then((res) => {
+        setPaymentType(res?.data[0]?.checkoutcom_card_payment?.active_pk);
+      });
     };
-    await axios(config).then((res) => {
-      setCheckoutId(JSON.parse(res.data).id);
-      console.log({ res });
-    });
-  };
-  useEffect(() => {
-    if (paymentMode && paymentMode.length > 0) {
-      setPaymentMethod(paymentMode);
-    }
-  }, [paymentMode]);
+    const getPaymentForHyperPay = async (fnValue) => {
+      const config = {
+        method: "post",
+        url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+          paymentMode[fnValue].code
+        }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
+        silent: true,
+      };
+      await axios(config).then((res) => {
+        setCheckoutId(JSON.parse(res.data).id);
+      });
+    };
+    useEffect(() => {
+      if (paymentMode && paymentMode.length > 0) {
+        setPaymentMethod(paymentMode);
+      }
+    }, [paymentMode]);
 
-  const renderPaymentform = () => {
-    if (checkoutId) {
-      const script = document.createElement("script");
-      script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
-      script.async = true;
-      document.body.appendChild(script);
-      const form = document.createElement("form");
-      form.action = `${window.location.origin}/#/result/${paymentMode[value].code}`;
-      form.setAttribute("class", "paymentWidgets");
-      form.setAttribute(
-        "data-brands",
-        "VISA MASTER AMEX" || paymentMode[value].tbText
-      );
+    const renderPaymentform = () => {
+      if (checkoutId) {
+        const script = document.createElement("script");
+        script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
+        script.async = true;
+        document.body.appendChild(script);
+        const form = document.createElement("form");
+        form.action = `${window.location.origin}/#/result/${paymentMode[value].code}`;
+        form.setAttribute("class", "paymentWidgets");
+        form.setAttribute(
+          "data-brands",
+          "VISA MASTER AMEX" || paymentMode[value].tbText
+        );
 
+        let tabName;
+        if (value === 0) {
+          tabName = "renderPaymentformOne";
+        } else if (value === 2) {
+          tabName = "renderPaymentformThree";
+        } else if (value === 4) {
+          tabName = "renderPaymentformFive";
+        }
+        let menu = document.getElementById(tabName);
+
+        let child = menu?.lastElementChild;
+        while (child) {
+          menu?.removeChild(child);
+          child = menu?.lastElementChild;
+        }
+
+        if (menu && menu != null) {
+          menu.innerHTML = "";
+          menu = menu?.append(form);
+        }
+      }
+    };
+    useEffect(() => {
       let tabName;
-      if (value === 1) {
+      if (value === 0) {
         tabName = "renderPaymentformOne";
-      } else if (value === 3) {
+      } else if (value === 2) {
         tabName = "renderPaymentformThree";
-      } else if (value === 5) {
+      } else if (value === 4) {
         tabName = "renderPaymentformFive";
       }
-      let menu = document.getElementById(tabName);
-
-      let child = menu?.lastElementChild;
-      while (child) {
-        menu?.removeChild(child);
-        child = menu?.lastElementChild;
+      const isEmpty = document.getElementById(tabName)?.innerHTML === "";
+      getPaymentForHyperPay(value);
+      if (isEmpty) {
+        const item = document.getElementById(tabName);
+        item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
       }
+    }, [value]);
 
-      if (menu && menu != null) {
-        menu.innerHTML = "";
-        menu = menu?.append(form);
+    const handleChange = async (_, newValue) => {
+      switch (newValue) {
+        case 1:
+          setValue(newValue);
+          getPaymentForTapCheckout(newValue);
+          break;
+        case 2:
+          setValue(newValue);
+          getPaymentForHyperPay(newValue);
+          break;
+        case 3:
+          setValue(newValue);
+          break;
+        case 4:
+          getPaymentForHyperPay(newValue);
+          setValue(newValue);
+          break;
+        case 5:
+          setValue(newValue);
+          break;
+        default:
+          setValue(newValue);
+          break;
       }
-    }
-  };
-  useEffect(() => {
-    let tabName;
-    if (value === 1) {
-      tabName = "renderPaymentformOne";
-    } else if (value === 3) {
-      tabName = "renderPaymentformThree";
-    } else if (value === 5) {
-      tabName = "renderPaymentformFive";
-    }
-    const isEmpty = document.getElementById(tabName)?.innerHTML === "";
-    if (isEmpty) {
-      const item = document.getElementById(tabName);
-      item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
-    }
-  }, [value]);
-
-  const handleChange = async (_, newValue) => {
-    switch (newValue) {
-      case 0:
-        setValue(newValue);
-        break;
-      case 2:
-        getPaymentForTapCheckout("checkoutcom_card_payment");
-        setValue(newValue);
-        break;
-      case 3:
-      case 1:
-      case 5:
-        getPaymentForHyperPay(newValue);
-        setValue(newValue);
-        break;
-      case 4:
-        setValue(newValue);
-        break;
-      default:
-        setValue(newValue);
-        break;
-    }
-  };
-  if (loading)
+    };
+    if (loading)
+      return (
+        <div className={styles.tapLoader}>
+          <Loader />
+        </div>
+      );
     return (
-      <div className={styles.tapLoader}>
-        <Loader />
+      <div className="d-flex my-20px w-80">
+        <Tabs
+          className={classes.tabs}
+          TabIndicatorProps={{ style: selectedIndicatorStyle }}
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          style={{ background: "#f4f4f5" }}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+        >
+          {paymentMethod?.map((tab, i) => (
+            <Tab
+              id={tab.code}
+              className={`${classes.tab} ${
+                value === i ? classes.selectedTabLink : ""
+              }`}
+              disableRipple
+              label={
+                <div className="d-flex align-items-center w-100" id={tab.code}>
+                  <span
+                    id={tab.code}
+                    className={
+                      language === "Arabic"
+                        ? `${classes.icon} ${classes.arabicIcon}`
+                        : `${classes.icon}`
+                    }
+                  >
+                    {tab?.icon || <tabIcons.Icon2 />}
+                  </span>{" "}
+                  <span
+                    id={tab.code}
+                    className={
+                      language === "Arabic"
+                        ? `${classes.tbText} ${classes.arabicIcon}`
+                        : `${classes.tbText}`
+                    }
+                  >
+                    {tab.title}
+                  </span>
+                </div>
+              }
+              {...a11yProps(i)}
+            />
+          ))}
+        </Tabs>
+        <div className={classes.tabContent}>
+          <TabPanel className={styles.goSellWrap} value={value} index={0}>
+            <div id="renderPaymentformOne">{renderPaymentform()}</div>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {paymentType && (
+              <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+            )}
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <div id="renderPaymentformThree">{renderPaymentform()}</div>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <GooglePay
+              style={styles}
+              id="renderPaymentformFour"
+              cartPaymentInfo={cartPaymentInfo}
+              store={store}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            <div id="renderPaymentformFive">{renderPaymentform()}</div>
+          </TabPanel>
+          <TabPanel value={value} index={5}>
+            <ApplePay />
+          </TabPanel>
+        </div>
       </div>
     );
-  return (
-    <div className="d-flex my-20px w-80">
-      <Tabs
-        className={classes.tabs}
-        TabIndicatorProps={{ style: selectedIndicatorStyle }}
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        style={{ background: "#f4f4f5" }}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-      >
-        {paymentMethod?.map((tab, i) => (
-          <Tab
-            id={tab.code}
-            className={`${classes.tab} ${
-              value === i ? classes.selectedTabLink : ""
-            }`}
-            disableRipple
-            label={
-              <div className="d-flex align-items-center w-100" id={tab.code}>
-                <span
-                  id={tab.code}
-                  className={
-                    language === "Arabic"
-                      ? `${classes.icon} ${classes.arabicIcon}`
-                      : `${classes.icon}`
-                  }
-                >
-                  {tab?.icon || <tabIcons.Icon2 />}
-                </span>{" "}
-                <span
-                  id={tab.code}
-                  className={
-                    language === "Arabic"
-                      ? `${classes.tbText} ${classes.arabicIcon}`
-                      : `${classes.tbText}`
-                  }
-                >
-                  {tab.title}
-                </span>
-              </div>
-            }
-            {...a11yProps(i)}
-          />
-        ))}
-      </Tabs>
-      <div className={classes.tabContent}>
-        <TabPanel className={styles.goSellWrap} value={value} index={0}>
-          {/* {paymentType && (
-            <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
-          )} */}
-          <GoSellTap loading={loading} setLoading={setLoading} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <div id="renderPaymentformOne">{renderPaymentform()}</div>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {paymentType && (
-            <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
-          )}
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <div id="renderPaymentformThree">{renderPaymentform()}</div>
-        </TabPanel>
-
-        <TabPanel value={value} index={4}>
-          <GooglePay
-            style={styles}
-            id="renderPaymentformFour"
-            cartPaymentInfo={cartPaymentInfo}
-            store={store}
-          />
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          <div id="renderPaymentformFive">{renderPaymentform()}</div>
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          <ApplePay />
-        </TabPanel>
-      </div>
-    </div>
-  );
-});
+  }
+);
 
 export default PaymentTabs;

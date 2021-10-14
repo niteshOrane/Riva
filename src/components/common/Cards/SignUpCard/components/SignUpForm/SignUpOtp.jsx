@@ -111,7 +111,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
         setSeconds(secondsTime);
         setMinutes(minutesTime);
       } else {
-        dispatch(showSnackbar(res.data.data?.message, "error"));
+        dispatch(showSnackbar(res.data?.message, "error"));
       }
     }
   };
