@@ -7,7 +7,7 @@ function ContactUs() {
     return (
         <div className = {styles.wrap}>
             <ContactUsForm />
-            <CustomerService />
+            {/* <CustomerService /> */}
         </div>
     )
 }
