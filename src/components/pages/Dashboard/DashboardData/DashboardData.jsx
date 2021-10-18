@@ -1,8 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import * as icons from '../../../common/Icons/Icons';
-import styles from './DashboardData.module.scss';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import * as icons from "../../../common/Icons/Icons";
+import styles from "./DashboardData.module.scss";
 
 const DashboardData = () => {
   const customer = useSelector((state) => state.auth.customer);
@@ -20,7 +20,12 @@ const DashboardData = () => {
             </div>
             <div>
               <span>
-                Hello, <b>{`${customer.firstname} ${customer.lastname}` ?? 'unknown'} </b>
+                Hello,{" "}
+                <b>
+                  {customer?.username
+                    ? customer?.username
+                    : `${customer.firstname} ${customer.lastname}` ?? "unknown"}
+                </b>
               </span>
             </div>
           </div>

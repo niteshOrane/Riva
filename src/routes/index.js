@@ -62,6 +62,8 @@ const ProfileInformation = React.lazy(() =>
 const ManageAddress = React.lazy(() =>
   import("../pages/Manage-address/ManageAddress")
 );
+const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"))
+
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -133,7 +135,14 @@ class AppRoutes extends Component {
         layout: MainLayout,
         index: 3,
       },
-
+      {
+        path: "/contact-us",
+        component: ContactUs,
+        exact: true,
+        name: "Shopping Cart",
+        layout: MainLayout,
+        index: 3,
+      },
       {
         path: "/:identifier",
         component: CMSContent,

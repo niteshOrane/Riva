@@ -15,6 +15,8 @@ const Cart = () => {
     (state) => state.cart
   );
 
+  console.log(useSelector((state) => state.cart))
+
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
   const { currency_symbol, language } = useSelector(state => state?.common?.store);

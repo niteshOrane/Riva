@@ -37,18 +37,20 @@ function Footer() {
             <h4 className={style.title}>{section.section.toUpperCase()}</h4>
             <ul className={style.ul}>
               {section.data.map((link, i) => (
-                <li
-                  key={i}
-                  className={`d-flex align-items-center ${style.link}`}
-                >
-                  <Link
-                    to={`/${link.href.split("/").pop()}`}
-                    className={`w-100 ${style.footerLink}`}
+                <>
+                  <li
+                    key={i}
+                    className={`d-flex align-items-center ${style.link}`}
                   >
-                    <img src="/assets/images/footerArr.svg" alt={link.name} />
-                    <span className={style.footerLinkIcon}>{link.name}</span>
-                  </Link>
-                </li>
+                    <Link
+                      to={`/${link.href.split("/").pop()}`}
+                      className={`w-100 ${style.footerLink}`}
+                    >
+                      <img src="/assets/images/footerArr.svg" alt={link.name} />
+                      <span className={style.footerLinkIcon}>{link.name}</span>
+                    </Link>
+                  </li>
+                </>
               ))}
             </ul>
           </div>
@@ -75,6 +77,11 @@ function Footer() {
             <button onClick={(e) => handleOnSubmit(e)} type="button">
               SUBSCRIBE
             </button>
+          </div>
+          <div>
+            <Link to = "/contact-us">
+              <p>Contact Us</p>
+            </Link>
           </div>
         </div>
         <div className={`${style.footerCol} ${style.lastCol}`}>
@@ -184,7 +191,8 @@ function Footer() {
         </div>
       </div>
       <CopyRightSection />
-      <div id="myBtn"
+      <div
+        id="myBtn"
         className={`${style.toTopBtn} c-pointer`}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >

@@ -17,6 +17,7 @@ import {
   loginCustomer,
   forgotPassword,
   mergeGuestCart,
+  createCustomerSocial,
 } from "../../../../../../services/auth/auth.service";
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
@@ -68,6 +69,124 @@ const LoginForm = ({
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const responseFacebook = async (response) => {
+    if (response) {
+      const firstName = response?.name?.split(" ")[0];
+      const lName = response?.name?.split(" ")[1];
+      const userEmail = response?.email;
+      const customer = new FormData();
+      customer.append("email", userEmail);
+      customer.append("firstname", firstName || "");
+      customer.append("lastname", lName || "");
+      customer.append("password", "hello@123");
+      customer.append("resource", "Facebook");
+      const res = await createCustomerSocial(customer);
+
+      if (res.status === 200) {
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          toast.configure();
+          toast(
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
+            }`,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : res.data.message || "Login failure",
+              "error"
+            )
+          );
+        }
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
+  };
+
+  const responseGoogle = async (response) => {
+    if (response.profileObj) {
+      const firstName = response?.profileObj?.givenName;
+      const lname = response?.profileObj?.familyName;
+      const userEmail = response?.profileObj?.email;
+      const customer = new FormData();
+      customer.append("email", userEmail);
+      customer.append("lastname", lname || "");
+      customer.append("firstname", firstName || "");
+      customer.append("password", "hello@123");
+      customer.append("resource", "Google");
+      const res = await createCustomerSocial(customer);
+      if (res.status === 200) {
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          toast.configure();
+          toast(
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
+            }`,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : res.data.message || "Login failure",
+              "error"
+            )
+          );
+        }
+      }
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    } else {
+      return dispatch(showSnackbar("Something went wrong", "error"));
+    }
   };
 
   const setSignUpForm = () => {
@@ -226,23 +345,6 @@ const LoginForm = ({
           </div>
 
           <p className={styles.or}>OR</p>
-
-          {/* <div>
-          <a
-            type="button"
-            className={`d-flex align-items-center c-pointer`}
-            style={{ justifyContent: "center", textDecoration: "underline" }}
-            onClick={() => setSignUpForm()}
-          >
-            <p>Signup </p>
-          </a>
-          <p
-            className="c-pointer underline underline-hovered font-size-small greyText d-inline-block"
-            onClick={() => toggleForgotPassword()}
-          >
-            Forgot Password hello
-          </p>
-        </div> */}
           <div>
             <button
               type="button"
@@ -277,7 +379,7 @@ const LoginForm = ({
                 )}
                 // onClick={componentClicked}
                 textButton="Connect with Facebook"
-                // callback={responseFacebook}
+                callback={responseFacebook}
               />
             </button>
             <button
@@ -304,7 +406,7 @@ const LoginForm = ({
                   </button>
                 )}
                 className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
-                // onSuccess={(response) => responseGoogle(response)}
+                onSuccess={(response) => responseGoogle(response)}
                 onFailure={(response) => console.log(response)}
               />
             </button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   showSnackbar,
   toggleSignUpCard,
@@ -12,12 +12,21 @@ import * as icons from "../../../../Icons/Icons";
 import {
   createCustomer,
   createCustomerSocial,
+  mergeGuestCart,
 } from "../../../../../../services/auth/auth.service";
-import { getStoreId } from "../../../../../../util";
+import { getCartId, getStoreId } from "../../../../../../util";
 import SignUpOtp from "./SignUpOtp";
+import { getCart } from "../../../../../../store/actions/cart";
+import { loginSuccess } from "../../../../../../store/actions/auth";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 
 const SignUpForm = ({ handleSubmit, language }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const redirectTo = useSelector(
+    (state) => state.common.signUpCard?.redirectTo
+  );
 
   const [formData, setFormData] = useState({
     email: "",
@@ -52,22 +61,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
 
     if (!email || !name || !phone)
       return dispatch(showSnackbar("All fields are required", "warning"));
-
-    // const customer = new FormData();
-
-    // customer.append("email", email);
-    // customer.append("firstname", name || "");
-    // customer.append("lastname", lastName|| "");
-    // customer.append("password", password);
-    // customer.append("mobile_number", phone);
-    // customer.append("storeId", getStoreId());
-    // const res = await createCustomer(customer);
-
-    // if (res.status === 200 && res?.data?.success) {
-    //   handleSubmit();
-    //   return dispatch(showSnackbar(res?.data?.message, "success"));
-    // }
-    // return dispatch(showSnackbar("Something went wrong", "error"));
   };
 
   const [showPass, setShowPass] = useState(false);
@@ -83,7 +76,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
       customer.append("lastname", lName || "");
       customer.append("password", "hello@123");
       customer.append("resource", "Facebook");
-      const res = await createCustomer(customer);
+      const res = await createCustomerSocial(customer);
 
       if (res.status === 200) {
         handleSubmit();
@@ -108,8 +101,45 @@ const SignUpForm = ({ handleSubmit, language }) => {
       customer.append("resource", "Google");
       const res = await createCustomerSocial(customer);
       if (res.status === 200) {
-        handleSubmit();
-        return dispatch(showSnackbar(res?.data?.data, "success"));
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          toast.configure();
+          toast(
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
+            }`,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : res.data.message || "Login failure",
+              "error"
+            )
+          );
+        }
       }
       return dispatch(showSnackbar("Something went wrong", "error"));
     } else {
@@ -217,7 +247,11 @@ const SignUpForm = ({ handleSubmit, language }) => {
         </p>
 
         {/* <input value="SIGN UP" type="submit" className={styles.signUpBtn} /> */}
-        <SignUpOtp formData={formData} handleSubmit={handleSubmit} language = {language}/>
+        <SignUpOtp
+          formData={formData}
+          handleSubmit={handleSubmit}
+          language={language}
+        />
 
         <p className={styles.or}>OR</p>
 

@@ -45,6 +45,14 @@ export const getCart = () => async (dispatch) => {
       src: r?.extension_attributes?.image
     }));
     dispatch({
+      type:DATA_TYPES.CART_EXTRA_INFO,
+      payload:{
+        secure: res?.data?.["100_secure"],
+        hear:res?.data?.["letus-hear"],
+        we_offer:res?.data?.["we_offer"]
+      }
+    })
+    dispatch({
       type: DATA_TYPES.SET_BULK_CART,
       payload: products,
     });

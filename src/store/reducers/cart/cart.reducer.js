@@ -1,10 +1,11 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 
 const initialState = {
+  info: {},
   data: [],
   isOpen: false,
   cart_id: 0,
-  cartPaymentInfo: {}
+  cartPaymentInfo: {},
 };
 
 const handleAddToCart = (state, itemToBeAdded) => {
@@ -64,7 +65,12 @@ export default function Cart(state = initialState, action) {
     case DATA_TYPES.CART_INFO:
       return {
         ...state,
-        cartPaymentInfo: action.payload || {}
+        cartPaymentInfo: action.payload || {},
+      };
+    case DATA_TYPES.CART_EXTRA_INFO:
+      return {
+        ...state,
+        info:action.paylod
       };
     default:
       return state;

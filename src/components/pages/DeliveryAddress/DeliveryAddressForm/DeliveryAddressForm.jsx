@@ -115,6 +115,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       houseName: "",
       defaultAddess: true,
       country: "",
+      judda:"",
+      floorNumber:"",
+      buildingName:"",
     });
     if (onAfterSaveEdit) {
       onAfterSaveEdit();

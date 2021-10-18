@@ -36,6 +36,7 @@ export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';
 export const PAYMENT_MODE = 'PAYMENT_MODE';
 export const SHIPPING_METHOD = 'SHIPPING_METHOD';
 export const CART_INFO = 'CART_INFO';
+export const CART_EXTRA_INFO = "CART_EXTRA_INFO"
 
 // filters
 
