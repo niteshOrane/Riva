@@ -3,17 +3,23 @@
   flex-direction: column;
   justify-content: flex-start;
   margin-left: 4rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
   width: 45%;
+  border-right: 1px dashed black;
+  padding-right: 3rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
   input {
     height: 2.5rem;
     margin-top: 0.5rem;
     padding: 0.3rem;
+    border: 1px solid gray;
   }
   label {
     margin-top: 1rem;
@@ -24,6 +30,7 @@
     height: 5rem;
     margin-top: 0.5rem;
     padding: 0.3rem;
+    border: 1px solid gray;
   }
 }
 .groupWrap {
@@ -49,9 +56,48 @@
   margin-bottom: 1rem;
 }
 
+.box {
+  height: 5rem;
+  border: 1px solid black;
+  padding: 2rem;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 2px 3px 8.91px 0.09px gray;
+  transition: 0.3s ease;
+  cursor: pointer;
+  &:hover{
+    transform: scale(1.05);
+  }
+  span{
+    padding-right: 20px;
+  }
+}
+.title {
+  font-size: 1.25rem;
+  padding: 4px 0;
+  font-weight: normal;
+}
 
-.box{
-    height: 2rem;
-    border: 2px solid black;
-    padding: 0.5rem;
+.serviceWrap {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  margin-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  p{
+    font-size: 13px;
+    color: gray;
+    margin-bottom: 1rem;
+  }
+}
+.require{
+  display: flex;
+  align-items: center;
+  span{
+    padding-top: 15px;
+    padding-left: 3px;
+  }
 }

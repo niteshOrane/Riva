@@ -6,8 +6,8 @@ import CustomerService from '../../components/pages/ContactUs/CustomerService'
 function ContactUs() {
     return (
         <div className={styles.wrap}>
-            <h2 className={styles.title}>CONTACT INFORMATION</h2>
             <ContactUsForm />
+            <CustomerService />
         </div>
     )
 }
