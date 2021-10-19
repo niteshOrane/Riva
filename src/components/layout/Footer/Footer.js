@@ -43,7 +43,7 @@ function Footer() {
                     className={`d-flex align-items-center ${style.link}`}
                   >
                     <Link
-                      to={`/${link.href.split("/").pop()}`}
+                      to={`/${link.href.split("/").pop()?.toLowerCase() === "customer-service" ? "contact-us" : link.href.split("/").pop()}`}
                       className={`w-100 ${style.footerLink}`}
                     >
                       <img src="/assets/images/footerArr.svg" alt={link.name} />
@@ -77,11 +77,6 @@ function Footer() {
             <button onClick={(e) => handleOnSubmit(e)} type="button">
               SUBSCRIBE
             </button>
-          </div>
-          <div>
-            <Link to = "/contact-us">
-              <p>Contact Us</p>
-            </Link>
           </div>
         </div>
         <div className={`${style.footerCol} ${style.lastCol}`}>

@@ -36,7 +36,13 @@ function ContactUsForm() {
       if (res?.data?.message) {
         dispatch(showSnackbar(`${res?.data?.message}`, "error"));
       } else {
-        dispatch(showSnackbar("We got your quiry", "success"));
+        dispatch(showSnackbar("Thanks for contacting us", "success"));
+        setFormData({
+          email: "",
+          name: "",
+          comment: "",
+          telephone: "",
+        })
       }
     } else {
       dispatch(showSnackbar("something went wrong", "error"));
