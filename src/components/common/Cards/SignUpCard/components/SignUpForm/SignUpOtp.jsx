@@ -82,6 +82,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+  const [loading,setLoading] = React.useState(false)
   const [otp, setOtp] = React.useState(null);
   const [userOtp, setUserOtp] = React.useState("");
 
@@ -92,6 +93,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
   const sendRegisterOtp = async (fnValue) => {
     const { phone, name, lastName, email } = fnValue;
     if (phone && name && lastName && email) {
+      setLoading(true)
       const customer = new FormData();
       customer.append("phone", phone);
       customer.append("email", email);
@@ -102,7 +104,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
         setOtp(res?.data.data.otp);
         setOpen(true);
         setRecivedOTPData(res?.data.data);
-
+        setLoading(true)
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
         const minutesTime = Math.floor(divisor_for_minutes / 60);
 
@@ -112,6 +114,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
         setMinutes(minutesTime);
       } else {
         dispatch(showSnackbar(res.data?.message, "error"));
+        setLoading(true)
       }
     }
   };
@@ -198,7 +201,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
   };
   return (
     <div>
-      <button className={classes.signUpBtn} type="button" onClick={handleOpen}>
+      <button disabled = {loading} className={classes.signUpBtn} type="button" onClick={handleOpen}>
         SIGN UP
       </button>
       <Modal

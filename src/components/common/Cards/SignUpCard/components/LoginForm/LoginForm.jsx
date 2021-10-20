@@ -22,6 +22,7 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const LoginForm = ({
   handleSubmit,
@@ -30,6 +31,7 @@ const LoginForm = ({
   language,
 }) => {
   const dispatch = useDispatch();
+  const [loading,setLoading] = useState(false)
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -197,7 +199,7 @@ const LoginForm = ({
     e.preventDefault();
     if (!email || !password)
       return dispatch(showSnackbar("All fields are required", "warning"));
-
+    setLoading(true)
     const customer = new FormData();
 
     customer.append("email", email);
@@ -216,6 +218,7 @@ const LoginForm = ({
           customerCart.append("customerId", res.data?.data?.customerID);
           await mergeGuestCart(customerCart);
           dispatch(getCart());
+          setLoading(false)
         }
         handleSubmit();
         typeof res?.data?.data !== "string" &&
@@ -245,9 +248,11 @@ const LoginForm = ({
             "error"
           )
         );
+        setLoading(false)
       }
     } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
+      return dispatch(showSnackbar("Something went wrong,check your internet connection", "error"));
+      setLoading(false)
     }
   };
 
@@ -335,7 +340,7 @@ const LoginForm = ({
             </div>
           </div>
           <div className={styles.signinWrapper}>
-            <input value="SIGN IN" type="submit" className={styles.signUpBtn} />
+            <input disabled={loading} value="SIGN IN" type="submit" className={styles.signUpBtn} />
             <input
               value="SIGN IN WITH OTP"
               type="button"

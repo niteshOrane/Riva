@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   setAttributes,
   toggleQuickView,
@@ -38,6 +39,10 @@ const ProductCard = ({
 }) => {
   const { custom_attributes, id, image, name } = product;
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const [loading, setLoading] = useState({
+    quickView: false,
+    wishlist: false,
+  });
   let {
     origprice = 0,
     origpriceWithoutCurrency,
@@ -93,6 +98,7 @@ const ProductCard = ({
   const dispatch = useDispatch();
 
   const handleWishList = async () => {
+    setLoading({ ...loading, wishlist: true });
     const res = await getProduct(productItem.sku);
 
     const { colors, size } = extractColorSize(
@@ -122,6 +128,7 @@ const ProductCard = ({
         size: size?.[0] || {},
       },
     };
+    setLoading({ ...loading, wishlist: false });
     dispatch(toggleWishlist(p));
   };
 
@@ -142,6 +149,7 @@ const ProductCard = ({
     );
   };
   const handleQuickView = async () => {
+    setLoading({ ...loading, quickView: true });
     const res = await getProduct(productItem.sku);
 
     const { colors, size } = extractColorSize(
@@ -171,6 +179,7 @@ const ProductCard = ({
         size: size?.[0] || {},
       },
     };
+    setLoading({ ...loading, quickView: false });
     dispatch(toggleQuickView(p));
   };
   const handleChange = async (event, newValue) => {
@@ -321,7 +330,11 @@ const ProductCard = ({
                   className="material-icons-outlined"
                   style={{ color: isAddedToWishlist ? "red" : "black" }}
                 >
-                  {isAddedToWishlist ? "favorite" : "favorite_border"}
+                  {loading.wishlist
+                    ? "hourglass_top"
+                    : isAddedToWishlist
+                    ? "favorite"
+                    : "favorite_border"}
                 </span>
               </button>
             </div>
@@ -332,7 +345,7 @@ const ProductCard = ({
                 onClick={handleQuickView}
               >
                 <span className="material-icons-outlined font-light-black">
-                  search
+                  {loading.quickView ? "hourglass_top" : "search"}
                 </span>
               </button>
             </div>
