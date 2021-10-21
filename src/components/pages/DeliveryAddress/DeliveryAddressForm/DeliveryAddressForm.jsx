@@ -180,7 +180,6 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     block = "",
     defaultAddess,
     id,
-    email,
     country,
     judda,
     buildingName,
