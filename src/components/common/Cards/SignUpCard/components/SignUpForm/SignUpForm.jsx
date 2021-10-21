@@ -207,7 +207,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
 
         <div>
           <a
-            type="button"
             className={`d-flex align-items-center c-pointer`}
             style={{ justifyContent: "center", textDecoration: "underline" }}
             onClick={() => setshowLoginForm()}

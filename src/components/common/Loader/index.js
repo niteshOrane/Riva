@@ -1,15 +1,20 @@
 import React from 'react';
 
-function Loader() {
+import './loader.css';
+
+function Loader({ isLanding = false }) {
   return (
-    <div className="loading">
-      <p>Please wait</p>
-      <span>
-        <i />
-        <i />
-        <i />
-      </span>
-    </div>
+    <>
+      {!isLanding ? <div className="loading">Loading&#8230;</div > :
+        <div className="loadingLanding">
+          <p>Please wait</p>
+          <span>
+            <i />
+            <i />
+            <i />
+          </span>
+        </div>
+      }</>
   );
 }
 

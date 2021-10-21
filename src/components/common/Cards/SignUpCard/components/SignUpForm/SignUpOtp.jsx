@@ -13,6 +13,8 @@ import { getStoreId } from "../../../../../../util";
 import { useDispatch } from "react-redux";
 import * as icons from "../../../../Icons/Icons";
 import { showSnackbar } from "../../../../../../store/actions/common";
+import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     height: 310,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    position:"relative"
+    position: "relative"
   },
   head: {
     textAlign: "center",
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px auto",
     background: "transparent",
     cursor: "pointer",
-    border:"1px solid black"
+    border: "1px solid black"
   },
   otpInput: {
     height: 42,
@@ -78,11 +80,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal({ formData, handleSubmit,language }) {
+export default function TransitionsModal({ formData, handleSubmit, language }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const [loading,setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [otp, setOtp] = React.useState(null);
   const [userOtp, setUserOtp] = React.useState("");
 
@@ -104,7 +106,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
         setOtp(res?.data.data.otp);
         setOpen(true);
         setRecivedOTPData(res?.data.data);
-        setLoading(true)
+        setLoading(false)
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
         const minutesTime = Math.floor(divisor_for_minutes / 60);
 
@@ -113,8 +115,8 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
         setSeconds(secondsTime);
         setMinutes(minutesTime);
       } else {
-        dispatch(showSnackbar(res.data?.message, "error"));
-        setLoading(true)
+        setLoading(false)
+        dispatch(showSnackbar(res.message, "error"));
       }
     }
   };
@@ -145,6 +147,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
       const { email, name, lastName, password, phone } = formData;
       const customer = new FormData();
       customer.append("otp", userOtp);
+      setLoading(true);
       customer.append("phone", phone);
       customer.append("customerInfo[firstname]", name || "");
       customer.append("customerInfo[lastname]", lastName || "");
@@ -155,11 +158,14 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
       const res = await customerVerifyOtp(customer);
       if (res.status === 200 && res?.data?.success) {
         handleClose();
+        setLoading(false);
         handleSubmit();
       } else {
+        setLoading(false);
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
     } else {
+      setLoading(false);
       dispatch(showSnackbar("Please enter OTP", "error"));
     }
   };
@@ -168,6 +174,7 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
     if (email && name && lastName && password && phone) {
       sendRegisterOtp(formData);
     } else {
+      setLoading(false);
       dispatch(showSnackbar("Please fill all required fields", "error"));
     }
   };
@@ -201,9 +208,14 @@ export default function TransitionsModal({ formData, handleSubmit,language }) {
   };
   return (
     <div>
-      <button disabled = {loading} className={classes.signUpBtn} type="button" onClick={handleOpen}>
-        SIGN UP
-      </button>
+      <LoaderButton
+        onClick={handleOpen}
+        loading={loading}
+        value=" SIGN UP"
+        className={classes.signUpBtn}
+      >  SIGN UP
+      </LoaderButton>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

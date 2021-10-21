@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useHistory } from "react-router-dom";
@@ -22,7 +24,7 @@ import {
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
 
 const LoginForm = ({
   handleSubmit,
@@ -31,7 +33,7 @@ const LoginForm = ({
   language,
 }) => {
   const dispatch = useDispatch();
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -99,8 +101,7 @@ const LoginForm = ({
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${
-              res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -158,8 +159,7 @@ const LoginForm = ({
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${
-              res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -197,8 +197,9 @@ const LoginForm = ({
 
   const userCreateHandler = async (e) => {
     e.preventDefault();
-    if (!email || !password)
+    if (!email || !password) {
       return dispatch(showSnackbar("All fields are required", "warning"));
+    }
     setLoading(true)
     const customer = new FormData();
 
@@ -209,7 +210,6 @@ const LoginForm = ({
     customer.append("action", "login");
 
     const res = await loginCustomer(customer);
-
     if (res.status === 200) {
       if (res?.data?.success) {
         if (getCartId() > 0) {
@@ -251,8 +251,8 @@ const LoginForm = ({
         setLoading(false)
       }
     } else {
-      return dispatch(showSnackbar("Something went wrong,check your internet connection", "error"));
       setLoading(false)
+      return dispatch(showSnackbar(res?.message, "error"));
     }
   };
 
@@ -286,7 +286,7 @@ const LoginForm = ({
   return (
     <>
       <span className={styles.tagline}>Have an account? Sign In</span>
-      <form className={styles.formLogin} onSubmit={userCreateHandler}>
+      <form className={styles.formLogin}>
         <div className={styles.container}>
           <p className={styles.inpTitle}>
             Email <span className={styles.star}>*</span>
@@ -340,7 +340,16 @@ const LoginForm = ({
             </div>
           </div>
           <div className={styles.signinWrapper}>
-            <input disabled={loading} value="SIGN IN" type="submit" className={styles.signUpBtn} />
+            <LoaderButton color="secondary"
+              onClick={userCreateHandler}
+              loading={loading}
+              loadingPosition="start"
+              variant="contained"
+              value="SIGN IN"
+              className={styles.signUpBtn}
+            >
+              SIGN IN
+            </LoaderButton>
             <input
               value="SIGN IN WITH OTP"
               type="button"
@@ -408,6 +417,7 @@ const LoginForm = ({
                     className={styles.googleAuthBtn}
                   >
                     Connect with Google
+
                   </button>
                 )}
                 className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}

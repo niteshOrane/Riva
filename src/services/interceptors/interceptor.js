@@ -67,16 +67,14 @@ export default {
     Axios.interceptors.request.use(
       (config) => {
         const { silent = false } = config;
-
+        config.timeout = 10000 * 5; // Wait for 5 seconds
         if (!silent) showLoader(store);
         config.headers.Authorization = `Bearer ${process.env.REACT_APP_TOKEN}`;
         config.headers['Access-Control-Allow-Origin'] = '*';
         return config;
       },
       (error) => {
-        hideLoader(store);
-        handleError(store, error);
-        return Promise.reject(error ? error['response'] : null);
+        return Promise.resolve({ data: [], success: false, message: error ? error['response'] : null });
       }
     );
 
@@ -86,25 +84,18 @@ export default {
         const { data = {}, config = {} } = response;
         const { skipErrorHandler = false } = config;
 
-
-        hideLoader(store);
-        if (data.status >= 400) {
-          const err = prepareErrorObject(data);
-          history.push("/404");
-          if (!skipErrorHandler) {
-            handleError(store, err);
-          }
-        }
+		if (data.status >= 400) {
+		const err = prepareErrorObject(data);
+		history.push("/404");
+			if (!skipErrorHandler) {
+				handleError(store, err);
+			}
+		}
         return response;
       },
       (error) => {
         const err = prepareErrorObject(error);
-        const skipErrorHandler = error?.config?.skipErrorHandler;
-
-        if (!skipErrorHandler) {
-          handleError(store, err);
-        }
-        hideLoader(store);
+       
         return Promise.resolve({ data: [], success: false, message: err.message });
       }
     );

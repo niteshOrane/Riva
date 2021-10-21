@@ -63,7 +63,7 @@ class AppRoot extends React.Component {
   render() {
     const { loading, error } = this.props;
 
-    if (loading) return <Loader />;
+    if (loading) return <Loader isLanding={Boolean(true)} />;
     return (
       <>
         <AppRoutes {...this.props} />
