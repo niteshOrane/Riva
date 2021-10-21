@@ -1,9 +1,10 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 
 const INITIAL_STATE = {
   modalData: {},
   data: [],
   isOpen: false,
+  loading: false,
 };
 
 const wishlist = (state = INITIAL_STATE, action) => {
@@ -29,6 +30,11 @@ const wishlist = (state = INITIAL_STATE, action) => {
         ...state,
         data:
           state?.data?.filter((d) => d.id !== action.payload?.data?.id) || [],
+      };
+    case DATA_TYPES.LOADING_WISHLIST:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

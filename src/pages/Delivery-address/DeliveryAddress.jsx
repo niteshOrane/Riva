@@ -36,6 +36,7 @@ function DeliveryAddress({ isManageScreen }) {
     indexItem: null,
   });
   const { language } = useSelector((state) => state?.common?.store);
+  const [loading,setLoading] = useState(false)
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -105,6 +106,7 @@ function DeliveryAddress({ isManageScreen }) {
     dispatch(getCustomerAddressList());
   };
   const setDefaultAddress = async (record, isBilling) => {
+    setLoading(true)
     const form = new FormData();
 
     form.append("customerid", getCustId());
@@ -119,7 +121,9 @@ function DeliveryAddress({ isManageScreen }) {
         checkedB: false,
         indexItem: null,
       });
+      setLoading(false)
     } else {
+      setLoading(false)
       dispatch(
         showSnackbar(
           res.data.message || "failed to add item to Address",
@@ -227,6 +231,7 @@ function DeliveryAddress({ isManageScreen }) {
                       isDefault={false}
                       isBillingDefault={false}
                       isManageScreen = {isManageScreen}
+                      loading = {loading}
                     />
                   );
                 })}

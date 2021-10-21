@@ -14,6 +14,7 @@ import {
   addNewAddress,
 } from "../../../../store/actions/customerAddress";
 import * as icons from "../../../../components/common/Icons/Icons";
+import LoaderButton from "../../../common/Buttons/LoaderButton";
 
 function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const dispatch = useDispatch();
@@ -494,14 +495,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         </div>
       </form>
       <div className="text-right c-pointer">
-        <button
-          className={styles.addAddressBtn}
-          type="button"
+        <LoaderButton
           onClick={addAddressHandler}
-          disabled = {loading}
+          loading={loading}
+          value = {id ? "UPDATE ADDRESS" : "ADD ADDRESS"}
+          className={styles.addAddressBtn}
         >
           {id ? "UPDATE" : "ADD"} ADDRESS
-        </button>
+        </LoaderButton>
         <button
           className={styles.clrAddressBtn}
           type="button"

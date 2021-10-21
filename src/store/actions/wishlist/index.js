@@ -2,10 +2,10 @@ import {
   addWishListItem,
   getWishlistItems,
   removeWishlistItem,
-} from '../../../services/wishlist/wishlist.service';
-import { getCustId } from '../../../util';
-import * as DATA_TYPES from '../../types';
-import { showSnackbar } from '../common';
+} from "../../../services/wishlist/wishlist.service";
+import { getCustId } from "../../../util";
+import * as DATA_TYPES from "../../types";
+import { showSnackbar } from "../common";
 
 export const toggleWishlist = (data) => ({
   type: DATA_TYPES.TOGGLE_WISHLIST,
@@ -19,6 +19,11 @@ export const getWishlist_action = (data) => ({
 export const addWishlist_action = (data) => ({
   type: DATA_TYPES.ADD_WISHLIST,
   payload: { data },
+});
+
+export const wishlistLoader = (state) => ({
+  type: DATA_TYPES.LOADING_WISHLIST,
+  payload: state,
 });
 
 export const removeWishlist_action = (data) => ({
@@ -43,30 +48,33 @@ export const addWishlist = (item) => async (dispatch) => {
   if (res.data.success === 1) {
     dispatch(addWishlist_action(item));
     dispatch(
-      showSnackbar(res.data?.data || 'Item added to wishlist', 'success')
+      showSnackbar(res.data?.data || "Item added to wishlist", "success")
     );
   } else
     dispatch(
       showSnackbar(
-        res.data.data || res.data.message || 'failed to add item to wishlist',
-        'error'
+        res.data.data || res.data.message || "failed to add item to wishlist",
+        "error"
       )
     );
 };
 
 export const removeWishlist = (item) => async (dispatch) => {
+  dispatch(wishlistLoader(true));
   const res = await removeWishlistItem(item.id, getCustId());
 
   if (res.data.success === 1) {
     dispatch(removeWishlist_action(item));
     dispatch(
-      showSnackbar(res.data?.data || 'Item removed from wishlist', 'success')
+      showSnackbar(res.data?.data || "Item removed from wishlist", "success")
     );
+    dispatch(wishlistLoader(false));
   } else
     dispatch(
       showSnackbar(
-        res.data.data || res.data.message || 'failed to add item to wishlist',
-        'error'
+        res.data.data || res.data.message || "failed to add item to wishlist",
+        "error"
       )
     );
+  dispatch(wishlistLoader(false));
 };

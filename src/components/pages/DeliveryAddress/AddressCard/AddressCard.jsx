@@ -10,7 +10,7 @@ import {
   IconButton,
   colors,
 } from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import LoaderButton from "../../../common/Buttons/LoaderButton";
 
 import style from "./AddressCard.module.scss";
 
@@ -43,6 +43,7 @@ function AddressCard({
   isBillingDefault,
   setDefaultAddress,
   isManageScreen,
+  loading
 }) {
   const classes = useStyles();
   return addressItem ? (
@@ -104,12 +105,14 @@ function AddressCard({
             Remove
           </span>{" "}
           {!isDefault && (
-            <span
+            <LoaderButton
               onClick={() => setDefaultAddress(addressItem, false)}
+              loading={loading}
+              value="| Set as default Delivery"
               className={style.delete}
             >
               | Set as default Delivery
-            </span>
+            </LoaderButton>
           )}{" "}
           {!isBillingDefault && (
             <span
