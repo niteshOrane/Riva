@@ -5,7 +5,8 @@ import * as icons from "../../../common/Icons/Icons";
 import styles from "./DashboardData.module.scss";
 
 const DashboardData = () => {
-  const customer = useSelector((state) => state.auth.customer);
+  const { customer, socialDetails } = useSelector((state) => state.auth);
+  console.log({ customer,socialDetails });
   return (
     <div>
       <div className={styles.header}>
@@ -21,11 +22,11 @@ const DashboardData = () => {
             <div>
               <span>
                 Hello,{" "}
-                <b>
-                  {customer?.username
-                    ? customer?.username
-                    : `${customer.firstname} ${customer.lastname}` ?? "unknown"}
-                </b>
+                {!socialDetails?.isSocial ? ( <b>
+                  {`${customer.firstname} ${customer.lastname}` ?? "unknown"}
+                </b>): (
+                  <b>{customer?.username}</b>
+                )}
               </span>
             </div>
           </div>

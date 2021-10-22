@@ -37,3 +37,8 @@ export const setCustomer = (data) => ({
   type: DATA_TYPES.SET_CUSTOMER,
   payload: data,
 });
+
+export const setSocialLogin = (data) => ({
+  type:DATA_TYPES.LOGIN_WITH_SOCIAL,
+  payload:data
+})

@@ -79,7 +79,7 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
             </span>
             <span className="align-self-end font-light-black d-flex underline-hovered " >
                 {' '}
-                {isAuthenticated ? <><span>{`Welcome ${customer.firstname}`} </span>
+                {isAuthenticated ? <><span>{`Welcome ${customer.firstname || customer?.username}`} </span>
                     <span className="material-icons-outlined"> keyboard_arrow_down</span>
                 </> : <div >Welcome Guest, Sign in &nbsp; &nbsp;</div>}
 

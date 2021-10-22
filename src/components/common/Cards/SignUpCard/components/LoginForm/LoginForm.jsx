@@ -21,7 +21,7 @@ import {
   mergeGuestCart,
   createCustomerSocial,
 } from "../../../../../../services/auth/auth.service";
-import { loginSuccess } from "../../../../../../store/actions/auth";
+import { loginSuccess, setSocialLogin } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
@@ -155,8 +155,10 @@ const LoginForm = ({
             dispatch(getCart());
           }
           handleSubmit();
+          dispatch(setSocialLogin(res?.data?.data))
           typeof res?.data?.data !== "string" &&
             dispatch(loginSuccess(res.data.data));
+          
           toast.configure();
           toast(
             `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"

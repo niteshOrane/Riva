@@ -1,11 +1,15 @@
-import { logoutUser } from '../../../services/auth/auth.service';
-import * as DATA_TYPES from '../../types';
+import { logoutUser } from "../../../services/auth/auth.service";
+import * as DATA_TYPES from "../../types";
 
 const INITIAL_STATE = {
   isAuthenticated: false,
   loading: false,
   customer: null,
   token: null,
+  socialDetails: {
+    isSocial: false,
+    data: null,
+  },
 };
 
 const auth = (state = INITIAL_STATE, action) => {
@@ -26,6 +30,10 @@ const auth = (state = INITIAL_STATE, action) => {
         customer: null,
         token: null,
         loading: false,
+        socialDetails:{
+          isSocial:false,
+          data:null
+        }
       };
 
     case DATA_TYPES.SET_CUSTOMER:
@@ -34,6 +42,14 @@ const auth = (state = INITIAL_STATE, action) => {
         customer: {
           ...state.customer,
           ...action.payload,
+        },
+      };
+    case DATA_TYPES.LOGIN_WITH_SOCIAL:
+      return {
+        ...state,
+        socialDetails: {
+          isSocial: true,
+          data: action.payload,
         },
       };
     default:
