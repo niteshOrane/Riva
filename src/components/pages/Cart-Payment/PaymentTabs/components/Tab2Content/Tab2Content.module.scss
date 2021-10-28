@@ -70,8 +70,8 @@
   color: #fff;
 }
 
-.cardValidation{
-  color:red;
+.cardValidation {
+  color: red;
   margin-top: 8px;
 }
 
@@ -89,18 +89,45 @@
   }
 }
 
-
-.goSellWrap{
+.goSellWrap {
   display: flex;
   align-content: center;
   justify-content: center;
   margin-top: 2rem;
 }
-.gPay{
+.gPay {
   display: flex;
   justify-content: center;
   overflow-x: auto;
 }
-.arabicIcon{
+.arabicIcon {
   margin-left: 10px !important;
+}
+
+.rePayment {
+  width: 250px;
+  height: 45px;
+  margin: 17px 10px 9px 86px;
+  padding: 17px 69px 13px;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  background-color: #676666;
+}
+.choose {
+  width: 290px;
+  height: 34px;
+  margin: 29px 53.3px 35px 86px;
+  font-family: Roboto;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.79;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+}
+.reGrid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

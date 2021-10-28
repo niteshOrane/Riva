@@ -24,6 +24,7 @@ import { getCartId, getCurrencyCode } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
+import RePaymentTab from "./RePaymentTab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -247,7 +248,7 @@ const PaymentTabs = React.memo(
       );
     return (
       <div className="d-flex my-20px w-80">
-        <Tabs
+        {/* <Tabs
           className={classes.tabs}
           TabIndicatorProps={{ style: selectedIndicatorStyle }}
           orientation="vertical"
@@ -318,7 +319,7 @@ const PaymentTabs = React.memo(
           <TabPanel value={value} index={5}>
             <ApplePay />
           </TabPanel>
-        </div>
+        </div>  */}
       </div>
     );
   }

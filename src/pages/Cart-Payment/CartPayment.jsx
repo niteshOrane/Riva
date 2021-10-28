@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PaymentTabs from "../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs";
+import RePaymentTab from "../../components/pages/Cart-Payment/PaymentTabs/RePaymentTab"
 import * as icons from "../../components/common/Icons/Icons";
 import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
@@ -61,7 +62,8 @@ function CartPayment() {
         </div>
       </div>
       <div className={styles.container}>
-        <div className={styles.col1}>
+        <div style = {{overflowX:"scroll"}} className={styles.col1}>
+        <RePaymentTab/>
           {paymentOption &&
           paymentOption?.data &&
           paymentOption?.data?.length ? (
@@ -69,7 +71,7 @@ function CartPayment() {
               <h2 className="font-weight-normal my-20px">
                 Choose Payment Mode
               </h2>
-              <PaymentTabs
+              {/* <PaymentTabs
                 cartItem={items}
                 customerID={customerid}
                 cartPaymentInfo={cartPaymentInfo}
@@ -77,7 +79,8 @@ function CartPayment() {
                 paymentMode={paymentOption?.data}
                 loading={loading}
                 setLoading={setLoading}
-              />
+              /> */}
+               
             </>
           ) : null}
         </div>
