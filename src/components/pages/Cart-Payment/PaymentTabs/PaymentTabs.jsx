@@ -248,7 +248,7 @@ const PaymentTabs = React.memo(
       );
     return (
       <div className="d-flex my-20px w-80">
-        {/* <Tabs
+        <Tabs
           className={classes.tabs}
           TabIndicatorProps={{ style: selectedIndicatorStyle }}
           orientation="vertical"
@@ -319,7 +319,7 @@ const PaymentTabs = React.memo(
           <TabPanel value={value} index={5}>
             <ApplePay />
           </TabPanel>
-        </div>  */}
+        </div> 
       </div>
     );
   }

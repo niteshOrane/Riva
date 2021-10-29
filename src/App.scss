@@ -195,7 +195,10 @@ h6 {
   color: black !important;
   opacity: 0 !important;}
 
-
+.css-heg063-MuiTabs-flexContainer{
+  display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+}
   apple-pay-button {
     --apple-pay-button-width: 140px;
     --apple-pay-button-height: 30px;
