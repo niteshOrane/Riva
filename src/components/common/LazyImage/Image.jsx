@@ -4,6 +4,8 @@ import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
 import { URL } from "../../../util";
 import styles from "./lazyImage.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 
 const LazyImage = (props) => {
@@ -18,9 +20,12 @@ const LazyImage = (props) => {
     isCategory,
     isZoom,
     type = "",
-    zoomPos
+    zoomPos,
+    loading
   } = props;
   const [error, setError] = useState(false);
+
+
 
 
   const srcImage =
@@ -50,6 +55,9 @@ const LazyImage = (props) => {
         <ReactImageZoom {...propsImg} />
       </div>
     );
+  }
+  if(loading){
+    <Skeleton />
   }
 
   return (

@@ -36,6 +36,7 @@ const ProductCard = ({
   isRecommended,
   isComplete,
   landing,
+  Imgloading
 }) => {
   const { custom_attributes, id, image, name } = product;
   const { currency_symbol } = useSelector((state) => state?.common?.store);
@@ -276,6 +277,7 @@ const ProductCard = ({
                       }
                       defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                       width="100%"
+                      loading = {Imgloading}
                     />
 
                     <div className={`legend ${styles.sizeWrap}`}>

@@ -10,6 +10,8 @@ import Image from "../../components/common/LazyImage/Image";
 import Slider from "../../components/common/Sliders/Slider";
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import { extractColorSize } from "../../util";
@@ -154,7 +156,8 @@ function Products(props) {
           {sessionStorage.getItem("selectedCategory") ??
             (parsed?.serachTerm && parsed?.serachTerm !== "undefined"
               ? `Search Results for ${parsed?.serachTerm}`
-              : match.params.category?.[0]?.toUpperCase() + match.params.category?.slice(1))}
+              : match.params.category?.[0]?.toUpperCase() +
+                match.params.category?.slice(1))}
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
@@ -226,7 +229,21 @@ function Products(props) {
           </section>
         </div>
       </div>
-      {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
+      {loading && (
+        <div
+          className={`${styles.productsPage} ${
+            pageColumns === 3
+              ? styles.threeColumnsLayOut
+              : styles.twoColumnsLayOut
+          }`}
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((li) => (
+            <div style = {{marginLeft:"1.7rem"}} className={getClassOfBigCard(li)}>
+              <Skeleton height="30rem"  />
+            </div>
+          ))}
+        </div>
+      )}
       {!loading && !products.length && (
         <h3 style={{ textAlign: "center" }}>No Product found!</h3>
       )}
@@ -248,6 +265,7 @@ function Products(props) {
                   isProduct={Boolean(true)}
                   isListing
                   currency_symbol={currency_symbol}
+                  Imgloading={loading}
                 />
               </div>
             ))
@@ -297,10 +315,7 @@ function Products(props) {
 
         <div ref={refContainerLoad} />
       </div>
-      <center>
-        {" "}
-        {loading && <h3 style={{ textAlign: "center" }}>loading...</h3>}
-      </center>
+      <center> {loading && <h3>loading...</h3>}</center>
       <div>
         <h4 className={styles.sliderTitle}>Recommendation For You</h4>
       </div>
