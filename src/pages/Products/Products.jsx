@@ -238,7 +238,7 @@ function Products(props) {
           }`}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((li) => (
-            <div style = {{marginLeft:"1.7rem"}} className={getClassOfBigCard(li)}>
+            <div style = {{marginLeft:"1.7rem",marginRight:"1.5rem"}} className={getClassOfBigCard(li)}>
               <Skeleton height="30rem"  />
             </div>
           ))}

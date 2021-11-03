@@ -5,8 +5,10 @@ import Image from "../../../common/LazyImage/Image";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
 import style from "./HeroGrid.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const HeroGrid = ({ btfLeft, btfRight }) => {
+const HeroGrid = ({ btfLeft, btfRight, loading }) => {
   const { language } = useSelector((state) => state?.common?.store);
   return (
     <div className={`${style.grid} container-with-circles`}>
@@ -16,6 +18,21 @@ const HeroGrid = ({ btfLeft, btfRight }) => {
       >
         <CategoriesCircles />
       </div>
+      {loading && (
+        <div className={style.skeleton}>
+          <div className={style.mainSkeleton}>
+            <Skeleton height="30rem" width="40rem" />
+          </div>
+          <div className={style.subSkeleton}>
+            <Skeleton
+              containerClassName={style.skeSpan}
+              count={2}
+              height="15rem"
+              width="35rem"
+            />
+          </div>
+        </div>
+      )}
       <div className="d-flex">
         <div className={style.col2}>
           {btfLeft.length > 0 ? <SlideBanner banners={btfLeft} /> : null}

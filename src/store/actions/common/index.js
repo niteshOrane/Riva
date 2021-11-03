@@ -83,4 +83,10 @@ export const removeFilterParams = (all) => ({
 export const clearSingleFilterValue = (name,value) => ({
   type:DATA_TYPES.CLEAR_SINGLE_VALUE,
   payload: {name,value}
-})
+});
+
+// export const loadingTrue = () => {
+//   {
+//     type:
+//   }
+// }

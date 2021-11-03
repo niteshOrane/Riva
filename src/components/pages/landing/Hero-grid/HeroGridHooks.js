@@ -1,30 +1,45 @@
-import { useEffect, useState } from 'react';
-import { getBanners } from '../../../../services/layout/Layout.service';
+import { useEffect, useState } from "react";
+import { getBanners } from "../../../../services/layout/Layout.service";
 
 const useHeroGrid = () => {
   const [btfLeft, setBtfLeft] = useState([]);
   const [allrecord, setAllrecord] = useState([]);
   const [btfRight, setBtfRight] = useState([]);
   const [videoBanner, setVideoBanner] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getBanners('main')
-      .then((response) => setAllrecord(response.data))
-      .catch((error) => console.log(error));
-    getBanners('lookbook')
-      .then((response) => setVideoBanner(response.data))
-      .catch((error) => console.log(error));
+    setLoading(true);
+    getBanners("main")
+      .then((response) => {
+        setAllrecord(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+    getBanners("lookbook")
+      .then((response) => {
+        setVideoBanner(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
     // http://65.0.141.49/media/mageplaza/bannerslider/banner/image/
   }, []);
 
   useEffect(() => {
-    setBtfLeft(allrecord.filter(e => e.position === '1'))
-    setBtfRight(allrecord.filter(e => e.position !== '1'))
+    setBtfLeft(allrecord.filter((e) => e.position === "1"));
+    setBtfRight(allrecord.filter((e) => e.position !== "1"));
   }, [allrecord]);
   return {
     btfLeft,
     btfRight,
     videoBanner,
+    loading
   };
 };
 

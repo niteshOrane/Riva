@@ -20,8 +20,13 @@ import SignUpOtp from "./SignUpOtp";
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
+import { isdCodes } from "../ISDdummy/isdCodes";
 
 const SignUpForm = ({ handleSubmit, language }) => {
+  const { currency } = useSelector((state) => state?.common?.store);
+  const [isdState, setIsdState] = useState(
+    isdCodes?.find((li) => li?.countryCode === currency)?.isd
+  );
   const dispatch = useDispatch();
   const history = useHistory();
   const redirectTo = useSelector(
@@ -35,6 +40,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
     phone: "",
     lastName: "",
   });
+  const [passError, setPassError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -63,7 +69,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
       return dispatch(showSnackbar("All fields are required", "warning"));
   };
 
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState();
 
   const responseFacebook = async (response) => {
     if (response) {
@@ -242,13 +248,25 @@ const SignUpForm = ({ handleSubmit, language }) => {
           Mobile Number <span className={styles.star}>*</span>
         </p>
         <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span className="material-icons-outlined">call</span>
+          <div className={styles.cntCode}>
+            <select
+              value={isdState}
+              onChange={(e) => setIsdState(e.target.value)}
+            >
+              {isdCodes?.map((li) => (
+                <option value={li?.isd}>
+                  {li?.isd} {li?.countryCode}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <input
-            type="mobile"
+            type="number"
             name="phone"
             id="phone"
             value={phone}
-            maxLength={15}
+            maxLength={10}
             onChange={handleChange}
           />
         </div>
@@ -264,6 +282,8 @@ const SignUpForm = ({ handleSubmit, language }) => {
             value={password}
             type={!showPass ? "password" : "text"}
             name="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             id="password"
             maxLength={15}
             onChange={handleChange}
@@ -278,7 +298,9 @@ const SignUpForm = ({ handleSubmit, language }) => {
             </span>{" "}
           </button>
         </div>
-        <p className={styles.passInstruction}>
+        {/* {passError && <span> Password must be at least 8 characters long with 1 Uppercase, 1
+          Lowercase & 1 Number character.</span>} */}
+        <p>
           Password must be at least 8 characters long with 1 Uppercase, 1
           Lowercase & 1 Number character.
         </p>

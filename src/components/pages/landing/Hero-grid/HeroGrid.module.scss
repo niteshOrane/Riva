@@ -106,3 +106,13 @@
     );
   }
 }
+
+.skeleton{
+  display: flex;
+  justify-content: space-between;
+  .mainSkeleton{
+    width: 20rem;
+    height: 10rem;
+    padding-right: 0.5rem;
+  }
+}

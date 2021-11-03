@@ -20,7 +20,7 @@ import { getInstagramBanners } from "../../services/layout/Layout.service";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
-  const { btfLeft, btfRight, videoBanner } = useHeroGrid();
+  const { btfLeft, btfRight, videoBanner,loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
   );
@@ -35,6 +35,8 @@ function Landing() {
       setInstagramBanners(res?.data)
     }
   };
+
+  console.log({loading})
 
   useEffect(() => {
     getIgBanners();
@@ -53,7 +55,7 @@ function Landing() {
   return (
     <>
       <div>
-        <HeroGrid btfLeft={btfLeft} btfRight={btfRight} />
+        <HeroGrid btfLeft={btfLeft} btfRight={btfRight} loading={loading} />
         <div>
           <Slider
             className="categoriesSlider"

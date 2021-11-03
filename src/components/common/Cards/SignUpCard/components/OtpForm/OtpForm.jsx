@@ -7,10 +7,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import * as icons from "../../../../Icons/Icons";
 import styles from "./Otp.module.scss";
 
-import {
-  showSnackbar,
-} from "../../../../../../store/actions/common";
-
+import { showSnackbar } from "../../../../../../store/actions/common";
 
 import { getCart } from "../../../../../../store/actions/cart";
 
@@ -18,21 +15,31 @@ import {
   loginCustomerOTP,
   customerVerifyOtp,
   mergeGuestCart,
-  customerResendOtp
+  customerResendOtp,
 } from "../../../../../../services/auth/auth.service";
 
 import { loginSuccess } from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
+import { isdCodes } from "../ISDdummy/isdCodes";
 
-const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = true, mobileNo = '', otpData = '',language }) => {
+const OtpForm = ({
+  handleSubmit,
+  onChangeMobileNumber = null,
+  showMediaIcon = true,
+  mobileNo = "",
+  otpData = "",
+  language,
+}) => {
   const dispatch = useDispatch();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
+  const { currency } = useSelector((state) => state?.common?.store);
+  const [isdState,setIsdState] = useState(isdCodes?.find((li) => li?.countryCode === currency)?.isd)
   const history = useHistory();
   const [mobileNumber, setMobileNumber] = useState(mobileNo);
-  const [mobileOtp, setMobileOtp] = useState('');
-  const [recivedOTPData, setRecivedOTPData] = useState('');
+  const [mobileOtp, setMobileOtp] = useState("");
+  const [recivedOTPData, setRecivedOTPData] = useState("");
   const [hideMobileBox, setHideMobileBox] = useState(false);
 
   let myInterval = null;
@@ -52,7 +59,7 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
     const customer = new FormData();
     customer.append("phone", mobileNumber);
     customer.append("email", "");
-    customer.append("name", "")
+    customer.append("name", "");
 
     const res = await loginCustomerOTP(customer);
 
@@ -69,15 +76,13 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         setSeconds(secondsTime);
         setMinutes(minutesTime);
         return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
-      }
-      else {
+      } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
-    }
-    else {
+    } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
-  }
+  };
   const reSendOTP = async (e) => {
     e.preventDefault();
     if (!mobileNumber)
@@ -98,29 +103,27 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         const secondsTime = Math.ceil(divisor_for_seconds);
         setSeconds(secondsTime);
         setMinutes(minutesTime);
-        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber} or Email`, "success"));
-      }
-      else {
+        return dispatch(
+          showSnackbar(`OTP Sent on ${mobileNumber} or Email`, "success")
+        );
+      } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
-    }
-    else {
+    } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
-  }
+  };
   const verifyOTP = async (e) => {
     e.preventDefault();
     if (!mobileOtp) {
       return dispatch(showSnackbar("Please enter OTP", "warning"));
-    }
-    else if (onChangeMobileNumber) {
-      onChangeMobileNumber(e, mobileOtp)
-    }
-    else {
+    } else if (onChangeMobileNumber) {
+      onChangeMobileNumber(e, mobileOtp);
+    } else {
       const customer = new FormData();
       customer.append("phone", mobileNumber);
       customer.append("otp", mobileOtp);
-      customer.append("customerInfo", "")
+      customer.append("customerInfo", "");
 
       const res = await customerVerifyOtp(customer);
       if (res.status === 200) {
@@ -153,7 +156,7 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
         return dispatch(showSnackbar("Something went wrong", "error"));
       }
     }
-  }
+  };
   const setIntervalOTP = () => {
     myInterval = setInterval(() => {
       if (seconds > 0) {
@@ -161,21 +164,20 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
       }
       if (seconds === 0) {
         if (minutes === 0) {
-          clearInterval(myInterval)
+          clearInterval(myInterval);
         } else {
           setMinutes(minutes - 1);
           setSeconds(59);
         }
       }
-    }, 1000)
-  }
+    }, 1000);
+  };
   useEffect(() => {
     setIntervalOTP();
 
     return () => {
       clearInterval(myInterval);
     };
-
   });
   useEffect(() => {
     if (onChangeMobileNumber) {
@@ -190,59 +192,84 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
       setSeconds(secondsTime);
       setMinutes(minutesTime);
     }
-  }, [])
+  }, []);
   return (
     <>
       <span className={styles.tagline}>Have an account? Sign In</span>
-      {hideMobileBox ? <form>
-        <div className="d-flex justify-content-between align-items-end">
-          <div className="d-flex align-items-center my-12px">
-            <div className={styles.mobileIcon}>
-              <icons.Mobile />
-            </div>
-            <div className="d-flex">
-              <div>
-                <p>Mobile Number</p>
-                <p className="font-weight-600">{mobileNumber}</p>
+      {hideMobileBox ? (
+        <form>
+          <div className="d-flex justify-content-between align-items-end">
+            <div className="d-flex align-items-center my-12px">
+              <div className = {styles.cntCode}>
+                {isdCodes?.find((li) => li?.countryCode === currency)?.isd}
+                <div className={styles.mobileIcon}>
+                  <icons.Mobile />
+                </div>
               </div>
-              {hideMobileBox && minutes === 0 && seconds === 0 ? <span onClick={(e) => { reSendOTP(e) }} className={styles.resend}>Resend OTP</span> : null}
+              <div className="d-flex">
+                <div>
+                  <p>Mobile Number</p>
+                  <p className="font-weight-600">{mobileNumber}</p>
+                </div>
+                {hideMobileBox && minutes === 0 && seconds === 0 ? (
+                  <span
+                    onClick={(e) => {
+                      reSendOTP(e);
+                    }}
+                    className={styles.resend}
+                  >
+                    Resend OTP
+                  </span>
+                ) : null}
+              </div>
             </div>
+            <button type="button" className="no-border bg-transparent" />
           </div>
-          <button type="button" className="no-border bg-transparent" />
-        </div>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <div className={styles.otpDots}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+          <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+            <div className={styles.otpDots}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <input
+              placeholder="Enter OTP"
+              type="text"
+              name="mobileOtp"
+              autoComplete={false}
+              value={mobileOtp}
+              id="mobileOtp"
+              onChange={handleChangeOTP}
+            />
+            {minutes === 0 && seconds === 0 ? null : (
+              <span>
+                {" "}
+                {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+              </span>
+            )}
           </div>
-          <input
-            placeholder="Enter OTP"
-            type="text"
-            name="mobileOtp"
-            autoComplete={false}
-            value={mobileOtp}
-            id="mobileOtp"
-            onChange={handleChangeOTP}
-          />
-          {minutes === 0 && seconds === 0
-            ? null
-            : <span> {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>
-          }
-        </div>
-        <button type="button" onClick={(e) => { verifyOTP(e) }} className={styles.verifyBtn}>
-          CONTINUE
-        </button>
-      </form>
-        :
+          <button
+            type="button"
+            onClick={(e) => {
+              verifyOTP(e);
+            }}
+            className={styles.verifyBtn}
+          >
+            CONTINUE
+          </button>
+        </form>
+      ) : (
         <form>
           <p className="mt-12px">
             Mobile Number<span className={styles.star}>*</span>
           </p>
           <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-            <div className={styles.mobileIcon}>
-              <icons.Mobile />
+            <div className = "d-flex align-items-center">
+              <select value={isdState} onChange={(e) => setIsdState(e.target.value)}>
+                {isdCodes?.map(li => (
+                  <option value={li?.isd}>{li?.isd}{" "}{li?.countryCode}</option>
+                ))}
+              </select>
             </div>
             <input
               placeholder="Enter Mobile Number"
@@ -254,91 +281,94 @@ const OtpForm = ({ handleSubmit, onChangeMobileNumber = null, showMediaIcon = tr
               onChange={handleChange}
             />
           </div>
-          <button type="button" onClick={(e) => { sendOTP(e) }} className={styles.verifyBtn}>
+          <button
+            type="button"
+            onClick={(e) => {
+              sendOTP(e);
+            }}
+            className={styles.verifyBtn}
+          >
             SEND OTP
           </button>
         </form>
-
-      }
-      {showMediaIcon ? <div className={styles.formLogin}>
-        <p className={styles.or}>OR</p>
-        <div>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
-            }
-          >
-            <span className={styles.btnIcon}>
-              <icons.Apple />
-            </span>
-            <p>Connect with Apple</p>
-          </button>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
-            }
-          >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
-              <icons.Facebook />
-            </span>
-            <FacebookLogin
-              appId="3898973050213783"
-              fields="name,email,picture"
-              // cssClass=  {styles.facebookAuthBtn}
-              render={(renderProps) => (
-                <p onClick={renderProps.onClick}>Connect with Facebook</p>
-              )}
-              // onClick={componentClicked}
-              textButton="Connect with Facebook"
-            // callback={responseFacebook}
-            />
-          </button>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
-            }
-          >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
-              phone_iphone
-            </span>
-            <GoogleLogin
-              clientId="488711396287-7q699f85tm36dha5c5mml1dkpg9eibrr.apps.googleusercontent.com"
-              buttonText="Connect with Google"
-              render={(renderProps) => (
-                <button
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  className={styles.googleAuthBtn}
-                >
-                  Connect with Google
-                </button>
-              )}
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
-              // onSuccess={(response) => responseGoogle(response)}
-              onFailure={(response) => console.log(response)}
-            />
-
-          </button>
-          <div className={styles.signInLink}>
-            <p>
-              Create an account?{" "}
-              <strong className="c-pointer">
-                Sign In
-              </strong>
-            </p>
+      )}
+      {showMediaIcon ? (
+        <div className={styles.formLogin}>
+          <p className={styles.or}>OR</p>
+          <div>
+            <button
+              type="button"
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
+              }
+            >
+              <span className={styles.btnIcon}>
+                <icons.Apple />
+              </span>
+              <p>Connect with Apple</p>
+            </button>
+            <button
+              type="button"
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
+              }
+            >
+              <span className={`material-icons-outlined ${styles.btnIcon}`}>
+                <icons.Facebook />
+              </span>
+              <FacebookLogin
+                appId="3898973050213783"
+                fields="name,email,picture"
+                // cssClass=  {styles.facebookAuthBtn}
+                render={(renderProps) => (
+                  <p onClick={renderProps.onClick}>Connect with Facebook</p>
+                )}
+                // onClick={componentClicked}
+                textButton="Connect with Facebook"
+                // callback={responseFacebook}
+              />
+            </button>
+            <button
+              type="button"
+              className={
+                language === "Arabic"
+                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
+                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
+              }
+            >
+              <span className={`material-icons-outlined ${styles.btnIcon}`}>
+                phone_iphone
+              </span>
+              <GoogleLogin
+                clientId="488711396287-7q699f85tm36dha5c5mml1dkpg9eibrr.apps.googleusercontent.com"
+                buttonText="Connect with Google"
+                render={(renderProps) => (
+                  <button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    className={styles.googleAuthBtn}
+                  >
+                    Connect with Google
+                  </button>
+                )}
+                className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+                // onSuccess={(response) => responseGoogle(response)}
+                onFailure={(response) => console.log(response)}
+              />
+            </button>
+            <div className={styles.signInLink}>
+              <p>
+                Create an account?{" "}
+                <strong className="c-pointer">Sign Up</strong>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-        : null}
+      ) : null}
     </>
   );
 };

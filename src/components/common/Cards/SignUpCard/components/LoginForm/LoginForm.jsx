@@ -21,7 +21,10 @@ import {
   mergeGuestCart,
   createCustomerSocial,
 } from "../../../../../../services/auth/auth.service";
-import { loginSuccess, setSocialLogin } from "../../../../../../store/actions/auth";
+import {
+  loginSuccess,
+  setSocialLogin,
+} from "../../../../../../store/actions/auth";
 import { getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
@@ -31,9 +34,10 @@ const LoginForm = ({
   handleOtpForm,
   setForgetPassStyle,
   language,
+  setIsForget
 }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -50,6 +54,7 @@ const LoginForm = ({
   const toggleForgotPassword = () => {
     setForgetPassStyle(true);
     setforgotPassword((f) => !f);
+    setIsForget((f) => !f)
   };
 
   const { email, password } = formData;
@@ -68,7 +73,14 @@ const LoginForm = ({
       handleSubmit();
       return dispatch(showSnackbar(res?.data?.message, "success"));
     }
-    return dispatch(showSnackbar("Something went wrong", "error"));
+    if (res?.data?.message) {
+      return dispatch(
+        showSnackbar(
+          `${res?.data?.message ? res?.data?.message : "Something went wrong"}`,
+          "error"
+        )
+      );
+    }
   };
 
   const handleChange = (e) => {
@@ -101,7 +113,8 @@ const LoginForm = ({
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -155,13 +168,14 @@ const LoginForm = ({
             dispatch(getCart());
           }
           handleSubmit();
-          dispatch(setSocialLogin(res?.data?.data))
+          dispatch(setSocialLogin(res?.data?.data));
           typeof res?.data?.data !== "string" &&
             dispatch(loginSuccess(res.data.data));
-          
+
           toast.configure();
           toast(
-            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -202,7 +216,7 @@ const LoginForm = ({
     if (!email || !password) {
       return dispatch(showSnackbar("All fields are required", "warning"));
     }
-    setLoading(true)
+    setLoading(true);
     const customer = new FormData();
 
     customer.append("email", email);
@@ -220,7 +234,7 @@ const LoginForm = ({
           customerCart.append("customerId", res.data?.data?.customerID);
           await mergeGuestCart(customerCart);
           dispatch(getCart());
-          setLoading(false)
+          setLoading(false);
         }
         handleSubmit();
         typeof res?.data?.data !== "string" &&
@@ -250,10 +264,10 @@ const LoginForm = ({
             "error"
           )
         );
-        setLoading(false)
+        setLoading(false);
       }
     } else {
-      setLoading(false)
+      setLoading(false);
       return dispatch(showSnackbar(res?.message, "error"));
     }
   };
@@ -265,7 +279,7 @@ const LoginForm = ({
       <form className={styles.form} onSubmit={forgotPasswordSubmit}>
         <div className={styles.container}>
           <p className={styles.inpTitle}>
-            Enter Email <span className={styles.star}>*</span>
+            Enter your registered email <span className={styles.star}>*</span>
           </p>
           <div className={`d-flex align-items-center ${styles.inpContainer}`}>
             <span className="material-icons-outlined">email</span>
@@ -279,7 +293,7 @@ const LoginForm = ({
             />
           </div>
         </div>
-
+        <p className={styles.forP}>You will get a password reset link on your registered email</p>
         <div className={styles.container}>
           <input value="SUBMIT" type="submit" className={styles.signUpBtn} />
         </div>
@@ -337,12 +351,13 @@ const LoginForm = ({
             </div>
             <div>
               <p onClick={() => toggleForgotPassword()} className={styles.fyp}>
-                Forget Your Password
+                Forgot Your Password
               </p>
             </div>
           </div>
           <div className={styles.signinWrapper}>
-            <LoaderButton color="secondary"
+            <LoaderButton
+              color="secondary"
               onClick={userCreateHandler}
               loading={loading}
               loadingPosition="start"
@@ -419,7 +434,6 @@ const LoginForm = ({
                     className={styles.googleAuthBtn}
                   >
                     Connect with Google
-
                   </button>
                 )}
                 className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}

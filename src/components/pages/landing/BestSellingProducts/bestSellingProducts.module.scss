@@ -23,3 +23,7 @@
   @include right('padding', 9px);
   @include left("padding",9px)
 }
+.bestSke{
+  display: flex;
+  justify-content: space-around;
+}

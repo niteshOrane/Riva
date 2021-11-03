@@ -6,6 +6,8 @@ import ArrowButton from "../../../common/Buttons/Arrow";
 import Slider from "react-slick";
 import { getProducts } from "../../../../services/layout/Layout.service";
 import "./styles.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProductList = () => {
   const refContainer = useRef();
@@ -14,12 +16,19 @@ const ProductList = () => {
   const next = () => refContainer.current.slickNext();
 
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
+    setLoading(true);
     const res = await getProducts("2046", 10);
-    setProducts(res.data || []);
+    if (res?.data) {
+      setProducts(res.data || []);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   };
-  
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -35,13 +44,24 @@ const ProductList = () => {
 
   return (
     <>
-      <div style={{marginTop:"52px"}} className="section-header-container">
+      <div style={{ marginTop: "52px" }} className="section-header-container">
         <SectionHeader roboto="Extraordinary" dancing="Essentials" />
       </div>
       <div className="product-list-container container-with-circles ">
         <div className="arrow-button" onClick={previous}>
           <ArrowButton direction="backward" />
         </div>
+        {loading && (
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <Skeleton height="25rem" width="18rem" />
+             <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+            <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+            <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+          </div>
+        )}
         <div className="product-slider">
           <Slider ref={refContainer} {...settings}>
             {products.map((product, index) => {

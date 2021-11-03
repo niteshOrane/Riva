@@ -5,6 +5,8 @@ import ArrowButton from "../../../common/Buttons/Arrow";
 import Slider from "../../../common/Sliders/Slider";
 import { getProducts } from "../../../../services/layout/Layout.service";
 import styles from "./bestSellingProducts.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const category_ids = {
   featured: "2044",
@@ -15,8 +17,8 @@ const category_ids = {
 const BestSellingProducts = () => {
   const [title, setTitle] = useState({
     roboto: "Featured",
-    dancing: "Products"
-  })
+    dancing: "Products",
+  });
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
@@ -25,16 +27,23 @@ const BestSellingProducts = () => {
   const [dataSet, setdataSet] = useState({ 2044: [], 2045: [], "": [] });
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
+  const [loading, setLoading] = useState(false);
 
   const changeCategory = (slug, title1, title2) => {
     setcategoryId(slug);
-    setTitle({ roboto: title1, dancing: title2 })
+    setTitle({ roboto: title1, dancing: title2 });
   };
 
   const fetchProducts = async (id) => {
+    setLoading(true);
     if (!id) return [];
     const res = await getProducts(id, 10);
-    return res?.data || [];
+    if (res?.data) {
+      setLoading(false);
+      return res?.data || [];
+    } else {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -64,12 +73,14 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.all, "All", "Products")}
-
+                onClick={() =>
+                  changeCategory(category_ids.all, "All", "Products")
+                }
               >
                 <span
-                  className={`align-self-end font-light-black ${categoryId === category_ids.all ? "color-text-primary" : ""
-                    }`}
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.all ? "color-text-primary" : ""
+                  }`}
                 >
                   All
                 </span>
@@ -78,13 +89,20 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.best_selling, "Best Selling", "Products")}
+                onClick={() =>
+                  changeCategory(
+                    category_ids.best_selling,
+                    "Best Selling",
+                    "Products"
+                  )
+                }
               >
                 <span
-                  className={`align-self-end font-light-black ${categoryId === category_ids.best_selling
-                    ? "color-text-primary"
-                    : ""
-                    }`}
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.best_selling
+                      ? "color-text-primary"
+                      : ""
+                  }`}
                 >
                   Best Selling Products
                 </span>
@@ -93,13 +111,16 @@ const BestSellingProducts = () => {
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.featured, "Featured", "Products")}
+                onClick={() =>
+                  changeCategory(category_ids.featured, "Featured", "Products")
+                }
               >
                 <span
-                  className={`align-self-end font-light-black ${categoryId === category_ids.featured
-                    ? "color-text-primary"
-                    : ""
-                    }`}
+                  className={`align-self-end font-light-black ${
+                    categoryId === category_ids.featured
+                      ? "color-text-primary"
+                      : ""
+                  }`}
                 >
                   Featured Products
                 </span>
@@ -114,6 +135,14 @@ const BestSellingProducts = () => {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className = {styles.bestSke}>
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+        </div>
+      )}
       <div>
         <Slider
           className="basicSlider basicSliderGap"
