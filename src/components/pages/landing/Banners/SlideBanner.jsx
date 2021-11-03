@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import style from './slideBanner.module.scss';
 import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
 import Slider from '../../../common/Sliders/Slider';

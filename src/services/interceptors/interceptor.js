@@ -7,7 +7,7 @@ import { history, ALERT } from '../../util';
 /* Loader Show/Hide logic */
 let count = 0;
 const showLoader = (store) => {
-  store.dispatch(loader(true));
+  //store.dispatch(loader(true));
   count++;
 };
 
@@ -41,7 +41,7 @@ const handleError = (store, err = null) => {
         ),
       );
     } else {
-      store.dispatch(errorHandler(err));
+      //store.dispatch(errorHandler(err));
     }
   }
 };

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Image from "../../../common/LazyImage/Image";
-import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
-import SlideBanner from "../../../pages/landing/Banners/SlideBanner";
-import style from "./HeroGrid.module.scss";
+import React from "react";
+import { useSelector } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Image from "../../../common/LazyImage/Image";
+import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
+import SlideBanner from "../Banners/SlideBanner";
+import style from "./HeroGrid.module.scss";
+
 
 const HeroGrid = ({ btfLeft, btfRight, loading }) => {
   const { language } = useSelector((state) => state?.common?.store);
@@ -21,7 +21,7 @@ const HeroGrid = ({ btfLeft, btfRight, loading }) => {
       {loading && (
         <div className={style.skeleton}>
           <div className={style.mainSkeleton}>
-            <Skeleton height="30rem" width="40rem" />
+            <Skeleton height="30rem" width="40rem" containerClassName={style.mainSkeleton} />
           </div>
           <div className={style.subSkeleton}>
             <Skeleton

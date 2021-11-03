@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import ButtonWithArrows from "../../../common/Buttons/ButtonWithArrows/ButtonWithArrows";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import { selectedCategory } from "../../../../store/actions/common";
@@ -135,12 +137,26 @@ const HomeHeroGrid = (props) => {
         </div>
       ) : (
         <div style={{ margin: "0% auto" }}>
-          <Image
-            src={
-              "https://via.placeholder.com/1300x500?text=Loading+Please+wait"
-            }
-            alt=""
-          />
+          <section className="banner-grid-wrapper"
+          >
+            <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory.find(e => e?.name?.toLowerCase() === itemsImage.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>
+              <Skeleton
+                count={1}
+                height="99%"
+                width="100%"
+                containerClassName='base-image-wrapper c-pointer'
+              />
+            </div>
+            <section>
+
+                <Skeleton
+                  count={2}
+                  height="33vh"
+                  width="100%"
+                  containerClassName='base-image-wrapper c-pointer'
+                />
+            </section>
+          </section>
         </div>
       )}
     </div>
