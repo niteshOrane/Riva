@@ -252,6 +252,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             <select
               value={isdState}
               onChange={(e) => setIsdState(e.target.value)}
+              className = {styles.isdSelect}
             >
               {isdCodes?.map((li) => (
                 <option value={li?.isd}>

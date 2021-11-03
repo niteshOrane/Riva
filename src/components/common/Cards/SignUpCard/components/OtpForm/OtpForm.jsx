@@ -265,7 +265,7 @@ const OtpForm = ({
           </p>
           <div className={`d-flex align-items-center ${styles.inpContainer}`}>
             <div className = "d-flex align-items-center">
-              <select value={isdState} onChange={(e) => setIsdState(e.target.value)}>
+              <select className = {styles.isdSelect} value={isdState} onChange={(e) => setIsdState(e.target.value)}>
                 {isdCodes?.map(li => (
                   <option value={li?.isd}>{li?.isd}{" "}{li?.countryCode}</option>
                 ))}
