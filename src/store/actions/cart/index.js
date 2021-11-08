@@ -1,16 +1,16 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 import {
   addToCartService,
   deleteCartItem,
   getCartService,
   editCartService,
   getProductIdBySku,
-  getCartPaymentInfo
-} from '../../../services/cart/cart.service';
-import { emptyCartItem, emptyCart } from '../auth';
+  getCartPaymentInfo,
+} from "../../../services/cart/cart.service";
+import { emptyCartItem, emptyCart } from "../auth";
 
-import { getCartId, getCustId } from '../../../util';
-import { showSnackbar } from '../common';
+import { getCartId, getCustId } from "../../../util";
+import { showSnackbar } from "../common";
 
 export const getCartPaymentInfo_action = (data) => ({
   type: DATA_TYPES.CART_INFO,
@@ -28,7 +28,6 @@ export const getCustomerCartPayments = () => async (dispatch) => {
   } else dispatch(getCartPaymentInfo_action([]));
 };
 
-
 export const getCart = () => async (dispatch) => {
   //if (getCartId() && getCartId() !== '0') {
 
@@ -39,38 +38,49 @@ export const getCart = () => async (dispatch) => {
     const productIds = await Promise.allSettled(productIdPromises);
     const products = res.data.map((r, i) => ({
       ...r,
-      id: productIds?.[i]?.value?.data?.data?.product_id ?
-        parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+      id: productIds?.[i]?.value?.data?.data?.product_id
+        ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
         : 0,
-      src: r?.extension_attributes?.image
+      src: r?.extension_attributes?.image,
     }));
     dispatch({
-      type:DATA_TYPES.CART_EXTRA_INFO,
-      payload:{
+      type: DATA_TYPES.CART_EXTRA_INFO,
+      payload: {
         secure: res?.data?.["100_secure"],
-        hear:res?.data?.["letus-hear"],
-        we_offer:res?.data?.["we_offer"]
-      }
-    })
+        hear: res?.data?.["letus-hear"],
+        we_offer: res?.data?.["we_offer"],
+      },
+    });
+
     dispatch({
       type: DATA_TYPES.SET_BULK_CART,
       payload: products,
     });
-  }
-  else {
+  } else if (res?.data?.["0"] && res?.data?.custom_data) {
+    dispatch({
+      type: DATA_TYPES.SINGLE_CART,
+      payload: res?.data?.["0"],
+    });
+    dispatch({
+      type: DATA_TYPES.CART_EXTRA_INFO,
+      payload: {
+        secure: res?.data?.custom_data?.["100_secure"],
+        hear: res?.data?.custom_data?.["letus-hear"],
+        we_offer: res?.data?.custom_data?.["we_offer"],
+      },
+    });
+  } else {
     dispatch(emptyCart());
     dispatch(emptyCartItem());
   }
- // }
-
+  // }
 };
 
 export const addToCart = (data) => async (dispatch) => {
   if (!data?.color?.value || !data?.size?.value) {
-    dispatch(showSnackbar('please select one color and size', 'error'));
+    dispatch(showSnackbar("please select one color and size", "error"));
     return true;
-  }
-  else {
+  } else {
     const res = await addToCartService(
       data.id,
       data?.color?.value,
@@ -89,10 +99,9 @@ export const addToCart = (data) => async (dispatch) => {
         type: DATA_TYPES.SET_CART_ID,
         payload: { cart_id: response.cart_id },
       });
-      dispatch(showSnackbar('Added to cart', 'success'));
+      dispatch(showSnackbar("Added to cart", "success"));
       dispatch(getCart());
-    }
-    else dispatch(showSnackbar(response?.message || '', 'error'));
+    } else dispatch(showSnackbar(response?.message || "", "error"));
   }
 };
 
@@ -101,15 +110,14 @@ export const removeFromCart = (data) => async (dispatch) => {
 
   if (res && res.status === 200 && res.data) {
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
-    dispatch(showSnackbar('item removed from cart successfully', 'success'));
-  } else dispatch(showSnackbar('something went wrong', 'error'));
+    dispatch(showSnackbar("item removed from cart successfully", "success"));
+  } else dispatch(showSnackbar("something went wrong", "error"));
 };
 export const editItemQntCart = (data) => async (dispatch) => {
   const res = await editCartService(data.item_id, data.qty);
 
-  if (res.status === 200 && res.data)
-    dispatch(getCart());
-  else dispatch(showSnackbar('something went wrong', 'error'));
+  if (res.status === 200 && res.data) dispatch(getCart());
+  else dispatch(showSnackbar("something went wrong", "error"));
 };
 export const incrementItemqty = (data) => ({
   type: DATA_TYPES.INCREMENT_ITEM,

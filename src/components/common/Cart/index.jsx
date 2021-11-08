@@ -11,10 +11,9 @@ import { toggleSignUpCard } from '../../../store/actions/common';
 
 const Cart = () => {
 
-  const { data: items = [], isOpen = false } = useSelector(
+  const { data: items = [], isOpen = false,info,isSingle } = useSelector(
     (state) => state.cart
   );
-
 
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
@@ -71,6 +70,9 @@ const Cart = () => {
             </div> */}
           </div>
           <div className={style.sideBody}>
+            {/* {isSingle && (
+
+            )} */}
             {items && items.length > 0 ? <>
               <div className={style.items}>
                 {items?.map((item, index) => (

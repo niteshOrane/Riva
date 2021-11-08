@@ -6,6 +6,7 @@ import { toggleWishlist } from "../../../../store/actions/wishlist";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   setAttributes,
+  showSnackbar,
   toggleQuickView,
 } from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
@@ -36,7 +37,7 @@ const ProductCard = ({
   isRecommended,
   isComplete,
   landing,
-  Imgloading
+  Imgloading,
 }) => {
   const { custom_attributes, id, image, name } = product;
   const { currency_symbol } = useSelector((state) => state?.common?.store);
@@ -103,13 +104,13 @@ const ProductCard = ({
     const res = await getProduct(productItem.sku);
 
     const { colors, size } = extractColorSize(
-      res.data?.extension_attributes?.configurable_product_options || []
+      res?.data?.extension_attributes?.configurable_product_options || []
     );
 
     const p = {
       ...productItem,
-      ...res.data,
-      image: res.data?.custom_attributes.find(
+      ...res?.data,
+      image: res?.data?.custom_attributes.find(
         (attr) => attr.attribute_code === "image"
       )?.value,
       name: res.data.name,
@@ -152,36 +153,41 @@ const ProductCard = ({
   const handleQuickView = async () => {
     setLoading({ ...loading, quickView: true });
     const res = await getProduct(productItem.sku);
+    if (res?.status === 200 && res?.data) {
+      const { colors, size } = extractColorSize(
+        res.data?.extension_attributes?.configurable_product_options || []
+      );
 
-    const { colors, size } = extractColorSize(
-      res.data?.extension_attributes?.configurable_product_options || []
-    );
-
-    const p = {
-      ...productItem,
-      ...res.data,
-      image: res.data?.custom_attributes.find(
-        (attr) => attr.attribute_code === "image"
-      )?.value,
-      name: res.data.name,
-      price: res.data.price,
-      currency_symbol,
-      sale:
-        res.data?.custom_attributes.find(
-          (attr) => attr.attribute_code === "show_sale_badge"
-        )?.value === "1",
-      description: res.data?.custom_attributes.find(
-        (attr) => attr.attribute_code === "description"
-      )?.value,
-      colors,
-      size,
-      selected: {
-        color: colors?.[0] || {},
-        size: size?.[0] || {},
-      },
-    };
-    setLoading({ ...loading, quickView: false });
-    dispatch(toggleQuickView(p));
+      const p = {
+        ...productItem,
+        ...res.data,
+        image: res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "image"
+        )?.value,
+        name: res.data.name,
+        price: res.data.price,
+        currency_symbol,
+        sale:
+          res.data?.custom_attributes.find(
+            (attr) => attr.attribute_code === "show_sale_badge"
+          )?.value === "1",
+        description: res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "description"
+        )?.value,
+        colors,
+        size,
+        selected: {
+          color: colors?.[0] || {},
+          size: size?.[0] || {},
+        },
+      };
+      setLoading({ ...loading, quickView: false });
+      dispatch(toggleQuickView(p));
+    } else if (res?.message) {
+      dispatch(showSnackbar(`${res?.message}`, "warning"));
+    } else {
+      dispatch(showSnackbar(`Something went wrong`, "error"));
+    }
   };
   const handleChange = async (event, newValue) => {
     if (!product.productColorImage) {
@@ -277,7 +283,7 @@ const ProductCard = ({
                       }
                       defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                       width="100%"
-                      loading = {Imgloading}
+                      loading={Imgloading}
                     />
 
                     <div className={`legend ${styles.sizeWrap}`}>
