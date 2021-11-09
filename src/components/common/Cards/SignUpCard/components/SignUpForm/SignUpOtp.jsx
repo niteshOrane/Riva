@@ -56,13 +56,17 @@ const useStyles = makeStyles((theme) => ({
   },
   signUpBtn: {
     margin: "12px auto",
-    display: "block",
+    display: "flex",
+    justifyContent:"center",
+    
     border: "1px solid #ddd",
     backgroundColor: "#fff",
     color: "#181617",
     textAlign: "center",
     padding: "12px 30px",
     cursor: "pointer",
+    width: 204,
+    height:40
     // transition: all 0.4s ease;
     // cursor: pointer;
     // &:hover {

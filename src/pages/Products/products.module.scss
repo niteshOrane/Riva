@@ -142,7 +142,19 @@
     margin: 0 auto;
   }
 }
-
+.sortBy{
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+}
+.sortDrop{
+  border: none;
+}
 .twoColumnsLayOut {
   grid-template-columns: repeat(2, 1fr);
   // margin-right: 70px;

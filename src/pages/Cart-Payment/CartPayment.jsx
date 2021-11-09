@@ -63,7 +63,7 @@ function CartPayment() {
       </div>
       <div className={styles.container}>
         <div className={styles.col1}>
-          <RePaymentTab />
+         
           {paymentOption &&
           paymentOption?.data &&
           paymentOption?.data?.length ? (
@@ -80,6 +80,15 @@ function CartPayment() {
                 loading={loading}
                 setLoading={setLoading}
               /> */}
+               <RePaymentTab
+            cartItem={items}
+            customerID={customerid}
+            cartPaymentInfo={cartPaymentInfo}
+            store={store}
+            paymentMode={paymentOption?.data}
+            loading={loading}
+            setLoading={setLoading}
+          />
             </>
           ) : null}
         </div>

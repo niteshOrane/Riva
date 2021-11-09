@@ -175,9 +175,9 @@ function Products(props) {
                 )}
               </span>
               <div className={styles.sortByText}>
-                <span>SORT BY:</span>
+                <span className = {styles.sortBy}>SORT BY:</span>
                 <span>
-                  <select onChange={handleSortChange}>
+                  <select className = {styles.sortDrop} onChange={handleSortChange}>
                     <option
                       style={{ background: "#fff" }}
                       value="entity_id-desc"

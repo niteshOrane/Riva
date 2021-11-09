@@ -11,6 +11,7 @@ import {
 } from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import {
   getProduct,
@@ -251,62 +252,44 @@ const ProductCard = ({
       >
         {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
         {isListing && (
-          <TempLink product={productItem}>
-            <section className="d-flex justify-content-between">
-              <div className={styles.sliderArrowIcon}>
-                <img src="/assets/images/recomended.svg" alt="" />
-              </div>
-              <div className={styles.sliderArrowIconNext}>
-                <img src="/assets/images/recomended2.svg" alt="" />
-              </div>
-            </section>
+          <Carousel
+            showThumbs={false}
+            showStatus={false}
+            autoPlay={false}
+            showIndicators={false}
+            interval={2000}
+          >
+            {productItem?.media_gallery_entries?.map((item, indexitem) => (
+              <div className={styles.legendWrapper}>
+                <Image
+                  src={
+                    colorImg ||
+                    `${
+                      !productItem?.productColorImage ? URL.baseUrlProduct : ""
+                    }/${item?.file}`
+                  }
+                  defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                  width="100%"
+                  loading={Imgloading}
+                />
 
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-              showArrows={false}
-              autoPlay={false}
-              showIndicators={false}
-              interval={2000}
-            >
-              {productItem?.media_gallery_entries?.map((item, indexitem) => (
-                <div className={styles.legendWrapper}>
-                  <TempLink product={productItem}>
-                    <Image
-                      src={
-                        colorImg ||
-                        `${
-                          !productItem?.productColorImage
-                            ? URL.baseUrlProduct
-                            : ""
-                        }/${item?.file}`
-                      }
-                      defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                      width="100%"
-                      loading={Imgloading}
-                    />
-
-                    <div className={`legend ${styles.sizeWrap}`}>
-                      <p>SIZE</p>
-                      <div className={styles.sizeType}>
-                        {attributes?.size?.map((li) => (
-                          <span
-                            className={
-                              attributes?.size?.length === 1
-                                ? styles.single
-                                : null
-                            }
-                          >
-                            {li?.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </TempLink>
+                <div className={`legend ${styles.sizeWrap}`}>
+                  <p>SIZE</p>
+                  <div className={styles.sizeType}>
+                    {attributes?.size?.map((li) => (
+                      <span
+                        className={
+                          attributes?.size?.length === 1 ? styles.single : null
+                        }
+                      >
+                        {li?.label}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </Carousel>
-          </TempLink>
+              </div>
+            ))}
+          </Carousel>
         )}
         {!isListing && (
           <div className={styles.imageContainer}>
@@ -370,30 +353,32 @@ const ProductCard = ({
               </TempLink>
             </div>
           </div>
-          <div
-            className={`${
-              !extraOridnary ? styles.productName : styles.extraOridnary
-            } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
-            title={name}
-          >
-            {name || ""}
-          </div>
-          <div
-            className={`${styles.productPrice} ${
-              !isProduct ? "text-center" : ""
-            }`}
-          >
-            {origpriceWithoutCurrency > priceWithoutCurrency ? (
-              <div className={styles.was}>
-                Was {currency_symbol}
-                {origprice || ""}
-              </div>
-            ) : null}
-            <div className={styles.now}>
-              {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
-              {currency_symbol} {price}
+          <TempLink product={productItem}>
+            <div
+              className={`${
+                !extraOridnary ? styles.productName : styles.extraOridnary
+              } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
+              title={name}
+            >
+              {name || ""}
             </div>
-          </div>
+            <div
+              className={`${styles.productPrice} ${
+                !isProduct ? "text-center" : ""
+              }`}
+            >
+              {origpriceWithoutCurrency > priceWithoutCurrency ? (
+                <div className={styles.was}>
+                  Was {currency_symbol}
+                  {origprice || ""}
+                </div>
+              ) : null}
+              <div className={styles.now}>
+                {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
+                {currency_symbol} {price}
+              </div>
+            </div>
+          </TempLink>
           <div
             className={`${styles.productColors} ${
               !isProduct ? "text-center justify-content-center" : ""
@@ -412,24 +397,31 @@ const ProductCard = ({
                     key={`color${index}`}
                     title={item?.label}
                     className={`${styles.option}  c-pointer `}
+                    style={{
+                      border:
+                        product?.selected?.color?.value === item?.value &&
+                        `1px solid ${item?.color}`,
+                    }}
                     onClick={() => {
                       loadColorImages(product, item);
                     }}
                   >
                     {typeof item?.label === "string" ? (
-                      <img
-                        src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
-                          item?.label
-                        )
-                          ?.toLowerCase()
-                          .trim()}.png`}
-                        className={`${styles.colorItem} ${
-                          product?.selected?.color?.value === item.value
-                            ? styles.active
-                            : ""
-                        }`}
-                        alt={item?.label}
-                      />
+                      <Tooltip arrow title={item?.label} placement="top">
+                        <img
+                          src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                            item?.label
+                          )
+                            ?.toLowerCase()
+                            .trim()}.png`}
+                          className={`${styles.colorItem} ${
+                            product?.selected?.color?.value === item.value
+                              ? styles.active
+                              : ""
+                          }`}
+                          alt={item?.label}
+                        />
+                      </Tooltip>
                     ) : (
                       <div
                         src={item?.file}

@@ -17,6 +17,7 @@ import Instagram from "../../components/pages/landing/Instagram/Instagram";
 import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks";
 import { Link } from "react-router-dom";
 import { getInstagramBanners } from "../../services/layout/Layout.service";
+import styles from "./Landing.module.scss"
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
@@ -79,7 +80,7 @@ function Landing() {
                   />
                 </div>
                 <div>
-                  <span className="my-12px d-inline-block">
+                  <span className={`${styles.categoryName} my-12px d-inline-block`}>
                     {item?.name?.toUpperCase()}
                   </span>
                 </div>

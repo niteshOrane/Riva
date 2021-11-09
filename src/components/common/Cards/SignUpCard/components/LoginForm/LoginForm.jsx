@@ -316,6 +316,7 @@ const LoginForm = ({
               name="email"
               id="email"
               onChange={handleChange}
+              className = {styles.signUpInput}
             />
           </div>
         </div>
@@ -333,6 +334,7 @@ const LoginForm = ({
               name="password"
               id="password"
               onChange={handleChange}
+              className = {styles.signUpInput}
             />
             <button
               type="button"
@@ -361,7 +363,7 @@ const LoginForm = ({
               onClick={userCreateHandler}
               loading={loading}
               loadingPosition="start"
-              variant="contained"
+              // variant="contained"
               value="SIGN IN"
               className={styles.signUpBtn}
             >

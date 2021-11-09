@@ -7,6 +7,7 @@ const Search = ({ handleChange, value = "", onSearch, handleKeyDown }) => (
   <FormControl>
     <Input
       placeholder="Type here to search"
+      style = {{width:"167px"}}
       id="standard-adornment-weight"
       value={value}
       onChange={handleChange}

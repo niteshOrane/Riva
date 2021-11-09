@@ -127,3 +127,8 @@
    padding-top: 5px;
  }
 }
+.spaceBox{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}

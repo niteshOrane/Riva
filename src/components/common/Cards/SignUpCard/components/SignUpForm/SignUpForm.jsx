@@ -206,6 +206,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="name"
             maxLength={30}
             onChange={handleChange}
+            className = {styles.signUpInput}
           />
         </div>
       </div>
@@ -223,6 +224,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="lastName"
             maxLength={30}
             onChange={handleChange}
+            className = {styles.signUpInput}
           />
         </div>
       </div>
@@ -240,6 +242,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="email"
             maxLength={256}
             onChange={handleChange}
+            className = {styles.signUpInput}
           />
         </div>
       </div>
@@ -269,6 +272,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             value={phone}
             maxLength={10}
             onChange={handleChange}
+            className = {styles.signUpInput}
           />
         </div>
       </div>
@@ -288,6 +292,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="password"
             maxLength={15}
             onChange={handleChange}
+            className = {styles.signUpInput}
           />
           <button
             type="button"

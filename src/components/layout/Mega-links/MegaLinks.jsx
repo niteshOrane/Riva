@@ -70,7 +70,7 @@ const MegaLinks = ({ links, language }) => {
                           style={{
                             display: child.children_data.length > 0 && "flex",
                             paddingRight: language === "Arabic" ? "0" : "60",
-                            paddingLeft: language === "Arabic" ? "60" : "0",
+                            paddingLeft: language === "Arabic" ? "60" : "10px",
                             overflow: "auto",
                           }}
                         >

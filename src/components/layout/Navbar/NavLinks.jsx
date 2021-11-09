@@ -27,7 +27,7 @@ const NavLinks = React.memo(() => {
             isAuth ? history.push('/wishlist') : openSignUpCard('/wishlist');
           }}
         >
-          <span  className=" personIcon material-icons-outlined font-light-black">
+          <span className=" personIcon material-icons-outlined font-light-black">
             favorite_border
           </span>
           <span className="align-self-end font-light-black">

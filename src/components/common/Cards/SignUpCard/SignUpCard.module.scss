@@ -33,7 +33,7 @@
         color: #f7591a;
       }
       .inpContainer {
-        border: 1px solid black;
+        border: 1px solid lightgray;
         padding: 3px 6px;
 
         input {
@@ -156,7 +156,7 @@
       color: #f7591a;
     }
     .inpContainer {
-      border: 1px solid black;
+      border: 1px solid lightgray;
       padding: 3px 6px;
 
       input {
@@ -346,7 +346,7 @@
         color: #f7591a;
       }
       .inpContainer {
-        border: 1px solid black;
+        border: 1px solid lightgray;
         padding: 3px 6px;
 
         input {
@@ -363,6 +363,7 @@
     }
     .signUpBtn {
       margin: 12px auto;
+      width: 204px !important;
       display: block;
       border: 1px solid #ddd;
       background-color: #fff;
@@ -448,4 +449,7 @@
   border-radius: 5px;
   border: 1px solid gray;
   outline: none;
+}
+.signUpInput{
+  height: 33px !important;
 }

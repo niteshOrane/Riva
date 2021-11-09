@@ -12,7 +12,7 @@ const CardWithBoxContent = ({ item }) => {
           <Image src={item.image || ""} width="100%" alt={item?.title} />
         </div>
         <div className={style.cardBoxContent}>
-          <h3 className="text-center">{item?.title}</h3>
+          <h3 className="text-center">{item?.title?.toUpperCase()}</h3>
           <p className={`text-center ${style.description}`}>
             {item?.description || item?.name || <i>No Description</i>} 
           </p>

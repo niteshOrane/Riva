@@ -183,7 +183,7 @@ h6 {
 .MuiDialog-paperWidthSm {
   max-width: 704px !important;
 }
-.legend{
+.legend {
   width: 100% !important;
   height: 71px;
   padding: 0;
@@ -193,15 +193,47 @@ h6 {
   border-radius: 0px !important;
   background-color: #fff !important;
   color: black !important;
-  opacity: 0 !important;}
-
-.css-heg063-MuiTabs-flexContainer{
-  display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
+  opacity: 0 !important;
 }
-  apple-pay-button {
-    --apple-pay-button-width: 140px;
-    --apple-pay-button-height: 30px;
-    --apple-pay-button-border-radius: 5px;
-    --apple-pay-button-padding: 5px 0px;
+
+.css-heg063-MuiTabs-flexContainer {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+}
+apple-pay-button {
+  --apple-pay-button-width: 140px;
+  --apple-pay-button-height: 30px;
+  --apple-pay-button-border-radius: 5px;
+  --apple-pay-button-padding: 5px 0px;
+}
+
+.carousel .control-disabled.control-arrow {
+  display: block !important;
+  opacity: 1 !important;
+ font-size: 12rem !important;
+  &:hover{
+    background: transparent !important;
   }
+}
+
+.carousel .control-prev.control-arrow:before{
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  width: 1rem;
+  height: 1rem;
+}
+
+.carousel .control-next.control-arrow:before{
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 1rem;
+  height: 1rem;
+} 
