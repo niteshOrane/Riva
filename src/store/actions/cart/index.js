@@ -33,10 +33,10 @@ export const getCart = () => async (dispatch) => {
 
   const res = await getCartService();
 
-  if (res && res.data && res.data.length) {
-    const productIdPromises = res.data?.map((r) => getProductIdBySku(r.sku));
+  if (res && res.data && res.data.cart.length) {
+    const productIdPromises = res.data?.cart?.map((r) => getProductIdBySku(r.sku));
     const productIds = await Promise.allSettled(productIdPromises);
-    const products = res.data.map((r, i) => ({
+    const products = res?.data?.cart?.map((r, i) => ({
       ...r,
       id: productIds?.[i]?.value?.data?.data?.product_id
         ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)

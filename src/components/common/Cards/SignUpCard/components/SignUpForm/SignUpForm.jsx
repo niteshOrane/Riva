@@ -21,6 +21,7 @@ import { loginSuccess } from "../../../../../../store/actions/auth";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 import { isdCodes } from "../ISDdummy/isdCodes";
+import { set } from "mobx";
 
 const SignUpForm = ({ handleSubmit, language }) => {
   const { currency } = useSelector((state) => state?.common?.store);
@@ -28,6 +29,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
     isdCodes?.find((li) => li?.countryCode === currency)?.isd
   );
   const dispatch = useDispatch();
+  const [error, setError] = React.useState({});
   const history = useHistory();
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
@@ -190,13 +192,23 @@ const SignUpForm = ({ handleSubmit, language }) => {
     }
   };
 
+  const escapeAlpha = (event) => {
+    console.log(event)
+    return (
+      event.keyCode === 8 || (event.charCode >= 48 && event.charCode <= 57)
+    );
+  };
+
   return (
     <form className={styles.form} onSubmit={userCreateHandler}>
       <div className={styles.container}>
         <p className="mt-12px">
           First Name<span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">account_circle</span>
           <input
             required
@@ -206,15 +218,21 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="name"
             maxLength={30}
             onChange={handleChange}
-            className = {styles.signUpInput}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.name && (
+          <span className={styles.authVal}>First name required</span>
+        )}
       </div>
       <div className={styles.container}>
         <p className="mt-12px">
           Last Name <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">account_circle</span>
           <input
             required
@@ -224,15 +242,21 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="lastName"
             maxLength={30}
             onChange={handleChange}
-            className = {styles.signUpInput}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.lastName && (
+          <span className={styles.authVal}>Last name required</span>
+        )}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Email <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">email</span>
           <input
             required
@@ -242,20 +266,24 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="email"
             maxLength={256}
             onChange={handleChange}
-            className = {styles.signUpInput}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.email && <span className={styles.authVal}>{error.email}</span>}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Mobile Number <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <div className={styles.cntCode}>
             <select
               value={isdState}
               onChange={(e) => setIsdState(e.target.value)}
-              className = {styles.isdSelect}
+              className={styles.isdSelect}
             >
               {isdCodes?.map((li) => (
                 <option value={li?.isd}>
@@ -271,28 +299,33 @@ const SignUpForm = ({ handleSubmit, language }) => {
             id="phone"
             value={phone}
             maxLength={10}
+            onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }
             onChange={handleChange}
-            className = {styles.signUpInput}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.phone && <span className={styles.authVal}>{error?.phone}</span>}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Set a Password <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">lock</span>{" "}
           <input
             required
             value={password}
             type={!showPass ? "password" : "text"}
             name="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        
             title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             id="password"
             maxLength={15}
             onChange={handleChange}
-            className = {styles.signUpInput}
+            className={styles.signUpInput}
           />
           <button
             type="button"
@@ -304,18 +337,24 @@ const SignUpForm = ({ handleSubmit, language }) => {
             </span>{" "}
           </button>
         </div>
-        {/* {passError && <span> Password must be at least 8 characters long with 1 Uppercase, 1
-          Lowercase & 1 Number character.</span>} */}
-        <p>
-          Password must be at least 8 characters long with 1 Uppercase, 1
-          Lowercase & 1 Number character.
-        </p>
+        {!error.password && (
+          <span>
+            {" "}
+            Password must be at least 8 characters long with 1 Uppercase, 1
+            Lowercase & 1 Number character and one special character.
+          </span>
+        )}
+        {error?.password && (
+          <span className={styles.authVal}>{error.password}</span>
+        )}
 
         {/* <input value="SIGN UP" type="submit" className={styles.signUpBtn} /> */}
         <SignUpOtp
           formData={formData}
           handleSubmit={handleSubmit}
           language={language}
+          error={error}
+          setError={setError}
         />
 
         <p className={styles.or}>OR</p>

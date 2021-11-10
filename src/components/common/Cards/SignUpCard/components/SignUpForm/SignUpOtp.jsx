@@ -57,8 +57,8 @@ const useStyles = makeStyles((theme) => ({
   signUpBtn: {
     margin: "12px auto",
     display: "flex",
-    justifyContent:"center",
-    
+    justifyContent: "center",
+
     border: "1px solid #ddd",
     backgroundColor: "#fff",
     color: "#181617",
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "12px 30px",
     cursor: "pointer",
     width: 204,
-    height:40
+    height: 40,
     // transition: all 0.4s ease;
     // cursor: pointer;
     // &:hover {
@@ -83,7 +83,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal({ formData, handleSubmit, language }) {
+export default function TransitionsModal({
+  formData,
+  handleSubmit,
+  language,
+  error,
+  setError,
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -94,6 +100,41 @@ export default function TransitionsModal({ formData, handleSubmit, language }) {
   const [recivedOTPData, setRecivedOTPData] = useState("");
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const validate = (value) => {
+    const errorVal = {};
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        value?.email
+      )
+    ) {
+      errorVal.email = "Please enter a valid email address";
+    }
+    if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/.test(
+        value?.password
+      )
+    ) {
+      errorVal.password =
+        "Password must be at least 8 characters long with 1 Uppercase, 1 Lowercase & 1 Number character and one special character";
+    }
+    if (!value.phone) {
+      errorVal.phone = "Phone is required";
+    }
+    if (!value.name) {
+      errorVal.name = "First name is required";
+    }
+    if (!value.lastName) {
+      errorVal.lastName = "Last name is required";
+    }
+    return errorVal;
+  };
+  const handleSubmitSign = (e) => {
+    e.preventDefault();
+    setError(validate(formData));
+    setIsSubmit(true);
+  };
 
   const sendRegisterOtp = async (fnValue) => {
     const { phone, name, lastName, email } = fnValue;
@@ -141,6 +182,7 @@ export default function TransitionsModal({ formData, handleSubmit, language }) {
       clearInterval(myInterval);
     };
   });
+
   const handleClose = () => {
     setOpen(false);
     setOtp("");
@@ -173,22 +215,7 @@ export default function TransitionsModal({ formData, handleSubmit, language }) {
     }
   };
   const handleOpen = () => {
-    const { email, name, lastName, password, phone } = formData;
-    if (email && name && lastName && password && phone) {
-      const re =
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
-      if (!re.test(password))
-        return dispatch(
-          showSnackbar(
-            "Password must be at least 8 characters long with 1 Uppercase, 1 Lowercase & 1 Number character.",
-            "error"
-          )
-        );
-      sendRegisterOtp(formData);
-    } else {
-      setLoading(false);
-      dispatch(showSnackbar("Please fill all required fields", "error"));
-    }
+    sendRegisterOtp(formData);
   };
   const reSendOTP = async (e) => {
     const { email, name, lastName, password, phone } = formData;
@@ -218,10 +245,15 @@ export default function TransitionsModal({ formData, handleSubmit, language }) {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
+  useEffect(() => {
+    if (Object.keys(error)?.length === 0 && isSubmit) {
+      handleOpen();
+    }
+  }, [error]);
   return (
     <div>
       <LoaderButton
-        onClick={handleOpen}
+        onClick={handleSubmitSign}
         loading={loading}
         value=" SIGN UP"
         className={classes.signUpBtn}

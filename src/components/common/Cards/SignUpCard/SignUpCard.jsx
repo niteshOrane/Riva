@@ -23,6 +23,7 @@ const SignUpCard = () => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
+    setIsForget(false)
     dispatch(toggleSignUpCard({ isOpen: false }));
   };
   const handleOtpForm = () => {
@@ -52,8 +53,12 @@ const SignUpCard = () => {
         >
           <icons.Close />
         </button>
-        {isForget ? <h2 className={styles.title}>Enter Email</h2> :   <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>}
-      
+        {isForget ? (
+          <h2 className={styles.title}>RESET PASSWORD</h2>
+        ) : (
+          <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>
+        )}
+
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
         {!isOtp ? (
           isLogin ? (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -34,10 +34,13 @@ const LoginForm = ({
   handleOtpForm,
   setForgetPassStyle,
   language,
-  setIsForget
+  setIsForget,
 }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
+  const [forgotError, setForgotError] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -52,17 +55,19 @@ const LoginForm = ({
   const [showforgotPassword, setforgotPassword] = useState(false);
 
   const toggleForgotPassword = () => {
+    setIsForget(true);
     setForgetPassStyle(true);
     setforgotPassword((f) => !f);
-    setIsForget((f) => !f)
+ 
   };
 
   const { email, password } = formData;
 
   const forgotPasswordSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return dispatch(showSnackbar("email required", "warning"));
-
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+      email)) return setForgotError(true)
+     setForgotError(false)
     const customer = new FormData();
 
     customer.append("email", email);
@@ -206,16 +211,29 @@ const LoginForm = ({
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
+  const validate = (value) => {
+    const errorVal = {};
+    if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+      value?.email)) {
+      errorVal.email = "Please enter a valid email address";
+    }
+    if (!value?.password) {
+      errorVal.password = "Password is required";
+    }
+    return errorVal;
+  };
 
   const setSignUpForm = () => {
     dispatch(toggleSignUpCard({ isLogin: false }));
   };
 
-  const userCreateHandler = async (e) => {
+  const handleSubmitLogin = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      return dispatch(showSnackbar("All fields are required", "warning"));
-    }
+    setError(validate(formData));
+    setIsSubmit(true);
+  };
+
+  const userCreateHandler = async (e) => {
     setLoading(true);
     const customer = new FormData();
 
@@ -272,6 +290,12 @@ const LoginForm = ({
     }
   };
 
+  useEffect(() => {
+    if (Object.keys(error)?.length === 0 && isSubmit) {
+      userCreateHandler();
+    }
+  }, [error]);
+
   const [showPass, setShowPass] = useState(false);
 
   if (showforgotPassword)
@@ -281,19 +305,21 @@ const LoginForm = ({
           <p className={styles.inpTitle}>
             Enter your registered email <span className={styles.star}>*</span>
           </p>
-          <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <div  style={{ border: forgotError ? "1px solid red" : null }} className={`d-flex align-items-center ${styles.inpContainer}`}>
             <span className="material-icons-outlined">email</span>
             <input
-              required
               value={email}
-              type="email"
+              type="text"
               name="email"
               id="email"
               onChange={handleChange}
             />
           </div>
         </div>
-        <p className={styles.forP}>You will get a password reset link on your registered email</p>
+        {forgotError && <span className={styles.authVal}>Please enter a valid email containing "@" and "."</span>}
+        <p className={styles.forP}>
+          You will get a password reset link on your registered email
+        </p>
         <div className={styles.container}>
           <input value="SUBMIT" type="submit" className={styles.signUpBtn} />
         </div>
@@ -307,7 +333,10 @@ const LoginForm = ({
           <p className={styles.inpTitle}>
             Email <span className={styles.star}>*</span>
           </p>
-          <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <div
+            style={{ border: error?.email ? "1px solid red" : null }}
+            className={`d-flex align-items-center ${styles.inpContainer}`}
+          >
             <span className="material-icons-outlined">email</span>
             <input
               required
@@ -316,16 +345,22 @@ const LoginForm = ({
               name="email"
               id="email"
               onChange={handleChange}
-              className = {styles.signUpInput}
+              className={styles.signUpInput}
             />
           </div>
+          {error?.email && (
+            <span className={styles.authVal}>{error.email}</span>
+          )}
         </div>
 
         <div className={styles.container}>
           <p className={styles.inpTitle}>
             Password <span className={styles.star}>*</span>
           </p>
-          <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <div
+            style={{ border: error?.password ? "1px solid red" : null }}
+            className={`d-flex align-items-center ${styles.inpContainer}`}
+          >
             <span className="material-icons-outlined">lock</span>{" "}
             <input
               required
@@ -334,7 +369,7 @@ const LoginForm = ({
               name="password"
               id="password"
               onChange={handleChange}
-              className = {styles.signUpInput}
+              className={styles.signUpInput}
             />
             <button
               type="button"
@@ -346,6 +381,9 @@ const LoginForm = ({
               </span>{" "}
             </button>
           </div>
+          {error?.password && (
+            <span className={styles.authVal}>password is required</span>
+          )}
           <div className={styles.checkContainer}>
             <div>
               <input className={styles.checkBox} type="checkbox" />
@@ -360,7 +398,7 @@ const LoginForm = ({
           <div className={styles.signinWrapper}>
             <LoaderButton
               color="secondary"
-              onClick={userCreateHandler}
+              onClick={handleSubmitLogin}
               loading={loading}
               loadingPosition="start"
               // variant="contained"
