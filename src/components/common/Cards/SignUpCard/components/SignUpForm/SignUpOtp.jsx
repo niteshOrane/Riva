@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../OtpForm/Otp.module.scss";
+import { PhoneNumberUtil } from 'google-libphonenumber';
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -121,6 +122,33 @@ export default function TransitionsModal({
     }
     if (!value.phone) {
       errorVal.phone = "Phone is required";
+      return dispatch(
+        showSnackbar(
+          "Phone is required",
+          "error"
+        )
+      );
+    } else {
+      let valid = false;
+      try {
+        const phoneUtil = PhoneNumberUtil.getInstance();
+        valid = phoneUtil.isValidNumber(phoneUtil.parse(value.phone));
+        if (!valid) {
+          return dispatch(
+            showSnackbar(
+              "Invalid Contact Phone With Country",
+              "error"
+            )
+          );
+        }
+      } catch (e) {
+        return dispatch(
+          showSnackbar(
+            "Invalid Contact Phone With Country",
+            "error"
+          )
+        );
+      }
     }
     if (!value.name) {
       errorVal.name = "First name is required";
@@ -224,7 +252,6 @@ export default function TransitionsModal({
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customer = new FormData();
     customer.append("phone", phone);
-
     const res = await customerResendOtp(customer);
 
     if (res.status === 200) {

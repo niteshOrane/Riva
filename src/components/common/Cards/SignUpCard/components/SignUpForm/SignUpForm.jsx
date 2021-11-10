@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useDispatch, useSelector } from "react-redux";
+import 'react-phone-number-input/style.css'
 import {
   showSnackbar,
   toggleSignUpCard,
@@ -9,6 +10,7 @@ import {
 
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
+import PhoneInput from 'react-phone-number-input';
 import {
   createCustomer,
   createCustomerSocial,
@@ -24,10 +26,9 @@ import { isdCodes } from "../ISDdummy/isdCodes";
 import { set } from "mobx";
 
 const SignUpForm = ({ handleSubmit, language }) => {
-  const { currency } = useSelector((state) => state?.common?.store);
-  const [isdState, setIsdState] = useState(
-    isdCodes?.find((li) => li?.countryCode === currency)?.isd
-  );
+   const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState()
+  
   const dispatch = useDispatch();
   const [error, setError] = React.useState({});
   const history = useHistory();
@@ -42,7 +43,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
     phone: "",
     lastName: "",
   });
-  const [passError, setPassError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -100,8 +100,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${
-              res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -159,8 +158,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${
-              res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -280,31 +278,19 @@ const SignUpForm = ({ handleSubmit, language }) => {
           className={`d-flex align-items-center ${styles.inpContainer}`}
         >
           <div className={styles.cntCode}>
-            <select
-              value={isdState}
-              onChange={(e) => setIsdState(e.target.value)}
-              className={styles.isdSelect}
-            >
-              {isdCodes?.map((li) => (
-                <option value={li?.isd}>
-                  {li?.isd} {li?.countryCode}
-                </option>
-              ))}
-            </select>
+            <PhoneInput
+              placeholder="Enter Mobile Number"
+              value={phoneValue}
+              width="10px"
+              defaultCountry={currentLocation.country_code.toUpperCase()}
+              onChange={setPhoneValue}
+            />
           </div>
-
-          <input
-            type="number"
-            name="phone"
-            id="phone"
-            value={phone}
-            maxLength={10}
-            onKeyDown={ (evt) => evt.key === 'e' && evt.preventDefault() }
-            onChange={handleChange}
-            className={styles.signUpInput}
-          />
+         
         </div>
-        {error?.phone && <span className={styles.authVal}>{error?.phone}</span>}
+        {error?.phone && (
+          <span className={styles.authVal}>{error?.phone}</span>
+        )}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
@@ -320,7 +306,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
             value={password}
             type={!showPass ? "password" : "text"}
             name="password"
-        
+
             title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             id="password"
             maxLength={15}
@@ -348,9 +334,8 @@ const SignUpForm = ({ handleSubmit, language }) => {
           <span className={styles.authVal}>{error.password}</span>
         )}
 
-        {/* <input value="SIGN UP" type="submit" className={styles.signUpBtn} /> */}
         <SignUpOtp
-          formData={formData}
+          formData={Object.assign(formData, { phone: phoneValue })}
           handleSubmit={handleSubmit}
           language={language}
           error={error}
