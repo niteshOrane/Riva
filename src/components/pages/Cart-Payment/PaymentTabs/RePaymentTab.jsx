@@ -65,9 +65,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: ".9rem",
   },
   tabContent: {
-    maxWidth: "50%",
-    width: "100%",
-    // border: "1px solid #ddd",
+    display: "flex",
+    justifyContent: "center",
     borderLeft: "0",
   },
   arabicIcon: {

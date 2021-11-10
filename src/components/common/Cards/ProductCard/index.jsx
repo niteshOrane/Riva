@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
+import { Carousel } from "react-responsive-carousel";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import {
-  setAttributes,
-  showSnackbar,
   toggleQuickView,
 } from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import {
   getProduct,
   getProductColor,
 } from "../../../../services/product/product.service";
 import styles from "./product.module.scss";
-import wishlist from "../../../../store/reducers/wishlist/wishlist";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+
 
 const TempLink = ({ children, product }) => {
   if (product?.sku)
@@ -73,19 +70,11 @@ const ProductCard = ({
 
       product["selected"] = { color: colors[0], size: size[0] };
     }
-
-    setProductItem(product);
-  }, [product]);
-  useEffect(() => {
     if (isComplete) {
       const colors = Object.values(product?.options?.[0]?.values);
 
       setattributes({ colors });
     }
-
-    setProductItem(product);
-  }, [product]);
-  useEffect(() => {
     if (landing) {
       if (product?.options) {
         const colors = getColorsForHomePage(product?.options);
@@ -260,52 +249,54 @@ const ProductCard = ({
             interval={2000}
           >
             {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <div className={styles.legendWrapper}>
-                <Image
-                  src={
-                    colorImg ||
-                    `${
-                      !productItem?.productColorImage ? URL.baseUrlProduct : ""
-                    }/${item?.file}`
-                  }
-                  defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
-                  width="100%"
-                  loading={Imgloading}
-                />
+              <TempLink product={productItem}>
+                <div className={styles.legendWrapper} key={indexitem}>
+                  <Image
+                    src={
+                      colorImg ||
+                      `${!productItem?.productColorImage ? URL.baseUrlProduct : ""
+                      }/${item?.file}`
+                    }
+                    defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                    width="100%"
+                    loading={Imgloading}
+                  />
 
-                <div className={`legend ${styles.sizeWrap}`}>
-                  <p>SIZE</p>
-                  <div className={styles.sizeType}>
-                    {attributes?.size?.map((li) => (
-                      <span
-                        className={
-                          attributes?.size?.length === 1 ? styles.single : null
-                        }
-                      >
-                        {li?.label}
-                      </span>
-                    ))}
+                  <div className={`legend ${styles.sizeWrap}`}>
+                    <p>SIZE</p>
+                    <div className={styles.sizeType}>
+                      {attributes?.size?.map((li) => (
+                        <span
+                          className={
+                            attributes?.size?.length === 1 ? styles.single : null
+                          }
+                        >
+                          {li?.label}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </TempLink>
             ))}
           </Carousel>
         )}
         {!isListing && (
           <div className={styles.imageContainer}>
-            <TempLink product={productItem}>
-              <div className={styles.imgContainer_P}>
-                <div className={styles.imgContainer}>
-                  {!isListing && (
+
+            <div className={styles.imgContainer_P}>
+              <div className={styles.imgContainer}>
+                {!isListing && (
+                  <TempLink product={productItem}>
                     <Image
                       src={srcImage}
                       defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                       width="100%"
                     />
-                  )}
-                </div>
+                  </TempLink>
+                )}
               </div>
-            </TempLink>
+            </div>
           </div>
         )}
         {productItem?.sale && <div className={styles.sale}>Sale</div>}
@@ -324,8 +315,8 @@ const ProductCard = ({
                   {loading.wishlist
                     ? "hourglass_top"
                     : isAddedToWishlist
-                    ? "favorite"
-                    : "favorite_border"}
+                      ? "favorite"
+                      : "favorite_border"}
                 </span>
               </button>
             </div>
@@ -355,17 +346,15 @@ const ProductCard = ({
           </div>
           <TempLink product={productItem}>
             <div
-              className={`${
-                !extraOridnary ? styles.productName : styles.extraOridnary
-              } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
+              className={`${!extraOridnary ? styles.productName : styles.extraOridnary
+                } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
               title={name}
             >
               {name || ""}
             </div>
             <div
-              className={`${styles.productPrice} ${
-                !isProduct ? "text-center" : ""
-              }`}
+              className={`${styles.productPrice} ${!isProduct ? "text-center" : ""
+                }`}
             >
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
@@ -380,16 +369,14 @@ const ProductCard = ({
             </div>
           </TempLink>
           <div
-            className={`${styles.productColors} ${
-              !isProduct ? "text-center justify-content-center" : ""
-            }`}
+            className={`${styles.productColors} ${!isProduct ? "text-center justify-content-center" : ""
+              }`}
           >
             <div
-              className={`${
-                !isRecommended
-                  ? styles.color
-                  : `${styles.color} ${styles.recomm}`
-              } d-flex`}
+              className={`${!isRecommended
+                ? styles.color
+                : `${styles.color} ${styles.recomm}`
+                } d-flex`}
             >
               {attributes?.colors?.length > 0 &&
                 attributes?.colors?.map((item) => (
@@ -414,11 +401,10 @@ const ProductCard = ({
                           )
                             ?.toLowerCase()
                             .trim()}.png`}
-                          className={`${styles.colorItem} ${
-                            product?.selected?.color?.value === item.value
-                              ? styles.active
-                              : ""
-                          }`}
+                          className={`${styles.colorItem} ${product?.selected?.color?.value === item.value
+                            ? styles.active
+                            : ""
+                            }`}
                           alt={item?.label}
                         />
                       </Tooltip>
@@ -426,11 +412,10 @@ const ProductCard = ({
                       <div
                         src={item?.file}
                         className={`${styles.colorItem} 
-                        ${
-                          product?.selected?.color?.value === item?.value
+                        ${product?.selected?.color?.value === item?.value
                             ? styles.active
                             : ""
-                        }`}
+                          }`}
                         title={item?.label}
                       />
                     )}

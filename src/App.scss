@@ -207,15 +207,20 @@ apple-pay-button {
   --apple-pay-button-padding: 5px 0px;
 }
 
-.carousel .control-disabled.control-arrow {
+.control-arrow {
   display: block !important;
   opacity: 1 !important;
- font-size: 12rem !important;
+  top: 39%;
+  bottom: 39%;
+  font-size: 12rem !important;
   &:hover{
     background: transparent !important;
   }
 }
-
+.carousel.carousel-slider .control-arrow{
+  top: 40% !important;
+  bottom: 40% !important;
+}
 .carousel .control-prev.control-arrow:before{
   border: solid black;
   border-width: 0 3px 3px 0;

@@ -41,7 +41,7 @@ export const getCart = () => async (dispatch) => {
       id: productIds?.[i]?.value?.data?.data?.product_id
         ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
         : 0,
-      src: r?.extension_attributes?.image,
+      src: r?.extension_attributes?.image.replace('index.php', ''),
     }));
     dispatch({
       type: DATA_TYPES.CART_EXTRA_INFO,
@@ -55,19 +55,6 @@ export const getCart = () => async (dispatch) => {
     dispatch({
       type: DATA_TYPES.SET_BULK_CART,
       payload: products,
-    });
-  } else if (res?.data?.["0"] && res?.data?.custom_data) {
-    dispatch({
-      type: DATA_TYPES.SINGLE_CART,
-      payload: res?.data?.["0"],
-    });
-    dispatch({
-      type: DATA_TYPES.CART_EXTRA_INFO,
-      payload: {
-        secure: res?.data?.custom_data?.["100_secure"],
-        hear: res?.data?.custom_data?.["letus-hear"],
-        we_offer: res?.data?.custom_data?.["we_offer"],
-      },
     });
   } else {
     dispatch(emptyCart());
