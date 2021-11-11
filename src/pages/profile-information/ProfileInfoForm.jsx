@@ -291,6 +291,7 @@ function ProfileInfoForm() {
             otpData={recivedOTPData}
             showMediaIcon={Boolean(false)}
             mobileNo={mobileNumber}
+            email = {values?.email}
           />
         </div>
       </Dialog>

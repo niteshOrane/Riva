@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";

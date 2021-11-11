@@ -43,7 +43,7 @@ export const getCart = () => async (dispatch) => {
 
   const res = await getCartService();
 
-  if (res && res.data && res.data.cart.length) {
+  if (res && res?.data && res?.data?.cart?.length) {
     const productIdPromises = res.data?.cart?.map((r) =>
       getProductIdBySku(r.sku)
     );

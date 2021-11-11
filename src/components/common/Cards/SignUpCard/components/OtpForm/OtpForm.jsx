@@ -94,7 +94,7 @@ const OtpForm = ({
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customer = new FormData();
     customer.append("phone", mobileNumber);
-
+    customer.append("customerInfo[email]", '');
     const res = await customerResendOtp(customer);
 
     if (res.status === 200) {
