@@ -35,7 +35,7 @@ const OtpForm = ({
 }) => {
   const dispatch = useDispatch();
   const currentLocation = useSelector((state) => state.common.currentLocation);
-  const [phoneValue, setPhoneValue] = useState()
+  const [phoneValue, setPhoneValue] = useState(mobileNo)
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -65,7 +65,7 @@ const OtpForm = ({
     customer.append("phone", phoneValue);
     customer.append("email", "");
     customer.append("name", "");
-
+    setMobileNumber(phoneValue)
     const res = await loginCustomerOTP(customer);
 
     if (res.status === 200) {
@@ -80,7 +80,7 @@ const OtpForm = ({
         const secondsTime = Math.ceil(divisor_for_seconds);
         setSeconds(secondsTime);
         setMinutes(minutesTime);
-        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
+        return dispatch(showSnackbar(`OTP Sent on ${phoneValue}`, "success"));
       } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
@@ -90,10 +90,10 @@ const OtpForm = ({
   };
   const reSendOTP = async (e) => {
     e.preventDefault();
-    if (!mobileNumber)
+    if (!phoneValue)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customer = new FormData();
-    customer.append("phone", mobileNumber);
+    customer.append("phone", phoneValue);
     customer.append("customerInfo[email]", '');
     const res = await customerResendOtp(customer);
 
@@ -109,7 +109,7 @@ const OtpForm = ({
         setSeconds(secondsTime);
         setMinutes(minutesTime);
         return dispatch(
-          showSnackbar(`OTP Sent on ${mobileNumber} or Email`, "success")
+          showSnackbar(`OTP Sent on ${phoneValue} or Email`, "success")
         );
       } else {
         return dispatch(showSnackbar(res?.data.message, "error"));
@@ -126,7 +126,7 @@ const OtpForm = ({
       onChangeMobileNumber(e, mobileOtp);
     } else {
       const customer = new FormData();
-      customer.append("phone", mobileNumber);
+      customer.append("phone", phoneValue);
       customer.append("otp", mobileOtp);
       customer.append("customerInfo", "");
 
@@ -206,7 +206,6 @@ const OtpForm = ({
           <div className="d-flex justify-content-between align-items-end">
             <div className="d-flex align-items-center my-12px">
               <div className = {styles.cntCode}>
-                {isdCodes?.find((li) => li?.countryCode === currency)?.isd}
                 <div className={styles.mobileIcon}>
                   <icons.Mobile />
                 </div>
@@ -214,7 +213,7 @@ const OtpForm = ({
               <div className="d-flex">
                 <div>
                   <p>Mobile Number</p>
-                  <p className="font-weight-600">{mobileNumber}</p>
+                  <p className="font-weight-600">{phoneValue}</p>
                 </div>
                 {hideMobileBox && minutes === 0 && seconds === 0 ? (
                   <span
