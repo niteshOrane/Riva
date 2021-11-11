@@ -116,7 +116,7 @@ export default function DetailTabs({
 }) {
   // const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [name, setName] = React.useState("mada debit card");
+  const [name, setName] = React.useState("Tap");
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -190,11 +190,11 @@ export default function DetailTabs({
       );
 
       let tabName;
-      if (value === 0) {
+      if (value === 1) {
         tabName = "renderPaymentformOne";
-      } else if (value === 2) {
+      } else if (value === 3) {
         tabName = "renderPaymentformThree";
-      } else if (value === 4) {
+      } else if (value === 5) {
         tabName = "renderPaymentformFive";
       }
       let menu = document.getElementById(tabName);
@@ -213,11 +213,11 @@ export default function DetailTabs({
   };
   useEffect(() => {
     let tabName;
-    if (value === 0) {
+    if (value === 1) {
       tabName = "renderPaymentformOne";
-    } else if (value === 2) {
+    } else if (value === 3) {
       tabName = "renderPaymentformThree";
-    } else if (value === 4) {
+    } else if (value === 5) {
       tabName = "renderPaymentformFive";
     }
     const isEmpty = document.getElementById(tabName)?.innerHTML === "";
@@ -227,28 +227,33 @@ export default function DetailTabs({
       item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
     }
   }, [value]);
- const handleChangeVal = (event, newValue) => {
-    setValue(newValue);
-    // handleChange()
-  };
+
   const handleChange = async (_, newValue) => {
     switch (newValue) {
       case 1:
         setValue(newValue);
-        getPaymentForTapCheckout(newValue);
+        getPaymentForHyperPay(newValue);
+        // setValue(newValue);
+        // getPaymentForTapCheckout(newValue);
         break;
       case 2:
-        setValue(newValue);
-        getPaymentForHyperPay(newValue);
+        // setValue(newValue);
+        // getPaymentForHyperPay(newValue);
+           setValue(newValue);
+        getPaymentForTapCheckout(newValue);
         break;
       case 3:
+        // setValue(newValue);
+        getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;
       case 4:
-        getPaymentForHyperPay(newValue);
+        // getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;
       case 5:
+        // setValue(newValue);
+        getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;
       default:
@@ -268,7 +273,7 @@ export default function DetailTabs({
     background: "#000",
     left: "0",
   };
- 
+
   const changeStyle = (fn) => {
     setName(fn);
   };
@@ -305,17 +310,20 @@ export default function DetailTabs({
         </Box>
         <div className={classes.tabContent}>
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
+            <GoSellTap />
+          </TabPanel>
+          <TabPanel className={styles.goSellWrap} value={value} index={1}>
             <div id="renderPaymentformOne">{renderPaymentform()}</div>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={2}>
             {paymentType && (
               <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
             )}
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          <TabPanel value={value} index={3}>
             <div id="renderPaymentformThree">{renderPaymentform()}</div>
           </TabPanel>
-          <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={4}>
             <GooglePay
               style={styles}
               id="renderPaymentformFour"
@@ -323,10 +331,10 @@ export default function DetailTabs({
               store={store}
             />
           </TabPanel>
-          <TabPanel value={value} index={4}>
+          <TabPanel value={value} index={5}>
             <div id="renderPaymentformFive">{renderPaymentform()}</div>
           </TabPanel>
-          <TabPanel value={value} index={5}>
+          <TabPanel value={value} index={6}>
             <ApplePay />
           </TabPanel>
         </div>

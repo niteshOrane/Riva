@@ -6,6 +6,9 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import * as icons from "../../../../Icons/Icons";
 import styles from "./Otp.module.scss";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'
+
 
 import { showSnackbar } from "../../../../../../store/actions/common";
 
@@ -31,6 +34,8 @@ const OtpForm = ({
   language,
 }) => {
   const dispatch = useDispatch();
+  const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState()
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
@@ -54,10 +59,10 @@ const OtpForm = ({
   };
   const sendOTP = async (e) => {
     e.preventDefault();
-    if (!mobileNumber)
+    if (!phoneValue)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customer = new FormData();
-    customer.append("phone", mobileNumber);
+    customer.append("phone", phoneValue);
     customer.append("email", "");
     customer.append("name", "");
 
@@ -264,14 +269,14 @@ const OtpForm = ({
             Mobile Number<span className={styles.star}>*</span>
           </p>
           <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-            <div className = "d-flex align-items-center">
+            {/* <div className = "d-flex align-items-center">
               <select className = {styles.isdSelect} value={isdState} onChange={(e) => setIsdState(e.target.value)}>
                 {isdCodes?.map(li => (
                   <option value={li?.isd}>{li?.isd}{" "}{li?.countryCode}</option>
                 ))}
               </select>
-            </div>
-            <input
+            </div> */}
+            {/* <input
               placeholder="Enter Mobile Number"
               type="text"
               name="mobileNumber"
@@ -279,6 +284,13 @@ const OtpForm = ({
               id="mobileNumber"
               maxLength={20}
               onChange={handleChange}
+            /> */}
+             <PhoneInput
+              placeholder="Enter Mobile Number"
+              value={phoneValue}
+              width="10px"
+              defaultCountry={currentLocation.country_code.toUpperCase()}
+              onChange={setPhoneValue}
             />
           </div>
           <button

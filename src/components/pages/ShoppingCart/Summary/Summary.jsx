@@ -6,7 +6,7 @@ import style from "./Summary.module.scss";
 import { toggleSignUpCard } from "../../../../store/actions/common";
 
 const Summary = ({ currency_symbol }) => {
-  const { data: items = [] } = useSelector((state) => state.cart);
+  const { data: items = [], freeShipping } = useSelector((state) => state.cart);
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
 
@@ -26,8 +26,10 @@ const Summary = ({ currency_symbol }) => {
           <p className="font-light-black">SUBTOTAL</p>
           <span>
             {currency_symbol}
-            {parseFloat(items.reduce((total, item) => total + item.price * item.qty, 0) ||
-              0)?.toFixed(2)}
+            {parseFloat(
+              items.reduce((total, item) => total + item.price * item.qty, 0) ||
+                0
+            )?.toFixed(2)}
           </span>
         </div>
         <div
@@ -46,6 +48,19 @@ const Summary = ({ currency_symbol }) => {
           <Link to="/delivery-address">
             <button type="button">SECURE CHECKOUT</button>
           </Link>
+        </div>
+        <div className="gap-12px bg-white d-flex align-items-center p-12px">
+          {!freeShipping?.[0]?.remaining_amount == 0 ? (
+            <div>
+              <span>
+                Spend {currency_symbol}
+                {freeShipping?.[0]?.remaining_amount}
+              </span>{" "}
+              to qualify for free standard delivery{" "}
+            </div>
+          ) : (
+            <div>You are eligible for free shipping</div>
+          )}
         </div>
         <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>

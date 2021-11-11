@@ -41,6 +41,8 @@ export const CART_INFO = 'CART_INFO';
 export const CART_EXTRA_INFO = "CART_EXTRA_INFO"
 export const SINGLE_CART = "SINGLE_CART"
 
+export const GET_FREE_SHIPPING = "GET_FREE_SHIPPING"
+
 // filters
 
 export const FILTER_PARAMS = "FILTER_PARAMS"

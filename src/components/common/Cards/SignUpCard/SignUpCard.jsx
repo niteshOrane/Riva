@@ -18,15 +18,17 @@ const SignUpCard = () => {
 
   const [forgetPassStyle, setForgetPassStyle] = useState(false);
   const [isForget, setIsForget] = useState(false);
+  const [isLoginWithOtp, setLoginWithOtp] = useState(false);
   const { language } = useSelector((state) => state?.common?.store);
 
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    setIsForget(false)
+    setIsForget(false);
     dispatch(toggleSignUpCard({ isOpen: false }));
   };
   const handleOtpForm = () => {
+    setLoginWithOtp(true);
     dispatch(toggleSignUpCard({ isOtp: true }));
   };
 
@@ -56,7 +58,13 @@ const SignUpCard = () => {
         {isForget ? (
           <h2 className={styles.title}>RESET PASSWORD</h2>
         ) : (
-          <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>
+          <h2 className={styles.title}>
+            {isLogin
+              ? "SIGN IN"
+              : isLoginWithOtp
+              ? "SIGNIN WITH OTP"
+              : "SIGN UP"}{" "}
+          </h2>
         )}
 
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}

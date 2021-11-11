@@ -12,8 +12,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-function GoSellTap({setLoading}) {
+function GoSellTap() {
   const { store_name } = useSelector((state) => state?.common?.store);
+  const [loading,setLoading] = useState(false)
   const callbackFunc = async (e) => {
     const subType = e.target.value;
     if (subType) {
@@ -57,9 +58,9 @@ function GoSellTap({setLoading}) {
         </FormControl>
         <br />
       </div>
-      {/* <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: "20px" }}>
         {loading && <strong>Redirecting to payments page...</strong>}
-      </div> */}
+      </div>
     </>
   );
 }

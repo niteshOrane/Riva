@@ -11,9 +11,10 @@ import { toggleSignUpCard } from '../../../store/actions/common';
 
 const Cart = () => {
 
-  const { data: items = [], isOpen = false,info,isSingle } = useSelector(
+  const { data: items = [], isOpen = false,freeShipping } = useSelector(
     (state) => state.cart
   );
+
 
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
@@ -174,8 +175,9 @@ const Cart = () => {
                     </span>
                   </div>
                   <p className={style.spend}>
-                    <span>Spend {currency_symbol}18.20</span> to quality
-                    for free standard delivery
+                    {!freeShipping?.[0]?.remaining_amount==0 ? (  <div><span>Spend {currency_symbol}{freeShipping?.[0]?.remaining_amount}</span> to qualify
+                    for free standard delivery </div>) : <div>You are eligible for free shipping</div>}
+                  
                   </p>
                   <div
                     className={`${style.exclamation} bg-grey border-radius-50 d-flex-all-center`}

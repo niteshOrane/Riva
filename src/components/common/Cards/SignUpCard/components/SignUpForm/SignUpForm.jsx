@@ -11,6 +11,7 @@ import {
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
 import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'
 import {
   createCustomer,
   createCustomerSocial,
@@ -190,12 +191,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
     }
   };
 
-  const escapeAlpha = (event) => {
-    console.log(event)
-    return (
-      event.keyCode === 8 || (event.charCode >= 48 && event.charCode <= 57)
-    );
-  };
 
   return (
     <form className={styles.form} onSubmit={userCreateHandler}>
@@ -284,6 +279,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
               width="10px"
               defaultCountry={currentLocation.country_code.toUpperCase()}
               onChange={setPhoneValue}
+              className={styles.signUpInput}
             />
           </div>
          

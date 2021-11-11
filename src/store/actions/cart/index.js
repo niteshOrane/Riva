@@ -6,6 +6,7 @@ import {
   editCartService,
   getProductIdBySku,
   getCartPaymentInfo,
+  getFreeShippingInfo,
 } from "../../../services/cart/cart.service";
 import { emptyCartItem, emptyCart } from "../auth";
 
@@ -28,21 +29,33 @@ export const getCustomerCartPayments = () => async (dispatch) => {
   } else dispatch(getCartPaymentInfo_action([]));
 };
 
+export const calculateFreeShipping = () => async (dispatch) => {
+  const freeShippingInfo = await getFreeShippingInfo(getCartId());
+  if (freeShippingInfo?.data) {
+    dispatch({
+      type: DATA_TYPES.GET_FREE_SHIPPING,
+      payload: freeShippingInfo?.data,
+    });
+  }
+};
 export const getCart = () => async (dispatch) => {
   //if (getCartId() && getCartId() !== '0') {
 
   const res = await getCartService();
 
   if (res && res.data && res.data.cart.length) {
-    const productIdPromises = res.data?.cart?.map((r) => getProductIdBySku(r.sku));
+    const productIdPromises = res.data?.cart?.map((r) =>
+      getProductIdBySku(r.sku)
+    );
     const productIds = await Promise.allSettled(productIdPromises);
     const products = res?.data?.cart?.map((r, i) => ({
       ...r,
       id: productIds?.[i]?.value?.data?.data?.product_id
         ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
         : 0,
-      src: r?.extension_attributes?.image.replace('index.php', ''),
+      src: r?.extension_attributes?.image.replace("index.php", ""),
     }));
+
     dispatch({
       type: DATA_TYPES.CART_EXTRA_INFO,
       payload: {
@@ -51,7 +64,7 @@ export const getCart = () => async (dispatch) => {
         we_offer: res?.data?.["we_offer"],
       },
     });
-
+    dispatch(calculateFreeShipping());
     dispatch({
       type: DATA_TYPES.SET_BULK_CART,
       payload: products,
@@ -97,6 +110,7 @@ export const removeFromCart = (data) => async (dispatch) => {
 
   if (res && res.status === 200 && res.data) {
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
+    dispatch(calculateFreeShipping())
     dispatch(showSnackbar("item removed from cart successfully", "success"));
   } else dispatch(showSnackbar("something went wrong", "error"));
 };

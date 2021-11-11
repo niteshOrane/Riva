@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../OtpForm/Otp.module.scss";
-import { PhoneNumberUtil } from 'google-libphonenumber';
+import { PhoneNumberUtil } from "google-libphonenumber";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -122,32 +122,22 @@ export default function TransitionsModal({
     }
     if (!value.phone) {
       errorVal.phone = "Phone is required";
-      return dispatch(
-        showSnackbar(
-          "Phone is required",
-          "error"
-        )
-      );
+      // return dispatch(
+      //   showSnackbar(
+      //     "Phone is required",
+      //     "error"
+      //   )
+      // );
     } else {
       let valid = false;
       try {
         const phoneUtil = PhoneNumberUtil.getInstance();
         valid = phoneUtil.isValidNumber(phoneUtil.parse(value.phone));
         if (!valid) {
-          return dispatch(
-            showSnackbar(
-              "Invalid Contact Phone With Country",
-              "error"
-            )
-          );
+          errorVal.phone = "Invalid Contact Phone With Country";
         }
       } catch (e) {
-        return dispatch(
-          showSnackbar(
-            "Invalid Contact Phone With Country",
-            "error"
-          )
-        );
+        errorVal.phone = "Invalid Contact Phone With Country";
       }
     }
     if (!value.name) {
@@ -316,7 +306,7 @@ export default function TransitionsModal({
               <div>
                 <icons.Mobile />
               </div>
-              <div className="d-flex">
+              <div className="d-flex justify-content-between w-100">
                 <div className={classes.para}>
                   <p>Mobile Number</p>
                   <p>{formData.phone}</p>
@@ -340,8 +330,11 @@ export default function TransitionsModal({
                 <img src="/assets/images/signOtp.png" alt="otp-icon" />
                 <input
                   onChange={(e) => setUserOtp(e.target.value)}
-                  className={classes.otpInput}
+                  className={styles.signUpInput}
                   placeholder="Enter OTP"
+                  type="number"
+
+                  onKeyDown={ e => ( e.keyCode === 69 || e.keyCode === 190 ) && e.preventDefault() }
                 />
 
                 {minutes === 0 && seconds === 0 ? null : (
