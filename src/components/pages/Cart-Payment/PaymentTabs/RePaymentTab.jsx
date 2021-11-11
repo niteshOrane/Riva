@@ -161,9 +161,8 @@ export default function DetailTabs({
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
+        }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -240,7 +239,7 @@ export default function DetailTabs({
       case 2:
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
-           setValue(newValue);
+        setValue(newValue);
         getPaymentForTapCheckout(newValue);
         break;
       case 3:
@@ -289,15 +288,16 @@ export default function DetailTabs({
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
-            className={`${styles.reGrid}`}
+            classes={styles.reGrid}
             variant="scrollable"
             orientation="horizontal"
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
             TabIndicatorProps={{ style: selectedIndicatorStyle }}
           >
             {paymentMethod?.map((li, idx) => (
               <Tab
                 onClick={() => changeStyle(li?.title)}
-                className={styles.rePayment}
+                classes={styles.rePayment}
                 label={li.title}
                 style={{
                   background: li?.title === name ? "#676666" : null,
