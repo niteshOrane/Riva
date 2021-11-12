@@ -309,7 +309,7 @@ export default function DetailTabs({
                   boxShadow:"0 2px 2px 0 rgba(0, 0, 0, 0.16)",
                 }}
                 {...a11yProps(idx)}
-              > <div className={styles.rePaymenttitle}>{li.title}</div></div>
+              > <div className={styles.rePaymenttitle}>{li.title?.toUpperCase()}</div></div>
             ))}
           </div>
         </Box>
