@@ -71,3 +71,17 @@
   cursor: pointer;
   @include left('margin', 10px)
 }
+// .inputIsd{
+//   padding: 10px !important;
+//   width: 100%;
+//   font-size: 1rem;
+//   border: none;
+//   outline: none;
+// }
+
+.isdDel{
+  input{
+    border: none;
+    outline: none;
+  }
+}
