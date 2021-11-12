@@ -18,9 +18,13 @@ import {
   loginCustomerOTP,
 } from "../../services/auth/auth.service";
 import { getCustId, getStoreId } from "../../util";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
+  const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState();
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
@@ -62,7 +66,7 @@ function ProfileInfoForm() {
     cust.append("customerInfo[lastname]", values.lastname);
     cust.append("customerInfo[dob]", values.dob);
     cust.append("customerInfo[gender]", values.gender);
-    cust.append("customerInfo[mobile_number]", values.mobile_number);
+    cust.append("customerInfo[mobile_number]", phoneValue);
     cust.append("customerInfo[storeId]", getStoreId());
 
     const res = await profileUpdate(cust);
@@ -107,10 +111,10 @@ function ProfileInfoForm() {
   }, [recivedOTPData]);
   const onSendOTP = async (e) => {
     e.preventDefault();
-    if (!mobileNumber)
+    if (!phoneValue)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customerSendOTP = new FormData();
-    customerSendOTP.append("phone", mobileNumber);
+    customerSendOTP.append("phone", phoneValue);
     customerSendOTP.append("email", "");
     customerSendOTP.append("name", values?.firstname);
 
@@ -119,12 +123,7 @@ function ProfileInfoForm() {
     if (res.status === 200) {
       if (res?.data?.success) {
         setRecivedOTPData(res?.data.data);
-        return dispatch(
-          showSnackbar(
-            `OTP Sent on ${mobileNumber}`,
-            "success"
-          )
-        );
+        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
       } else if (res?.data.message) {
         return dispatch(showSnackbar(res?.data.message, "error"));
       } else {
@@ -140,7 +139,7 @@ function ProfileInfoForm() {
         <form onSubmit={handleSubmit} className="user-sign-in-form">
           <article className="inner-form-wrapper">
             <section>
-              <div className>
+              <div className="boxProfileInfo">
                 <label className="profile-label">First Name</label>
                 <input
                   value={values?.firstname}
@@ -148,7 +147,7 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div style={{ marginLeft: "2rem" }}>
+              <div  className="boxProfileInfo" style={{ marginLeft: "2rem" }}>
                 <label className="profile-label">Last Name</label>
                 <input
                   name="lastname"
@@ -158,7 +157,7 @@ function ProfileInfoForm() {
               </div>
             </section>
             <section>
-              <div className>
+              <div className="boxProfileInfo">
                 <label className="profile-label">Email</label>
                 <input
                   readOnly
@@ -168,16 +167,24 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div style={{ marginLeft: "2rem" }}>
-                <label className="profile-label">Mobile Number</label>
+              <div className = "isdInfoBox" style={{ marginLeft: "2rem" }}>
+                <label className="profile-label-mobile">Mobile Number</label>
                 <div
-                  className={`d-flex align-items-center inpContainer positionWrap`}
+                  className={`inpContainer positionWrap`}
                 >
-                  <input
+                  {/* <input
                     name="mobile_number"
                     readOnly={!isEdit}
                     value={isEdit ? mobileNumber : values?.mobile_number}
                     onChange={handleChangeMobile}
+                  /> */}
+                  <PhoneInput
+                    placeholder="Enter Mobile Number"
+                    value={isEdit ? mobileNumber : phoneValue}
+                    readOnly={!isEdit}
+                    defaultCountry={currentLocation.country_code.toUpperCase()}
+                    onChange={setPhoneValue}
+                    width="100%"
                   />
                   {isEdit ? (
                     <>
@@ -249,7 +256,7 @@ function ProfileInfoForm() {
               </FormControl>
             </section>
             <section>
-              <div style={{ position: "relative" }}>
+              <div  className="boxProfileInfo" style={{ position: "relative" }}>
                 <label className="profile-label">Date of Birth</label>
                 <input
                   type="date"
@@ -291,7 +298,7 @@ function ProfileInfoForm() {
             otpData={recivedOTPData}
             showMediaIcon={Boolean(false)}
             mobileNo={mobileNumber}
-            email = {values?.email}
+            email={values?.email}
           />
         </div>
       </Dialog>

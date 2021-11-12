@@ -6,7 +6,7 @@ import styles from "./DashboardData.module.scss";
 
 const DashboardData = () => {
   const { customer, socialDetails } = useSelector((state) => state.auth);
-  console.log({ customer,socialDetails });
+  // console.log({ customer,socialDetails });
   return (
     <div>
       <div className={styles.header}>
@@ -23,7 +23,7 @@ const DashboardData = () => {
               <span>
                 Hello,{" "}
                 {!socialDetails?.isSocial ? ( <b>
-                  {`${customer.firstname} ${customer.lastname}` ?? "unknown"}
+                  {`${customer.firstname}` ?? "unknown"}
                 </b>): (
                   <b>{customer?.username}</b>
                 )}

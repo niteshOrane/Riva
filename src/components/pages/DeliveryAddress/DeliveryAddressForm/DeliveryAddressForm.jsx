@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./DeliveryAddressForm.module.scss";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
 import { getCustId } from "../../../../util";
+
 import { showSnackbar } from "../../../../store/actions/common";
 import {
   addCustomerAddress,
@@ -18,6 +22,8 @@ import LoaderButton from "../../../common/Buttons/LoaderButton";
 
 function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const dispatch = useDispatch();
+  const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,13 +36,13 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     block: "",
     houseName: "",
     defaultAddess: true,
-    judda:"",
-    floorNumber:"",
-    buildingName:"",
+    judda: "",
+    floorNumber: "",
+    buildingName: "",
     id: 0,
     country: "",
   });
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
 
@@ -58,7 +64,10 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
   const getAddress = async (lat, lng) => {
     const res = await getAddressByLocation(lat, lng);
     if (res.status === 200) {
-      setUserAddress(res?.data?.data?.find(li => li?.postal_code !== null) || res?.data?.data[0]);
+      setUserAddress(
+        res?.data?.data?.find((li) => li?.postal_code !== null) ||
+          res?.data?.data[0]
+      );
     }
   };
   useEffect(() => {
@@ -90,7 +99,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         street: userAddress?.label,
         city: userAddress?.locality,
         block: userAddress?.name,
-        pincode:userAddress?.postal_code || ""
+        pincode: userAddress?.postal_code || "",
       });
     }
   }, [userAddress]);
@@ -116,23 +125,24 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       houseName: "",
       defaultAddess: true,
       country: "",
-      judda:"",
-      floorNumber:"",
-      buildingName:"",
+      judda: "",
+      floorNumber: "",
+      buildingName: "",
     });
+    setPhoneValue(null)
     if (onAfterSaveEdit) {
       onAfterSaveEdit();
     }
   };
   const addAddress = (item, id) => async () => {
-    setLoading(true)
+    setLoading(true);
     const res = await (id
       ? updateCustomerAddress(item)
       : addCustomerAddress(item));
     if (res.data.success) {
       dispatch(addNewAddress(res, item));
       clearAll();
-      setLoading(false)
+      setLoading(false);
       if (onAfterSaveEdit) {
         onAfterSaveEdit();
       }
@@ -143,13 +153,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           "error"
         )
       );
-      setLoading(false)
+      setLoading(false);
     }
   };
   useEffect(() => {
     formData.firstName = customerData?.name?.split(" ")?.[0];
     formData.lastName = customerData?.name?.split(" ")?.[1];
-    formData.mobile = customerData?.phone;
+    // formData.mobile = customerData?.phone;
+
     formData.pincode = customerData?.postcode;
     formData.id = customerData?.id;
     formData.block = customerData?.street?.split(" ")?.[0];
@@ -159,6 +170,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.judda = customerData?.judda;
     formData.buildingName = customerData?.buildingName;
     formData.buildingName = customerData?.buildingName;
+    setPhoneValue(customerData?.phone);
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
   const handleChange = (e) => {
@@ -218,7 +230,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!street) {
       return dispatch(showSnackbar("Street is Required", "error"));
     }
-    if (!mobile) {
+    if (!phoneValue) {
       return dispatch(showSnackbar("mobile Require", "error"));
     }
     if (!judda) {
@@ -230,11 +242,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!buildingName) {
       return dispatch(showSnackbar("building name is required", "error"));
     }
-    if (mobile.length !== 10) {
-      return dispatch(
-        showSnackbar("Mobile number must be 10 numbers long", "error")
-      );
-    }
+    // if (mobile.length !== 10) {
+    //   return dispatch(
+    //     showSnackbar("Mobile number must be 10 numbers long", "error")
+    //   );
+    // }
 
     form.append("customerid", getCustId());
     if (id) {
@@ -244,7 +256,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("customerAddress[pincode]", pincode);
     form.append("customerAddress[city]", city);
     form.append("customerAddress[state]", state);
-    form.append("customerAddress[telephone]", mobile);
+    form.append("customerAddress[telephone]", phoneValue);
     form.append("customerAddress[street]", `${block} ${houseName}`);
     form.append("customerAddress[street1]", street);
     form.append("customerAddress[country]", country);
@@ -261,14 +273,16 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     <>
       <div>
         <div
-        style={{marginBottom:"10px"}}
+          style={{ marginBottom: "10px" }}
           onClick={getLatLng}
           className="font-weight-normal d-flex c-pointer"
         >
           <div className="location-icon">
             <icons.LocationFlag />
           </div>
-          <div style={{marginLeft:"2rem"}} className="location-map">USE MY CURRENT LOCATION</div>
+          <div style={{ marginLeft: "2rem" }} className="location-map">
+            USE MY CURRENT LOCATION
+          </div>
         </div>
       </div>
       <form className={styles.form} id="addNewAddress">
@@ -466,16 +480,13 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               Mobile Number<span className={styles.star}>*</span>
             </p>
-            <div className="d-flex align-items-center w-100 position-relative">
-              <span className={styles.mobileCode}>+374</span>
-              <input
-                type="mobile"
-                value={mobile}
-                maxLength={15}
-                className={`${styles.input} ${styles.mobileInput}`}
-                name="mobile"
-                id="mobile"
-                onChange={handleChange}
+            <div className={`d-flex align-items-center w-100 position-relative ${styles.isdDel}`}>
+              <PhoneInput
+                placeholder="Enter Mobile Number"
+                value={phoneValue}
+                defaultCountry={currentLocation.country_code.toUpperCase()}
+                onChange={setPhoneValue}
+                className={styles.input}
               />
             </div>
           </div>
@@ -497,7 +508,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         <LoaderButton
           onClick={addAddressHandler}
           loading={loading}
-          value = {id ? "UPDATE ADDRESS" : "ADD ADDRESS"}
+          value={id ? "UPDATE ADDRESS" : "ADD ADDRESS"}
           className={styles.addAddressBtn}
         >
           {id ? "UPDATE" : "ADD"} ADDRESS

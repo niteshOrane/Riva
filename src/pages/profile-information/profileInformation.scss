@@ -3,13 +3,13 @@
   margin-top:1rem;
 }
 .user-sign-in-form {
-  div {
+  .boxProfileInfo {
     display: flex;
     flex-direction: column;
   }
   input {
     height: 2.5rem;
-    width: 25rem;
+    width: 24rem;
     margin:0.51rem 0rem;
     padding-left: 5px;
   }
@@ -22,6 +22,14 @@
       color: gray;
   }
 }
+.profile-label-mobile{
+  margin-left: 2.5rem;
+  color: black !important
+}
+// .isdInfoBox{
+//   display: flex !important;
+//   flex-direction: row !important;
+// }
 .registration-form-wrapper{
     // border: 1px solid black; 
     width: 35rem;
