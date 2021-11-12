@@ -161,8 +161,9 @@ export default function DetailTabs({
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${paymentMode[fnValue].code
-        }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
+      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        paymentMode[fnValue].code
+      }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
     };
     await axios(config).then((res) => {
@@ -229,13 +230,12 @@ export default function DetailTabs({
   }, [value]);
 
   const handleChange = async (newValue) => {
-   
     switch (newValue) {
       case 1:
-        setValue(newValue);
-        getPaymentForHyperPay(newValue);
         // setValue(newValue);
-        // getPaymentForTapCheckout(newValue);
+        // getPaymentForHyperPay(newValue);
+        setValue(newValue);
+        getPaymentForTapCheckout(newValue);
         break;
       case 2:
         // setValue(newValue);
@@ -276,7 +276,7 @@ export default function DetailTabs({
   };
 
   const changeStyle = (fn, newValue) => {
-    handleChange(newValue)
+    handleChange(newValue);
     setName(fn);
   };
 
@@ -290,39 +290,41 @@ export default function DetailTabs({
             value={value}
             className={styles.reGrid}
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr'
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
             }}
           >
-
             {paymentMethod?.map((li, idx) => (
               <div
                 onClick={() => changeStyle(li?.title, idx)}
                 className={styles.rePayment}
-                label={li.title}
+                label={li?.title}
                 style={{
                   background: li?.title === name ? "#676666" : null,
                   color: li?.title === name ? "#ffffff" : "#000000",
                   marginBottom: "0.5rem",
-                  marginRight:"10px",
-                  borderRadius:"4px",
-                  boxShadow:"0 2px 2px 0 rgba(0, 0, 0, 0.16)",
+                  marginRight: "10px",
+                  borderRadius: "4px",
+                  boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.16)",
                 }}
                 {...a11yProps(idx)}
-              > <div className={styles.rePaymenttitle}>{li.title}</div></div>
+              >
+                {" "}
+                <div className={styles.rePaymenttitle}>{li?.title}</div>
+              </div>
             ))}
           </div>
         </Box>
 
         <div className={classes.tabContent}>
-          <div className = {styles.payName}>{name?.toUpperCase()}</div>
+          <div className={styles.payName}>{name?.toUpperCase()}</div>
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
             <GoSellTap />
           </TabPanel>
-          < TabPanel className={styles.goSellWrap} value={value} index={1}>
+          < TabPanel className={styles.goSellWrap} value={value} index={2}>
             <div id="renderPaymentformOne">{renderPaymentform()}</div>
           </TabPanel>
-          < TabPanel value={value} index={2}>
+          < TabPanel value={value} index={1}>
             {paymentType && (
               <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
             )}
@@ -344,6 +346,25 @@ export default function DetailTabs({
           <TabPanel value={value} index={6}>
             <ApplePay />
           </TabPanel>
+          {/* {paymentMethod?.map((li) => {
+            if (li?.code === "tap")
+              return (
+                <TabPanel className={styles.goSellWrap} value={value} index={0}>
+                  <GoSellTap />
+                </TabPanel>
+              );
+            if (li?.code === "checkoutcom_card_payment")
+              return (
+                <TabPanel value={value} index={2}>
+                  {paymentType && (
+                    <Tab2Content
+                      onPayNow={onPayNow}
+                      paymentType={paymentType}
+                    />
+                  )}
+                </TabPanel>
+              );
+          })} */}
         </div>
       </Box>
     </>
