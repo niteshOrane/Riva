@@ -107,12 +107,25 @@
 .rePayment {
   width: 250px !important;
   height: 45px !important;
-  // margin: 17px 10px 9px 86px !important;
-  padding: 17px 69px 13px;
+  padding: 13px 0px 13px;
   border-radius: 4px !important;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16) !important;
-  background-color: #676666;
-
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #cbc7c7;
+  text-align: center;
+  cursor:  pointer !important;
+}
+.rePaymentTitle{
+  width: 215px;
+  height: 15px;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.46;
+  letter-spacing: normal;
+  text-align: center;
+  color: #343232;
 }
 .choose {
   width: 290px;
@@ -130,9 +143,13 @@
   color: #000;
 }
 .reGrid{
-  display: grid !important;
-  grid-template-columns: 1fr 1fr 1fr !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 .payWith{
   margin-bottom: 1.5rem;
+}
+
+.payName{
+  margin-top: 20px;
 }

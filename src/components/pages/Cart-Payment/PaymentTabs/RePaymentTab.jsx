@@ -228,7 +228,8 @@ export default function DetailTabs({
     }
   }, [value]);
 
-  const handleChange = async (_, newValue) => {
+  const handleChange = async (newValue) => {
+   
     switch (newValue) {
       case 1:
         setValue(newValue);
@@ -274,7 +275,8 @@ export default function DetailTabs({
     left: "0",
   };
 
-  const changeStyle = (fn) => {
+  const changeStyle = (fn, newValue) => {
+    handleChange(newValue)
     setName(fn);
   };
 
@@ -284,42 +286,43 @@ export default function DetailTabs({
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <h5 className={styles.payWith}>Pay With</h5>
-          <Tabs
+          <div
             value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-            classes={styles.reGrid}
-            variant="scrollable"
-            orientation="horizontal"
-            // style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
-            TabIndicatorProps={{ style: selectedIndicatorStyle }}
+            className={styles.reGrid}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr 1fr'
+            }}
           >
+
             {paymentMethod?.map((li, idx) => (
               <div
-                onClick={() => changeStyle(li?.title)}
+                onClick={() => changeStyle(li?.title, idx)}
                 className={styles.rePayment}
                 label={li.title}
                 style={{
                   background: li?.title === name ? "#676666" : null,
                   color: li?.title === name ? "#ffffff" : "#000000",
-                  marginBottom: "1.5rem",
+                  marginBottom: "0.5rem",
                   marginRight:"10px",
                   borderRadius:"4px",
                   boxShadow:"0 2px 2px 0 rgba(0, 0, 0, 0.16)",
                 }}
                 {...a11yProps(idx)}
-              />
+              > <div className={styles.rePaymenttitle}>{li.title}</div></div>
             ))}
-          </Tabs>
+          </div>
         </Box>
+
         <div className={classes.tabContent}>
+          <div className = {styles.payName}>{name?.toUpperCase()}</div>
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
             <GoSellTap />
           </TabPanel>
-          <TabPanel className={styles.goSellWrap} value={value} index={1}>
+          < TabPanel className={styles.goSellWrap} value={value} index={1}>
             <div id="renderPaymentformOne">{renderPaymentform()}</div>
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          < TabPanel value={value} index={2}>
             {paymentType && (
               <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
             )}
