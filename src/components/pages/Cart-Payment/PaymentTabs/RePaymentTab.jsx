@@ -295,9 +295,9 @@ export default function DetailTabs({
             TabIndicatorProps={{ style: selectedIndicatorStyle }}
           >
             {paymentMethod?.map((li, idx) => (
-              <Tab
+              <div
                 onClick={() => changeStyle(li?.title)}
-                classes={styles.rePayment}
+                className={styles.rePayment}
                 label={li.title}
                 style={{
                   background: li?.title === name ? "#676666" : null,
