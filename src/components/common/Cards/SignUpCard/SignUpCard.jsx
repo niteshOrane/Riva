@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 import * as icons from "../../Icons/Icons";
@@ -24,9 +24,15 @@ const SignUpCard = () => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    setIsForget(false);
     dispatch(toggleSignUpCard({ isOpen: false }));
+    // setIsForget(false);
+    setLoginWithOtp(false)
   };
+  useEffect(() => {
+    if(isOpen){
+      setIsForget(false)
+    }
+  }, [isOpen])
   const handleOtpForm = () => {
     setLoginWithOtp(true);
     dispatch(toggleSignUpCard({ isOtp: true }));
@@ -57,14 +63,10 @@ const SignUpCard = () => {
         </button>
         {isForget ? (
           <h2 className={styles.title}>RESET PASSWORD</h2>
+        ) : isLoginWithOtp ? (
+          <h2 className={styles.title}>SIGNIN WITH OTP</h2>
         ) : (
-          <h2 className={styles.title}>
-            {isLogin
-              ? "SIGN IN"
-              : isLoginWithOtp
-              ? "SIGNIN WITH OTP"
-              : "SIGN UP"}{" "}
-          </h2>
+          <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>
         )}
 
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
@@ -81,7 +83,7 @@ const SignUpCard = () => {
             <SignUpForm handleSubmit={handleSubmit} language={language} />
           )
         ) : (
-          <OtpForm handleSubmit={handleClose} language={language} />
+          <OtpForm handleSubmit={handleClose} language={language} setLoginWithOtp={setLoginWithOtp} />
         )}
       </div>
     </Dialog>

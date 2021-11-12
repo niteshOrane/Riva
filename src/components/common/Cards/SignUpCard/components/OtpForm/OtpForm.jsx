@@ -10,7 +10,7 @@ import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css'
 
 
-import { showSnackbar } from "../../../../../../store/actions/common";
+import { showSnackbar, toggleSignUpCard } from "../../../../../../store/actions/common";
 
 import { getCart } from "../../../../../../store/actions/cart";
 
@@ -32,6 +32,7 @@ const OtpForm = ({
   mobileNo = "",
   otpData = "",
   language,
+  setLoginWithOtp
 }) => {
   const dispatch = useDispatch();
   const currentLocation = useSelector((state) => state.common.currentLocation);
@@ -56,6 +57,10 @@ const OtpForm = ({
   };
   const handleChangeOTP = (e) => {
     setMobileOtp(e.target.value);
+  };
+  const setSignUpForm = () => {
+    dispatch(toggleSignUpCard({ isLogin: false }));
+    setLoginWithOtp(false)
   };
   const sendOTP = async (e) => {
     e.preventDefault();
@@ -374,7 +379,7 @@ const OtpForm = ({
             <div className={styles.signInLink}>
               <p>
                 Create an account?{" "}
-                <strong className="c-pointer">Sign Up</strong>
+                <strong className="c-pointer" onClick={() => setSignUpForm()}>Sign Up</strong>
               </p>
             </div>
           </div>

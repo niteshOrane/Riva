@@ -291,7 +291,7 @@ export default function DetailTabs({
             classes={styles.reGrid}
             variant="scrollable"
             orientation="horizontal"
-            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
+            // style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}
             TabIndicatorProps={{ style: selectedIndicatorStyle }}
           >
             {paymentMethod?.map((li, idx) => (
@@ -303,6 +303,9 @@ export default function DetailTabs({
                   background: li?.title === name ? "#676666" : null,
                   color: li?.title === name ? "#ffffff" : "#000000",
                   marginBottom: "1.5rem",
+                  marginRight:"10px",
+                  borderRadius:"4px",
+                  boxShadow:"0 2px 2px 0 rgba(0, 0, 0, 0.16)",
                 }}
                 {...a11yProps(idx)}
               />
