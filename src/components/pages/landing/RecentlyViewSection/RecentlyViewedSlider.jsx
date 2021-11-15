@@ -13,7 +13,7 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
 
   useEffect(() => {
     if (items.length) {
-      setRecentlyViewed(items);
+      setRecentlyViewed(items?.reverse());
     }
   }, [items]);
 

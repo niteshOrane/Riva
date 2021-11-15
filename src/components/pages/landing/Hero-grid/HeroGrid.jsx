@@ -10,6 +10,7 @@ import style from "./HeroGrid.module.scss";
 
 const HeroGrid = ({ btfLeft, btfRight, loading }) => {
   const { language } = useSelector((state) => state?.common?.store);
+  // console.log({btfLeft})
   return (
     <div className={`${style.grid} container-with-circles`}>
       <div

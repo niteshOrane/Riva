@@ -5,6 +5,7 @@ import Slider from '../../../common/Sliders/Slider';
 import Image from '../../../common/LazyImage/Image';
 
 const SlideBanner = ({ banners = [] }) => {
+  console.log(banners)
   return (
     <div className={style.slider}>
       <Slider
@@ -12,7 +13,7 @@ const SlideBanner = ({ banners = [] }) => {
         items={banners}
         slidesToShow={1}
         render={(item) => (
-          <a href={`${banners?.url_banner || ''}`}>
+          <a href={`${item?.url_banner || ''}`}>
             <div
               className={`${style.slide} text-center d-flex-all-center flex-column`}
             >
@@ -22,7 +23,7 @@ const SlideBanner = ({ banners = [] }) => {
                 alt=""
               />
               <div className={style.overlay}>
-                <a href="/" className={style.overlay}>
+                <a href={`${item?.url_banner || ''}`} className={style.overlay}>
                   <div className={`${style.sliderTxt} text-center `}>
                     <h2 className="color-white">{item?.title?.toUpperCase()}</h2>
                     <p className="color-white">

@@ -136,7 +136,7 @@ const HomeHeroGrid = (props) => {
           </div>
         </div>
       ) : (
-        <div style={{ margin: "0% auto" }}>
+        <div style={{ margin: "0% auto",paddingBottom:"2rem" }}>
           <section className="banner-grid-wrapper"
           >
             <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory.find(e => e?.name?.toLowerCase() === itemsImage.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>

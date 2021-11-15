@@ -43,9 +43,11 @@ function Card({
         <p className={`font-size-600 ${styles.boldFont}`}>{name}</p>
       </div>
       <div className="d-flex align-items-center gap-12px">
-        <s className="color-grey">
-          Was {currency_symbol} {parseFloat(priceWas)?.toFixed(2)}
-        </s>
+        {priceWas !== priceIs && (
+          <s className="color-grey">
+            Was {currency_symbol} {parseFloat(priceWas)?.toFixed(2)}
+          </s>
+        )}
         &nbsp; &nbsp;
         <span>
           Now {currency_symbol}{" "}

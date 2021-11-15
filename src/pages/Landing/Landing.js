@@ -37,7 +37,6 @@ function Landing() {
     }
   };
 
-  console.log({loading})
 
   useEffect(() => {
     getIgBanners();

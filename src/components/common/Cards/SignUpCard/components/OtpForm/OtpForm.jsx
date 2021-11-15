@@ -6,11 +6,13 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import * as icons from "../../../../Icons/Icons";
 import styles from "./Otp.module.scss";
-import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css'
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
-
-import { showSnackbar, toggleSignUpCard } from "../../../../../../store/actions/common";
+import {
+  showSnackbar,
+  toggleSignUpCard,
+} from "../../../../../../store/actions/common";
 
 import { getCart } from "../../../../../../store/actions/cart";
 
@@ -32,16 +34,20 @@ const OtpForm = ({
   mobileNo = "",
   otpData = "",
   language,
-  setLoginWithOtp
+  setLoginWithOtp,
 }) => {
   const dispatch = useDispatch();
+  const [error, setError] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
-  const [phoneValue, setPhoneValue] = useState(mobileNo)
+  const [phoneValue, setPhoneValue] = useState(mobileNo);
+  const [loading, setLoading] = useState(false);
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
   const { currency } = useSelector((state) => state?.common?.store);
-  const [isdState,setIsdState] = useState(isdCodes?.find((li) => li?.countryCode === currency)?.isd)
+  const [isdState, setIsdState] = useState(
+    isdCodes?.find((li) => li?.countryCode === currency)?.isd
+  );
   const history = useHistory();
   const [mobileNumber, setMobileNumber] = useState(mobileNo);
   const [mobileOtp, setMobileOtp] = useState("");
@@ -60,22 +66,25 @@ const OtpForm = ({
   };
   const setSignUpForm = () => {
     dispatch(toggleSignUpCard({ isLogin: false }));
-    setLoginWithOtp(false)
+    setLoginWithOtp(false);
   };
   const sendOTP = async (e) => {
     e.preventDefault();
-    if (!phoneValue)
-      return dispatch(showSnackbar("Mobile Number are required", "warning"));
+    if (!phoneValue) return setError(true);
+    setError(false);
+    setLoading(true);
     const customer = new FormData();
     customer.append("phone", phoneValue);
     customer.append("email", "");
     customer.append("name", "");
-    setMobileNumber(phoneValue)
+    setMobileNumber(phoneValue);
     const res = await loginCustomerOTP(customer);
 
     if (res.status === 200) {
       if (res?.data?.success) {
+        setLoading(false);
         setHideMobileBox(true);
+
         setRecivedOTPData(res?.data.data);
 
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
@@ -87,9 +96,11 @@ const OtpForm = ({
         setMinutes(minutesTime);
         return dispatch(showSnackbar(`OTP Sent on ${phoneValue}`, "success"));
       } else {
+        setLoading(false);
         return dispatch(showSnackbar(res?.data.message, "error"));
       }
     } else {
+      setLoading(false);
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
@@ -99,7 +110,7 @@ const OtpForm = ({
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
     const customer = new FormData();
     customer.append("phone", phoneValue);
-    customer.append("customerInfo[email]", '');
+    customer.append("customerInfo[email]", "");
     const res = await customerResendOtp(customer);
 
     if (res.status === 200) {
@@ -210,7 +221,7 @@ const OtpForm = ({
         <form>
           <div className="d-flex justify-content-between align-items-end">
             <div className="d-flex align-items-center my-12px">
-              <div className = {styles.cntCode}>
+              <div className={styles.cntCode}>
                 <div className={styles.mobileIcon}>
                   <icons.Mobile />
                 </div>
@@ -243,12 +254,15 @@ const OtpForm = ({
             </div>
             <input
               placeholder="Enter OTP"
-              type="text"
+              type="number"
               name="mobileOtp"
               autoComplete={false}
               value={mobileOtp}
               id="mobileOtp"
               onChange={handleChangeOTP}
+              onKeyDown={(e) =>
+                (e.keyCode === 69 || e.keyCode === 190) && e.preventDefault()
+              }
             />
             {minutes === 0 && seconds === 0 ? null : (
               <span>
@@ -272,7 +286,10 @@ const OtpForm = ({
           <p className="mt-12px">
             Mobile Number<span className={styles.star}>*</span>
           </p>
-          <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <div
+            style={{ border: error ? "1px solid red" : null }}
+            className={`d-flex align-items-center ${styles.inpContainer}`}
+          >
             {/* <div className = "d-flex align-items-center">
               <select className = {styles.isdSelect} value={isdState} onChange={(e) => setIsdState(e.target.value)}>
                 {isdCodes?.map(li => (
@@ -289,7 +306,7 @@ const OtpForm = ({
               maxLength={20}
               onChange={handleChange}
             /> */}
-             <PhoneInput
+            <PhoneInput
               placeholder="Enter Mobile Number"
               value={phoneValue}
               width="10px"
@@ -297,6 +314,11 @@ const OtpForm = ({
               onChange={setPhoneValue}
             />
           </div>
+          {error && (
+            <span className={styles.authVal}>
+              Please enter a valid mobile number
+            </span>
+          )}
           <button
             type="button"
             onClick={(e) => {
@@ -304,7 +326,7 @@ const OtpForm = ({
             }}
             className={styles.verifyBtn}
           >
-            SEND OTP
+            {loading ? "SENDING OTP . . ." : "SEND OTP"}
           </button>
         </form>
       )}
@@ -379,7 +401,9 @@ const OtpForm = ({
             <div className={styles.signInLink}>
               <p>
                 Create an account?{" "}
-                <strong className="c-pointer" onClick={() => setSignUpForm()}>Sign Up</strong>
+                <strong className="c-pointer" onClick={() => setSignUpForm()}>
+                  Sign Up
+                </strong>
               </p>
             </div>
           </div>
