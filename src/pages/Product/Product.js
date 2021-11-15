@@ -29,7 +29,7 @@ const Product = (props) => {
 
   const [product, setproduct] = useState({});
   const [compositioncare, setCompositioncare] = useState({});
-  const {currency_symbol, language} = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(state => state?.common?.store);
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -90,7 +90,16 @@ const Product = (props) => {
         p.priceWithoutCurrency = p.price;
         p.price = `${parseFloat(p.price).toFixed(2)}`;
       }
-      dispatch(addToRecentlyViewed(p));
+      const cartValue = sessionStorage.getItem("recentVieItem") || JSON.stringify([]);
+      const cartObj = JSON.parse(cartValue);
+      if (cartObj.filter(e => e?.id === p?.id).length === 0) {
+        cartObj.push(p)
+        const jsonStr = JSON.stringify(cartObj);
+        sessionStorage.setItem("recentVieItem", jsonStr);
+
+        dispatch(addToRecentlyViewed(p));
+      }
+
     } catch (err) {
       setproduct({});
     }
@@ -145,7 +154,7 @@ const Product = (props) => {
               render={(item) => <ProductCard isComplete product={item} />}
             />
           </div>
-          <hr style={{marginTop:"100px",marginBottom:"60px"}} />
+          <hr style={{ marginTop: "100px", marginBottom: "60px" }} />
           <div className="container-90 max-width-1750 mx-auto my-20px">
             <ShopTheWholeOutfit data={howToWear} mainProd={product} />
           </div>
