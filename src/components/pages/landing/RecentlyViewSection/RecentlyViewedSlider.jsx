@@ -12,7 +12,7 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
 
 
   useEffect(() => {
-    const cartValue = sessionStorage.getItem("recentVieItem") || JSON.stringify([]);
+    const cartValue = localStorage.getItem("recentVieItem") || JSON.stringify([]);
     const cartObj = JSON.parse(cartValue);
     if (cartObj.length) {
       setRecentlyViewed(cartObj?.reverse());

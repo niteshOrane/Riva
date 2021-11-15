@@ -90,12 +90,12 @@ const Product = (props) => {
         p.priceWithoutCurrency = p.price;
         p.price = `${parseFloat(p.price).toFixed(2)}`;
       }
-      const cartValue = sessionStorage.getItem("recentVieItem") || JSON.stringify([]);
+      const cartValue = localStorage.getItem("recentVieItem") || JSON.stringify([]);
       const cartObj = JSON.parse(cartValue);
       if (cartObj.filter(e => e?.id === p?.id).length === 0) {
         cartObj.push(p)
         const jsonStr = JSON.stringify(cartObj);
-        sessionStorage.setItem("recentVieItem", jsonStr);
+        localStorage.setItem("recentVieItem", jsonStr);
 
         dispatch(addToRecentlyViewed(p));
       }
