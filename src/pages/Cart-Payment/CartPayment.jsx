@@ -71,15 +71,6 @@ function CartPayment() {
               <h2 className="font-weight-normal my-20px">
                 Choose Payment Mode
               </h2>
-              {/* <PaymentTabs
-                cartItem={items}
-                customerID={customerid}
-                cartPaymentInfo={cartPaymentInfo}
-                store={store}
-                paymentMode={paymentOption?.data}
-                loading={loading}
-                setLoading={setLoading}
-              /> */}
               <RePaymentTab
                 cartItem={items}
                 customerID={customerid}
