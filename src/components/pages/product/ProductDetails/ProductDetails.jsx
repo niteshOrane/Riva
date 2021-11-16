@@ -200,7 +200,7 @@ const ProductDetails = (props) => {
             </div>
             {/*<ImageDropdown />*/}
 
-            <div className={styles.actionContainerTopRight}>
+            {/* <div className={styles.actionContainerTopRight}>
               <div onClick={handleWishList}>
                 <span
                   className="material-icons-outlined font-light-black"
@@ -209,7 +209,7 @@ const ProductDetails = (props) => {
                   {isAddedToWishlist ? "favorite" : "favorite_border"}
                 </span>
               </div>
-            </div>
+            </div> */}
             <div className={styles.actionContainerTopLeft}>
               {calculateOnSale()}
             </div>

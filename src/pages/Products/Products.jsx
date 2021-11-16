@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import queryString from "query-string";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useProducts from "./useProducts";
 import useOnScreen from "./useOnScreen";
@@ -18,6 +18,7 @@ import { extractColorSize } from "../../util";
 
 function Products(props) {
   const handleQuickView = () => {};
+  const history = useHistory();
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const filterAttr = useSelector((state) => state?.common?.filtersParams);
 
@@ -57,7 +58,10 @@ function Products(props) {
       setCurrentPage(currentPage + 1);
     }
   }, [onScreen]);
-
+  const handleBannerPush = (title, categories) => {
+    console.log(`${`/products/${title}/${categories}`}`);
+    history.push(`${`/products/${title}/${categories}`}`);
+  };
   useEffect(() => {
     if (
       filterAttr?.Color.length ||
@@ -175,9 +179,12 @@ function Products(props) {
                 )}
               </span>
               <div className={styles.sortByText}>
-                <span className = {styles.sortBy}>SORT BY:</span>
+                <span className={styles.sortBy}>SORT BY:</span>
                 <span>
-                  <select className = {styles.sortDrop} onChange={handleSortChange}>
+                  <select
+                    className={styles.sortDrop}
+                    onChange={handleSortChange}
+                  >
                     <option
                       style={{ background: "#fff" }}
                       value="entity_id-desc"
@@ -238,8 +245,11 @@ function Products(props) {
           }`}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((li) => (
-            <div style = {{marginLeft:"1.7rem",marginRight:"1.5rem"}} className={getClassOfBigCard(li)}>
-              <Skeleton height="30rem"  />
+            <div
+              style={{ marginLeft: "1.7rem", marginRight: "1.5rem" }}
+              className={getClassOfBigCard(li)}
+            >
+              <Skeleton height="30rem" />
             </div>
           ))}
         </div>
@@ -347,14 +357,14 @@ function Products(props) {
                 key={`divBanner_${index}`}
                 className={styles.bannerImg}
               >
-                <Link to={`/products/${item.title}/${item?.categories}`}>
+                <a href={item?.url_banner}>
                   <Image
                     alt={item?.title}
                     src={item?.image}
                     defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
                     width="100%"
                   />
-                </Link>
+                </a>
               </div>
             );
           })}

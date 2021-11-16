@@ -21,6 +21,7 @@ import styles from "./Landing.module.scss"
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
+  // console.log({middleBanner})
   const { btfLeft, btfRight, videoBanner,loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem

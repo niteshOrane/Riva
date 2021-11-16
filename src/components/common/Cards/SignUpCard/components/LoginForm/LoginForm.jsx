@@ -241,6 +241,7 @@ const LoginForm = ({
     customer.append("password", password);
     customer.append("mobile", "");
     customer.append("action", "login");
+    customer.append("cartId",getCartId());
 
     const res = await loginCustomer(customer);
     if (res.status === 200) {
@@ -249,8 +250,8 @@ const LoginForm = ({
           const customerCart = new FormData();
           customerCart.append("guestQuoteId", getCartId());
           customerCart.append("customerId", res.data?.data?.customerID);
-          await mergeGuestCart(customerCart);
-          dispatch(getCart());
+          // await mergeGuestCart(customerCart);
+          // dispatch(getCart());
           setLoading(false);
         }
         handleSubmit();

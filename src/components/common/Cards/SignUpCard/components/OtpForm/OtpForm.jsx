@@ -145,6 +145,7 @@ const OtpForm = ({
       customer.append("phone", phoneValue);
       customer.append("otp", mobileOtp);
       customer.append("customerInfo", "");
+      customer.append("cartId",getCartId())
 
       const res = await customerVerifyOtp(customer);
       if (res.status === 200) {
@@ -153,8 +154,8 @@ const OtpForm = ({
             const customerCart = new FormData();
             customerCart.append("guestQuoteId", getCartId());
             customerCart.append("customerId", res.data?.data?.customerID);
-            await mergeGuestCart(customerCart);
-            dispatch(getCart());
+            // await mergeGuestCart(customerCart);
+            // dispatch(getCart());
           }
           handleSubmit();
           typeof res?.data?.data !== "string" &&
