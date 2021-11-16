@@ -2,15 +2,15 @@ import React from "react";
 import styles from "./Information.module.scss";
 
 function InformationGrid({ orderNumber, infoList }) {
-  const { shippingAddress, shippingDescription, payment } = infoList;
-  const { street, city, region, postcode } = shippingAddress;
+  const { shippingAddress = { street: '', city: '', region: '', postcode: '' }, shippingDescription, payment } = infoList;
+  const { street = '', city = '', region = '', postcode = '' } = shippingAddress;
   return (
     <div>
-      <section className = {styles.title}>
+      <section className={styles.title}>
         <h2>Order Information</h2>
         <p>Order ID #{orderNumber}</p>
       </section>
-      <div className = {styles.mainBox}>
+      <div className={styles.mainBox}>
         <section className={styles.grid}>
           <div>
             <span className={styles.heading}>Shipping Address</span>

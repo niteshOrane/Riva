@@ -94,7 +94,7 @@ function TrackOrders() {
     if (value) {
       setCancelLoading(true);
       const res = await cancelOrder(id);
-      if (res.status === 200) {
+      if (res && res.status === 200) {
         dispatch(showSnackbar("Order Canceled", "Success"));
         setCancelLoading(false);
         history.push("/cancelled-orders");

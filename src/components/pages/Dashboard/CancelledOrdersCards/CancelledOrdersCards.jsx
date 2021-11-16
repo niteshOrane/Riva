@@ -7,6 +7,8 @@ import {getOrderList} from "../../../../services/order/order.services"
 const CancelledOrdersCards = ({ products }) => {
   const { customer } = useSelector((state) => state.auth);
   const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
+
   const getOrders = async (id) => {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
@@ -16,6 +18,7 @@ const CancelledOrdersCards = ({ products }) => {
       }));
       setOrderList(temp);
     }
+    setStatus(res?.status);
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);

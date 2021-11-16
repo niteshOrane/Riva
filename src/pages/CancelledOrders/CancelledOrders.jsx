@@ -21,6 +21,8 @@ const randomProducts = [
 function CancelledOrders() {
   const { customer } = useSelector((state) => state.auth);
   const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
+
   const getOrders = async (id) => {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
@@ -32,6 +34,7 @@ function CancelledOrders() {
       }));
       setOrderList(temp?.filter((li) => li.status === "canceled"));
     }
+    setStatus(res?.status)
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
@@ -53,9 +56,9 @@ function CancelledOrders() {
                 />
               ))
             ) : (
-              <div className = {styles.progress}>
+              !status ? <div className={styles.progress}>
                 <CircularProgress size={50} />
-              </div>
+              </div> : <div  className={styles.progress}>No record</div>
             )}
           </div>
         </div>

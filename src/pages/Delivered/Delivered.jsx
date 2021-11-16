@@ -13,6 +13,7 @@ function Delivered({ title = "Delivered" }) {
 
   const { language } = useSelector((state) => state?.common?.store);
   const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
   const getOrders = async (id) => {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
@@ -24,6 +25,7 @@ function Delivered({ title = "Delivered" }) {
       }));
       setOrderList(temp);
     }
+    setStatus(res?.status)
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
@@ -31,7 +33,7 @@ function Delivered({ title = "Delivered" }) {
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-      
+
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
@@ -51,9 +53,9 @@ function Delivered({ title = "Delivered" }) {
                   />
                 ))
             ) : (
-              <div className = {styles.progress}>
+              !status ? <div className={styles.progress}>
                 <CircularProgress size={50} />
-              </div>
+              </div> : <div  className={styles.progress}>No record</div>
             )}
           </div>
         </div>

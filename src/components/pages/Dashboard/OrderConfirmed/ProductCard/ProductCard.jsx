@@ -52,7 +52,7 @@ function ProductCard({
           <div
             className= "underline underline-hovered c-pointer font-weight-normal color-blue d-flex"
             onClick={(e) => {
-              cancelOrderFn(e, product?.order_id);
+              cancelOrderFn(e, product?.increment_id);
             }}
             type="button"
           >
