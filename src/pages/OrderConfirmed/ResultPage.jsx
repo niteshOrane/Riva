@@ -54,7 +54,7 @@ function ResultPage(props) {
         <div className="d-flex h-100">
           <Sidebar />
           <div className={styles.contentConatiner}>
-            <h2 className={styles.title}>Order Confirmed</h2>
+            <h2 className={styles.title}>Processing Order...</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
               {!paymentErrorMsg ? (
                 <div>Please wait Order In Progress</div>

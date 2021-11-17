@@ -51,6 +51,7 @@ export const getCustInfo = () => store?.getState()?.auth;
 export const getCartId = () => store?.getState()?.cart?.cart_id;
 
 
+
 export const getLanguageName = () => store?.getState()?.common?.store.language === "English" ? 'en' : 'ar';
 
 

@@ -14,7 +14,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 function GoSellTap() {
   const { store_name } = useSelector((state) => state?.common?.store);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
   const callbackFunc = async (e) => {
     const subType = e.target.value;
     if (subType) {
@@ -28,6 +29,10 @@ function GoSellTap() {
       ) {
         window.location.href = res.data?.[0]?.redirect_url;
         setLoading(false);
+      } else if (res?.message) {
+        dispatch(showSnackbar(`${res?.message}`,"error"))
+        window.location.reload()
+        return setLoading(false);
       } else {
         return setLoading(false);
       }

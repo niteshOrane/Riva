@@ -1,18 +1,24 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
 import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
+
 import { extractColorSize } from "../../../../../util";
-import { addCartId } from '../../../../../store/actions/auth';
+import { addCartId } from "../../../../../store/actions/auth";
 import { getCart } from "../../../../../store/actions/cart";
-import {
-  buyAgainOrder
-} from "../../../../../services/order/order.services";
+import { buyAgainOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
-const DeliveredOrders = ({ products, status, code, increment_id, language }) => {
+const DeliveredOrders = ({
+  products,
+  status,
+  code,
+  increment_id,
+  language,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -51,8 +57,8 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
     return (
       <div className={styles.card}>
         <div className={styles.incrementWrap}>
-          <span className="greyText">Order Number: #{increment_id}</span><br />
-
+          <span className="greyText">Order Number: #{increment_id}</span>
+          <br />
         </div>
 
         <div className={styles.carItem}>
@@ -64,9 +70,13 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
                     ? styles.processIcon
                     : styles.deliveredIcon
                 }
-
-              > {status} </span>{" "}
-              {product.deliveryDate}
+              >
+                {" "}
+                {status}{" "}
+              </span>{" "}
+              <div className={styles.orderDate}>
+                {moment(product?.created_at).format("MMMM Do YYYY")}
+              </div>
             </div>
             <div>
               <h3 className="font-weight-normal">{product?.name}</h3>
@@ -98,7 +108,11 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
                 <icons.Star />
               </span>
               <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                <ReviewModal id={product?.product_id} sku={product?.sku} language={language} />
+                <ReviewModal
+                  id={product?.product_id}
+                  sku={product?.sku}
+                  language={language}
+                />
               </h4>
             </div>
             <div className="d-flex align-items-center mt-12px">
@@ -107,9 +121,14 @@ const DeliveredOrders = ({ products, status, code, increment_id, language }) => 
               </span>
               <h4 className="c-pointer font-weight-normal greyText">Return</h4>
             </div>
-            <div className="d-flex align-items-center mt-12px" onClick={() => { reOrder(product?.order_id) }}>
+            <div
+              className="d-flex align-items-center mt-12px"
+              onClick={() => {
+                reOrder(product?.order_id);
+              }}
+            >
               <span className={styles.icon}>
-                <icons.MyOrders height='20' width='15' />
+                <icons.MyOrders height="20" width="15" />
               </span>
               <span className={styles.reorder}>Reorder</span>
             </div>

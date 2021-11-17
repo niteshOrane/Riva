@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import styles from "./CancelledOrdersCards.module.scss";
 import * as icons from "../../../../common/Icons/Icons";
 import { extractColorSize } from "../../../../../util";
+import moment from "moment";
 import { addCartId } from '../../../../../store/actions/auth';
 
 import { getCart } from "../../../../../store/actions/cart";
@@ -57,6 +58,7 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <span className="greyText">Order Number: #{increment_id}</span>
           <br />
         </div>
+        {/* {moment(product?.created_at).format("MMMM Do YYYY")} */}
         <div className="d-flex align-items-center mt-12px" onClick={() => { reOrder(product?.order_id) }}>
           <span className={styles.icon}>
             <icons.MyOrders height='20' width='15' />
