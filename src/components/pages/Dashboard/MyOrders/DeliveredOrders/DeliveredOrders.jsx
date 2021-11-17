@@ -75,7 +75,7 @@ const DeliveredOrders = ({
                 {status}{" "}
               </span>{" "}
               <div className={styles.orderDate}>
-                {moment(product?.created_at).format("MMMM Do YYYY")}
+                {moment(product?.created_at).format("MMMM DD YYYY")}
               </div>
             </div>
             <div>

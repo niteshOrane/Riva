@@ -15,7 +15,7 @@ import {
 
 function ResultPage(props) {
   const history = useHistory();
-  const [paymentErrorMsg, setPaymentErrorMsg] = useState("");
+  const [paymentErrorMsg, setPaymentErrorMsg] = useState(null);
 
   const getHyperPayPayment = async () => {
     const parsed = queryString.parse(props?.location?.search);
@@ -35,11 +35,12 @@ function ResultPage(props) {
         res?.data &&
         res.data?.[0]?.["order_id"]
       ) {
+
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
       } else {
-        setPaymentErrorMsg(res?.data?.[0]?.status);
+        setPaymentErrorMsg(res?.data?.[0]?.message);
       }
     }
   };
@@ -54,12 +55,12 @@ function ResultPage(props) {
         <div className="d-flex h-100">
           <Sidebar />
           <div className={styles.contentConatiner}>
-            <h2 className={styles.title}>Processing Order...</h2>
+            <h2 className={styles.title}>{paymentErrorMsg !== null ? 'Order Confirmed' : 'Processing Order...'}</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
-              {!paymentErrorMsg ? (
-                <div>Please wait Order In Progress</div>
-              ) : (
+              {paymentErrorMsg !== null ? (
                 <div className={styles.payMsg}>{paymentErrorMsg}</div>
+              ) : (
+                <div>Please wait Order In Progress</div>
               )}
             </div>
           </div>
