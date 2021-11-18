@@ -62,7 +62,11 @@ const ProfileInformation = React.lazy(() =>
 const ManageAddress = React.lazy(() =>
   import("../pages/Manage-address/ManageAddress")
 );
-const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"))
+const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
+
+//order info
+
+const OrderInformation = React.lazy(() => import("../components/pages/OrderInformation/InformationGrid"))
 
 
 class AppRoutes extends Component {
@@ -296,6 +300,14 @@ class AppRoutes extends Component {
         component: ManageAddress,
         exact: true,
         name: "Manage Address",
+        layout: MainLayout,
+        index: 15
+      },
+      {
+        path: "/order-details/:number",
+        component: OrderInformation,
+        exact: true,
+        name: "Order Information",
         layout: MainLayout,
         index: 15
       },

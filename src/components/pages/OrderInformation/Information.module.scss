@@ -43,6 +43,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px !important;
+  padding-bottom: 2rem;
 }
 .title {
   margin-top: 15px;
@@ -73,7 +74,9 @@
     border: 2px solid #ddd;
     .bgLightGrey {
       background-color: #cccccc;
-      padding: 12px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      padding-left: 3px;
       color: #000;
       flex: 1;
       margin: 0 3px;
@@ -135,13 +138,21 @@
   color: black;
   font-weight: bold;
 }
-.qty{
+.qty {
   display: flex;
   flex-direction: column;
   margin-top: 8px;
 }
-.payTitle{
+.payTitle {
   margin-right: 25px;
   font-size: 15px;
   color: #393838;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  h2 {
+    padding-bottom: 1rem;
+  }
 }

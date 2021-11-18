@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import * as icons from "../../../../common/Icons/Icons";
@@ -12,13 +12,8 @@ import { getCart } from "../../../../../store/actions/cart";
 import { buyAgainOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
-const DeliveredOrders = ({
-  products,
-  status,
-  code,
-  increment_id,
-  language,
-}) => {
+const DeliveredOrders = ({ product,language }) => {
+  console.log({product})
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -37,106 +32,111 @@ const DeliveredOrders = ({
       }
     }
   };
-  return products?.map((product) => {
-    const getColorSize = (options) => {
-      const { colors, size } = extractColorSize(
-        options.map((o) => ({
-          label: o.option_id === "92" ? "Color" : "Size",
-          values: [{ value_index: o.option_value }],
-          attribute_id: o.option_id,
-        }))
-      );
 
-      return { colors, size };
-    };
-    const colorSize = getColorSize(
-      product?.parent_item?.product_option.extension_attributes
-        ?.configurable_item_options
+  const getColorSize = (options) => {
+    const { colors, size } = extractColorSize(
+      options.map((o) => ({
+        label: o.option_id === "92" ? "Color" : "Size",
+        values: [{ value_index: o.option_value }],
+        attribute_id: o.option_id,
+      }))
     );
 
-    return (
-      <div className={styles.card}>
-        <div className={styles.incrementWrap}>
-          <span className="greyText">Order Number: #{increment_id}</span>
-          <br />
-        </div>
+    return { colors, size };
+  };
+  const colorSize = getColorSize(
+    product?.parent_item?.product_option.extension_attributes
+      ?.configurable_item_options
+  );
 
-        <div className={styles.carItem}>
-          <div className={styles.col1}>
+  return (
+    <div className={styles.card}>
+      <div className={styles.incrementWrap}>
+        <Link to={`/order-details/${product?.increment_id}`}>
+          <span className="greyText">Order Number: #{product?.increment_id}</span>
+        </Link>
+
+        <br />
+      </div>
+
+      <div className={styles.carItem}>
+        <div className={styles.col1}>
+          <Link to={`/order-details/${product?.increment_id}`}>
             <div className={styles.img}>
               <span
                 className={
-                  status === "processing"
+                  product?.status === "processing"
                     ? styles.processIcon
                     : styles.deliveredIcon
                 }
               >
                 {" "}
-                {status}{" "}
+                {product?.status}{" "}
               </span>{" "}
               <div className={styles.orderDate}>
                 {moment(product?.created_at).format("MMMM DD YYYY")}
               </div>
             </div>
-            <div>
-              <h3 className="font-weight-normal">{product?.name}</h3>
-              <div className="mt-12px">
-                <div className={styles.colorSize}>
-                  <span>Color: </span>
-                  <span className={styles.greyText}>
-                    {colorSize?.colors?.[0]?.label}
-                  </span>
-                </div>
-                <div className={styles.colorSize}>
-                  <span>Size: </span>
-                  <span className={styles.greyText}>
-                    {colorSize.size?.[0]?.label}
-                  </span>
-                </div>
+          </Link>
+
+          <div>
+            <h3 className="font-weight-normal">{product?.name}</h3>
+            <div className="mt-12px">
+              <div className={styles.colorSize}>
+                <span>Color: </span>
+                <span className={styles.greyText}>
+                  {colorSize?.colors?.[0]?.label}
+                </span>
+              </div>
+              <div className={styles.colorSize}>
+                <span>Size: </span>
+                <span className={styles.greyText}>
+                  {colorSize.size?.[0]?.label}
+                </span>
               </div>
             </div>
           </div>
-          <div className="text-center">
-            <strong>
-              {code}
-              {product?.parent_item?.price}
-            </strong>
+        </div>
+        <div className="text-center">
+          <strong>
+            {product?.currency_code}
+            {product?.parent_item?.price}
+          </strong>
+        </div>
+        <div>
+          <div className="d-flex align-items-center mt-12px">
+            <span className={styles.icon}>
+              <icons.Star />
+            </span>
+            <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
+              <ReviewModal
+                id={product?.product_id}
+                sku={product?.sku}
+                language={language}
+              />
+            </h4>
           </div>
-          <div>
-            <div className="d-flex align-items-center mt-12px">
-              <span className={styles.icon}>
-                <icons.Star />
-              </span>
-              <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-                <ReviewModal
-                  id={product?.product_id}
-                  sku={product?.sku}
-                  language={language}
-                />
-              </h4>
-            </div>
-            <div className="d-flex align-items-center mt-12px">
-              <span className={styles.icon}>
-                <icons.Undo />
-              </span>
-              <h4 className="c-pointer font-weight-normal greyText">Return</h4>
-            </div>
-            <div
-              className="d-flex align-items-center mt-12px"
-              onClick={() => {
-                reOrder(product?.order_id);
-              }}
-            >
-              <span className={styles.icon}>
-                <icons.MyOrders height="20" width="15" />
-              </span>
-              <span className={styles.reorder}>Reorder</span>
-            </div>
+          <div className="d-flex align-items-center mt-12px">
+            <span className={styles.icon}>
+              <icons.Undo />
+            </span>
+            <h4 className="c-pointer font-weight-normal greyText">Return</h4>
+          </div>
+          <div
+            className="d-flex align-items-center mt-12px"
+            onClick={() => {
+              reOrder(product?.order_id);
+            }}
+          >
+            <span className={styles.icon}>
+              <icons.MyOrders height="20" width="15" />
+            </span>
+            <span className={styles.reorder}>Reorder</span>
           </div>
         </div>
       </div>
-    );
-  });
+    </div>
+  );
 };
 
 export default DeliveredOrders;

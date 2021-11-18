@@ -53,12 +53,12 @@ function TrackOrders() {
             subtotal:property?.subtotal
           }
         });
-        setOrderInfo({
-          shippingAddress: property?.billing_address,
-          shippingDescription: property?.shipping_description,
-          billingAddress: property?.billing_address,
-          payment: property?.payment,
-        });
+        // setOrderInfo({
+        //   shippingAddress: property?.billing_address,
+        //   shippingDescription: property?.shipping_description,
+        //   billingAddress: property?.billing_address,
+        //   payment: property?.payment,
+        // });
       } else {
         dispatch(showSnackbar("No product found"), "error");
       }
@@ -114,10 +114,10 @@ function TrackOrders() {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
           />
-          {orderInfo && (
-            <InformationGrid orderNumber={value} infoList={orderInfo} />
-          )}
-          {orderInfo && <InformationTable orderDetails={orderDetails} />}
+          {/* {orderInfo && (
+            <InformationGrid orderNumber={value} infoList={orderInfo} isTrack/>
+          )} */}
+          {/* {orderInfo && <InformationTable orderDetails={orderDetails} />} */}
           {orderDetails?.product && (
             <div>
               <section className={styles.detailsWrap}>Order Details</section>

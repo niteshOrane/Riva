@@ -59,7 +59,7 @@ function InformationTable({ orderDetails }) {
             <div className={styles.pad}>{product?.sku}</div>
             <div className={styles.pad}>
               {currency}
-              {paymentInfo?.price}
+              {product?.parent_item?.price}
             </div>
             <div className={styles.qty}>
               <span>Ordered:{product?.qty_ordered} </span>
@@ -67,10 +67,10 @@ function InformationTable({ orderDetails }) {
             </div>
             <div className={styles.pad}>
               {currency}
-              {paymentInfo?.subtotal}
+              {product?.parent_item?.price}
             </div>
           </div>
-          <hr className={styles.line} />
+          {/* <hr className={styles.line} />
           <div className={styles.pay}>
             <div className={styles.payBox}>
               <span className={styles?.payTitle}>Subtotal: </span>
@@ -100,7 +100,7 @@ function InformationTable({ orderDetails }) {
                 {paymentInfo?.grandTotal}
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
