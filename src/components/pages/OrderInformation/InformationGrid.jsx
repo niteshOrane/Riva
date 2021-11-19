@@ -148,7 +148,6 @@ function InformationGrid() {
           <div>
             <InformationTable orderDetails={orderDetails} />
           </div>
-          <hr/>
           <div className = {styles.trackLink}>
             <Link
               to={{
