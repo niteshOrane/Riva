@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -17,7 +17,7 @@ import { showSnackbar } from "../../store/actions/common";
 import InformationGrid from "../../components/pages/OrderInformation/InformationGrid";
 import InformationTable from "../../components/pages/OrderInformation/InformationTable";
 
-function TrackOrders() {
+function TrackOrders(props) {
   const { customer } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,6 +34,12 @@ function TrackOrders() {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (props.location.state) {
+      setValue(props.location.state);
+    }
+  }, []);
   const getOrderDetail = async () => {
     if (value) {
       const res2 = await getOrderList(customer?.customerID);
@@ -44,14 +50,15 @@ function TrackOrders() {
         setOrderDetails({
           ...orderDetails,
           product: property?.items?.find((li) => li.product_type === "simple"),
-          status:property?.status,
+          status: property?.status,
           currency: property?.base_currency_code,
-          paymentInfo:{
-            price: property?.items?.find((li) => li.product_type === "simple")?.price,
-            grandTotal:property?.grand_total,
+          paymentInfo: {
+            price: property?.items?.find((li) => li.product_type === "simple")
+              ?.price,
+            grandTotal: property?.grand_total,
             shippingAmount: property?.shipping_amount,
-            subtotal:property?.subtotal
-          }
+            subtotal: property?.subtotal,
+          },
         });
         // setOrderInfo({
         //   shippingAddress: property?.billing_address,
@@ -144,7 +151,9 @@ function TrackOrders() {
               </div>
             </section>
           )}
-          {orderItems.length > 0 && <TrackOrderDetails order={orderItems[0]} />}
+          {orderItems.length > 0 && (
+            <TrackOrderDetails order={orderItems[0]} value={value} />
+          )}
           {loading && (
             <div className={styles.progress}>
               <CircularProgress size={50} />

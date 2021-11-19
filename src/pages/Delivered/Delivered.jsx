@@ -54,7 +54,7 @@ function Delivered({ title = "Delivered" }) {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = finalList?.slice(indexOfFirstPost, indexOfLastPost);
 
- 
+ const paginate = (pageNumber) => setCurrentPage(pageNumber)
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -75,11 +75,12 @@ function Delivered({ title = "Delivered" }) {
             ) : (
               <div className={styles.progress}>No record</div>
             )}
-            {/* <Pagination
+            <Pagination
               postsPerPage={postsPerPage}
               totalPosts={finalList?.length}
               paginate={paginate}
-            /> */}
+              currentPage = {currentPage}
+            />
           </div>
         </div>
       </div>

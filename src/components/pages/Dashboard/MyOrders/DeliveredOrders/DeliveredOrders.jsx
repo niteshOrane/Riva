@@ -13,7 +13,6 @@ import { buyAgainOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
 const DeliveredOrders = ({ product,language }) => {
-  console.log({product})
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {

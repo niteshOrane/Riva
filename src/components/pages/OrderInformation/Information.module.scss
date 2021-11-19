@@ -156,3 +156,22 @@
     padding-bottom: 1rem;
   }
 }
+.headInfo{
+
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.05;
+  letter-spacing: normal;
+  text-align: left;
+  color: #474545;
+}
+.trackLink{
+  padding-top: 0.5rem;
+  color: lightseagreen;
+  &:hover{
+    text-decoration: underline;
+  }
+}

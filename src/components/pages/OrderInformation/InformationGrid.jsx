@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "react-router";
+import moment from "moment";
 import { getOrderList } from "../../../services/order/order.services";
 import { showSnackbar } from "../../../store/actions/common";
 import Sidebar from "../Dashboard/Sidebar/Sidebar";
 import styles from "./Information.module.scss";
 import InformationTable from "./InformationTable";
+import { Link } from "react-router-dom";
 
 function InformationGrid() {
   const { customer } = useSelector((state) => state.auth);
@@ -87,15 +89,26 @@ function InformationGrid() {
         <Sidebar />
         <div>
           <h2>Order Information</h2>
-          <h4>Order Number #{number}</h4>
+
+          <div className="d-flex justify-content-between">
+            <h4 className={styles.headInfo}>Order Number #{number}</h4>
+            <h4 className={styles.headInfo}>
+              {" "}
+              Order Place Date:{" "}
+              {moment(orderDetails?.product?.created_at).format("MMMM DD YYYY")}
+            </h4>
+          </div>
+          <hr />
           <div className={styles.mainBox}>
             <section className={styles.grid}>
               <div>
                 <span className={styles.heading}>Shipping Address</span>
                 <hr className={styles.divider} />
                 <div className={styles.addr}>
-                  <p>{street?.[0]},{" "}{city},</p>
-            
+                  <p>
+                    {street?.[0]}, {city},
+                  </p>
+
                   <p>{region},</p>
                   <p>{postcode}</p>
                 </div>
@@ -134,6 +147,17 @@ function InformationGrid() {
           </div>
           <div>
             <InformationTable orderDetails={orderDetails} />
+          </div>
+          <hr/>
+          <div className = {styles.trackLink}>
+            <Link
+              to={{
+                pathname: "/track-orders",
+                state: number,
+              }}
+            >
+              Track Your Order
+            </Link>
           </div>
         </div>
       </div>
