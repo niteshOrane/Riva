@@ -35,6 +35,7 @@ const ProductDetails = (props) => {
   } = props;
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
+  const [reviewState, setReviewState] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
   const [value, setValue] = React.useState(0);
   const [reviewList, setReviewList] = useState([]);
@@ -90,6 +91,9 @@ const ProductDetails = (props) => {
     getOutOfStock();
     getReviewListForProduct(product?.sku);
   }, []);
+  useEffect(() => {
+    getReviewListForProduct(product?.sku);
+  }, [reviewState]);
   useEffect(() => {
     let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
     setValue(
@@ -147,7 +151,8 @@ const ProductDetails = (props) => {
     }
     return null;
   };
-  const addToCardHandler = () =>
+  
+  const addToCardHandler = () => {
     dispatch(
       addToCart({
         ...product,
@@ -159,7 +164,7 @@ const ProductDetails = (props) => {
         ...product.selected,
       })
     );
-
+  };
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
   };
@@ -335,7 +340,9 @@ const ProductDetails = (props) => {
                           product.selected.size.value === size.value
                             ? "scale(1.2)"
                             : "scale(1)",
-                        background:  product.selected.size.value === size.value && "#EADEB8"
+                        background:
+                          product.selected.size.value === size.value &&
+                          "#EADEB8",
                       }}
                     >
                       {size.label}
@@ -534,6 +541,8 @@ const ProductDetails = (props) => {
                           id={product?.id}
                           sku={product?.sku}
                           isDetail
+                          setReviewState = {setReviewState}
+                          reviewState = {reviewState}
                         />
                       ),
                       icon: "/assets/images/review.png",

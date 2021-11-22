@@ -5,6 +5,7 @@ import * as icons from "../../../../../common/Icons/Icons";
 
 const SizeCard = ({ handleClose, open, imageSelected, language }) => {
   const [selectedUnit, setSelectedUnit] = useState("CM");
+  const [selectedUnitWeight, setSelectedUnitWeight] = useState("Kg");
   const [height, setHeight] = useState({
     range: 0,
   });
@@ -143,7 +144,7 @@ const SizeCard = ({ handleClose, open, imageSelected, language }) => {
                     <p
                       className={`${styles.smallFonts} ${styles.unitToChange}`}
                     >
-                      {weight.range} {selectedUnit}
+                      {weight.range} KG
                     </p>
                   </div>
                 </div>

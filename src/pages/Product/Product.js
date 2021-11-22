@@ -15,10 +15,11 @@ import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
 
 import styles from "./product.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
-
 
 const Product = (props) => {
   const { match } = props;
@@ -29,7 +30,9 @@ const Product = (props) => {
 
   const [product, setproduct] = useState({});
   const [compositioncare, setCompositioncare] = useState({});
-  const { currency_symbol, language } = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -90,16 +93,16 @@ const Product = (props) => {
         p.priceWithoutCurrency = p.price;
         p.price = `${parseFloat(p.price).toFixed(2)}`;
       }
-      const cartValue = localStorage.getItem("recentVieItem") || JSON.stringify([]);
+      const cartValue =
+        localStorage.getItem("recentVieItem") || JSON.stringify([]);
       const cartObj = JSON.parse(cartValue);
-      if (cartObj.filter(e => e?.id === p?.id).length === 0) {
-        cartObj.push(p)
+      if (cartObj.filter((e) => e?.id === p?.id).length === 0) {
+        cartObj.push(p);
         const jsonStr = JSON.stringify(cartObj);
         localStorage.setItem("recentVieItem", jsonStr);
 
         dispatch(addToRecentlyViewed(p));
       }
-
     } catch (err) {
       setproduct({});
     }
@@ -113,7 +116,17 @@ const Product = (props) => {
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-  if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
+  if (loading)
+    return (
+      <div className="d-flex justify-content-between">
+        <div className = {styles.load}>
+          <Skeleton height="40rem" width="40rem" />
+        </div>
+        <div className = {styles.load}>
+          <Skeleton height="40rem" width="40rem" />
+        </div>
+      </div>
+    );
   return (
     <div>
       <ProductDetails
@@ -129,7 +142,12 @@ const Product = (props) => {
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={{ src: item?.file }} count={mediaImage.length} />}
+          render={(item) => (
+            <ImageCard
+              product={{ src: item?.file }}
+              count={mediaImage.length}
+            />
+          )}
         />
       </div>
       <DescriptionComposition
@@ -137,8 +155,8 @@ const Product = (props) => {
         prodDiscr={product}
         compositioncare={compositioncare?.data}
       />
-      {howToWear.length > 0 ?
-        < div id="complete-your-look" >
+      {howToWear.length > 0 ? (
+        <div id="complete-your-look">
           <div className="max-width-1750 mx-auto my-20px">
             <div>
               <p className="section-title text-center my-20px">
@@ -159,7 +177,7 @@ const Product = (props) => {
             <ShopTheWholeOutfit data={howToWear} mainProd={product} />
           </div>
         </div>
-        : null}
+      ) : null}
       {/* <div className="d-flex-all-center gap-12px mx-50px gap-12px">
         <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />

@@ -94,6 +94,24 @@
   align-content: center;
   justify-content: center;
   margin-top: 2rem;
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  }
+  .labelRadio {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 99em; // or something higher...
+    transition: 0.25s ease;
+    &:hover {
+      background-color: mix(#fff, blue, 84%);
+    }
+  }
 }
 .gPay {
   display: flex;
@@ -119,9 +137,9 @@
   font-style: normal;
   line-height: 1.46;
   letter-spacing: normal;
-  cursor:  pointer !important;
+  cursor: pointer !important;
 }
-.rePaymentTitle{
+.rePaymentTitle {
   width: 215px;
   height: 30px;
   font-family: Roboto;
@@ -149,14 +167,14 @@
   text-align: left;
   color: #000;
 }
-.reGrid{
+.reGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.payWith{
+.payWith {
   margin-bottom: 1.5rem;
 }
 
-.payName{
+.payName {
   margin-top: 20px;
 }

@@ -77,6 +77,7 @@ export const getCart = () => async (dispatch) => {
 };
 
 export const addToCart = (data) => async (dispatch) => {
+  console.log({data})
   if (!data?.color?.value || !data?.size?.value) {
     dispatch(showSnackbar("please select one color and size", "error"));
     return true;

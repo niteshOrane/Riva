@@ -15,7 +15,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 function GoSellTap() {
   const { store_name } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const callbackFunc = async (e) => {
     const subType = e.target.value;
     if (subType) {
@@ -30,8 +30,8 @@ function GoSellTap() {
         window.location.href = res.data?.[0]?.redirect_url;
         setLoading(false);
       } else if (res?.message) {
-        dispatch(showSnackbar(`${res?.message}`,"error"))
-        window.location.reload()
+        dispatch(showSnackbar(`${res?.message}`, "error"));
+        window.location.reload();
         return setLoading(false);
       } else {
         return setLoading(false);
@@ -42,25 +42,54 @@ function GoSellTap() {
   return (
     <>
       <div className={styles.goSellWrap}>
-        <FormControl component="fieldset">
-          <RadioGroup onChange={callbackFunc}>
-            <FormControlLabel value="card" control={<Radio />} label="Card" />
-            {store_name === "Kuwait" && (
-              <FormControlLabel value="knet" control={<Radio />} label="Knet" />
-            )}
-            {store_name === "Saudi Arabia" && (
-              <FormControlLabel value="mada" control={<Radio />} label="Mada" />
-            )}
+        <form>
+          <FormControl component="fieldset">
+            <RadioGroup onChange={callbackFunc}>
+              <div className={styles.labelRadio}>
+                <FormControlLabel
+                  value="card"
+                  control={<Radio />}
+                  label="Card"
+                />
+                <span style = {{color:"gray"}} className="material-icons">credit_card</span>
+              </div>
+              {store_name === "Kuwait" && (
+                <div className={styles.labelRadio}>
+                  <FormControlLabel
+                    value="knet"
+                    control={<Radio />}
+                    label="Knet"
+                  />
+                  <span style = {{color:"gray"}} className="material-icons">credit_card</span>
+                </div>
+              )}
+              {store_name === "Saudi Arabia" && (
+                <div className={styles.labelRadio}>
+                  <FormControlLabel
+           
+                    value="mada"
+                    control={<Radio />}
+                    label="Mada"
+                  />
+                  <span style = {{color:"gray"}} className="material-icons">credit_card</span>
+                </div>
+              )}
 
-            {store_name === "Bahrain" && (
-              <FormControlLabel
-                value="benefit"
-                control={<Radio />}
-                label="Benefit"
-              />
-            )}
-          </RadioGroup>
-        </FormControl>
+              {store_name === "Bahrain" && (
+                <div className={styles.labelRadio}>
+                  <FormControlLabel
+         
+                    value="benefit"
+                    control={<Radio />}
+                    label="Benefit"
+                  />
+                  <span style = {{color:"lightgray"}} className="material-icons">credit_card</span>
+                </div>
+              )}
+            </RadioGroup>
+          </FormControl>
+        </form>
+
         <br />
       </div>
       <div style={{ marginTop: "20px" }}>

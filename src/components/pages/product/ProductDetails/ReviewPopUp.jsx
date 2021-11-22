@@ -65,10 +65,16 @@ const dummyData = [
   },
 ];
 
-export default function ReviewModal({ id, sku, isDetail }) {
+export default function ReviewModal({
+  id,
+  sku,
+  isDetail,
+  setReviewState,
+  reviewState,
+}) {
   const dispatch = useDispatch();
 
-  const {language} = useSelector(state => state?.common?.store);
+  const { language } = useSelector((state) => state?.common?.store);
   const auth = useSelector((state) => state.auth);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -83,6 +89,9 @@ export default function ReviewModal({ id, sku, isDetail }) {
   };
   const handleClose = () => {
     setOpen(false);
+    if (isDetail) {
+      setReviewState(prev => !prev);
+    }
   };
   const onChange = (event, newValue) => {
     setRate(newValue);
@@ -166,7 +175,7 @@ export default function ReviewModal({ id, sku, isDetail }) {
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        dir={language === 'Arabic' ? 'rtl' : 'ltr'}
+        dir={language === "Arabic" ? "rtl" : "ltr"}
         className={classes.modal}
         open={open}
         onClose={handleClose}
@@ -177,7 +186,6 @@ export default function ReviewModal({ id, sku, isDetail }) {
         }}
       >
         <Fade in={open}>
-         
           <div className={classes.paper}>
             <button
               type="submit"
@@ -267,9 +275,8 @@ export default function ReviewModal({ id, sku, isDetail }) {
                   </div>
                   <h4 className={styles.reviewName}>{li?.title}</h4>
                 </section>
-                <span className = {styles.reviewDesc}>{li?.detail}</span>
+                <span className={styles.reviewDesc}>{li?.detail}</span>
                 <section className={styles.nameDateWrap}>
-             
                   <div className={styles.nameDate}>
                     <span>{li?.nickname}</span>
                     <span className={`${styles.reviewName} ${styles.dateSpan}`}>
@@ -291,16 +298,18 @@ export default function ReviewModal({ id, sku, isDetail }) {
                         <span className={styles.numLike}>{li.dislike}</span>
                       </div>
                     </div>
-                    {li?.nickname === auth?.customer?.firstname ? !loading ? (
-                      <span
-                        onClick={() => deleteReviewAction(li?.id)}
-                        className="material-icons-outlined c-pointer"
-                      >
-                        delete
-                      </span>
-                    ) : (
-                      <CircularProgress size={10} />
-                    ):null}
+                    {li?.nickname === auth?.customer?.firstname ? (
+                      !loading ? (
+                        <span
+                          onClick={() => deleteReviewAction(li?.id)}
+                          className="material-icons-outlined c-pointer"
+                        >
+                          delete
+                        </span>
+                      ) : (
+                        <CircularProgress size={10} />
+                      )
+                    ) : null}
                   </div>
                 </section>
                 <hr style={{ marginBottom: "15px" }} />

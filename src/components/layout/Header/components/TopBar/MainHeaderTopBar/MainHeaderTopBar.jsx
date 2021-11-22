@@ -37,7 +37,10 @@ const MainHeaderTopBar = ({ mainHeader }) => {
     setLanguageItem(lanTochange);
     setStoreDropDown(header.filter((e) => e.language === languageChange));
     const foundStoreByChnageLang =
-      header?.find(({ language, country_id }) => language === languageChange && country_id === store.country_id) || {};
+      header?.find(
+        ({ language, country_id }) =>
+          language === languageChange && country_id === store.country_id
+      ) || {};
 
     dispatch(
       setStore({
@@ -96,41 +99,55 @@ const MainHeaderTopBar = ({ mainHeader }) => {
               <div className={`${style.flag} d-flex`}>
                 <img
                   className={style.curSelectedImage}
-                  src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${store?.currency
-                    }.png`}
+                  src={`${mainHeader ? "" : "/"}assets/images/countryIcons/${
+                    store?.currency
+                  }.png`}
                   alt={store?.currency}
                 />
               </div>
               <div className={style.curSelected}>{store?.currency}</div>
               <div
-                className={`${style.dropdownBody} ${showDropdown ? style.showDD : ""
-                  }`}
+                className={`${style.dropdownBody} ${
+                  showDropdown ? style.showDD : ""
+                }`}
               >
                 <div className={style.currencyDropdown}>
-                  {storeDropDown?.map((head) => {
-                    const { currency } = head;
-                    return (
-                      <div
-                        className={store.language === 'Arabic' ? style.dropdownItemRight : style.dropdownItem}
-                        onClick={(e) => {
-                          handleCurrencyChange(e, head);
-                        }}
-                      >
-                        <img
-                          width="24"
-                          className={style.curImage}
-                          src={`${mainHeader ? "" : "/"
+                  {storeDropDown
+                    ?.map((head) => {
+                      const { currency } = head;
+                      return (
+                        <div
+                          className={
+                            store.language === "Arabic"
+                              ? style.dropdownItemRight
+                              : style.dropdownItem
+                          }
+                          onClick={(e) => {
+                            handleCurrencyChange(e, head);
+                          }}
+                        >
+                          <img
+                            width="24"
+                            className={style.curImage}
+                            src={`${
+                              mainHeader ? "" : "/"
                             }assets/images/countryIcons/${currency}.png`}
-                          height="24"
-                          alt={currency}
-                        />
-                        <div className={style.curName}>{currency}</div>
-                      </div>
-                    );
-                  })}
+                            height="24"
+                            alt={currency}
+                          />
+                          <div className={style.curName}>{currency}</div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
-              <div className={store.language === 'Arabic' ? style.angleIconRight : style.angleIcon}>
+              <div
+                className={
+                  store.language === "Arabic"
+                    ? style.angleIconRight
+                    : style.angleIcon
+                }
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11.591"
@@ -158,9 +175,17 @@ const MainHeaderTopBar = ({ mainHeader }) => {
               style={{ width: "100px" }}
             >
               <div className={`${style.flag} d-flex`} />
-              <div className={style.curSelected} onClick={(e) => {
-                handleLanguageChange(e, languageItem === "English" ? "Arabic" : "English");
-              }}>{languageItem === "English" ? "العربية" : "English"}</div>
+              <div
+                className={style.curSelected}
+                onClick={(e) => {
+                  handleLanguageChange(
+                    e,
+                    languageItem === "English" ? "Arabic" : "English"
+                  );
+                }}
+              >
+                {languageItem === "English" ? "العربية" : "English"}
+              </div>
             </div>
           </div>
         </div>
