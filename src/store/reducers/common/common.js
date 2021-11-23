@@ -4,11 +4,11 @@ import { act } from "react-test-renderer";
 
 const initialState = {
   filtersParams: {
-    status:false,
+    status: false,
     Color: [],
     Size: [],
     Options: [],
-    Price:[]
+    Price: [],
   },
   header: [],
   footer: [],
@@ -26,7 +26,7 @@ const initialState = {
   },
   attributes: { color: [], size: [] },
   signUpCard: { isOpen: false, isLogin: false, isOtp: false },
-
+  newUser: "",
 };
 
 export default function common(state = initialState, action) {
@@ -123,7 +123,7 @@ export default function common(state = initialState, action) {
         ...state,
         filtersParams: {
           ...state.filtersParams,
-          status:true,
+          status: true,
           [action?.payload?.name]: [
             ...state.filtersParams[action.payload.name],
             action.payload.param,
@@ -146,11 +146,17 @@ export default function common(state = initialState, action) {
       return {
         ...state,
         filtersParams: {
-          status:false,
+          status: false,
           Color: [],
           Size: [],
           Options: [],
         },
+      };
+
+    case DATA_TYPES.NEW_USER_EMAIL:
+      return {
+        ...state,
+        newUser:action.payload
       };
     default:
       return state;

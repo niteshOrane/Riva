@@ -7,7 +7,7 @@ import SignUpForm from "./components/SignUpForm/SignUpForm";
 import LoginForm from "./components/LoginForm/LoginForm";
 import OtpForm from "./components/OtpForm/OtpForm";
 import styles from "./SignUpCard.module.scss";
-import { toggleSignUpCard } from "../../../../store/actions/common";
+import { newUserEmailCheck, toggleSignUpCard } from "../../../../store/actions/common";
 
 const SignUpCard = () => {
   const {
@@ -21,18 +21,21 @@ const SignUpCard = () => {
   const [isLoginWithOtp, setLoginWithOtp] = useState(false);
   const { language } = useSelector((state) => state?.common?.store);
 
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(toggleSignUpCard({ isOpen: false }));
     // setIsForget(false);
-    setLoginWithOtp(false)
+    setLoginWithOtp(false);
+    // dispatch(newUserEmailCheck(""))
+  
   };
   useEffect(() => {
-    if(isOpen){
-      setIsForget(false)
+    if (isOpen) {
+      setIsForget(false);
     }
-  }, [isOpen])
+  }, [isOpen]);
   const handleOtpForm = () => {
     setLoginWithOtp(true);
     dispatch(toggleSignUpCard({ isOtp: true }));
@@ -70,6 +73,7 @@ const SignUpCard = () => {
         )}
 
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
+      
         {!isOtp ? (
           isLogin ? (
             <LoginForm
@@ -83,7 +87,11 @@ const SignUpCard = () => {
             <SignUpForm handleSubmit={handleSubmit} language={language} />
           )
         ) : (
-          <OtpForm handleSubmit={handleClose} language={language} setLoginWithOtp={setLoginWithOtp} />
+          <OtpForm
+            handleSubmit={handleClose}
+            language={language}
+            setLoginWithOtp={setLoginWithOtp}
+          />
         )}
       </div>
     </Dialog>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useHistory } from "react-router-dom";
@@ -43,6 +42,7 @@ const LoginForm = ({
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
+  const newEmail = useSelector((state) => state.common.newUser);
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -57,16 +57,15 @@ const LoginForm = ({
     setIsForget(true);
     setForgetPassStyle(true);
     setforgotPassword((f) => !f);
- 
   };
 
   const { email, password } = formData;
 
   const forgotPasswordSubmit = async (e) => {
     e.preventDefault();
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-      email)) return setForgotError(true)
-     setForgotError(false)
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+      return setForgotError(true);
+    setForgotError(false);
     const customer = new FormData();
 
     customer.append("email", email);
@@ -212,8 +211,11 @@ const LoginForm = ({
   };
   const validate = (value) => {
     const errorVal = {};
-    if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-      value?.email)) {
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        newEmail ? newEmail : value?.email
+      )
+    ) {
       errorVal.email = "Please enter a valid email address";
     }
     if (!value?.password) {
@@ -236,12 +238,12 @@ const LoginForm = ({
     setLoading(true);
     const customer = new FormData();
 
-    customer.append("email", email);
+    customer.append("email", newEmail ? newEmail : email);
 
     customer.append("password", password);
     customer.append("mobile", "");
     customer.append("action", "login");
-    customer.append("cartId",getCartId());
+    customer.append("cartId", getCartId());
 
     const res = await loginCustomer(customer);
     if (res.status === 200) {
@@ -305,7 +307,10 @@ const LoginForm = ({
           <p className={styles.inpTitle}>
             Enter your registered email <span className={styles.star}>*</span>
           </p>
-          <div  style={{ border: forgotError ? "1px solid red" : null }} className={`d-flex align-items-center ${styles.inpContainer}`}>
+          <div
+            style={{ border: forgotError ? "1px solid red" : null }}
+            className={`d-flex align-items-center ${styles.inpContainer}`}
+          >
             <span className="material-icons-outlined">email</span>
             <input
               value={email}
@@ -316,7 +321,11 @@ const LoginForm = ({
             />
           </div>
         </div>
-        {forgotError && <span className={styles.authVal}>Please enter a valid email containing "@" and "."</span>}
+        {forgotError && (
+          <span className={styles.authVal}>
+            Please enter a valid email containing "@" and "."
+          </span>
+        )}
         <p className={styles.forP}>
           You will get a password reset link on your registered email
         </p>
@@ -340,7 +349,7 @@ const LoginForm = ({
             <span className="material-icons-outlined">email</span>
             <input
               required
-              value={email}
+              value={newEmail ? newEmail : email}
               type="email"
               name="email"
               id="email"

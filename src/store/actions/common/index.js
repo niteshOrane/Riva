@@ -70,6 +70,11 @@ export const toggleSignUpCard = ({
   payload: { isOpen, isLogin, isOtp, ...rest },
 });
 
+export const newUserEmailCheck = (data) => ({
+  type: DATA_TYPES.NEW_USER_EMAIL,
+  payload: data,
+});
+
 export const addFilterParams = (name, param) => ({
   type: DATA_TYPES.FILTER_PARAMS,
   payload: { name, param },
@@ -80,9 +85,9 @@ export const removeFilterParams = (all) => ({
   payload: all,
 });
 
-export const clearSingleFilterValue = (name,value) => ({
-  type:DATA_TYPES.CLEAR_SINGLE_VALUE,
-  payload: {name,value}
+export const clearSingleFilterValue = (name, value) => ({
+  type: DATA_TYPES.CLEAR_SINGLE_VALUE,
+  payload: { name, value },
 });
 
 // export const loadingTrue = () => {

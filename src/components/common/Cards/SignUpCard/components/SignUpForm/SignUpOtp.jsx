@@ -13,7 +13,11 @@ import {
 import { getStoreId } from "../../../../../../util";
 import { useDispatch } from "react-redux";
 import * as icons from "../../../../Icons/Icons";
-import { showSnackbar } from "../../../../../../store/actions/common";
+import {
+  newUserEmailCheck,
+  showSnackbar,
+  toggleSignUpCard,
+} from "../../../../../../store/actions/common";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -223,6 +227,14 @@ export default function TransitionsModal({
         handleClose();
         setLoading(false);
         handleSubmit();
+        // dispatch(newUserEmailCheck(email));
+        // dispatch(toggleSignUpCard(""));
+        // dispatch(
+        //   showSnackbar(
+        //     "User registered successfully, please login to continue",
+        //     "success"
+        //   )
+        // );
       } else {
         setLoading(false);
         return dispatch(showSnackbar(res?.data.message, "error"));
@@ -240,6 +252,7 @@ export default function TransitionsModal({
     e.preventDefault();
     if (!phone)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
+    setUserOtp("");
     const customer = new FormData();
     customer.append("phone", phone);
     customer.append("customerInfo[email]", email);
@@ -334,8 +347,11 @@ export default function TransitionsModal({
                   className={styles.signUpInput}
                   placeholder="Enter OTP"
                   type="number"
-
-                  onKeyDown={ e => ( e.keyCode === 69 || e.keyCode === 190 ) && e.preventDefault() }
+                  value={userOtp}
+                  onKeyDown={(e) =>
+                    (e.keyCode === 69 || e.keyCode === 190) &&
+                    e.preventDefault()
+                  }
                 />
 
                 {minutes === 0 && seconds === 0 ? null : (

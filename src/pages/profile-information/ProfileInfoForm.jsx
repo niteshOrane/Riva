@@ -24,7 +24,7 @@ import "react-phone-number-input/style.css";
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
   const currentLocation = useSelector((state) => state.common.currentLocation);
-  const [phoneValue, setPhoneValue] = useState();
+  const [phoneValue, setPhoneValue] = useState(`+${customer?.mobile}`);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
@@ -181,7 +181,7 @@ function ProfileInfoForm() {
                   <PhoneInput
                     placeholder="Enter Mobile Number"
                     value={isEdit ? mobileNumber : phoneValue}
-                    readOnly={!isEdit}
+                    readOnly={isEdit}
                     defaultCountry={currentLocation.country_code.toUpperCase()}
                     onChange={setPhoneValue}
                     width="100%"

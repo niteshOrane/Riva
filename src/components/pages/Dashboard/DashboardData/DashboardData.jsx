@@ -53,12 +53,12 @@ const DashboardData = () => {
           </span>
           <span>My Wishlist</span>
         </Link>
-        <Link className={styles.box} to="#">
+        {/* <Link className={styles.box} to="#">
           <span className="my-12px">
             <icons.MyStuf />
           </span>
           <span>My Stuff</span>
-        </Link>
+        </Link> */}
         <Link className={styles.box} to="/notify-me">
           <span className="my-12px">
             <icons.Notification />
@@ -71,12 +71,12 @@ const DashboardData = () => {
           </span>
           <span>Account</span>
         </Link>
-        <Link className={styles.box} to="#">
+        {/* <Link className={styles.box} to="#">
           <span className="my-12px">
             <icons.DashboardPayments />
           </span>
           <span>Payments</span>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
