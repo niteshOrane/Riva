@@ -10,6 +10,7 @@ const initialState = {
     Options: [],
     Price: [],
   },
+  forgetPasswordEmail: "",
   header: [],
   footer: [],
   topBrands: [],
@@ -27,6 +28,7 @@ const initialState = {
   attributes: { color: [], size: [] },
   signUpCard: { isOpen: false, isLogin: false, isOtp: false },
   newUser: "",
+
 };
 
 export default function common(state = initialState, action) {
@@ -156,7 +158,12 @@ export default function common(state = initialState, action) {
     case DATA_TYPES.NEW_USER_EMAIL:
       return {
         ...state,
-        newUser:action.payload
+        newUser: action.payload,
+      };
+    case DATA_TYPES.FORGET_PASSOWORD_EMAIL:
+      return {
+        ...state,
+        forgetPasswordEmail: action.payload,
       };
     default:
       return state;

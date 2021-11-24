@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useDispatch, useSelector } from "react-redux";
-import 'react-phone-number-input/style.css'
+import "react-phone-number-input/style.css";
 import {
   showSnackbar,
   toggleSignUpCard,
@@ -10,8 +10,8 @@ import {
 
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
-import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css'
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import {
   createCustomer,
   createCustomerSocial,
@@ -27,9 +27,9 @@ import { isdCodes } from "../ISDdummy/isdCodes";
 import { set } from "mobx";
 
 const SignUpForm = ({ handleSubmit, language }) => {
-   const currentLocation = useSelector((state) => state.common.currentLocation);
-  const [phoneValue, setPhoneValue] = useState()
-  
+  const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState();
+
   const dispatch = useDispatch();
   const [error, setError] = React.useState({});
   const history = useHistory();
@@ -101,7 +101,8 @@ const SignUpForm = ({ handleSubmit, language }) => {
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -159,7 +160,8 @@ const SignUpForm = ({ handleSubmit, language }) => {
             dispatch(loginSuccess(res.data.data));
           toast.configure();
           toast(
-            `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
             }`,
             {
               position: "top-right",
@@ -190,7 +192,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
-
 
   return (
     <form className={styles.form} onSubmit={userCreateHandler}>
@@ -274,6 +275,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
         >
           <div className={styles.cntCode}>
             <PhoneInput
+     
               placeholder="Enter Mobile Number"
               value={phoneValue}
               width="10px"
@@ -282,11 +284,8 @@ const SignUpForm = ({ handleSubmit, language }) => {
               className={styles.signUpInput}
             />
           </div>
-         
         </div>
-        {error?.phone && (
-          <span className={styles.authVal}>{error?.phone}</span>
-        )}
+        {error?.phone && <span className={styles.authVal}>{error?.phone}</span>}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
@@ -302,7 +301,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
             value={password}
             type={!showPass ? "password" : "text"}
             name="password"
-
             title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             id="password"
             maxLength={15}

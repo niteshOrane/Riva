@@ -5,11 +5,15 @@ import Dialog from '@material-ui/core/Dialog';
 import * as icons from '../../../Icons/Icons';
 import CreatePasswordForm from './CreatePasswordForm';
 import styles from '../SignUpCard.module.scss';
+import { getForgetPasswordEmail } from '../../../../../store/actions/common';
+import { useDispatch } from 'react-redux';
 
 const CreatePassword = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
+    dispatch(getForgetPasswordEmail(""))
     setIsOpen(false);
   };
   useEffect(() => {

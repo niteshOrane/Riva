@@ -200,9 +200,9 @@ const ProductDetails = (props) => {
               type="product-details"
               isZoom
             />
-            <div className={styles.circlesContainer}>
+            {/* <div className={styles.circlesContainer}>
               <CategoriesCircles />
-            </div>
+            </div> */}
             {/*<ImageDropdown />*/}
 
             {/* <div className={styles.actionContainerTopRight}>

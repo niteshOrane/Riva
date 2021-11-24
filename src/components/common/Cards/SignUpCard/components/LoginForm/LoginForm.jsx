@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { getCart } from "../../../../../../store/actions/cart";
 import {
+  getForgetPasswordEmail,
   showSnackbar,
   toggleSignUpCard,
 } from "../../../../../../store/actions/common";
@@ -42,6 +43,9 @@ const LoginForm = ({
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
+  console.log(useSelector(
+    (state) => state.common
+  ))
   const newEmail = useSelector((state) => state.common.newUser);
   const history = useHistory();
 
@@ -73,6 +77,7 @@ const LoginForm = ({
     const res = await forgotPassword(customer);
 
     if (res && res.status === 200 && res.data?.success) {
+      dispatch(getForgetPasswordEmail(email));
       handleSubmit();
       return dispatch(showSnackbar(res?.data?.message, "success"));
     }

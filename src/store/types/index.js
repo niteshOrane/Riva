@@ -44,6 +44,7 @@ export const SINGLE_CART = "SINGLE_CART"
 export const GET_FREE_SHIPPING = "GET_FREE_SHIPPING"
 
 export const NEW_USER_EMAIL = "NEW_USER_EMAIL"
+export const FORGET_PASSOWORD_EMAIL = "FORGET_PASSOWORD_EMAIL"
 
 // filters
 

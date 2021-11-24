@@ -75,6 +75,10 @@ export const newUserEmailCheck = (data) => ({
   payload: data,
 });
 
+export const getForgetPasswordEmail = (data) => ({
+  type: DATA_TYPES.FORGET_PASSOWORD_EMAIL,
+  payload: data,
+});
 export const addFilterParams = (name, param) => ({
   type: DATA_TYPES.FILTER_PARAMS,
   payload: { name, param },
