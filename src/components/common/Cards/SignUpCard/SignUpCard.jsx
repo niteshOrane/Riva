@@ -28,7 +28,7 @@ const SignUpCard = () => {
     dispatch(toggleSignUpCard({ isOpen: false }));
     // setIsForget(false);
     setLoginWithOtp(false);
-    // dispatch(newUserEmailCheck(""))
+    dispatch(newUserEmailCheck(""))
   
   };
   useEffect(() => {

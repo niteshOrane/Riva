@@ -227,14 +227,14 @@ export default function TransitionsModal({
         handleClose();
         setLoading(false);
         handleSubmit();
-        // dispatch(newUserEmailCheck(email));
-        // dispatch(toggleSignUpCard(""));
-        // dispatch(
-        //   showSnackbar(
-        //     "User registered successfully, please login to continue",
-        //     "success"
-        //   )
-        // );
+        dispatch(newUserEmailCheck(email));
+        dispatch(toggleSignUpCard(""));
+        dispatch(
+          showSnackbar(
+            "User registered successfully, please login to continue",
+            "success"
+          )
+        );
       } else {
         setLoading(false);
         return dispatch(showSnackbar(res?.data.message, "error"));
