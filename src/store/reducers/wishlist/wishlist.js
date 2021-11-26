@@ -36,6 +36,11 @@ const wishlist = (state = INITIAL_STATE, action) => {
         ...state,
         loading: action.payload,
       };
+    case DATA_TYPES.CLEAR_WISHLIST:
+      return {
+        ...state,
+        data: action.payload,
+      };
     default:
       return state;
   }

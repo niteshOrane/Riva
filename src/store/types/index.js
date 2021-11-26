@@ -20,6 +20,7 @@ export const STORE = 'STORE';
 export const SNACKBAR = 'SNACKBAR';
 export const GET_WISHLIST = 'GET_WISHLIST';
 export const ADD_WISHLIST = 'ADD_WISHLIST';
+export const CLEAR_WISHLIST = 'CLEAR_WISHLIST';
 export const REMOVE_WISHLIST = 'REMOVE_WISHLIST';
 export const LOADING_WISHLIST="LOADING_WISHLIST"
 export const SET_ATTRIBUTES = 'SET_ATTRIBUTES';

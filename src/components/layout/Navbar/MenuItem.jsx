@@ -13,6 +13,7 @@ import { logout, emptyCart } from '../../../store/actions/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
+import { clearwishlist_action } from '../../../store/actions/wishlist';
 
 
 
@@ -46,6 +47,7 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
         dispatch(emptyCart());
         logoutUser();
         handleClose(event);
+        dispatch(clearwishlist_action([]))
     };
     const handleMyProfile = (event) => {
         history.push('/dashboard')

@@ -30,6 +30,10 @@ export const removeWishlist_action = (data) => ({
   type: DATA_TYPES.REMOVE_WISHLIST,
   payload: { data },
 });
+export const clearwishlist_action = (data) => ({
+  type: DATA_TYPES.CLEAR_WISHLIST,
+  payload: data,
+});
 
 export const getWishlist = () => async (dispatch) => {
   const id = getCustId();
