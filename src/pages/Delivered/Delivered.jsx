@@ -5,12 +5,15 @@ import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/Delivered
 import { useSelector } from "react-redux";
 import { getOrderList } from "../../services/order/order.services";
 import styles from "./Delivered.module.scss";
+import { useParams } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "./Pagination";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
+  const { orderType } = useParams();
+  console.log(useParams())
 
   const { language } = useSelector((state) => state?.common?.store);
   const [orderList, setOrderList] = React.useState([]);
@@ -33,35 +36,58 @@ function Delivered({ title = "Delivered" }) {
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
-  }, []);
+  }, [orderType,orderList]);
   React.useEffect(() => {
-    let data = orderList?.reduce((acc, pro) => {
-      if (pro.status !== "canceled") {
-        let data2 = pro?.list?.map((a) => ({
-          ...a,
-          status: pro?.status,
-          increment_id: pro?.increment_id,
-          currency_code: pro?.currency_code,
-        }));
-        return [...acc, ...data2];
+    if (orderType === "orders") {
+      const data = orderList?.reduce((acc, pro) => {
+        if (pro.status !== "canceled") {
+          const data2 = pro?.list?.map((a) => ({
+            ...a,
+            status: pro?.status,
+            increment_id: pro?.increment_id,
+            currency_code: pro?.currency_code,
+          }));
+          return [...acc, ...data2];
+        } else {
+          return acc;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
       }
-    }, []);
-    if (data) {
-      setFinalList(data);
+    } else if (orderType === "delivered") {
+      const data = orderList?.reduce((acc, pro) => {
+        if (pro.status === "delivered") {
+          const data2 = pro?.list?.map((a) => ({
+            ...a,
+            status: pro?.status,
+            increment_id: pro?.increment_id,
+            currency_code: pro?.currency_code,
+          }));
+          return [...acc, ...data2];
+        } else {
+          return acc;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
+      }
     }
-  }, [orderList]);
+  }, [orderType,orderList]);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = finalList?.slice(indexOfFirstPost, indexOfLastPost);
 
- const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">{title}</h2>
+            <h2 className="font-weight-normal">
+              {orderType?.[0]?.toUpperCase() + orderType.slice(1)}
+            </h2>
 
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
             {currentPosts.length > 0 ? (
@@ -79,7 +105,7 @@ function Delivered({ title = "Delivered" }) {
               postsPerPage={postsPerPage}
               totalPosts={finalList?.length}
               paginate={paginate}
-              currentPage = {currentPage}
+              currentPage={currentPage}
             />
           </div>
         </div>

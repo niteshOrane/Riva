@@ -12,7 +12,7 @@ import { getCart } from "../../../../../store/actions/cart";
 import { buyAgainOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
-const DeliveredOrders = ({ product,language }) => {
+const DeliveredOrders = ({ product, language }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -52,12 +52,15 @@ const DeliveredOrders = ({ product,language }) => {
     <div className={styles.card}>
       <div className={styles.incrementWrap}>
         <Link to={`/order-details/${product?.increment_id}`}>
-          <span className="greyText">Order Number: #{product?.increment_id}</span>
+          <span className="greyText">
+            Order Number: #{product?.increment_id}
+          </span>
         </Link>
-
-        <br />
+        {/* <div className={styles.statusText}>
+          <strong>Order Status: </strong>
+          <span>{product?.status}</span>
+        </div> */}
       </div>
-
       <div className={styles.carItem}>
         <div className={styles.col1}>
           <Link to={`/order-details/${product?.increment_id}`}>
@@ -102,7 +105,16 @@ const DeliveredOrders = ({ product,language }) => {
             {product?.parent_item?.price}
           </strong>
         </div>
+
         <div>
+          <div className="d-flex align-items-center mt-12px">
+            <span className={`material-icons-outlined ${styles.icon}`}>
+              update
+            </span>
+            <h4 className="c-pointer font-weight-normal greyText">
+              {product?.status}
+            </h4>
+          </div>
           <div className="d-flex align-items-center mt-12px">
             <span className={styles.icon}>
               <icons.Star />

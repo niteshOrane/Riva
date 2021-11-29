@@ -46,12 +46,17 @@ function GoSellTap() {
           <FormControl component="fieldset">
             <RadioGroup onChange={callbackFunc}>
               <div className={styles.labelRadio}>
+                <span
+                  style={{ color: "gray", paddingRight: "1rem" }}
+                  className="material-icons"
+                >
+                  credit_card
+                </span>
                 <FormControlLabel
                   value="card"
                   control={<Radio />}
-                  label="Card"
+                  label="VISA / MASTERCARD / AMEX"
                 />
-                <span style = {{color:"gray"}} className="material-icons">credit_card</span>
               </div>
               {store_name === "Kuwait" && (
                 <div className={styles.labelRadio}>
@@ -60,34 +65,49 @@ function GoSellTap() {
                     control={<Radio />}
                     label="Knet"
                   />
-                  <span style = {{color:"gray"}} className="material-icons">credit_card</span>
+                  <span style={{ color: "gray" }} className="material-icons">
+                    credit_card
+                  </span>
                 </div>
               )}
               {store_name === "Saudi Arabia" && (
                 <div className={styles.labelRadio}>
                   <FormControlLabel
-           
                     value="mada"
                     control={<Radio />}
                     label="Mada"
                   />
-                  <span style = {{color:"gray"}} className="material-icons">credit_card</span>
+                  <span style={{ color: "gray" }} className="material-icons">
+                    credit_card
+                  </span>
                 </div>
               )}
 
               {store_name === "Bahrain" && (
                 <div className={styles.labelRadio}>
                   <FormControlLabel
-         
                     value="benefit"
                     control={<Radio />}
                     label="Benefit"
                   />
-                  <span style = {{color:"lightgray"}} className="material-icons">credit_card</span>
+                  <span
+                    style={{ color: "lightgray" }}
+                    className="material-icons"
+                  >
+                    credit_card
+                  </span>
                 </div>
               )}
             </RadioGroup>
           </FormControl>
+          <div className = {styles.staticContent}>
+            <span>
+              Express Shipping in 3-6 Business Days. You will be redirected to
+              the website of Mastercard Internet Gateway System (AMEX) when you
+              place your order. And then you will automatically return to
+              rivafashion.com.
+            </span>
+          </div>
         </form>
 
         <br />

@@ -94,13 +94,21 @@
   align-content: center;
   justify-content: center;
   margin-top: 2rem;
+
   form {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     border: 1px solid lightgray;
     padding: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+      rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      margin: 0;
+    }
   }
   .labelRadio {
     display: flex;
@@ -177,4 +185,14 @@
 
 .payName {
   margin-top: 20px;
+}
+.staticContent {
+  span {
+    font-size: 13px;
+    letter-spacing: 0.07em;
+    color: #2c3240;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
 }

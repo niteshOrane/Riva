@@ -248,7 +248,7 @@ class AppRoutes extends Component {
         index: 9,
       },
       {
-        path: "/delivered",
+        path: "/myOrder/:orderType",
         component: Delivered,
         exact: true,
         name: "Delivered",

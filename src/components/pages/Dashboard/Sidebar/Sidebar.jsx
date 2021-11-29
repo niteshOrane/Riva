@@ -31,11 +31,11 @@ function Sidebar() {
             <div className={styles.children}>
               <p className={styles.title}>My Orders</p>
 
-              <Link to="/" className={styles.child}>
+              <Link to={`/myOrder/${"orders"}`} className={styles.child}>
                 <icons.AngleRight />
-                &nbsp; On the Way
+                &nbsp; Orders
               </Link>
-              <Link to="/delivered" className={styles.child}>
+              <Link to={`/myOrder/${"delivered"}`} className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; Delivered
               </Link>
