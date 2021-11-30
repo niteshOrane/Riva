@@ -48,59 +48,59 @@ function GoSellTap() {
               <div className={styles.labelRadio}>
                 <span
                   style={{ color: "gray", paddingRight: "1rem" }}
-                  className="material-icons"
+                  className={`material-icons ${styles.line}`}
                 >
                   credit_card
                 </span>
                 <FormControlLabel
                   value="card"
                   control={<Radio />}
-                  label="VISA / MASTERCARD / AMEX"
+                  label="VISA/MASTERCARD/AMEX"
                 />
               </div>
               {store_name === "Kuwait" && (
                 <div className={styles.labelRadio}>
+                  <span style={{ color: "gray",paddingRight: "1rem" }} className="material-icons">
+                    credit_card
+                  </span>
                   <FormControlLabel
                     value="knet"
                     control={<Radio />}
-                    label="Knet"
+                    label="KNET"
                   />
-                  <span style={{ color: "gray" }} className="material-icons">
-                    credit_card
-                  </span>
                 </div>
               )}
               {store_name === "Saudi Arabia" && (
                 <div className={styles.labelRadio}>
+                  <span style={{ color: "gray", paddingRight: "1rem" }} className="material-icons">
+                    credit_card
+                  </span>
                   <FormControlLabel
                     value="mada"
                     control={<Radio />}
-                    label="Mada"
+                    label="MADA DEBIT CARD"
                   />
-                  <span style={{ color: "gray" }} className="material-icons">
-                    credit_card
-                  </span>
                 </div>
               )}
 
               {store_name === "Bahrain" && (
                 <div className={styles.labelRadio}>
-                  <FormControlLabel
-                    value="benefit"
-                    control={<Radio />}
-                    label="Benefit"
-                  />
                   <span
-                    style={{ color: "lightgray" }}
+                    style={{ color: "gray", paddingRight: "1rem" }}
                     className="material-icons"
                   >
                     credit_card
                   </span>
+                  <FormControlLabel
+                    value="benefit"
+                    control={<Radio />}
+                    label="BENEFIT"
+                  />
                 </div>
               )}
             </RadioGroup>
           </FormControl>
-          <div className = {styles.staticContent}>
+          <div className={styles.staticContent}>
             <span>
               Express Shipping in 3-6 Business Days. You will be redirected to
               the website of Mastercard Internet Gateway System (AMEX) when you

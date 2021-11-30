@@ -36,7 +36,7 @@ function Delivered({ title = "Delivered" }) {
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
-  }, [orderType,orderList]);
+  }, [orderType]);
   React.useEffect(() => {
     if (orderType === "orders") {
       const data = orderList?.reduce((acc, pro) => {

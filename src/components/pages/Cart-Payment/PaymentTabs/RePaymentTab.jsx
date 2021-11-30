@@ -25,6 +25,7 @@ import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
 import RePaymentTab from "./RePaymentTab";
+import PaymentFooter from "./components/PaymentFooter";
 
 const dummyPay = [
   "TAP",
@@ -317,7 +318,7 @@ export default function DetailTabs({
         </Box>
 
         <div className={classes.tabContent}>
-          <div className={styles.payName}>{name?.toUpperCase()}</div>
+          {/* <div className={styles.payName}>{name?.toUpperCase()}</div> */}
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
             <GoSellTap />
           </TabPanel>
@@ -367,6 +368,7 @@ export default function DetailTabs({
           })} */}
         </div>
       </Box>
+      <PaymentFooter />
     </>
   );
 }
