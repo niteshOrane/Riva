@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import styles from "./CancelledOrdersCards.module.scss";
 import * as icons from "../../../../common/Icons/Icons";
 import { extractColorSize } from "../../../../../util";
-import moment from "moment";
+
+
 import { addCartId } from '../../../../../store/actions/auth';
 
 import { getCart } from "../../../../../store/actions/cart";
