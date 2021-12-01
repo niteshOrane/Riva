@@ -5,14 +5,16 @@ import moment from "moment";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
 import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
+import { cancelOrder } from "../../../../../services/order/order.services";
 
 import { extractColorSize } from "../../../../../util";
 import { addCartId } from "../../../../../store/actions/auth";
 import { getCart } from "../../../../../store/actions/cart";
 import { buyAgainOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
+import swal from "sweetalert";
 
-const DeliveredOrders = ({ product, language }) => {
+const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -30,6 +32,22 @@ const DeliveredOrders = ({ product, language }) => {
         dispatch(showSnackbar(response?.data?.message, "error"));
       }
     }
+  };
+
+  const cancelOrderMyOrder = async (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "You want to cancel order.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (result) => {
+      if (result) {
+        cancelOrderOnTap(id);
+      } else {
+        return
+      }
+    });
   };
 
   const getColorSize = (options) => {
@@ -56,10 +74,6 @@ const DeliveredOrders = ({ product, language }) => {
             Order Number: #{product?.increment_id}
           </span>
         </Link>
-        {/* <div className={styles.statusText}>
-          <strong>Order Status: </strong>
-          <span>{product?.status}</span>
-        </div> */}
       </div>
       <div className={styles.carItem}>
         <div className={styles.col1}>
@@ -144,6 +158,19 @@ const DeliveredOrders = ({ product, language }) => {
             </span>
             <span className={styles.reorder}>Reorder</span>
           </div>
+          {/* {product?.status === "pending" && (
+            <div
+              className="d-flex align-items-center mt-12px"
+              onClick={() => {
+                cancelOrderMyOrder(product?.order_id);
+              }}
+            >
+              <span style={{fontSize:"18px"}} className={`material-icons ${styles.icon}`}>
+                not_interested
+              </span>
+              <span className={styles.reorder}>Cancel Order</span>
+            </div>
+          )} */}
         </div>
       </div>
     </div>

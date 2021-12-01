@@ -5,10 +5,6 @@ import { act } from "react-test-renderer";
 const initialState = {
   filtersParams: {
     status: false,
-    Color: [],
-    Size: [],
-    Options: [],
-    Price: [],
   },
   forgetPasswordEmail: "",
   header: [],
@@ -121,6 +117,11 @@ export default function common(state = initialState, action) {
         },
       };
     case DATA_TYPES.FILTER_PARAMS:
+
+      if(!state.filtersParams?.[action.payload.name]){
+         state.filtersParams[action.payload.name] = []        
+      }
+      console.log(action.payload.name,action.payload.param)
       return {
         ...state,
         filtersParams: {

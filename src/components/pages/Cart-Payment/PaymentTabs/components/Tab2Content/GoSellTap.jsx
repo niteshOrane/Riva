@@ -31,7 +31,7 @@ function GoSellTap() {
         setLoading(false);
       } else if (res?.message) {
         dispatch(showSnackbar(`${res?.message}`, "error"));
-        window.location.reload();
+        // window.location.reload();
         return setLoading(false);
       } else {
         return setLoading(false);

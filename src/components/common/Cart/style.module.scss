@@ -111,3 +111,22 @@
     color:black !important
   }
 }
+.emptyCart{
+  font-size: 10rem !important;
+  color:#4ad395 !important;
+}
+.emptyWrap{
+  width: 250px;
+  height: 250px;
+  background-color: #E8E8E8;
+  border: gray;
+  border-radius: 50%;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+.emptySec{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
