@@ -3,17 +3,19 @@ import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/DeliveredOrders/DeliveredOrders";
 import { useSelector } from "react-redux";
-import { getOrderList } from "../../services/order/order.services";
+import { cancelOrder, getOrderList } from "../../services/order/order.services";
 import styles from "./Delivered.module.scss";
 import { useParams } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "./Pagination";
+import { showSnackbar } from "../../store/actions/common";
+import { useDispatch } from "react-redux";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
-  console.log(useParams())
+  const dispatch = useDispatch();
 
   const { language } = useSelector((state) => state?.common?.store);
   const [orderList, setOrderList] = React.useState([]);
@@ -33,6 +35,12 @@ function Delivered({ title = "Delivered" }) {
       setOrderList(temp);
     }
     setStatus(res?.status);
+  };
+  const cancelOrderOnTap = async (id) => {
+    const res = await cancelOrder(id);
+    if (res?.status === 200) {
+      dispatch(showSnackbar("Order Cancelled successfully", "success"));
+    }
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
@@ -73,7 +81,7 @@ function Delivered({ title = "Delivered" }) {
         setFinalList(data);
       }
     }
-  }, [orderType,orderList]);
+  }, [orderType, orderList]);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = finalList?.slice(indexOfFirstPost, indexOfLastPost);
@@ -92,7 +100,11 @@ function Delivered({ title = "Delivered" }) {
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
             {currentPosts.length > 0 ? (
               currentPosts?.map((li) => (
-                <DeliveredOrders product={li} language={language} />
+                <DeliveredOrders
+                  product={li}
+                  language={language}
+                  cancelOrderOnTap={cancelOrderOnTap}
+                />
               ))
             ) : !status ? (
               <div className={styles.progress}>

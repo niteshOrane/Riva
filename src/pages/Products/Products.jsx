@@ -45,6 +45,7 @@ function Products(props) {
     sortField,
     onScreen,
     serachTerm: parsed?.serachTerm,
+    filterAttr
   });
 
   const handleSortChange = (event) => {
@@ -62,80 +63,80 @@ function Products(props) {
     console.log(`${`/products/${title}/${categories}`}`);
     history.push(`${`/products/${title}/${categories}`}`);
   };
-  useEffect(() => {
-    if (
-      filterAttr?.Color.length ||
-      filterAttr?.Size.length ||
-      filterAttr?.Price?.length
-    ) {
-      const temp = products?.filter((pro) => {
-        if (pro?.extension_attributes?.configurable_product_options) {
-          const { colors, size } = extractColorSize(
-            pro?.extension_attributes?.configurable_product_options || []
-          );
-          const tempColor = colors?.filter((li) =>
-            filterAttr?.Color?.includes(li?.label)
-          );
-          const tempSize = size?.filter((si) =>
-            filterAttr?.Size?.includes(si?.label)
-          );
-          const tempPrice = [];
+  // useEffect(() => {
+  //   if (
+  //     filterAttr?.Color.length ||
+  //     filterAttr?.Size.length ||
+  //     filterAttr?.Price?.length
+  //   ) {
+  //     const temp = products?.filter((pro) => {
+  //       if (pro?.extension_attributes?.configurable_product_options) {
+  //         const { colors, size } = extractColorSize(
+  //           pro?.extension_attributes?.configurable_product_options || []
+  //         );
+  //         const tempColor = colors?.filter((li) =>
+  //           filterAttr?.Color?.includes(li?.label)
+  //         );
+  //         const tempSize = size?.filter((si) =>
+  //           filterAttr?.Size?.includes(si?.label)
+  //         );
+  //         const tempPrice = [];
 
-          if (filterAttr?.Price?.length === 1) {
-            const value = filterAttr?.Price[0];
-            const limit1 = value?.slice(2, 5);
-            const limit2 = value.slice(-6).slice(0, 3);
-            if (pro.price < limit1 || pro.price > limit2) {
-              tempPrice.push(pro);
-            }
-          } else if (filterAttr?.Price?.length === 2) {
-            const value = filterAttr?.Price[0];
-            const value1 = filterAttr?.Price[1];
-            const limit1 = value?.slice(2, 5);
-            const limit2 = value?.slice(-6).slice(0, 3);
-            const limit3 = value1?.slice(2, 5);
-            const limit4 = value1?.slice(-6).slice(0, 3);
-            if (
-              pro.price < limit1 ||
-              pro.price > limit2 ||
-              pro.price < limit3 ||
-              pro.price > limit4
-            ) {
-              tempPrice.push(pro);
-            }
-          } else if (filterAttr?.Price?.length === 3) {
-            const value = filterAttr?.Price[0];
-            const value1 = filterAttr?.Price[1];
-            const value2 = filterAttr?.Price[2];
-            const limit1 = value?.slice(2, 5);
-            const limit2 = value?.slice(-6).slice(0, 3);
-            const limit3 = value1?.slice(2, 5);
-            const limit4 = value1?.slice(-6).slice(0, 3);
-            const limit5 = value2?.slice(2, 5);
-            const limit6 = value2?.slice(-6).slice(0, 3);
-            if (
-              pro.price < limit1 ||
-              pro.price > limit2 ||
-              pro.price < limit3 ||
-              pro.price > limit4 ||
-              pro.price < limit5 ||
-              pro.price > limit6
-            ) {
-              tempPrice.push(pro);
-            }
-          }
+  //         if (filterAttr?.Price?.length === 1) {
+  //           const value = filterAttr?.Price[0];
+  //           const limit1 = value?.slice(2, 5);
+  //           const limit2 = value.slice(-6).slice(0, 3);
+  //           if (pro.price < limit1 || pro.price > limit2) {
+  //             tempPrice.push(pro);
+  //           }
+  //         } else if (filterAttr?.Price?.length === 2) {
+  //           const value = filterAttr?.Price[0];
+  //           const value1 = filterAttr?.Price[1];
+  //           const limit1 = value?.slice(2, 5);
+  //           const limit2 = value?.slice(-6).slice(0, 3);
+  //           const limit3 = value1?.slice(2, 5);
+  //           const limit4 = value1?.slice(-6).slice(0, 3);
+  //           if (
+  //             pro.price < limit1 ||
+  //             pro.price > limit2 ||
+  //             pro.price < limit3 ||
+  //             pro.price > limit4
+  //           ) {
+  //             tempPrice.push(pro);
+  //           }
+  //         } else if (filterAttr?.Price?.length === 3) {
+  //           const value = filterAttr?.Price[0];
+  //           const value1 = filterAttr?.Price[1];
+  //           const value2 = filterAttr?.Price[2];
+  //           const limit1 = value?.slice(2, 5);
+  //           const limit2 = value?.slice(-6).slice(0, 3);
+  //           const limit3 = value1?.slice(2, 5);
+  //           const limit4 = value1?.slice(-6).slice(0, 3);
+  //           const limit5 = value2?.slice(2, 5);
+  //           const limit6 = value2?.slice(-6).slice(0, 3);
+  //           if (
+  //             pro.price < limit1 ||
+  //             pro.price > limit2 ||
+  //             pro.price < limit3 ||
+  //             pro.price > limit4 ||
+  //             pro.price < limit5 ||
+  //             pro.price > limit6
+  //           ) {
+  //             tempPrice.push(pro);
+  //           }
+  //         }
 
-          if (tempColor.length || tempSize.length || tempPrice.length) {
-            return pro;
-          }
-        }
-      });
+  //         if (tempColor.length || tempSize.length || tempPrice.length) {
+  //           return pro;
+  //         }
+  //       }
+  //     });
 
-      if (temp.length) {
-        setFilteredData(temp);
-      }
-    }
-  }, [products]);
+  //     if (temp.length) {
+  //       setFilteredData(temp);
+  //     }
+  //   }
+  // }, [products]);
 
   const handleThreeColumns = () => setPageColumns(3);
   const handleTwoColumns = () => setPageColumns(2);
