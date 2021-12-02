@@ -47,7 +47,6 @@ const useProducts = ({
         },
       };
     }
-    console.log({filterAttr})
     if (filterAttr) {
       config = {
         method: "get",
@@ -93,7 +92,7 @@ const useProducts = ({
       .catch((error) => {
         setloading(false);
       });
-  }, [serachTerm, categoryId, currentPage, pageSize, sortField, sortDirection]);
+  }, [serachTerm, categoryId, currentPage, pageSize, sortField, sortDirection,filterAttr]);
   return {
     products,
     filters,

@@ -84,7 +84,7 @@ function Delivered({ title = "Delivered" }) {
   }, [orderType, orderList]);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = finalList?.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = finalList?.sort((a,b) => new Date(b.created_at) - new Date(a.created_at))?.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (

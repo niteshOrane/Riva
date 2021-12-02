@@ -25,7 +25,7 @@ const Table = ({ order,value }) => {
               {list?.[0]?.ShipmentDate?.slice(0, 10) || "No Date Found"} 
               </a>
             </div>
-            <div>Expected delivery with in 6 to 5 bussiness days</div>
+            <div>Expected delivery with in 5 to 7 bussiness days</div>
             <div>123098765</div>
           </div>
         </div>

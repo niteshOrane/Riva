@@ -20,6 +20,7 @@ import {
 } from "../../../../../../store/actions/common";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
 
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -106,7 +107,7 @@ export default function TransitionsModal({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isSubmit, setIsSubmit] = useState(false);
-
+   let myInterval = null;
   const validate = (value) => {
     const errorVal = {};
     if (
@@ -154,6 +155,7 @@ export default function TransitionsModal({
   };
   const handleSubmitSign = (e) => {
     e.preventDefault();
+    // setOpen(true)
     setError(validate(formData));
     setIsSubmit(true);
   };
@@ -186,24 +188,6 @@ export default function TransitionsModal({
       }
     }
   };
-  useEffect(() => {
-    const myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(0);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval);
-        } else {
-          setMinutes(0);
-          setSeconds(0);
-        }
-      }
-    }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
-  });
 
   const handleClose = () => {
     setOpen(false);
@@ -276,11 +260,34 @@ export default function TransitionsModal({
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
+   const setIntervalOTP = () => {
+    myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+  };
+  useEffect(() => {
+    setIntervalOTP();
+
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
   useEffect(() => {
     if (Object.keys(error)?.length === 0 && isSubmit) {
       handleOpen();
     }
   }, [error]);
+  
   return (
     <div>
       <LoaderButton
@@ -360,6 +367,8 @@ export default function TransitionsModal({
                     {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
                   </span>
                 )}
+
+
               </div>
               <button
                 onClick={varifyOtp}

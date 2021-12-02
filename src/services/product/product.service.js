@@ -35,9 +35,9 @@ export const getFiltersList = ({ catId, qTerm = '', filterAttr = {} }) => {
       filterValue.push(`categoryData[${element}]=${filterAttr[element].join(',')}`)
     }
   });
-  if (filterValue.length) {
-    filterData = `&${filterValue.join('&')}`
-  }
+  // if (filterValue.length) {
+  //   filterData = `&${filterValue.join('&')}`
+  // }
   const querySearch = qTerm ? `&categoryData[q] = ${qTerm}` : "";
   const config = {
     method: "get",
