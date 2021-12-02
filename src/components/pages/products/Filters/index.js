@@ -89,9 +89,10 @@ function Filters(props) {
     setSelectedTags(temp);
   };
   const filterList = async (catId) => {
-    const list = await getFiltersList({ catId, serachTerm });
+    const list = await getFiltersList({ catId, serachTerm, filterAttr });
     setFiltersAttr(list?.data[0]?.filters);
   };
+
   useEffect(() => {
     if (categoryId && categoryId > 0) {
       filterList(categoryId);
@@ -117,6 +118,7 @@ function Filters(props) {
           isItem: false,
           type: "checkbox",
           attr_code: el?.attr_code,
+          value_code: c?.value
         };
       });
       newArr.push(obj);
@@ -133,7 +135,9 @@ function Filters(props) {
   };
 
   const seeResultsAction = () => {
-    window.location.reload();
+    if (categoryId && categoryId > 0) {
+      filterList(categoryId);
+    }
   };
 
   const removeSingleAttr = (label, value) => {
@@ -165,16 +169,15 @@ function Filters(props) {
             dispatch(
               addFilterParams(
                 val?.attr_code,
-                val?.title
+                val?.value_code
               )
             );
-          } 
+          }
         } else {
           null;
         }
         let color =
-          selectedTags.filter((li) => li?.val.label === "Color").length > 0 &&
-          true;
+          selectedTags.filter((li) => li?.val.label === "Color").length > 0 && true;
         // const list = await getFiltersList(categoryId, val,val,val);
         //  setFiltersAttr(list?.data[0]?.filters);
       };
@@ -211,10 +214,10 @@ function Filters(props) {
               style={
                 items?.children?.length > 10
                   ? {
-                      height: "25rem",
-                      overflowY: "scroll",
-                      // paddingRight: "1rem",
-                    }
+                    height: "25rem",
+                    overflowY: "scroll",
+                    // paddingRight: "1rem",
+                  }
                   : null
               }
             >
@@ -247,18 +250,16 @@ function Filters(props) {
             <div className={style.filterDots}>
               <div
                 onClick={handleTwoColumns}
-                className={`${pageColumns === 2 ? style.blackDots : ""} ${
-                  style.greyDots
-                }`}
+                className={`${pageColumns === 2 ? style.blackDots : ""} ${style.greyDots
+                  }`}
               >
                 <span />
                 <span />
               </div>
               <div
                 onClick={handleThreeColumns}
-                className={`${pageColumns === 3 ? style.blackDots : ""} ${
-                  style.greyDots
-                }`}
+                className={`${pageColumns === 3 ? style.blackDots : ""} ${style.greyDots
+                  }`}
               >
                 <span />
                 <span />
@@ -328,12 +329,12 @@ function Filters(props) {
           </div>
           <div>
             <section className={`${style.seeResult}`}>
-              <button className="c-pointer" onClick={seeResultsAction}>
+              <button type="button" className="c-pointer" onClick={seeResultsAction}>
                 SEE RESULTS
               </button>
             </section>
             <section className={`${style.seeResult}`}>
-              <button className="c-pointer" onClick={resetFilters}>
+              <button type="button" className="c-pointer" onClick={resetFilters}>
                 RESET ALL
               </button>
             </section>

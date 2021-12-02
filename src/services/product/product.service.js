@@ -1,4 +1,5 @@
 import axios from "axios";
+import { object } from "prop-types";
 import API_URL from "../../enviroments/index";
 import { getStoreId, getStoreData } from "../../util";
 
@@ -25,14 +26,22 @@ export const getProductMedia = (sku) => {
   return axios(config);
 };
 
-export const getFiltersList = ({ catId, color = "", size = "", price = "", qTerm = '' }) => {
-  const filterData = color ? `&categoryData[color]=${color?.value}` : "";
-  const sizeData = size ? `&categoryData[size] = ${size?.value}` : "";
-  const priceData = price ? `&categoryData[price] = ${price?.value}` : "";
+export const getFiltersList = ({ catId, qTerm = '', filterAttr = {} }) => {
+  const keyValue = Object.keys(filterAttr).filter(e => e !== "status");
+  const filterValue = [];
+  let filterData = '';
+  keyValue.forEach(element => {
+    if (filterAttr[element]?.length) {
+      filterValue.push(`categoryData[${element}]=${filterAttr[element].join(',')}`)
+    }
+  });
+  if (filterValue.length) {
+    filterData = `&${filterValue.join('&')}`
+  }
   const querySearch = qTerm ? `&categoryData[q] = ${qTerm}` : "";
   const config = {
     method: "get",
-    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${sizeData}${priceData}${querySearch}`,
+    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${querySearch}`,
     silent: true,
   };
   return axios(config);
