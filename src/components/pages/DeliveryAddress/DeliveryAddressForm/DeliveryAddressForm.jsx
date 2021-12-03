@@ -280,7 +280,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           <div className="location-icon">
             <icons.LocationFlag />
           </div>
-          <div style={{ marginLeft: "2rem" }} className="location-map">
+          <div style={{ marginLeft: "2rem",marginRight:"5px" }} className="location-map">
             USE MY CURRENT LOCATION
           </div>
         </div>

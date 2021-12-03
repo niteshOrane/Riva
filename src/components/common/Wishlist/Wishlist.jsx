@@ -99,7 +99,11 @@ function Wishlist() {
     if (data) {
       setSelectedColor({ ...selectedColor, color: data?.selected?.color });
       getReviewListForProduct(data?.sku);
-      setSelectedColor({...selectedColor,size:data?.size?.[0],color:data?.colors?.[0]})
+      setSelectedColor({
+        ...selectedColor,
+        size: data?.size?.[0],
+        color: data?.colors?.[0],
+      });
     }
   }, [data]);
 
@@ -151,7 +155,10 @@ function Wishlist() {
             <div className={`${styles.rating} d-flex-all-center`}>
               {calculateAvgReview()} rating
             </div>
-            <div className={`${styles.sku} d-flex`}>
+            <div
+              style={{ marginRight: language === "Arabic" ? "1.5rem" : "0rem" }}
+              className={`${styles.sku} d-flex`}
+            >
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
@@ -249,7 +256,8 @@ function Wishlist() {
                             ? "scale(1)"
                             : "scale(.9)",
                         background:
-                          selectedColor?.size?.value === size?.value && "#EADEB8",
+                          selectedColor?.size?.value === size?.value &&
+                          "#EADEB8",
                         border:
                           selectedColor?.size?.value === size?.value &&
                           "1px solid #EADEB8",

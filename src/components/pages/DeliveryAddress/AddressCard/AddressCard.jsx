@@ -32,6 +32,7 @@ const useStyles = makeStyles({
   },
   avatar: {
     backgroundColor: colors.red[500],
+    marginLeft:8
   },
 });
 

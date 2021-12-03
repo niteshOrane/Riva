@@ -24,6 +24,7 @@ import "react-phone-number-input/style.css";
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
   const currentLocation = useSelector((state) => state.common.currentLocation);
+  const { language } = useSelector((state) => state?.common?.store);
   const [phoneValue, setPhoneValue] = useState(`+${customer?.mobile}`);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
@@ -147,7 +148,7 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div  className="boxProfileInfo" style={{ marginLeft: "2rem" }}>
+              <div className="boxProfileInfo" style={{ marginLeft: "2rem" }}>
                 <label className="profile-label">Last Name</label>
                 <input
                   name="lastname"
@@ -167,11 +168,9 @@ function ProfileInfoForm() {
                   onChange={handleChange}
                 />
               </div>
-              <div className = "isdInfoBox" style={{ marginLeft: "2rem" }}>
+              <div className="isdInfoBox" style={{ marginLeft: "2rem" }}>
                 <label className="profile-label-mobile">Mobile Number</label>
-                <div
-                  className={`inpContainer positionWrap`}
-                >
+                <div className={`inpContainer positionWrap`}>
                   {/* <input
                     name="mobile_number"
                     readOnly={!isEdit}
@@ -213,6 +212,9 @@ function ProfileInfoForm() {
                         setIsEdit(true);
                       }}
                       className={` underline-hovered c-pointer edit-position-pencil`}
+                      style={{
+                        left: language === "Arabic" && "3%",
+                      }}
                     >
                       <icons.Pencil />
                     </span>
@@ -234,7 +236,11 @@ function ProfileInfoForm() {
                     setValues({ ...values, gender: e.target.value })
                   }
                 >
-                  <section>
+                  <section
+                    style={{
+                      paddingRight: language === "Arabic" ? "10px" : "0px",
+                    }}
+                  >
                     <FormControlLabel
                       value="Male"
                       control={<Radio color="primary" />}
@@ -256,7 +262,7 @@ function ProfileInfoForm() {
               </FormControl>
             </section>
             <section>
-              <div  className="boxProfileInfo" style={{ position: "relative" }}>
+              <div className="boxProfileInfo" style={{ position: "relative" }}>
                 <label className="profile-label">Date of Birth</label>
                 <input
                   type="date"

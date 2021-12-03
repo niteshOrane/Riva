@@ -6,6 +6,7 @@ import {getOrderList} from "../../../../services/order/order.services"
 
 const CancelledOrdersCards = ({ products }) => {
   const { customer } = useSelector((state) => state.auth);
+
   const [orderList, setOrderList] = React.useState([]);
   const [status, setStatus] = React.useState(null);
 

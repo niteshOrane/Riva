@@ -3,7 +3,7 @@ import styles from "./Products.module.scss";
 import { extractColorSize } from "../../../../../../util";
 import Image from "../../../../../common/LazyImage/Image";
 
-function Products({ products, currency_symbol }) {
+function Products({ products, currency_symbol, language }) {
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -54,7 +54,7 @@ function Products({ products, currency_symbol }) {
                       ).colors?.[0]?.label}
                   </span>
                 </div>
-                <div className={styles.colorSize}>
+                <div  className={styles.colorSize}>
                   <span>Size: </span>
                   <span className={styles.greyText}>
                     {product?.size?.label ||
@@ -70,7 +70,7 @@ function Products({ products, currency_symbol }) {
                     <strong>{product?.qty}</strong>
                   </span>
                 </div>
-                <div className={styles.colorSize}>
+                <div style = {{marginBottom:language==="Arabic"?"30px":"0"}}  className={styles.colorSize}>
                   <span>Price: </span>
                   <span className={styles.greyText}>
                     <strong>{currency_symbol} {parseFloat(product?.price * product?.qty).toFixed(2)}</strong>

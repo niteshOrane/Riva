@@ -1,24 +1,20 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./CancelledOrdersCards.module.scss";
 import * as icons from "../../../../common/Icons/Icons";
 import { extractColorSize } from "../../../../../util";
 
-
-import { addCartId } from '../../../../../store/actions/auth';
+import { addCartId } from "../../../../../store/actions/auth";
 
 import { getCart } from "../../../../../store/actions/cart";
 
-import {
-  buyAgainOrder
-} from "../../../../../services/order/order.services";
-
+import { buyAgainOrder } from "../../../../../services/order/order.services";
 
 import { showSnackbar } from "../../../../../store/actions/common";
 
-
 const CancelledOrdersCards = ({ products, code, increment_id }) => {
+  const { language } = useSelector((state) => state?.common?.store);
   const dispatch = useDispatch();
   const history = useHistory();
   const getColorSize = (options) => {
@@ -60,9 +56,14 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <br />
         </div>
         {/* {moment(product?.created_at).format("MMMM Do YYYY")} */}
-        <div className="d-flex align-items-center mt-12px" onClick={() => { reOrder(product?.order_id) }}>
-          <span className={styles.icon}>
-            <icons.MyOrders height='20' width='15' />
+        <div
+          className="d-flex align-items-center mt-12px"
+          onClick={() => {
+            reOrder(product?.order_id);
+          }}
+        >
+          <span style={{paddingLeft: language==="Arabic" ? "8px":"0px"}} className={styles.icon}>
+            <icons.MyOrders height="20" width="15" />
           </span>
           <span className={styles.reorder}>Reorder</span>
         </div>
@@ -72,10 +73,10 @@ const CancelledOrdersCards = ({ products, code, increment_id }) => {
           <div className={styles.img}>
             {/* <img src={product?.image} width="100%" alt={product?.name} /> */}
             <h4 className="greyText">
-              <span className={styles.deliveredIcon}>Cancelled</span> 
+              <span className={styles.deliveredIcon}>Cancelled</span>
             </h4>
           </div>
-          <div>
+          <div style={{ paddingRight: language === "Arabic" ? "15px" : "0px" }}>
             <h3 className="font-weight-normal">{product?.name}</h3>
             <div className="mt-12px">
               <div className={styles.colorSize}>

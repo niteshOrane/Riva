@@ -169,7 +169,7 @@ const ProductDetails = (props) => {
     dispatch(toggleWishlist(product));
   };
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
-
+  console.log({colorImg})
   return (
     <div style={{ marginTop: "25px" }}>
       <SizeCard

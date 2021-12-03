@@ -17,10 +17,11 @@ function OrderReview({
   callBackAfterApplyCoupan,
   addressItem,
 }) {
-
   const history = useHistory();
 
-  const { currency_symbol } = useSelector(state => state?.common?.store);
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
   const { data: items = [] } = useSelector((state) => state.cart);
   const { cart_id } = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
@@ -68,7 +69,13 @@ function OrderReview({
   };
   const getShippingInfo = async () => {
     const res = await getFreeShippingInfo(getCartId());
-    if (res && res.status === 200 && res?.data && res?.data?.length && res?.data?.[0]) {
+    if (
+      res &&
+      res.status === 200 &&
+      res?.data &&
+      res?.data?.length &&
+      res?.data?.[0]
+    ) {
       setFreeShippingInfo(res?.data?.[0]?.message);
     }
   };
@@ -91,7 +98,6 @@ function OrderReview({
       cartPayment?.total_segments?.find((e) => e.code === "subtotal")?.value
     );
     getShippingInfo();
-
   }, [cartPayment]);
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
@@ -114,7 +120,6 @@ function OrderReview({
       }
     }
   };
-
 
   const onSpeedDeliveryRadio = async (val) => {
     if (addressItem?.name) {
@@ -165,7 +170,12 @@ function OrderReview({
         </Link>
       </div>
       <div className="mt-20px d-flex align-items-center">
-        <span style={{ margin: "4px" }}>
+        <span
+          style={{
+            margin: "4px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.CouponIcon />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
@@ -180,13 +190,15 @@ function OrderReview({
           readOnly={couponDiscount}
           value={couponCode}
         />
-        {!couponDiscount ? <button
-          type="button"
-          onClick={handleApplyCoupon}
-          className={`${styles.applyBtn} c-pointer`}
-        >
-          APPLY
-        </button> :
+        {!couponDiscount ? (
+          <button
+            type="button"
+            onClick={handleApplyCoupon}
+            className={`${styles.applyBtn} c-pointer`}
+          >
+            APPLY
+          </button>
+        ) : (
           <button
             type="button"
             onClick={handleRemoveCoupon}
@@ -195,33 +207,35 @@ function OrderReview({
           >
             REMOVE
           </button>
-        }
-
+        )}
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">
-          <span>
+          <span style={{ marginLeft: language === "Arabic" ? "10px" : "0px" }}>
             <icons.Loyalty />
           </span>
           <strong>Use Loyalty Cash ({currency_symbol} 0 Available)</strong>
         </div>
         <p className={`${styles.greyText} ${styles.smallText}`}>
-          *You have to earn a minimum of {currency_symbol} 50 Loyalty Cash before you can redeem
-          it in your future purchases.
+          *You have to earn a minimum of {currency_symbol} 50 Loyalty Cash
+          before you can redeem it in your future purchases.
         </p>
       </div>
       <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
       {deliverySpeed?.map((item) => {
         return (
-          <div onClick={() => onSpeedDeliveryRadio(item)}
+          <div
+            onClick={() => onSpeedDeliveryRadio(item)}
             className={styles.chooseShipping}
           >
             <div>
               <input
                 type="radio"
-                checked={activeDelivery ?
-                  `${item?.carrier_code}_${item?.method_code}` ===
-                  activeDelivery : false
+                checked={
+                  activeDelivery
+                    ? `${item?.carrier_code}_${item?.method_code}` ===
+                      activeDelivery
+                    : false
                 }
                 name={item.method_code}
                 id={item.method_code}
@@ -230,42 +244,58 @@ function OrderReview({
             <label htmlFor="twoDays">
               <h5>{item?.method_title}</h5>
               <span className={styles.greyText}>
-                {currency_symbol}{" "}{item.amount} - {item.carrier_title}
+                {currency_symbol} {item.amount} - {item.carrier_title}
               </span>
             </label>
           </div>
         );
       })}
 
-      <Products products={items} currency_symbol={currency_symbol} />
+      <Products
+        products={items}
+        currency_symbol={currency_symbol}
+        language={language}
+      />
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>SUBTOTAL</span>
 
-        <strong> {currency_symbol}{" "}{parseFloat(totalAmout || 0)?.toFixed(2)}</strong>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(totalAmout || 0)?.toFixed(2)}
+        </strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>  {currency_symbol}{" "}{parseFloat(totalDC || 0)?.toFixed(2)}</strong>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
+        </strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>TAX</span>
-        <strong>  {currency_symbol}{" "}{parseFloat(totalTax || 0)?.toFixed(2)}</strong>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
+        </strong>
       </div>
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
         <span className={styles.greyText}>Coupon Applied</span>
-        <strong>  {currency_symbol}{" "}{parseFloat(discount || 0)?.toFixed(2)}</strong>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
+        </strong>
       </div>
       <div
         id={styles.calculatinRow}
@@ -279,21 +309,24 @@ function OrderReview({
             : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}
         </strong>
       </div>
-      <div className="d-flex align-items-center mt-12px">
+      <div
+      
+        className="d-flex align-items-center mt-12px"
+      >
         <input
           checked={news}
           type="checkbox"
           name=""
           className={styles.inp}
           id=""
-          onChange={() => setNews(prev => !prev)}
+          onChange={() => setNews((prev) => !prev)}
         />
-        <span onClick={() => setNews(!news)} className="c-pointer">
+        <span   style={{ paddingRight: language === "Arabic" ? "10px" : "0px" }} onClick={() => setNews(!news)} className="c-pointer">
           Sign up for Newsletter
         </span>
       </div>
       <br />
-      <div style={{ color: '#ff0000' }}> {freeShippingInfo}</div>
+      <div style={{ color: "#ff0000" }}> {freeShippingInfo}</div>
       <button
         onClick={(e) => {
           handlePlaceOrder(e);
@@ -311,7 +344,12 @@ function OrderReview({
         />
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span
+          style={{
+            marginRight: "12px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.Return />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
@@ -319,7 +357,12 @@ function OrderReview({
         </span>
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span
+          style={{
+            marginRight: "12px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.Secure />
         </span>
         <div>

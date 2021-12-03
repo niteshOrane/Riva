@@ -6,6 +6,7 @@ import styles from "./DashboardData.module.scss";
 
 const DashboardData = () => {
   const { customer, socialDetails } = useSelector((state) => state.auth);
+  const { language } = useSelector((state) => state?.common?.store);
   // console.log({ customer,socialDetails });
   return (
     <div>
@@ -32,7 +33,9 @@ const DashboardData = () => {
           </div>
         </div>
         <Link to="/profile-information">
-          <span className={` underline-hovered c-pointer ${styles.pencil}`}>
+          <span  style={{
+                      paddingLeft: language === "Arabic" ? "8px" : "0px",
+                    }} className={` underline-hovered c-pointer ${styles.pencil}`}>
             <icons.Pencil />
           </span>
           <button className="bg-transparent no-border underline underline-hovered c-pointer">

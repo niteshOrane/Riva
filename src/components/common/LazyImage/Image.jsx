@@ -7,7 +7,6 @@ import styles from "./lazyImage.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
 const LazyImage = (props) => {
   const {
     src,
@@ -21,18 +20,16 @@ const LazyImage = (props) => {
     isZoom,
     type = "",
     zoomPos,
-    loading
+    loading,
   } = props;
   const [error, setError] = useState(false);
-
-
-
 
   const srcImage =
     src?.indexOf("http") > -1
       ? src
-      : `${type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
-      }/${src}`;
+      : `${
+          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
+        }/${src}`;
 
   const onImageError = () => {
     setError(true);
@@ -40,13 +37,10 @@ const LazyImage = (props) => {
   const propsImg = {
     width: 660,
     height: 874,
-    img: !error
-      ? srcImage
-      : defaultImage
-      ? defaultImage
-      : "https://via.placeholder.com/295x295?text=Image+Not+Available",
+    img: srcImage ? srcImage : defaultImage,
+
     zoomStyle: "z-index:10;right:-11px;border:1px solid black",
-    zoomPosition: zoomPos
+    zoomPosition: zoomPos,
   };
 
   if (isZoom) {
@@ -56,8 +50,8 @@ const LazyImage = (props) => {
       </div>
     );
   }
-  if(loading){
-    <Skeleton />
+  if (loading) {
+    <Skeleton />;
   }
 
   return (
@@ -66,8 +60,8 @@ const LazyImage = (props) => {
         !error
           ? srcImage
           : defaultImage
-            ? defaultImage
-            : "https://via.placeholder.com/295x295?text=Image+Not+Available"
+          ? defaultImage
+          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}
