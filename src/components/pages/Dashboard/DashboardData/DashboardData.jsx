@@ -44,7 +44,7 @@ const DashboardData = () => {
         </Link>
       </div>
       <div className={styles.grid}>
-        <Link className={styles.box} to="/delivered">
+        <Link className={styles.box} to={`myOrder/${"orders"}`}>
           <span className="my-12px">
             <icons.MyOrders />
           </span>

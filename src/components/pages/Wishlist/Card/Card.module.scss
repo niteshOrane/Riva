@@ -8,6 +8,30 @@
     z-index: 1;
   }
 
+  .quick {
+    position: absolute;
+    display: none;
+    top: 80%;
+    z-index: 10;
+    width: 100%;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #fff;
+      box-shadow: 0.4px 5px 8px 0 rgba(212, 206, 206, 0.39);
+      background-color: lightgray;
+      width: 100%;
+      padding-top: 10px;
+      padding-bottom: 8px;
+    }
+  }
+  &:hover {
+    .quick {
+      display: block;
+    }
+  }
+
   .imgContainer_P {
     overflow: hidden;
     margin: -8px;
@@ -32,6 +56,6 @@
     }
   }
 }
-.boldFont{
+.boldFont {
   font-weight: bold;
 }
