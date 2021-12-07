@@ -1,9 +1,8 @@
 import * as DATA_TYPES from "../../types";
-
 const initialState = {
   info: {},
   data: [],
-
+  faaa: [],
   isOpen: false,
   cart_id: 0,
   cartPaymentInfo: {},
