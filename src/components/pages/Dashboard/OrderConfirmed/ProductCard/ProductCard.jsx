@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ProductCard.module.scss";
 import { extractColorSize } from "../../../../../util";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useSelector } from "react-redux";
 
 function ProductCard({
   product,
@@ -12,6 +13,9 @@ function ProductCard({
   status,
   loading,
 }) {
+  const { currency_symbol} = useSelector(
+    (state) => state?.common?.store
+  );
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options?.map((o) => ({
@@ -47,7 +51,7 @@ function ProductCard({
           Order Number: #
           {trackOrder ? value : displayOrderNumber || product?.increment_id}
         </p>
-        <p>Payment: {product?.parent_item?.price}</p>
+        <p>Payment: {currency_symbol}{" "}{product?.parent_item?.price}</p>
         {cancelOrderFn && status === "pending" ? (
           <div
             className= "underline underline-hovered c-pointer font-weight-normal color-blue d-flex"

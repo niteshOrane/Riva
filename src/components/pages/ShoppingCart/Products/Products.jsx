@@ -3,7 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extractColorSize, getSKuId } from "../../../../util";
-import { toggleWishlist } from "../../../../store/actions/wishlist";
+import {addWishlist} from "../../../../store/actions/wishlist/index"
 import style from "./Products.module.scss";
 import Image from "../../../common/LazyImage/Image";
 import {
@@ -36,7 +36,7 @@ const ProductsData = ({ products, currency_symbol }) => {
   };
 
   const handleWishList = (product) => {
-    dispatch(toggleWishlist(product));
+    dispatch(addWishlist(product));
   };
   const removeProduct = useCallback((product) => {
     dispatch(removeFromCart(product));

@@ -23,6 +23,7 @@ import ReviewModal from "./ReviewPopUp";
 import ShareIcons from "./ShareIcons";
 import Rating from "@material-ui/lab/Rating";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
+import SizeChart from "./SizeChart";
 
 const ProductDetails = (props) => {
   const {
@@ -178,12 +179,12 @@ const ProductDetails = (props) => {
         handleClose={() => setSizeCardOpen(false)}
         language={language}
       />
-      <SizeGuide
+      {/* <SizeGuide
         imageSelected={colorImg || product?.image}
         open={guideCardOpen}
         handleClose={() => setGuideCardOpen(false)}
         language={language}
-      />
+      /> */}
       <div
         className={`${styles.product} gap-12px my-10px max-width-1750 mx-auto`}
       >
@@ -379,7 +380,7 @@ const ProductDetails = (props) => {
                       <span
                         className={`${styles.sizeGuide} align-self-end font-light-black`}
                       >
-                        Size Guide
+                            <SizeChart />
                       </span>
                     </button>
                   </span>
