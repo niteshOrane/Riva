@@ -45,7 +45,7 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
       if (result) {
         cancelOrderOnTap(id);
       } else {
-        return
+        return;
       }
     });
   };
@@ -115,7 +115,7 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
         </div>
         <div className="text-center">
           <strong>
-            {product?.currency_code}
+            {product?.order_currency_code}
             {product?.parent_item?.price}
           </strong>
         </div>
@@ -126,7 +126,7 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
               update
             </span>
             <h4 className="c-pointer font-weight-normal greyText">
-              {product?.status}
+              {product?.status?.[0]?.toUpperCase() + product?.status?.slice(1)}
             </h4>
           </div>
           <div className="d-flex align-items-center mt-12px">
@@ -158,14 +158,17 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
             </span>
             <span className={styles.reorder}>Reorder</span>
           </div>
-          {product?.status !== "delivered" && product?.status !=="canceled" && (
+          {product?.status !== "delivered" && product?.status !== "canceled" && (
             <div
               className="d-flex align-items-center mt-12px"
               onClick={() => {
                 cancelOrderMyOrder(product?.order_id);
               }}
             >
-              <span style={{fontSize:"18px"}} className={`material-icons ${styles.icon}`}>
+              <span
+                style={{ fontSize: "18px" }}
+                className={`material-icons ${styles.icon}`}
+              >
                 not_interested
               </span>
               <span className={styles.reorder}>Cancel Order</span>

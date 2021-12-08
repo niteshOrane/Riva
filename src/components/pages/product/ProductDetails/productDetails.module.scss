@@ -6,7 +6,7 @@
     display: inline-block;
     width: 18px;
     padding: 2px;
-    @include left('margin',  5px);
+    @include left("margin", 5px);
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -45,10 +45,10 @@
         font-size: 15px;
       }
     }
-    .circlesContainer{
+    .circlesContainer {
       position: absolute;
       top: 1%;
-      @include leftpos(11%)
+      @include leftpos(11%);
     }
 
     .actionContainerTopLeft {
@@ -156,8 +156,8 @@
       letter-spacing: normal;
       color: #181617;
       margin-top: 5px;
-      @include left('margin',  14px);
-      word-wrap: break-word ;
+      @include left("margin", 14px);
+      word-wrap: break-word;
     }
 
     .price {
@@ -173,7 +173,7 @@
         text-align: left;
         color: #5c5959;
         text-decoration: line-through;
-        @include right('margin',  25px);
+        @include right("margin", 25px);
       }
 
       .now {
@@ -184,7 +184,7 @@
         font-style: normal;
         line-height: 1;
         letter-spacing: normal;
-       
+
         color: #181617;
       }
 
@@ -224,7 +224,6 @@
       }
 
       .options {
-        
         @include left("margin", 27px);
         .option {
           display: inline-block;
@@ -483,23 +482,23 @@
     }
   }
 }
-.reviewStars{
-  color: #FF9529;
+.reviewStars {
+  color: #ff9529;
 }
 // .icon{
 //   @include right("margin",10px)
 // }
-.now{
-  @include right("margin",5px)
+.now {
+  @include right("margin", 5px);
 }
-.was{
-  @include right("margin",3px)
+.was {
+  @include right("margin", 3px);
 }
-.colorItem{
-  @include left("margin",5px)
+.colorItem {
+  @include left("margin", 5px);
 }
 .socialMediaPopper {
-  top: 300px  !important;
+  top: 300px !important;
   left: unset !important;
   @include rightpos(0px !important);
   padding: 10px !important;
@@ -507,15 +506,15 @@
 }
 
 .labelName {
-  @include left('margin',  13px);
+  @include left("margin", 13px);
   font-weight: normal;
   white-space: nowrap;
 }
 .labelContainer {
   display: flex;
-  @include left('margin',  15px);
+  @include left("margin", 15px);
 }
-.sizeGuide{
+.sizeGuide {
   text-decoration: underline;
 }
 //review styles
@@ -532,7 +531,7 @@
     font-style: normal;
     line-height: 1.47;
     letter-spacing: normal;
-    @include textAlign('text-align');
+    @include textAlign("text-align");
     color: #6a6565;
     margin-bottom: "5px";
   }
@@ -580,7 +579,7 @@
   width: 46px;
   height: 24px;
   /* padding: 2px; */
-  @include right('padding',  54px);
+  @include right("padding", 54px);
 }
 .sectionWrapOne {
   display: flex;
@@ -593,37 +592,37 @@
   background-color: green;
   /* width: 10px; */
   height: 25px;
-  @include right('padding',  7px);
+  @include right("padding", 7px);
   border-radius: 3px;
 }
 
-.nameDateWrap{
+.nameDateWrap {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.likeDislike{
+.likeDislike {
   display: flex;
 }
-.reviewName{
-  @include left('margin',  35px);
+.reviewName {
+  @include left("margin", 35px);
 }
-.nameDate{
+.nameDate {
   margin-top: 7px;
   margin-bottom: 18px;
 }
-.reviewDesc{
+.reviewDesc {
   margin-top: 7px;
 }
-.dislikeThumb{
-  @include left('margin',  10px);
+.dislikeThumb {
+  @include left("margin", 10px);
   display: flex;
 }
-.dateSpan{
+.dateSpan {
   opacity: 0.36;
 }
-.numLike{
+.numLike {
   padding-top: 2px;
   padding-left: 4px;
 }
@@ -633,13 +632,38 @@
   font-size: 25px;
   border: none;
   background: transparent;
-  cursor: pointer
+  cursor: pointer;
 }
 
-.sizeChartTable{
-  th{
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
-    padding-right: 1.5rem;
+.sizeChartTable {
+  th {
+    width: 5rem;
+    height: 2rem;
+    background-color: gray;
+  }
+  td {
+    line-height: 2rem;
+    color: gray;
+    border-bottom: 1px ridge lightgray;
+  }
+
+}
+.imgWrap {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+  }
+}
+.sizeGuideInfo{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  strong{
+    font-size: 15px;
+  }
+  span{
+    font-size: 13px;
   }
 }

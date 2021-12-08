@@ -33,6 +33,7 @@ function InformationGrid() {
           product: property?.items?.find((li) => li.product_type === "simple"),
           status: property?.status,
           currency: property?.base_currency_code,
+          orderCurrency: property?.order_currency_code,
           paymentInfo: {
             price: property?.items?.find((li) => li.product_type === "simple")
               ?.price,

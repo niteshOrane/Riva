@@ -4,7 +4,8 @@ import * as icons from "../../common/Icons/Icons";
 import styles from "./Information.module.scss";
 
 function InformationTable({ orderDetails }) {
-  const { product, status, currency, paymentInfo } = orderDetails;
+  const { product, status, currency, paymentInfo,
+    orderCurrency } = orderDetails;
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options?.map((o) => ({

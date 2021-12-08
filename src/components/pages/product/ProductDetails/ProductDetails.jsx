@@ -170,7 +170,6 @@ const ProductDetails = (props) => {
     dispatch(toggleWishlist(product));
   };
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
-  console.log({colorImg})
   return (
     <div style={{ marginTop: "25px" }}>
       <SizeCard
@@ -380,7 +379,7 @@ const ProductDetails = (props) => {
                       <span
                         className={`${styles.sizeGuide} align-self-end font-light-black`}
                       >
-                            <SizeChart />
+                            <SizeChart img = {colorImg} language={language} />
                       </span>
                     </button>
                   </span>

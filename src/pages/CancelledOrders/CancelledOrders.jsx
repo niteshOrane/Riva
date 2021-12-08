@@ -30,11 +30,17 @@ function CancelledOrders() {
         increment_id: li?.increment_id,
         currency_code: li?.base_currency_code,
         status: li.status,
+        created_at:li?.created_at,
+        order_currency_code:li?.order_currency_code,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
-      setOrderList(temp?.filter((li) => li.status === "canceled"));
+      setOrderList(
+        temp
+          ?.filter((li) => li.status === "canceled")
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      );
     }
-    setStatus(res?.status)
+    setStatus(res?.status);
   };
   React.useEffect(() => {
     getOrders(customer?.customerID);
@@ -42,23 +48,27 @@ function CancelledOrders() {
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
             <h2 className="font-weight-normal">Order Cancelled</h2>
             {orderList.length ? (
-              orderList?.map((li) => (
-                <CancelledOrdersCards
-                  products={li?.list}
-                  code={li?.currency_code}
-                  increment_id={li?.increment_id}
-                />
-              ))
-            ) : (
-              !status ? <div className={styles.progress}>
+              orderList
+                ?.reverse()
+                ?.map((li) => (
+                  <CancelledOrdersCards
+                    products={li?.list}
+                    code={li?.currency_code}
+                    increment_id={li?.increment_id}
+                    order_currency_code = {li?.order_currency_code}
+                  />
+                ))
+            ) : !status ? (
+              <div className={styles.progress}>
                 <CircularProgress size={50} />
-              </div> : <div  className={styles.progress}>No record</div>
+              </div>
+            ) : (
+              <div className={styles.progress}>No record</div>
             )}
           </div>
         </div>

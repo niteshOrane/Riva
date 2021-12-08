@@ -239,7 +239,7 @@ const ProductCard = ({
         key={id}
         className={styles.productCard}
       >
-        {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>}
+        {/* {index === 4 && <div className={styles.outOfStock}>OUT OF STOCK</div>} */}
         {isListing && (
           <Carousel
             showThumbs={false}

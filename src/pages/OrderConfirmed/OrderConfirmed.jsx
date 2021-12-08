@@ -17,6 +17,7 @@ function OrderConfirmed(props) {
   const dispatch = useDispatch();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
+  const [orderCurrency,setOrderCurrency] = useState(null)
   const [amount, setAmount] = useState(null);
   const [orderItems, setOrderItems] = useState(null);
 
@@ -32,6 +33,7 @@ function OrderConfirmed(props) {
         shippingAmount: res?.data?.shipping_amount,
         totalPaid: res?.data?.grand_total,
       });
+      setOrderCurrency(res?.data?.order_currency_code)
     } else {
       return dispatch(showSnackbar(res?.data?.error, "error"));
     }
@@ -57,12 +59,13 @@ function OrderConfirmed(props) {
                   <ProductCard
                     product={li}
                     displayOrderNumber={displayOrderNumber}
+                    orderCurrency = {orderCurrency}
                   />
                 ))}
               </div>
             </div>
             {deliveryAddress && amount && (
-              <Details deliveryAddress={deliveryAddress} amount={amount} />
+              <Details deliveryAddress={deliveryAddress} amount={amount} orderCurrency={orderCurrency} />
             )}
           </div>
         </div>

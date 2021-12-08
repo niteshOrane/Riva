@@ -12,6 +12,7 @@ function ProductCard({
   displayOrderNumber,
   status,
   loading,
+  orderCurrency
 }) {
   const { currency_symbol} = useSelector(
     (state) => state?.common?.store
@@ -51,7 +52,7 @@ function ProductCard({
           Order Number: #
           {trackOrder ? value : displayOrderNumber || product?.increment_id}
         </p>
-        <p>Payment: {currency_symbol}{" "}{product?.parent_item?.price}</p>
+        <p>Payment: {orderCurrency || currency_symbol}{" "}{product?.parent_item?.price}</p>
         {cancelOrderFn && status === "pending" ? (
           <div
             className= "underline underline-hovered c-pointer font-weight-normal color-blue d-flex"

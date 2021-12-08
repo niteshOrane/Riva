@@ -15,13 +15,13 @@ function getModalStyle() {
   };
 }
 
-export default function SizeChart({ image, sizes, language }) {
+export default function SizeChart({ img,language }) {
   const useStyles = makeStyles((theme) => ({
     paper: {
-      display: "flex",
+      // display: "flex",
       position: "absolute",
-      height: 420,
-      width: 740,
+      height: 300,
+      width: 640,
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
@@ -37,7 +37,8 @@ export default function SizeChart({ image, sizes, language }) {
       cursor: "pointer",
     },
     table:{
-      marginTop:"2rem"
+      marginTop:"2rem",
+      marginLeft:"1.5rem"
     }
   }));
 
@@ -57,12 +58,12 @@ export default function SizeChart({ image, sizes, language }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <button type="button" className={classes.closeBtn}>
+      <button onClick={handleClose} type="button" className={classes.closeBtn}>
         <icons.Close />
       </button>
+      <section className="d-flex">
       <div className={classes.sizeHead}>WOMEN'S CLOTHING SIZE GUIDE</div>
-      <section>
-        <div></div>
+      <section >
         <div className = {classes.table}>
           <table className={styles.sizeChartTable}>
             <tr>
@@ -98,6 +99,11 @@ export default function SizeChart({ image, sizes, language }) {
           </table>
         </div>
       </section>
+      </section>
+      <div className={styles.sizeGuideInfo}>
+        <strong>All Sizes are in CMs</strong>
+        <span>Measure your, height and waist and then compare with the size cart.</span>
+      </div>
     </div>
   );
 

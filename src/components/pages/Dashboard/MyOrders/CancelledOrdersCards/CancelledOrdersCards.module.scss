@@ -62,3 +62,12 @@
   cursor: pointer;
   color: blue;
 }
+.cancelSec{
+  display: flex;
+  flex-direction: column;
+  .orderDate{
+    padding-top: 0.5rem;
+    width: 10rem;
+    color: gray;
+  }
+}

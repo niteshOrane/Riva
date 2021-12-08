@@ -29,6 +29,7 @@ function Delivered({ title = "Delivered" }) {
       const temp = res?.data?.items?.map((li) => ({
         increment_id: li?.increment_id,
         currency_code: li?.base_currency_code,
+        order_currency_code:li?.order_currency_code,
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
@@ -54,6 +55,7 @@ function Delivered({ title = "Delivered" }) {
             status: pro?.status,
             increment_id: pro?.increment_id,
             currency_code: pro?.currency_code,
+            order_currency_code:pro?.order_currency_code,
           }));
           return [...acc, ...data2];
         } else {
@@ -69,6 +71,7 @@ function Delivered({ title = "Delivered" }) {
           const data2 = pro?.list?.map((a) => ({
             ...a,
             status: pro?.status,
+            order_currency_code:pro?.order_currency_code,
             increment_id: pro?.increment_id,
             currency_code: pro?.currency_code,
           }));
