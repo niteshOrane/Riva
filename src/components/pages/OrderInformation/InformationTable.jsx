@@ -59,7 +59,7 @@ function InformationTable({ orderDetails }) {
             </div>
             <div className={styles.pad}>{product?.sku}</div>
             <div className={styles.pad}>
-              {currency}
+              {orderCurrency}
               {product?.parent_item?.price}
             </div>
             <div className={styles.qty}>
@@ -67,7 +67,7 @@ function InformationTable({ orderDetails }) {
               <span> Canceled:{product?.qty_canceled}</span>
             </div>
             <div className={styles.pad}>
-              {currency}
+              {orderCurrency}
               {product?.parent_item?.price}
             </div>
           </div>
