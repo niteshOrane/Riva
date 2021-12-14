@@ -63,6 +63,7 @@ const ManageAddress = React.lazy(() =>
   import("../pages/Manage-address/ManageAddress")
 );
 const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
+const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"))
 
 //order info
 
@@ -260,6 +261,14 @@ class AppRoutes extends Component {
         component: CancelledOrders,
         exact: true,
         name: "CancelledOrders",
+        layout: MainLayout,
+        index: 11,
+      },
+      {
+        path: "/my-reviews",
+        component: Reviews,
+        exact: true,
+        name: "MyReviews",
         layout: MainLayout,
         index: 11,
       },

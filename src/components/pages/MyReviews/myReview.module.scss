@@ -1,0 +1,43 @@
+.box{
+    display: flex;
+    margin-top: 1rem;
+    img{
+        width: 200px;
+        height: 250px;
+    }
+    p{
+        font-size: 1.5rem;
+    }
+}
+.starBox{
+    display: flex;
+    align-items: center;
+    background-color: grey;
+    padding: 5px;
+    width: 3rem;
+    height: 1.5rem;
+    font-size: 14px;
+    border-radius: 15px;
+}
+.reviews{
+    padding-top: 20px;
+    font-size: 15px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 1rem;
+}
+.links{
+    a{
+        padding-right: 10px;
+        text-decoration: underline;
+    }
+}
+.act{
+    float: right;
+    span{
+        padding-left: 15px;
+    }
+}

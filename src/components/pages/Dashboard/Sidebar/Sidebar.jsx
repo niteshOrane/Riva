@@ -88,7 +88,7 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; Change Password
               </Link>
-              <Link to="/" className={styles.child}>
+              <Link to="/my-reviews" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; My Reviews
               </Link>
