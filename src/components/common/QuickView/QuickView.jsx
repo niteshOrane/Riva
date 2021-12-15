@@ -23,7 +23,7 @@ import {
   getReviewList,
   outOfStockCheck,
 } from "../../../services/product/product.service";
-import { addWishlist, removeWishlist } from "../../../store/actions/wishlist";
+import { addWishlist, getWishlist, removeWishlist } from "../../../store/actions/wishlist";
 
 function QuickView() {
   const dispatch = useDispatch();
@@ -141,7 +141,7 @@ function QuickView() {
   useEffect(() => {
     getOutOfStock();
     getReviewListForProduct(data?.sku);
-    setSelectedProduct(data)
+    setSelectedProduct(data);
   }, [data]);
   const srcImage =
     data?.image?.indexOf("http") > -1

@@ -10,7 +10,7 @@ import {
   showSnackbar,
   toggleQuickView,
 } from "../../../../store/actions/common";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Card({
   src,

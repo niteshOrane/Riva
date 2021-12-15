@@ -12,6 +12,7 @@ import { emptyCartItem, emptyCart } from "../auth";
 
 import { getCartId, getCustId } from "../../../util";
 import { showSnackbar } from "../common";
+import { getWishlist, removeWishlist } from "../wishlist";
 
 export const getCartPaymentInfo_action = (data) => ({
   type: DATA_TYPES.CART_INFO,
@@ -101,6 +102,10 @@ export const addToCart = (data) => async (dispatch) => {
       });
       dispatch(showSnackbar("Added to cart", "success"));
       dispatch(getCart());
+      dispatch(removeWishlist(data));
+      setTimeout(() => {
+        dispatch(getWishlist());
+      }, 2000);
     } else dispatch(showSnackbar(response?.message || "", "error"));
   }
 };
@@ -110,7 +115,7 @@ export const removeFromCart = (data) => async (dispatch) => {
 
   if (res && res.status === 200 && res.data) {
     dispatch({ type: DATA_TYPES.REMOVE_FROM_CART, payload: { ...data } });
-    dispatch(calculateFreeShipping())
+    dispatch(calculateFreeShipping());
     dispatch(showSnackbar("item removed from cart successfully", "success"));
   } else dispatch(showSnackbar("something went wrong", "error"));
 };
