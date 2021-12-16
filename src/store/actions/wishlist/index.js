@@ -63,22 +63,29 @@ export const addWishlist = (item) => async (dispatch) => {
     );
 };
 
-export const removeWishlist = (item) => async (dispatch) => {
-  dispatch(wishlistLoader(true));
-  const res = await removeWishlistItem(item.id, getCustId());
+export const removeWishlist =
+  (item, isFromWishlist = false) =>
+  async (dispatch) => {
+    dispatch(wishlistLoader(true));
+    const res = await removeWishlistItem(item.id, getCustId());
 
-  if (res.data.success === 1) {
-    dispatch(removeWishlist_action(item));
-    dispatch(
-      showSnackbar(res.data?.data || "Item removed from wishlist", "success")
-    );
+    if (res.data.success === 1) {
+      dispatch(removeWishlist_action(item));
+      if (!isFromWishlist) {
+        dispatch(
+          showSnackbar(
+            res.data?.data || "Item removed from wishlist",
+            "success"
+          )
+        );
+        dispatch(wishlistLoader(false));
+      }
+    } else
+      dispatch(
+        showSnackbar(
+          res.data.data || res.data.message || "failed to add item to wishlist",
+          "error"
+        )
+      );
     dispatch(wishlistLoader(false));
-  } else
-    dispatch(
-      showSnackbar(
-        res.data.data || res.data.message || "failed to add item to wishlist",
-        "error"
-      )
-    );
-  dispatch(wishlistLoader(false));
-};
+  };

@@ -66,7 +66,7 @@ const ProductDetails = (props) => {
     }
   };
   const calculateAvgReview = () => {
-    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    const sum = reviewList?.reduce((acc, li) => li?.ratings?.length ? acc + li?.ratings[0]?.value : null, 0);
 
     return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
       ? 0
@@ -96,12 +96,13 @@ const ProductDetails = (props) => {
     getReviewListForProduct(product?.sku);
   }, [reviewState]);
   useEffect(() => {
-    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    const sum = reviewList?.reduce((acc, li) =>li?.ratings?.length ? acc + li?.ratings[0]?.value : null, 0);
     setValue(
       isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
         ? 0
         : parseFloat(sum / reviewList?.length)?.toFixed(1)
     );
+    calculateAvgReview();
   }, [reviewList]);
   useEffect(() => {
     getOutOfStock();
@@ -248,6 +249,8 @@ const ProductDetails = (props) => {
                 id={product?.id}
                 sku={product?.sku}
                 language={language}
+                isTop
+                setReviewState = {setReviewState}
               />
             </div>
             <div className={`${styles.price} d-flex`}>

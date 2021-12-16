@@ -119,6 +119,7 @@ function QuickView() {
         qty: productQuantity,
         ...selectedProduct?.selected,
         price,
+        isFromWishlist:data?.isFromWishlist
       })
     );
 

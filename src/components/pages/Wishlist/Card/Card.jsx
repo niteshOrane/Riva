@@ -25,7 +25,7 @@ function Card({
   const srcImage =
     src?.indexOf("http") > -1 ? src : `${URL.baseUrlProduct}/${src}`;
   const dispatch = useDispatch();
-  const handleQuickView = async () => {
+  const handleQuickView = async (isFromWishlist) => {
     const res = await getProduct(sku);
     if (res?.status === 200 && res?.data) {
       const { colors, size } = extractColorSize(
@@ -54,6 +54,7 @@ function Card({
           color: colors?.[0] || {},
           size: size?.[0] || {},
         },
+        isFromWishlist
       };
       dispatch(toggleQuickView(p));
     } else if (res?.message) {
@@ -68,7 +69,7 @@ function Card({
         <button
           type="button"
           className={`no-border bg-transparent c-pointer`}
-          onClick={handleQuickView}
+          onClick={() => handleQuickView(true)}
         >
           ADD TO CART
         </button>

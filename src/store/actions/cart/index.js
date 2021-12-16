@@ -102,10 +102,12 @@ export const addToCart = (data) => async (dispatch) => {
       });
       dispatch(showSnackbar("Added to cart", "success"));
       dispatch(getCart());
-      dispatch(removeWishlist(data));
-      setTimeout(() => {
-        dispatch(getWishlist());
-      }, 2000);
+      if (data?.isFromWishlist) {
+        dispatch(removeWishlist(data,data?.isFromWishlist));
+        setTimeout(() => {
+          dispatch(getWishlist());
+        }, 2000);
+      }
     } else dispatch(showSnackbar(response?.message || "", "error"));
   }
 };

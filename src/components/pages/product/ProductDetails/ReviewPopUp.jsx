@@ -69,8 +69,8 @@ export default function ReviewModal({
   id,
   sku,
   isDetail,
+  isTop,
   setReviewState,
-  reviewState,
 }) {
   const dispatch = useDispatch();
 
@@ -89,8 +89,8 @@ export default function ReviewModal({
   };
   const handleClose = () => {
     setOpen(false);
-    if (isDetail) {
-      setReviewState(prev => !prev);
+    if (isDetail || isTop) {
+      setReviewState((prev) => !prev);
     }
   };
   const onChange = (event, newValue) => {
@@ -152,7 +152,10 @@ export default function ReviewModal({
   };
 
   const calculateAvgReview = () => {
-    let sum = reviewRes?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
+    let sum = reviewRes?.reduce(
+      (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
+      0
+    );
     return isNaN(parseFloat(sum / reviewRes?.length)?.toFixed(1))
       ? 0
       : parseFloat(sum / reviewRes?.length)?.toFixed(1);
