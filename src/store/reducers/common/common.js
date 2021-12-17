@@ -121,7 +121,6 @@ export default function common(state = initialState, action) {
       if(!state.filtersParams?.[action.payload.name]){
          state.filtersParams[action.payload.name] = []        
       }
-      console.log(action.payload.name,action.payload.param)
       return {
         ...state,
         filtersParams: {
