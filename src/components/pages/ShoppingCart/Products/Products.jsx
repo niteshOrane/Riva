@@ -3,7 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extractColorSize, getSKuId } from "../../../../util";
-import {addWishlist} from "../../../../store/actions/wishlist/index"
+import { addWishlist, removeWishlist } from "../../../../store/actions/wishlist/index"
 import style from "./Products.module.scss";
 import Image from "../../../common/LazyImage/Image";
 import {
@@ -35,8 +35,13 @@ const ProductsData = ({ products, currency_symbol }) => {
     return { colors, size };
   };
 
-  const handleWishList = (product) => {
-    dispatch(addWishlist(product));
+  const handleWishList = (product, isExist) => {
+    if (isExist) {
+      dispatch(removeWishlist(product, false, true))
+    }
+    else {
+      dispatch(addWishlist(product, true));
+    }
   };
   const removeProduct = useCallback((product) => {
     dispatch(removeFromCart(product));
@@ -150,9 +155,9 @@ const ProductsData = ({ products, currency_symbol }) => {
                       <div className={style.footerContent}>
                         <div
                           className="font-light-black c-pointer d-flex justify-content-center"
-                          onClick={() => handleWishList(product)}
+                          onClick={() => handleWishList(product, wishlist.find((w) => w.id === product.parent_product_id))}
                           style={{
-                            color: wishlist.find((w) => w.id == product.id)
+                            color: wishlist.find((w) => w.id === product.parent_product_id)
                               ? "red"
                               : "black",
                           }}
@@ -160,11 +165,11 @@ const ProductsData = ({ products, currency_symbol }) => {
                           <span
                             className={`material-icons-outlined ${style.closeHeart}`}
                           >
-                            {wishlist.find((w) => w.id == product.id)
+                            {wishlist.find((w) => w.id === product.parent_product_id)
                               ? "favorite"
                               : "favorite_border"}
                           </span>
-                          <span className="underline">Move to Wishlist</span>
+                          <span className="underline">{wishlist.find((w) => w.id === product.parent_product_id) ? 'Remove from Wishlist' : 'Move to Wishlist'}</span>
                         </div>
                         <Link
                           to={`/product/${product.sku}`}

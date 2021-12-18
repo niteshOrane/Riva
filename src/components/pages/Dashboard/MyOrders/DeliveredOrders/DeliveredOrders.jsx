@@ -1,18 +1,20 @@
 import React from "react";
+import swal from "sweetalert";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import Image from "../../../../common/LazyImage/Image";
+
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./DeliveredOrders.module.scss";
 import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
-import { cancelOrder } from "../../../../../services/order/order.services";
 
 import { extractColorSize } from "../../../../../util";
 import { addCartId } from "../../../../../store/actions/auth";
 import { getCart } from "../../../../../store/actions/cart";
-import { buyAgainOrder } from "../../../../../services/order/order.services";
+import { buyAgainOrder, cancelOrder } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
-import swal from "sweetalert";
+
 
 const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
   const dispatch = useDispatch();
@@ -44,8 +46,6 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
     }).then(async (result) => {
       if (result) {
         cancelOrderOnTap(id);
-      } else {
-        return;
       }
     });
   };
@@ -79,16 +79,17 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
         <div className={styles.col1}>
           <Link to={`/order-details/${product?.increment_id}`}>
             <div className={styles.img}>
-              <span
-                className={
-                  product?.status === "processing"
-                    ? styles.processIcon
-                    : styles.deliveredIcon
-                }
-              >
-                {" "}
-                {product?.status}{" "}
-              </span>{" "}
+              {product?.extension_attributes?.product_thumbnail_image ?
+                 <Image src={product?.extension_attributes?.product_thumbnail_image} width="100%" /> : <span
+                  className={
+                    product?.status === "processing"
+                      ? styles.processIcon
+                      : styles.deliveredIcon
+                  }
+                >
+                  {" "}
+                  {product?.status}{" "}
+                </span>}{" "}
               <div className={styles.orderDate}>
                 {moment(product?.created_at).format("MMMM DD YYYY")}
               </div>

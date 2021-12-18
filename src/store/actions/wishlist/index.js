@@ -46,10 +46,11 @@ export const getWishlist = () => async (dispatch) => {
   } else dispatch(getWishlist_action([]));
 };
 
-export const addWishlist = (item) => async (dispatch) => {
-  const res = await addWishListItem(item.id, getCustId());
+export const addWishlist = (item, isAddtoCard = false) => async (dispatch) => {
+  const res = await addWishListItem(isAddtoCard ? item.parent_product_id : item.id, getCustId());
 
   if (res.data.success === 1) {
+    dispatch(getWishlist());
     dispatch(addWishlist_action(item));
     dispatch(
       showSnackbar(res.data?.data || "Item added to wishlist", "success")
@@ -64,28 +65,29 @@ export const addWishlist = (item) => async (dispatch) => {
 };
 
 export const removeWishlist =
-  (item, isFromWishlist = false) =>
-  async (dispatch) => {
-    dispatch(wishlistLoader(true));
-    const res = await removeWishlistItem(item.id, getCustId());
+  (item, isFromWishlist = false, isAddtoCard = false) =>
+    async (dispatch) => {
+      dispatch(wishlistLoader(true));
+      const res = await removeWishlistItem(isAddtoCard ? item.parent_product_id : item.id, getCustId());
 
-    if (res.data.success === 1) {
-      dispatch(removeWishlist_action(item));
-      if (!isFromWishlist) {
+      if (res.data.success === 1) {
+        dispatch(getWishlist());
+        dispatch(removeWishlist_action(item));
+        if (!isFromWishlist) {
+          dispatch(
+            showSnackbar(
+              res.data?.data || "Item removed from wishlist",
+              "success"
+            )
+          );
+          dispatch(wishlistLoader(false));
+        }
+      } else
         dispatch(
           showSnackbar(
-            res.data?.data || "Item removed from wishlist",
-            "success"
+            res.data.data || res.data.message || "failed to add item to wishlist",
+            "error"
           )
         );
-        dispatch(wishlistLoader(false));
-      }
-    } else
-      dispatch(
-        showSnackbar(
-          res.data.data || res.data.message || "failed to add item to wishlist",
-          "error"
-        )
-      );
-    dispatch(wishlistLoader(false));
-  };
+      dispatch(wishlistLoader(false));
+    };

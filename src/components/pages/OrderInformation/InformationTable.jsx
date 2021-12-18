@@ -1,5 +1,7 @@
 import React from "react";
 import { extractColorSize } from "../../../util";
+
+import Image from "../../common/LazyImage/Image";
 import * as icons from "../../common/Icons/Icons";
 import styles from "./Information.module.scss";
 
@@ -42,12 +44,17 @@ function InformationTable({ orderDetails }) {
           </div>
           <div id={styles.orderInfo} className="d-flex align-items-start w-100">
             <div className="d-flex justify-content-center align-items-center">
-              <div
-                style={{ backgroundColor: colorObj[status] }}
-                className={styles.statusBox}
-              >
-                <span>{status}</span>
-              </div>
+
+              {product?.extension_attributes?.product_thumbnail_image ?
+                <Image src={product?.extension_attributes?.product_thumbnail_image} customeStyle={{ padding: 10}} width="100%" />
+                :
+                <div
+                  style={{ backgroundColor: colorObj[status] }}
+                  className={styles.statusBox}
+                >
+                  <span>{status}</span>
+                </div>
+              }
             </div>
             <div className={styles.highWrap}>
               <div>
