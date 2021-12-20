@@ -1,61 +1,48 @@
 import React from "react";
 import styles from "./myReview.module.scss";
+import moment from "moment";
 
-const dummyReviews = [
-  {
-    name: "Western style top",
-    image:
-      "http://65.0.141.49/shop/media/catalog/product/cache/60beb09e5cd7beda45c9be9bfccb6a94/a/z/az1i8911.jpg",
-    rating: 4,
-    reviews: "This Product is good",
-  },
-  {
-    name: "Top waist hijab",
-    image:
-      "http://65.0.141.49/shop/media/catalog/product/cache/60beb09e5cd7beda45c9be9bfccb6a94/a/a/aaz1i9267.jpg",
-    rating: 5,
-    reviews: "This Product is good",
-  },
-  {
-    name: "High waist slim fit trouser",
-    image:
-      "http://65.0.141.49/shop/media/catalog/product/cache/60beb09e5cd7beda45c9be9bfccb6a94/a/z/az1i8608.jpg",
-    rating: 4,
-    reviews: "This Product is good",
-  },
-];
-
-function MyReviews() {
+function MyReviews({ li, deleteReviewAction }) {
   return (
     <div>
-      <h2>My Reviews</h2>
       <section>
-        {dummyReviews?.map((li) => (
-          <section>
-            <div className={styles.box}>
-              <div>
-                <img src={li?.image} alt={li?.name} />
-              </div>
-              <div className={styles.content}>
-                <p>{li.name}</p>
-                <div className={styles.starBox}>
-                  <span className="material-icons">star_rate</span>
-                  <span>{li?.rating}</span>
-                </div>
-                <span className={styles.reviews}>{li.reviews}</span>
-                <div className={styles.links}>
-                  <a href="#">Edit</a>
-                  <a href="#">Delete</a>
-                </div>
-                <div className={styles.act}>
-                  <span className="material-icons-outlined">thumb_up_alt</span>
-                  <span className="material-icons-outlined">thumb_down</span>
-                </div>
-              </div>
+        <div className={styles.box}>
+          <div>
+            <img src={li?.image} alt={li?.name} />
+          </div>
+          <div className={styles.content}>
+            <p>{li.name}</p>
+            <div className={styles.starBox}>
+              <span style={{ fontSize: "16px" }} className="material-icons">
+                star_rate
+              </span>
+              <span>{li?.ratings?.[0]?.value}</span>
             </div>
-            <hr style={{marginTop:"20px"}}/>
-          </section>
-        ))}
+            <span className={styles.reviewTitle}>{li?.title}</span>
+            <span className={styles.reviews}>{li?.detail}</span>
+            <div className={styles.date}>
+              {moment(li?.created_at)?.calendar()}
+            </div>
+            <div className={styles.links}>
+              <button className={styles.action} type="button">
+                Edit
+              </button>
+              <button
+                className={styles.action}
+                type="button"
+                onClick={() => deleteReviewAction(li?.id)}
+                style={{ marginLeft: "20px" }}
+              >
+                Delete
+              </button>
+            </div>
+            {/* <div className={styles.act}>
+              <span className="material-icons-outlined">thumb_up_alt</span>
+              <span className="material-icons-outlined">thumb_down</span>
+            </div> */}
+          </div>
+        </div>
+        <hr className={styles.line} />
       </section>
     </div>
   );

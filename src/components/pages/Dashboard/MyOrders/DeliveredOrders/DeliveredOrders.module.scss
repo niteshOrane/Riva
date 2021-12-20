@@ -9,7 +9,7 @@
     .col1 {
       display: flex;
       .img {
-        @include right('margin', 0px);
+        @include right('margin', 20px);
         width: 10rem;
       }
       .colorSize {

@@ -13,8 +13,14 @@ import { buyAgainOrder } from "../../../../../services/order/order.services";
 
 import { showSnackbar } from "../../../../../store/actions/common";
 import moment from "moment";
+import LazyImage from "../../../../common/LazyImage/Image";
 
-const CancelledOrdersCards = ({ products, code, increment_id,order_currency_code }) => {
+const CancelledOrdersCards = ({
+  products,
+  code,
+  increment_id,
+  order_currency_code,
+}) => {
   const { language } = useSelector((state) => state?.common?.store);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -74,18 +80,31 @@ const CancelledOrdersCards = ({ products, code, increment_id,order_currency_code
       </div>
       <div className={styles.carItem}>
         <div className={styles.col1}>
-          <section className = {styles.cancelSec}>
-          <div className={styles.img}>
-            <h4 className="greyText">
-              <span className={styles.deliveredIcon}>Cancelled</span>
-            </h4>
-          </div>
-          <div className={styles.orderDate}>
-            {moment(product?.created_at).format("MMMM DD YYYY")}
-          </div>
-
+          <section className={styles.cancelSec}>
+            <div className={styles.img}>
+              {product?.extension_attributes?.product_thumbnail_image ? (
+                <LazyImage
+                  src={product?.extension_attributes?.product_thumbnail_image}
+                  width="100%"
+                />
+              ) : (
+                <span
+                  className={
+                    product?.status === "processing"
+                      ? styles.processIcon
+                      : styles.deliveredIcon
+                  }
+                >
+                  {" "}
+                  {product?.status}{" "}
+                </span>
+              )}{" "}
+            </div>
+            <div className={styles.orderDate}>
+              {moment(product?.created_at).format("MMMM DD YYYY")}
+            </div>
           </section>
-         
+
           <div style={{ paddingRight: language === "Arabic" ? "15px" : "0px" }}>
             <h3 className="font-weight-normal">{product?.name}</h3>
             <div className="mt-12px">
@@ -122,8 +141,8 @@ const CancelledOrdersCards = ({ products, code, increment_id,order_currency_code
         &nbsp;&nbsp;&nbsp;
         <span className="greyText">(Refund ID: {product?.refundId})</span>
         <p className={`greyText ${styles.fontSmall}`}>
-          {product?.amount_refunded} has been refunded to your Wallet on
-          May 21.Credit Card refunds will take 7 business days.
+          {product?.amount_refunded} has been refunded to your Wallet on May
+          21.Credit Card refunds will take 7 business days.
         </p>
         <p className={`greyText ${styles.fontSmall}`}>
           For any questions, please contact your bank with reference number

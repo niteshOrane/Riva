@@ -1,7 +1,7 @@
 import axios from "axios";
 import { object } from "prop-types";
 import API_URL from "../../enviroments/index";
-import { getStoreId, getStoreData } from "../../util";
+import { getStoreId, getStoreData, getCustId } from "../../util";
 
 const urlPath = "http://65.0.141.49/shop/index.php";
 
@@ -26,13 +26,15 @@ export const getProductMedia = (sku) => {
   return axios(config);
 };
 
-export const getFiltersList = ({ catId, qTerm = '', filterAttr = {} }) => {
-  const keyValue = Object.keys(filterAttr).filter(e => e !== "status");
+export const getFiltersList = ({ catId, qTerm = "", filterAttr = {} }) => {
+  const keyValue = Object.keys(filterAttr).filter((e) => e !== "status");
   const filterValue = [];
-  let filterData = '';
-  keyValue.forEach(element => {
+  let filterData = "";
+  keyValue.forEach((element) => {
     if (filterAttr[element]?.length) {
-      filterValue.push(`categoryData[${element}]=${filterAttr[element].join(',')}`)
+      filterValue.push(
+        `categoryData[${element}]=${filterAttr[element].join(",")}`
+      );
     }
   });
   // if (filterValue.length) {
@@ -108,10 +110,17 @@ export const outOfStockCheck = (productId = 0, color = "", size = "") => {
 };
 
 // add review
-export const createReview = (title, description, review, id, firstname) => {
+export const createReview = (
+  title,
+  description,
+  review,
+  id,
+  firstname,
+  customerId
+) => {
   const config = {
     method: "post",
-    url: `${API_URL}/reviews?review[title]=${title}&review[detail]=${description}&review[nickname]=${firstname}&review[entity_pk_value]=${id}&review[review_status]=1&review[review_entity]=product&review[review_type]=2&review[ratings][0][value]=${review}&review[ratings][0][rating_name]=Quality&review[store_id]=${getStoreId()}`,
+    url: `${API_URL}/reviews?review[title]=${title}&review[detail]=${description}&review[nickname]=${firstname}&review[entity_pk_value]=${id}&review[review_status]=1&review[review_entity]=product&review[review_type]=2&review[ratings][0][value]=${review}&review[ratings][0][rating_name]=Quality&review[store_id]=${getStoreId()}&review[customer_id] = ${customerId}`,
     silent: true,
   };
   return axios(config);
@@ -127,12 +136,24 @@ export const getReviewList = (fnValue) => {
   return axios(config);
 };
 
-
 // delete review
 export const deleteReviewFromList = (fnValue) => {
   const config = {
     method: "delete",
     url: `${API_URL}/reviews/${fnValue}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+// my review
+export const getMyReviewList = () => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/reviews/?searchCriteria[filterGroups][0][filters][0][field]=customer_id&searchCriteria[filterGroups][0][filters][0][value] = ${parseInt(
+      getCustId(),
+      10
+    )}`,
     silent: true,
   };
   return axios(config);

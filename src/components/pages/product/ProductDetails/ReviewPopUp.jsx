@@ -108,7 +108,7 @@ export default function ReviewModal({
     if (!auth?.isAuthenticated) {
       return dispatch(showSnackbar("Please sign in to add a review", "error"));
     } else {
-      const { firstname } = auth?.customer;
+      const { firstname, customerID } = auth?.customer;
       if (!title) {
         return dispatch(showSnackbar("Please add title", "error"));
       }
@@ -119,7 +119,14 @@ export default function ReviewModal({
         return dispatch(showSnackbar("Please rate with star", "error"));
       }
       setLoading(true);
-      const res = await createReview(title, description, rate, id, firstname);
+      const res = await createReview(
+        title,
+        description,
+        rate,
+        id,
+        firstname,
+        customerID
+      );
       if (res.status === 200 && res?.data) {
         dispatch(showSnackbar("review added successfully", "success"));
         getReviewListForProduct(sku);
