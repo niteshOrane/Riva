@@ -108,6 +108,8 @@ const OtpForm = ({
     e.preventDefault();
     if (!phoneValue)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
+      setMobileOtp("");
+
     const customer = new FormData();
     customer.append("phone", phoneValue);
     customer.append("customerInfo[email]", "");
@@ -116,6 +118,7 @@ const OtpForm = ({
     if (res.status === 200) {
       if (res?.data?.success) {
         setHideMobileBox(true);
+  
         setRecivedOTPData(res?.data.data);
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
         const minutesTime = Math.floor(divisor_for_minutes / 60);

@@ -528,6 +528,7 @@ const ProductDetails = (props) => {
                           image={colorImg || product?.image}
                           sizes={product?.size}
                           language={language}
+                          sku = {product?.sku}
                         />
                         // <SubscribeModel />
                       ),

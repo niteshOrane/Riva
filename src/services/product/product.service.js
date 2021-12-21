@@ -158,3 +158,17 @@ export const getMyReviewList = () => {
   };
   return axios(config);
 };
+
+// search in store
+export const searchInStore = (itemCode, country) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/storeStock`,
+    silent: true,
+    data: {
+      itemCode,
+      country,
+    },
+  };
+  return axios(config);
+};
