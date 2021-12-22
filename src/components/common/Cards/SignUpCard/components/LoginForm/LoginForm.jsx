@@ -43,9 +43,6 @@ const LoginForm = ({
   const redirectTo = useSelector(
     (state) => state.common.signUpCard?.redirectTo
   );
-  console.log(useSelector(
-    (state) => state.common
-  ))
   const newEmail = useSelector((state) => state.common.newUser);
   const history = useHistory();
 

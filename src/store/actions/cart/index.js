@@ -65,11 +65,25 @@ export const getCart = () => async (dispatch) => {
         we_offer: res?.data?.["we_offer"],
       },
     });
+    dispatch({
+      type: DATA_TYPES.SET_CART_ID,
+      payload: { cart_id: res?.data?.custom_data?.cart_id },
+    });
     dispatch(calculateFreeShipping());
     dispatch({
       type: DATA_TYPES.SET_BULK_CART,
       payload: products,
     });
+  } else if (res?.data?.custom_data) {
+    if (res?.data?.custom_data?.cart_id === 0) {
+      dispatch(emptyCart());
+      dispatch(emptyCartItem());
+    } else {
+      dispatch({
+        type: DATA_TYPES.SET_CART_ID,
+        payload: { cart_id: res?.data?.custom_data?.cart_id },
+      });
+    }
   } else {
     dispatch(emptyCart());
     dispatch(emptyCartItem());
@@ -103,7 +117,7 @@ export const addToCart = (data) => async (dispatch) => {
       dispatch(showSnackbar("Added to cart", "success"));
       dispatch(getCart());
       if (data?.isFromWishlist) {
-        dispatch(removeWishlist(data,data?.isFromWishlist));
+        dispatch(removeWishlist(data, data?.isFromWishlist));
         setTimeout(() => {
           dispatch(getWishlist());
         }, 2000);

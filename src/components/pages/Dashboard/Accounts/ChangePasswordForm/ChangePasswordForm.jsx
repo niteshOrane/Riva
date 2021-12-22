@@ -40,19 +40,6 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
             value={values.retypePassword}
           />
         </div>
-        <div className={styles.inputContainer}>
-          <p>
-            Enter OTP
-            {/* <span class={styles.star}>*</span> */}
-          </p>
-          <input
-            onChange={handleChange}
-            type="text"
-            name="otp"
-            id="otp"
-            value={values.otp}
-          />
-        </div>
       </form>
       <div className="my-12px">
         <strong>Note:</strong>{' '}

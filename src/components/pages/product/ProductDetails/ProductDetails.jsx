@@ -24,6 +24,9 @@ import ShareIcons from "./ShareIcons";
 import Rating from "@material-ui/lab/Rating";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import SizeChart from "./SizeChart";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 const ProductDetails = (props) => {
   const {
@@ -66,7 +69,10 @@ const ProductDetails = (props) => {
     }
   };
   const calculateAvgReview = () => {
-    const sum = reviewList?.reduce((acc, li) => li?.ratings?.length ? acc + li?.ratings[0]?.value : null, 0);
+    const sum = reviewList?.reduce(
+      (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
+      0
+    );
 
     return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
       ? 0
@@ -96,7 +102,10 @@ const ProductDetails = (props) => {
     getReviewListForProduct(product?.sku);
   }, [reviewState]);
   useEffect(() => {
-    const sum = reviewList?.reduce((acc, li) =>li?.ratings?.length ? acc + li?.ratings[0]?.value : null, 0);
+    const sum = reviewList?.reduce(
+      (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
+      0
+    );
     setValue(
       isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
         ? 0
@@ -153,7 +162,7 @@ const ProductDetails = (props) => {
     }
     return null;
   };
-  
+
   const addToCardHandler = () => {
     dispatch(
       addToCart({
@@ -189,6 +198,14 @@ const ProductDetails = (props) => {
         className={`${styles.product} gap-12px my-10px max-width-1750 mx-auto`}
       >
         <div className={styles.mainImage}>
+          <section className={styles.bread}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="inherit" href="/">
+                Home
+              </Link>
+              <Typography>{product?.name}</Typography>
+            </Breadcrumbs>
+          </section>
           <div
             className={`${styles.slide} h-100 text-center d-flex-all-center flex-column`}
           >
@@ -250,7 +267,7 @@ const ProductDetails = (props) => {
                 sku={product?.sku}
                 language={language}
                 isTop
-                setReviewState = {setReviewState}
+                setReviewState={setReviewState}
               />
             </div>
             <div className={`${styles.price} d-flex`}>
@@ -382,7 +399,7 @@ const ProductDetails = (props) => {
                       <span
                         className={`${styles.sizeGuide} align-self-end font-light-black`}
                       >
-                            <SizeChart img = {colorImg} language={language} />
+                        <SizeChart img={colorImg} language={language} />
                       </span>
                     </button>
                   </span>
@@ -528,7 +545,7 @@ const ProductDetails = (props) => {
                           image={colorImg || product?.image}
                           sizes={product?.size}
                           language={language}
-                          sku = {product?.sku}
+                          sku={product?.sku}
                         />
                         // <SubscribeModel />
                       ),
@@ -545,8 +562,8 @@ const ProductDetails = (props) => {
                           id={product?.id}
                           sku={product?.sku}
                           isDetail
-                          setReviewState = {setReviewState}
-                          reviewState = {reviewState}
+                          setReviewState={setReviewState}
+                          reviewState={reviewState}
                         />
                       ),
                       icon: "/assets/images/review.png",

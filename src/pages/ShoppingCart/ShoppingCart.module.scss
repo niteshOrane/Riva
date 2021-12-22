@@ -7,3 +7,27 @@
     margin: 20px 0;
   }
 }
+.emptyCart {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .emptyCartIcon {
+    font-size: 10rem;
+    color: #4ad395 !important;
+  }
+  .emptyWrap {
+    width: 250px;
+    height: 250px;
+    background-color: #e8e8e8;
+    border: gray;
+    border-radius: 50%;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}
