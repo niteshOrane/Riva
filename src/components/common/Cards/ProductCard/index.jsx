@@ -5,9 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Image from "../../LazyImage/Image";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
-import {
-  toggleQuickView,
-} from "../../../../store/actions/common";
+import { toggleQuickView } from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
@@ -18,10 +16,13 @@ import {
 import styles from "./product.module.scss";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-
 const TempLink = ({ children, product }) => {
   if (product?.sku)
-    return <Link to={`/product/${product?.sku}`}>{children} </Link>;
+    return (
+      <Link to={{ pathname: `/product/${product?.sku}`, state: product?.cat }}>
+        {children}{" "}
+      </Link>
+    );
 
   return <a href={product?.uri}>{children}</a>;
 };
@@ -249,12 +250,15 @@ const ProductCard = ({
             interval={2000}
           >
             {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <TempLink product={productItem}>
+              <TempLink product={productItem} >
                 <div className={styles.legendWrapper} key={indexitem}>
                   <Image
                     src={
                       colorImg ||
-                      `${!productItem?.productColorImage ? URL.baseUrlProduct : ""
+                      `${
+                        !productItem?.productColorImage
+                          ? URL.baseUrlProduct
+                          : ""
                       }/${item?.file}`
                     }
                     defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
@@ -268,7 +272,9 @@ const ProductCard = ({
                       {attributes?.size?.map((li) => (
                         <span
                           className={
-                            attributes?.size?.length === 1 ? styles.single : null
+                            attributes?.size?.length === 1
+                              ? styles.single
+                              : null
                           }
                         >
                           {li?.label}
@@ -283,7 +289,6 @@ const ProductCard = ({
         )}
         {!isListing && (
           <div className={styles.imageContainer}>
-
             <div className={styles.imgContainer_P}>
               <div className={styles.imgContainer}>
                 {!isListing && (
@@ -315,8 +320,8 @@ const ProductCard = ({
                   {loading.wishlist
                     ? "hourglass_top"
                     : isAddedToWishlist
-                      ? "favorite"
-                      : "favorite_border"}
+                    ? "favorite"
+                    : "favorite_border"}
                 </span>
               </button>
             </div>
@@ -346,15 +351,17 @@ const ProductCard = ({
           </div>
           <TempLink product={productItem}>
             <div
-              className={`${!extraOridnary ? styles.productName : styles.extraOridnary
-                } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
+              className={`${
+                !extraOridnary ? styles.productName : styles.extraOridnary
+              } two-lines-text ${!isProduct ? "text-center " : "d-flex"}`}
               title={name}
             >
               {name || ""}
             </div>
             <div
-              className={`${styles.productPrice} ${!isProduct ? "text-center" : ""
-                }`}
+              className={`${styles.productPrice} ${
+                !isProduct ? "text-center" : ""
+              }`}
             >
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
@@ -369,14 +376,16 @@ const ProductCard = ({
             </div>
           </TempLink>
           <div
-            className={`${styles.productColors} ${!isProduct ? "text-center justify-content-center" : ""
-              }`}
+            className={`${styles.productColors} ${
+              !isProduct ? "text-center justify-content-center" : ""
+            }`}
           >
             <div
-              className={`${!isRecommended
-                ? styles.color
-                : `${styles.color} ${styles.recomm}`
-                } d-flex`}
+              className={`${
+                !isRecommended
+                  ? styles.color
+                  : `${styles.color} ${styles.recomm}`
+              } d-flex`}
             >
               {attributes?.colors?.length > 0 &&
                 attributes?.colors?.map((item) => (
@@ -401,10 +410,11 @@ const ProductCard = ({
                           )
                             ?.toLowerCase()
                             .trim()}.png`}
-                          className={`${styles.colorItem} ${product?.selected?.color?.value === item.value
-                            ? styles.active
-                            : ""
-                            }`}
+                          className={`${styles.colorItem} ${
+                            product?.selected?.color?.value === item.value
+                              ? styles.active
+                              : ""
+                          }`}
                           alt={item?.label}
                         />
                       </Tooltip>
@@ -412,10 +422,11 @@ const ProductCard = ({
                       <div
                         src={item?.file}
                         className={`${styles.colorItem} 
-                        ${product?.selected?.color?.value === item?.value
+                        ${
+                          product?.selected?.color?.value === item?.value
                             ? styles.active
                             : ""
-                          }`}
+                        }`}
                         title={item?.label}
                       />
                     )}

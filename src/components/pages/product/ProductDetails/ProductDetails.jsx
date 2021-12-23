@@ -25,8 +25,8 @@ import Rating from "@material-ui/lab/Rating";
 import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import SizeChart from "./SizeChart";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
+import { Link, useHistory } from "react-router-dom";
 
 const ProductDetails = (props) => {
   const {
@@ -37,6 +37,7 @@ const ProductDetails = (props) => {
     currency_symbol,
     language,
   } = props;
+  const history = useHistory();
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [reviewState, setReviewState] = useState(false);
@@ -179,6 +180,8 @@ const ProductDetails = (props) => {
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
   };
+ 
+
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
     <div style={{ marginTop: "25px" }}>
@@ -200,15 +203,15 @@ const ProductDetails = (props) => {
         <div className={styles.mainImage}>
           <section className={styles.bread}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" href="/">
-                Home
-              </Link>
-              <Link
-                underline="hover"
-                color="inherit"
-              >
+              <Link to="/">Home</Link>
+              {history?.location?.state && (
+                <Link to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}>
+                  {history?.location?.state?.category}
+                </Link>
+              )}
+              <span underline="hover" color="inherit">
                 {product?.name}
-              </Link>
+              </span>
             </Breadcrumbs>
           </section>
           <div

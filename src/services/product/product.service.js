@@ -146,6 +146,26 @@ export const deleteReviewFromList = (fnValue) => {
   return axios(config);
 };
 
+// update review
+export const updateReviewFromList = (
+  title,
+  description,
+  review,
+  id,
+  firstname,
+  store_id,
+  review_status,
+  review_type,
+  customerId
+) => {
+  const config = {
+    method: "put",
+    url: `${API_URL}/reviews/20?review[title]=${title}&review[detail]=${description}&review[nickname]=${firstname}&review[entity_pk_value]=${id}&review[review_status]=${review_status}&review[review_entity]=product&review[review_type]=${review_type}&review[ratings][0][value]=${review}&review[ratings][0][rating_name]=Quality&review[store_id]=${store_id}&review[customer_id] = ${customerId}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
 // my review
 export const getMyReviewList = () => {
   const config = {

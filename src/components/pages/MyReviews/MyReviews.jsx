@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./myReview.module.scss";
 import moment from "moment";
+import ReviewModal from "../product/ProductDetails/ReviewPopUp";
 
-function MyReviews({ li, deleteReviewAction }) {
+function MyReviews({ li, deleteReviewAction,getMyReview }) {
   return (
     <div>
       <section>
@@ -25,7 +26,7 @@ function MyReviews({ li, deleteReviewAction }) {
             </div>
             <div className={styles.links}>
               <button className={styles.action} type="button">
-                Edit
+                <ReviewModal isEdit singleReview={li} getMyReview={getMyReview} />
               </button>
               <button
                 className={styles.action}
