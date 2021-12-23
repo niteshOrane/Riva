@@ -45,7 +45,7 @@ function Products(props) {
     sortField,
     onScreen,
     serachTerm: parsed?.serachTerm,
-    filterAttr
+    filterAttr,
   });
 
   const handleSortChange = (event) => {
@@ -266,20 +266,29 @@ function Products(props) {
         }`}
       >
         {filteredData.length === 0
-          ? products?.map((product, i) => (
-              <div className={getClassOfBigCard(i)}>
-                <ProductCard
-                  index={i}
-                  pageColumns={pageColumns}
-                  handleQuickView={handleQuickView}
-                  product={product}
-                  isProduct={Boolean(true)}
-                  isListing
-                  currency_symbol={currency_symbol}
-                  Imgloading={loading}
-                />
-              </div>
-            ))
+          ? products?.map((product, i) => {
+              const pro = {
+                ...product,
+                cat: {
+                  category: match.params.category,
+                  categoryId: match.params.categoryId,
+                },
+              };
+              return (
+                <div className={getClassOfBigCard(i)}>
+                  <ProductCard
+                    index={i}
+                    pageColumns={pageColumns}
+                    handleQuickView={handleQuickView}
+                    product={pro}
+                    isProduct={Boolean(true)}
+                    isListing
+                    currency_symbol={currency_symbol}
+                    Imgloading={loading}
+                  />
+                </div>
+              );
+            })
           : filteredData?.map((product, i) => (
               <div className={getClassOfBigCard(i)}>
                 <ProductCard

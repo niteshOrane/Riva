@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import Rating from "@material-ui/lab/Rating";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import {
   createReview,
   getReviewList,
   deleteReviewFromList,
+  updateReviewFromList,
 } from "../../../../services/product/product.service";
 import { showSnackbar } from "../../../../store/actions/common";
 import { setAttributeFormatter } from "validatorjs";
@@ -38,39 +39,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const dummyData = [
-  {
-    star: 4,
-    review: "Love Shopping on ths site.",
-    name: "Maghna",
-    date: "17days ago",
-    like: 2,
-    dislike: 0,
-  },
-  {
-    star: 4,
-    review: "Not bad value for money",
-    name: "Shopia",
-    date: "a month ago",
-    like: 2,
-    dislike: 0,
-  },
-  {
-    star: 4,
-    review: "Love Shopping on ths site.",
-    name: "Maghna",
-    date: "17days ago",
-    like: 2,
-    dislike: 0,
-  },
-];
-
 export default function ReviewModal({
   id,
   sku,
   isDetail,
   isTop,
   setReviewState,
+  isEdit,
+  singleReview,
+  getMyReview,
 }) {
   const dispatch = useDispatch();
 
@@ -87,6 +64,16 @@ export default function ReviewModal({
   const handleOpen = () => {
     setOpen(true);
   };
+  useEffect(() => {
+    if (isEdit && singleReview) {
+      const rating = singleReview?.ratings?.[0]?.value;
+      const desc = singleReview?.detail;
+      const titleEdit = singleReview?.title;
+      setRate(rating);
+      setDescription(desc);
+      setTitle(titleEdit);
+    }
+  }, [singleReview]);
   const handleClose = () => {
     setOpen(false);
     if (isDetail || isTop) {
@@ -106,7 +93,40 @@ export default function ReviewModal({
     e.preventDefault();
 
     if (!auth?.isAuthenticated) {
-      return dispatch(showSnackbar("Please sign in to add a review", "error"));
+      dispatch(showSnackbar("Please sign in to add a review", "error"));
+    } else if (isEdit) {
+      const { firstname, customerID } = auth?.customer;
+      if (!title) {
+        return dispatch(showSnackbar("Please add title", "error"));
+      }
+      if (!description) {
+        return dispatch(showSnackbar("Please add description", "error"));
+      }
+      if (!rate) {
+        return dispatch(showSnackbar("Please rate with star", "error"));
+      }
+      const res = await updateReviewFromList(
+        title,
+        description,
+        rate,
+        singleReview?.entity_pk_value,
+        singleReview?.nickname,
+        singleReview?.store_id,
+        singleReview?.review_status,
+        singleReview?.review_type,
+        singleReview?.customer_id
+      );
+      if (res.status === 200 && res?.data) {
+        dispatch(showSnackbar("review Uploaded successfully", "success"));
+        setDescription("");
+        setTitle("");
+        setRate(0);
+        getMyReview();
+        setLoading(false);
+        setOpen(false);
+      } else {
+        setLoading(false);
+      }
     } else {
       const { firstname, customerID } = auth?.customer;
       if (!title) {
@@ -177,7 +197,7 @@ export default function ReviewModal({
       >
         {isDetail ? (
           "Review"
-        ) : (
+        ) : isEdit ? (<span className={classes.viewAll}>Edit</span>) : (
           <span className={classes.viewAll}>Rate this product</span>
         )}
       </span>
@@ -239,92 +259,97 @@ export default function ReviewModal({
                   type="submit"
                   className={styles.reviewSubmit}
                 >
-                  Submit
+                  {isEdit ? "Update" : "Submit"}
                 </button>
               </div>
             </form>
-            <section>
-              <div className={styles.secWrap}>
-                <h3>Ratings & Reviews</h3>
-                <div className={styles.avg}>
-                  <span
-                    style={{ marginBottom: "20px", marginTop: "20px" }}
-                    className="material-icons-outlined"
-                  >
-                    star_border
-                  </span>
-                  <b>{calculateAvgReview()}</b>
-                </div>
-                <span>
-                  {isNaN(
-                    reviewRes?.reduce(
-                      (acc, li) => acc + li?.ratings[0]?.value,
-                      0
-                    )
-                  )
-                    ? 0
-                    : reviewRes?.reduce(
-                        (acc, li) => acc + li?.ratings[0]?.value,
-                        0
-                      )}{" "}
-                  ratings and {reviewRes?.length} reviews
-                </span>
-              </div>
-            </section>
-            {reviewRes?.map((li) => (
+            {!isEdit && (
               <section>
-                <section className={styles.sectionWrapOne}>
-                  <div className={styles.mapReview}>
+                <div className={styles.secWrap}>
+                  <h3>Ratings & Reviews</h3>
+                  <div className={styles.avg}>
                     <span
                       style={{ marginBottom: "20px", marginTop: "20px" }}
                       className="material-icons-outlined"
                     >
                       star_border
                     </span>
-                    <b>{li?.ratings[0]?.value}</b>
+                    <b>{calculateAvgReview()}</b>
                   </div>
-                  <h4 className={styles.reviewName}>{li?.title}</h4>
-                </section>
-                <span className={styles.reviewDesc}>{li?.detail}</span>
-                <section className={styles.nameDateWrap}>
-                  <div className={styles.nameDate}>
-                    <span>{li?.nickname}</span>
-                    <span className={`${styles.reviewName} ${styles.dateSpan}`}>
-                      {moment(li?.created_at)?.calendar()}
-                    </span>
-                  </div>
-                  <div className={styles.likeDislike}>
-                    <div className={styles.likeDislike}>
-                      <span className="material-icons-outlined">
-                        thumb_up_alt
-                      </span>
-                      <span className={styles.numLike}>{li.like}</span>
-                    </div>
-                    <div>
-                      <div className={styles.dislikeThumb}>
-                        <span className="material-icons-outlined">
-                          thumb_down
-                        </span>
-                        <span className={styles.numLike}>{li.dislike}</span>
-                      </div>
-                    </div>
-                    {li?.nickname === auth?.customer?.firstname ? (
-                      !loading ? (
-                        <span
-                          onClick={() => deleteReviewAction(li?.id)}
-                          className="material-icons-outlined c-pointer"
-                        >
-                          delete
-                        </span>
-                      ) : (
-                        <CircularProgress size={10} />
+                  <span>
+                    {isNaN(
+                      reviewRes?.reduce(
+                        (acc, li) => acc + li?.ratings[0]?.value,
+                        0
                       )
-                    ) : null}
-                  </div>
-                </section>
-                <hr style={{ marginBottom: "15px" }} />
+                    )
+                      ? 0
+                      : reviewRes?.reduce(
+                          (acc, li) => acc + li?.ratings[0]?.value,
+                          0
+                        )}{" "}
+                    ratings and {reviewRes?.length} reviews
+                  </span>
+                </div>
               </section>
-            ))}
+            )}
+            {!isEdit &&
+              reviewRes?.map((li) => (
+                <section>
+                  <section className={styles.sectionWrapOne}>
+                    <div className={styles.mapReview}>
+                      <span
+                        style={{ marginBottom: "20px", marginTop: "20px" }}
+                        className="material-icons-outlined"
+                      >
+                        star_border
+                      </span>
+                      <b>{li?.ratings[0]?.value}</b>
+                    </div>
+                    <h4 className={styles.reviewName}>{li?.title}</h4>
+                  </section>
+                  <span className={styles.reviewDesc}>{li?.detail}</span>
+                  <section className={styles.nameDateWrap}>
+                    <div className={styles.nameDate}>
+                      <span>{li?.nickname}</span>
+                      <span
+                        className={`${styles.reviewName} ${styles.dateSpan}`}
+                      >
+                        {moment(li?.created_at)?.calendar()}
+                      </span>
+                    </div>
+                    <div className={styles.likeDislike}>
+                      <div className={styles.likeDislike}>
+                        <span className="material-icons-outlined">
+                          thumb_up_alt
+                        </span>
+                        <span className={styles.numLike}>{li.like}</span>
+                      </div>
+                      <div>
+                        <div className={styles.dislikeThumb}>
+                          <span className="material-icons-outlined">
+                            thumb_down
+                          </span>
+                          <span className={styles.numLike}>{li.dislike}</span>
+                        </div>
+                      </div>
+                      {li?.nickname === auth?.customer?.firstname ? (
+                        !loading ? (
+                          <span
+                            onClick={() => deleteReviewAction(li?.id)}
+                            className="material-icons-outlined c-pointer"
+                          >
+                            delete
+                          </span>
+                        ) : (
+                          <CircularProgress size={10} />
+                        )
+                      ) : null}
+                    </div>
+                  </section>
+                  <hr style={{ marginBottom: "15px" }} />
+                </section>
+              ))}
           </div>
         </Fade>
       </Modal>

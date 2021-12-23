@@ -129,7 +129,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       floorNumber: "",
       buildingName: "",
     });
-    setPhoneValue(null)
+    setPhoneValue(null);
     if (onAfterSaveEdit) {
       onAfterSaveEdit();
     }
@@ -157,9 +157,12 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     }
   };
   useEffect(() => {
-    formData.firstName = customerData?.name?.split(" ")?.[0];
-    formData.lastName = customerData?.name?.split(" ")?.[1];
-    // formData.mobile = customerData?.phone;
+    formData.firstName = customerData?.firstname
+      ? customerData?.firstname
+      : customerData?.name?.split(" ")?.[0];
+    formData.lastName = customerData?.lastname
+      ? customerData?.lastname
+      : customerData?.name?.split(" ")?.[1];
 
     formData.pincode = customerData?.postcode;
     formData.id = customerData?.id;
@@ -252,7 +255,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (id) {
       form.append("addressid", id);
     }
-    form.append("customerAddress[name]", `${firstName}${lastName}`);
+    form.append("customerAddress[firstname]", firstName);
+    form.append("customerAddress[lastname]", lastName);
     form.append("customerAddress[pincode]", pincode);
     form.append("customerAddress[city]", city);
     form.append("customerAddress[state]", state);
@@ -280,7 +284,10 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           <div className="location-icon">
             <icons.LocationFlag />
           </div>
-          <div style={{ marginLeft: "2rem",marginRight:"5px" }} className="location-map">
+          <div
+            style={{ marginLeft: "2rem", marginRight: "5px" }}
+            className="location-map"
+          >
             USE MY CURRENT LOCATION
           </div>
         </div>
@@ -480,7 +487,9 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             <p className={styles.inpLable}>
               Mobile Number<span className={styles.star}>*</span>
             </p>
-            <div className={`d-flex align-items-center w-100 position-relative ${styles.isdDel}`}>
+            <div
+              className={`d-flex align-items-center w-100 position-relative ${styles.isdDel}`}
+            >
               <PhoneInput
                 placeholder="Enter Mobile Number"
                 value={phoneValue}

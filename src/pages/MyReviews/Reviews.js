@@ -45,7 +45,7 @@ function Reviews() {
             <h2>My Reviews</h2>
             {myReviewList?.length ? (
               currentPosts?.map((li) => (
-                <MyReviews li={li} deleteReviewAction={deleteReviewAction} />
+                <MyReviews li={li} deleteReviewAction={deleteReviewAction} getMyReview={getMyReview} />
               ))
             ) : (
               <section>No Review Found !!</section>
