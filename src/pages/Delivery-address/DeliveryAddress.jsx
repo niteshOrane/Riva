@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import * as icons from "../../components/common/Icons/Icons";
 import { Link } from "react-router-dom";
 import { getCustId } from "../../util";
@@ -29,14 +30,15 @@ import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 
-function DeliveryAddress({ isManageScreen }) {
+function DeliveryAddress({ isManageScreen, currentLocationPath }) {
+
   const [stateCheck, setState] = React.useState({
     checkedA: false,
     checkedB: false,
     indexItem: null,
   });
   const { language } = useSelector((state) => state?.common?.store);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -59,9 +61,10 @@ function DeliveryAddress({ isManageScreen }) {
     (state) => state.cart?.cartPaymentInfo || {}
   );
   useEffect(() => {
+
     setDataList(customerAddressList);
   }, [customerAddressList]);
-  const [showList, setShowList] = useState(true);
+  const [showList, setShowList] = useState(customerAddressList.length);
 
   const [recordToEdit, setrecordToEdit] = useState(null);
   useEffect(() => {
@@ -76,7 +79,7 @@ function DeliveryAddress({ isManageScreen }) {
       dispatch(getShippingMethodlist(defaultAddressIds.Shippingid));
     }
   }, [defaultAddressIds]);
-  useEffect(() => {}, [customerDeliverySpeed]);
+  useEffect(() => { }, [customerDeliverySpeed]);
   const handleOnEdit = (record) => {
     setrecordToEdit(record);
     setShowList(false);
@@ -104,6 +107,9 @@ function DeliveryAddress({ isManageScreen }) {
   };
   const recordUpdated = () => {
     dispatch(getCustomerAddressList());
+  };
+  const addNewAddressbtn = () => {
+    setShowList(false);
   };
   const setDefaultAddress = async (record, isBilling) => {
     setLoading(true)
@@ -133,7 +139,7 @@ function DeliveryAddress({ isManageScreen }) {
     }
   };
   return (
-    <div className="container-90 max-width-1600">
+    <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? '' : `container-90`}>
       {!isManageScreen && (
         <div className={styles.header}>
           <div className={styles.breadCrumb}>
@@ -159,8 +165,15 @@ function DeliveryAddress({ isManageScreen }) {
           </div>
         </div>
       )}
-
-      <div className={styles.container}>
+      {showList ? <button
+        className={styles.addAddressBtn}
+        type="button"
+        onClick={addNewAddressbtn}
+      >
+        Add New Address
+      </button>
+        : null}
+      <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? '' : styles.container}>
         <div className={styles.columnLeft}>
           <section
             style={{
@@ -171,6 +184,7 @@ function DeliveryAddress({ isManageScreen }) {
           >
             {showList ? (
               <>
+
                 <AddressCard
                   className={styles.defualtAddressArea}
                   onEdit={handleOnEdit}
@@ -178,20 +192,20 @@ function DeliveryAddress({ isManageScreen }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                          (e) => e.id === defaultAddressIds?.Shippingid
-                        )
+                        (e) => e.id === defaultAddressIds?.Shippingid
+                      )
                       : {}
                   }
                   setDefaultAddress={setDefaultAddress}
                   isDefault={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                          (e) => e.id === defaultAddressIds?.Shippingid
-                        )?.Shippingid?.length > 0
+                        (e) => e.id === defaultAddressIds?.Shippingid
+                      )?.Shippingid?.length > 0
                       : {}
                   }
                   isBillingDefault={false}
-                  isManageScreen ={isManageScreen}
+                  isManageScreen={isManageScreen}
                 />
 
                 <AddressCard
@@ -201,8 +215,8 @@ function DeliveryAddress({ isManageScreen }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                          (e) => e.id === defaultAddressIds?.Billingid
-                        )
+                        (e) => e.id === defaultAddressIds?.Billingid
+                      )
                       : {}
                   }
                   setDefaultAddress={setDefaultAddress}
@@ -210,11 +224,11 @@ function DeliveryAddress({ isManageScreen }) {
                   isBillingDefault={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                          (e) => e.id === defaultAddressIds?.Billingid
-                        )?.Billingid?.length > 0
+                        (e) => e.id === defaultAddressIds?.Billingid
+                      )?.Billingid?.length > 0
                       : {}
                   }
-                  isManageScreen = {isManageScreen}
+                  isManageScreen={isManageScreen}
                 />
               </>
             ) : null}
@@ -230,25 +244,26 @@ function DeliveryAddress({ isManageScreen }) {
                       setDefaultAddress={setDefaultAddress}
                       isDefault={false}
                       isBillingDefault={false}
-                      isManageScreen = {isManageScreen}
-                      loading = {loading}
+                      isManageScreen={isManageScreen}
+                      loading={loading}
                     />
                   );
                 })}
           </section>
-          <div className={styles.addAddress}>
-            <p className={styles.title}>
-              {recordToEdit ? "Edit your address" : "Add a new address"}
-            </p>
-          </div>
-          <DeliveryAddressForm
-            customerData={recordToEdit}
-            onAfterSaveEdit={() => {
-              setShowList(true);
-              setrecordToEdit(null);
-              recordUpdated();
-            }}
-          />
+          {!showList || recordToEdit ?
+            <> <div className={styles.addAddress}>
+              <p className={styles.title}>
+                {recordToEdit ? "Edit your address" : "Add a new address"}
+              </p>
+            </div>
+              <DeliveryAddressForm
+                customerData={recordToEdit}
+                onAfterSaveEdit={() => {
+                  setShowList(true);
+                  setrecordToEdit(null);
+                  recordUpdated();
+                }}
+              /></> : null}
           {!isManageScreen && (
             <>
               <div className={styles.shippingMethod}>
@@ -287,8 +302,8 @@ function DeliveryAddress({ isManageScreen }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                          (e) => e.id === defaultAddressIds?.Shippingid
-                        )
+                        (e) => e.id === defaultAddressIds?.Shippingid
+                      )
                       : {}
                   }
                 />

@@ -104,25 +104,8 @@ function AddressCard({
             className={style.delete}
           >
             Remove
-          </span>{" "}
-          {!isDefault && (
-            <LoaderButton
-              onClick={() => setDefaultAddress(addressItem, false)}
-              loading={loading}
-              value="| Set as default Delivery"
-              className={style.delete}
-            >
-              | Set as default Delivery
-            </LoaderButton>
-          )}{" "}
-          {!isBillingDefault && (
-            <span
-              onClick={() => setDefaultAddress(addressItem, true)}
-              className={style.delete}
-            >
-              | Set as default Billing
-            </span>
-          )}
+          </span>
+        
         </div>
       </CardActions>
     </Card>

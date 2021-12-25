@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useLocation } from "react-router-dom";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import "./manageAddress.scss";
 import * as icons from "../../components/common/Icons/Icons";
@@ -9,6 +9,7 @@ import DeliveryAddressForm from "../../components/pages/DeliveryAddress/Delivery
 import { getAddressByLocation } from "../../services/address/address.service";
 
 function ManageAddress() {
+  const currentLocationPath = useLocation();
   const [currentPosition, setCurrentPosition] = useState({
     lat: "",
     lng: "",
@@ -44,8 +45,8 @@ function ManageAddress() {
         </div>
         <div className="d-flex h-100">
           <Sidebar />
-          <div className="w-50">
-            <DeliveryAddress isManageScreen />
+          <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? 'w-100' : `w-50`}>
+            <DeliveryAddress isManageScreen currentLocationPath={currentLocationPath} />
           </div>
         </div>
       </div>

@@ -35,12 +35,14 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     street1: "",
     block: "",
     houseName: "",
-    defaultAddess: true,
+    defaultAddress: true,
+    billingAddress: true,
     judda: "",
     floorNumber: "",
     buildingName: "",
     id: 0,
     country: "",
+    Billingid: 0,
   });
   const [loading, setLoading] = useState(false);
   const [countryList, setCountryList] = useState([]);
@@ -66,7 +68,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.status === 200) {
       setUserAddress(
         res?.data?.data?.find((li) => li?.postal_code !== null) ||
-          res?.data?.data[0]
+        res?.data?.data[0]
       );
     }
   };
@@ -123,7 +125,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       street1: "",
       block: "",
       houseName: "",
-      defaultAddess: true,
+      defaultAddress: true,
+      billingAddress: true,
       country: "",
       judda: "",
       floorNumber: "",
@@ -166,13 +169,16 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
 
     formData.pincode = customerData?.postcode;
     formData.id = customerData?.id;
-    formData.block = customerData?.street?.split(" ")?.[0];
-    formData.houseName = customerData?.street?.split(" ")?.[1];
+    formData.block = customerData?.block;
+    formData.houseName = customerData?.house_name_number;
+    formData.street = customerData?.street?.split(" ")?.[1];
     formData.country = customerData?.country;
-    formData.defaultAddess = customerData?.Shippingid !== "";
+    formData.defaultAddress =  customerData?.Shippingid !== "";
+    formData.billingAddress = customerData?.Billingid !== "";
     formData.judda = customerData?.judda;
-    formData.buildingName = customerData?.buildingName;
-    formData.buildingName = customerData?.buildingName;
+    formData.buildingName = customerData?.building_name_number;
+    formData.firstName = customerData?.firstname;
+    formData.floorNumber = customerData?.floor_number;
     setPhoneValue(customerData?.phone);
     setFormData({ ...formData, ...customerData });
   }, [customerData]);
@@ -193,7 +199,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     street = "",
     houseName = "",
     block = "",
-    defaultAddess,
+    defaultAddress,
+    billingAddress,
     id,
     country,
     judda,
@@ -269,7 +276,8 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("customerAddress[judda]", judda);
     form.append("customerAddress[floor_number]", floorNumber);
     form.append("customerAddress[building_name_number]", buildingName);
-    form.append("setDefaultAddress", defaultAddess ? 1 : 0);
+    form.append("setDefaultAddress", defaultAddress ? 1 : 0);
+    form.append("setBillingAddress", billingAddress ? 1 : 0);
     dispatch(addAddress(form, id));
     dispatch(toggleAddresslist(null));
   };
@@ -503,13 +511,24 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         <div className="d-flex align-items-center">
           <input
             type="checkbox"
-            checked={defaultAddess}
-            name="defaultAddess"
-            id="defaultAddess"
+            checked={defaultAddress}
+            name="defaultAddress"
+            id="defaultAddress"
             onChange={handleChange}
           />
-          <label htmlFor="default" className={styles.useDefaultText}>
+          <label htmlFor="default" aria-controls="defaultAddress" className={styles.useDefaultText}>
             Use as my default address.
+          </label>
+          {' '}
+          <input
+            type="checkbox"
+            checked={billingAddress}
+            name="billingAddress"
+            id="billingAddress"
+            onChange={handleChange}
+          />
+          <label htmlFor="default" aria-controls="billingAddress"   className={styles.useDefaultText}>
+            Use as Billing address.
           </label>
         </div>
       </form>
@@ -527,7 +546,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
           type="button"
           onClick={clearAll}
         >
-          CLEAR
+          CANCEL
         </button>
       </div>
     </>

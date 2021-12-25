@@ -1,6 +1,16 @@
 .greyText {
   color: #6a6565;
 }
+.addAddressBtn {
+  background-color: #000000;
+  color: #fff;
+  min-width: 204.2px;
+  height: 41px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 .header {
   margin: 30px auto;
   .logo {
@@ -114,7 +124,4 @@
     padding: 17px;
     background: #f6f7f9;
   }
-}
-.addAddress {
-  padding-top: 30px;
 }
