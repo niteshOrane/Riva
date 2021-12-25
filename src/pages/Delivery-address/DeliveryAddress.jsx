@@ -232,7 +232,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                 />
               </>
             ) : null}
-            {showList &&
+            {showList ?
               dataList
                 .filter((e) => e.Billingid === "" && e.Shippingid === "")
                 .map((addr, index) => {
@@ -248,7 +248,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                       loading={loading}
                     />
                   );
-                })}
+                }) : null}
           </section>
           {!showList || recordToEdit ?
             <> <div className={styles.addAddress}>

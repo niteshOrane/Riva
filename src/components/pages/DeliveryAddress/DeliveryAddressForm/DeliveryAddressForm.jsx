@@ -262,6 +262,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (id) {
       form.append("addressid", id);
     }
+
     form.append("customerAddress[firstname]", firstName);
     form.append("customerAddress[lastname]", lastName);
     form.append("customerAddress[pincode]", pincode);
