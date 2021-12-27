@@ -1,17 +1,14 @@
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import styles from "./components/Tab2Content/Tab2Content.module.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
+import styles from "./components/Tab2Content/Tab2Content.module.scss";
 
-import * as tabIcons from "../Icons/Icons";
 import Tab2Content from "./components/Tab2Content/Tab2Content";
 
 import { showSnackbar } from "../../../../store/actions/common";
@@ -19,22 +16,17 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
-
 import { getCartId, getCurrencyCode } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
-import RePaymentTab from "./RePaymentTab";
 import PaymentFooter from "./components/PaymentFooter";
-
-const dummyPay = [
-  "TAP",
-  "MADA DEBIT CARD",
-  "HYPERPAY VISA",
-  "HYPERPAY MASTERCARD",
-  "GOOGLE PAY",
-  "APPLE PAY",
-];
+import {
+  processCodPayment,
+  processCodPaymentFurther,
+} from "../../../../services/payment/payment.service";
+import { getCustomerCartPayments } from "../../../../store/actions/cart";
+import Cod from "./components/Cod";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +117,7 @@ export default function DetailTabs({
   const [paymentType, setPaymentType] = React.useState(null);
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([]);
+  const [codInfo, setCodInfo] = useState(null);
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
@@ -229,6 +222,18 @@ export default function DetailTabs({
       item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
     }
   }, [value]);
+  const processCod = async (fnValue) => {
+    if (fnValue === "cashondelivery") {
+      const res = await processCodPayment();
+      if (res?.status === 200) {
+        const processedCod = await processCodPaymentFurther();
+        if (processedCod.status === 200) {
+          setCodInfo(processedCod?.data);
+          dispatch(getCustomerCartPayments());
+        }
+      }
+    }
+  };
 
   const handleChange = async (newValue) => {
     switch (newValue) {
@@ -242,7 +247,7 @@ export default function DetailTabs({
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
         setValue(newValue);
-        getPaymentForTapCheckout(newValue);
+        processCod("cashondelivery");
         break;
       case 3:
         // setValue(newValue);
@@ -270,20 +275,12 @@ export default function DetailTabs({
       </div>
     );
 
-  const selectedIndicatorStyle = {
-    width: "0px",
-    background: "#000",
-    left: "0",
-  };
-
   const changeStyle = (fn, newValue) => {
     handleChange(newValue);
     setName(fn);
   };
-
   return (
     <>
-      {/* <h2 className={styles.choose}>Choose Payment Mode</h2> */}
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <h5 className={styles.payWith}>Pay With</h5>
@@ -318,14 +315,13 @@ export default function DetailTabs({
         </Box>
 
         <div className={classes.tabContent}>
-          {/* <div className={styles.payName}>{name?.toUpperCase()}</div> */}
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
             <GoSellTap />
           </TabPanel>
-          < TabPanel className={styles.goSellWrap} value={value} index={2}>
-            <div id="renderPaymentformOne">{renderPaymentform()}</div>
+          <TabPanel value={value} index={2}>
+            {codInfo && <Cod codInfo={codInfo} />}
           </TabPanel>
-          < TabPanel value={value} index={1}>
+          <TabPanel value={value} index={1}>
             {paymentType && (
               <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
             )}
@@ -347,25 +343,6 @@ export default function DetailTabs({
           <TabPanel value={value} index={6}>
             <ApplePay />
           </TabPanel>
-          {/* {paymentMethod?.map((li) => {
-            if (li?.code === "tap")
-              return (
-                <TabPanel className={styles.goSellWrap} value={value} index={0}>
-                  <GoSellTap />
-                </TabPanel>
-              );
-            if (li?.code === "checkoutcom_card_payment")
-              return (
-                <TabPanel value={value} index={2}>
-                  {paymentType && (
-                    <Tab2Content
-                      onPayNow={onPayNow}
-                      paymentType={paymentType}
-                    />
-                  )}
-                </TabPanel>
-              );
-          })} */}
         </div>
       </Box>
       <PaymentFooter />

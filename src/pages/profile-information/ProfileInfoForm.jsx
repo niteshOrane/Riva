@@ -44,6 +44,20 @@ function ProfileInfoForm() {
         ...values,
         [event.target.name]: event.target.files[0],
       });
+    } else if (event.target.type === "date") {
+      const date = new Date(event.target.value);
+      const selectedDate = date.getTime();
+      if (selectedDate > new Date().getTime()) {
+        dispatch(
+          showSnackbar(
+            "Enter a valid DOB, Future Date cannot be added",
+            "error"
+          )
+        );
+      } else {
+        const { value, name } = event.target;
+        setValues({ ...values, [name]: value });
+      }
     } else {
       const { value, name } = event.target;
       setValues({ ...values, [name]: value });
@@ -110,6 +124,7 @@ function ProfileInfoForm() {
       setIsOpen(true);
     }
   }, [recivedOTPData]);
+
   const onSendOTP = async (e) => {
     e.preventDefault();
     if (!phoneValue)

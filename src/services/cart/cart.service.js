@@ -122,3 +122,13 @@ export const getFreeShippingInfo = (cartId) => {
   };
   return axios(config);
 };
+
+// Cod
+export const placeCodOrder = (type) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=${type}`,
+    silent: true,
+  };
+  return axios(config);
+};

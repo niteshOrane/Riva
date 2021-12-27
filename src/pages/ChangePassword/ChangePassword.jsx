@@ -61,6 +61,9 @@ function ChangePassword() {
         retypePassword: "",
         otp: "",
       });
+      if(res?.data?.message){
+        return dispatch(showSnackbar(res.data.message, "warning"));
+      }
       return dispatch(showSnackbar(res.data.data, "success"));
     }
     return dispatch(showSnackbar("Something went wrong", "error"));

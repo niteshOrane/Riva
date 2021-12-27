@@ -1,13 +1,12 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
-import { getCartId } from "../../util";
+import { getCartId, getCustId } from "../../util";
 
 export const getPaymentMode = () => {
-
   const config = {
     method: "get",
     url: `${API_URL}/carts/${getCartId()}/payment-methods`,
-    silent: true
+    silent: true,
   };
   return axios(config);
 };
@@ -18,14 +17,30 @@ export const getShippingMethod = (addressId) => {
       url: `${API_URL}/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,
       silent: true,
       data: {
-        "addressId": addressId
-      }
+        addressId: addressId,
+      },
     };
     return axios(config);
-  }
-  catch {
+  } catch {
     return { data: [], success: false };
   }
 };
 
+// COD
 
+export const processCodPayment = () => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/webapi/getcodfee?quoteId=${getCartId()}&paymentMethod=cashondelivery`,
+    silent: true,
+  };
+  return axios(config);
+};
+export const processCodPaymentFurther = () => {
+  const config = {
+    method: "post",
+    url: `http://65.0.141.49/shop/index.php/rest/en/V1/webapi/quoteInfo?quoteId=${getCartId()}`,
+    silent: true,
+  };
+  return axios(config);
+};

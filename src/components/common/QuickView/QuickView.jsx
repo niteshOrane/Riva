@@ -23,7 +23,11 @@ import {
   getReviewList,
   outOfStockCheck,
 } from "../../../services/product/product.service";
-import { addWishlist, getWishlist, removeWishlist } from "../../../store/actions/wishlist";
+import {
+  addWishlist,
+  getWishlist,
+  removeWishlist,
+} from "../../../store/actions/wishlist";
 
 function QuickView() {
   const dispatch = useDispatch();
@@ -119,10 +123,10 @@ function QuickView() {
         qty: productQuantity,
         ...selectedProduct?.selected,
         price,
-        isFromWishlist:data?.isFromWishlist
+        isFromWishlist: data?.isFromWishlist,
       })
     );
-
+    setProductQuantity(1);
     dispatch(toggleQuickView(null));
   };
   const getOutOfStock = async () => {
