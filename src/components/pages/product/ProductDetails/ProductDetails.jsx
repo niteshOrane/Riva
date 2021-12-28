@@ -180,7 +180,6 @@ const ProductDetails = (props) => {
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
   };
- 
 
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
@@ -205,7 +204,9 @@ const ProductDetails = (props) => {
             <Breadcrumbs aria-label="breadcrumb">
               <Link to="/">Home</Link>
               {history?.location?.state && (
-                <Link to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}>
+                <Link
+                  to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}
+                >
                   {history?.location?.state?.category}
                 </Link>
               )}
@@ -546,6 +547,7 @@ const ProductDetails = (props) => {
                     {
                       name: "Delivery & returns",
                       icon: "/assets/images/delivery.png",
+                      link: `/myOrder/delivered`,
                     },
                     {
                       name: (
@@ -586,8 +588,19 @@ const ProductDetails = (props) => {
                       ),
                       icon: "/assets/images/share.png",
                     },
-                  ].map((item) => {
-                    return (
+                  ].map((item) =>
+                    item?.link ? (
+                      <Link to={item?.link}>
+                        <div className={`${styles.labelContainer}`}>
+                          <div className={styles.icon}>
+                            <img src={item.icon} alt={item.name} />
+                          </div>
+                          <div className={`${styles.labelName} c-pointer`}>
+                            {item.name}
+                          </div>
+                        </div>
+                      </Link>
+                    ) : (
                       <div className={`${styles.labelContainer}`}>
                         <div className={styles.icon}>
                           <img src={item.icon} alt={item.name} />
@@ -596,8 +609,8 @@ const ProductDetails = (props) => {
                           {item.name}
                         </div>
                       </div>
-                    );
-                  })}
+                    )
+                  )}
                 </div>
               </div>
             </div>

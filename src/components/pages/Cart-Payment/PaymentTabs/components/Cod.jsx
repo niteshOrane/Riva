@@ -5,17 +5,19 @@ import { placeCodOrder } from "../../../../../services/cart/cart.service";
 import styles from "./Tab2Content/Tab2Content.module.scss";
 import * as DATA_TYPES from "../../../../../store/types";
 import { showSnackbar } from "../../../../../store/actions/common";
+import { useState } from "react";
 
 function Cod({ codInfo }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const title = codInfo?.total_segments?.find(
-    (li) => li?.code === "fee"
-  )?.title;
-  const value = codInfo?.total_segments?.find(
-    (li) => li?.code === "fee"
-  )?.value;
+  const [loading, setLoading] = useState(false);
+  const title =
+    codInfo?.total_segments?.find((li) => li?.code === "fee")?.title ||
+    "Delivery Charges";
+  const value =
+    codInfo?.total_segments?.find((li) => li?.code === "fee")?.value || 0;
   const placeCodOrderConfirm = async () => {
+    setLoading(true);
     const res = await placeCodOrder("cashondelivery");
     if (res.status === 200) {
       dispatch({
@@ -26,13 +28,16 @@ function Cod({ codInfo }) {
         type: DATA_TYPES.SET_BULK_CART,
         payload: [],
       });
+      setLoading(false);
       history.push(
         `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
       );
     } else if (res?.message) {
       dispatch(showSnackbar(res?.message, "warning"));
+      setLoading(false);
     } else {
       dispatch(showSnackbar("Something went wrong", "error"));
+      setLoading(false);
     }
   };
   return (
@@ -52,6 +57,9 @@ function Cod({ codInfo }) {
       >
         Place Order
       </button>
+      {loading && (
+        <p className={styles.loading}>Please Wait processing your order...</p>
+      )}
     </div>
   );
 }

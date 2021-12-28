@@ -21,7 +21,6 @@ export const getOrderList = (id) => {
 };
 export const cancelOrder = (id) => {
   const orderData = new FormData();
-  orderData.append("customerId", getCustId());
   orderData.append("orderId", id);
   const config = {
     method: "post",

@@ -159,11 +159,11 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
             </span>
             <span className={styles.reorder}>Reorder</span>
           </div>
-          {product?.status !== "delivered" && product?.status !== "canceled" && (
+          {product?.status === "pending" &&  (
             <div
               className="d-flex align-items-center mt-12px"
               onClick={() => {
-                cancelOrderMyOrder(product?.order_id);
+                cancelOrderMyOrder(product?.increment_id);
               }}
             >
               <span
