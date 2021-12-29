@@ -48,12 +48,14 @@ function ProfileInfoForm() {
       const date = new Date(event.target.value);
       const selectedDate = date.getTime();
       if (selectedDate > new Date().getTime()) {
-        dispatch(
+        const ele = document.querySelector('#dob-date');
+        ele.value = "";
+       return  dispatch(
           showSnackbar(
             "Enter a valid DOB, Future Date cannot be added",
             "error"
           )
-        );
+        )
       } else {
         const { value, name } = event.target;
         setValues({ ...values, [name]: value });
@@ -281,6 +283,7 @@ function ProfileInfoForm() {
                 <label className="profile-label">Date of Birth</label>
                 <input
                   type="date"
+                  id="dob-date"
                   value={values.dob}
                   placeholder="Select DOB"
                   name="dob"

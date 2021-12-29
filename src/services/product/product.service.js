@@ -192,3 +192,14 @@ export const searchInStore = (itemCode, country) => {
   };
   return axios(config);
 };
+
+// delivery and return
+
+export const deliveryAndReturnService = () => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/webapi/delivery-returns?storeId=${getStoreId()}`,
+    silent: true,
+  };
+  return axios(config);
+};

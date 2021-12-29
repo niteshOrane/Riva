@@ -58,7 +58,7 @@ export default function SimpleModal({ image, sizes, language, sku }) {
       border: "1px solid #c8c0c0",
       padding: "2px",
       marginTop: "50px",
-      cursor:"pointer"
+      cursor: "pointer",
     },
     input: {
       height: 42,
@@ -129,9 +129,9 @@ export default function SimpleModal({ image, sizes, language, sku }) {
     noStore: {
       color: "gray",
     },
-    noStoreFound:{
-      color:"black"
-    }
+    noStoreFound: {
+      color: "black",
+    },
   }));
 
   const classes = useStyles();
@@ -229,7 +229,9 @@ export default function SimpleModal({ image, sizes, language, sku }) {
                 {store?.ADDRESS1}, {store.ADDRESS2}
               </span>
               <span>{store?.LOCATION_NAME}</span>
-              <span>Store Type: {store?.STORE_TYPE}</span>
+              {store?.STORE_TYPE !== "WAREHOUSE" && (
+                <span>Store Type: {store?.STORE_TYPE}</span>
+              )}
               <span>{store?.SUB_COMPANY_CODE}</span>
             </section>
           ))

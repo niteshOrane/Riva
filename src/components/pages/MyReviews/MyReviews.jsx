@@ -25,22 +25,16 @@ function MyReviews({ li, deleteReviewAction,getMyReview }) {
               {moment(li?.created_at)?.calendar()}
             </div>
             <div className={styles.links}>
-              <button className={styles.action} type="button">
-                <ReviewModal isEdit singleReview={li} getMyReview={getMyReview} />
-              </button>
+            
               <button
                 className={styles.action}
                 type="button"
                 onClick={() => deleteReviewAction(li?.id)}
-                style={{ marginLeft: "20px" }}
               >
                 Delete
               </button>
             </div>
-            {/* <div className={styles.act}>
-              <span className="material-icons-outlined">thumb_up_alt</span>
-              <span className="material-icons-outlined">thumb_down</span>
-            </div> */}
+         
           </div>
         </div>
         <hr className={styles.line} />

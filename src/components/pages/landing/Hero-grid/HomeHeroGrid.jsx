@@ -10,6 +10,7 @@ import Image from "../../../common/LazyImage/Image";
 
 import "./heroGridTwo.css";
 
+
 const HomeHeroGrid = (props) => {
   const { items, srcPath = "/assets/images/banner", isHomePage } = props;
   const links = useSelector((state) => state.common.category)[0];
@@ -19,6 +20,7 @@ const HomeHeroGrid = (props) => {
     setItemsImage(items);
     setCategory(links?.children_data.filter((item) => item.is_active == 1));
   }, [items]);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const onCategorySelect = (id) => {
@@ -28,8 +30,18 @@ const HomeHeroGrid = (props) => {
       history.push(`/type/${id}`);
     }
   };
+  const onCategorySelectOnRender = (id) => {
+    const selectItem = links?.children_data?.filter((e) => e?.id === id) ?? [];
+    if (selectItem.length) {
+      dispatch(selectedCategory(selectItem[0]?.children_data, id));
+    }
+  };
+  useEffect(() => {
+    onCategorySelectOnRender("1241")
+  }, [])
+
   return (
-    <div className="landing-two-wrapper">
+    <div className="landing-two-wrapper">   
       <CategoriesCircles isHomePage={isHomePage} />
       {itemsImage?.length ? (
         <div>

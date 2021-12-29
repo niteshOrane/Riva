@@ -27,6 +27,7 @@ import SizeChart from "./SizeChart";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
+import DeliveryReturn from "./DeliveryReturn";
 
 const ProductDetails = (props) => {
   const {
@@ -545,9 +546,8 @@ const ProductDetails = (props) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: "Delivery & returns",
+                      name: <DeliveryReturn language={language} />,
                       icon: "/assets/images/delivery.png",
-                      link: `/myOrder/delivered`,
                     },
                     {
                       name: (
@@ -588,29 +588,16 @@ const ProductDetails = (props) => {
                       ),
                       icon: "/assets/images/share.png",
                     },
-                  ].map((item) =>
-                    item?.link ? (
-                      <Link to={item?.link}>
-                        <div className={`${styles.labelContainer}`}>
-                          <div className={styles.icon}>
-                            <img src={item.icon} alt={item.name} />
-                          </div>
-                          <div className={`${styles.labelName} c-pointer`}>
-                            {item.name}
-                          </div>
-                        </div>
-                      </Link>
-                    ) : (
-                      <div className={`${styles.labelContainer}`}>
-                        <div className={styles.icon}>
-                          <img src={item.icon} alt={item.name} />
-                        </div>
-                        <div className={`${styles.labelName} c-pointer`}>
-                          {item.name}
-                        </div>
+                  ].map((item) => (
+                    <div className={`${styles.labelContainer}`}>
+                      <div className={styles.icon}>
+                        <img src={item.icon} alt={item.name} />
                       </div>
-                    )
-                  )}
+                      <div className={`${styles.labelName} c-pointer`}>
+                        {item.name}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
