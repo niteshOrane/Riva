@@ -47,10 +47,10 @@ function Sidebar() {
               <icons.AngleRight />
               &nbsp; Track Your Order
             </Link> */}
-              <Link to="/cancelled-orders" className={styles.child}>
+              {/* <Link to="/cancelled-orders" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; Cancelled
-              </Link>
+              </Link> */}
               <Link to="/" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; Returned

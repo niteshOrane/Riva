@@ -125,6 +125,7 @@ const ProductDetails = (props) => {
     priceWithoutCurrency = 0,
   } = product;
   const { price, visibility = 0, custom_attributes } = product;
+  console.log({price})
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === "special_price"
@@ -516,11 +517,12 @@ const ProductDetails = (props) => {
                   {outOfStock ? (
                     <OutOfStock productId={product.id} />
                   ) : (
-                    <div className={styles.addToCart}>
+                    <div className={Number(price)===0 ? styles.disableCart : styles.addToCart}>
                       <button
                         type="button"
                         onClick={() => addToCardHandler()}
                         className="d-flex-all-center"
+                        disabled={Number(price)===0}
                       >
                         <span className="material-icons-outlined">
                           shopping_cart
