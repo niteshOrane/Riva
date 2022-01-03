@@ -20,7 +20,6 @@ function Products(props) {
   const handleQuickView = () => {};
   const history = useHistory();
   const { currency_symbol } = useSelector((state) => state?.common?.store);
-  const filterAttr = useSelector((state) => state?.common?.filtersParams);
 
   const refContainer = useRef();
 
@@ -45,7 +44,6 @@ function Products(props) {
     sortField,
     onScreen,
     serachTerm: parsed?.serachTerm,
-    filterAttr,
   });
 
   const handleSortChange = (event) => {

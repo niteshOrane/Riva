@@ -33,7 +33,7 @@ export const getFiltersList = ({ catId, qTerm = "", filterAttr = {} }) => {
   keyValue.forEach((element) => {
     if (filterAttr[element]?.length) {
       filterValue.push(
-        `categoryData[${element}]=${filterAttr[element].join(",")}`
+        `&categoryData[${element}]=${filterAttr[element].join(",")}`
       );
     }
   });
@@ -43,7 +43,7 @@ export const getFiltersList = ({ catId, qTerm = "", filterAttr = {} }) => {
   const querySearch = qTerm ? `&categoryData[q] = ${qTerm}` : "";
   const config = {
     method: "get",
-    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterData}${querySearch}`,
+    url: `${urlPath}/rest/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterValue}${querySearch}`,
     silent: true,
   };
   return axios(config);

@@ -12,7 +12,7 @@ const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
       />
       <label
         className="c-pointer w-100"
-        style={{ marginLeft: "12px" }}
+        style={{ marginLeft: "12px",paddingRight:"10px" }}
         htmlFor={item.id}
       >
         {item.title}

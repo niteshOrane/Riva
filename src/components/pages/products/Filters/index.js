@@ -78,6 +78,7 @@ function Filters(props) {
   const [selectedTags, setSelectedTags] = useState([]);
   // const [newList, setNewList] = useState([]);
   const filterAttr = useSelector((state) => state?.common?.filtersParams);
+  console.log({filterAttr})
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -281,42 +282,6 @@ function Filters(props) {
               drawerPosition={drawerPosition}
               filter
             />
-            {/* <Search handleChange={handleSearchChange} value={searchValue} /> */}
-            <div className={style.tagsFlex}>
-              {[...new Set(filterAttr?.Color)]?.map((li) => (
-                <div className="d-flex flex-wrap">
-                  <div
-                    onClick={() => removeSingleAttr("Color", li)}
-                    className={style.tag}
-                  >
-                    <span>{li}</span>
-                    <span className="material-icons-outlined">close</span>
-                  </div>
-                </div>
-              ))}
-              {[...new Set(filterAttr?.Size)]?.map((li) => (
-                <div className="d-flex flex-wrap">
-                  <div
-                    onClick={() => removeSingleAttr("Size", li)}
-                    className={style.tag}
-                  >
-                    <span>{li}</span>
-                    <span className="material-icons-outlined">close</span>
-                  </div>
-                </div>
-              ))}
-              {[...new Set(filterAttr?.Price)]?.map((li) => (
-                <div className="d-flex flex-wrap">
-                  <div
-                    onClick={() => removeSingleAttr("Price", li)}
-                    className={style.tag}
-                  >
-                    <span>{li}</span>
-                    <span className="material-icons-outlined">close</span>
-                  </div>
-                </div>
-              ))}
-            </div>
             <div className={style.filtersGrid}>
               {newList?.map(($item, i) => {
                 return (

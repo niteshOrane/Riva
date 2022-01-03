@@ -149,9 +149,6 @@ export default function common(state = initialState, action) {
         ...state,
         filtersParams: {
           status: false,
-          Color: [],
-          Size: [],
-          Options: [],
         },
       };
 
