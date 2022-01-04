@@ -5,7 +5,6 @@ import * as icons from "../../components/common/Icons/Icons";
 import { Link } from "react-router-dom";
 import { getCustId } from "../../util";
 import SelectDeliveryAddress from "../../components/pages/DeliveryAddress/SelectDeliveryAddress/SelectDeliveryAddress";
-import SelectBillingAddress from "../../components/pages/DeliveryAddress/SelectBillingAddress/SelectBillingAddress";
 
 import DeliveryAddressForm from "../../components/pages/DeliveryAddress/DeliveryAddressForm/DeliveryAddressForm";
 import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/OrderReview";
