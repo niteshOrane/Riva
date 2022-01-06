@@ -69,24 +69,26 @@ function NotifyMe() {
                         </span>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => redirectToDetails(card?.productId)}
-                      className={styles.redirectBtn}
-                    >
-                      View Product
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        handleSubmit(e, card.productId);
-                      }}
-                      role="button"
-                      aria-label="Delete Notifictaion"
-                      className="bg-transparent no-border c-pointer"
-                      id={styles.closeBtn}
-                    >
-                      <icons.Close />
-                    </button>
+                    <div className="d-flex justify-content-around">
+                      <button
+                        type="button"
+                        onClick={() => redirectToDetails(card?.productId)}
+                        className={styles.redirectBtn}
+                      >
+                        View Product
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          handleSubmit(e, card.productId);
+                        }}
+                        role="button"
+                        aria-label="Delete Notifictaion"
+                        className="bg-transparent no-border c-pointer"
+                        id={styles.closeBtn}
+                      >
+                        <icons.Close />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))

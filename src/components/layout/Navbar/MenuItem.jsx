@@ -43,11 +43,13 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
         setOpen(false);
     };
     const handleLogout = (event) => {
+        sessionStorage.clear()
         dispatch(logout());
         dispatch(emptyCart());
         logoutUser();
         handleClose(event);
         dispatch(clearwishlist_action([]))
+        
     };
     const handleMyProfile = (event) => {
         history.push('/dashboard')

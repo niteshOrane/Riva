@@ -25,20 +25,13 @@ const HomeHeroGrid = (props) => {
   const history = useHistory();
   const onCategorySelect = (id) => {
     const selectItem = links?.children_data?.filter((e) => e?.id === id) ?? [];
+    sessionStorage.setItem("preferredCategory",JSON.stringify(id));
     if (selectItem.length) {
       dispatch(selectedCategory(selectItem[0]?.children_data, id));
       history.push(`/type/${id}`);
     }
   };
-  const onCategorySelectOnRender = (id) => {
-    const selectItem = links?.children_data?.filter((e) => e?.id === id) ?? [];
-    if (selectItem.length) {
-      dispatch(selectedCategory(selectItem[0]?.children_data, id));
-    }
-  };
-  useEffect(() => {
-    onCategorySelectOnRender("1241")
-  }, [])
+
 
   return (
     <div className="landing-two-wrapper">   

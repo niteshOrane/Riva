@@ -25,20 +25,29 @@ const NavbarMain = () => {
       }
     }
   }
+  const handlePush = () => {
+    const category = JSON.parse(sessionStorage.getItem("preferredCategory"));
+    if(category){
+      history.push(`/type/${category}`)
+    }else{
+      history.push(`/`)
+    }
+  }
   return (
     <nav
       className={`${styles.container} d-flex align-items-center justify-content-between container-with-circles`}
     >
       <Search handleChange={handleSearchChange} handleKeyDown={handleKeyDown} value={searchValue} onSearch={handleOnSearch} />
       <strong className={`logo-strong d-block ${styles.logoImg}`}>
-        <Link className="d-block" to="/">
+        
           <img
             className="logo-image"
             src="/assets/images/logo.png"
             width="100%"
             alt="RIVA"
+            onClick={handlePush}
           />
-        </Link>
+      
       </strong>
 
       <NavLinks />

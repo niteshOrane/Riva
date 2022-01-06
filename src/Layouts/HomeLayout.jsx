@@ -50,7 +50,7 @@ const MainLayout = ({ children }) => {
     <bdo dir={store.language === 'Arabic' ? 'rtl' : 'ltr'}>
       <div >
         {mainHeader &&
-          <MainHeader mainHeade={mainHeader} disableMegicLink={Boolean(false)} />}
+          <MainHeader mainHeade={mainHeader} disableMegicLink={Boolean(true)} />}
         <SignUpCard />
         {childRender ? <>{paths.includes(children?.props.location.pathname) && !children.props.auth.isAuthenticated ? <ShoppingCart /> : children}</> : <Landing />}
         <Cart />

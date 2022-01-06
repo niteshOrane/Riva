@@ -8,7 +8,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate,currentPage }) => {
     pageNumbers.push(i);
   }
   return (
-    <nav>
+    <nav style={{width:"fit-content",overflowX:"auto"}}>
       <ul className={styles.pageLi}>
         {pageNumbers.map((number) => (
           <li
@@ -18,6 +18,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate,currentPage }) => {
                 number === currentPage
                   ? "inset 0px 0px 60px -28px rgba(0, 0, 0, 0.5)"
                   : null,
+                  lineBreak: pageNumbers.length > 8 && "auto"
             }}
             key={number}
             onClick={() => paginate(number)}
