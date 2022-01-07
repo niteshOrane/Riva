@@ -43,7 +43,7 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
         setOpen(false);
     };
     const handleLogout = (event) => {
-        sessionStorage.clear()
+        sessionStorage.clear();
         dispatch(logout());
         dispatch(emptyCart());
         logoutUser();

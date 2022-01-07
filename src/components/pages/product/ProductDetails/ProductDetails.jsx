@@ -564,7 +564,7 @@ const ProductDetails = (props) => {
                       icon: "/assets/images/shop.png",
                     },
                     {
-                      name: <SubscribeModel language={language} />,
+                      name: <SubscribeModel language={language} productId={product.id} />,
                       icon: "/assets/images/tshirt.png",
                     },
 
