@@ -203,3 +203,21 @@ export const deliveryAndReturnService = () => {
   };
   return axios(config);
 };
+
+export const getSizeGuide = (type) => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/webapi/size-guide?storeId=27&type=${type}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const getProductDetailsById = (id) => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/webapi/getproductdetailsbyid?productId=${id}`,
+    silent: true,
+  };
+  return axios(config);
+};

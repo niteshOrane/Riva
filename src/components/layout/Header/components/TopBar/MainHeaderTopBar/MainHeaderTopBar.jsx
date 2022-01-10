@@ -112,7 +112,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                 }`}
               >
                 <div className={style.currencyDropdown}>
-                  {storeDropDown
+                  {storeDropDown?.filter(li => li?.currency !== "OMR")
                     ?.map((head) => {
                       const { currency } = head;
                       return (

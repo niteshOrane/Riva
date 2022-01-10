@@ -2,7 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import * as icons from "../../../../components/common/Icons/Icons";
-import styles from "./productDetails.module.scss"
+import "./sizeChart.css";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { getSizeGuide } from "../../../../services/product/product.service";
 
 function getModalStyle() {
   const top = 50;
@@ -15,17 +20,38 @@ function getModalStyle() {
   };
 }
 
-export default function SizeChart({ img,language }) {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+export default function SizeChart({ img, language }) {
   const useStyles = makeStyles((theme) => ({
     paper: {
-      // display: "flex",
       position: "absolute",
-      height: 300,
-      width: 640,
+      height: 600,
+      width: 950,
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
       border: "none",
+      overflowY: "scroll",
+      overflowX: "scroll",
     },
     closeBtn: {
       position: "absolute",
@@ -36,74 +62,114 @@ export default function SizeChart({ img,language }) {
       border: "none",
       cursor: "pointer",
     },
-    table:{
-      marginTop:"2rem",
-      marginLeft:"1.5rem"
-    }
   }));
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+  const [sizeType, setSizeType] = React.useState(null);
+  const [menu, setMenu] = React.useState(null);
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
 
   const handleOpen = () => {
     setOpen(true);
+    getSizeByType("dress-size-guide");
+  };
+
+  const getSizeByType = async (type) => {
+    const res = await getSizeGuide(type);
+    if (res?.status === 200 && res?.data?.["size-guide"]) {
+      setSizeType(res?.data?.["size-guide"]);
+
+      const list = [
+        ...document
+          .getElementsByClassName("size-menu")?.[0]
+          ?.getElementsByTagName("li"),
+      ]?.map((li) => li?.innerText);
+      setMenu(list);
+      
+    }
+  };
+
+  const handleChange = (event, newValue) => {
+    switch (newValue) {
+      case 0:
+        getSizeByType("dress-size-guide");
+        setValue(newValue);
+        break;
+      case 1:
+        getSizeByType("trouser-size-guide");
+        setValue(newValue);
+        break;
+      case 2:
+        getSizeByType("tops-size-guide");
+        setValue(newValue);
+        break;
+      case 3:
+        getSizeByType("coat-size-guide");
+        setValue(newValue);
+        break;
+
+      default:
+        break;
+    }
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-
-
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <button onClick={handleClose} type="button" className={classes.closeBtn}>
         <icons.Close />
       </button>
-      <section className="d-flex">
-      <div className={classes.sizeHead}>WOMEN'S CLOTHING SIZE GUIDE</div>
-      <section >
-        <div className = {classes.table}>
-          <table className={styles.sizeChartTable}>
-            <tr>
-              <th>SIZE</th>
-              <th>CHEST</th>
-              <th>WAIST</th>
-              <th>HP</th>
-            </tr>
-            <tr>
-              <td>S</td>
-              <td>89</td>
-              <td>66</td>
-              <td>66</td>
-            </tr>
-            <tr>
-              <td>M</td>
-              <td>92</td>
-              <td>72</td>
-              <td>72</td>
-            </tr>
-            <tr>
-              <td>L</td>
-              <td>98</td>
-              <td>78</td>
-              <td>78</td>
-            </tr>
-            <tr>
-              <td>XL</td>
-              <td>104</td>
-              <td>85</td>
-              <td>85</td>
-            </tr>
-          </table>
-        </div>
+      <section>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          {menu?.map((li, idx) => (
+            <Tab label={li} {...a11yProps(idx)} />
+          ))}
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sizeType ? sizeType : "No size found",
+            }}
+          ></div>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sizeType ? sizeType : "No size found",
+            }}
+          ></div>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sizeType ? sizeType : "No size found",
+            }}
+          ></div>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sizeType ? sizeType : "No size found",
+            }}
+          ></div>
+        </TabPanel>
       </section>
-      </section>
-      <div className={styles.sizeGuideInfo}>
-        <strong>All Sizes are in CMs</strong>
-        <span>Measure your, height and waist and then compare with the size cart.</span>
-      </div>
     </div>
   );
 

@@ -1,0 +1,13 @@
+.size-main{
+}
+.size-table-container{
+    /* display: flex; */
+}
+.size-table th{
+    width:16%;
+}
+.size-table td{
+    /* display: flex;
+    justify-content: center; */
+    text-align: center;
+}
