@@ -9,9 +9,11 @@ import { getStoreId } from "../../../util";
 import storeData from "../../../store/index";
 
 import { addSubscribeList } from "../../../store/actions/subscription/index";
+import useArabic from "../../common/arabicDict/useArabic";
 
 function Footer() {
   const dispatch = useDispatch();
+  const {translate} = useArabic()
   const [phone, setPhone] = useState("+971 800 7482");
   const [value, setValue] = useState("");
   const handleChange = (e) => setValue(e.target.value);
@@ -56,10 +58,10 @@ function Footer() {
           </div>
         ))}
         <div className={`${style.footerCol} ${style.maxWidth80}`}>
-          <h4 className={style.title}>STAY IN TOUCH</h4>
+          <h4 className={style.title}>{translate?.footer?.TOUCH}</h4>
           <div>
             <p className={style.thirdMsg}>
-              Get exclusive deals you will not find anywhere else straight to
+            {translate?.footer?.DEALS}
               ...
             </p>
           </div>
@@ -75,12 +77,12 @@ function Footer() {
           </div>
           <div className={style.sub}>
             <button onClick={(e) => handleOnSubmit(e)} type="button">
-              SUBSCRIBE
+            {translate?.footer?.SUBS}
             </button>
           </div>
         </div>
         <div className={`${style.footerCol} ${style.lastCol}`}>
-          <h4 className={style.title}>STAY CONNECTED</h4>
+          <h4 className={style.title}>{translate?.footer?.STAY}</h4>
           <ul className="d-flex align-items-center justify-content-between">
             <a
               href="https://www.snapchat.com/add/rivafashion/"
@@ -131,7 +133,7 @@ function Footer() {
           <div className={style.m}>
             <img src="/assets/images/footerPhn.png" alt="" />
             <div className={style.text_alignmemt}>
-              <span className={style.clrGrey}>Customer care:&nbsp;</span>
+              <span className={style.clrGrey}>{translate?.footer?.CARE}:&nbsp;</span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
               </a>
@@ -144,7 +146,7 @@ function Footer() {
             </span>
             <div className={style.text_alignmemt}>
               <span className={style.clrGrey}>
-                WhatsApp Customer Care:&nbsp;
+              {translate?.footer?.WHATS}:&nbsp;
               </span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
@@ -153,7 +155,7 @@ function Footer() {
           </div>
 
           <div className={style.lm}>
-            <div className="font-weight-normal color-white">RIVA APP</div>
+            <div className="font-weight-normal color-white">{translate?.footer?.APP}</div>
             <div>
               <a
                 href="https://apps.apple.com/us/app/apple-store/id375380948"

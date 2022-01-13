@@ -144,11 +144,7 @@ const ProductsData = ({ products, currency_symbol }) => {
                             )}
                           </strong>
                         </div>
-                        {/*<div className={`text-right ${style.loyaltyPoints}`}>
-                            <span>
-                              Earn Loyalty Points: {currency_symbol}2 ?
-                            </span>
-                          </div>*/}
+                    
                       </div>
                     </div>
                     <div className={style.footer}>

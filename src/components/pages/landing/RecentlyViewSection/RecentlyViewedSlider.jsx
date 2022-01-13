@@ -9,7 +9,7 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
   const refContainer = useRef();
   const { data: items = [] } = useSelector((state) => state.stats);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
-
+  const { language } = useSelector((state) => state?.common?.store);
 
   useEffect(() => {
     const cartValue = localStorage.getItem("recentVieItem") || JSON.stringify([]);
@@ -28,7 +28,7 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
         id={style.borderBotm}
         className="d-flex align-items-center justify-content-between"
       >
-        <h4 className={style.titelMrgn}>Recently Viewed</h4>
+        <h4 className={style.titelMrgn}>{language==="Arabic" ?"شوهد حديثًا،" : "Recently Viewed"}</h4>
         <div className="d-flex align-items-center">
           <div onClick={previous} className={style.arrowBtn}>
             <ArrowButton direction="backward" />

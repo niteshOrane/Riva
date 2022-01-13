@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import * as icons from "../../../../components/common/Icons/Icons";
@@ -8,6 +8,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { getSizeGuide } from "../../../../services/product/product.service";
+import { listItemIconClasses } from "@mui/material";
 
 function getModalStyle() {
   const top = 50;
@@ -45,7 +46,7 @@ export default function SizeChart({ img, language }) {
     paper: {
       position: "absolute",
       height: 600,
-      width: 950,
+      width: 750,
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
@@ -94,15 +95,41 @@ export default function SizeChart({ img, language }) {
           ?.getElementsByTagName("li"),
       ]?.map((li) => li?.innerText);
       setMenu(list);
-      
+    } else {
+      setSizeType("No Size Found");
     }
   };
+  useEffect(() => {
+    if (menu) {
+      const sizeMenu = [
+        ...document
+          .getElementsByClassName("size-menu")?.[0]
+          ?.getElementsByTagName("li"),
+      ];
+      console.log({ sizeMenu });
+      if (sizeMenu) {
+        sizeMenu.map((item, idx) => {
+          const link = item?.getElementsByTagName("a")?.[0];
+          link.removeAttribute("href");
+          item.addEventListener("click", () => handleChange(idx));
+        });
+      }
+    }
+  }, [menu]);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
+    console.log("type");
+    const sizeMenu = [
+      ...document
+        .getElementsByClassName("size-menu")?.[0]
+        ?.getElementsByTagName("li"),
+    ];
+    sizeMenu?.[newValue].classList.add("active-now");
     switch (newValue) {
       case 0:
         getSizeByType("dress-size-guide");
         setValue(newValue);
+
         break;
       case 1:
         getSizeByType("trouser-size-guide");
@@ -128,11 +155,12 @@ export default function SizeChart({ img, language }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <button onClick={handleClose} type="button" className={classes.closeBtn}>
-        <icons.Close />
-      </button>
-      <section>
-        <Tabs
+      <section
+        dangerouslySetInnerHTML={{
+          __html: sizeType ? sizeType : "No size found",
+        }}
+      >
+        {/* <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
@@ -168,7 +196,7 @@ export default function SizeChart({ img, language }) {
               __html: sizeType ? sizeType : "No size found",
             }}
           ></div>
-        </TabPanel>
+        </TabPanel> */}
       </section>
     </div>
   );

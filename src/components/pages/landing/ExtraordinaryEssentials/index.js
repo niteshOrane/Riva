@@ -8,12 +8,14 @@ import { getProducts } from "../../../../services/layout/Layout.service";
 import "./styles.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
+  const { language } = useSelector((state) => state?.common?.store);
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +47,7 @@ const ProductList = () => {
   return (
     <>
       <div style={{ marginTop: "52px" }} className="section-header-container">
-        <SectionHeader roboto="Extraordinary" dancing="Essentials" />
+<SectionHeader roboto={language==="Arabic" ? "رائع،" : "Extraordinary"} dancing={language==="Arabic" ? "أساسيات لكل يوم،" : "Essentials"} />
       </div>
       <div className="product-list-container container-with-circles ">
         <div className="arrow-button" onClick={previous}>

@@ -17,7 +17,7 @@ import { clearwishlist_action } from '../../../store/actions/wishlist';
 
 
 
-const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
+const MenuListComposition = React.memo(({ auth, history, openSignUpCard,translate }) => {
     const dispatch = useDispatch();
     const { isAuthenticated, customer } = auth;
 
@@ -83,9 +83,9 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
             </span>
             <span className="align-self-end font-light-black d-flex underline-hovered " >
                 {' '}
-                {isAuthenticated ? <><span>{`Welcome ${customer.firstname || customer?.username}`} </span>
+                {isAuthenticated ? <><span>{`${translate?.nav?.WEL} ${customer.firstname || customer?.username}`} </span>
                     <span style={{marginRight:"15px"}}   className="material-icons-outlined"> keyboard_arrow_down</span>
-                </> : <div >Welcome Guest, Sign in &nbsp; &nbsp;</div>}
+                </> : <div >{translate?.nav?.WEL} {translate?.nav?.IN} &nbsp; &nbsp;</div>}
 
             </span>
 
@@ -101,10 +101,10 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard }) => {
                                     onKeyDown={handleListKeyDown}>
                                     <MenuItem onClick={handleMyProfile}><span className="material-icons-outlined font-light-black">
                                         person
-                                    </span>My account</MenuItem>
+                                    </span>{translate?.nav?.MYAC}</MenuItem>
                                     <MenuItem onClick={handleLogout}> <span className="material-icons-outlined font-light-black">
                                         logout
-                                    </span>Logout</MenuItem>
+                                    </span>{translate?.nav?.LOG}</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
