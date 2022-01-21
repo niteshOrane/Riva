@@ -28,6 +28,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
 import DeliveryReturn from "./DeliveryReturn";
+import useArabic from "../../../common/arabicDict/useArabic"
 
 const ProductDetails = (props) => {
   const {
@@ -39,6 +40,7 @@ const ProductDetails = (props) => {
     language,
   } = props;
   const history = useHistory();
+  const {translate} = useArabic();
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [reviewState, setReviewState] = useState(false);
@@ -204,7 +206,7 @@ const ProductDetails = (props) => {
         <div className={styles.mainImage}>
           <section className={styles.bread}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link to="/">Home</Link>
+              <Link to="/">{translate?.details?.HOME}</Link>
               {history?.location?.state && (
                 <Link
                   to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}
@@ -258,14 +260,14 @@ const ProductDetails = (props) => {
         </div>
         <div className={styles.details}>
           <form>
-            <div className={styles.bestSeller}>BEST SELLER</div>
+            <div className={styles.bestSeller}>{translate?.details?.BEST}</div>
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
               <div className={`${styles.stars} d-flex-all-center`}>
                 <Rating name="read-only" readOnly value={value} />
               </div>
               <div className={`${styles.rating} d-flex-all-center`}>
-                {calculateAvgReview()} rating
+                {calculateAvgReview()} {translate?.details?.RATE}
               </div>
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
@@ -284,12 +286,12 @@ const ProductDetails = (props) => {
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
-                  Was {currency_symbol}{" "}
+                  {translate?.details?.WAS} {currency_symbol}{" "}
                   {parseFloat(origprice)?.toFixed(2) || ""}
                 </div>
               ) : null}
               <div className={styles.now}>
-                Now {currency_symbol} {price}
+              {translate?.details?.NOW} {currency_symbol} {price}
               </div>
               {/*
                 <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -297,7 +299,7 @@ const ProductDetails = (props) => {
             </div>
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>
-                Color:{" "}
+              {translate?.details?.COLOR}:{" "}
                 {typeof productColorList?.find(
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
@@ -355,7 +357,7 @@ const ProductDetails = (props) => {
             <div
               className={`${styles.size} gap-12px d-flex align-items-center`}
             >
-              <div className={styles.title}>Size:</div>
+              <div className={styles.title}>{translate?.details?.SIZE}:</div>
               <div
                 className={`${styles.options} gap-12px d-flex align-items-center`}
               >
@@ -390,7 +392,7 @@ const ProductDetails = (props) => {
                   <span className="material-icons">mail</span>
                 </div>
                 <div className={styles.text}>
-                  We will let you know when its in stock
+                {translate?.details?.STOCK}
                 </div>
               </div>
             ) : null}
@@ -429,7 +431,7 @@ const ProductDetails = (props) => {
                       <span
                         className={`${styles.sizeGuide} align-self-end font-light-black`}
                       >
-                        Find your size
+                        {translate?.details?.FIND}
                       </span>
                     </button>
                   </span>
@@ -447,9 +449,9 @@ const ProductDetails = (props) => {
                     </span>
                   </div>
                   <div>
-                    <div className={styles.title}>POPULAR</div>
+                    <div className={styles.title}>{translate?.details?.POPULAR}</div>
                     <div className={styles.text}>
-                      {product?.stats?.popular} are looking at this right now
+                      {product?.stats?.popular} {translate?.details?.LOOK}
                     </div>
                   </div>
                 </div>
@@ -464,7 +466,7 @@ const ProductDetails = (props) => {
                   <div>
                     <div className={styles.title}>IN DEMAND</div>
                     <div className={styles.text}>
-                      Bought {product?.stats?.inDemand}+ times in last few days
+                      Bought {product?.stats?.inDemand}+ {translate?.details?.TIMES}
                     </div>
                   </div>
                 </div>
@@ -475,7 +477,7 @@ const ProductDetails = (props) => {
                   <div
                     className={`${styles.qty} d-flex align-items-center justify-content-between`}
                   >
-                    <div className={styles.title}>Quantity:</div>
+                    <div className={styles.title}>{translate?.details?.QUANT}:</div>
                     <div
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >
@@ -504,7 +506,7 @@ const ProductDetails = (props) => {
                     className={`${styles.demand} d-flex gap-12px align-items-center`}
                   >
                     <div className="d-flex align-items-center">
-                      <div className={styles.title}>Availability: </div>
+                      <div className={styles.title}>{translate?.details?.AVAIL}: </div>
                       &nbsp;
                       <div className={styles.text}>
                         {outOfStock ? "Out Of Stock" : "In Stock"}
@@ -527,7 +529,7 @@ const ProductDetails = (props) => {
                         <span className="material-icons-outlined">
                           shopping_cart
                         </span>
-                        &nbsp;ADD TO CART
+                        &nbsp;{translate?.details?.CARD}
                       </button>
                     </div>
                   )}
@@ -548,7 +550,7 @@ const ProductDetails = (props) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: <DeliveryReturn language={language} />,
+                      name: <DeliveryReturn language={language} translate={translate}/>,
                       icon: "/assets/images/delivery.png",
                     },
                     {
@@ -558,15 +560,16 @@ const ProductDetails = (props) => {
                           sizes={product?.size}
                           language={language}
                           sku={product?.sku}
+                          translate={translate}
                         />
                         // <SubscribeModel />
                       ),
                       icon: "/assets/images/shop.png",
                     },
-                    {
-                      name: <SubscribeModel language={language} productId={product.id} />,
-                      icon: "/assets/images/tshirt.png",
-                    },
+                    // {
+                    //   name: <SubscribeModel language={language} productId={product.id} />,
+                    //   icon: "/assets/images/tshirt.png",
+                    // },
 
                     {
                       name: (
@@ -576,6 +579,7 @@ const ProductDetails = (props) => {
                           isDetail
                           setReviewState={setReviewState}
                           reviewState={reviewState}
+                          translate={translate}
                         />
                       ),
                       icon: "/assets/images/review.png",
@@ -586,6 +590,7 @@ const ProductDetails = (props) => {
                           styles={styles}
                           product={product}
                           language={language}
+                          translate={translate}
                         />
                       ),
                       icon: "/assets/images/share.png",

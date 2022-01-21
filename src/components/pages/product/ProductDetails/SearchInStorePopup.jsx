@@ -20,7 +20,7 @@ function getModalStyle() {
   };
 }
 
-export default function SimpleModal({ image, sizes, language, sku }) {
+export default function SimpleModal({ image, sizes, language, sku,translate }) {
   const { country_id } = useSelector((state) => state?.common?.store);
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -252,7 +252,7 @@ export default function SimpleModal({ image, sizes, language, sku }) {
 
   return (
     <div>
-      <span onClick={handleOpen}>Search In Store</span>
+      <span onClick={handleOpen}>{translate?.details?.STORE}</span>
       <Modal
         open={open}
         onClose={handleClose}

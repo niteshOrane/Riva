@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import TagManager from 'react-gtm-module'
 import { fetchCommonData } from './store/actions/common/common';
 import { getWishlist } from './store/actions/wishlist';
 import Loader from './components/common/Loader';
@@ -11,7 +12,16 @@ import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
+
 import { deepEqual, hardReload } from './util';
+
+
+const tagManagerArgs = {
+    gtmId: 'GTM-K8HHCZF'
+}
+
+TagManager.initialize(tagManagerArgs)
 
 
 

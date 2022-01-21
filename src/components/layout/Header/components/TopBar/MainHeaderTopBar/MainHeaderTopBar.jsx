@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStore } from "../../../../../../store/actions/common";
 import style from "./MainHeaderTopBar.module.scss";
 import storeData from "../../../../../../store/index";
+import useArabic from "../../../../../common/arabicDict/useArabic";
 
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const {translate} = useArabic();
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
@@ -82,9 +84,9 @@ const MainHeaderTopBar = ({ mainHeader }) => {
         </div>
         <div className={style.topBarMsgWrapper}>
           <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
-            NEW IN:{" "}
-            <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
-            COLLECTION
+          {translate?.home?.NEW}:{" "}
+            <span className="color-text-primary">{translate?.home?.SPRING}</span>{" "}
+            {translate?.home?.COL}
           </h4>
         </div>
         <div

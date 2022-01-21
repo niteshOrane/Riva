@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ShareIcons({ styles, product, language }) {
+export default function ShareIcons({ styles, product, language,translate }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -97,7 +97,7 @@ export default function ShareIcons({ styles, product, language }) {
   return (
     <div dir={language === 'Arabic' ? 'rtl' : 'ltr'}>
       <span onClick={handleOpen}>
-        Share
+        {translate?.details?.SHARE}
       </span>
       <Modal
         dir={language === 'Arabic' ? 'rtl' : 'ltr'}

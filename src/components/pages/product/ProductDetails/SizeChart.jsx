@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { getSizeGuide } from "../../../../services/product/product.service";
 import { listItemIconClasses } from "@mui/material";
+import useArabic from "../../../common/arabicDict/useArabic"
 
 function getModalStyle() {
   const top = 50;
@@ -42,6 +43,7 @@ function TabPanel(props) {
 }
 
 export default function SizeChart({ img, language }) {
+  const {translate} = useArabic();
   const useStyles = makeStyles((theme) => ({
     paper: {
       position: "absolute",
@@ -203,7 +205,7 @@ export default function SizeChart({ img, language }) {
 
   return (
     <div>
-      <span onClick={handleOpen}>Size Guide</span>
+      <span onClick={handleOpen}>{translate?.details?.GUIDE}</span>
       <Modal
         open={open}
         onClose={handleClose}
