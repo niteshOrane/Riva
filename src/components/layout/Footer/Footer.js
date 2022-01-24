@@ -152,7 +152,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className={style.lm}>
+          <div className={style.lm} >
             <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
               <a
