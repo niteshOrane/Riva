@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Riva Fashion</title>
-    
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -19,6 +18,27 @@
     <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
     <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
     <script src="https://secure.gosell.io/js/sdk/tap.min.js"></script>
-
+    <!-- <script
+      type="text/javascript"
+      language="javascript"
+      src="https://rivastores.com:8443/ameyochatjs/ameyo-emerge-chat.js"
+      async
+      defer
+    ></script>
+    <script type="text/javascript">
+      var campaignId = "5";
+      var nodeflowId = "3";
+      var ameyoUrl = "https://rivastores.com:8443";
+      var ameyo_script = document.createElement("script");
+      ameyo_script.onload = function () {
+        try {
+          initializeChat(campaignId, nodeflowId, ameyoUrl);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      ameyo_script.src = ameyoUrl + "/ameyochatjs/ameyo-emerge-chat.js";
+      document.getElementsByTagName("head")[0].appendChild(ameyo_script);
+    </script> -->
   </body>
 </html>

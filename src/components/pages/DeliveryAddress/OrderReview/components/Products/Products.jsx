@@ -3,7 +3,7 @@ import styles from "./Products.module.scss";
 import { extractColorSize } from "../../../../../../util";
 import Image from "../../../../../common/LazyImage/Image";
 
-function Products({ products, currency_symbol, language }) {
+function Products({ products, currency_symbol, language,translate }) {
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({

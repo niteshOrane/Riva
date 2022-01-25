@@ -25,10 +25,7 @@
 .size-footer{
     padding-top: 2rem;
 }
-.more-top{
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-}
+
 .size-menu ul {
     display: flex;
     justify-content: space-around;
@@ -40,15 +37,18 @@
 .size-menu ul li{
     cursor: pointer;
     list-style: none;
-    border: 1px ridge lightgrey;
-    padding : 0px 10px;
+    border: 1px solid lightgrey;
+    padding : 5px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .size-menu ul li:hover{
   background-color: lightblue;
   border: none;
+
 }
 .size-active{
   background-color: lightgrey;
@@ -61,5 +61,8 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
-
+.size-table-container h2{
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
 

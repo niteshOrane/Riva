@@ -27,6 +27,7 @@ import {
 } from "../../../../services/payment/payment.service";
 import { getCustomerCartPayments } from "../../../../store/actions/cart";
 import Cod from "./components/Cod";
+import TagManager from 'react-gtm-module'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,6 +102,12 @@ function a11yProps(index) {
   };
 }
 
+
+const tagManagerArgs = {
+  gtmId: 'GTM-K8HHCZF'
+}
+TagManager.initialize(tagManagerArgs)
+
 export default function DetailTabs({
   paymentMode,
   cartPaymentInfo,
@@ -132,6 +139,15 @@ export default function DetailTabs({
         dispatch({
           type: DATA_TYPES.SET_BULK_CART,
           payload: [],
+        });
+        window.dataLayer.push({
+          event: 'event',
+          eventProps: {
+              category: "purchase",
+              action: "purchase",
+              label: "buy",
+              value: 10
+          }
         });
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
