@@ -92,12 +92,27 @@
     width: auto !important;
     overflow: auto;
 }
+.footer_footerGrid__2MGY3 ul {
+  margin-bottom: 30px;
 }
-@media only screen and (max-width: 480px) {
+}
+@media only screen and (max-width: 767px) {
   .MainHeaderTopBar_topBarcontainer__2U3fA .MainHeaderTopBar_topBarRight__19JOo{
     max-width: initial;
   }
   .MainHeaderTopBar_topBarcontainer__2U3fA .MainHeaderTopBar_topBarLeft__3YWOk{
     display: none;
   }
+  span.align-self-end.font-light-black {
+    display: none;
+  }
+  strong.logo-strong.d-block.navbar_logoImg__2U0yj {
+    margin-right: 20px;
+  }
+  .footer_footerCol__2fifx.footer_lastCol__3tKzC {
+    padding-left: 0px !important;
+    margin-top: 20px;
+  }
+
+
 }
