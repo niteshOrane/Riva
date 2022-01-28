@@ -1,9 +1,40 @@
-
-.d-flex, 
-.d-grid {
+@media only screen and (max-width: 767px) {
+.HeroGrid_grid__3IJHc.container-with-circles .d-flex, 
+.HeroGrid_grid__3IJHc.container-with-circles .d-grid {
   display: block !important;
   width:100% !important;
 }
 .HeroGrid_grid__3IJHc .HeroGrid_col2__okvcP{
   width: 100% !important;
+}
+.container-with-circles.styles_container__1ovLG{
+    display: block;
+}
+[dir='ltr'] .HeroGrid_circlesContainer__jKMs- {
+    margin-left: 20px;
+    position: absolute;
+    top: 229px;
+    z-index: 90;
+}
+.container-90.max-width-1600.mx-auto > .d-flex{
+    display: block;
+}
+.container-90.max-width-1600.mx-auto  .TopBrandCard_col__Cut9_ {
+    flex-basis: 100%;
+    width: 100%;
+}
+.TopBrandCard_card__3WkRW .TopBrandCard_cardBody__1m1aQ{
+    width: auto !important;
+}
+.product-slider .slick-slide{
+    width: 44% !important;
+    flex: 0 0 44%;
+}
+.categoriesSlider .slick-slide{
+    flex: 0 0 14%;
+}
+.basicSlider.basicSliderGap .slick-slide{
+    width: 15% !important;
+    flex: 0 0 15%;
+}
 }

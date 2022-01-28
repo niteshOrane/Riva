@@ -5,6 +5,7 @@ import ArrowButton from "../../../common/Buttons/Arrow";
 import Slider from "../../../common/Sliders/Slider";
 import { getProducts } from "../../../../services/layout/Layout.service";
 import styles from "./bestSellingProducts.module.scss";
+import style from "./bestSellingProducts.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
