@@ -116,6 +116,7 @@ export default function DetailTabs({
   setLoading,
 }) {
   // const classes = useStyles();
+
   const [value, setValue] = React.useState(0);
   const [name, setName] = React.useState("Tap");
   const history = useHistory();
@@ -244,8 +245,7 @@ export default function DetailTabs({
       if (res?.status === 200) {
         const processedCod = await processCodPaymentFurther();
         if (processedCod.status === 200) {
-          setCodInfo(processedCod?.data);
-          dispatch(getCustomerCartPayments());
+          setCodInfo(processedCod?.data);         
         }
       }
     }
@@ -253,29 +253,38 @@ export default function DetailTabs({
 
   const handleChange = async (newValue) => {
     switch (newValue) {
+      case 0:
+        dispatch(getCustomerCartPayments());
+        setValue(newValue);
+        break;
       case 1:
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
+        dispatch(getCustomerCartPayments());
         setValue(newValue);
         getPaymentForTapCheckout(newValue);
         break;
       case 2:
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
+        dispatch(getCustomerCartPayments());
         setValue(newValue);
         processCod("cashondelivery");
         break;
       case 3:
         // setValue(newValue);
+        dispatch(getCustomerCartPayments());
         getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;
       case 4:
         // getPaymentForHyperPay(newValue);
+        dispatch(getCustomerCartPayments());
         setValue(newValue);
         break;
       case 5:
         // setValue(newValue);
+        dispatch(getCustomerCartPayments());
         getPaymentForHyperPay(newValue);
         setValue(newValue);
         break;

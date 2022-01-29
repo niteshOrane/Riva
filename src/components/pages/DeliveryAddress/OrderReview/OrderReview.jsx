@@ -19,6 +19,7 @@ function OrderReview({
   translate
 }) {
   const history = useHistory();
+  console.log({cartPayment});
 
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
@@ -34,6 +35,7 @@ function OrderReview({
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
+  const [paymentFee,setPaymentFee] = useState(0);
   const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
@@ -89,6 +91,7 @@ function OrderReview({
       ) || 0;
     setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
+    // setPaymentFee(cartPayment?.)
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
     setTotalDC(
@@ -261,7 +264,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>SUBTOTAL</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.SUB}</span>
 
         <strong>
           {" "}
@@ -272,7 +275,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>DELIVERY CHARGES</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.DEL}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
@@ -282,7 +285,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>TAX</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.TAX}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
@@ -292,7 +295,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>Coupon Applied</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.COUPON}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}

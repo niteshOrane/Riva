@@ -1,21 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { placeCodOrder } from "../../../../../services/cart/cart.service";
 import styles from "./Tab2Content/Tab2Content.module.scss";
 import * as DATA_TYPES from "../../../../../store/types";
 import { showSnackbar } from "../../../../../store/actions/common";
 import { useState } from "react";
+import { useEffect } from "react";
 
 function Cod({ codInfo }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
-  const title =
+  const [title,setTitle] = useState();
+  const [value,setValue] = useState();
+  useEffect(() => {
+    const name =
     codInfo?.total_segments?.find((li) => li?.code === "fee")?.title ||
     "Delivery Charges";
-  const value =
-    codInfo?.total_segments?.find((li) => li?.code === "fee")?.value || 0;
+    setTitle(name);
+  const pay =
+    codInfo?.total_segments?.find((li) => li?.code === "payment_fee")?.value || 0;
+    setValue(pay)
+  },[codInfo])
   const placeCodOrderConfirm = async () => {
     setLoading(true);
     const res = await placeCodOrder("cashondelivery");
@@ -46,7 +54,7 @@ function Cod({ codInfo }) {
         <span className={`material-icons ${styles.icon}`}>payments</span>
         <span>{title}:</span>
         <span className={styles.codCharge}>
-          {codInfo?.quote_currency_code}
+          {currency_symbol}
           {value}
         </span>
       </section>

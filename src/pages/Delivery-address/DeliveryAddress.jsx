@@ -317,7 +317,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   alt=""
                 />
               </div>
-              <LetUsHear />
+              <LetUsHear translate={translate} />
             </div>
           </>
         )}

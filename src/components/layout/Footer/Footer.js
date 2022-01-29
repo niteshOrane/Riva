@@ -154,8 +154,8 @@ function Footer() {
             </div>
           </div>
 
-          <div className={style.lm}>
-            <div className="font-weight-normal color-white">{translate?.footer?.APP}</div>
+          <div className={style.lm} >
+            <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
               <a
                 href="https://apps.apple.com/us/app/apple-store/id375380948"

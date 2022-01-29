@@ -3,6 +3,7 @@ import * as icons from "../../../common/Icons/Icons";
 import styles from "./PriceDetails.module.scss";
 const PriceDetails = ({ cartItem, cartPaymentInfo, store }) => {
   const { currency_symbol } = store;
+  console.log({cartPaymentInfo});
 
   return (
     <div className={styles.container}>
@@ -32,9 +33,17 @@ const PriceDetails = ({ cartItem, cartPaymentInfo, store }) => {
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
+        <span className={styles.greyText}>PAYMENT FEE</span>
+        <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "payment_fee")?.value || 0)?.toFixed(2)}</strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
         <span className={styles.greyText}>Coupon Applied</span>
         <strong>{currency_symbol} {parseFloat(cartPaymentInfo?.total_segments?.find(e => e.code === "discount")?.value || 0)?.toFixed(2)}</strong>
       </div>
+     
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
