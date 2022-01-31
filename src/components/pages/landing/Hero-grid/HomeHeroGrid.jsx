@@ -42,7 +42,7 @@ const HomeHeroGrid = (props) => {
           >
             <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory?.find(e => e?.name?.toLowerCase() === itemsImage?.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>
               {itemsImage.length ? <Image
-                src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${itemsImage?.find(e => e.position === '1').image || ''}`}
+                src={`http://103.107.67.125/shop/media/mageplaza/bannerslider/banner/image/${itemsImage?.find(e => e.position === '1').image || ''}`}
                 alt={items?.[0]?.title} />
                 : null}
               <div className="banner-wrapper-text">
@@ -70,7 +70,7 @@ const HomeHeroGrid = (props) => {
                 }}
               >
                 <img
-                  src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${
+                  src={`http://103.107.67.125/shop/media/mageplaza/bannerslider/banner/image/${
                     itemsImage.find((e) => e.position === "2")?.image
                   }`}
                   alt=""
@@ -99,7 +99,7 @@ const HomeHeroGrid = (props) => {
                 }}
               >
                 <img
-                  src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${
+                  src={`http://103.107.67.125/shop/media/mageplaza/bannerslider/banner/image/${
                     itemsImage.find((e) => e.position === "3")?.image
                   }`}
                   alt=""
@@ -132,7 +132,7 @@ const HomeHeroGrid = (props) => {
           >
             <section className = "some-space-bootom">
               <img
-                src={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${
+                src={`http://103.107.67.125/shop/media/mageplaza/bannerslider/banner/image/${
                   itemsImage.find((e) => e.position === "4")?.image
                 }`}
                 alt=""

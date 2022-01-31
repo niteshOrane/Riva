@@ -162,7 +162,7 @@ export default function DetailTabs({
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
       method: "get",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+      url: `http://103.107.67.125/shop/index.php/rest/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
       silent: true,
     };
     await axios(configTap).then((res) => {
@@ -172,7 +172,7 @@ export default function DetailTabs({
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+      url: `http://103.107.67.125/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
         paymentMode[fnValue].code
       }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,

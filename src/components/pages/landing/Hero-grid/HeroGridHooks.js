@@ -28,7 +28,7 @@ const useHeroGrid = () => {
         console.log(error);
         setLoading(false);
       });
-    // http://65.0.141.49/media/mageplaza/bannerslider/banner/image/
+    // http://103.107.67.125/media/mageplaza/bannerslider/banner/image/
   }, []);
 
   useEffect(() => {
