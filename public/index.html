@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta name="theme-color" content="#181617" />
     <meta name="description" content="Riva Fashion" />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Riva Fashion</title>
-    
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -19,6 +21,58 @@
     <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
     <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
     <script src="https://secure.gosell.io/js/sdk/tap.min.js"></script>
-
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="https://rivastores.com:8443/ameyochatjs/ameyo-emerge-chat.js"
+      async
+      defer
+    ></script>
+    <script type="text/javascript">
+      var campaignId = "5";
+      var nodeflowId = "3";
+      var ameyoUrl = "https://rivastores.com:8443";
+      var ameyo_script = document.createElement("script");
+      ameyo_script.onload = function () {
+        try {
+          initializeChat(campaignId, nodeflowId, ameyoUrl);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      ameyo_script.src = ameyoUrl + "/ameyochatjs/ameyo-emerge-chat.js";
+      document.getElementsByTagName("head")[0].appendChild(ameyo_script);
+    </script>
+    <script>
+      // load Branch
+      (function (b, r, a, n, c, h, _, s, d, k) {
+        if (!b[n] || !b[n]._q) {
+          for (; s < _.length; ) c(h, _[s++]);
+          d = r.createElement(a);
+          d.async = 1;
+          d.src = "https://cdn.branch.io/branch-latest.min.js";
+          k = r.getElementsByTagName(a)[0];
+          k.parentNode.insertBefore(d, k);
+          b[n] = h;
+        }
+      })(
+        window,
+        document,
+        "script",
+        "branch",
+        function (b, r) {
+          b[r] = function () {
+            b._q.push([r, arguments]);
+          };
+        },
+        { _q: [], _v: 1 },
+        "addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(
+          " "
+        ),
+        0
+      );
+      // init Branch
+      branch.init("key_live_ejtZuYYYjb68S6lhzAFYcllfCvnQX50U");
+    </script>
   </body>
 </html>

@@ -16,8 +16,10 @@ function OrderReview({
   cartPayment,
   callBackAfterApplyCoupan,
   addressItem,
+  translate
 }) {
   const history = useHistory();
+  console.log({cartPayment});
 
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
@@ -33,6 +35,7 @@ function OrderReview({
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
+  const [paymentFee,setPaymentFee] = useState(0);
   const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
@@ -88,6 +91,7 @@ function OrderReview({
       ) || 0;
     setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
+    // setPaymentFee(cartPayment?.)
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
     setTotalDC(
@@ -161,7 +165,7 @@ function OrderReview({
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <div className={styles.title}>ORDER REVIEW</div>
+        <div className={styles.title}>{translate?.deliveryAddress?.ORDER}</div>
         <Link to="/shopping-cart" className="c-pointer">
           <div className="d-flex align-items-center c-pointer">
             <span className="material-icons-outlined">edit</span>
@@ -179,7 +183,7 @@ function OrderReview({
           <icons.CouponIcon />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-          Enter your coupon code if you have any.
+        {translate?.deliveryAddress?.ENTER}
         </span>
       </div>
       <div className={styles.applyCoupon}>
@@ -196,7 +200,7 @@ function OrderReview({
             onClick={handleApplyCoupon}
             className={`${styles.applyBtn} c-pointer`}
           >
-            APPLY
+            {translate?.deliveryAddress?.APPLY}
           </button>
         ) : (
           <button
@@ -205,7 +209,7 @@ function OrderReview({
             className={`${styles.applyBtn} c-pointer`}
             style={{ marginLeft: "0.5rem" }}
           >
-            REMOVE
+            {translate?.deliveryAddress?.REMOVE}
           </button>
         )}
       </div>
@@ -214,14 +218,13 @@ function OrderReview({
           <span style={{ marginLeft: language === "Arabic" ? "10px" : "0px" }}>
             <icons.Loyalty />
           </span>
-          <strong>Use Loyalty Cash ({currency_symbol} 0 Available)</strong>
+          <strong>{translate?.deliveryAddress?.USE}</strong>
         </div>
         <p className={`${styles.greyText} ${styles.smallText}`}>
-          *You have to earn a minimum of {currency_symbol} 50 Loyalty Cash
-          before you can redeem it in your future purchases.
+        {translate?.deliveryAddress?.YOU}
         </p>
       </div>
-      <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
+      <h4 className="font-weight-normal mt-12px">{translate?.deliveryAddress?.CHOOSE}</h4>
       {deliverySpeed?.map((item) => {
         return (
           <div
@@ -255,12 +258,13 @@ function OrderReview({
         products={items}
         currency_symbol={currency_symbol}
         language={language}
+        translate={translate}
       />
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>SUBTOTAL</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.SUB}</span>
 
         <strong>
           {" "}
@@ -271,7 +275,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>DELIVERY CHARGES</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.DEL}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
@@ -281,7 +285,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>TAX</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.TAX}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
@@ -291,7 +295,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>Coupon Applied</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.COUPON}</span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
@@ -301,7 +305,7 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <h4 className="color-black">GRAND TOTAL </h4>
+        <h4 className="color-black">{translate?.deliveryAddress?.GRAND} </h4>
         <strong>
           {currency_symbol}{" "}
           {discount
@@ -322,7 +326,7 @@ function OrderReview({
           onChange={() => setNews((prev) => !prev)}
         />
         <span   style={{ paddingRight: language === "Arabic" ? "10px" : "0px" }} onClick={() => setNews(!news)} className="c-pointer">
-          Sign up for Newsletter
+        {translate?.deliveryAddress?.SIGN}
         </span>
       </div>
       <br />
@@ -353,7 +357,7 @@ function OrderReview({
           <icons.Return />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-          We offer easy returns up to 14 days. Terms & Conditions apply.
+        {translate?.deliveryAddress?.WE}
         </span>
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
@@ -366,17 +370,15 @@ function OrderReview({
           <icons.Secure />
         </span>
         <div>
-          <h4 className={styles.greyText}>100% SECURE DATA ENCRYPTION</h4>
+          <h4 className={styles.greyText}>{translate?.deliveryAddress?.SECURE}</h4>
           <p className={`${styles.greyText} ${styles.smallText}`}>
-            We guarantee security of every transaction
+          {translate?.deliveryAddress?.SECURITY}
           </p>
           <p></p>
         </div>
       </div>
       <p className={`${styles.greyText} ${styles.smallText} my-12px`}>
-        Express Shipping in 3-6 Business Days. You will be redirected to the
-        website of Mastercard Internet Gateway System (AMEX) when you place your
-        order. And then you will automatically return to rivafashion.com.
+      {translate?.deliveryAddress?.EXPRESS}
       </p>
     </div>
   );

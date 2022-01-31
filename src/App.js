@@ -1,31 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import TagManager from 'react-gtm-module'
-import { fetchCommonData } from './store/actions/common/common';
-import { getWishlist } from './store/actions/wishlist';
-import Loader from './components/common/Loader';
-import { getCart } from './store/actions/cart';
-import SnackBar from './components/common/Snakbar';
-import AlertComponent from './components/common/Alert';
-import AppRoutes from './routes';
-import './App.scss';
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
+import { connect } from "react-redux";
+import TagManager from "react-gtm-module";
+import { fetchCommonData } from "./store/actions/common/common";
+import { getWishlist } from "./store/actions/wishlist";
+import Loader from "./components/common/Loader";
+import { getCart } from "./store/actions/cart";
+import SnackBar from "./components/common/Snakbar";
+import AlertComponent from "./components/common/Alert";
+import AppRoutes from "./routes";
+import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
+import ReactGA from "react-ga";
 
 
-
-
-import { deepEqual, hardReload } from './util';
-
+import { deepEqual, hardReload } from "./util";
 
 const tagManagerArgs = {
-    gtmId: 'GTM-K8HHCZF'
-}
+  gtmId: "GTM-K8HHCZF",
+};
 
-TagManager.initialize(tagManagerArgs)
-
-
+TagManager.initialize(tagManagerArgs);
 
 class AppRoot extends React.Component {
+  setGA = () => {
+    ReactGA.initialize('UA-80127534-1');
+   
+  };
+
   componentDidMount() {
     const {
       fetchCommonData: fetch,
@@ -35,6 +36,7 @@ class AppRoot extends React.Component {
     fetch();
     wishlistInit();
     cartInit();
+    this.setGA()
   }
 
   topFunction() {
@@ -47,7 +49,10 @@ class AppRoot extends React.Component {
     window.addEventListener("scroll", () => {
       const mybutton = document.getElementById("myBtn");
       if (mybutton) {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
           mybutton.style.display = "block";
           mybutton.style.bottom = `100px`;
         } else {
@@ -63,8 +68,8 @@ class AppRoot extends React.Component {
   handleError(err) {
     const properties = {
       title: err?.statusText,
-      message: err?.message ?? '',
-      secondaryActionText: 'OK',
+      message: err?.message ?? "",
+      secondaryActionText: "OK",
       visible: true,
     };
     return <AlertComponent {...properties} />;
@@ -77,7 +82,6 @@ class AppRoot extends React.Component {
     return (
       <>
         <AppRoutes {...this.props} />
-
 
         {error && this.handleError(error)}
         <SnackBar />

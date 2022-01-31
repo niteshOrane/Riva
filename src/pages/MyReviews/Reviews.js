@@ -10,6 +10,7 @@ import {
 import { showSnackbar } from "../../store/actions/common";
 import Pagination from "../Delivered/Pagination";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function Reviews() {
   const [myReviewList, setMyReviewList] = useState([]);
@@ -18,6 +19,7 @@ function Reviews() {
   const [status, setStatus] = useState(null);
   const [postsPerPage] = useState(3);
   const dispatch = useDispatch();
+  const {translate} = useArabic();
 
   const getMyReview = async () => {
     const res = await getMyReviewList();
@@ -58,7 +60,7 @@ function Reviews() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2>My Reviews</h2>
+            <h2>{translate?.dash?.REVIEW}</h2>
             {myReviewList?.length ? (
               currentPosts?.map((li) => (
                 <MyReviews

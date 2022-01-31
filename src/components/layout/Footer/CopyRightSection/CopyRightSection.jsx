@@ -6,7 +6,7 @@ const CopyRightSection = () => {
   const {translate} = useArabic();
   return (
     <div className={`mx-75px max-width-1750 mx-auto ${style.copyRightSec}`}>
-      <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-center aaa justify-content-between">
         <div className="d-flex align-items-center">
           <strong id="logo">
             <Link className="d-block">
