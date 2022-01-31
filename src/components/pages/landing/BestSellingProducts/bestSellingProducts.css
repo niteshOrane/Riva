@@ -34,7 +34,9 @@
     flex: 0 0 14%;
 }
 
-
+.HeroGrid_grid__3IJHc .HeroGrid_col2Grid__1LmHW{
+    display: block;
+}
 .basicSlider.basicSliderGap .slick-slide{
     width: 15% !important;
     flex: 0 0 15%;
