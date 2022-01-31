@@ -97,6 +97,13 @@
   }
 }
 @media only screen and (max-width: 767px) {
+  
+  [dir='ltr'] .HeroGrid_circlesContainer__jKMs- {
+    margin-left: 20px;
+    position: absolute;
+    top: 229px;
+    z-index: 90;
+}
   .MainHeaderTopBar_topBarcontainer__2U3fA .MainHeaderTopBar_topBarRight__19JOo{
     max-width: initial;
   }
@@ -113,4 +120,16 @@
     padding-left: 0px !important;
     margin-top: 20px;
   }
+  .megalinks_container__1repq.d-flex-all-center.px-75px.position-relative {
+    display: none;
+}
+.bg-black {
+  display: none;
+}
+.MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl.MuiInputBase-adornedStart{
+  width: 1px;
+}
+strong.logo-strong.d-block.navbar_logoImg__2U0yj {
+  padding-left: 40px !IMPORTANT;
+}
 }
