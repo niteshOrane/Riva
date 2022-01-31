@@ -33,6 +33,8 @@
 .categoriesSlider .slick-slide{
     flex: 0 0 14%;
 }
+
+
 .basicSlider.basicSliderGap .slick-slide{
     width: 15% !important;
     flex: 0 0 15%;
