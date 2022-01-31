@@ -3,7 +3,7 @@ import styles from "./Products.module.scss";
 import { extractColorSize } from "../../../../../../util";
 import Image from "../../../../../common/LazyImage/Image";
 
-function Products({ products, currency_symbol, language }) {
+function Products({ products, currency_symbol, language,translate }) {
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options.map((o) => ({
@@ -18,7 +18,7 @@ function Products({ products, currency_symbol, language }) {
     <div className={styles.container}>
       <div className={styles.grid}>
         <div className={styles.col1}>
-          <h4 className="font-weight-normal">PRODUCTS</h4>
+          <h4 className="font-weight-normal">{translate?.deliveryAddress?.PRO}</h4>
         </div>
         {/* <div className={styles.col2}>
           <p className={styles.greyText}>QTY:</p>

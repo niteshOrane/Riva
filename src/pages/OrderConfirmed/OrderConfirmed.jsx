@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Congratulations from "../../components/pages/Dashboard/OrderConfirmed/Congratulations/Congratulations";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import Details from "../../components/pages/Dashboard/OrderConfirmed/Details/Details";

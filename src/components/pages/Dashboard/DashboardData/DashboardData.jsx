@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import useArabic from "../../../common/arabicDict/useArabic";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./DashboardData.module.scss";
 
 const DashboardData = () => {
   const { customer, socialDetails } = useSelector((state) => state.auth);
   const { language } = useSelector((state) => state?.common?.store);
+  const {translate} = useArabic()
   // console.log({ customer,socialDetails });
   return (
     <div>
@@ -48,13 +50,13 @@ const DashboardData = () => {
           <span className="my-12px">
             <icons.MyOrders />
           </span>
-          <span>My Orders</span>
+          <span>{translate?.dash?.ORDER}</span>
         </Link>
         <Link className={styles.box} to="/wishlist">
           <span className="my-12px">
             <icons.Heart />
           </span>
-          <span>My Wishlist</span>
+          <span>{translate?.dash?.WISH}</span>
         </Link>
         {/* <Link className={styles.box} to="#">
           <span className="my-12px">
@@ -66,13 +68,13 @@ const DashboardData = () => {
           <span className="my-12px">
             <icons.Notification />
           </span>
-          <span>Notify Me</span>
+          <span>{translate?.dash?.NOTIFY}</span>
         </Link>
         <Link className={styles.box} to="/profile-information">
           <span className="my-12px">
             <icons.Accounts />
           </span>
-          <span>Account</span>
+          <span>{translate?.dash?.ACCOUNT}</span>
         </Link>
         {/* <Link className={styles.box} to="#">
           <span className="my-12px">

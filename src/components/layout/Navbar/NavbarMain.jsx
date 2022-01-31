@@ -35,7 +35,7 @@ const NavbarMain = () => {
   }
   return (
     <nav
-      className={`${styles.container} d-flex align-items-center justify-content-between container-with-circles`}
+      className={`${styles.container}  d-flex align-items-center justify-content-between container-with-circles`}
     >
       <Search handleChange={handleSearchChange} handleKeyDown={handleKeyDown} value={searchValue} onSearch={handleOnSearch} />
       <strong className={`logo-strong d-block ${styles.logoImg}`}>

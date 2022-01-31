@@ -20,11 +20,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
+  useAnalytics();
 
   const selectedProductId = match.params.categoryId;
 

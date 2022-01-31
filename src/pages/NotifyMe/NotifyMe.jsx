@@ -13,9 +13,11 @@ import useNotifyMeList from "./useNotifyMeList";
 import styles from "./NotifyMe.module.scss";
 import { getProductColor } from "../../services/product/product.service";
 import { useHistory } from "react-router-dom";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function NotifyMe() {
   const { notifyList } = useNotifyMeList();
+  const {translate} = useArabic();
   const [notifyItems, setNotifyItems] = React.useState();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,7 +53,7 @@ function NotifyMe() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2>Notify Me</h2>
+            <h2>{translate?.dash?.NOTIFY}</h2>
             {notifyItems && notifyItems?.data.length ? (
               notifyItems?.data?.map((card, i) => (
                 <div className={styles.card}>
@@ -62,7 +64,7 @@ function NotifyMe() {
                       </div>
                       <div>
                         <h4 className="font-weight-normal">
-                          Your notification for:- {card.productname}
+                         {card.productname}
                         </h4>
                         <span className="greyText font-size-small">
                           {moment().format("DD MMM, YYYY")}
@@ -75,7 +77,7 @@ function NotifyMe() {
                         onClick={() => redirectToDetails(card?.productId)}
                         className={styles.redirectBtn}
                       >
-                        View Product
+                        {translate?.dash?.VIEW}
                       </button>
                       <button
                         onClick={(e) => {

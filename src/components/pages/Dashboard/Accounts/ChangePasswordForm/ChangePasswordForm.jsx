@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './ChangePasswordForm.module.scss';
-const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
+const ChangePasswordForm = ({ values, handleChange, handleSubmit,translate }) => {
   return (
     <div>
       <form className={styles.form}>
         <div className={styles.inputContainer}>
           <p>
-            Type Current Password<span class={styles.star}>*</span>
+          {translate?.dash?.TYPE}<span class={styles.star}>*</span>
           </p>
           <input
             onChange={handleChange}
@@ -18,7 +18,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
         </div>
         <div className={styles.inputContainer}>
           <p>
-            Type New Password<span class={styles.star}>*</span>
+          {translate?.dash?.CURRENT}<span class={styles.star}>*</span>
           </p>
           <input
             onChange={handleChange}
@@ -30,7 +30,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
         </div>
         <div className={styles.inputContainer}>
           <p>
-            Retype New Password<span class={styles.star}>*</span>
+          {translate?.dash?.RETYPE}<span class={styles.star}>*</span>
           </p>
           <input
             onChange={handleChange}
@@ -44,8 +44,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
       <div className="my-12px">
         <strong>Note:</strong>{' '}
         <span className={`greyText ${styles.smallText}`}>
-          Password must be at least 8 characters long with 1 Uppercase, 1
-          Lowercase & 1 Numeric character.
+        {translate?.dash?.PASS}
         </span>
       </div>
       <div className="mt-12px">
@@ -54,7 +53,7 @@ const ChangePasswordForm = ({ values, handleChange, handleSubmit }) => {
           type="submit"
           className={styles.submitBtn}
         >
-          CHANGE PASSWORD
+          {translate?.dash?.CHANGE}
         </button>
       </div>
     </div>

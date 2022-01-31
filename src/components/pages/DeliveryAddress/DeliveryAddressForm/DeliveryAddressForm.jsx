@@ -82,7 +82,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     const res = await getCountryList();
     if (res.status === 200) {
       if (res?.data) {
-        setCountryList(res?.data);
+        setCountryList(res?.data?.data);
         // setFormData({ ...formData, country: res?.data[0]?.full_name_english });
       }
     } else {

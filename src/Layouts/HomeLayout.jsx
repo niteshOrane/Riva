@@ -55,7 +55,7 @@ const MainLayout = ({ children }) => {
         {childRender ? <>{paths.includes(children?.props.location.pathname) && !children.props.auth.isAuthenticated ? <ShoppingCart /> : children}</> : <Landing />}
         <Cart />
         <Footer />
-        <ChatButton />
+        {/* <ChatButton /> */}
         <Wishlist />
         <QuickView />
       </div>
