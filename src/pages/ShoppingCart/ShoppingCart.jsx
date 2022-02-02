@@ -6,6 +6,7 @@ import Summary from "../../components/pages/ShoppingCart/Summary/Summary";
 import style from "./ShoppingCart.module.scss";
 import { StylesContext } from "@material-ui/styles";
 import { Link } from "react-router-dom";
+import TagManager from "react-gtm-module";
 
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
@@ -14,6 +15,11 @@ const ShoppingCart = () => {
 
   useEffect(() => {
     dispatch(toggleCart(false));
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+
+    TagManager.initialize(tagManagerArgs);
   }, []);
   const handleContinueShopping = () => {
     window.location.href = "/";

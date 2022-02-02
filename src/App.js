@@ -12,21 +12,15 @@ import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import ReactGA from "react-ga";
 
-
 import { deepEqual, hardReload } from "./util";
 
 const tagManagerArgs = {
-  gtmId: "GTM-K8HHCZF",
+  gtmId: process.env.REACT_APP_GTM,
 };
 
-TagManager.initialize(tagManagerArgs);
+
 
 class AppRoot extends React.Component {
-  setGA = () => {
-    ReactGA.initialize('UA-80127534-1');
-   
-  };
-
   componentDidMount() {
     const {
       fetchCommonData: fetch,
@@ -36,7 +30,7 @@ class AppRoot extends React.Component {
     fetch();
     wishlistInit();
     cartInit();
-    this.setGA()
+    TagManager.initialize(tagManagerArgs);
   }
 
   topFunction() {

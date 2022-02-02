@@ -11,9 +11,12 @@ import { emptyCart, emptyCartItem } from "../../store/actions/auth";
 import { orderConfirmed } from "../../services/order/order.services";
 
 import { showSnackbar } from "../../store/actions/common";
+import TagManager from "react-gtm-module";
+
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
+  // useAnalytics();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
   const [orderCurrency,setOrderCurrency] = useState(null)
@@ -44,6 +47,13 @@ function OrderConfirmed(props) {
       getOrderDetails(displayOrderNumber);
     }
   }, [orderId]);
+    // google tag manager
+    useEffect(() => {
+      const tagManagerArgs = {
+        gtmId: process.env.REACT_APP_GTM,
+      };
+      TagManager.initialize(tagManagerArgs);
+    }, []);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">

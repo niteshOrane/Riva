@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { getInstagramBanners } from "../../services/layout/Layout.service";
 import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
+import TagManager from "react-gtm-module";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
@@ -42,6 +43,11 @@ function Landing() {
 
   useEffect(() => {
     getIgBanners();
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+
+    TagManager.initialize(tagManagerArgs);
   }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
@@ -65,7 +71,7 @@ function Landing() {
             bgImageUrl="./assets/images/categSlider-bg.png"
             bgImage
             slidesToShow={6}
-            header={[translate?.home?.SHOP , translate?.home?.CAT ]}
+            header={[translate?.home?.SHOP, translate?.home?.CAT]}
             render={(item) => (
               <Link
                 to={`/products/${item?.url_key}/${item?.parent_id}`}

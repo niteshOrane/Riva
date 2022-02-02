@@ -197,13 +197,13 @@ export default function TransitionsModal({
     if (userOtp) {
       const { email, name, lastName, password, phone } = formData;
       const customer = new FormData();
-      customer.append("otp", userOtp);
+      customer.append("otp", `${userOtp}`);
       setLoading(true);
       customer.append("phone", phone);
       customer.append("customerInfo[firstname]", name || "");
       customer.append("customerInfo[lastname]", lastName || "");
       customer.append("customerInfo[email]", email);
-      customer.append("customerInfo[mobile]", phone);
+      customer.append("customerInfo[mobile_number]", phone);
       customer.append("customerInfo[password]", password);
       customer.append("customerInfo[storeId]", getStoreId());
       const res = await customerVerifyOtp(customer);

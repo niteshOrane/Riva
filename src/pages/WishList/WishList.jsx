@@ -5,6 +5,7 @@ import Card from "../../components/pages/Wishlist/Card/Card";
 import styles from "./Wishlist.module.scss";
 import { getWishlist, removeWishlist } from "../../store/actions/wishlist";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
+import TagManager from "react-gtm-module";
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
@@ -16,7 +17,11 @@ function WishList() {
     dispatch(removeWishlist(data));
   };
   useEffect(() => {
-    dispatch(getWishlist())
+    dispatch(getWishlist());
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
   },[])
 
   return (

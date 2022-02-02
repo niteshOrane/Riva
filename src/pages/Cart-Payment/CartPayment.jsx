@@ -11,9 +11,11 @@ import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
+import TagManager from "react-gtm-module";
 
 function CartPayment() {
   const dispatch = useDispatch();
+  // useAnalytics();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -33,6 +35,12 @@ function CartPayment() {
   useEffect(() => {
     setPaymentOption(paymentMode);
   }, [paymentMode]);
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  }, []);
   if (loading)
     return (
       <div className={styles.tapLoader}>
@@ -63,10 +71,9 @@ function CartPayment() {
       </div>
       <div className={styles.container}>
         <div className={styles.col1}>
-
           {paymentOption &&
-            paymentOption?.data &&
-            paymentOption?.data?.length ? (
+          paymentOption?.data &&
+          paymentOption?.data?.length ? (
             <>
               <h2 className="font-weight-normal my-20px">
                 Choose Payment Mode

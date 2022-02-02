@@ -10,6 +10,7 @@ import { toggleCart } from "../../../../store/actions/cart";
 import { deliveryCheck } from "../../../../services/address/address.service";
 import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
 import { getCartId } from "../../../../util";
+import TagManager from 'react-gtm-module'
 
 function OrderReview({
   deliverySpeed,
@@ -65,6 +66,16 @@ function OrderReview({
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (activeDelivery && activeDelivery != null) {
+      const tagManagerArgs = {
+        gtmId: 'GTM-P84HSVZ',
+        dataLayer: {
+            category: 'placeOrder',
+            action: 'test',
+            label:"testtt",
+            value:10
+        }
+    }
+    TagManager.initialize(tagManagerArgs)
       history.push("/cart-payment");
     } else {
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
