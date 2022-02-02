@@ -5,3 +5,17 @@
     background-color: $color-white;
     z-index: 100;
 }
+@media only screen and (max-width: 767px) {
+    .megalinks_container__1repq.d-flex-all-center.px-75px.position-relative {
+        display: none;
+    }
+    .bg-black {
+      display: none;
+    }
+    .MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl.MuiInputBase-adornedStart{
+      width: 1px !important;
+    }
+    strong.logo-strong.d-block.navbar_logoImg__2U0yj {
+      padding-left: 40px !IMPORTANT;
+    }
+}
