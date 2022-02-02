@@ -12,6 +12,8 @@ import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import TagManager from "react-gtm-module";
+
 
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import { extractColorSize } from "../../util";
@@ -45,6 +47,13 @@ function Products(props) {
     onScreen,
     serachTerm: parsed?.serachTerm,
   });
+  const tagManagerArgs = {
+    gtmId: "GTM-P84HSVZ",
+    events: {
+      placeOrder: 'userInfo'
+  }
+  };
+
 
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
@@ -56,9 +65,9 @@ function Products(props) {
     if (onScreen && !loading && totalCount > products.length) {
       setCurrentPage(currentPage + 1);
     }
+    TagManager.initialize(tagManagerArgs);
   }, [onScreen]);
   const handleBannerPush = (title, categories) => {
-    console.log(`${`/products/${title}/${categories}`}`);
     history.push(`${`/products/${title}/${categories}`}`);
   };
   // useEffect(() => {

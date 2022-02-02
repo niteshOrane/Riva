@@ -28,7 +28,9 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
 import DeliveryReturn from "./DeliveryReturn";
-import useArabic from "../../../common/arabicDict/useArabic"
+import useArabic from "../../../common/arabicDict/useArabic";
+import ReactGA from "react-ga";
+import TagManager from "react-gtm-module";
 
 const ProductDetails = (props) => {
   const {
@@ -40,7 +42,7 @@ const ProductDetails = (props) => {
     language,
   } = props;
   const history = useHistory();
-  const {translate} = useArabic();
+  const { translate } = useArabic();
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [reviewState, setReviewState] = useState(false);
@@ -48,6 +50,15 @@ const ProductDetails = (props) => {
   const [value, setValue] = React.useState(0);
   const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
+
+  const tagManagerArgs = {
+    gtmId: "GTM-P84HSVZ",
+    events: {
+      placeOrder: 'userInfo'
+  }
+  };
+
+  
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -58,6 +69,7 @@ const ProductDetails = (props) => {
         color: { label: temp[0]?.color, value: temp[0]?.option_id },
       });
     }
+    TagManager.initialize(tagManagerArgs);
   }, []);
   const colorImageAction = (data) => {
     setColorImg(data?.file);
@@ -127,7 +139,7 @@ const ProductDetails = (props) => {
     priceWithoutCurrency = 0,
   } = product;
   const { price, visibility = 0, custom_attributes } = product;
-  console.log({price})
+  console.log({ price });
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === "special_price"
@@ -180,6 +192,10 @@ const ProductDetails = (props) => {
         ...product.selected,
       })
     );
+    ReactGA.event({
+      category: "User",
+      action: "product added to cart",
+    });
   };
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
@@ -291,7 +307,7 @@ const ProductDetails = (props) => {
                 </div>
               ) : null}
               <div className={styles.now}>
-              {translate?.details?.NOW} {currency_symbol} {price}
+                {translate?.details?.NOW} {currency_symbol} {price}
               </div>
               {/*
                 <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -299,7 +315,7 @@ const ProductDetails = (props) => {
             </div>
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>
-              {translate?.details?.COLOR}:{" "}
+                {translate?.details?.COLOR}:{" "}
                 {typeof productColorList?.find(
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
@@ -391,9 +407,7 @@ const ProductDetails = (props) => {
                 <div className={`${styles.icon} d-flex-all-center`}>
                   <span className="material-icons">mail</span>
                 </div>
-                <div className={styles.text}>
-                {translate?.details?.STOCK}
-                </div>
+                <div className={styles.text}>{translate?.details?.STOCK}</div>
               </div>
             ) : null}
             <div className={`${styles.sizeHelp} d-flex align-items-center`}>
@@ -449,7 +463,9 @@ const ProductDetails = (props) => {
                     </span>
                   </div>
                   <div>
-                    <div className={styles.title}>{translate?.details?.POPULAR}</div>
+                    <div className={styles.title}>
+                      {translate?.details?.POPULAR}
+                    </div>
                     <div className={styles.text}>
                       {product?.stats?.popular} {translate?.details?.LOOK}
                     </div>
@@ -466,7 +482,8 @@ const ProductDetails = (props) => {
                   <div>
                     <div className={styles.title}>IN DEMAND</div>
                     <div className={styles.text}>
-                      Bought {product?.stats?.inDemand}+ {translate?.details?.TIMES}
+                      Bought {product?.stats?.inDemand}+{" "}
+                      {translate?.details?.TIMES}
                     </div>
                   </div>
                 </div>
@@ -477,7 +494,9 @@ const ProductDetails = (props) => {
                   <div
                     className={`${styles.qty} d-flex align-items-center justify-content-between`}
                   >
-                    <div className={styles.title}>{translate?.details?.QUANT}:</div>
+                    <div className={styles.title}>
+                      {translate?.details?.QUANT}:
+                    </div>
                     <div
                       className={`${styles.counter} d-flex align-items-center justify-content-between`}
                     >
@@ -506,7 +525,9 @@ const ProductDetails = (props) => {
                     className={`${styles.demand} d-flex gap-12px align-items-center`}
                   >
                     <div className="d-flex align-items-center">
-                      <div className={styles.title}>{translate?.details?.AVAIL}: </div>
+                      <div className={styles.title}>
+                        {translate?.details?.AVAIL}:{" "}
+                      </div>
                       &nbsp;
                       <div className={styles.text}>
                         {outOfStock ? "Out Of Stock" : "In Stock"}
@@ -519,12 +540,18 @@ const ProductDetails = (props) => {
                   {outOfStock ? (
                     <OutOfStock productId={product.id} />
                   ) : (
-                    <div className={Number(price)===0 ? styles.disableCart : styles.addToCart}>
+                    <div
+                      className={
+                        Number(price) === 0
+                          ? styles.disableCart
+                          : styles.addToCart
+                      }
+                    >
                       <button
                         type="button"
                         onClick={() => addToCardHandler()}
                         className="d-flex-all-center"
-                        disabled={Number(price)===0}
+                        disabled={Number(price) === 0}
                       >
                         <span className="material-icons-outlined">
                           shopping_cart
@@ -550,7 +577,12 @@ const ProductDetails = (props) => {
                 <div className={styles.other}>
                   {[
                     {
-                      name: <DeliveryReturn language={language} translate={translate}/>,
+                      name: (
+                        <DeliveryReturn
+                          language={language}
+                          translate={translate}
+                        />
+                      ),
                       icon: "/assets/images/delivery.png",
                     },
                     {

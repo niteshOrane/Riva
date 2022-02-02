@@ -11,9 +11,11 @@ import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function CartPayment() {
   const dispatch = useDispatch();
+  useAnalytics();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
   const [loading, setLoading] = React.useState(false);

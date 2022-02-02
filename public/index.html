@@ -72,7 +72,9 @@
         0
       );
       // init Branch
-      branch.init("key_live_ejtZuYYYjb68S6lhzAFYcllfCvnQX50U");
+      branch.init("key_live_ejtZuYYYjb68S6lhzAFYcllfCvnQX50U",function(err, data) {
+console.log("branch",err, data);
+});
     </script>
   </body>
 </html>
