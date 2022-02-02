@@ -6,18 +6,29 @@ import ArrowButton from "../../../common/Buttons/Arrow";
 import Slider from "react-slick";
 import { getProducts } from "../../../../services/layout/Layout.service";
 import "./styles.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const refContainer = useRef();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
+  const { language } = useSelector((state) => state?.common?.store);
 
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
-    const res = await getProducts("2045", 10);
-    setProducts(res.data || []);
+    setLoading(true);
+    const res = await getProducts("2046", 10);
+    if (res?.data) {
+      setProducts(res.data || []);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -34,20 +45,31 @@ const ProductList = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className="section-header-container">
-        <SectionHeader roboto="Extraordinary" dancing="Essentials" />
+    <>
+      <div style={{ marginTop: "52px" }} className="section-header-container">
+<SectionHeader roboto={language==="Arabic" ? "رائع،" : "Extraordinary"} dancing={language==="Arabic" ? "أساسيات لكل يوم،" : "Essentials"} />
       </div>
       <div className="product-list-container container-with-circles ">
         <div className="arrow-button" onClick={previous}>
           <ArrowButton direction="backward" />
         </div>
+        {loading && (
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <Skeleton height="25rem" width="18rem" />
+             <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+            <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+            <span style={{width:"0.5rem"}}></span>
+            <Skeleton height="25rem" width="18rem" />
+          </div>
+        )}
         <div className="product-slider">
           <Slider ref={refContainer} {...settings}>
             {products.map((product, index) => {
               return (
                 <div key={index}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} landing extraOridnary />
                 </div>
               );
             })}
@@ -57,7 +79,7 @@ const ProductList = () => {
           <ArrowButton direction="forward" />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

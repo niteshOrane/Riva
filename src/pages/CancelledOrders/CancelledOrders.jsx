@@ -2,7 +2,10 @@ import React from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import styles from "./CancelledOrders.module.scss";
+import { useSelector } from "react-redux";
 import CancelledOrdersCards from "../../components/pages/Dashboard/MyOrders/CancelledOrdersCards/CancelledOrdersCards";
+import { getOrderList } from "../../services/order/order.services";
+import CircularProgress from "@material-ui/core/CircularProgress";
 const randomProducts = [
   {
     image:
@@ -16,18 +19,57 @@ const randomProducts = [
 ];
 
 function CancelledOrders() {
+  const { customer } = useSelector((state) => state.auth);
+  const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
+
+  const getOrders = async (id) => {
+    const res = await getOrderList(id);
+    if (res?.status === 200 && res?.data) {
+      const temp = res?.data?.items?.map((li) => ({
+        increment_id: li?.increment_id,
+        currency_code: li?.base_currency_code,
+        status: li.status,
+        created_at:li?.created_at,
+        order_currency_code:li?.order_currency_code,
+        list: li?.items?.filter((a) => a.product_type === "simple"),
+      }));
+      setOrderList(
+        temp
+          ?.filter((li) => li.status === "canceled")
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      );
+    }
+    setStatus(res?.status);
+  };
+  React.useEffect(() => {
+    getOrders(customer?.customerID);
+  }, []);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className={styles.circlesContainer}>
-          <CategoriesCircles />
-        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
             <h2 className="font-weight-normal">Order Cancelled</h2>
-
-            <CancelledOrdersCards products={randomProducts} />
+            {orderList.length ? (
+              orderList
+                ?.reverse()
+                ?.map((li) => (
+                  <CancelledOrdersCards
+                    products={li?.list}
+                    code={li?.currency_code}
+                    increment_id={li?.increment_id}
+                    order_currency_code = {li?.order_currency_code}
+                  />
+                ))
+            ) : !status ? (
+              <div className={styles.progress}>
+                <CircularProgress size={50} />
+              </div>
+            ) : (
+              <div className={styles.progress}>No record</div>
+            )}
           </div>
         </div>
       </div>

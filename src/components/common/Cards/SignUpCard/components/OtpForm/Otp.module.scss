@@ -1,5 +1,5 @@
 .mobileIcon {
-  margin-right: 10px;
+  @include right('margin', 10px);
 }
 .inpContainer {
   border: 1px solid black;
@@ -12,6 +12,7 @@
     width: 100%;
     font-size: 1.1rem;
     padding-left: 7px;
+    @include left('padding', 7px);
     &:focus {
       outline: none;
     }
@@ -45,4 +46,352 @@
     background-color: #181617;
     color: #fff;
   }
+}
+.resend {
+  @include left('margin', 6rem);
+  margin-top: 1rem;
+  font-size: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.resendSignup {
+  @include left('margin', 5rem);
+  margin-top: 1rem;
+  font-size: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.popupBody {
+  padding: 12px;
+  min-height: 300px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  .close {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+      svg {
+        fill: #f7591a;
+      }
+    }
+  }
+  .title {
+    font-size: 1.25rem;
+    text-align: center;
+    padding: 4px 0;
+    font-weight: normal;
+  }
+  .form {
+    .container {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      .inpTitle {
+        margin-bottom: 3px;
+        font-weight: 500;
+      }
+      .star {
+        color: #f7591a;
+      }
+      .inpContainer {
+        border: 1px solid black;
+        padding: 3px 6px;
+
+        input {
+          border: none;
+          height: 21px;
+          width: 100%;
+          font-size: 1.1rem;
+          padding-left: 7px;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+    .signUpBtn {
+      margin: 12px auto;
+      display: block;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #181617;
+      text-align: center;
+      padding: 12px 30px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      &:hover {
+        background-color: #181617;
+        color: white;
+      }
+    }
+    .or {
+      position: relative;
+      text-align: center;
+      margin-bottom: 15px;
+      &::after {
+        content: "";
+        border: 1px solid #ddd;
+        position: absolute;
+        width: 46%;
+        z-index: 0;
+        left: 54%;
+        top: 50%;
+      }
+      &::before {
+        content: "";
+        border: 1px solid #ddd;
+        left: 0;
+        position: absolute;
+        right: 0;
+        width: 46%;
+        top: 50%;
+        z-index: 0;
+      }
+    }
+
+    .btn {
+      width: 100%;
+      color: white;
+      text-align: center;
+      margin: 9px 0;
+      border: none;
+      max-height: 40px;
+      transition: all 0.3s ease;
+      &:hover {
+        opacity: 0.91;
+      }
+
+      p {
+        margin-left: 50px;
+        font-size: 1rem;
+      }
+    }
+    .appleBtn {
+      background: #272727;
+      .btnIcon {
+        background-color: #181617;
+      }
+    }
+    .fbBtn {
+      background-color: #5a6fa5;
+      .btnIcon {
+        background-color: #405895;
+      }
+    }
+    .googleBtn {
+      background-color: #fe4b69;
+      .btnIcon {
+        background-color: #ec1e40;
+      }
+    }
+    .passInstruction {
+      margin-top: 4px;
+      font-size: 0.7rem;
+    }
+    .btnIcon {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 12px;
+      height: 40px;
+      width: 40px;
+    }
+  }
+}
+.formLogin {
+  width: 358px;
+  height: 200px;
+  .container {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    .inpTitle {
+      margin-bottom: 3px;
+      font-weight: 500;
+    }
+    .star {
+      color: #f7591a;
+    }
+    .inpContainer {
+      border: 1px solid black;
+      padding: 3px 6px;
+
+      input {
+        border: none;
+        height: 21px;
+        width: 100%;
+        font-size: 1.1rem;
+        padding-left: 7px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .signUpBtn {
+    margin: 12px auto;
+    display: block;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #181617;
+    text-align: center;
+    padding: 12px 30px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    &:hover {
+      background-color: #181617;
+      color: white;
+    }
+  }
+  .or {
+    position: relative;
+    text-align: center;
+    margin-bottom: 15px;
+    &::after {
+      content: "";
+      border: 1px solid #ddd;
+      position: absolute;
+      width: 46%;
+      z-index: 0;
+      left: 54%;
+      top: 50%;
+    }
+    &::before {
+      content: "";
+      border: 1px solid #ddd;
+      left: 0;
+      position: absolute;
+      right: 0;
+      width: 46%;
+      top: 50%;
+      z-index: 0;
+    }
+  }
+
+  .btn {
+    width: 100%;
+    color: white;
+    text-align: center;
+    margin: 9px 0;
+    border: none;
+    max-height: 40px;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.91;
+    }
+
+    p {
+      margin-left: 50px;
+      font-size: 1rem;
+    }
+  }
+  .appleBtn {
+    background: #272727;
+    .btnIcon {
+      background-color: #181617;
+    }
+  }
+  .fbBtn {
+    background-color: #5a6fa5;
+    .btnIcon {
+      background-color: #405895;
+    }
+  }
+  .googleBtn {
+    background-color: #fe4b69;
+    .btnIcon {
+      background-color: #ec1e40;
+    }
+  }
+  .passInstruction {
+    margin-top: 4px;
+    font-size: 0.7rem;
+  }
+  .btnIcon {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+    height: 40px;
+    width: 40px;
+  }
+}
+
+.googleAuthBtn {
+  height: 40px;
+  background: transparent;
+  width: 72%;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.facebookAuthBtn {
+  height: 40px;
+  background: transparent;
+  width: 100%;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 3.4rem;
+}
+.checkContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.checkBox {
+  margin-right: 8px;
+  background-color: #f2f2f2;
+}
+.fyp {
+  text-decoration: underline;
+  font-size: 13px;
+  cursor: pointer;
+}
+.signinWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 18px;
+}
+.signInLink {
+  float: right;
+  margin-top: 11px;
+}
+.tagline {
+  font-size: 13px;
+  display: block;
+  text-align: center;
+}
+.signOtpCls{
+  position: absolute;
+  right: 3%;
+  border: none;
+  background: transparent;
+  /* width: 5px; */
+  font-size: 28px;
+  top: 2%;
+  cursor: pointer;
+}
+
+.isdSelect{
+  border-radius: 5px;
+  border: 1px solid gray;
+  outline: none;
+}
+
+.loginOtpBtn{
+  width: 4rem;
+}
+.authVal{
+  font-size: 14px;
+  margin-top: 15px;
+  color: red;
 }

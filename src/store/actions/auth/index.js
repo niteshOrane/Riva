@@ -25,8 +25,20 @@ export const emptyCart = () => ({
   type: DATA_TYPES.SET_CART_ID,
   payload: { cart_id: 0 }
 });
-
+export const addCartId = (quoteid) => ({
+  type: DATA_TYPES.SET_CART_ID,
+  payload: { cart_id:  quoteid }
+});
+export const emptyCartItem = () => ({
+  type: DATA_TYPES.SET_BULK_CART,
+  payload: [],
+})
 export const setCustomer = (data) => ({
   type: DATA_TYPES.SET_CUSTOMER,
   payload: data,
 });
+
+export const setSocialLogin = (data) => ({
+  type:DATA_TYPES.LOGIN_WITH_SOCIAL,
+  payload:data
+})

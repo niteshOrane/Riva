@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import styles from "./SizeCard.module.scss";
 import * as icons from "../../../../../common/Icons/Icons";
-const SizeCard = ({ handleClose, open, imageSelected }) => {
+
+const SizeCard = ({ handleClose, open, imageSelected, language }) => {
   const [selectedUnit, setSelectedUnit] = useState("CM");
+  const [selectedUnitWeight, setSelectedUnitWeight] = useState("Kg");
   const [height, setHeight] = useState({
     range: 0,
   });
@@ -38,6 +40,7 @@ const SizeCard = ({ handleClose, open, imageSelected }) => {
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
       open={open}
+      dir={language === 'Arabic' ? 'rtl' : 'ltr'}
     >
       <div>
         <button
@@ -115,8 +118,8 @@ const SizeCard = ({ handleClose, open, imageSelected }) => {
                         id="range"
                         onChange={handleHeightChange}
                         value={height.range}
-                        // min="0"
-                        // max="100"
+                      // min="0"
+                      // max="100"
                       />
                     </div>
                     <p
@@ -134,14 +137,14 @@ const SizeCard = ({ handleClose, open, imageSelected }) => {
                         id="range"
                         onChange={handleWeightChange}
                         value={weight.range}
-                        // min="0"
-                        // max="100"
+                      // min="0"
+                      // max="100"
                       />
                     </div>
                     <p
                       className={`${styles.smallFonts} ${styles.unitToChange}`}
                     >
-                      {weight.range} {selectedUnit}
+                      {weight.range} KG
                     </p>
                   </div>
                 </div>

@@ -6,19 +6,20 @@ import style from "./style.module.scss";
 
 const CardWithBoxContent = ({ item }) => {
   return (
-    <Link to={`/${item?.url_banner ?? ''}`}>
+    <Link to={`/products/${item?.url_key ?? ''}/${item?.id ?? ''}`}>
       <div className="position-relative" title={item?.name}>
         <div>
           <Image src={item.image || ""} width="100%" alt={item?.title} />
         </div>
         <div className={style.cardBoxContent}>
-          <h3 className="text-center">{item?.title}</h3>
+          <h3 className="text-center">{item?.title?.toUpperCase()}</h3>
           <p className={`text-center ${style.description}`}>
-            {item?.description || item?.name || <i>No Description</i>}
+            {item?.description || item?.name || <i>No Description</i>} 
           </p>
           <ButtonWithArrows
             btnClass="bg-black color-white mx-auto"
             text="Shop Now"
+            isFestiveCard
           />
         </div>
       </div>

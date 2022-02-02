@@ -1,11 +1,13 @@
 import React from "react";
+import useArabic from "../../../../common/arabicDict/useArabic";
 import styles from "./TrackYourOrderCard.module.scss";
-const TrackYourOrderCard = ({ value, handleChange, handleSubmit }) => {
+const TrackYourOrderCard = ({ value, handleChange, handleSubmit,loading }) => {
+  const {translate} = useArabic()
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.card}>
         <div className={styles.inpContainer}>
-          <p>Order ID</p>
+          <p> {translate?.dash?.NUM}:-</p>
           <input
             type="text"
             onChange={handleChange}
@@ -16,7 +18,7 @@ const TrackYourOrderCard = ({ value, handleChange, handleSubmit }) => {
         </div>
       </div>
       <button type="submit" className={styles.trackOrderBtn}>
-        TRACK ORDER
+      {translate?.dash?.TRACK}
       </button>
     </form>
   );

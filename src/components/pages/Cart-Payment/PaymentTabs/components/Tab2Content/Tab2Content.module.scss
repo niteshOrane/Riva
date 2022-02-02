@@ -70,7 +70,185 @@
   color: #fff;
 }
 
-.cardValidation{
-  color:red;
+.cardValidation {
+  color: red;
   margin-top: 8px;
+}
+
+.chooseShipping {
+  margin-top: 12px;
+  h5 {
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+  label {
+    cursor: pointer;
+  }
+  input {
+    margin: 0 12px;
+  }
+}
+
+.goSellWrap {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    padding: 2rem;
+    input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      margin: 0;
+    }
+  }
+  .labelRadio {
+    display: flex;
+    align-items: center;
+    padding: 0.375em 0.75em 0.375em 0.375em;
+    border-radius: 99em; // or something higher...
+    transition: 0.25s ease;
+    &:hover {
+      background-color: mix(#fff, blue, 84%);
+    }
+  }
+}
+.gPay {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+.arabicIcon {
+  margin-left: 10px !important;
+}
+
+.rePayment {
+  width: 250px !important;
+  height: 45px !important;
+  padding: 13px 0px 13px;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #cbc7c7;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.46;
+  letter-spacing: normal;
+  cursor: pointer !important;
+}
+.rePaymentTitle {
+  width: 215px;
+  height: 30px;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.46;
+  letter-spacing: normal;
+  text-align: center;
+  color: #343232;
+}
+.choose {
+  width: 290px;
+  height: 34px;
+  // margin: 29px 53.3px 35px 86px;
+  margin-bottom: 1rem !important;
+  font-family: Roboto;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.79;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+}
+.reGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.payWith {
+  margin-bottom: 1.5rem;
+}
+
+.payName {
+  margin-top: 20px;
+}
+.staticContent {
+  span {
+    font-size: 13px;
+    letter-spacing: 0.07em;
+    color: #2c3240;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+}
+
+.payFooter {
+  border: 1px solid lightgrey;
+  padding: 1.5rem;
+  width: 30rem;
+  margin-left: 1.8rem;
+  .text {
+    font-size: 12px;
+    color: #5d5c5c;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-left: 1rem;
+  }
+  p {
+    font-size: 13px;
+    color: #5d5c5c;
+    font-weight: 300;
+    padding: 5px 0 0 24px;
+    text-transform: none;
+    margin-bottom: 1.5rem;
+    padding-left: 2.5rem;
+  }
+  .footIcon {
+    color: #39b548;
+    font-size: 1.4rem;
+  }
+}
+.codWrapper {
+  padding: 1rem;
+  border: 1px ridge lightgray;
+  width: 25rem;
+  section {
+    display: flex;
+    margin-bottom: 20px;
+    .codCharge {
+      font-weight: bold;
+      padding-left: 10px;
+    }
+  }
+  .icon{
+    color: gray;
+    padding-right: 10px;
+  }
+  .codPlace {
+    background-color: #000000;
+    height: 49px;
+    border: none;
+    display: inline-block;
+    width: 70%;
+    color: #fff;
+    cursor: pointer;
+  }
+  .loading{
+    font-size: 14px;
+    color: gray;
+    padding-top: 5px;
+  }
 }

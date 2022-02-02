@@ -40,7 +40,8 @@ const MainLayout = ({ children }) => {
   });
 
   return (
-    <div dir={store.language === 'Arabic' ? 'rtl' : 'ltr'}>
+    <bdo dir={store.language === 'Arabic' ? 'rtl' : 'ltr'}>
+    <div >
       {mainHeader && <MainHeader mainHeade={mainHeader} />}
       <SignUpCard />
       {childRender ? <>{paths.includes(children?.props.location.pathname) && !children.props.auth.isAuthenticated? <ShoppingCart /> : children}</> : <Landing />}
@@ -50,6 +51,7 @@ const MainLayout = ({ children }) => {
       <Wishlist />
       <QuickView />
     </div>
+   </bdo>
   );
 };
 

@@ -1,13 +1,33 @@
 .product {
   display: grid;
   grid-template-columns: 33fr 35fr;
-
+  .colorItem {
+    height: 18px;
+    display: inline-block;
+    width: 18px;
+    padding: 2px;
+    @include left("margin", 5px);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    &:hover {
+      border: solid 1px #2c2a2a;
+    }
+  }
+  .active {
+    border: solid 1px #2c2a2a;
+  }
+  .bread{
+    margin-left: 20px;
+  }
   .mainImage {
     position: relative;
     .actionContainerTopRight {
       position: absolute;
       top: 4px;
-      right: 4px;
+      @include rightpos(4px);
       font-size: 15px;
       font-weight: 500;
       background-color: transparent;
@@ -27,6 +47,11 @@
         padding: 5px;
         font-size: 15px;
       }
+    }
+    .circlesContainer {
+      position: absolute;
+      top: 1%;
+      @include leftpos(11%);
     }
 
     .actionContainerTopLeft {
@@ -67,7 +92,7 @@
     .actionContainerBottomRight {
       position: absolute;
       bottom: 4px;
-      right: 4px;
+      @include rightpos(4px);
       font-size: 15px;
       font-weight: 500;
       background-color: transparent;
@@ -97,7 +122,7 @@
       height: 19px;
       font-family: Jost;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: normal;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.69;
@@ -109,12 +134,12 @@
     .name {
       font-family: Jost;
       font-size: 28px;
-      font-weight: 500;
+      font-weight: bold;
       font-stretch: normal;
       font-style: normal;
       line-height: 0.85;
       letter-spacing: normal;
-      text-align: left;
+      // text-align: left;
       margin-top: 6px;
       margin-bottom: 7px;
       color: #181617;
@@ -125,16 +150,17 @@
     }
 
     .rating {
-      width: 58px;
+      width: 60px;
       font-family: Roboto;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: normal;
       font-stretch: normal;
       font-style: normal;
       letter-spacing: normal;
       color: #181617;
       margin-top: 5px;
-      margin-left: 14px;
+      @include left("margin", 14px);
+      word-wrap: break-word;
     }
 
     .price {
@@ -150,25 +176,25 @@
         text-align: left;
         color: #5c5959;
         text-decoration: line-through;
-        margin-right: 25px;
+        @include right("margin", 25px);
       }
 
       .now {
         font-family: Jost;
         font-size: 22px;
-        font-weight: 500;
+        font-weight: bold;
         font-stretch: normal;
         font-style: normal;
         line-height: 1;
         letter-spacing: normal;
-        text-align: left;
+
         color: #181617;
       }
 
       .loyalty {
         font-family: Jost;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: normal;
         font-stretch: normal;
         font-style: normal;
         line-height: 1.57;
@@ -201,7 +227,7 @@
       }
 
       .options {
-        margin-left: 27px;
+        @include left("margin", 27px);
         .option {
           display: inline-block;
           width: 13px;
@@ -245,7 +271,7 @@
           border: solid 1px #c8c0c0;
           font-size: 14.5px;
           font-family: Roboto;
-          font-weight: 700;
+          font-weight: normal;
           font-stretch: normal;
           font-style: normal;
           line-height: 1.83;
@@ -306,6 +332,7 @@
       font-family: Jost;
       font-size: 14px;
       font-weight: 700;
+      margin-right: 2.8rem;
       font-stretch: normal;
       font-style: normal;
       letter-spacing: normal;
@@ -319,6 +346,7 @@
 
       .text {
         color: #8f8c8c;
+        font-weight: normal;
       }
     }
     .w80 {
@@ -375,7 +403,7 @@
         color: #161616;
 
         .title {
-          margin-right: 18px;
+          @include right("margin", 18px);
         }
 
         .counter {
@@ -417,7 +445,7 @@
           background-color: #181617;
           font-family: Jost;
           font-size: 17px;
-          font-weight: 700;
+          font-weight: normal;
           font-stretch: normal;
           font-style: normal;
           line-height: 1.35;
@@ -426,6 +454,26 @@
           color: #ffffff;
           border: none;
           cursor: pointer;
+        }
+      }
+      .disableCart{
+        width: 100%;
+        button {
+          width: 100%;
+          height: 41px;
+          padding: 11px 56.7px 10px 71.5px;
+          background-color: gray;
+          font-family: Jost;
+          font-size: 17px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.35;
+          letter-spacing: normal;
+          text-align: left;
+          color: #ffffff;
+          border: none;
+          cursor: no-drop;
         }
       }
 
@@ -451,8 +499,194 @@
           width: 22px;
           height: 22px;
           object-fit: contain;
+          margin-bottom: 20px;
         }
       }
     }
+  }
+}
+.reviewStars {
+  color: #ff9529;
+}
+// .icon{
+//   @include right("margin",10px)
+// }
+.now {
+  @include right("margin", 5px);
+}
+.was {
+  @include right("margin", 3px);
+}
+.colorItem {
+  @include left("margin", 5px);
+}
+.socialMediaPopper {
+  top: 300px !important;
+  left: unset !important;
+  @include rightpos(0px !important);
+  padding: 10px !important;
+  cursor: pointer;
+}
+
+.labelName {
+  @include left("margin", 13px);
+  font-weight: normal;
+  white-space: nowrap;
+}
+.labelContainer {
+  display: flex;
+  @include left("margin", 15px);
+}
+.sizeGuide {
+  text-decoration: underline;
+}
+//review styles
+
+.reviewTextArea {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  label {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: normal;
+    @include textAlign("text-align");
+    color: #6a6565;
+    margin-bottom: "5px";
+  }
+}
+.desc {
+  width: 658px;
+  height: 113px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+.reviewInput {
+  width: 658px;
+  height: 51px;
+  padding-left: 5px;
+}
+
+.reviewPro {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.reviewSubmit {
+  width: 116px;
+  height: 41px;
+  margin-top: 25px;
+  padding: 12px 31px 11px 31px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+}
+
+.secWrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: stretch;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.avg {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f1;
+  width: 46px;
+  height: 24px;
+  /* padding: 2px; */
+  @include right("padding", 54px);
+}
+.sectionWrapOne {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.mapReview {
+  display: flex;
+  align-items: center;
+  background-color: green;
+  /* width: 10px; */
+  height: 25px;
+  @include right("padding", 7px);
+  border-radius: 3px;
+}
+
+.nameDateWrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.likeDislike {
+  display: flex;
+}
+.reviewName {
+  @include left("margin", 35px);
+}
+.nameDate {
+  margin-top: 7px;
+  margin-bottom: 18px;
+}
+.reviewDesc {
+  margin-top: 7px;
+}
+.dislikeThumb {
+  @include left("margin", 10px);
+  display: flex;
+}
+.dateSpan {
+  opacity: 0.36;
+}
+.numLike {
+  padding-top: 2px;
+  padding-left: 4px;
+}
+.reviewCls {
+  position: absolute;
+  @include rightpos(2%);
+  font-size: 25px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sizeChartTable {
+  th {
+    width: 5rem;
+    height: 2rem;
+    background-color: gray;
+  }
+  td {
+    line-height: 2rem;
+    color: gray;
+    border-bottom: 1px ridge lightgray;
+  }
+
+}
+.imgWrap {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+  }
+}
+.sizeGuideInfo{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  strong{
+    font-size: 15px;
+  }
+  span{
+    font-size: 13px;
   }
 }

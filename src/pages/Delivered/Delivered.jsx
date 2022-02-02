@@ -1,74 +1,137 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/DeliveredOrders/DeliveredOrders";
 import { useSelector } from "react-redux";
-import { getOrderList } from "../../services/order/order.services";
-const randomProducts = [
-  {
-    image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/6edae83a-8a9c-48f3-9835-a40b9f29a0de.png",
-    name: "High Waist Slim Fit Trouser",
-    color: "White",
-    size: "XL",
-    deliveryDate: "24 April 2021",
-    price: "25.00",
-    orderId: "#R0374915036",
-  },
-  {
-    image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/2606012f-bc87-4744-9182-5b978c66a46a.png",
-    name: "Solid Classic Midaxi Dress",
-    color: "Black",
-    size: "MD",
-    deliveryDate: "24 April 2021",
-    price: "50.00",
-    orderId: "#R0374915036",
-  },
-  {
-    image:
-      "https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/54ec64f9-21e9-4968-8d23-f376f3eeff2f.png",
-    name: "Solid Classic Midaxi Dress",
-    color: "White",
-    size: "XL",
-    deliveryDate: "24 April 2021",
-    price: "32.00",
-    orderId: "#R0374915036",
-  },
-];
+import { cancelOrder, getOrderList } from "../../services/order/order.services";
+import styles from "./Delivered.module.scss";
+import { useParams } from "react-router-dom";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Pagination from "./Pagination";
+import { showSnackbar } from "../../store/actions/common";
+import { useDispatch } from "react-redux";
+import useArabic from "../../components/common/arabicDict/useArabic";
+import { useEffect } from "react";
+import TagManager from "react-gtm-module";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
+  const { orderType } = useParams();
+  const dispatch = useDispatch();
+  const {translate}  = useArabic();
+  const { language } = useSelector((state) => state?.common?.store);
+
   const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
+  const [finalList, setFinalList] = React.useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
   const getOrders = async (id) => {
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
       const temp = res?.data?.items?.map((li) => ({
+        increment_id: li?.increment_id,
+        currency_code: li?.base_currency_code,
+        order_currency_code:li?.order_currency_code,
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
       setOrderList(temp);
     }
+    setStatus(res?.status);
   };
+  const cancelOrderOnTap = async (id) => {
+    const res = await cancelOrder(id);
+    if (res?.status === 200) {
+      dispatch(showSnackbar("Order Cancelled successfully", "success"));
+    }
+  };
+  useEffect(()=>{
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  },[])
   React.useEffect(() => {
     getOrders(customer?.customerID);
-  }, []);
+  }, [orderType]);
+  React.useEffect(() => {
+    if (orderType === "orders") {
+      const data = orderList?.reduce((acc, pro) => {
+        if (pro.status !== "canceled") {
+          const data2 = pro?.list?.map((a) => ({
+            ...a,
+            status: pro?.status,
+            increment_id: pro?.increment_id,
+            currency_code: pro?.currency_code,
+            order_currency_code:pro?.order_currency_code,
+          }));
+          return [...acc, ...data2];
+        } else {
+          return acc;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
+      }
+    } else if (orderType === "delivered") {
+      const data = orderList?.reduce((acc, pro) => {
+        if (pro.status === "delivered") {
+          const data2 = pro?.list?.map((a) => ({
+            ...a,
+            status: pro?.status,
+            order_currency_code:pro?.order_currency_code,
+            increment_id: pro?.increment_id,
+            currency_code: pro?.currency_code,
+          }));
+          return [...acc, ...data2];
+        } else {
+          return acc;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
+      }
+    }
+  }, [orderType, orderList]);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = finalList?.sort((a,b) => new Date(b.created_at) - new Date(a.created_at))?.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className="circlesContainer">
-          <CategoriesCircles />
-        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">{title}</h2>
+            <h2 className="font-weight-normal">
+              {orderType?.[0]?.toUpperCase() + orderType.slice(1)}
+            </h2>
 
             {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
-            {orderList.length > 0 &&
-              orderList.map((li) => (
-                <DeliveredOrders products={li.list} status={li.status} />
-              ))}
+            {currentPosts.length > 0 ? (
+              currentPosts?.map((li) => (
+                <DeliveredOrders
+                  product={li}
+                  language={language}
+                  cancelOrderOnTap={cancelOrderOnTap}
+                />
+              ))
+            ) : !status ? (
+              <div className={styles.progress}>
+                <CircularProgress size={50} />
+              </div>
+            ) : (
+              <div className={styles.progress}>No record</div>
+            )}
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={finalList?.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,12 @@
-import * as DATA_TYPES from '../../types';
-import { defaultStore } from '../../../util/index';
+import * as DATA_TYPES from "../../types";
+import { defaultStore } from "../../../util/index";
+import { act } from "react-test-renderer";
 
 const initialState = {
+  filtersParams: {
+    status: false,
+  },
+  forgetPasswordEmail: "",
   header: [],
   footer: [],
   topBrands: [],
@@ -18,6 +23,8 @@ const initialState = {
   },
   attributes: { color: [], size: [] },
   signUpCard: { isOpen: false, isLogin: false, isOtp: false },
+  newUser: "",
+
 };
 
 export default function common(state = initialState, action) {
@@ -75,7 +82,7 @@ export default function common(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        selectedCategoryItem: action.payload
+        selectedCategoryItem: action.payload,
       };
     case DATA_TYPES.TOGGLE_QUICKVIEW:
       return {
@@ -98,7 +105,7 @@ export default function common(state = initialState, action) {
         ...state,
         snackbar: {
           error: action.payload?.message ?? null,
-          severity: action.payload?.severity ?? '',
+          severity: action.payload?.severity ?? "",
           open: action.payload?.open,
         },
       };
@@ -108,6 +115,52 @@ export default function common(state = initialState, action) {
         signUpCard: {
           ...action.payload,
         },
+      };
+    case DATA_TYPES.FILTER_PARAMS:
+
+      if(!state.filtersParams?.[action.payload.name]){
+         state.filtersParams[action.payload.name] = []        
+      }
+      return {
+        ...state,
+        filtersParams: {
+          ...state.filtersParams,
+          status: true,
+          [action?.payload?.name]: [
+            ...state.filtersParams[action.payload.name],
+            action.payload.param,
+          ],
+        },
+      };
+    case DATA_TYPES.CLEAR_SINGLE_VALUE:
+      return {
+        ...state,
+        filtersParams: {
+          ...state.filtersParams,
+          [action?.payload?.name]: [
+            ...state.filtersParams[action.payload.name]?.filter(
+              (li) => li !== action.payload.value
+            ),
+          ],
+        },
+      };
+    case DATA_TYPES.CLEAR_FILTER_PARAMS:
+      return {
+        ...state,
+        filtersParams: {
+          status: false,
+        },
+      };
+
+    case DATA_TYPES.NEW_USER_EMAIL:
+      return {
+        ...state,
+        newUser: action.payload,
+      };
+    case DATA_TYPES.FORGET_PASSOWORD_EMAIL:
+      return {
+        ...state,
+        forgetPasswordEmail: action.payload,
       };
     default:
       return state;

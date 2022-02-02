@@ -15,6 +15,7 @@
     justify-content: center;
     border: 1px solid $color-grey;
     text-align: center;
+    margin-left: 10px;
     span {
       margin: 0 4px;
     }
@@ -78,7 +79,7 @@
       padding: 8px;
       font-weight: bold;
       margin: 12px;
-      border: 1px solid $color-grey;
+      border: 2px solid $color-grey;
       div {
         .exclamation {
           width: 30px;
@@ -98,4 +99,35 @@
       }
     }
   }
+}
+.cartBtn{
+  background: transparent;
+  border: 2px solid gray !important;
+  transition: 0.2s ease;
+  font-weight: normal !important;
+}
+.spend{
+  color: gray;
+  span{
+    color:black !important
+  }
+}
+.emptyCart{
+  font-size: 10rem !important;
+  color:#4ad395 !important;
+}
+.emptyWrap{
+  width: 250px;
+  height: 250px;
+  background-color: #E8E8E8;
+  border: gray;
+  border-radius: 50%;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+.emptySec{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

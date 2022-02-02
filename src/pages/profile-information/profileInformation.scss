@@ -3,14 +3,15 @@
   margin-top:1rem;
 }
 .user-sign-in-form {
-  div {
+  .boxProfileInfo {
     display: flex;
     flex-direction: column;
   }
   input {
     height: 2.5rem;
-    width: 15rem;
+    width: 24rem;
     margin:0.51rem 0rem;
+    padding-left: 5px;
   }
   section {
     display: flex;
@@ -21,6 +22,14 @@
       color: gray;
   }
 }
+.profile-label-mobile{
+  margin-left: 2.5rem;
+  color: black !important
+}
+// .isdInfoBox{
+//   display: flex !important;
+//   flex-direction: row !important;
+// }
 .registration-form-wrapper{
     // border: 1px solid black; 
     width: 35rem;
@@ -34,12 +43,13 @@
     margin: 1rem 0rem;
 }
 .registration-btn {
-    width: 6rem;
-    height: 2rem;
+    width: 154px;
+    height: 41px;
     padding: 3px 3px;
     background-color: black;
     border: none;
-    color:#fff
+    color:#fff;
+    font-size: 15px;
 }
 .cat-circle {
   margin-left: 3px;
@@ -54,6 +64,51 @@
 }
 .inner-form-wrapper{
   border: 1px solid black;
-  width: 35rem;
+  width: 55rem;
   padding: 1rem 1rem;
+}
+.profile-label{
+  color: black !important;
+}
+.inputCalender{
+  width:24px;
+  height:24px;
+  position:absolute;
+  top:48%;
+  right:3%;
+}
+
+.closeIcon{
+  width:12px;
+  height:12px;
+}
+
+.positionWrap{
+  position: relative;
+}
+.edit-position-check{
+  position: absolute;
+    top: 35%;
+    left: 92%;
+    margin-left: -25px;
+}
+.edit-position-close{
+  position: absolute;
+  top: 35%;
+  left: 92%;
+}
+.edit-position-pencil{
+  position: absolute;
+  top: 35%;
+  left: 92%;
+  margin-right: 5px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url("/assets/images/pfCalender.svg") no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
 }

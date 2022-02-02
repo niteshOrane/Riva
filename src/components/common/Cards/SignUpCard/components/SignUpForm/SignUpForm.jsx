@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import "react-phone-number-input/style.css";
 import {
   showSnackbar,
   toggleSignUpCard,
@@ -9,16 +10,39 @@ import {
 
 import styles from "../../SignUpCard.module.scss";
 import * as icons from "../../../../Icons/Icons";
-import { createCustomer,createCustomerSocial } from "../../../../../../services/auth/auth.service";
-import { getStoreId } from "../../../../../../util";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import {
+  createCustomer,
+  createCustomerSocial,
+  mergeGuestCart,
+} from "../../../../../../services/auth/auth.service";
+import { getCartId, getStoreId } from "../../../../../../util";
+import { getCart } from "../../../../../../store/actions/cart";
+import SignUpOtp from "./SignUpOtp";
+import { loginSuccess } from "../../../../../../store/actions/auth";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
+import { isdCodes } from "../ISDdummy/isdCodes";
+import { set } from "mobx";
 
-const SignUpForm = ({ handleSubmit }) => {
+const SignUpForm = ({ handleSubmit, language }) => {
+  const currentLocation = useSelector((state) => state.common.currentLocation);
+  const [phoneValue, setPhoneValue] = useState();
+
   const dispatch = useDispatch();
+  const [error, setError] = React.useState({});
+  const history = useHistory();
+  const redirectTo = useSelector(
+    (state) => state.common.signUpCard?.redirectTo
+  );
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
-    phone:""
+    phone: "",
+    lastName: "",
   });
 
   const handleChange = (e) => {
@@ -29,7 +53,7 @@ const SignUpForm = ({ handleSubmit }) => {
     dispatch(toggleSignUpCard({}));
   };
 
-  const { email, password, name, phone } = formData;
+  const { email, password, name, phone, lastName } = formData;
 
   const userCreateHandler = async (e) => {
     e.preventDefault();
@@ -46,42 +70,63 @@ const SignUpForm = ({ handleSubmit }) => {
 
     if (!email || !name || !phone)
       return dispatch(showSnackbar("All fields are required", "warning"));
-
-    const customer = new FormData();
-
-    customer.append("email", email);
-    customer.append("firstname", name?.split(" ")?.[0] || "");
-    customer.append("lastname", name?.split(" ")?.[1] || "");
-    customer.append("password", password);
-    customer.append("mobile_number", phone);
-    customer.append("storeId", getStoreId());
-    const res = await createCustomer(customer);
-
-    if (res.status === 200 && res?.data?.success) {
-      handleSubmit();
-      return dispatch(showSnackbar(res?.data?.message, "success"));
-    }
-    return dispatch(showSnackbar("Something went wrong", "error"));
   };
 
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState();
 
   const responseFacebook = async (response) => {
     if (response) {
       const firstName = response?.name?.split(" ")[0];
-      const lastName = response?.name?.split(" ")[1];
+      const lName = response?.name?.split(" ")[1];
       const userEmail = response?.email;
       const customer = new FormData();
       customer.append("email", userEmail);
       customer.append("firstname", firstName || "");
-      customer.append("lastname", lastName || "");
-      customer.append("password",  "hello@123");
-      customer.append('resource',"Facebook")
-      const res = await createCustomer(customer);
+      customer.append("lastname", lName || "");
+      customer.append("password", "hello@123");
+      customer.append("resource", "Facebook");
+      const res = await createCustomerSocial(customer);
 
       if (res.status === 200) {
-        handleSubmit();
-        return dispatch(showSnackbar(res?.data?.data, "success"));
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          toast.configure();
+          toast(
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
+            }`,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : res.data.message || "Login failure",
+              "error"
+            )
+          );
+        }
       }
       return dispatch(showSnackbar("Something went wrong", "error"));
     } else {
@@ -92,18 +137,55 @@ const SignUpForm = ({ handleSubmit }) => {
   const responseGoogle = async (response) => {
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
-      const lastName = response?.profileObj?.familyName;
+      const lname = response?.profileObj?.familyName;
       const userEmail = response?.profileObj?.email;
       const customer = new FormData();
       customer.append("email", userEmail);
-      customer.append("lastname", lastName || "");
+      customer.append("lastname", lname || "");
       customer.append("firstname", firstName || "");
-      customer.append("password",  "hello@123");
-      customer.append('resource',"Google")
+      customer.append("password", "hello@123");
+      customer.append("resource", "Google");
       const res = await createCustomerSocial(customer);
       if (res.status === 200) {
-        handleSubmit();
-        return dispatch(showSnackbar(res?.data?.data, "success"));
+        if (res?.data?.success) {
+          if (getCartId() > 0) {
+            const customerCart = new FormData();
+            customerCart.append("guestQuoteId", getCartId());
+            customerCart.append("customerId", res.data?.data?.customerID);
+            await mergeGuestCart(customerCart);
+            dispatch(getCart());
+          }
+          handleSubmit();
+          typeof res?.data?.data !== "string" &&
+            dispatch(loginSuccess(res.data.data));
+          toast.configure();
+          toast(
+            `Welcome ${
+              res?.data?.success ? res?.data.data.firstname : " Guest"
+            }`,
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            }
+          );
+          return typeof res?.data?.data !== "string"
+            ? history.push(redirectTo || "/dashboard")
+            : null;
+        } else {
+          dispatch(
+            showSnackbar(
+              typeof res?.data?.data === "string"
+                ? res?.data?.data
+                : res.data.message || "Login failure",
+              "error"
+            )
+          );
+        }
       }
       return dispatch(showSnackbar("Something went wrong", "error"));
     } else {
@@ -115,9 +197,12 @@ const SignUpForm = ({ handleSubmit }) => {
     <form className={styles.form} onSubmit={userCreateHandler}>
       <div className={styles.container}>
         <p className="mt-12px">
-          First Name & Last Name <span className={styles.star}>*</span>
+          First Name<span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">account_circle</span>
           <input
             required
@@ -127,14 +212,45 @@ const SignUpForm = ({ handleSubmit }) => {
             id="name"
             maxLength={30}
             onChange={handleChange}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.name && (
+          <span className={styles.authVal}>First name required</span>
+        )}
+      </div>
+      <div className={styles.container}>
+        <p className="mt-12px">
+          Last Name <span className={styles.star}>*</span>
+        </p>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
+          <span className="material-icons-outlined">account_circle</span>
+          <input
+            required
+            value={lastName}
+            type="text"
+            name="lastName"
+            id="lastName"
+            maxLength={30}
+            onChange={handleChange}
+            className={styles.signUpInput}
+          />
+        </div>
+        {error?.lastName && (
+          <span className={styles.authVal}>Last name required</span>
+        )}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Email <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">email</span>
           <input
             required
@@ -142,41 +258,54 @@ const SignUpForm = ({ handleSubmit }) => {
             type="email"
             name="email"
             id="email"
-            maxLength={25}
+            maxLength={256}
             onChange={handleChange}
+            className={styles.signUpInput}
           />
         </div>
+        {error?.email && <span className={styles.authVal}>{error.email}</span>}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Mobile Number <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
-          <span className="material-icons-outlined">call</span>
-          <input
-            type="mobile"
-            name="phone"
-            id="phone"
-            value={phone}
-            maxLength={15}
-            onChange={handleChange}
-          />
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
+          <div className={styles.cntCode}>
+            <PhoneInput
+     
+              placeholder="Enter Mobile Number"
+              value={phoneValue}
+              width="10px"
+              defaultCountry={currentLocation.country_code.toUpperCase()}
+              onChange={setPhoneValue}
+              className={styles.signUpInput}
+            />
+          </div>
         </div>
+        {error?.phone && <span className={styles.authVal}>{error?.phone}</span>}
       </div>
       <div className={styles.container}>
         <p className={styles.inpTitle}>
           Set a Password <span className={styles.star}>*</span>
         </p>
-        <div className={`d-flex align-items-center ${styles.inpContainer}`}>
+        <div
+          style={{ border: error?.email ? "1px solid red" : null }}
+          className={`d-flex align-items-center ${styles.inpContainer}`}
+        >
           <span className="material-icons-outlined">lock</span>{" "}
           <input
             required
             value={password}
             type={!showPass ? "password" : "text"}
             name="password"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             id="password"
             maxLength={15}
             onChange={handleChange}
+            className={styles.signUpInput}
           />
           <button
             type="button"
@@ -188,18 +317,29 @@ const SignUpForm = ({ handleSubmit }) => {
             </span>{" "}
           </button>
         </div>
-        <p className={styles.passInstruction}>
-          Password must be at least 8 characters long with 1 Uppercase, 1
-          Lowercase & 1 Number character.
-        </p>
+        {!error.password && (
+          <span>
+            {" "}
+            Password must be at least 8 characters long with 1 Uppercase, 1
+            Lowercase & 1 Number character and one special character.
+          </span>
+        )}
+        {error?.password && (
+          <span className={styles.authVal}>{error.password}</span>
+        )}
 
-        <input value="SIGN UP" type="submit" className={styles.signUpBtn} />
+        <SignUpOtp
+          formData={Object.assign(formData, { phone: phoneValue })}
+          handleSubmit={handleSubmit}
+          language={language}
+          error={error}
+          setError={setError}
+        />
 
         <p className={styles.or}>OR</p>
 
         <div>
           <a
-            type="button"
             className={`d-flex align-items-center c-pointer`}
             style={{ justifyContent: "center", textDecoration: "underline" }}
             onClick={() => setshowLoginForm()}
@@ -208,7 +348,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </a>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
+            }
           >
             <span className={styles.btnIcon}>
               <icons.Apple />
@@ -217,7 +361,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               <icons.Facebook />
@@ -236,7 +384,11 @@ const SignUpForm = ({ handleSubmit }) => {
           </button>
           <button
             type="button"
-            className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
+            className={
+              language === "Arabic"
+                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
+                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
+            }
           >
             <span className={`material-icons-outlined ${styles.btnIcon}`}>
               phone_iphone
@@ -255,7 +407,7 @@ const SignUpForm = ({ handleSubmit }) => {
               )}
               className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
               onSuccess={(response) => responseGoogle(response)}
-              // onFailure={(responseGoogle) => console.log(responseGoogle)}
+              onFailure={(response) => console.log(response)}
             />
           </button>
         </div>

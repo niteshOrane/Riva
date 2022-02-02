@@ -32,7 +32,6 @@ export const getCustomerAddressList = () => async (dispatch) => {
 
   if (res.data.success) {
     dispatch(getAddress_action(res.data));
-    console.log('res.data', res.data.data)
   } else dispatch(getAddress_action([]));
 };
 

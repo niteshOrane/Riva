@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStore } from "../../../../../../store/actions/common";
 import style from "./MainHeaderTopBar.module.scss";
 import storeData from "../../../../../../store/index";
-import { useEffect } from "react";
+import useArabic from "../../../../../common/arabicDict/useArabic";
+
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const {translate} = useArabic();
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
-  const header = useSelector((state) => state.common.header);
+  const header = useSelector((state) => state?.common?.header);
   const foundStore =
     header?.find(({ country_id }) => country_id === currentLocation) || {};
   const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");
-  const [languageItem, setLanguageItem] = useState(" العربية");
+  const [languageItem, setLanguageItem] = useState("العربية");
   const [storeDropDown, setStoreDropDown] = useState([]);
   const dispatch = useDispatch();
   if (!store) dispatch(setStore(foundStore));
@@ -29,16 +31,23 @@ const MainHeaderTopBar = ({ mainHeader }) => {
     dispatch(setStore(head));
   };
 
-  const handleLanguageChange = (event, language) => {
+  const handleLanguageChange = (event, languageChange) => {
     let lanTochange = "";
-    language === "Arabic"
+    languageChange === "Arabic"
       ? (lanTochange = "العربية")
-      : (lanTochange = language);
+      : (lanTochange = languageChange);
     setLanguageItem(lanTochange);
+    setStoreDropDown(header.filter((e) => e.language === languageChange));
+    const foundStoreByChnageLang =
+      header?.find(
+        ({ language, country_id }) =>
+          language === languageChange && country_id === store.country_id
+      ) || {};
+
     dispatch(
       setStore({
-        ...store,
-        language: language === "English" ? "English" : "Arabic",
+        ...foundStoreByChnageLang,
+        languageChange,
       })
     );
   };
@@ -52,7 +61,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
     setLanguageItem(lanTochange);
     setPhone(data.phone || "+971 800 7482");
     if (!store) dispatch(setStore(foundStore));
-    setStoreDropDown(header.filter((e) => e.language !== data.language));
+    setStoreDropDown(header.filter((e) => e.language === data.language));
   }, [header]);
 
   return (
@@ -75,9 +84,9 @@ const MainHeaderTopBar = ({ mainHeader }) => {
         </div>
         <div className={style.topBarMsgWrapper}>
           <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
-            NEW IN:{" "}
-            <span className="color-text-primary">SPRING-SUMMER 2021</span>{" "}
-            COLLECTION
+          {translate?.home?.NEW}:{" "}
+            <span className="color-text-primary">{translate?.home?.SPRING}</span>{" "}
+            {translate?.home?.COL}
           </h4>
         </div>
         <div
@@ -105,31 +114,42 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                 }`}
               >
                 <div className={style.currencyDropdown}>
-                  {storeDropDown?.map((head) => {
-                    const { currency } = head;
-                    return (
-                      <div
-                        className={style.dropdownItem}
-                        onClick={(e) => {
-                          handleCurrencyChange(e, head);
-                        }}
-                      >
-                        <img
-                          width="24"
-                          className={style.curImage}
-                          src={`${
-                            mainHeader ? "" : "/"
-                          }assets/images/countryIcons/${currency}.png`}
-                          height="24"
-                          alt={currency}
-                        />
-                        <div className={style.curName}>{currency}</div>
-                      </div>
-                    );
-                  })}
+                  {storeDropDown?.filter(li => li?.currency !== "OMR")
+                    ?.map((head) => {
+                      const { currency } = head;
+                      return (
+                        <div
+                          className={
+                            store.language === "Arabic"
+                              ? style.dropdownItemRight
+                              : style.dropdownItem
+                          }
+                          onClick={(e) => {
+                            handleCurrencyChange(e, head);
+                          }}
+                        >
+                          <img
+                            width="24"
+                            className={style.curImage}
+                            src={`${
+                              mainHeader ? "" : "/"
+                            }assets/images/countryIcons/${currency}.png`}
+                            height="24"
+                            alt={currency}
+                          />
+                          <div className={style.curName}>{currency}</div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
-              <div className={style.angleIcon}>
+              <div
+                className={
+                  store.language === "Arabic"
+                    ? style.angleIconRight
+                    : style.angleIcon
+                }
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11.591"
@@ -153,50 +173,20 @@ const MainHeaderTopBar = ({ mainHeader }) => {
             |&nbsp;&nbsp;
             <div
               onClick={() => setLanguageShowDropdown(!showLanguageShowDropdown)}
-              className="position-relative d-flex align-items-center justify-content-center"
+              className="position-relative d-flex align-items-center"
               style={{ width: "100px" }}
             >
-              <div className={`${style.flag} d-flex`}></div>
-              <div className={style.curSelected}>{languageItem}</div>
+              <div className={`${style.flag} d-flex`} />
               <div
-                className={`${style.dropdownBody} ${
-                  showLanguageShowDropdown ? style.showDD : ""
-                }`}
+                className={style.curSelected}
+                onClick={(e) => {
+                  handleLanguageChange(
+                    e,
+                    languageItem === "English" ? "Arabic" : "English"
+                  );
+                }}
               >
-                <div className={style.currencyDropdown}>
-                  {["English", "العربية"]?.map((head) => {
-                    return (
-                      <div
-                        className={style.dropdownItem}
-                        onClick={(e) => {
-                          handleLanguageChange(e, head);
-                        }}
-                      >
-                        <div className={style.curName}>{head}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className={style.angleIcon}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="11.591"
-                  height="6.049"
-                  viewBox="0 0 11.591 6.049"
-                >
-                  <g>
-                    <path
-                      fill="#f44336"
-                      d="M117.759.2a.252.252 0 0 0-.356.356l5.364 5.364-5.367 5.368a.252.252 0 1 0 .35.362l.006-.006L123.3 6.1a.252.252 0 0 0 0-.356z"
-                      transform="translate(11.591 -117.325) rotate(90) translate(0 -0.131)"
-                    />
-                    <path
-                      d="M117.7 11.588a.252.252 0 0 1-.178-.43l5.364-5.364L117.521.43a.252.252 0 0 1 .357-.357l5.542 5.542a.252.252 0 0 1 0 .356l-5.542 5.542a.252.252 0 0 1-.178.075z"
-                      transform="translate(11.591 -117.325) rotate(90) translate(-0.119 0)"
-                    />
-                  </g>
-                </svg>
+                {languageItem === "English" ? "العربية" : "English"}
               </div>
             </div>
           </div>

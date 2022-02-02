@@ -1,10 +1,10 @@
 .circlesContainer {
-  margin-left: 3px;
+  @include left("margin", 3px);
   display: flex;
   flex-direction: column;
   gap: 4px;
   float: left;
-  margin-left: -65px;
+  @include left("margin", -65px);
   div {
     cursor: pointer;
   }
@@ -14,4 +14,13 @@
   .title {
     font-weight: normal;
   }
+}
+.confirmCard{
+  display: flex;
+  flex-direction: column;
+  height: 13rem;
+  overflow: auto;
+}
+.payMsg{
+  color: rgb(238, 20, 20);
 }

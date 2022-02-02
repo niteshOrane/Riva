@@ -1,20 +1,29 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Image from '../../common/LazyImage/Image';
-import style from './megalinks.module.scss';
-import { header } from '../../../mockdata.json';
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import Image from "../../common/LazyImage/Image";
+import style from "./megalinks.module.scss";
 
-const MegaLinks = ({ links }) => {
+const MegaLinks = ({ links, language }) => {
+  const history = useHistory();
   const [showMegaMenue, setShowMegaMenue] = useState(null);
-
+  const [childLinks, setChildLinks] = useState({});
   const handleMouseOver = (link) => {
     // document.getElementById('header').style.position = 'relative';
     setShowMegaMenue(link);
   };
-
-  const childLinks = links?.find((l) => l.url_key === showMegaMenue);
-
+  useEffect(() => {
+    const childLink = links?.find((l) => l.url_key === showMegaMenue);
+    setChildLinks(childLink ?? {});
+  }, [showMegaMenue]);
+  const onSelectCaegory = (link) => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+    sessionStorage.setItem("selectedCategory", link);
+  };
+  const redirectPath = (link, id) => {
+    setShowMegaMenue(null)
+    history.push(`/products/${link}/${id}`);
+  };
   return (
     <>
       <div
@@ -29,6 +38,9 @@ const MegaLinks = ({ links }) => {
               onMouseLeave={() => setShowMegaMenue(null)}
             >
               <Link
+                onClick={() => {
+                  onSelectCaegory(link.name);
+                }}
                 to={`/products/${link.url_key}/${link.id}`}
                 className={`${style.megaLink} p-12px d-block`}
               >
@@ -42,7 +54,8 @@ const MegaLinks = ({ links }) => {
 
               <div
                 className={`${style.megaContainer} ${
-                  showMegaMenue === link.url_key ? style.show : ''
+                  showMegaMenue === link.url_key ? style.show : ""
+                  // style.show
                 } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />
@@ -51,40 +64,29 @@ const MegaLinks = ({ links }) => {
                   <div className={style.allProductsCard}>
                     <div
                       className={`d-flex justify-content-between ${style.allProductsTitles}`}
-                      style={{
-                        flexDirection:
-                          childLinks?.children_data.find(
-                            (child) => child?.children_data?.length
-                          ) && 'row',
-                        maxHeight: childLinks?.children_data.find(
-                          (child) => child?.children_data?.length
-                        )
-                          ? 'unset'
-                          : 300,
-                        minHeight: childLinks?.children_data.find(
-                          (child) => child?.children_data?.length
-                        )
-                          ? 300
-                          : 'unset',
-                      }}
                     >
                       {childLinks?.children_data?.map((child) => (
                         <div
                           style={{
-                            display: child.children_data.length > 0 && 'flex',
-                            paddingRight: 60,
+                            display: child.children_data.length > 0 && "flex",
+                            paddingRight: language === "Arabic" ? "0" : "60",
+                            paddingLeft: language === "Arabic" ? "60" : "10px",
+                            overflow: "auto",
                           }}
                         >
                           <span>
                             <Link
+                              onClick={() => {
+                                onSelectCaegory(child.name);
+                              }}
                               to={`/products/${child.url_key}/${child.id}`}
                               className={`${style.megaLink} p-12px d-block`}
                             >
                               <p
                                 className={`${style.pLink} ${
                                   child.children_data.length > 0
-                                    ? 'color-black font-weight-700'
-                                    : 'color-gray'
+                                    ? "color-black font-weight-700"
+                                    : "color-gray"
                                 }`}
                                 onClick={() => setShowMegaMenue(null)}
                               >
@@ -96,6 +98,9 @@ const MegaLinks = ({ links }) => {
                             </Link>
                             {child.children_data?.map((childitem) => (
                               <Link
+                                onClick={() => {
+                                  onSelectCaegory(childitem.name);
+                                }}
                                 to={`/products/${childitem.url_key}/${child.id}/${childitem.id}`}
                                 className={`${style.megaLink} p-12px d-block`}
                               >
@@ -107,20 +112,30 @@ const MegaLinks = ({ links }) => {
                                 </p>
                               </Link>
                             ))}
-                          </span>{' '}
+                          </span>{" "}
                         </div>
                       ))}
                     </div>
                   </div>
                   <div className={style.megaImg}>
-                    <Image src={link.image} width="100%" alt="change me" />
+                    <div  onClick={() => redirectPath(link.url_key, link.id)}>
+                      <Image
+                       
+                        src={link?.image?.replace("index.php", "")}
+                        width="100%"
+                        alt="change me"
+                      />
+                    </div>
                     <Link
+                      onClick={() => {
+                        onSelectCaegory(link.name);
+                      }}
                       to={`/products/${link.url_key}/${link.id}`}
                       className={`${style.megaLink} p-12px d-block`}
                     >
                       <button
                         type="button"
-                        className="bg-black my-12px no-border p-12px color-white"
+                        className="bg-black my-12px no-border p-12px color-white c-pointer"
                         onClick={() => setShowMegaMenue(null)}
                       >
                         Shop Now

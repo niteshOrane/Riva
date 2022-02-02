@@ -4,7 +4,7 @@ import styles from "./DeliveredItems.module.scss";
 const DeliveredItems = ({ products }) => {
   return products?.map((product) => (
     <div className={styles.card}>
-      <span className="greyText">Order Id {product?.orderId}</span>
+      <span className="greyText">Order Number: #{product?.increment_id}</span>
       <div className={styles.carItem}>
         <div className={styles.col1}>
           <div className={styles.img}>

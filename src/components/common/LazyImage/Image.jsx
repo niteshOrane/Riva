@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { URL } from '../../../util';
+import React, { useState } from "react";
+
+import ReactImageZoom from "react-image-zoom";
+import PropTypes from "prop-types";
+import { URL } from "../../../util";
+import styles from "./lazyImage.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const LazyImage = (props) => {
   const {
@@ -11,20 +16,43 @@ const LazyImage = (props) => {
     customeStyle,
     classname,
     defaultImage,
-    type = '',
+    isCategory,
+    isZoom,
+    type = "",
+    zoomPos,
+    loading,
   } = props;
   const [error, setError] = useState(false);
 
   const srcImage =
-    src?.indexOf('http') > -1
+    src?.indexOf("http") > -1
       ? src
       : `${
-          type === 'product-details' ? URL.baseUrlProduct : URL.baseUrl
+          type === "product-details" ? URL.baseUrlProduct : URL.baseUrl
         }/${src}`;
 
   const onImageError = () => {
     setError(true);
   };
+  const propsImg = {
+    width: 660,
+    height: 874,
+    img: srcImage ? srcImage : defaultImage,
+
+    zoomStyle: "z-index:10;right:-11px;border:1px solid black",
+    zoomPosition: zoomPos,
+  };
+
+  if (isZoom) {
+    return (
+      <div>
+        <ReactImageZoom {...propsImg} />
+      </div>
+    );
+  }
+  if (loading) {
+    <Skeleton />;
+  }
 
   return (
     <img
@@ -33,14 +61,14 @@ const LazyImage = (props) => {
           ? srcImage
           : defaultImage
           ? defaultImage
-          : 'https://via.placeholder.com/295x295?text=Image+Not+Available'
+          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
       }
       onError={onImageError}
       width={width}
       height={height}
-      alt={alt || 'No image available'}
+      alt={alt || "No image available"}
       style={customeStyle}
-      className={classname}
+      className={isCategory ? `${styles.category}` : classname}
     />
   );
 };

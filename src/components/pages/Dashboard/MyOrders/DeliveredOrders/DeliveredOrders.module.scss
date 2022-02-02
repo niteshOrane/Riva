@@ -9,12 +9,8 @@
     .col1 {
       display: flex;
       .img {
-        margin-right: 12px;
-        img {
-          max-width: 100px;
-          height: 100px;
-          object-fit: contain;
-        }
+        @include right('margin', 20px);
+        width: 10rem;
       }
       .colorSize {
         display: flex;
@@ -29,24 +25,49 @@
       }
     }
     .deliveredIcon {
-      display: inline-block;
-      width: 12.5px;
-      height: 12.5px;
+      width: 100px;
+      height: 100px;
+      font-size: 1rem;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
       border: solid 2px #26a541;
       background-color: #26a541;
-      border-radius: 50%;
     }
     .processIcon {
-      display: inline-block;
-      width: 12.5px;
-      height: 12.5px;
+      width: 100px;
+      height: 100px;
+      font-size: 1rem;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      color:#fff;
       border: solid 2px orange;
       background-color: orange;
-      border-radius: 50%;
     }
   }
   
   .icon {
-    margin-right: 12px;
+    @include right('margin', 12px);
   }
 }
+.incrementWrap{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  .statusText{
+    margin-right: 10rem;
+  }
+}
+.reorder{
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+}
+.orderDate{
+  padding-top: 0.5rem;
+  width: 10rem;
+  color: gray;
+}
+

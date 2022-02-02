@@ -1,6 +1,10 @@
 $footer-grey-color: #737373;
 
 .footer {
+  background-image: url("/assets/images/footerShape1.png"),
+    url("/assets/images/footerShape2.png");
+  background-position: left top, right bottom;
+  background-repeat: no-repeat;
   background-color: $footer-bg;
   font-family: Jost;
   .footerGrid {
@@ -58,9 +62,12 @@ $footer-grey-color: #737373;
           border: none;
           cursor: pointer;
           background-color: #fff;
-          padding: 10px;
+          // padding: 10px;
           color: #000;
           font-size: 1.1rem;
+         
+          height: 34.3px;
+          padding: 7px 21.3px 5.3px 17px;
         }
       }
 
@@ -108,14 +115,15 @@ $footer-grey-color: #737373;
 
       .m {
         font-size: 14px;
-        margin: 12px 0;
+        //margin: 12px 0;
+        @include sideValues('margin', 12px 0 12px 0);
         display: flex;
         align-items: center;
         span:nth-child(1) {
           color: $footer-grey-color;
         }
         .clrGrey {
-          margin-left: 9px;
+          @include left('margin', 9px);
           color: $footer-grey-color;
         }
       }
@@ -137,35 +145,57 @@ $footer-grey-color: #737373;
 
   .toTopBtn {
     position: relative;
-    background-color: black;
-
+    display: none;
+  
+    background-color: black !important;
     span {
-      position: absolute;
+      position: fixed;
+      cursor: pointer;
       bottom: 200px;
       right: 32px;
       height: 40px;
       width: 40px;
-      background: #181617;
+      background: black;
     }
   }
   .copyRightText {
-    margin-left: 22px;
+   // margin-left: 22px;
+   @include left('margin', 22px);
     color: #737373;
   }
   .copyRightSec {
     margin-top: 20px;
+
+   // @include top('margin', 20px);
     border-top: 1px solid #3f3f3f;
-    padding: 16px 0 22.8px;
-    margin-left: 75px !important;
+   // padding: 16px 0 22.8px;
+    @include sideValues('padding', 16px 0 0 22.8px);
+    //margin-left: 75px !important;
+    @include left('margin', 75px, !important);
     width: 88%;
     .weAcceptImage {
       max-width: 407px;
-      margin-left: 18px;
+      img{
+        height: 26px;
+        width: 314px;
+      }
+      @include left('margin', 18px);
+      //margin-left: 18px;
     }
   }
 }
 
-.arrowIcons{
-  width :8px;
+.arrowIcons {
+  width: 8px;
   height: 6px;
+}
+.footerLogoImg{
+  width: 130px;
+  height: 25px;
+}
+.footerLinkIcon {
+  @include left('margin', 2rem);
+}
+.text_alignmemt{
+  @include left('margin', .5rem);
 }

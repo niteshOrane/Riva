@@ -1,9 +1,13 @@
 import React from "react";
 import styles from "./Details.module.scss";
 import { Link } from "react-router-dom";
-function Details({deliveryAddress,amount}) {
-  const {firstname,lastname,street,region,country_id,postcode,telephone} = deliveryAddress
+import { useSelector } from "react-redux";
+function Details({deliveryAddress,amount,orderCurrency}) {
+  const {firstname,lastname,street,region,country_id,postcode,telephone,city} = deliveryAddress
   const {total, shippingAmount,totalPaid} = amount
+  const { currency_symbol } = useSelector(
+    (state) => state?.common?.store
+  );
   return (
     <>
       <div className={styles.container}>
@@ -19,7 +23,7 @@ function Details({deliveryAddress,amount}) {
           <div className={styles.bodyLeft}>
             <h5 className={styles.name}>{`${firstname} ${lastname}`}</h5>
             <address className={`${styles.greyText} ${styles.address}`}>
-              {`${street.map(li => li)}, ${region}, ${postcode}`}
+              {`${street.map(li => li)}, ${city || region}, ${postcode}`}
               <div>{`${country_id}`}</div>
             </address>
             <div>{telephone} </div>
@@ -27,22 +31,22 @@ function Details({deliveryAddress,amount}) {
           <div className={styles.bodyRight}>
             <div className="d-flex justify-content-between">
               <div className={styles.greyText}>Item :</div>
-              <div className={styles.greyText}>${total}</div>
+              <div className={styles.greyText}>{orderCurrency}{" "}{total}</div>
             </div>
             <div className="d-flex justify-content-between">
               <div className={styles.greyText}>Shipping:</div>
-              <div className={styles.greyText}>${shippingAmount}</div>
+              <div className={styles.greyText}>{orderCurrency}{" "}{shippingAmount}</div>
             </div>
             <div className="d-flex justify-content-between">
               <div>Total</div>
-              <div>${totalPaid}</div>
+              <div>{orderCurrency}{" "}{totalPaid}</div>
             </div>
           </div>
         </div>
       </div>
       <Link
         className="p-12px d-inline-block mt-12px bg-black color-white no-border c-pointer"
-        to="/delivered"
+        to={`/myOrder/${"orders"}`}
       >
         GO TO MY ORDERS
       </Link>

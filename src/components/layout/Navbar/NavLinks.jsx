@@ -1,14 +1,15 @@
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { logoutUser } from '../../../services/auth/auth.service';
-import { logout } from '../../../store/actions/auth';
+import { useHistory } from 'react-router-dom';
+import MenuListComposition from './MenuItem';
 import { toggleCart } from '../../../store/actions/cart';
 import { toggleSignUpCard } from '../../../store/actions/common';
-import { hardReload } from '../../../util';
+import useArabic from '../../common/arabicDict/useArabic';
 
-const NavLinks = () => {
+const NavLinks = React.memo(() => {
   const history = useHistory();
+  const { translate } = useArabic();
   const { data = [] } = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist.data);
   const auth = useSelector((state) => state.auth);
@@ -28,29 +29,22 @@ const NavLinks = () => {
             isAuth ? history.push('/wishlist') : openSignUpCard('/wishlist');
           }}
         >
-          <span className="material-icons-outlined font-light-black">
+          <span className=" personIcon material-icons-outlined font-light-black">
             favorite_border
           </span>
           <span className="align-self-end font-light-black">
-            Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
-          </span>{' '}
+           {translate?.nav?.WISH}({isAuth ? wishlist.length ?? 0 : 0})
+            &nbsp; &nbsp;
+          </span>{'   '}
         </span>
       </li>
 
       <li className="nav-li">
         <span
-          onClick={() => {
-            isAuth ? history.push('/dashboard') : openSignUpCard('');
-          }}
           className="d-flex align-items-center gap-12"
         >
-          <span className="material-icons-outlined font-light-black">
-            person
-          </span>
-          <span className="align-self-end font-light-black">
-            {' '}
-            {'Account'}
-          </span>{' '}
+           <MenuListComposition auth={auth} history={history} openSignUpCard={openSignUpCard} translate={translate} />
+         {' '}
         </span>
       </li>
       <li className="nav-li">
@@ -62,12 +56,12 @@ const NavLinks = () => {
             shopping_cart
           </span>
           <span className="align-self-end font-light-black">
-            Cart ({data?.length || 0})
+          {translate?.nav?.CART} ({data?.length || 0})
           </span>{' '}
         </a>
       </li>
     </ul>
   );
-};
+});
 
 export default NavLinks;

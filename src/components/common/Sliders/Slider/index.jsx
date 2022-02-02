@@ -4,6 +4,7 @@ import SectionHeader from '../../SectionHeader/SectionHeader';
 
 const Slider = React.forwardRef((props, ref) => {
   const {
+    recomended,
     bgImage,
     bgImageUrl,
     className = '',
@@ -33,10 +34,13 @@ const Slider = React.forwardRef((props, ref) => {
         className={className}
         style={{
           right: 0,
+          width:"37px",
+          height:"115px",
+          marginBottom:"15px"
         }}
         onClick={onClick}
       >
-        <span>›</span>
+        <span >›</span>
       </div>
     );
   }
@@ -47,8 +51,10 @@ const Slider = React.forwardRef((props, ref) => {
       <div
         className={className}
         style={{
-          left: 0,
+          left: "25px",
           zIndex: 1,
+          width:"37px",
+          height:"115px",
         }}
         onClick={onClick}
       >
@@ -66,7 +72,7 @@ const Slider = React.forwardRef((props, ref) => {
         bgImage
           ? {
               backgroundImage: `url(${bgImageUrl})`,
-              backgroundPosition: 'center',
+              // backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
             }
@@ -80,7 +86,7 @@ const Slider = React.forwardRef((props, ref) => {
         </div>
       )}
       <SlickCarousel {...carouselOptions} ref={ref}>
-        {items.map((item, index) => (
+        {items?.map((item, index) => (
           <div key={index}>{render(item, index)}</div>
         ))}
       </SlickCarousel>

@@ -5,11 +5,15 @@ import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
 import HomeLayout from "../Layouts/HomeLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Page404 from "../pages/404/NotFound";
+
 const LandingHome = React.lazy(() => import("../pages/Landing/HomeLanding"));
 const Landing = React.lazy(() => import("../pages/Landing/Landing"));
 const Product = React.lazy(() => import("../pages/Product/Product"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
 const WishList = React.lazy(() => import("../pages/WishList/WishList"));
+
+const CreatePassword = React.lazy(() => import("../components/common/Cards/SignUpCard/CreatePassword/CreatePassword"));
 
 const DeliveryAddress = React.lazy(() =>
   import("../pages/Delivery-address/DeliveryAddress")
@@ -21,12 +25,17 @@ const CancelledOrders = React.lazy(() =>
 const TrackYourOrder = React.lazy(() =>
   import("../pages/TrackYourOrder/TrackYourOrder")
 );
+
+
 const ChangePassword = React.lazy(() =>
   import("../pages/ChangePassword/ChangePassword")
 );
 const Coupons = React.lazy(() => import("../pages/Coupons/Coupons"));
 const OrderConfirmed = React.lazy(() =>
   import("../pages/OrderConfirmed/OrderConfirmed")
+);
+const ResultPage = React.lazy(() =>
+  import("../pages/OrderConfirmed/ResultPage")
 );
 const MySubscription = React.lazy(() =>
   import("../pages/MySubscription/MySubscription")
@@ -53,6 +62,13 @@ const ProfileInformation = React.lazy(() =>
 const ManageAddress = React.lazy(() =>
   import("../pages/Manage-address/ManageAddress")
 );
+const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
+const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"))
+
+//order info
+
+const OrderInformation = React.lazy(() => import("../components/pages/OrderInformation/InformationGrid"))
+
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -66,6 +82,22 @@ class AppRoutes extends Component {
         name: "Landing page",
         layout: HomeLayout,
         index: 0,
+      },
+      {
+        path: "/404",
+        component: Page404,
+        exact: true,
+        name: "Landing page",
+        layout: HomeLayout,
+        index: 404,
+      },
+      {
+        path: "/createpassword",
+        component: CreatePassword,
+        exact: true,
+        name: "Landing page",
+        layout: HomeLayout,
+        index: 13,
       },
       {
         path: "/type/:mainCategoryId",
@@ -108,7 +140,14 @@ class AppRoutes extends Component {
         layout: MainLayout,
         index: 3,
       },
-
+      {
+        path: "/contact-us",
+        component: ContactUs,
+        exact: true,
+        name: "Shopping Cart",
+        layout: MainLayout,
+        index: 3,
+      },
       {
         path: "/:identifier",
         component: CMSContent,
@@ -153,13 +192,14 @@ class AppRoutes extends Component {
         index: 6,
       },
       {
-        path: "/order-confirmed",
-        component: OrderConfirmed,
+        path: "/result/:type",
+        component: ResultPage,
         exact: true,
-        name: "OrderConfirmed",
+        name: "ResultPage",
         layout: MainLayout,
         index: 6,
       },
+
       {
         path: "/track-your-order",
         component: TrackYourOrder,
@@ -209,7 +249,7 @@ class AppRoutes extends Component {
         index: 9,
       },
       {
-        path: "/delivered",
+        path: "/myOrder/:orderType",
         component: Delivered,
         exact: true,
         name: "Delivered",
@@ -221,6 +261,14 @@ class AppRoutes extends Component {
         component: CancelledOrders,
         exact: true,
         name: "CancelledOrders",
+        layout: MainLayout,
+        index: 11,
+      },
+      {
+        path: "/my-reviews",
+        component: Reviews,
+        exact: true,
+        name: "MyReviews",
         layout: MainLayout,
         index: 11,
       },
@@ -261,6 +309,14 @@ class AppRoutes extends Component {
         component: ManageAddress,
         exact: true,
         name: "Manage Address",
+        layout: MainLayout,
+        index: 15
+      },
+      {
+        path: "/order-details/:number",
+        component: OrderInformation,
+        exact: true,
+        name: "Order Information",
         layout: MainLayout,
         index: 15
       },

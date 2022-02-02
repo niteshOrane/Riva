@@ -19,7 +19,7 @@
             color: #181617;
             padding: 9px;
             border-radius: 20px;
-            margin-left: 6px;
+            @include left('margin',6px);
             border: none;
         }
     }
@@ -28,7 +28,7 @@
             border-bottom: 1px solid #ddd;
             padding: 12px;
         .title{
-            margin-left: 20px;
+            @include left('margin',20px);
         }
     }
     }

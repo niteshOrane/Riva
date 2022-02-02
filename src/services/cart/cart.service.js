@@ -5,9 +5,11 @@ import { getCustId, getCartId, getStoreId } from "../../util";
 export const addToCartService = (id, color, size, qty) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${getCartId() || 0
-      }&productInfo[customer_id]=${getCustId() || 0
-      }&productInfo[store_id]=${getStoreId()}`,
+    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
+      getCartId() || 0
+    }&productInfo[customer_id]=${
+      getCustId() || 0
+    }&productInfo[store_id]=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -24,9 +26,14 @@ export const getCartPaymentInfo = () => {
 
 export const getCartService = () => {
   const config = {
-    method: "get",
-    url: `${API_URL}/carts/${getCartId()}/items`,
+    method: "post",
+    url: `${API_URL}/cartlisting`,
     silent: true,
+    data: {
+      storeId: getStoreId(),
+      customerId: getCustId(),
+      quoteId: getCartId(),
+    },
   };
   return axios(config);
 };
@@ -67,10 +74,60 @@ export const getProductIdBySku = (sku) => {
   return axios(config);
 };
 
-export const cartPaymentAction = (token) => {
+export const cartPaymentAction = (token, type) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=checkoutcom_card_payment&paymentInfo[transactionDetails]=${JSON.stringify(token)}`,
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(
+      token
+    )}`,
+    silent: true,
+  };
+  return axios(config);
+};
+export const Hypy_PaymentCart = (data, cardType) => {
+  const config = {
+    method: "get",
+    url: `${API_URL}/webapi/processhyperpay${data}&method=${cardType}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const cartPaymentTapAction = (submethod) => {
+  const config = {
+    method: "post",
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+export const finalCallTapAction = (id) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/processtap?paymentData[tap_id]=${id}`,
+    silent: true,
+  };
+  return axios(config);
+};
+export const getFreeShippingInfo = (cartId) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/webapi/getfreeshipping?quoteId=${cartId}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+// Cod
+export const placeCodOrder = (type) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=${type}`,
     silent: true,
   };
   return axios(config);

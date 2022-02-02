@@ -7,36 +7,22 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../../../../store/actions/common";
 import { Frames, CardNumber, ExpiryDate, Cvv } from "frames-react";
 
-const Tab2Content = ({onPayNow}) => {
+const Tab2Content = ({ onPayNow, paymentType }) => {
   const dispatch = useDispatch();
-  const [validation,setValidation] = React.useState(false)
-  // const onPayNow = async (e) => {
-  //   if (e) {
-  //     setLoading(true)
-  //     const res = await cartPaymentAction(e);
-  //     if (res.status === 200) {
-  //       setLoading(false)
-  //       dispatch(showSnackbar("Payment success", "success"));
-  //       dispatch({
-  //         type: DATA_TYPES.SET_CART_ID,
-  //         payload: { cart_id: 0 },
-  //       });
-  //       dispatch({
-  //         type: DATA_TYPES.SET_BULK_CART,
-  //         payload: [],
-  //       });
-  //       history.push(`/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`);
-  //     } else {
-  //       dispatch(showSnackbar("Payment Failed", "error"));
-  //     }
-  //   }
-  // };
+  const [validation, setValidation] = React.useState(false)
   const showValidation = (e) => {
-    if(!e.isValid || e.isEmpty){
+    if (e.isEmpty) return setValidation(true)
+    if (!e.isValid || e.isEmpty) {
       setValidation(true)
-    }else{
+    } else {
       setValidation(false)
     }
+  }
+  const gtmDataLayer = () => {
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({
+      'bookTitle': 'Cien años de soledad',
+  });
   }
   return (
     <div>
@@ -44,8 +30,7 @@ const Tab2Content = ({onPayNow}) => {
       <Frames
         id={styles.cardNumber}
         config={{
-          debug: true,
-          publicKey: "pk_test_15144f98-d5cf-435d-943c-325ed98564ba",
+          publicKey: paymentType,
           localization: {
             cardNumberPlaceholder: "Card number",
             expiryMonthPlaceholder: "MM",
@@ -81,12 +66,13 @@ const Tab2Content = ({onPayNow}) => {
           className={styles.payNowBtn}
           onClick={() => {
             Frames.submitCard();
+            gtmDataLayer();
           }}
         >
           PAY NOW
         </button>
       </Frames>
-      <br/>
+      <br />
       {validation && <span className={styles.cardValidation}>Please enter valid card details</span>}
     </div >
   );

@@ -21,12 +21,12 @@ const DescriptionComposition = ({ product, compositioncare, prodDiscr }) => {
           <p className={styles.title}>
             {compositioncare?.data?.[0]?.composition_label || 'Composition'}
           </p>
-          <strong className="my-10px d-inline-block">Outer</strong>
+          <p className="my-10px d-inline-block">Outer</p>
           <div className="my-10">
             <p className="opacity-7">{product.polyester}% polyester</p>
             <p className="opacity-7">{product.viscose}% viscose</p>
             <div className="mt-12px">
-              <h3>{compositioncare?.data?.[0]?.care_label}</h3>
+              <p>{compositioncare?.data?.[0]?.care_label}</p>
               <div className="mt-12px d-flex align-items-center gap-12px">
                 <div title={compositioncare?.data?.[0]?.Wash}>
                   <img

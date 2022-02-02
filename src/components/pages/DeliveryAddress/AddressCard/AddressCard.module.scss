@@ -1,0 +1,56 @@
+.card{
+    width: 20rem;
+    height: 15.5rem;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 6px -6px black;
+    background-clip: border-box;
+}
+.cardHeader{
+    text-align: center;
+    padding-top: 0.6rem !important;
+    padding-bottom: 1rem !important;
+    h3{
+        padding-bottom: 0.6rem;
+    }
+}
+.cardBody{
+    padding-left: 1rem;;
+    line-height: 15px;
+    margin-top: 10px;
+    p{
+       line-height: 30px; 
+    }
+}
+.name{
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.edit{
+    margin-right: 0px;
+    color: #007eb9;
+}
+.edit:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #C7511F;
+    background: transparent !important;
+}
+.delete:hover{
+    text-decoration: underline !important;
+    cursor: pointer;
+    color: #C7511F;
+}
+.delete{
+    margin-left: 0px;
+    font-weight: bold !important;
+    cursor: pointer;
+    color: #007eb9 !important;
+    border: none !important;
+}
+.action{
+    font-weight: bold;
+    cursor: pointer;
+}

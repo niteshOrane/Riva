@@ -1,5 +1,6 @@
 import React from 'react';
 import useCMSContent from './useCMSContent';
+import './CMSContent.css';
 
 const CMSContent = ({ match }) => {
   const { identifier } = match.params;

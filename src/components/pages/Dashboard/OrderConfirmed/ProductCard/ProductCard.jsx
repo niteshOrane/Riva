@@ -1,23 +1,41 @@
 import React from "react";
 import styles from "./ProductCard.module.scss";
-import { extractColorSize } from '../../../../../util';
+import { extractColorSize } from "../../../../../util";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useSelector } from "react-redux";
 
-function ProductCard({ product }) {
+function ProductCard({
+  product,
+  cancelOrderFn,
+  trackOrder,
+  value,
+  displayOrderNumber,
+  status,
+  loading,
+  orderCurrency
+}) {
+  const { currency_symbol} = useSelector(
+    (state) => state?.common?.store
+  );
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
-      options.map((o) => ({
-        label: o.option_id === '92' ? 'Color' : 'Size',
+      options?.map((o) => ({
+        label: o.option_id === "92" ? "Color" : "Size",
         values: [{ value_index: o.option_value }],
+        attribute_id: o.option_id,
       }))
     );
 
     return { colors, size };
   };
-  const colorSize = getColorSize(product?.parent_item?.product_option.extension_attributes?.configurable_item_options)
+  const colorSize = getColorSize(
+    product?.parent_item?.product_option.extension_attributes
+      ?.configurable_item_options
+  );
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <img src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/b4bac6c2-516e-4778-89c1-fdf75fc725ce.png" width="100%" alt={product?.name} />
+        <img src={product?.image} width="100%" alt={product?.name} />
       </div>
       <div className={styles.productDetails}>
         <h4 className={styles.name}>{product?.name}</h4>
@@ -30,8 +48,27 @@ function ProductCard({ product }) {
           <span>{colorSize.size?.[0]?.label}</span>
         </div>
         {/* <p className={styles.mt4}>Order Placed @ nitesh{product?.placedDate}</p> */}
-        <p>Order ID #{product?.order_id}</p>
-        <p>Payment: {product?.parent_item?.price}</p>
+        <p>
+          Order Number: #
+          {trackOrder ? value : displayOrderNumber || product?.increment_id}
+        </p>
+        <p>Payment: {orderCurrency || currency_symbol}{" "}{product?.parent_item?.price}</p>
+        {cancelOrderFn && status === "pending" ? (
+          <div
+            className= "underline underline-hovered c-pointer font-weight-normal color-blue d-flex"
+            onClick={(e) => {
+              cancelOrderFn(e, product?.order_id);
+            }}
+            type="button"
+          >
+            {loading ? "" : "Cancel order"}
+            {loading && (
+              <div className={styles.cancelLoader}>
+                <CircularProgress size={12} />
+              </div>
+            )}
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -20,5 +20,10 @@
 
 .bestSellingProductsContainer li + li:before {
   content: " | ";
-  padding: 0 10px;
+  @include right('padding', 9px);
+  @include left("padding",9px)
+}
+.bestSke{
+  display: flex;
+  justify-content: space-around;
 }

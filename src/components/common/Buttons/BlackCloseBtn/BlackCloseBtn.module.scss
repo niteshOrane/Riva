@@ -17,6 +17,20 @@
     border-color: #ff9a9a;
   }
 }
+.filterBtn{
+  display: flex;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  margin: 5px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid black;
+  transition: all 0.3s ease;
+}
 .top {
   position: absolute;
   right: 20px;

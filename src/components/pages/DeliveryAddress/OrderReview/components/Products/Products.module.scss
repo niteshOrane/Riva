@@ -1,5 +1,7 @@
 .container {
   margin-top: 20px;
+  max-height: 20rem;
+  overflow: auto;
   .greyText {
     color: #666464;
   }
@@ -12,11 +14,11 @@
     margin: 12px;
     grid-template-columns: 2fr 1fr 1fr;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 7px;
+    padding-bottom: 30px;
     opacity: 0.8;
     .col1 {
       .textArea{
-        width: 102px;
+        width: 110px;
         height: 35px;
         margin: 0px 0px 11px 11px;
         font-family: Roboto;

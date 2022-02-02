@@ -1,5 +1,5 @@
 .horizontalProductCard {
-    height: 150px;
+    height: 165px;
 
     img {
         width: 100px;
@@ -7,7 +7,6 @@
 
     .price {
         font-size: 10px;
-        font-weight: 500;
         margin-top: 5px;
         justify-content: center;
 
@@ -16,7 +15,6 @@
             height: 18px;
             margin-right: 8px;
             font-size: 15px;
-            font-weight: 700;
             font-stretch: normal;
             font-style: normal;
             line-height: 1.47;
@@ -30,7 +28,6 @@
             display: inline-block;
             height: 18px;
             font-size: 15px;
-            font-weight: 700;
             margin-left: 5px;
             font-stretch: normal;
             font-style: normal;
@@ -85,4 +82,20 @@
         margin-bottom: 25px;
         cursor: pointer;
     }
+}
+.was{
+    @include right("margin",4px)
+}
+
+.text{
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    border: solid 1px #b2aeae;
+    padding:3px 5px
+}
+.selectSize{
+    font-size: 15px;
+    opacity: 0.7;
+    color: gray;
 }

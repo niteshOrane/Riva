@@ -1,7 +1,7 @@
 .topBarcontainer {
   height: 37px;
   .topBarRight {
-    margin-left: 88px;
+    @include left('margin', 88px);
     display: flex;
     align-items: center;
     @include mobile {

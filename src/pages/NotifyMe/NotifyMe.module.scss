@@ -27,3 +27,14 @@
     }
   }
 }
+.redirectBtn{
+  border: none;
+  border-bottom: 1px ridge lightgray;
+  outline: none;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: transparent;
+  &:hover{
+    border-bottom: 1px ridge black;
+  }
+}

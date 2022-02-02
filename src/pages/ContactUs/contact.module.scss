@@ -1,0 +1,12 @@
+.wrap{
+    width: 100%;
+    display: flex;
+    margin-left: 4rem;
+    position: relative;
+    .title {
+        font-size: 1.25rem;
+        text-align: center;
+        padding: 4px 0;
+        font-weight: normal;
+      }
+}

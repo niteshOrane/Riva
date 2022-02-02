@@ -9,9 +9,11 @@ import { getStoreId } from "../../../util";
 import storeData from "../../../store/index";
 
 import { addSubscribeList } from "../../../store/actions/subscription/index";
+import useArabic from "../../common/arabicDict/useArabic";
 
 function Footer() {
   const dispatch = useDispatch();
+  const {translate} = useArabic()
   const [phone, setPhone] = useState("+971 800 7482");
   const [value, setValue] = useState("");
   const handleChange = (e) => setValue(e.target.value);
@@ -37,31 +39,29 @@ function Footer() {
             <h4 className={style.title}>{section.section.toUpperCase()}</h4>
             <ul className={style.ul}>
               {section.data.map((link, i) => (
-                <li
-                  key={i}
-                  className={`d-flex align-items-center ${style.link}`}
-                >
-                  <Link
-                    to={`/${link.href.split("/").pop()}`}
-                    className={`w-100 ${style.footerLink}`}
+                <>
+                  <li
+                    key={i}
+                    className={`d-flex align-items-center ${style.link}`}
                   >
-                    <span
-                      className={`material-icons`}
+                    <Link
+                      to={`/${link.href.split("/").pop()?.toLowerCase() === "customer-service" ? "contact-us" : link.href.split("/").pop()}`}
+                      className={`w-100 ${style.footerLink}`}
                     >
-                      arrow_forward
-                    </span>
-                    <span style = {{marginLeft:"2rem"}}>{link.name}</span>
-                  </Link>
-                </li>
+                      <img src="/assets/images/footerArr.svg" alt={link.name} />
+                      <span className={style.footerLinkIcon}>{link.name}</span>
+                    </Link>
+                  </li>
+                </>
               ))}
             </ul>
           </div>
         ))}
         <div className={`${style.footerCol} ${style.maxWidth80}`}>
-          <h4 className={style.title}>STAY IN TOUCH</h4>
+          <h4 className={style.title}>{translate?.footer?.TOUCH}</h4>
           <div>
             <p className={style.thirdMsg}>
-              Get exclusive deals you will not find anywhere else straight to
+            {translate?.footer?.DEALS}
               ...
             </p>
           </div>
@@ -77,12 +77,12 @@ function Footer() {
           </div>
           <div className={style.sub}>
             <button onClick={(e) => handleOnSubmit(e)} type="button">
-              SUBSCRIBE
+            {translate?.footer?.SUBS}
             </button>
           </div>
         </div>
         <div className={`${style.footerCol} ${style.lastCol}`}>
-          <h4 className={style.title}>STAY CONNECTED</h4>
+          <h4 className={style.title}>{translate?.footer?.STAY}</h4>
           <ul className="d-flex align-items-center justify-content-between">
             <a
               href="https://www.snapchat.com/add/rivafashion/"
@@ -131,9 +131,9 @@ function Footer() {
           </ul>
 
           <div className={style.m}>
-            <span className="material-icons-outlined">settings_phone</span>
-            <div>
-              <span className={style.clrGrey}>Customer care:&nbsp;</span>
+            <img src="/assets/images/footerPhn.png" alt="" />
+            <div className={style.text_alignmemt}>
+              <span className={style.clrGrey}>{translate?.footer?.CARE}:&nbsp;</span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
               </a>
@@ -144,9 +144,9 @@ function Footer() {
             <span>
               <icons.FooterWhatsapp />
             </span>
-            <div>
+            <div className={style.text_alignmemt}>
               <span className={style.clrGrey}>
-                WhatsApp Customer Care:&nbsp;
+              {translate?.footer?.WHATS}:&nbsp;
               </span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
@@ -154,7 +154,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className={style.lm}>
+          <div className={style.lm} >
             <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
               <a
@@ -189,6 +189,7 @@ function Footer() {
       </div>
       <CopyRightSection />
       <div
+        id="myBtn"
         className={`${style.toTopBtn} c-pointer`}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >

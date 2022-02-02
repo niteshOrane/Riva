@@ -8,27 +8,36 @@ import styles from "./OrderReview.module.scss";
 import { showSnackbar } from "../../../../store/actions/common";
 import { toggleCart } from "../../../../store/actions/cart";
 import { deliveryCheck } from "../../../../services/address/address.service";
+import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
+import { getCartId } from "../../../../util";
+import TagManager from 'react-gtm-module'
 
 function OrderReview({
   deliverySpeed,
   cartPayment,
   callBackAfterApplyCoupan,
   addressItem,
+  translate
 }) {
   const history = useHistory();
+  console.log({cartPayment});
 
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
   const { data: items = [] } = useSelector((state) => state.cart);
   const { cart_id } = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.auth.customer);
   const dispatch = useDispatch();
   const [activeDelivery, setActiveDelivery] = React.useState(null);
   const [news, setNews] = React.useState(true);
-  const [cartPaymentInfo, setCartPaymentInfo] = React.useState({});
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(null);
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
+  const [paymentFee,setPaymentFee] = useState(0);
+  const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const handleApplyCoupon = async (e) => {
@@ -44,38 +53,58 @@ function OrderReview({
         data: coupon,
       };
       const res = await axios(config);
-      if (res.data.success === 200) {
+      if (res.data.success) {
         dispatch(showSnackbar(res.data.message, "success"));
         setCouponDiscount(true);
-
         callBackAfterApplyCoupan();
         setDiscount(res.data.data.discount);
-      } else if (res.data.success === 201) {
-        dispatch(showSnackbar(res.data.message, "success"));
-        setCouponDiscount(true);
+      } else if (!res.data.success) {
+        dispatch(showSnackbar(res.data.message, "error"));
       }
     }
   };
-  
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    if (activeDelivery != null) {
+    if (activeDelivery && activeDelivery != null) {
+      const tagManagerArgs = {
+        gtmId: 'GTM-P84HSVZ',
+        dataLayer: {
+            category: 'placeOrder',
+            action: 'test',
+            label:"testtt",
+            value:10
+        }
+    }
+    TagManager.initialize(tagManagerArgs)
       history.push("/cart-payment");
     } else {
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
     }
   };
+  const getShippingInfo = async () => {
+    const res = await getFreeShippingInfo(getCartId());
+    if (
+      res &&
+      res.status === 200 &&
+      res?.data &&
+      res?.data?.length &&
+      res?.data?.[0]
+    ) {
+      setFreeShippingInfo(res?.data?.[0]?.message);
+    }
+  };
   useEffect(() => {
     dispatch(toggleCart(false));
     const amount =
-      items.reduce((total, item) => total + item.price * item.qty, 0) || 0;
+      items.reduce(
+        (total, item) => parseFloat(total + item.price * item.qty),
+        0
+      ) || 0;
     setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
+    // setPaymentFee(cartPayment?.)
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
-    setActiveDelivery(
-      cartPayment?.shipping_method
-    );
     setTotalDC(
       cartPayment?.total_segments?.find((e) => e.code === "shipping")?.value
     );
@@ -83,9 +112,8 @@ function OrderReview({
     setTotalAmout(
       cartPayment?.total_segments?.find((e) => e.code === "subtotal")?.value
     );
-    setCartPaymentInfo(cartPayment);
+    getShippingInfo();
   }, [cartPayment]);
-
   const handleRemoveCoupon = async (e) => {
     e.preventDefault();
     if (customerid) {
@@ -134,6 +162,8 @@ function OrderReview({
         region
       );
       if (res.status === 200) {
+        setActiveDelivery(`${val?.carrier_code}_${val?.method_code}`);
+        setTotalDC(val?.price_incl_tax);
         dispatch(showSnackbar("Delivery speed added successfully", "success"));
         callBackAfterApplyCoupan();
       } else {
@@ -143,22 +173,28 @@ function OrderReview({
       dispatch(showSnackbar("Add a delivery address first", "error"));
     }
   };
-
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
-        <div className={styles.title}>ORDER REVIEW</div>
-        <div className="d-flex align-items-center">
-          <span className="material-icons-outlined">edit</span>
-          <span className="underline underline-hovered c-pointer">Edit</span>
-        </div>
+        <div className={styles.title}>{translate?.deliveryAddress?.ORDER}</div>
+        <Link to="/shopping-cart" className="c-pointer">
+          <div className="d-flex align-items-center c-pointer">
+            <span className="material-icons-outlined">edit</span>
+            <span className="underline underline-hovered c-pointer">Edit</span>
+          </div>
+        </Link>
       </div>
       <div className="mt-20px d-flex align-items-center">
-        <span style={{ margin: "4px" }}>
+        <span
+          style={{
+            margin: "4px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.CouponIcon />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-          Enter your coupon code if you have any.
+        {translate?.deliveryAddress?.ENTER}
         </span>
       </div>
       <div className={styles.applyCoupon}>
@@ -166,53 +202,55 @@ function OrderReview({
           name="coupon"
           onChange={(event) => setCouponCode(event.target.value)}
           type="text"
+          readOnly={couponDiscount}
           value={couponCode}
         />
-        <button
-          type="button"
-          onClick={handleApplyCoupon}
-          className={`${styles.applyBtn} c-pointer`}
-        >
-          APPLY
-        </button>
-        {couponDiscount && (
+        {!couponDiscount ? (
+          <button
+            type="button"
+            onClick={handleApplyCoupon}
+            className={`${styles.applyBtn} c-pointer`}
+          >
+            {translate?.deliveryAddress?.APPLY}
+          </button>
+        ) : (
           <button
             type="button"
             onClick={handleRemoveCoupon}
             className={`${styles.applyBtn} c-pointer`}
             style={{ marginLeft: "0.5rem" }}
           >
-            REMOVE
+            {translate?.deliveryAddress?.REMOVE}
           </button>
         )}
       </div>
       <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">
-          <span>
+          <span style={{ marginLeft: language === "Arabic" ? "10px" : "0px" }}>
             <icons.Loyalty />
           </span>
-          <strong>Use Loyalty Cash ($0 Available)</strong>
+          <strong>{translate?.deliveryAddress?.USE}</strong>
         </div>
         <p className={`${styles.greyText} ${styles.smallText}`}>
-          *You have to earn a minimum of $50 Loyalty Cash before you can redeem
-          it in your future purchases.
+        {translate?.deliveryAddress?.YOU}
         </p>
       </div>
-      <h4 className="font-weight-normal mt-12px">CHOOSE A DELIVERY SPEED</h4>
-      {deliverySpeed?.map((item, index) => {
+      <h4 className="font-weight-normal mt-12px">{translate?.deliveryAddress?.CHOOSE}</h4>
+      {deliverySpeed?.map((item) => {
         return (
           <div
+            onClick={() => onSpeedDeliveryRadio(item)}
             className={styles.chooseShipping}
-            onClick={() => {
-              setActiveDelivery(`${item?.carrier_code}_${item?.method_code}`);
-              setTotalDC(item?.price_incl_tax);
-            }}
           >
             <div>
               <input
-                onChange={() => onSpeedDeliveryRadio(item)}
                 type="radio"
-                checked={`${item?.carrier_code}_${item?.method_code}` === activeDelivery}
+                checked={
+                  activeDelivery
+                    ? `${item?.carrier_code}_${item?.method_code}` ===
+                      activeDelivery
+                    : false
+                }
                 name={item.method_code}
                 id={item.method_code}
               />
@@ -220,74 +258,97 @@ function OrderReview({
             <label htmlFor="twoDays">
               <h5>{item?.method_title}</h5>
               <span className={styles.greyText}>
-                ${item.amount} - {item.carrier_title}
+                {currency_symbol} {item.amount} - {item.carrier_title}
               </span>
             </label>
           </div>
         );
       })}
 
-      <Products products={items} />
+      <Products
+        products={items}
+        currency_symbol={currency_symbol}
+        language={language}
+        translate={translate}
+      />
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>SUBTOTAL</span>
+        <span className={styles.greyText}>{translate?.deliveryAddress?.SUB}</span>
 
-        <strong>${parseFloat(totalAmout || 0)?.toFixed(2)}</strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>DELIVERY CHARGES</span>
-        <strong>${parseFloat(totalDC || 0)?.toFixed(2)}</strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>TAX</span>
-        <strong>${parseFloat(totalTax || 0)?.toFixed(2)}</strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>Coupon Applied</span>
-        <strong>${parseFloat(discount || 0)?.toFixed(2)}</strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <h4 className="color-black">GRAND TOTAL </h4>
         <strong>
-          $
+          {" "}
+          {currency_symbol} {parseFloat(totalAmout || 0)?.toFixed(2)}
+        </strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
+        <span className={styles.greyText}>{translate?.deliveryAddress?.DEL}</span>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
+        </strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
+        <span className={styles.greyText}>{translate?.deliveryAddress?.TAX}</span>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
+        </strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
+        <span className={styles.greyText}>{translate?.deliveryAddress?.COUPON}</span>
+        <strong>
+          {" "}
+          {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
+        </strong>
+      </div>
+      <div
+        id={styles.calculatinRow}
+        className="d-flex align-items-center justify-content-between"
+      >
+        <h4 className="color-black">{translate?.deliveryAddress?.GRAND} </h4>
+        <strong>
+          {currency_symbol}{" "}
           {discount
             ? parseFloat(totalDC + totalTax + totalAmout + discount).toFixed(2)
             : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}
         </strong>
       </div>
-      <div className="d-flex align-items-center mt-12px">
+      <div
+      
+        className="d-flex align-items-center mt-12px"
+      >
         <input
           checked={news}
           type="checkbox"
           name=""
           className={styles.inp}
           id=""
+          onChange={() => setNews((prev) => !prev)}
         />
-        <span onClick={() => setNews(!news)} className="c-pointer">
-          Sign up for Newsletter
+        <span   style={{ paddingRight: language === "Arabic" ? "10px" : "0px" }} onClick={() => setNews(!news)} className="c-pointer">
+        {translate?.deliveryAddress?.SIGN}
         </span>
       </div>
+      <br />
+      <div style={{ color: "#ff0000" }}> {freeShippingInfo}</div>
       <button
         onClick={(e) => {
           handlePlaceOrder(e);
         }}
         className={styles.placeOrderBtn}
       >
-        PLACE ORDER
+        Continue
       </button>
       <div className={`${styles.borderBottom} my-12px`}>
         <img
@@ -298,29 +359,37 @@ function OrderReview({
         />
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span
+          style={{
+            marginRight: "12px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.Return />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-          We offer easy returns up to 14 days. Terms & Conditions apply.
+        {translate?.deliveryAddress?.WE}
         </span>
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
-        <span style={{ marginRight: "12px" }}>
+        <span
+          style={{
+            marginRight: "12px",
+            marginLeft: language === "Arabic" ? "10px" : "0px",
+          }}
+        >
           <icons.Secure />
         </span>
         <div>
-          <h4 className={styles.greyText}>100% SECURE DATA ENCRYPTION</h4>
+          <h4 className={styles.greyText}>{translate?.deliveryAddress?.SECURE}</h4>
           <p className={`${styles.greyText} ${styles.smallText}`}>
-            We guarantee security of every transaction
+          {translate?.deliveryAddress?.SECURITY}
           </p>
           <p></p>
         </div>
       </div>
       <p className={`${styles.greyText} ${styles.smallText} my-12px`}>
-        Express Shipping in 3-6 Business Days. You will be redirected to the
-        website of Mastercard Internet Gateway System (AMEX) when you place your
-        order. And then you will automatically return to rivafashion.com.
+      {translate?.deliveryAddress?.EXPRESS}
       </p>
     </div>
   );

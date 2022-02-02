@@ -1,16 +1,24 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
+  align-items: flex-start;
+  margin: 0px 0px;
   .sortByText {
-    margin-left: 17px;
+    @include left('margin', 17px);
     span:nth-child(2) {
-      margin-left: 9px;
+      @include left('margin', 9px);
     }
   }
 }
-
+.total{
+  margin-top: 3.2rem;
+}
+.listingWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .sliderCol {
   max-width: calc(50% - 12px);
   flex-basis: 50%;
@@ -24,13 +32,17 @@
     flex-basis: 100%;
   }
 }
+
+.catNumber{
+  display: flex;
+  // justify-content: center;
+  align-items: flex-start;
+}
 .essentials {
-  margin: 30px 59px 18px 5px;
-  height: 43px;
+  margin-top: 30px;
   text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   font-family: Jost;
   font-size: 30px;
-  font-weight: 700;
   font-stretch: normal;
   font-style: normal;
   line-height: 0.67;
@@ -39,7 +51,7 @@
   color: #181617;
 }
 .productsPage {
-  margin-top: 50px;
+  margin-top: -80px;
   margin-bottom: 50px;
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
@@ -47,6 +59,8 @@
   grid-auto-flow: dense;
   grid-gap: 12px;
   min-height: 90vh;
+  @include left("margin", 3rem);
+  @include right("margin", 4.2rem);
   @include tablet {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -73,7 +87,7 @@
     .sale {
       position: absolute;
       top: 10px;
-      left: 10px;
+      @include leftpos(10px);
       width: 60px;
       height: 59px;
       background-color: #181617;
@@ -86,7 +100,7 @@
     .actionContainer {
       position: absolute;
       top: 4px;
-      right: 4px;
+      @include rightpos(4px);
       font-size: 15px;
       font-weight: 500;
       background-color: transparent;
@@ -128,9 +142,22 @@
     margin: 0 auto;
   }
 }
-
+.sortBy{
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+}
+.sortDrop{
+  border: none;
+}
 .twoColumnsLayOut {
   grid-template-columns: repeat(2, 1fr);
+  // margin-right: 70px;
 }
 .threeColumnsLayOut {
   grid-template-columns: repeat(3, 1fr);
@@ -140,4 +167,7 @@
   text-align: center;
   font-size: 1.2rem;
   margin: 20px auto;
+}
+.circlesContainer{
+  @include left("padding", 15px);
 }

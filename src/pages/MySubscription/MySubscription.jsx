@@ -3,6 +3,7 @@ import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import Switch from "@material-ui/core/Switch";
 import { withStyles } from "@material-ui/core/styles";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 const IOSSwitch = withStyles((theme) => ({
   root: {
@@ -66,19 +67,17 @@ function MySubscription() {
     checkedA: true,
     checkedB: false,
   });
+  const {translate} = useArabic();
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className="circlesContainer">
-          <CategoriesCircles />
-        </div>
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">My Subscription</h2>
+            <h2 className="font-weight-normal">{translate?.dash?.MYSUBS}</h2>
             <div className="mt-20px">
               <div className="d-flex align-items-center">
                 <p className="w-100" style={{ maxWidth: "350px" }}>

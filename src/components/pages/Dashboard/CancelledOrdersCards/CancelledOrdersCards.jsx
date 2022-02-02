@@ -1,7 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./CancelledOrdersCards.module.scss";
+import {getOrderList} from "../../../../services/order/order.services"
+
 const CancelledOrdersCards = ({ products }) => {
+  const { customer } = useSelector((state) => state.auth);
+
+  const [orderList, setOrderList] = React.useState([]);
+  const [status, setStatus] = React.useState(null);
+
+  const getOrders = async (id) => {
+    const res = await getOrderList(id);
+    if (res?.status === 200 && res?.data) {
+      const temp = res?.data?.items?.map((li) => ({
+        status: li.status,
+        list: li?.items?.filter((a) => a.product_type === "simple"),
+      }));
+      setOrderList(temp);
+    }
+    setStatus(res?.status);
+  };
+  React.useEffect(() => {
+    getOrders(customer?.customerID);
+  }, []);
   return products?.map((product) => (
     <div className={styles.card}>
       <div className={styles.carItem}>
@@ -28,7 +50,7 @@ const CancelledOrdersCards = ({ products }) => {
         </div>
         <div>
           <h4 className="greyText">
-            <span className={styles.deliveredIcon}></span> Cancelled
+            <span className={styles.deliveredIcon}>Cancelled</span> 
           </h4>
           <p className={`mt-12px greyText ${styles.fontSmall}`}>
             You requested a cancellation because you changed your mind about

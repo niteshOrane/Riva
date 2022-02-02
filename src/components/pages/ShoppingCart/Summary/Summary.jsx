@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import LetUsHear from '../../../common/Cards/LetUsHear/LetUsHear';
-import style from './Summary.module.scss';
-import { toggleSignUpCard } from '../../../../store/actions/common';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import LetUsHear from "../../../common/Cards/LetUsHear/LetUsHear";
+import style from "./Summary.module.scss";
+import { toggleSignUpCard } from "../../../../store/actions/common";
 
-const Summary = () => {
-  const { data: items = [] } = useSelector((state) => state.cart);
+const Summary = ({ currency_symbol }) => {
+  const { data: items = [], freeShipping } = useSelector((state) => state.cart);
   const history = useHistory();
   const auth = useSelector((state) => state.auth);
 
@@ -14,7 +14,7 @@ const Summary = () => {
   const openSignUpCard = (redirectTo) => {
     dispatch(toggleSignUpCard({ redirectTo }));
   };
-  
+
   const isAuth = auth.isAuthenticated;
   return (
     <div className={style.container}>
@@ -24,38 +24,43 @@ const Summary = () => {
         </div>
         <div className="my-10px d-flex align-items-center justify-content-between">
           <p className="font-light-black">SUBTOTAL</p>
-          <span className="color-primary">
-            $
-            {items.reduce((total, item) => total + item.price * item.qty, 0) || 0}
+          <span>
+            {currency_symbol}
+            {parseFloat(
+              items.reduce((total, item) => total + item.price * item.qty, 0) ||
+                0
+            )?.toFixed(2)}
           </span>
         </div>
         <div
           className={`${style.greandTotal} my-10px d-flex align-items-center justify-content-between`}
         >
           <h4 className="font-weight-600">GRAND TOTAL</h4>
-          <h4 className="font-weight-600 color-primary">
-            $
-            {parseFloat(items.reduce((total, item) => total + item.price * item.qty, 0)).toFixed(2) ||
-              0}
+          <h4 className="font-weight-600">
+            {currency_symbol}
+            {parseFloat(
+              items.reduce((total, item) => total + item.price * item.qty, 0)
+            ).toFixed(2) || 0}
           </h4>
         </div>
 
         <div className={style.checkoutBtn}>
-          <Link to="/cart-payment">
+          <Link to="/delivery-address">
             <button type="button">SECURE CHECKOUT</button>
           </Link>
         </div>
-        <div>
-            
-            <button
-            onClick={() => {
-              isAuth ? history.push('/delivery-address') : openSignUpCard('/delivery-address');
-            }}
-              type="button"
-              className="bg-black color-white p-12px w-100 d-block c-pointer"
-            >
-              Change Delivery Address
-            </button>
+        <div className="gap-12px bg-white d-flex align-items-center p-12px">
+          {!freeShipping?.[0]?.remaining_amount == 0 ? (
+            <div>
+              <span>
+                Spend {currency_symbol}
+                {freeShipping?.[0]?.remaining_amount}
+              </span>{" "}
+              to qualify for free standard delivery{" "}
+            </div>
+          ) : (
+            <div>You are eligible for free shipping</div>
+          )}
         </div>
         <div className="gap-12px bg-white d-flex align-items-center p-12px">
           <span>icon</span>

@@ -16,12 +16,10 @@ const SimpleDropdown = ({ depth, children, item }) => {
         className={`${style.header} ${item.isParent ? style.dpHeader : ""} ${style.dropdownCollapse}`}
       >
         {item?.isParent ? <h4>{item.title}</h4> : <h5>{item.title}</h5>}
-        {item?.isParent ? (
-          <span className="material-icons">{`keyboard_arrow_${
+        {item?.isParent && (
+          <span className={`material-icons ${style.icon}`}>{`keyboard_arrow_${
             open ? "up" : "down"
           }`}</span>
-        ) : (
-          <span className="material-icons">{open ? "remove" : "add"}</span>
         )}
       </div>
 

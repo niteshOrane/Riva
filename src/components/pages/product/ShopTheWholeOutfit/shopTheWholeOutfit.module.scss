@@ -2,8 +2,9 @@
   .header {
     height: 27px;
     font-family: Roboto;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 50px;
+    font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: 0.85;
@@ -140,4 +141,16 @@
       }
     }
   }
+}
+
+.checkboxCancelBtn{
+  position: absolute;
+ right: 5%;
+ cursor: pointer;
+}
+.checkboxWrap{
+  height: 36.3rem;
+  width: 30rem;
+  overflow-x: scroll;
+  overflow-y: scroll;
 }

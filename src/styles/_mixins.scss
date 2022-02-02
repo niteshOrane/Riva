@@ -1,0 +1,125 @@
+$tablet-width: 812px;
+$mobile-width: 320px;
+$desktop-width: 1024px;
+
+@mixin no-padding($side) {
+  @if $side == 'all' {
+    .no-padding {
+      padding: 0 !important;
+    }
+  } @else {
+    .no-padding-#{$side} {
+      padding-#{$side}: 0 !important;
+    }
+  }
+}
+@mixin padding($side, $value) {
+  padding-#{$side}: #{$value}px !important;
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  // and (max-width: 812px)
+  @media screen and (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: #{$desktop-width -1px}) {
+    @content;
+  }
+}
+
+////
+@mixin rtlSwitcher($property, $ltr-value, $rtl-value) {
+  #{$property}: $ltr-value;
+
+  [dir='rtl'] & {
+    #{$property}: $rtl-value;
+  }
+}
+@mixin textAlign($property) {
+  #{$property}: 'left';
+
+  [dir='rtl'] & {
+    #{$property}: 'right';
+  }
+}
+@mixin right($property, $value, $important: null) {
+  [dir='rtl'] & {
+    #{$property}-left: $value $important;
+  }
+  [dir='ltr'] & {
+    #{$property}-right: $value $important;
+  }
+}
+
+
+@mixin left($property, $value, $important: null) {
+  [dir='rtl'] & {
+    #{$property}-right: $value $important;
+  }
+  [dir='ltr'] & {
+    #{$property}-left: $value $important;
+  }
+}
+
+@function side-values-rtl($values) {
+  @return nth($values, 1) nth($values, 4) nth($values, 3) nth($values, 2);
+}
+
+@mixin sideValues($property, $values, $important: null) {
+  [dir='rtl'] & {
+    #{$property}: side-values-rtl($values) $important;
+  }
+  [dir='ltr'] & {
+    #{$property}: $values $important;
+  }
+}
+@mixin rightpos($value, $important: null) {
+  [dir='rtl'] & {
+    left: $value $important;
+  }
+  [dir='ltr'] & {
+    right: $value $important;
+  }
+}
+@mixin leftpos($value, $important: null) {
+  [dir='rtl'] & {
+    right:$value $important;
+  }
+  [dir='ltr'] & {
+    left: $value $important;
+  }
+}
+@mixin flipImage() {
+  [dir='rtl'] & {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
+}
+@mixin translatexValue($from, $to) {
+  [dir='rtl'] & {
+    transform: translateX($to);
+  }
+  [dir='ltr'] & {
+    transform: translateX($from);
+  }
+}
+
+@mixin translaterotate($from, $to) {
+  [dir='rtl'] & {
+    transform: rotate($to);
+  }
+  [dir='ltr'] & {
+    transform: rotate($from);
+  }
+}

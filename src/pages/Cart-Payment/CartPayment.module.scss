@@ -29,3 +29,11 @@
     flex-basis: calc(30% - 12px);
   }
 }
+.tapLoader{
+  width: 100vw;
+  height: 100vh;
+  filter: blur(1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

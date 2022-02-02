@@ -3,7 +3,6 @@ import React from "react";
 import Image from "../../LazyImage/Image";
 
 const ImageCard = ({ product, count }) => {
-  console.log(product)
   return (
     <div>
       <Image

@@ -1,6 +1,8 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
+@import "mixins";
+
 // colors
 .color-primary {
   color: $color-primary;
@@ -19,6 +21,9 @@
 }
 .color-red {
   color: #f00900;
+}
+.color-blue {
+  color: blue;
 }
 .color-grey {
   color: $text-grey;
@@ -46,6 +51,10 @@
   margin-right: auto;
   margin-left: auto;
 }
+.container-row {
+  width: 76vw;
+  display: grid;
+}
 .max-width-1750 {
   max-width: 1750px;
 }
@@ -58,7 +67,7 @@
   margin-right: auto;
   margin-left: auto;
   width: 90vw;
-  padding-left: 12px;
+  @include left("padding", 0px);
 }
 
 .w-100 {
@@ -262,7 +271,7 @@ nav.nav {
 }
 
 .logo-strong {
-  margin-left: 100px;
+  @include left("margin", 0px);
 }
 // nav circles
 .circleBg-skin {
@@ -276,12 +285,12 @@ nav.nav {
 
 // container of circles on side
 .circlesContainer {
-  margin-left: 3px;
+  @include left("margin", 3px);
   display: flex;
   flex-direction: column;
   gap: 4px;
   float: left;
-  margin-left: -65px;
+  @include left("margin", -65px);
   div {
     cursor: pointer;
   }
@@ -311,7 +320,7 @@ nav.nav {
   }
   .slick-next:before {
     content: "›" !important;
-    padding-left: 4px;
+    @include left("padding", 4px);
   }
   .slick-prev,
   .slick-next {
@@ -388,7 +397,7 @@ nav.nav {
   }
   padding: 20px 0;
   margin: 35px 0;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
   .slick-prev::before,
   .slick-next:before {
     font-family: sans-serif !important;
@@ -415,13 +424,18 @@ nav.nav {
     height: 50px;
   }
   .slick-prev {
-    left: 2% !important;
+    //left: 2% !important;
+    @include leftpos(1%);
   }
   .slick-next {
-    right: 2% !important;
+    @include rightpos(2%, !important);
+    //  right: 2% !important;
   }
 }
-
+.catSliderImgsSpace:hover{
+  border: 2px solid white !important;
+  border-radius: 50% !important;
+}
 .basicSlider {
   .slick-track {
     display: flex;
@@ -451,10 +465,12 @@ nav.nav {
     height: 50px;
   }
   .slick-prev {
-    left: 2% !important;
+    //left: 2% !important;
+    @include leftpos(2%, !important);
   }
   .slick-next {
-    right: 2% !important;
+    //right: 2% !important;
+    @include rightpos(2%, !important);
   }
 }
 
@@ -495,10 +511,12 @@ nav.nav {
     height: 50px;
   }
   .slick-prev {
-    left: 2% !important;
+    // left: 2% !important;
+    @include leftpos(2%, !important);
   }
   .slick-next {
-    right: 2% !important;
+    // right: 2% !important;
+    @include rightpos(2%, !important);
   }
 }
 
@@ -507,7 +525,8 @@ nav.nav {
 .closeBtn {
   position: absolute;
   top: 12px;
-  right: 12px;
+  // right: 12px;
+  @include rightpos(12px);
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
@@ -562,7 +581,6 @@ nav.nav {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 2.4em;
   line-height: 1.2;
 }
 
@@ -591,4 +609,11 @@ nav.nav {
   &:hover {
     text-decoration: none;
   }
+}
+.personIcon {
+  @include right("margin", 12px, !important);
+  //margin-left: 12px;
+}
+.wishListicon {
+  @include right("margin", 9px, !important);
 }

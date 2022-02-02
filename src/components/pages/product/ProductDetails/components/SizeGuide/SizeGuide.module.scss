@@ -1,7 +1,7 @@
 .close {
   position: absolute;
   top: 12px;
-  right: 12px;
+  @include rightpos(12px);
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
@@ -58,7 +58,7 @@
           justify-content: space-between;
           &::after {
             content: "";
-            margin-left: -4px;
+            @include left('margin', -4px);
             display: inline-block;
             width: 0;
             height: 0;
@@ -69,7 +69,7 @@
           &::before {
             content: "";
             display: inline-block;
-            margin-right: -4px;
+            @include right('margin', -4px);
             width: 0;
             height: 0;
             border-top: 5px solid transparent;
@@ -95,7 +95,7 @@
       top: 102%;
       box-shadow: 0 0 12px #ddd;
       width: 100%;
-      left: 0;
+      @include leftpos(0);
       display: none;
       .item {
         padding: 12px;

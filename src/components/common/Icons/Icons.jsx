@@ -511,12 +511,13 @@ export const MyStuf = ({ className }) => {
     </svg>
   );
 };
-export const MyOrders = ({ className }) => {
+export const MyOrders = ({ className, width = "22.228",
+  height = "22.798" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="22.228"
-      height="22.798"
+      width={width}
+      height={height}
       viewBox="0 0 22.228 22.798"
     >
       <g>

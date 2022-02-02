@@ -14,7 +14,7 @@ export const getCustomerAddress = (customerid) => {
 export const addCustomerAddress = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/addAddressBook`,
+    url: `${API_URL}/addCustomerAddressBook`,
     silent: true,
     data: formData,
   };
@@ -24,7 +24,7 @@ export const addCustomerAddress = (formData) => {
 export const updateCustomerAddress = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/updateAddressBook`,
+    url: `${API_URL}/updateCustomerAddressBook`,
     silent: true,
     data: formData,
   };
@@ -78,6 +78,18 @@ export const getCountryList = () => {
   const config = {
     method: "get",
     url: `${process.env.REACT_APP_DEV}/directory/countries`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+
+// get address by geo location
+
+export const getAddressByLocation = (lat,lng) => {
+  const config = {
+    method: "get",
+    url: `http://api.positionstack.com/v1/reverse?access_key=f4fd5ebcef86fc323dee81a32d9501a9&query=${lat},${lng}`,
     silent: true,
   };
   return axios(config);

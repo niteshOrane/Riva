@@ -5,6 +5,10 @@ import ArrowButton from "../../../common/Buttons/Arrow";
 import Slider from "../../../common/Sliders/Slider";
 import { getProducts } from "../../../../services/layout/Layout.service";
 import styles from "./bestSellingProducts.module.scss";
+import style from "./bestSellingProducts.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import useArabic from "../../../common/arabicDict/useArabic";
 
 const category_ids = {
   featured: "2044",
@@ -13,7 +17,12 @@ const category_ids = {
 };
 
 const BestSellingProducts = () => {
+  const [title, setTitle] = useState({
+    roboto: "Featured",
+    dancing: "Products",
+  });
   const refContainer = useRef();
+  const { translate } = useArabic();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
@@ -21,15 +30,23 @@ const BestSellingProducts = () => {
   const [dataSet, setdataSet] = useState({ 2044: [], 2045: [], "": [] });
   const [products, setProducts] = useState([]);
   const [categoryId, setcategoryId] = useState(category_ids.featured);
+  const [loading, setLoading] = useState(false);
 
-  const changeCategory = (slug) => {
+  const changeCategory = (slug, title1, title2) => {
     setcategoryId(slug);
+    setTitle({ roboto: title1, dancing: title2 });
   };
 
   const fetchProducts = async (id) => {
+    setLoading(true);
     if (!id) return [];
     const res = await getProducts(id, 10);
-    return res?.data || [];
+    if (res?.data) {
+      setLoading(false);
+      return res?.data || [];
+    } else {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -53,27 +70,39 @@ const BestSellingProducts = () => {
       className={`container-with-circles ${styles.bestSellingProductsContainer}`}
     >
       <div className="d-flex align-items-center justify-content-between my-20px">
-        <SectionHeader roboto="Best Selling" dancing="Products" />
+        <SectionHeader roboto={title.roboto} dancing={title.dancing} />
         <div className="d-flex align-items-center">
           <ul className="nav-list d-flex align-items-center">
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.all)}
+                onClick={() =>
+                  changeCategory(
+                    category_ids.all,
+                    translate?.home?.ALL,
+                    "Products"
+                  )
+                }
               >
                 <span
                   className={`align-self-end font-light-black ${
                     categoryId === category_ids.all ? "color-text-primary" : ""
                   }`}
                 >
-                  All
+                  {translate?.home?.ALL}
                 </span>
               </span>
             </li>
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.best_selling)}
+                onClick={() =>
+                  changeCategory(
+                    category_ids.best_selling,
+                    translate?.home?.BEST_SELLING,
+                    "Products"
+                  )
+                }
               >
                 <span
                   className={`align-self-end font-light-black ${
@@ -82,14 +111,20 @@ const BestSellingProducts = () => {
                       : ""
                   }`}
                 >
-                  Best Selling Products
+                  {translate?.home?.BEST_SELLING}
                 </span>
               </span>
             </li>
             <li className="nav-li">
               <span
                 className="d-flex align-items-center"
-                onClick={() => changeCategory(category_ids.featured)}
+                onClick={() =>
+                  changeCategory(
+                    category_ids.featured,
+                    translate?.home?.FEATURE,
+                    "Products"
+                  )
+                }
               >
                 <span
                   className={`align-self-end font-light-black ${
@@ -98,7 +133,7 @@ const BestSellingProducts = () => {
                       : ""
                   }`}
                 >
-                  Featured Products
+                  {translate?.home?.FEATURE}
                 </span>
               </span>
             </li>
@@ -111,6 +146,14 @@ const BestSellingProducts = () => {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className={styles.bestSke}>
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+          <Skeleton height="25rem" width="18.5rem" />
+        </div>
+      )}
       <div>
         <Slider
           className="basicSlider basicSliderGap"
@@ -118,7 +161,7 @@ const BestSellingProducts = () => {
           slidesToShow={6}
           arrows={false}
           ref={refContainer}
-          render={(item) => <ProductCard product={item} />}
+          render={(item) => <ProductCard landing product={item} />}
         />
       </div>
     </div>

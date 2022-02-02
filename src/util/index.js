@@ -1,9 +1,18 @@
+import { colors } from '@material-ui/core';
 import { createBrowserHistory } from 'history';
 
 import store from '../store/index';
 
+export const ALERT = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+  WARN: 'warning',
+  INFO: 'info',
+};
+
 export const URL = {
   baseUrl: `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image`,
+  baseUrlColorSwitcher: `http://65.0.141.49/shop/pub/media/wysiwyg/swatches`,
   baseUrlProduct: `http://65.0.141.49/shop/media/catalog/product/`, //https://www.rivafashion.com/media/catalog/product
 };
 
@@ -11,6 +20,7 @@ export const defaultStore = {
   city: null,
   country_id: 'KW',
   currency: 'USD',
+  currency_symbol: "$",
   hours: null,
   language: 'English',
   merchant_vat_number: null,
@@ -29,12 +39,23 @@ export const defaultStore = {
 export const getStoreId = () =>
   store?.getState()?.common?.store?.store_id || '1';
 
+export const getCurrencyCode = () =>
+  store?.getState()?.common?.store?.currency || 'USD';
+
 export const getStoreData = () =>
   store?.getState()?.common?.store || defaultStore;
 
 export const getCustId = () => store?.getState()?.auth?.customer?.customerID;
+export const getCustInfo = () => store?.getState()?.auth;
 
 export const getCartId = () => store?.getState()?.cart?.cart_id;
+
+
+
+export const getLanguageName = () => store?.getState()?.common?.store.language === "English" ? 'en' : 'ar';
+
+
+export const getSelectedCategoryId = () => store?.getState().common?.selectedCategoryItem?.id;
 
 export const deepEqual = (x, y) => {
   // eslint-disable-next-line one-var
@@ -47,7 +68,7 @@ export const deepEqual = (x, y) => {
     : x === y;
 };
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({ queryKey: false });
 
 export const hardReload = () =>
   setTimeout(() => {
@@ -57,18 +78,47 @@ export const hardReload = () =>
 export const extractColorSize = (attributes = []) => {
   const { size = [], color = [] } = store.getState()?.common?.attributes || {};
 
-  const color_attr =
-    attributes?.find((e) => e?.label === 'Color')?.values || [];
-  const size_attr = attributes?.find((e) => e?.label === 'Size')?.values || [];
-
+  const color_attr = attributes?.find((e) => e?.attribute_id === '92')?.values || [];
+  const size_attr = attributes?.find((e) => e?.attribute_id === '213')?.values || [];
+  let colorData = [];
+  if (color_attr?.filter((c) => c.value_index === null).length) {
+    colorData.push({ label: false, value: null })
+  }
+  colorData = [
+    ...colorData, ...color?.filter(
+      (c) => color_attr?.find((cr) => cr.value_index ? cr.value_index == c.value : cr.value_index)
+    )
+  ];
   return {
     colors:
-      color?.filter(
-        (c) => !!color_attr?.find((cr) => cr.value_index == c.value)
-      ) || [],
+      colorData,
     size:
       size?.filter(
-        (s) => !!size_attr?.find((sr) => sr.value_index == s.value)
+        (s) => size_attr?.find((sr) => sr.value_index == s.value)
       ) || [],
   };
 };
+
+
+
+export const getSKuId = (sku) => {
+  if (sku) {
+    const skuArray = sku?.split('-');
+    const skuFinal = [];
+    for (let i = 0; i <= skuArray.length - 1; i++) {
+      if (!isNaN(parseFloat(skuArray[i])) && isFinite(skuArray[i])) {
+        skuFinal.push(skuArray[i])
+      }
+    }
+    return skuFinal.join('-');
+  }
+};
+
+
+export const getColorsForHomePage = (options) => {
+  const { size = [], color = [] } = store.getState()?.common?.attributes || {};
+  let colorLabel = options["92"]?.values?.map(li => (
+    {label : color?.find(c => c.value===li?.value_index)?.label,value:li?.value_index}
+  ))
+  return colorLabel
+}

@@ -173,7 +173,6 @@ export default function OrderStepper() {
           <Step className="text-center" key={label}>
             <div className="my-12px">{label.name}</div>
             <StepLabel StepIconComponent={ColorlibStepIcon}>
-              {console.log(i)}
               <p
                 className={`font-weight-600  ${
                   i === 3 ? "color-black" : "greyText"
@@ -186,7 +185,7 @@ export default function OrderStepper() {
         ))}
       </Stepper>
       <div className={styles.orderPlacedMsg}>
-        <div className={styles.border}></div>
+        <div className={styles.border}/>
         <p>Your Order hs been placed.</p>
         <div className={styles.placedDate}>
           <small className="d-inline-block greyText">Thu, 13th May</small>

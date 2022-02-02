@@ -10,7 +10,8 @@
   }
   .megaLink {
     padding: 0px 5px;
-    cursor: pointer;
+    cursor:pointer;
+   
     span {
       font-family: Roboto;
       font-size: 15px;
@@ -21,10 +22,10 @@
       text-align: left;
       transition: all 0.3s ease-in-out;
       border-bottom: 1px solid transparent;
-      color: #181617;
+      font-weight: normal;
+      color: #000;
       font-family: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande',
         sans-serif;
-      font-weight: 700;
       text-transform: uppercase;
     }
     &:hover {
@@ -56,18 +57,27 @@
   .allProductsCard {
     // width: 50%;
     .allProductsTitleLine {
-      margin-top: 9.5px;
+      margin-top: 5px;
       border: solid 1px #707070;
+      margin-bottom: 8px;
     }
 
     .allProductsTitles {
-      margin-top: 20px;
       max-height: 300px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
+      line-height: 25px;
       .pLink {
         margin: 2px 0;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 300;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.71;
+        letter-spacing: normal;
+        color: #373737;
         transition: all 0.3s ease;
         &:hover {
           color: black !important;
@@ -85,6 +95,10 @@
       max-width: 380px;
       max-height: 380px;
       object-fit: contain;
+      cursor: pointer;
+    }
+    a {
+      cursor: context-menu !important;
     }
   }
 }
@@ -106,6 +120,6 @@
 }
 .titleDoubleLine_SecondFilter {
   height: 1px;
-  margin: 1px 0px 16px 0px;
+  margin: 1px 0px 10px 0px;
   border: solid 0.1px #e1dfdf;
 }

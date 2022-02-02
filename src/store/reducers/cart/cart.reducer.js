@@ -1,10 +1,13 @@
-import * as DATA_TYPES from '../../types';
-
+import * as DATA_TYPES from "../../types";
 const initialState = {
+  info: {},
   data: [],
+  faaa: [],
   isOpen: false,
   cart_id: 0,
-  cartPaymentInfo: {}
+  cartPaymentInfo: {},
+  isSingle: null,
+  freeShipping: {},
 };
 
 const handleAddToCart = (state, itemToBeAdded) => {
@@ -64,7 +67,22 @@ export default function Cart(state = initialState, action) {
     case DATA_TYPES.CART_INFO:
       return {
         ...state,
-        cartPaymentInfo: action.payload || {}
+        cartPaymentInfo: action.payload || {},
+      };
+    case DATA_TYPES.CART_EXTRA_INFO:
+      return {
+        ...state,
+        info: action.payload,
+      };
+    case DATA_TYPES.SINGLE_CART:
+      return {
+        ...state,
+        isSingle: action.payload,
+      };
+    case DATA_TYPES.GET_FREE_SHIPPING:
+      return {
+        ...state,
+        freeShipping: action.payload,
       };
     default:
       return state;

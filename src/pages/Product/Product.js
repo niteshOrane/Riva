@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToRecentlyViewed } from "../../store/actions/stats";
 import Slider from "../../components/common/Sliders/Slider";
 import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
@@ -15,10 +15,13 @@ import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
 
 import styles from "./product.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
-
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import TagManager from "react-gtm-module";
 
 const Product = (props) => {
   const { match } = props;
@@ -29,6 +32,9 @@ const Product = (props) => {
 
   const [product, setproduct] = useState({});
   const [compositioncare, setCompositioncare] = useState({});
+  const { currency_symbol, language } = useSelector(
+    (state) => state?.common?.store
+  );
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -81,7 +87,24 @@ const Product = (props) => {
 
       setCompositioncare(rescompositioncare);
       setproduct(p);
-      dispatch(addToRecentlyViewed(p));
+      if (p.custom_attributes) {
+        p.origpriceWithoutCurrency = p.custom_attributes?.find(
+          (e) => e?.attribute_code === "special_price"
+        )?.value;
+        p.origprice = `${parseFloat(p.origpriceWithoutCurrency)?.toFixed(2)}`;
+        p.priceWithoutCurrency = p.price;
+        p.price = `${parseFloat(p.price).toFixed(2)}`;
+      }
+      const cartValue =
+        localStorage.getItem("recentVieItem") || JSON.stringify([]);
+      const cartObj = JSON.parse(cartValue);
+      if (cartObj.filter((e) => e?.id === p?.id).length === 0) {
+        cartObj.push(p);
+        const jsonStr = JSON.stringify(cartObj);
+        localStorage.setItem("recentVieItem", jsonStr);
+
+        dispatch(addToRecentlyViewed(p));
+      }
     } catch (err) {
       setproduct({});
     }
@@ -91,11 +114,28 @@ const Product = (props) => {
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+
+    TagManager.initialize(tagManagerArgs);
+  }, []);
 
   useEffect(() => {
     init(selectedProductId);
   }, [selectedProductId]);
-  if (loading) return <h2 style={{ textAlign: "center" }}>loading...</h2>;
+  if (loading)
+    return (
+      <div className="d-flex justify-content-between">
+        <div className={styles.load}>
+          <Skeleton height="40rem" width="40rem" />
+        </div>
+        <div className={styles.load}>
+          <Skeleton height="40rem" width="40rem" />
+        </div>
+      </div>
+    );
   return (
     <div>
       <ProductDetails
@@ -103,13 +143,20 @@ const Product = (props) => {
         setColorSize={setColorSize}
         mediaImage={mediaImage}
         colorImage={colorImage}
+        currency_symbol={currency_symbol}
+        language={language}
       />
       <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
           slidesToShow={3}
-          render={(item) => <ImageCard product={{ src: item?.file }} count={mediaImage.length} />}
+          render={(item) => (
+            <ImageCard
+              product={{ src: item?.file }}
+              count={mediaImage.length}
+            />
+          )}
         />
       </div>
       <DescriptionComposition
@@ -117,13 +164,13 @@ const Product = (props) => {
         prodDiscr={product}
         compositioncare={compositioncare?.data}
       />
-      {howToWear.length > 0 ?
-        < div id="complete-your-look" >
+      {howToWear.length > 0 ? (
+        <div id="complete-your-look">
           <div className="max-width-1750 mx-auto my-20px">
             <div>
-              <h4 className="section-title text-center my-20px">
+              <p className="section-title text-center my-20px">
                 Complete Your Look
-              </h4>
+              </p>
             </div>
             <Slider
               className="simpleGreyArrow"
@@ -131,14 +178,15 @@ const Product = (props) => {
               slidesToShow={4}
               arrows
               ref={refContainer}
-              render={(item) => <ProductCard product={item} />}
+              render={(item) => <ProductCard isComplete product={item} />}
             />
           </div>
+          <hr style={{ marginTop: "100px", marginBottom: "60px" }} />
           <div className="container-90 max-width-1750 mx-auto my-20px">
             <ShopTheWholeOutfit data={howToWear} mainProd={product} />
           </div>
         </div>
-        : null}
+      ) : null}
       {/* <div className="d-flex-all-center gap-12px mx-50px gap-12px">
         <OneImageBanner img="./assets/images/categSlider-bg.png" />
         <OneImageBanner img="./assets/images/bagDiscountBanner.png" />

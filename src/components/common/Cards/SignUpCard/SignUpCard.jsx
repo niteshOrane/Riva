@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Dialog from '@material-ui/core/Dialog';
-import * as icons from '../../Icons/Icons';
-import SignUpForm from './components/SignUpForm/SignUpForm';
-import LoginForm from './components/LoginForm/LoginForm';
-import OtpForm from './components/OtpForm/OtpForm';
-import styles from './SignUpCard.module.scss';
-import { toggleSignUpCard } from '../../../../store/actions/common';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Dialog from "@material-ui/core/Dialog";
+import * as icons from "../../Icons/Icons";
+import SignUpForm from "./components/SignUpForm/SignUpForm";
+import LoginForm from "./components/LoginForm/LoginForm";
+import OtpForm from "./components/OtpForm/OtpForm";
+import styles from "./SignUpCard.module.scss";
+import { newUserEmailCheck, toggleSignUpCard } from "../../../../store/actions/common";
 
 const SignUpCard = () => {
   const {
@@ -16,10 +16,29 @@ const SignUpCard = () => {
     isOtp = false,
   } = useSelector((state) => state.common?.signUpCard || {});
 
+  const [forgetPassStyle, setForgetPassStyle] = useState(false);
+  const [isForget, setIsForget] = useState(false);
+  const [isLoginWithOtp, setLoginWithOtp] = useState(false);
+  const { language } = useSelector((state) => state?.common?.store);
+
+
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(toggleSignUpCard({ isOpen: false }));
+    // setIsForget(false);
+    setLoginWithOtp(false);
+    dispatch(newUserEmailCheck(""))
+  
+  };
+  useEffect(() => {
+    if (isOpen) {
+      setIsForget(false);
+    }
+  }, [isOpen]);
+  const handleOtpForm = () => {
+    setLoginWithOtp(true);
+    dispatch(toggleSignUpCard({ isOtp: true }));
   };
 
   const handleSubmit = () => {
@@ -29,9 +48,14 @@ const SignUpCard = () => {
     <Dialog
       aria-labelledby="simple-dialog-title"
       onClose={handleClose}
+      dir={language === "Arabic" ? "rtl" : "ltr"}
       open={isOpen}
     >
-      <div className={styles.popupBody}>
+      <div
+        className={
+          !forgetPassStyle ? styles.popupBody : `${styles.forgetPassWrap}`
+        }
+      >
         <button
           type="button"
           onClick={handleClose}
@@ -40,16 +64,34 @@ const SignUpCard = () => {
         >
           <icons.Close />
         </button>
-        <h2 className={styles.title}>{isLogin ? 'LOGIN' : 'SIGN UP'} </h2>
+        {isForget ? (
+          <h2 className={styles.title}>RESET PASSWORD</h2>
+        ) : isLoginWithOtp ? (
+          <h2 className={styles.title}>SIGNIN WITH OTP</h2>
+        ) : (
+          <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>
+        )}
+
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
+      
         {!isOtp ? (
           isLogin ? (
-            <LoginForm handleSubmit={handleClose} />
+            <LoginForm
+              setForgetPassStyle={setForgetPassStyle}
+              handleOtpForm={handleOtpForm}
+              handleSubmit={handleClose}
+              language={language}
+              setIsForget={setIsForget}
+            />
           ) : (
-            <SignUpForm handleSubmit={handleSubmit} />
+            <SignUpForm handleSubmit={handleSubmit} language={language} />
           )
         ) : (
-          <OtpForm />
+          <OtpForm
+            handleSubmit={handleClose}
+            language={language}
+            setLoginWithOtp={setLoginWithOtp}
+          />
         )}
       </div>
     </Dialog>
