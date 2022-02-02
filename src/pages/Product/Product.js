@@ -21,12 +21,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import TagManager from "react-gtm-module";
 
 const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
-  useAnalytics();
 
   const selectedProductId = match.params.categoryId;
 
@@ -114,6 +114,13 @@ const Product = (props) => {
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+
+    TagManager.initialize(tagManagerArgs);
+  }, []);
 
   useEffect(() => {
     init(selectedProductId);
@@ -121,10 +128,10 @@ const Product = (props) => {
   if (loading)
     return (
       <div className="d-flex justify-content-between">
-        <div className = {styles.load}>
+        <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
-        <div className = {styles.load}>
+        <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
       </div>

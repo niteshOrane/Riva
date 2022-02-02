@@ -29,7 +29,7 @@ import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
-import ReactGA from "react-ga";
+
 import TagManager from "react-gtm-module";
 
 const ProductDetails = (props) => {
@@ -51,12 +51,6 @@ const ProductDetails = (props) => {
   const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
 
-  const tagManagerArgs = {
-    gtmId: "GTM-P84HSVZ",
-    events: {
-      placeOrder: 'userInfo'
-  }
-  };
 
   
   useEffect(() => {
@@ -69,7 +63,7 @@ const ProductDetails = (props) => {
         color: { label: temp[0]?.color, value: temp[0]?.option_id },
       });
     }
-    TagManager.initialize(tagManagerArgs);
+
   }, []);
   const colorImageAction = (data) => {
     setColorImg(data?.file);
@@ -192,10 +186,7 @@ const ProductDetails = (props) => {
         ...product.selected,
       })
     );
-    ReactGA.event({
-      category: "User",
-      action: "product added to cart",
-    });
+    
   };
   const handleWishList = () => {
     dispatch(toggleWishlist(product));

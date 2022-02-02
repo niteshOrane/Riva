@@ -29,10 +29,10 @@ import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 import useArabic from "../../components/common/arabicDict/useArabic";
-import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import TagManager from "react-gtm-module";
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
-  useAnalytics();
+  // useAnalytics();
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,
@@ -49,6 +49,12 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
       indexItem: index,
     });
   };
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  }, []);
   const dispatch = useDispatch();
   const customerAddressList = useSelector(
     (state) => state?.address?.data || []
