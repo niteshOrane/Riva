@@ -167,8 +167,9 @@ function Products(props) {
             <div className={styles.circlesContainer}>
               <CategoriesCircles />
             </div>
-            <div className={`d-flex align-items-center ${styles.total}`}>
-              <span className="color-grey">
+            <div className={`d-flex align-items-center  ${styles.total}`}>
+              
+              <span className="color-grey ">
                 {products.length ? (
                   <>
                     Showing {1}-{products.length} out of {totalCount}

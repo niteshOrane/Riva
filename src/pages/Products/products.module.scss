@@ -171,3 +171,14 @@
 .circlesContainer{
   @include left("padding", 15px);
 }
+ 
+@media only screen and (max-width: 767px) 
+{
+  .sortByText{
+    position:absolute;
+     right:0;
+    
+  }
+ 
+ 
+}

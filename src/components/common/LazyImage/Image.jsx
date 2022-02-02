@@ -6,6 +6,7 @@ import { URL } from "../../../util";
 import styles from "./lazyImage.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import "./lazyImagetwo.css"
 
 const LazyImage = (props) => {
   const {
@@ -68,6 +69,7 @@ const LazyImage = (props) => {
       height={height}
       alt={alt || "No image available"}
       style={customeStyle}
+      
       className={isCategory ? `${styles.category}` : classname}
     />
   );

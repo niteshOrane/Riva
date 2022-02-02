@@ -181,3 +181,19 @@
     color: white;
   }
 }
+@media only screen and (max-width: 767px) 
+{
+  .filterTextwrapper{
+    //   margin-bottom: 1rem;
+    //   margin-left:1.5rem;
+    // position:absolute; left:0
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    position:absolute; left:0
+  }
+  [dir='ltr'] .filters_filterText__8Tc3K {
+     margin-left: 10rem;
+    }
+
+}

@@ -13,6 +13,9 @@ $footer-grey-color: #737373;
     grid-template-columns: 2fr 2fr 3fr 3fr;
     margin-left: 75px;
     margin-right: 75px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap  ;
     .footerCol {
       ul {
         max-width: 200px;
@@ -198,4 +201,12 @@ $footer-grey-color: #737373;
 }
 .text_alignmemt{
   @include left('margin', .5rem);
+}
+
+@media only screen and (max-width: 767px) {
+    
+  .footerCol{
+    text-align: center;
+  }
+   
 }
