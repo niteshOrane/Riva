@@ -10203,6 +10203,11 @@
   "resolved" "https://registry.npmjs.org/react-facebook-login/-/react-facebook-login-4.1.1.tgz"
   "version" "4.1.1"
 
+"react-facebook-pixel@^1.0.4":
+  "integrity" "sha512-givZY8MS0v/mdbRzvcvouBo/j0TtDiu/93f4gIjJXwDDgwlf6bYUiQvb2qcqjluOOD/hIKUQHNYLNsSOnoEklg=="
+  "resolved" "https://registry.npmjs.org/react-facebook-pixel/-/react-facebook-pixel-1.0.4.tgz"
+  "version" "1.0.4"
+
 "react-fast-compare@^3.0.1":
   "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"

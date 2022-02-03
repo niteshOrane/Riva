@@ -109,6 +109,7 @@ const tagManagerArgs = {
 TagManager.initialize(tagManagerArgs)
 
 export default function DetailTabs({
+  translate,
   paymentMode,
   cartPaymentInfo,
   store,
@@ -308,7 +309,7 @@ export default function DetailTabs({
     <>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <h5 className={styles.payWith}>Pay With</h5>
+          <h5 className={styles.payWith}>{translate?.deliveryAddress?.PAY}</h5>
           <div
             value={value}
             className={styles.reGrid}
@@ -341,7 +342,7 @@ export default function DetailTabs({
 
         <div className={classes.tabContent}>
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
-            <GoSellTap />
+            <GoSellTap translate={translate} />
           </TabPanel>
           <TabPanel value={value} index={2}>
             {codInfo && <Cod codInfo={codInfo} />}
@@ -370,7 +371,7 @@ export default function DetailTabs({
           </TabPanel>
         </div>
       </Box>
-      <PaymentFooter />
+      <PaymentFooter translate={translate} />
     </>
   );
 }

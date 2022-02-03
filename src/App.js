@@ -11,6 +11,7 @@ import AppRoutes from "./routes";
 import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import ReactGA from "react-ga";
+import ReactPixel from 'react-facebook-pixel';
 
 import { deepEqual, hardReload } from "./util";
 
@@ -31,6 +32,8 @@ class AppRoot extends React.Component {
     wishlistInit();
     cartInit();
     TagManager.initialize(tagManagerArgs);
+    ReactPixel.init('361350254199347');
+    ReactPixel.pageView();
   }
 
   topFunction() {
