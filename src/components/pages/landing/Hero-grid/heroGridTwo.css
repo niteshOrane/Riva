@@ -67,14 +67,14 @@
     width:90%;
   }
 .footer_footerGrid__2MGY3{
-    display: block;
-    margin-left: 15px;
-    margin-right: 15px;
+    display: block !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
   }
   .d-flex.align-items-center.aaa.justify-content-between {
-    display: block;
-    margin-left: 15px;
-    margin-right: 15px;
+    display: block !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
   }
   [dir='ltr'] .footer_footer__8sDQo .footer_copyRightSec__NDM2-{
     margin-left: 15px !important;
