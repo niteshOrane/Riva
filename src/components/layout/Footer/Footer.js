@@ -11,6 +11,7 @@ import storeData from "../../../store/index";
 import { addSubscribeList } from "../../../store/actions/subscription/index";
 import useArabic from "../../common/arabicDict/useArabic";
 
+
 function Footer() {
   const dispatch = useDispatch();
   const {translate} = useArabic()
