@@ -32,7 +32,7 @@ class AppRoot extends React.Component {
     wishlistInit();
     cartInit();
     TagManager.initialize(tagManagerArgs);
-    ReactPixel.init('361350254199347');
+    ReactPixel.init(process.env.REACT_APP_FACEBOOK);
     ReactPixel.pageView();
   }
 

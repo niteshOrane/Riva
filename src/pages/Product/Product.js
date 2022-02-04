@@ -117,10 +117,22 @@ const Product = (props) => {
   useEffect(() => {
     const tagManagerArgs = {
       gtmId: process.env.REACT_APP_GTM,
+      dataLayer: {
+        pageType: "product_details_page_test",
+        list: "category",
+        customer: { isLoggedIn: false },
+        category: { id: "866", name: "Kids" },
+        cart: { hasItems: false },
+        ecommerce: { currencyCode: currency_symbol },
+        description:{
+          name:product?.name
+        }
+      },
     };
 
     TagManager.initialize(tagManagerArgs);
-  }, []);
+  }, [product]);
+  console.log({product})
 
   useEffect(() => {
     init(selectedProductId);

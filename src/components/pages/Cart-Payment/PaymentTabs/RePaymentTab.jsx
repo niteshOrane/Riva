@@ -151,6 +151,7 @@ export default function DetailTabs({
               value: 10
           }
         });
+        debugger
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );

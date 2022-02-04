@@ -28,6 +28,7 @@ import {
   getWishlist,
   removeWishlist,
 } from "../../../store/actions/wishlist";
+import ReactPixel from 'react-facebook-pixel';
 
 function QuickView() {
   const dispatch = useDispatch();
@@ -128,6 +129,15 @@ function QuickView() {
     );
     setProductQuantity(1);
     dispatch(toggleQuickView(null));
+    ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+    const wishData = {
+      content_name: "Added To Cart",
+      content_ids: data?.id,
+      content_type:data?.sku,
+      currency:currency_symbol, 
+      value:data?.price
+    };
+    ReactPixel.track("AddToCart", wishData);
   };
   const getOutOfStock = async () => {
     const id = data?.id;

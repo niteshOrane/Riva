@@ -10,17 +10,17 @@ import { toggleCart } from "../../../../store/actions/cart";
 import { deliveryCheck } from "../../../../services/address/address.service";
 import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
 import { getCartId } from "../../../../util";
-import TagManager from 'react-gtm-module'
+import TagManager from "react-gtm-module";
+import ReactPixel from "react-facebook-pixel";
 
 function OrderReview({
   deliverySpeed,
   cartPayment,
   callBackAfterApplyCoupan,
   addressItem,
-  translate
+  translate,
 }) {
   const history = useHistory();
-  console.log({cartPayment});
 
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
@@ -36,7 +36,7 @@ function OrderReview({
   const [discount, setDiscount] = useState(null);
   const customerid = customer.customerID;
   const [totalAmout, setTotalAmout] = useState(0);
-  const [paymentFee,setPaymentFee] = useState(0);
+  const [paymentFee, setPaymentFee] = useState(0);
   const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
@@ -66,16 +66,14 @@ function OrderReview({
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (activeDelivery && activeDelivery != null) {
-      const tagManagerArgs = {
-        gtmId: 'GTM-P84HSVZ',
-        dataLayer: {
-            category: 'placeOrder',
-            action: 'test',
-            label:"testtt",
-            value:10
-        }
-    }
-    TagManager.initialize(tagManagerArgs)
+      ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+      const data = {
+        currency: currency_symbol,
+        value: discount
+          ? parseFloat(totalDC + totalTax + totalAmout + discount).toFixed(2)
+          : parseFloat(totalDC + totalTax + totalAmout).toFixed(2),
+      };
+      ReactPixel.track("Purchase", data);
       history.push("/cart-payment");
     } else {
       dispatch(showSnackbar("Please select Delivery Speed ", "error"));
@@ -194,7 +192,7 @@ function OrderReview({
           <icons.CouponIcon />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-        {translate?.deliveryAddress?.ENTER}
+          {translate?.deliveryAddress?.ENTER}
         </span>
       </div>
       <div className={styles.applyCoupon}>
@@ -232,10 +230,12 @@ function OrderReview({
           <strong>{translate?.deliveryAddress?.USE}</strong>
         </div>
         <p className={`${styles.greyText} ${styles.smallText}`}>
-        {translate?.deliveryAddress?.YOU}
+          {translate?.deliveryAddress?.YOU}
         </p>
       </div>
-      <h4 className="font-weight-normal mt-12px">{translate?.deliveryAddress?.CHOOSE}</h4>
+      <h4 className="font-weight-normal mt-12px">
+        {translate?.deliveryAddress?.CHOOSE}
+      </h4>
       {deliverySpeed?.map((item) => {
         return (
           <div
@@ -275,7 +275,9 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>{translate?.deliveryAddress?.SUB}</span>
+        <span className={styles.greyText}>
+          {translate?.deliveryAddress?.SUB}
+        </span>
 
         <strong>
           {" "}
@@ -286,7 +288,9 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>{translate?.deliveryAddress?.DEL}</span>
+        <span className={styles.greyText}>
+          {translate?.deliveryAddress?.DEL}
+        </span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
@@ -296,7 +300,9 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>{translate?.deliveryAddress?.TAX}</span>
+        <span className={styles.greyText}>
+          {translate?.deliveryAddress?.TAX}
+        </span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
@@ -306,7 +312,9 @@ function OrderReview({
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
       >
-        <span className={styles.greyText}>{translate?.deliveryAddress?.COUPON}</span>
+        <span className={styles.greyText}>
+          {translate?.deliveryAddress?.COUPON}
+        </span>
         <strong>
           {" "}
           {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
@@ -324,10 +332,7 @@ function OrderReview({
             : parseFloat(totalDC + totalTax + totalAmout).toFixed(2)}
         </strong>
       </div>
-      <div
-      
-        className="d-flex align-items-center mt-12px"
-      >
+      <div className="d-flex align-items-center mt-12px">
         <input
           checked={news}
           type="checkbox"
@@ -336,8 +341,12 @@ function OrderReview({
           id=""
           onChange={() => setNews((prev) => !prev)}
         />
-        <span   style={{ paddingRight: language === "Arabic" ? "10px" : "0px" }} onClick={() => setNews(!news)} className="c-pointer">
-        {translate?.deliveryAddress?.SIGN}
+        <span
+          style={{ paddingRight: language === "Arabic" ? "10px" : "0px" }}
+          onClick={() => setNews(!news)}
+          className="c-pointer"
+        >
+          {translate?.deliveryAddress?.SIGN}
         </span>
       </div>
       <br />
@@ -368,7 +377,7 @@ function OrderReview({
           <icons.Return />
         </span>
         <span className={`${styles.greyText} ${styles.smallText}`}>
-        {translate?.deliveryAddress?.WE}
+          {translate?.deliveryAddress?.WE}
         </span>
       </div>
       <div className="my-12px p-12px bg-white d-flex align-items-center">
@@ -381,15 +390,17 @@ function OrderReview({
           <icons.Secure />
         </span>
         <div>
-          <h4 className={styles.greyText}>{translate?.deliveryAddress?.SECURE}</h4>
+          <h4 className={styles.greyText}>
+            {translate?.deliveryAddress?.SECURE}
+          </h4>
           <p className={`${styles.greyText} ${styles.smallText}`}>
-          {translate?.deliveryAddress?.SECURITY}
+            {translate?.deliveryAddress?.SECURITY}
           </p>
           <p></p>
         </div>
       </div>
       <p className={`${styles.greyText} ${styles.smallText} my-12px`}>
-      {translate?.deliveryAddress?.EXPRESS}
+        {translate?.deliveryAddress?.EXPRESS}
       </p>
     </div>
   );
