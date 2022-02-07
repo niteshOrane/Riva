@@ -224,4 +224,27 @@ margin: 20px !important;
   .filters_filtersContainer__1bia8{
     min-height: auto !important;
   }
+  .DeliveryAddress_container__1X6YQ{
+    display: block !important;
+  }
+  .DeliveryAddressForm_inpContainerAdd__12Dc7 {
+    margin-bottom: 35px;
+  }
+  .DeliveryAddress_subBtns__1HIdB button {
+    width: auto !important;
+    padding: 0 10px;
+  }
+  .DeliveryAddress_container__1X6YQ .DeliveryAddress_columnLeft__lRsCh .DeliveryAddress_subBtns__1HIdB{
+    margin-bottom: 30px;
+  }
+  .MuiCardHeader-root{
+    display: block !important;
+  }
+  .DeliveryAddress_columnLeft__lRsCh > section {
+    display: block !important;
+}
+.MuiPaper-root.MuiCard-root.MuiPaper-elevation1.MuiPaper-rounded {
+  width: 100% !important;
+  margin-bottom: 20px;
+}
 }
