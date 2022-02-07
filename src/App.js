@@ -11,15 +11,13 @@ import AppRoutes from "./routes";
 import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import ReactGA from "react-ga";
-import ReactPixel from 'react-facebook-pixel';
+import ReactPixel from "react-facebook-pixel";
 
 import { deepEqual, hardReload } from "./util";
 
 const tagManagerArgs = {
   gtmId: process.env.REACT_APP_GTM,
 };
-
-
 
 class AppRoot extends React.Component {
   componentDidMount() {

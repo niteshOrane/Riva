@@ -41,14 +41,14 @@ function Landing() {
     }
   };
 
-  useEffect(() => {
-    getIgBanners();
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
+  // useEffect(() => {
+  //   getIgBanners();
+  //   const tagManagerArgs = {
+  //     gtmId: process.env.REACT_APP_GTM,
+  //   };
 
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+  //   TagManager.initialize(tagManagerArgs);
+  // }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
       ?.find(

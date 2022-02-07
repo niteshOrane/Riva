@@ -29,8 +29,6 @@ import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
-
-import TagManager from "react-gtm-module";
 import ReactPixel from "react-facebook-pixel";
 
 const ProductDetails = (props) => {
