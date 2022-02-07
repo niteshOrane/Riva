@@ -3,7 +3,7 @@ import { object } from "prop-types";
 import API_URL from "../../enviroments/index";
 import { getStoreId, getStoreData, getCustId } from "../../util";
 
-const urlPath = "http://65.0.141.49/shop/index.php";
+const urlPath = process.env.REACT_APP_BASE_URL;
 
 export const getProductColor = (id) => {
   const colorAttr = new FormData();

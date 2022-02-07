@@ -104,7 +104,7 @@ function Landing() {
         <CardLayout data={cardsData} />
         <ExtraordinaryEssentials products={body.extraordinarySlider} />
         <OneImageBanner
-          img={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${middleBanner?.[0]?.image}`}
+          img={`${process.env.REACT_IMAGE_URL}${middleBanner?.[0]?.image}`}
           // title={middleBanner?.[0]?.name}
           link={middleBanner?.[0]?.url_banner}
         />

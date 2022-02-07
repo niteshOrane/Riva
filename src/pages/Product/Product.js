@@ -27,7 +27,6 @@ const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
- 
 
   const selectedProductId = match.params.categoryId;
 
@@ -35,6 +34,12 @@ const Product = (props) => {
   const [compositioncare, setCompositioncare] = useState({});
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
+  );
+  const { isAuthenticated } = useSelector(
+    (state) => state?.auth
+  );
+  const {data } = useSelector(
+    (state) => state?.cart
   );
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
@@ -121,29 +126,35 @@ const Product = (props) => {
         dataLayer: {
           pageType: "catalog_category_view",
           list: "category",
-          customer: { isLoggedIn: false },
-          category: { id: "866", name: "Kids" },
-          cart: { hasItems: false },
+          customer: { isLoggedIn: isAuthenticated },
+          category: {
+            id: JSON.parse(localStorage.getItem("preferredCategory")),
+          },
+          cart: { hasItems: data.length >0 ? true :false },
           ecommerce: {
             currencyCode: currency_symbol,
 
             product: {
               name: product.name,
+              price: product.price,
+              sku: product.sku,
+              id: product.id,
             },
           },
         },
       });
     }
   }, [product]);
+  console.log({ product });
 
   useEffect(() => {
     init(selectedProductId);
     TagManager.dataLayer({
-      dataLayer:{
-        event:"page_view",
-        url:match.url
-      }
-    })
+      dataLayer: {
+        event: "page_view",
+        url: match.url,
+      },
+    });
   }, [selectedProductId]);
   if (loading)
     return (
