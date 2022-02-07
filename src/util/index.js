@@ -11,9 +11,9 @@ export const ALERT = {
 };
 
 export const URL = {
-  baseUrl: `http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image`,
-  baseUrlColorSwitcher: `http://65.0.141.49/shop/pub/media/wysiwyg/swatches`,
-  baseUrlProduct: `http://65.0.141.49/shop/media/catalog/product/`, //https://www.rivafashion.com/media/catalog/product
+  baseUrl: process.env.REACT_IMAGE_URL,
+  baseUrlColorSwitcher: process.env.REACT_MEDIA,
+  baseUrlProduct: process.env.REACT_MEDIA, //https://www.rivafashion.com/media/catalog/product
 };
 
 export const defaultStore = {

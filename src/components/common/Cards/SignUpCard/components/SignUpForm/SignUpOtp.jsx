@@ -20,6 +20,7 @@ import {
 } from "../../../../../../store/actions/common";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
 import ReactPixel from "react-facebook-pixel";
+import TagManager from "react-gtm-module";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -223,6 +224,17 @@ export default function TransitionsModal({
           },
         };
         ReactPixel.track("CompleteRegistration", data);
+        TagManager.dataLayer({
+          dataLayer: {
+            pageType: "catalog_category_view",
+            list: "category",
+            customer: {  email: res.data.databind["user email"],
+            customerId: res.data.databind["customerId"], },
+            category: {
+              id: JSON.parse(localStorage.getItem("preferredCategory")),
+            },
+          }
+        });
         dispatch(
           showSnackbar(
             "User registered successfully, please login to continue",
