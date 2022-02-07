@@ -20,6 +20,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import TagManager from "react-gtm-module";
 
 const Product = (props) => {
   const { match } = props;
@@ -32,6 +34,12 @@ const Product = (props) => {
   const [compositioncare, setCompositioncare] = useState({});
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
+  );
+  const { isAuthenticated } = useSelector(
+    (state) => state?.auth
+  );
+  const {data } = useSelector(
+    (state) => state?.cart
   );
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
@@ -112,17 +120,49 @@ const Product = (props) => {
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
+  useEffect(() => {
+    if (product.name) {
+      TagManager.dataLayer({
+        dataLayer: {
+          pageType: "catalog_category_view",
+          list: "category",
+          customer: { isLoggedIn: isAuthenticated },
+          category: {
+            id: JSON.parse(localStorage.getItem("preferredCategory")),
+          },
+          cart: { hasItems: data.length >0 ? true :false },
+          ecommerce: {
+            currencyCode: currency_symbol,
+
+            product: {
+              name: product.name,
+              price: product.price,
+              sku: product.sku,
+              id: product.id,
+            },
+          },
+        },
+      });
+    }
+  }, [product]);
+  console.log({ product });
 
   useEffect(() => {
     init(selectedProductId);
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: match.url,
+      },
+    });
   }, [selectedProductId]);
   if (loading)
     return (
       <div className="d-flex justify-content-between">
-        <div className = {styles.load}>
+        <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
-        <div className = {styles.load}>
+        <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
       </div>

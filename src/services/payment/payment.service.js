@@ -39,7 +39,7 @@ export const processCodPayment = () => {
 export const processCodPaymentFurther = () => {
   const config = {
     method: "post",
-    url: `http://65.0.141.49/shop/index.php/rest/en/V1/webapi/quoteInfo?quoteId=${getCartId()}`,
+    url: `${process.env.REACT_APP_BASE_URL}/rest/en/V1/webapi/quoteInfo?quoteId=${getCartId()}`,
     silent: true,
   };
   return axios(config);

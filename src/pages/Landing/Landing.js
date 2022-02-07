@@ -17,31 +17,38 @@ import Instagram from "../../components/pages/landing/Instagram/Instagram";
 import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks";
 import { Link } from "react-router-dom";
 import { getInstagramBanners } from "../../services/layout/Layout.service";
-import styles from "./Landing.module.scss"
+import styles from "./Landing.module.scss";
+import useArabic from "../../components/common/arabicDict/useArabic";
+import TagManager from "react-gtm-module";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
   // console.log({middleBanner})
-  const { btfLeft, btfRight, videoBanner,loading } = useHeroGrid();
+  const { btfLeft, btfRight, videoBanner, loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
   );
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [instagramBanners, setInstagramBanners] = useState(null);
+  const { translate } = useArabic();
 
   const getIgBanners = async () => {
     const size = new FormData();
     size.append("limit", 8);
     const res = await getInstagramBanners(size);
-    if(res?.status===200 && res?.data){
-      setInstagramBanners(res?.data)
+    if (res?.status === 200 && res?.data) {
+      setInstagramBanners(res?.data);
     }
   };
 
+  // useEffect(() => {
+  //   getIgBanners();
+  //   const tagManagerArgs = {
+  //     gtmId: process.env.REACT_APP_GTM,
+  //   };
 
-  useEffect(() => {
-    getIgBanners();
-  }, []);
+  //   TagManager.initialize(tagManagerArgs);
+  // }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
       ?.find(
@@ -64,7 +71,7 @@ function Landing() {
             bgImageUrl="./assets/images/categSlider-bg.png"
             bgImage
             slidesToShow={6}
-            header={["Shop By", "Category"]}
+            header={[translate?.home?.SHOP, translate?.home?.CAT]}
             render={(item) => (
               <Link
                 to={`/products/${item?.url_key}/${item?.parent_id}`}
@@ -80,7 +87,9 @@ function Landing() {
                   />
                 </div>
                 <div>
-                  <span className={`${styles.categoryName} my-12px d-inline-block`}>
+                  <span
+                    className={`${styles.categoryName} my-12px d-inline-block`}
+                  >
                     {item?.name?.toUpperCase()}
                   </span>
                 </div>
@@ -95,12 +104,12 @@ function Landing() {
         <CardLayout data={cardsData} />
         <ExtraordinaryEssentials products={body.extraordinarySlider} />
         <OneImageBanner
-          img={`http://65.0.141.49/shop/media/mageplaza/bannerslider/banner/image/${middleBanner?.[0]?.image}`}
+          img={`${process.env.REACT_IMAGE_URL}${middleBanner?.[0]?.image}`}
           // title={middleBanner?.[0]?.name}
           link={middleBanner?.[0]?.url_banner}
         />
         <TopBrand />
-        {instagramBanners && <Instagram instagramBanners = {instagramBanners} /> }
+        {instagramBanners && <Instagram instagramBanners={instagramBanners} />}
       </div>
     </>
   );

@@ -20,12 +20,15 @@ import {
 import { getCustId, getStoreId } from "../../util";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
+  console.log({customer});
+  const {translate} = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const { language } = useSelector((state) => state?.common?.store);
-  const [phoneValue, setPhoneValue] = useState(`+${customer?.mobile}`);
+  const [phoneValue, setPhoneValue] = useState(`${customer?.mobile || customer?.mobile_number}`);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
@@ -295,7 +298,7 @@ function ProfileInfoForm() {
           </article>
           <section className="registration-submit-btn-wrapper">
             <button type="submit" className="registration-btn">
-              SAVE DEATILS
+             {translate?.dash?.DETAILS}
             </button>
           </section>
         </form>

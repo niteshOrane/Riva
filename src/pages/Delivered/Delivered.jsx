@@ -11,13 +11,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "./Pagination";
 import { showSnackbar } from "../../store/actions/common";
 import { useDispatch } from "react-redux";
+import useArabic from "../../components/common/arabicDict/useArabic";
+import { useEffect } from "react";
+import TagManager from "react-gtm-module";
 
 function Delivered({ title = "Delivered" }) {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
   const dispatch = useDispatch();
-
+  const {translate}  = useArabic();
   const { language } = useSelector((state) => state?.common?.store);
+
   const [orderList, setOrderList] = React.useState([]);
   const [status, setStatus] = React.useState(null);
   const [finalList, setFinalList] = React.useState([]);
@@ -43,6 +47,12 @@ function Delivered({ title = "Delivered" }) {
       dispatch(showSnackbar("Order Cancelled successfully", "success"));
     }
   };
+  useEffect(()=>{
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  },[])
   React.useEffect(() => {
     getOrders(customer?.customerID);
   }, [orderType]);

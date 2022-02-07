@@ -49,7 +49,7 @@ const LoginForm = ({
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    mobile: "",
+    mobile: ""
   });
 
   const [showforgotPassword, setforgotPassword] = useState(false);

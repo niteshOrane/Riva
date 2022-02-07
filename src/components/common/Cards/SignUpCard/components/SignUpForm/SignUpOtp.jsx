@@ -19,7 +19,8 @@ import {
   toggleSignUpCard,
 } from "../../../../../../store/actions/common";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
-
+import ReactPixel from "react-facebook-pixel";
+import TagManager from "react-gtm-module";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -107,7 +108,7 @@ export default function TransitionsModal({
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isSubmit, setIsSubmit] = useState(false);
-   let myInterval = null;
+  let myInterval = null;
   const validate = (value) => {
     const errorVal = {};
     if (
@@ -197,13 +198,13 @@ export default function TransitionsModal({
     if (userOtp) {
       const { email, name, lastName, password, phone } = formData;
       const customer = new FormData();
-      customer.append("otp", userOtp);
+      customer.append("otp", `${userOtp}`);
       setLoading(true);
       customer.append("phone", phone);
       customer.append("customerInfo[firstname]", name || "");
       customer.append("customerInfo[lastname]", lastName || "");
       customer.append("customerInfo[email]", email);
-      customer.append("customerInfo[mobile]", phone);
+      customer.append("customerInfo[mobile_number]", phone);
       customer.append("customerInfo[password]", password);
       customer.append("customerInfo[storeId]", getStoreId());
       const res = await customerVerifyOtp(customer);
@@ -213,6 +214,27 @@ export default function TransitionsModal({
         handleSubmit();
         dispatch(newUserEmailCheck(email));
         dispatch(toggleSignUpCard(""));
+        ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+        const data = {
+          content_name: "Customer Register",
+          status: "Success",
+          value: {
+            email: res.data.databind["user email"],
+            customerId: res.data.databind["customerId"],
+          },
+        };
+        ReactPixel.track("CompleteRegistration", data);
+        TagManager.dataLayer({
+          dataLayer: {
+            pageType: "catalog_category_view",
+            list: "category",
+            customer: {  email: res.data.databind["user email"],
+            customerId: res.data.databind["customerId"], },
+            category: {
+              id: JSON.parse(localStorage.getItem("preferredCategory")),
+            },
+          }
+        });
         dispatch(
           showSnackbar(
             "User registered successfully, please login to continue",
@@ -260,7 +282,7 @@ export default function TransitionsModal({
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
   };
-   const setIntervalOTP = () => {
+  const setIntervalOTP = () => {
     myInterval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
@@ -287,7 +309,7 @@ export default function TransitionsModal({
       handleOpen();
     }
   }, [error]);
-  
+
   return (
     <div>
       <LoaderButton
@@ -367,8 +389,6 @@ export default function TransitionsModal({
                     {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
                   </span>
                 )}
-
-
               </div>
               <button
                 onClick={varifyOtp}

@@ -5,9 +5,11 @@ import { useHistory } from 'react-router-dom';
 import MenuListComposition from './MenuItem';
 import { toggleCart } from '../../../store/actions/cart';
 import { toggleSignUpCard } from '../../../store/actions/common';
+import useArabic from '../../common/arabicDict/useArabic';
 
 const NavLinks = React.memo(() => {
   const history = useHistory();
+  const { translate } = useArabic();
   const { data = [] } = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist.data);
   const auth = useSelector((state) => state.auth);
@@ -31,7 +33,7 @@ const NavLinks = React.memo(() => {
             favorite_border
           </span>
           <span className="align-self-end font-light-black">
-            Wishlist ({isAuth ? wishlist.length ?? 0 : 0})
+           {translate?.nav?.WISH}({isAuth ? wishlist.length ?? 0 : 0})
             &nbsp; &nbsp;
           </span>{'   '}
         </span>
@@ -41,7 +43,7 @@ const NavLinks = React.memo(() => {
         <span
           className="d-flex align-items-center gap-12"
         >
-           <MenuListComposition auth={auth} history={history} openSignUpCard={openSignUpCard} />
+           <MenuListComposition auth={auth} history={history} openSignUpCard={openSignUpCard} translate={translate} />
          {' '}
         </span>
       </li>
@@ -54,7 +56,7 @@ const NavLinks = React.memo(() => {
             shopping_cart
           </span>
           <span className="align-self-end font-light-black">
-            Cart ({data?.length || 0})
+          {translate?.nav?.CART} ({data?.length || 0})
           </span>{' '}
         </a>
       </li>

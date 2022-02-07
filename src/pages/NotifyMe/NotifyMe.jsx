@@ -13,9 +13,11 @@ import useNotifyMeList from "./useNotifyMeList";
 import styles from "./NotifyMe.module.scss";
 import { getProductColor } from "../../services/product/product.service";
 import { useHistory } from "react-router-dom";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function NotifyMe() {
   const { notifyList } = useNotifyMeList();
+  const {translate} = useArabic();
   const [notifyItems, setNotifyItems] = React.useState();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,7 +53,7 @@ function NotifyMe() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2>Notify Me</h2>
+            <h2>{translate?.dash?.NOTIFY}</h2>
             {notifyItems && notifyItems?.data.length ? (
               notifyItems?.data?.map((card, i) => (
                 <div className={styles.card}>
@@ -62,31 +64,33 @@ function NotifyMe() {
                       </div>
                       <div>
                         <h4 className="font-weight-normal">
-                          Your notification for:- {card.productname}
+                         {card.productname}
                         </h4>
                         <span className="greyText font-size-small">
                           {moment().format("DD MMM, YYYY")}
                         </span>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => redirectToDetails(card?.productId)}
-                      className={styles.redirectBtn}
-                    >
-                      View Product
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        handleSubmit(e, card.productId);
-                      }}
-                      role="button"
-                      aria-label="Delete Notifictaion"
-                      className="bg-transparent no-border c-pointer"
-                      id={styles.closeBtn}
-                    >
-                      <icons.Close />
-                    </button>
+                    <div className="d-flex justify-content-around">
+                      <button
+                        type="button"
+                        onClick={() => redirectToDetails(card?.productId)}
+                        className={styles.redirectBtn}
+                      >
+                        {translate?.dash?.VIEW}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          handleSubmit(e, card.productId);
+                        }}
+                        role="button"
+                        aria-label="Delete Notifictaion"
+                        className="bg-transparent no-border c-pointer"
+                        id={styles.closeBtn}
+                      >
+                        <icons.Close />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))

@@ -11,9 +11,14 @@ import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
+import TagManager from "react-gtm-module";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function CartPayment() {
   const dispatch = useDispatch();
+  const {translate} = useArabic()
+
+  // useAnalytics();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -33,6 +38,12 @@ function CartPayment() {
   useEffect(() => {
     setPaymentOption(paymentMode);
   }, [paymentMode]);
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  }, []);
   if (loading)
     return (
       <div className={styles.tapLoader}>
@@ -53,25 +64,25 @@ function CartPayment() {
                 &nbsp;
               </strong>
               <span className="color-grey">
-                Home <icons.AngleRight />
+              {translate?.payment?.HOME} <icons.AngleRight />
               </span>
             </Link>
 
-            <strong>Payment</strong>
+            <strong>{translate?.payment?.PAYMENT}</strong>
           </div>
         </div>
       </div>
       <div className={styles.container}>
         <div className={styles.col1}>
-
           {paymentOption &&
-            paymentOption?.data &&
-            paymentOption?.data?.length ? (
+          paymentOption?.data &&
+          paymentOption?.data?.length ? (
             <>
               <h2 className="font-weight-normal my-20px">
-                Choose Payment Mode
+              {translate?.payment?.CHOOSE}
               </h2>
               <RePaymentTab
+              translate={translate}
                 cartItem={items}
                 customerID={customerid}
                 cartPaymentInfo={cartPaymentInfo}
@@ -86,6 +97,7 @@ function CartPayment() {
 
         <div className={styles.col2}>
           <PriceDetails
+          translate={translate}
             cartItem={items}
             store={store}
             customerID={customerid}

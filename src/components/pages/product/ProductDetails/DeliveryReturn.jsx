@@ -16,7 +16,7 @@ function getModalStyle() {
   };
 }
 
-export default function DeliveryReturn({ language }) {
+export default function DeliveryReturn({ language,translate }) {
   const useStyles = makeStyles((theme) => ({
     paper: {
       position: "absolute",
@@ -98,7 +98,7 @@ export default function DeliveryReturn({ language }) {
           getDeliveryDetail();
         }}
       >
-        Delivery & returns
+        {translate?.details?.DEL}
       </span>
       <Modal
         open={open}

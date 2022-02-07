@@ -1,19 +1,23 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchCommonData } from './store/actions/common/common';
-import { getWishlist } from './store/actions/wishlist';
-import Loader from './components/common/Loader';
-import { getCart } from './store/actions/cart';
-import SnackBar from './components/common/Snakbar';
-import AlertComponent from './components/common/Alert';
-import AppRoutes from './routes';
-import './App.scss';
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
+import { connect } from "react-redux";
+import TagManager from "react-gtm-module";
+import { fetchCommonData } from "./store/actions/common/common";
+import { getWishlist } from "./store/actions/wishlist";
+import Loader from "./components/common/Loader";
+import { getCart } from "./store/actions/cart";
+import SnackBar from "./components/common/Snakbar";
+import AlertComponent from "./components/common/Alert";
+import AppRoutes from "./routes";
+import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
+import ReactGA from "react-ga";
+import ReactPixel from "react-facebook-pixel";
 
+import { deepEqual, hardReload } from "./util";
 
-import { deepEqual, hardReload } from './util';
-
-
+const tagManagerArgs = {
+  gtmId: process.env.REACT_APP_GTM,
+};
 
 class AppRoot extends React.Component {
   componentDidMount() {
@@ -25,6 +29,9 @@ class AppRoot extends React.Component {
     fetch();
     wishlistInit();
     cartInit();
+    TagManager.initialize(tagManagerArgs);
+    ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+    ReactPixel.pageView();
   }
 
   topFunction() {
@@ -37,7 +44,10 @@ class AppRoot extends React.Component {
     window.addEventListener("scroll", () => {
       const mybutton = document.getElementById("myBtn");
       if (mybutton) {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
           mybutton.style.display = "block";
           mybutton.style.bottom = `100px`;
         } else {
@@ -53,8 +63,8 @@ class AppRoot extends React.Component {
   handleError(err) {
     const properties = {
       title: err?.statusText,
-      message: err?.message ?? '',
-      secondaryActionText: 'OK',
+      message: err?.message ?? "",
+      secondaryActionText: "OK",
       visible: true,
     };
     return <AlertComponent {...properties} />;
@@ -67,7 +77,6 @@ class AppRoot extends React.Component {
     return (
       <>
         <AppRoutes {...this.props} />
-
 
         {error && this.handleError(error)}
         <SnackBar />

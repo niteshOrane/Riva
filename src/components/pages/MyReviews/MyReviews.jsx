@@ -3,16 +3,27 @@ import styles from "./myReview.module.scss";
 import moment from "moment";
 import ReviewModal from "../product/ProductDetails/ReviewPopUp";
 
-function MyReviews({ li, deleteReviewAction,getMyReview }) {
+function MyReviews({ li, deleteReviewAction, getMyReview, imageAndname }) {
   return (
     <div>
       <section>
         <div className={styles.box}>
           <div>
-            <img src={li?.image} alt={li?.name} />
+            <img
+              src={
+                imageAndname?.find((val) => val?.id == li?.entity_pk_value)
+                  ?.image
+              }
+              alt={li?.name}
+            />
           </div>
           <div className={styles.content}>
-            <p>{li.name}</p>
+            <p>
+              {
+                imageAndname?.find((val) => val?.id == li?.entity_pk_value)
+                  ?.name
+              }
+            </p>
             <div className={styles.starBox}>
               <span style={{ fontSize: "16px" }} className="material-icons">
                 star_rate
@@ -25,7 +36,6 @@ function MyReviews({ li, deleteReviewAction,getMyReview }) {
               {moment(li?.created_at)?.calendar()}
             </div>
             <div className={styles.links}>
-            
               <button
                 className={styles.action}
                 type="button"
@@ -34,7 +44,6 @@ function MyReviews({ li, deleteReviewAction,getMyReview }) {
                 Delete
               </button>
             </div>
-         
           </div>
         </div>
         <hr className={styles.line} />

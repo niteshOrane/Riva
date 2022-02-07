@@ -8,6 +8,7 @@ import styles from "./bestSellingProducts.module.scss";
 import style from "./bestSellingProducts.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import useArabic from "../../../common/arabicDict/useArabic";
 
 const category_ids = {
   featured: "2044",
@@ -21,6 +22,7 @@ const BestSellingProducts = () => {
     dancing: "Products",
   });
   const refContainer = useRef();
+  const { translate } = useArabic();
 
   const previous = () => refContainer.current.slickPrev();
   const next = () => refContainer.current.slickNext();
@@ -75,7 +77,11 @@ const BestSellingProducts = () => {
               <span
                 className="d-flex align-items-center"
                 onClick={() =>
-                  changeCategory(category_ids.all, "All", "Products")
+                  changeCategory(
+                    category_ids.all,
+                    translate?.home?.ALL,
+                    "Products"
+                  )
                 }
               >
                 <span
@@ -83,7 +89,7 @@ const BestSellingProducts = () => {
                     categoryId === category_ids.all ? "color-text-primary" : ""
                   }`}
                 >
-                  All
+                  {translate?.home?.ALL}
                 </span>
               </span>
             </li>
@@ -93,7 +99,7 @@ const BestSellingProducts = () => {
                 onClick={() =>
                   changeCategory(
                     category_ids.best_selling,
-                    "Best Selling",
+                    translate?.home?.BEST_SELLING,
                     "Products"
                   )
                 }
@@ -105,7 +111,7 @@ const BestSellingProducts = () => {
                       : ""
                   }`}
                 >
-                  Best Selling Products
+                  {translate?.home?.BEST_SELLING}
                 </span>
               </span>
             </li>
@@ -113,7 +119,11 @@ const BestSellingProducts = () => {
               <span
                 className="d-flex align-items-center"
                 onClick={() =>
-                  changeCategory(category_ids.featured, "Featured", "Products")
+                  changeCategory(
+                    category_ids.featured,
+                    translate?.home?.FEATURE,
+                    "Products"
+                  )
                 }
               >
                 <span
@@ -123,7 +133,7 @@ const BestSellingProducts = () => {
                       : ""
                   }`}
                 >
-                  Featured Products
+                  {translate?.home?.FEATURE}
                 </span>
               </span>
             </li>
@@ -137,7 +147,7 @@ const BestSellingProducts = () => {
         </div>
       </div>
       {loading && (
-        <div className = {styles.bestSke}>
+        <div className={styles.bestSke}>
           <Skeleton height="25rem" width="18.5rem" />
           <Skeleton height="25rem" width="18.5rem" />
           <Skeleton height="25rem" width="18.5rem" />

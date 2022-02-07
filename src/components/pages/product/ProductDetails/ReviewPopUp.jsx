@@ -16,6 +16,7 @@ import {
 import { showSnackbar } from "../../../../store/actions/common";
 import { setAttributeFormatter } from "validatorjs";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import useArabic from "../../../common/arabicDict/useArabic"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -60,6 +61,8 @@ export default function ReviewModal({
   const [reviewRes, setReviewRes] = React.useState(null);
   const [rate, setRate] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+
+  const {translate} = useArabic();
 
   const handleOpen = () => {
     setOpen(true);
@@ -195,10 +198,10 @@ export default function ReviewModal({
           getAllReviews();
         }}
       >
-        {isDetail ? (
-          "Review"
-        ) : isEdit ? (<span className={classes.viewAll}>Edit</span>) : (
-          <span className={classes.viewAll}>Rate this product</span>
+        {isDetail ? 
+          translate?.details?.REV
+         : isEdit ? (<span className={classes.viewAll}>Edit</span>) : (
+          <span className={classes.viewAll}>{translate?.details?.GUIDE}</span>
         )}
       </span>
 

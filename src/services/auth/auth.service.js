@@ -53,7 +53,7 @@ export const verifyUpdateProfileMobileOtp = (formData) => {
 export const customerVerifyOtp = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/verifyOtp`,
+    url: `${API_URL}/otpVerify`,
     silent: true,
     data: formData,
   };

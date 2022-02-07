@@ -28,8 +28,11 @@ import {
 import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
+import useArabic from "../../components/common/arabicDict/useArabic";
+import TagManager from "react-gtm-module";
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
+  // useAnalytics();
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,
@@ -37,7 +40,8 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     indexItem: null,
   });
   const { language } = useSelector((state) => state?.common?.store);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const {translate} = useArabic()
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -45,6 +49,12 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
       indexItem: index,
     });
   };
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+    };
+    TagManager.initialize(tagManagerArgs);
+  }, []);
   const dispatch = useDispatch();
   const customerAddressList = useSelector(
     (state) => state?.address?.data || []
@@ -169,7 +179,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
         type="button"
         onClick={addNewAddressbtn}
       >
-        Add New Address
+        {translate?.dash?.NEW}
       </button>
         : null}
       <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? '' : styles.container}>
@@ -266,9 +276,9 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
           {!isManageScreen && (
             <>
               <div className={styles.shippingMethod}>
-                <h3 className="font-weight-normal">SHIPPING METHOD</h3>
+                <h3 className="font-weight-normal">{translate?.deliveryAddress?.SHIP}</h3>
                 <p className={styles.greyText}>
-                  Please specify the shipping address to see available options.
+                {translate?.deliveryAddress?.PLEASE}
                 </p>
               </div>
 
@@ -278,12 +288,12 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                     <span className="material-icons-outlined">
                       arrow_back_ios
                     </span>
-                    <span>RETURN TO CART</span>
+                    <span> {translate?.deliveryAddress?.RETURN}</span>
                   </button>
                 </Link>
                 <Link to="/">
                   <button className={styles.continueBtn} type="button">
-                    CONTINUE SHOPPING
+                  {translate?.deliveryAddress?.CONT}
                   </button>
                 </Link>
               </div>
@@ -305,6 +315,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                       )
                       : {}
                   }
+                  translate={translate}
                 />
               </div>
               <div className="my-20px">
@@ -314,7 +325,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   alt=""
                 />
               </div>
-              <LetUsHear />
+              <LetUsHear translate={translate} />
             </div>
           </>
         )}

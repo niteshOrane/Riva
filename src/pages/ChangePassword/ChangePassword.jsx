@@ -6,6 +6,7 @@ import { showSnackbar } from "../../store/actions/common";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../../services/auth/auth.service";
 import styles from "./ChangePassword.module.scss";
+import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ChangePassword() {
   const [values, setValues] = React.useState({
@@ -25,6 +26,7 @@ function ChangePassword() {
   };
 
   const dispatch = useDispatch();
+  const {translate} = useArabic();
 
   const auth = useSelector((state) => state.auth);
 
@@ -75,11 +77,12 @@ function ChangePassword() {
         <div className="d-flex h-100">
           <Sidebar />
           <div className="w-100">
-            <h2 className="font-weight-normal">Change Password</h2>
+            <h2 className="font-weight-normal">{translate?.dash?.CHANGE}</h2>
             <ChangePasswordForm
               values={values}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
+              translate={translate}
             />
           </div>
         </div>
