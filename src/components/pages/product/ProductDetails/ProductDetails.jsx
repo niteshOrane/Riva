@@ -29,8 +29,7 @@ import Typography from "@mui/material/Typography";
 import { Link, useHistory } from "react-router-dom";
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
-
-import TagManager from "react-gtm-module";
+import ReactPixel from "react-facebook-pixel";
 
 const ProductDetails = (props) => {
   const {
@@ -51,8 +50,6 @@ const ProductDetails = (props) => {
   const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
 
-
-  
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -63,7 +60,6 @@ const ProductDetails = (props) => {
         color: { label: temp[0]?.color, value: temp[0]?.option_id },
       });
     }
-
   }, []);
   const colorImageAction = (data) => {
     setColorImg(data?.file);
@@ -133,7 +129,6 @@ const ProductDetails = (props) => {
     priceWithoutCurrency = 0,
   } = product;
   const { price, visibility = 0, custom_attributes } = product;
-  console.log({ price });
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === "special_price"
@@ -186,7 +181,15 @@ const ProductDetails = (props) => {
         ...product.selected,
       })
     );
-    
+    ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+    const wishData = {
+      content_name: "Added To Cart",
+      content_ids: product?.id,
+      content_type: product?.sku,
+      currency: currency_symbol,
+      value: product?.price,
+    };
+    ReactPixel.track("AddToCart", wishData);
   };
   const handleWishList = () => {
     dispatch(toggleWishlist(product));
@@ -639,3 +642,5 @@ const ProductDetails = (props) => {
 };
 
 export default ProductDetails;
+
+

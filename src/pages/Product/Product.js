@@ -27,6 +27,7 @@ const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
+ 
 
   const selectedProductId = match.params.categoryId;
 
@@ -115,15 +116,34 @@ const Product = (props) => {
     setproduct({ ...product, selected: attr });
   };
   useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
+    if (product.name) {
+      TagManager.dataLayer({
+        dataLayer: {
+          pageType: "catalog_category_view",
+          list: "category",
+          customer: { isLoggedIn: false },
+          category: { id: "866", name: "Kids" },
+          cart: { hasItems: false },
+          ecommerce: {
+            currencyCode: currency_symbol,
 
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+            product: {
+              name: product.name,
+            },
+          },
+        },
+      });
+    }
+  }, [product]);
 
   useEffect(() => {
     init(selectedProductId);
+    TagManager.dataLayer({
+      dataLayer:{
+        event:"page_view",
+        url:match.url
+      }
+    })
   }, [selectedProductId]);
   if (loading)
     return (

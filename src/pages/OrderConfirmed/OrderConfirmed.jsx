@@ -13,13 +13,12 @@ import { orderConfirmed } from "../../services/order/order.services";
 import { showSnackbar } from "../../store/actions/common";
 import TagManager from "react-gtm-module";
 
-
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
   // useAnalytics();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
-  const [orderCurrency,setOrderCurrency] = useState(null)
+  const [orderCurrency, setOrderCurrency] = useState(null);
   const [amount, setAmount] = useState(null);
   const [orderItems, setOrderItems] = useState(null);
 
@@ -35,7 +34,7 @@ function OrderConfirmed(props) {
         shippingAmount: res?.data?.shipping_amount,
         totalPaid: res?.data?.grand_total,
       });
-      setOrderCurrency(res?.data?.order_currency_code)
+      setOrderCurrency(res?.data?.order_currency_code);
     } else {
       return dispatch(showSnackbar(res?.data?.error, "error"));
     }
@@ -47,13 +46,21 @@ function OrderConfirmed(props) {
       getOrderDetails(displayOrderNumber);
     }
   }, [orderId]);
-    // google tag manager
-    useEffect(() => {
-      const tagManagerArgs = {
-        gtmId: process.env.REACT_APP_GTM,
-      };
-      TagManager.initialize(tagManagerArgs);
-    }, []);
+  // google tag manager
+  useEffect(() => {
+    const tagManagerArgs = {
+      gtmId: process.env.REACT_APP_GTM,
+      dataLayer: {
+        pageType: "order_confirmed_page",
+        list: "category",
+        customer: { isLoggedIn: false },
+        category: { id: "866", name: "Kids" },
+        cart: { hasItems: false },
+        ecommerce: { currencyCode: "USD" },
+      },
+    };
+    TagManager.initialize(tagManagerArgs);
+  }, []);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -63,18 +70,22 @@ function OrderConfirmed(props) {
             <h2 className={styles.title}>Order Confirmed</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
               <Congratulations {...props?.match?.params} />
-              <div className = {styles.confirmCard}>
+              <div className={styles.confirmCard}>
                 {orderItems?.map((li) => (
                   <ProductCard
                     product={li}
                     displayOrderNumber={displayOrderNumber}
-                    orderCurrency = {orderCurrency}
+                    orderCurrency={orderCurrency}
                   />
                 ))}
               </div>
             </div>
             {deliveryAddress && amount && (
-              <Details deliveryAddress={deliveryAddress} amount={amount} orderCurrency={orderCurrency} />
+              <Details
+                deliveryAddress={deliveryAddress}
+                amount={amount}
+                orderCurrency={orderCurrency}
+              />
             )}
           </div>
         </div>
