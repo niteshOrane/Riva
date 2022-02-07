@@ -11,9 +11,9 @@ export const ALERT = {
 };
 
 export const URL = {
-  baseUrl: process.env.REACT_IMAGE_URL,
-  baseUrlColorSwitcher: process.env.REACT_MEDIA,
-  baseUrlProduct: process.env.REACT_MEDIA, //https://www.rivafashion.com/media/catalog/product
+  baseUrl: process.env.REACT_APP_IMAGE_URL,
+  baseUrlColorSwitcher: process.env.REACT_APP_MEDIA,
+  baseUrlProduct: process.env.REACT_APP_MEDIA, //https://www.rivafashion.com/media/catalog/product
 };
 
 export const defaultStore = {
