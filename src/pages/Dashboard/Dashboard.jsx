@@ -4,16 +4,20 @@ import CategoriesCircles from "../../components/common/CategoriesCircles/Categor
 import DashboardData from "../../components/pages/Dashboard/DashboardData/DashboardData";
 import { useEffect } from "react";
 import TagManager from "react-gtm-module";
+import { useLocation } from "react-router-dom";
 
 function Dashboard() {
+  const location = useLocation();
 
-  useEffect(()=>{
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-    TagManager.initialize(tagManagerArgs);
-  },[])
-  
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, []);
+
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">

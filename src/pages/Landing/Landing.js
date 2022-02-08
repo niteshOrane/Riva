@@ -15,7 +15,7 @@ import CardLayout from "../../components/pages/landing/CardLayout";
 import VideoPlayer from "../../components/pages/landing/VideoPlayer/VideoPlayer";
 import Instagram from "../../components/pages/landing/Instagram/Instagram";
 import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getInstagramBanners } from "../../services/layout/Layout.service";
 import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
@@ -23,6 +23,7 @@ import TagManager from "react-gtm-module";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
+  const location = useLocation();
   // console.log({middleBanner})
   const { btfLeft, btfRight, videoBanner, loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
@@ -41,14 +42,14 @@ function Landing() {
     }
   };
 
-  // useEffect(() => {
-  //   getIgBanners();
-  //   const tagManagerArgs = {
-  //     gtmId: process.env.REACT_APP_GTM,
-  //   };
-
-  //   TagManager.initialize(tagManagerArgs);
-  // }, []);
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
       ?.find(

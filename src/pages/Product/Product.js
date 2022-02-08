@@ -145,7 +145,6 @@ const Product = (props) => {
       });
     }
   }, [product]);
-  console.log({ product });
 
   useEffect(() => {
     init(selectedProductId);

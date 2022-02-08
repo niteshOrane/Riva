@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as icons from "../../components/common/Icons/Icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getCustId } from "../../util";
 import SelectDeliveryAddress from "../../components/pages/DeliveryAddress/SelectDeliveryAddress/SelectDeliveryAddress";
 
@@ -39,7 +39,17 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     checkedB: false,
     indexItem: null,
   });
+  const location = useLocation();
   const { language } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector(
+    (state) => state?.auth
+  );
+  const {data } = useSelector(
+    (state) => state?.cart
+  );
+  const { currency_symbol } = useSelector(
+    (state) => state?.common?.store
+  );
   const [loading, setLoading] = useState(false);
   const {translate} = useArabic()
   const handleChange = (event, index) => {
@@ -50,10 +60,26 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     });
   };
   useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-    TagManager.initialize(tagManagerArgs);
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "Delivery Address",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: data.length >0 ? true :false },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          products:data
+        },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
   }, []);
   const dispatch = useDispatch();
   const customerAddressList = useSelector(

@@ -226,8 +226,7 @@ export default function TransitionsModal({
         ReactPixel.track("CompleteRegistration", data);
         TagManager.dataLayer({
           dataLayer: {
-            pageType: "catalog_category_view",
-            list: "category",
+            pageType: "New Customer Signup",
             customer: {  email: res.data.databind["user email"],
             customerId: res.data.databind["customerId"], },
             category: {

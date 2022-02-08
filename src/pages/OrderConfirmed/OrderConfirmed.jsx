@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
@@ -15,6 +15,7 @@ import TagManager from "react-gtm-module";
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
+  const location = useLocation();
   // useAnalytics();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
@@ -58,7 +59,7 @@ function OrderConfirmed(props) {
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
-        pageType: "catalog_category_view",
+        pageType: "order_confirmed",
         list: "category",
         customer: { isLoggedIn: isAuthenticated },
         category: {
@@ -70,6 +71,12 @@ function OrderConfirmed(props) {
           orderValue:amount?.totalPaid,
           products:orderItems
         },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
       },
     });
   }, [orderItems,amount]);
