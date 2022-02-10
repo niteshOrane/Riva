@@ -82,12 +82,12 @@ function Products(props) {
     };
   });
   // google tag manager
-  useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+  // useEffect(() => {
+  //   const tagManagerArgs = {
+  //     gtmId: process.env.REACT_APP_GTM,
+  //   };
+  //   TagManager.initialize(tagManagerArgs);
+  // }, []);
   return (
     <div>
       <div className="container-90 max-width-1600">

@@ -16,6 +16,7 @@ import { URL } from "../../../util";
 import ReviewModal from "../../pages/product/ProductDetails/ReviewPopUp";
 import { getReviewList } from "../../../services/product/product.service";
 import { Rating } from "@material-ui/lab";
+import ReactPixel from 'react-facebook-pixel';
 
 function Wishlist() {
   const [selectedColor, setSelectedColor] = React.useState({
@@ -65,6 +66,15 @@ function Wishlist() {
       dispatch(removeWishlist(data));
     } else {
       dispatch(addWishlist(data));
+      ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+      const wishData = {
+        content_name: "Added To Wishlist",
+        content_category: "Success",
+        content_ids: data?.id,
+        currency:currency_symbol, 
+        value:data?.price
+      };
+      ReactPixel.track("AddToWishlist", wishData);
     }
     handleClose();
   };

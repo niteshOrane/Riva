@@ -349,14 +349,12 @@ class AppRoutes extends Component {
 
   render() {
     return (
-      <HashRouter>
-        <Suspense fallback={<Loader />}>
-          <Switch>
-            {this.renderRoutes()}
-            <Redirect to="/" />
-          </Switch>
-        </Suspense>
-      </HashRouter>
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          {this.renderRoutes()}
+          <Redirect to="/" />
+        </Switch>
+      </Suspense>
     );
   }
 }

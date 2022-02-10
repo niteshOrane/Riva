@@ -175,9 +175,21 @@ function useArabic() {
         language === "Arabic"
           ? "يتميّز شحن الإكسبرس بتوصيل الطلب خلال 3-6 أيام عمل. سيتم تحويلك لموقع ماستر كارد (AMEX) لإتمام الدفع وثم العودة لموقع ريفا."
           : "Express Shipping in 3-6 Business Days. You will be redirected to the website of Mastercard Internet Gateway System (AMEX) when you place your order. And then you will automatically return to rivafashion.com.",
-          LET: language==="Arabic" ? "تواصلي معنا على":"Let us hear from you at",
-          BOX:language==="Arabic"?"نسعد بخدمتك 24 ساعة على مدار الأسبوع.":" we are available to serve you 24 hours all week long & always happy to help you",
-          PRO:language==="Arabic"?"منتجات":"PRODUCTS"
+      LET:
+        language === "Arabic" ? "تواصلي معنا على" : "Let us hear from you at",
+      BOX:
+        language === "Arabic"
+          ? "نسعد بخدمتك 24 ساعة على مدار الأسبوع."
+          : " we are available to serve you 24 hours all week long & always happy to help you",
+      PRO: language === "Arabic" ? "منتجات" : "PRODUCTS",
+    },
+    payment: {
+      HOME: language === "Arabic" ? "المنزل" : "Home",
+      PAYMENT: language === "Arabic" ? "الدفع" : "Payment",
+      CHOOSE:
+        language === "Arabic" ? "اختيار طريقة الدفع" : "Choose Payment Mode",
+      DETAILS: language === "Arabic" ? "تفاصيل السعر" : "PRICE DETAILS",
+      PAY: language === "Arabic" ? "ادفع من خلال" : "Pay With",
     },
   };
   useEffect(() => {

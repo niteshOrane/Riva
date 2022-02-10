@@ -35,6 +35,12 @@ const Product = (props) => {
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
   );
+  const { isAuthenticated } = useSelector(
+    (state) => state?.auth
+  );
+  const {data } = useSelector(
+    (state) => state?.cart
+  );
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -115,15 +121,40 @@ const Product = (props) => {
     setproduct({ ...product, selected: attr });
   };
   useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
+    if (product.name) {
+      TagManager.dataLayer({
+        dataLayer: {
+          pageType: "catalog_category_view",
+          list: "category",
+          customer: { isLoggedIn: isAuthenticated },
+          category: {
+            id: JSON.parse(localStorage.getItem("preferredCategory")),
+          },
+          cart: { hasItems: data.length >0 ? true :false },
+          ecommerce: {
+            currencyCode: currency_symbol,
 
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+            product: {
+              name: product.name,
+              price: product.price,
+              sku: product.sku,
+              id: product.id,
+            },
+          },
+        },
+      });
+    }
+  }, [product]);
+  console.log({ product });
 
   useEffect(() => {
     init(selectedProductId);
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: match.url,
+      },
+    });
   }, [selectedProductId]);
   if (loading)
     return (

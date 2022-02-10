@@ -12,7 +12,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-function GoSellTap() {
+function GoSellTap({ translate }) {
   const { store_name } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -60,7 +60,10 @@ function GoSellTap() {
               </div>
               {store_name === "Kuwait" && (
                 <div className={styles.labelRadio}>
-                  <span style={{ color: "gray",paddingRight: "1rem" }} className="material-icons">
+                  <span
+                    style={{ color: "gray", paddingRight: "1rem" }}
+                    className="material-icons"
+                  >
                     credit_card
                   </span>
                   <FormControlLabel
@@ -72,7 +75,10 @@ function GoSellTap() {
               )}
               {store_name === "Saudi Arabia" && (
                 <div className={styles.labelRadio}>
-                  <span style={{ color: "gray", paddingRight: "1rem" }} className="material-icons">
+                  <span
+                    style={{ color: "gray", paddingRight: "1rem" }}
+                    className="material-icons"
+                  >
                     credit_card
                   </span>
                   <FormControlLabel
@@ -101,12 +107,7 @@ function GoSellTap() {
             </RadioGroup>
           </FormControl>
           <div className={styles.staticContent}>
-            <span>
-              Express Shipping in 3-6 Business Days. You will be redirected to
-              the website of Mastercard Internet Gateway System (AMEX) when you
-              place your order. And then you will automatically return to
-              rivafashion.com.
-            </span>
+            <span>{translate?.deliveryAddress?.EXPRESS}</span>
           </div>
         </form>
 

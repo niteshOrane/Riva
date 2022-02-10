@@ -203,4 +203,64 @@ margin: 20px !important;
   strong.logo-strong.d-block.navbar_logoImg__2U0yj {
     padding-left: 40px !IMPORTANT;
   }
+  .filters_filtersGrid__266I_ {
+    display: block !important;
+  }
+  .Dropdown_header__3B1PL {
+    border-bottom: 1px solid #dbdbdb;
+    padding: 5px 0;
+  }
+  .Dropdown_header__3B1PL h5{
+    font-size: 20px;
+    font-weight: normal;
+  }
+  .Dropdown_header__3B1PL h5:after {
+    content: "˅";
+    position: absolute;
+    right: 30px;
+    font-family: monospace;
+    margin-top: 8px;
+  }
+  .filters_filtersContainer__1bia8{
+    min-height: auto !important;
+  }
+  .DeliveryAddress_container__1X6YQ{
+    display: block !important;
+  }
+  .DeliveryAddressForm_inpContainerAdd__12Dc7 {
+    margin-bottom: 35px;
+  }
+  .DeliveryAddress_subBtns__1HIdB button {
+    width: auto !important;
+    padding: 0 10px;
+  }
+  .DeliveryAddress_container__1X6YQ .DeliveryAddress_columnLeft__lRsCh .DeliveryAddress_subBtns__1HIdB{
+    margin-bottom: 30px;
+  }
+  .MuiCardHeader-root{
+    display: block !important;
+  }
+  .DeliveryAddress_columnLeft__lRsCh > section {
+    display: block !important;
+}
+.MuiPaper-root.MuiCard-root.MuiPaper-elevation1.MuiPaper-rounded {
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+.Tab2Content_payFooter__1NZjr {
+  width: 88%!important;
+  margin-bottom: 20px;
+}
+.Tab2Content_reGrid__wi_2E .Tab2Content_rePayment__3qQma{
+  width: 100% !important;
+}
+.Tab2Content_reGrid__wi_2E {
+  display: block !important;
+}
+.makeStyles-tabContent-7{
+  max-width: 100% !important;
+}
+.CartPayment_container__4gtPs {
+  display: block !important;
+}
 }
