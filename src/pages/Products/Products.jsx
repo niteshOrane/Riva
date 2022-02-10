@@ -14,7 +14,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import TagManager from "react-gtm-module";
 
-
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import { extractColorSize } from "../../util";
 
@@ -276,7 +275,7 @@ function Products(props) {
       </div>
       <div className="container-90 max-width-1600 mx-auto">
         <Slider
-          className="basicSlider"
+          className="t"
           recomended
           items={products}
           slidesToShow={4}

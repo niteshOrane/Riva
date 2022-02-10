@@ -40,11 +40,11 @@ const ShoppingCart = () => {
       ) : (
         <div className={style.emptyCart}>
           <Link to="/">
-          <div className={style.emptyWrap}>
-          <span className={`material-icons ${style.emptyCartIcon}`}>
-            add_shopping_cart
-          </span>
-          </div>
+            <div className={style.emptyWrap}>
+              <span className={`material-icons ${style.emptyCartIcon}`}>
+                add_shopping_cart
+              </span>
+            </div>
           </Link>
           SHOPPING CART IS EMPTY You have no items in your shopping cart. Click{" "}
           <a
