@@ -263,4 +263,15 @@ margin: 20px !important;
 .CartPayment_container__4gtPs {
   display: block !important;
 }
+.d-flex.py-20px > .container-with-circles > .d-flex {
+  display: block;
+  height: auto !important;
+}
+.Sidebar_sidebar__1StS4 {
+  max-width: 100% !important;
+  margin-bottom: 25px;
+}
+.Sidebar_circlesContainer__2FjEV {
+  display: none !important;
+}
 }
