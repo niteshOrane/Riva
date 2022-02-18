@@ -98,13 +98,13 @@
   }
 }
 @media only screen and (max-width: 767px) {
-  div[class^="makeStyles-paper-"] {
-    width: 95% !important;
+  /* div[class^="makeStyles-paper-"] {
+    width: 35% !important;
     left: 10px !important;
     right: 0 !important;
     transform: none !important;
     top: 10px !important;
-}
+} */
 div[class^="makeStyles-paper-"] input,
 div[class^="makeStyles-paper-"] textarea{
   width: 100% !important;

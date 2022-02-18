@@ -7,12 +7,14 @@ $footer-grey-color: #737373;
   background-repeat: no-repeat;
   background-color: $footer-bg;
   font-family: Jost;
+  
   .footerGrid {
     padding-top: 35px;
     display: grid;
     grid-template-columns: 2fr 2fr 3fr 3fr;
     margin-left: 75px;
     margin-right: 75px;
+   
     .footerCol {
       ul {
         max-width: 200px;
@@ -160,6 +162,7 @@ $footer-grey-color: #737373;
   }
   .copyRightText {
    // margin-left: 22px;
+  
    @include left('margin', 22px);
     color: #737373;
   }
@@ -198,4 +201,15 @@ $footer-grey-color: #737373;
 }
 .text_alignmemt{
   @include left('margin', .5rem);
+}
+
+@media only screen and (max-width: 767px) {
+  /* Footer CSS */
+ .footerGrid
+ {
+     display: flex !important;
+     justify-content: space-around !important;
+     flex-wrap: wrap !important;
+     
+ }
 }

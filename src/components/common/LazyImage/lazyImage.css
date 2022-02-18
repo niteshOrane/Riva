@@ -1,0 +1,162 @@
+
+@media only screen and (max-width: 767px) {
+
+    /* Lazy Image CSS */
+
+    .products_productsPage__25u4X .products_fullWidthCardInTwoCol__3CwHk
+     {
+        width: 100% !important;
+     }
+
+     [dir='ltr'] .products_productsPage__25u4X 
+      {
+                    
+        display: inline-grid !important;
+      }
+
+       /* Filter and Sort BY CSS */
+
+     .fltrImg
+       {
+        width:15px !important;
+       }
+       .filterDots{
+           
+           width:2px !important;
+       }
+         /* .products_header__7pkiI {
+        
+        width: 50vh;
+        justify-content: space-between;
+        align-items: fl;
+        margin: 0px 0px;
+        } */
+    
+        .products_catNumber__33t9A {
+            display: flex;
+            align-items: flex-end;
+        }
+        .container-90 {
+         margin-bottom: 5rem !important;
+        }
+        .color-grey {
+            position: absolute;
+            left: 23rem !important;
+        }
+
+        [dir='ltr'] .filters_filterTextwrapper__fsw2h {
+            
+            position: absolute !important;
+            right: 8rem !important;
+        }
+
+        [dir='ltr'] .products_header__7pkiI .products_sortByText__z82dn {
+            width: 100%;
+            position: absolute;
+            left: 13rem !important;
+            margin-top: 2.5rem;
+        }
+    
+        [dir='ltr'] .filters_filterDots__1gWYn {
+            margin-right: 1.9rem !important;
+        }
+    
+        [dir='ltr'] .products_header__7pkiI .products_sortByText__z82dn span:nth-child(2) {
+            margin-left: 2px;
+        }
+        
+        /* Recommendation   for you css */
+
+         .basicSlider.slick-slide {
+            width: 100% !important;
+            flex: 0 0 1.6% !important;
+        }
+
+
+        /* Size Chart CSS */
+
+        .size-menu ul {
+            display: none !important;
+        }
+        
+        div[class^="makeStyles-paper-"] {
+            width: 30% !important;
+            left: 10px !important;
+            right: 0 !important;
+            transform: none !important;
+            top: 10px !important;
+        }
+
+
+        /* Shopping Cart   Css  */
+        [dir='ltr'] .Products_products__2gvz8 {
+            display: contents !important;
+            /* flex-wrap: wrap; */
+        }
+       .Products_products__2gvz8 .Products_header__3qLHv {
+            width: 100%;
+        }
+        .Products_products__2gvz8 .Products_header__3qLHv .Products_headerDetails__22Xj7 {
+            display: none !important;
+        }
+        /* .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt {
+            width: 40% !important;
+                  
+        } */
+
+        /* .Products_products__2gvz8 .Products_continueBtn__1SW9i {
+            text-align: right !important ;
+             
+            
+        } */
+
+        .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt .Products_nameClrSize__raa7z .Products_clrSize__SXHsq div span:nth-child(1) {
+          display: none;
+        }
+
+        .Products_spaceBox__28KaP {
+            flex-direction: inherit;
+        }
+          
+       /* .color-grey .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productPricing__1q_TV {
+            position: absolute;
+            margin-top: 8rem;
+        }
+        .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_footer__2Htj- .Products_footerContent__1_-xP {
+            flex-direction: column;
+        }  */
+        /* ddddd */
+       
+        .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt {
+            width: 100%;
+            display: inline-flex;
+        }
+         
+        /* Cart Payment CSS */
+
+        .CartPayment_container__2y_Bc {
+            display: block !important;
+        }
+        .Tab2Content_reGrid__3JwrP {
+            
+            display: block !important;
+        }
+        
+        .MuiFormControl-root {
+           
+            width: 100% !important;
+        }
+        .makeStyles-tabContent-7 {
+          
+            max-width: initial !important;
+           
+        }
+        .Tab2Content_payFooter__wpz-F {
+            
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-bottom: 2.5rem !important;
+        }
+       
+        
+    }

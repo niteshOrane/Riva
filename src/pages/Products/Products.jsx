@@ -292,7 +292,7 @@ function Products(props) {
       </div>
       <div className="container-90 max-width-1600 mx-auto">
         <Slider
-          className="basicSlider"
+          className="t"
           recomended
           items={products}
           slidesToShow={4}
