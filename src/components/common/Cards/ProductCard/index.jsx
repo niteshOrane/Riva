@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Image from "../../LazyImage/Image";
-import { toggleWishlist } from "../../../../store/actions/wishlist";
+import { addWishlist, toggleWishlist } from "../../../../store/actions/wishlist";
 import { toggleQuickView } from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
@@ -122,7 +122,8 @@ const ProductCard = ({
       },
     };
     setLoading({ ...loading, wishlist: false });
-    dispatch(toggleWishlist(p));
+    // dispatch(toggleWishlist(p));
+    dispatch(addWishlist(p));
   };
 
   const loadColorImages = async (pro, colorSelected) => {

@@ -164,7 +164,7 @@
     }
 
     .price {
-      margin-top: 20px;
+      margin-top: 10px;
       .was {
         font-family: Jost;
         font-size: 20px;
@@ -214,8 +214,8 @@
       line-height: 1.22;
       letter-spacing: normal;
       text-align: left;
-      margin-top: 45px;
-      margin-bottom: 45px;
+      margin-top: 17px;
+      margin-bottom: 17px;
 
       .title {
         font-weight: 500;
@@ -258,8 +258,8 @@
     }
 
     .size {
-      margin-top: 45px;
-      margin-bottom: 23px;
+      margin-top: 20px;
+      margin-bottom: 18px;
       .title {
         font-size: 14px;
         font-weight: 800;
@@ -688,5 +688,43 @@
   }
   span{
     font-size: 13px;
+  }
+}
+
+
+// carousal styles
+
+.imageCar{
+  display: flex;
+  padding-left: 20px;
+  height: 70%;
+}
+
+.imageCarSec{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
+  width: 14%;
+  height: 70%;
+  div{
+    width: 100%;
+    height: 100%;
+  }
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+.mainImgWrapper{
+  width: 70%;
+  height: 70%;
+  transition: 0.3s ease;
+  img{
+    width: 100%;
+    height: 100%;
+    transition: 0.3s ease;
   }
 }

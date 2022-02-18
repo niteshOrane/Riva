@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import PaymentTabs from "../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs";
+import TagManager from "react-gtm-module";
 import RePaymentTab from "../../components/pages/Cart-Payment/PaymentTabs/RePaymentTab";
 import * as icons from "../../components/common/Icons/Icons";
 import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
@@ -11,7 +11,7 @@ import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
-import TagManager from "react-gtm-module";
+
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function CartPayment() {
@@ -51,7 +51,7 @@ function CartPayment() {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 ? true : false },
+        cart: { hasItems: data.length > 0 },
         ecommerce: {
           currencyCode: currency_symbol,
           orderValue: parseFloat(

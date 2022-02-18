@@ -19,13 +19,17 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="d-flex py-20px">
-      <div className="container-with-circles">
-        <div className="d-flex h-100">
-          <Sidebar />
-          <div className="w-100">
-            <DashboardData />
-          </div>
+    <div
+      style={{
+        paddingLeft: "3.5rem",
+        paddingRight: "3.5rem",
+      }}
+      className="py-20px px-20px"
+    >
+      <div className="d-flex h-100">
+        <Sidebar />
+        <div className="w-100">
+          <DashboardData />
         </div>
       </div>
     </div>

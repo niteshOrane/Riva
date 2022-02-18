@@ -22,15 +22,9 @@ function OrderConfirmed(props) {
   const [orderCurrency, setOrderCurrency] = useState(null);
   const [amount, setAmount] = useState(null);
   const [orderItems, setOrderItems] = useState(null);
-  const { currency_symbol } = useSelector(
-    (state) => state?.common?.store
-  );
-  const { isAuthenticated } = useSelector(
-    (state) => state?.auth
-  );
-  const {data } = useSelector(
-    (state) => state?.cart
-  );
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
   const getOrderDetails = async (val) => {
     const res = await orderConfirmed(val);
     if (res.status === 200 && res?.data && !res?.data?.error) {
@@ -57,6 +51,14 @@ function OrderConfirmed(props) {
   }, [orderId]);
   // google tag manager
   useEffect(() => {
+    window.dataLayer.push({
+      transactionId: "",
+      transactionAffiliation: "",
+      transactionTotal:  amount?.totalPaid,
+      transactionShipping: "",
+      transactionTax: "",
+      transactionProducts: orderItems,
+    });
     TagManager.dataLayer({
       dataLayer: {
         pageType: "order_confirmed",
@@ -65,11 +67,11 @@ function OrderConfirmed(props) {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length >0 ? true :false },
+        cart: { hasItems: data.length > 0 ? true : false },
         ecommerce: {
           currencyCode: currency_symbol,
-          orderValue:amount?.totalPaid,
-          products:orderItems
+          orderValue: amount?.totalPaid,
+          products: orderItems,
         },
       },
     });
@@ -79,7 +81,7 @@ function OrderConfirmed(props) {
         url: location.pathname,
       },
     });
-  }, [orderItems,amount]);
+  }, [orderItems, amount]);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">

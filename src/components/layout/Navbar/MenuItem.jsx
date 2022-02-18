@@ -85,7 +85,7 @@ const MenuListComposition = React.memo(({ auth, history, openSignUpCard,translat
                 {' '}
                 {isAuthenticated ? <><span>{`${translate?.nav?.WEL} ${customer.firstname || customer?.username}`} </span>
                     <span style={{marginRight:"15px"}}   className="material-icons-outlined"> keyboard_arrow_down</span>
-                </> : <div >{translate?.nav?.WEL} {translate?.nav?.IN} &nbsp; &nbsp;</div>}
+                </> : <div >{isAuthenticated ? translate?.nav?.WEL:null} {translate?.nav?.IN} &nbsp; &nbsp;</div>}
 
             </span>
 

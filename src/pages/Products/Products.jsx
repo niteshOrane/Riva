@@ -117,9 +117,9 @@ function Products(props) {
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
-            <div className={styles.circlesContainer}>
+            {/* <div className={styles.circlesContainer}>
               <CategoriesCircles />
-            </div>
+            </div> */}
             <div className={`d-flex align-items-center ${styles.total}`}>
               <span className="color-grey">
                 {products.length ? (

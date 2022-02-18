@@ -12,12 +12,8 @@ function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
   const { loading } = useSelector((state) => state.wishlist);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
-  const { isAuthenticated } = useSelector(
-    (state) => state?.auth
-  );
-  const {data } = useSelector(
-    (state) => state?.cart
-  );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -33,10 +29,10 @@ function WishList() {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length >0 ? true :false },
+        cart: { hasItems: data.length > 0 ? true : false },
         ecommerce: {
           currencyCode: currency_symbol,
-          productsInWishlist:wishlist
+          productsInWishlist: wishlist,
         },
       },
     });
@@ -46,7 +42,7 @@ function WishList() {
         url: location.pathname,
       },
     });
-  },[wishlist])
+  }, [wishlist]);
 
   return (
     <div className="d-flex my-20px">
@@ -76,7 +72,7 @@ function WishList() {
                     sku={product?.sku}
                     currency_symbol={currency_symbol}
                     remove={() => removeFromWishlist(product)}
-                    loading = {loading}
+                    loading={loading}
                   />
                 );
               })}
