@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import PaymentTabs from "../../components/pages/Cart-Payment/PaymentTabs/PaymentTabs";
+import { Link, useLocation } from "react-router-dom";
+import TagManager from "react-gtm-module";
 import RePaymentTab from "../../components/pages/Cart-Payment/PaymentTabs/RePaymentTab";
 import * as icons from "../../components/common/Icons/Icons";
 import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
@@ -11,12 +11,12 @@ import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
-import TagManager from "react-gtm-module";
+
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function CartPayment() {
   const dispatch = useDispatch();
-  const {translate} = useArabic()
+  const { translate } = useArabic();
 
   // useAnalytics();
   const { data: items = [] } = useSelector((state) => state.cart);
@@ -27,9 +27,13 @@ function CartPayment() {
   const customerid = customer.customerID;
 
   const store = useSelector((state) => state?.common?.store);
+  const { data } = useSelector((state) => state?.cart);
+  const location = useLocation();
   const cartPaymentInfo = useSelector(
     (state) => state.cart?.cartPaymentInfo || {}
   );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   useEffect(() => {
     dispatch(getPaymentMethodlist());
     dispatch(toggleCart(false));
@@ -39,11 +43,33 @@ function CartPayment() {
     setPaymentOption(paymentMode);
   }, [paymentMode]);
   useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "cart_payment",
+        list: "category",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: data.length > 0 },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          orderValue: parseFloat(
+            cartPaymentInfo?.total_segments?.find(
+              (e) => e.code === "grand_total"
+            )?.value
+          ).toFixed(2),
+          products: items.length,
+        },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, [cartPaymentInfo,items]);
   if (loading)
     return (
       <div className={styles.tapLoader}>
@@ -64,7 +90,7 @@ function CartPayment() {
                 &nbsp;
               </strong>
               <span className="color-grey">
-              {translate?.payment?.HOME} <icons.AngleRight />
+                {translate?.payment?.HOME} <icons.AngleRight />
               </span>
             </Link>
 
@@ -79,10 +105,10 @@ function CartPayment() {
           paymentOption?.data?.length ? (
             <>
               <h2 className="font-weight-normal my-20px">
-              {translate?.payment?.CHOOSE}
+                {translate?.payment?.CHOOSE}
               </h2>
               <RePaymentTab
-              translate={translate}
+                translate={translate}
                 cartItem={items}
                 customerID={customerid}
                 cartPaymentInfo={cartPaymentInfo}
@@ -97,7 +123,7 @@ function CartPayment() {
 
         <div className={styles.col2}>
           <PriceDetails
-          translate={translate}
+            translate={translate}
             cartItem={items}
             store={store}
             customerID={customerid}

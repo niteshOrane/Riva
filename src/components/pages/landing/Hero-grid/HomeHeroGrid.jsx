@@ -35,7 +35,7 @@ const HomeHeroGrid = (props) => {
 
   return (
     <div className="landing-two-wrapper">   
-      <CategoriesCircles isHomePage={isHomePage} />
+      {/* <CategoriesCircles isHomePage={isHomePage} /> */}
       {itemsImage?.length ? (
         <div>
           <section className="banner-grid-wrapper"

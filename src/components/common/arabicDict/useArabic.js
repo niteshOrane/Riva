@@ -49,7 +49,7 @@ function useArabic() {
       CART: language === "Arabic" ? "عربة التسوّق،" : "Cart",
       TYPE: language === "Arabic" ? "اكتب هنا للبحث" : "Type here to search",
       LOG: language === "Arabic" ? "تسجيل خروج" : "LOGOUT",
-      IN: language === "Arabic" ? "ضيف ، تسجيل الدخول" : "GUEST, SIGN IN",
+      IN: language === "Arabic" ? "ضيف ، تسجيل الدخول" : "Account",
     },
     details: {
       HOME: language === "Arabic" ? "المنزل" : "Home",

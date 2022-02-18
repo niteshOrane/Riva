@@ -44,6 +44,7 @@
 }
 .landing-two-wrapper {
   display: flex;
+  justify-content: center;
   margin-top: 28px;
 }
 .landing-two-button {
