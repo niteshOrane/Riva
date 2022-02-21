@@ -69,7 +69,13 @@ function CartPayment() {
         url: location.pathname,
       },
     });
-  }, [cartPaymentInfo,items]);
+    window.insider_object = {
+      page: {
+        type: "Cart_payment",
+        url: location.pathname,
+      },
+    };
+  }, [cartPaymentInfo, items]);
   if (loading)
     return (
       <div className={styles.tapLoader}>

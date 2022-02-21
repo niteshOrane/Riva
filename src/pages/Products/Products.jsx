@@ -104,7 +104,17 @@ function Products(props) {
         url: location.pathname,
       },
     });
-  }, [ match.params.category,parsed.serachTerm]);
+    window.insider_object = {
+      listing: {
+        items: products,
+      },
+      page: {
+        type: "Product_details",
+        url: location.pathname,
+      },
+    };
+  }, [match.params.category, parsed.serachTerm,products]);
+  console.log("me",window.insider_object)
   return (
     <div>
       <div className="container-90 max-width-1600">

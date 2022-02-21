@@ -227,13 +227,23 @@ export default function TransitionsModal({
         TagManager.dataLayer({
           dataLayer: {
             pageType: "New Customer Signup",
-            customer: {  email: res.data.databind["user email"],
-            customerId: res.data.databind["customerId"], },
+            customer: {
+              email: res.data.databind["user email"],
+              customerId: res.data.databind["customerId"],
+            },
             category: {
               id: JSON.parse(localStorage.getItem("preferredCategory")),
             },
-          }
+          },
         });
+        window.insider_object = {
+          user: {
+            gdpr_optin: true,
+            sms_optin: true,
+            whatsapp_optin: true,
+            custom: res.data.databind,
+          },
+        };
         dispatch(
           showSnackbar(
             "User registered successfully, please login to continue",

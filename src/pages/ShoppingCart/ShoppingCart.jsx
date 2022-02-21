@@ -11,12 +11,7 @@ import TagManager from "react-gtm-module";
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
-  const { isAuthenticated } = useSelector(
-    (state) => state?.auth
-  );
-  const {data } = useSelector(
-    (state) => state?.cart
-  );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -29,10 +24,10 @@ const ShoppingCart = () => {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length >0 ? true :false },
+        cart: { hasItems: items.length > 0 ? true : false },
         ecommerce: {
           currencyCode: currency_symbol,
-          products:data
+          products: items,
         },
       },
     });
@@ -42,6 +37,21 @@ const ShoppingCart = () => {
         url: location.pathname,
       },
     });
+    window.insider_object = {
+      basket: {
+        currency: currency_symbol,
+        total:
+          parseFloat(
+            items.reduce((total, item) => total + item.price * item.qty, 0)
+          ).toFixed(2) || 0,
+
+        line_items: items,
+      },
+      page: {
+        type: "Product_details",
+        url: location.pathname,
+      },
+    };
   }, []);
   const handleContinueShopping = () => {
     window.location.href = "/";
