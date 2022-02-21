@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Circle from "../../layout/Navbar/Circle";
 import { selectedCategory } from "../../../store/actions/common";
+import styles from "./categoryCircle.module.scss";
 
 function CategoriesCircles({ isHomePage }) {
   const selectedCategoryItem = useSelector(
@@ -11,6 +12,7 @@ function CategoriesCircles({ isHomePage }) {
   const links = useSelector((state) => state.common.category)[0];
 
   const [defaultCategory, setCategory] = useState(0); //woman
+  const [selectedTab, setSelectedTab] = useState(null); //woman
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,7 +27,7 @@ function CategoriesCircles({ isHomePage }) {
           history.push(`/type/${id}`);
           window.location.reload();
         }
-      }, 200)
+      }, 200);
     }
   };
 
@@ -37,28 +39,25 @@ function CategoriesCircles({ isHomePage }) {
       if (items.length && selectedCategoryItem?.id != defaultCategory) {
         dispatch(selectedCategory(items[0]?.children_data, defaultCategory));
       }
-    }
-    else {
+    } else {
       dispatch(selectedCategory([], 0));
     }
   }, []);
   return (
-    <div style={{ margin: `0 ${isHomePage ? '5px' : 'auto'}` }}>
+    <div className={styles.categoryTab}>
       {links?.children_data?.map(
         (item) =>
           item.is_active == 1 && (
-            <div onClick={() => {
-              onCategorySelect(item?.id);
-            }}>
-              <Circle
-                id={item?.id}
-                onClick={onCategorySelect}
-                bg={`${defaultCategory === item?.id ? "skin" : "black"}`}
-              >
-                <span style={{ fontWeight: "bold" }}>
-                  {item?.name}
-                </span>
-              </Circle>
+            <div
+              style={{
+                border: selectedTab === item.id ? "1px solid black" : null,
+              }}
+              onClick={() => {
+                onCategorySelect(item?.id);
+                setSelectedTab(item.id);
+              }}
+            >
+              <span style={{ fontWeight: "bold" }}>{item?.name}</span>
             </div>
           )
       )}

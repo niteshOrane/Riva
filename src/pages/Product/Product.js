@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Skeleton from "react-loading-skeleton";
+import TagManager from "react-gtm-module";
 import { addToRecentlyViewed } from "../../store/actions/stats";
 import Slider from "../../components/common/Sliders/Slider";
 import ProductDetails from "../../components/pages/product/ProductDetails/ProductDetails";
@@ -15,13 +17,10 @@ import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
 
 import styles from "./product.module.scss";
-import Skeleton from "react-loading-skeleton";
+
 import "react-loading-skeleton/dist/skeleton.css";
 
-import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 import { extractColorSize } from "../../util";
-import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
-import TagManager from "react-gtm-module";
 
 const Product = (props) => {
   const { match } = props;
@@ -35,6 +34,8 @@ const Product = (props) => {
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
   );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
   const [loading, setloading] = useState(true);
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
@@ -115,15 +116,49 @@ const Product = (props) => {
     setproduct({ ...product, selected: attr });
   };
   useEffect(() => {
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
+    if (product.name) {
+      TagManager.dataLayer({
+        dataLayer: {
+          pageType: "catalog_category_view",
+          list: "category",
+          customer: { isLoggedIn: isAuthenticated },
+          category: {
+            id: JSON.parse(localStorage.getItem("preferredCategory")),
+          },
+          cart: { hasItems: data.length > 0 },
+          ecommerce: {
+            currencyCode: currency_symbol,
 
-    TagManager.initialize(tagManagerArgs);
-  }, []);
+            product: {
+              name: product.name,
+              price: product.price,
+              sku: product.sku,
+              id: product.id,
+            },
+          },
+        },
+      });
+    }
+    window.insider_object = {
+      product: {
+        ...product,
+        currency: currency_symbol,
+      },
+      page: {
+        type: "Product_details",
+        url: match.url,
+      },
+    };
+  }, [product]);
 
   useEffect(() => {
     init(selectedProductId);
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: match.url,
+      },
+    });
   }, [selectedProductId]);
   if (loading)
     return (
@@ -145,8 +180,9 @@ const Product = (props) => {
         colorImage={colorImage}
         currency_symbol={currency_symbol}
         language={language}
+        items={mediaImage}
       />
-      <div className="max-width-1750 mx-auto">
+      {/* <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
@@ -158,7 +194,7 @@ const Product = (props) => {
             />
           )}
         />
-      </div>
+      </div> */}
       <DescriptionComposition
         product={product}
         prodDiscr={product}

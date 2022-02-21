@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import { URL } from "../../../util";
 import styles from "./lazyImage.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import "./lazyImage.css"
 
 const LazyImage = (props) => {
   const {
@@ -42,6 +43,8 @@ const LazyImage = (props) => {
     zoomStyle: "z-index:10;right:-11px;border:1px solid black",
     zoomPosition: zoomPos,
   };
+
+
 
   if (isZoom) {
     return (

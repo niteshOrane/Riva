@@ -137,7 +137,7 @@ const PaymentTabs = React.memo(
     const getPaymentForTapCheckout = async (fnValue) => {
       const configTap = {
         method: "get",
-        url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+        url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
         silent: true,
       };
       await axios(configTap).then((res) => {
@@ -147,7 +147,7 @@ const PaymentTabs = React.memo(
     const getPaymentForHyperPay = async (fnValue) => {
       const config = {
         method: "post",
-        url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+        url: `${process.env.REACT_APP_DEV}/webapi/gethyperpayid?method=${
           paymentMode[fnValue].code
         }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
         silent: true,

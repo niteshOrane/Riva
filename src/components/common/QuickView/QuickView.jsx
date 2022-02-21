@@ -28,10 +28,14 @@ import {
   getWishlist,
   removeWishlist,
 } from "../../../store/actions/wishlist";
+import ReactPixel from "react-facebook-pixel";
+import TagManager from "react-gtm-module";
 
 function QuickView() {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data: cartItem } = useSelector((state) => state?.cart);
 
   const [outOfStock, setOutOfStock] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(1);
@@ -128,6 +132,34 @@ function QuickView() {
     );
     setProductQuantity(1);
     dispatch(toggleQuickView(null));
+    ReactPixel.init(process.env.REACT_APP_FACEBOOK);
+    const wishData = {
+      content_name: "Added To Cart",
+      content_ids: data?.id,
+      content_type: data?.sku,
+      currency: currency_symbol,
+      value: data?.price,
+    };
+    ReactPixel.track("AddToCart", wishData);
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "QuickView",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: cartItem.length > 0 ? true : false },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          product: {
+            name: data.name,
+            price: data.price,
+            sku: data.sku,
+            id: data.id,
+          },
+        },
+      },
+    });
   };
   const getOutOfStock = async () => {
     const id = data?.id;

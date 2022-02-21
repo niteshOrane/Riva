@@ -9,7 +9,6 @@ const MegaLinks = ({ links, language }) => {
   const [showMegaMenue, setShowMegaMenue] = useState(null);
   const [childLinks, setChildLinks] = useState({});
   const handleMouseOver = (link) => {
-    // document.getElementById('header').style.position = 'relative';
     setShowMegaMenue(link);
   };
   useEffect(() => {
@@ -148,7 +147,7 @@ const MegaLinks = ({ links, language }) => {
           ))}
       </div>
       <div className="container-with-circles">
-        <div className={style.titleDoubleLine} />
+        {/* <div className={style.titleDoubleLine} /> */}
         <div className={style.titleDoubleLine_Second} />
       </div>
     </>

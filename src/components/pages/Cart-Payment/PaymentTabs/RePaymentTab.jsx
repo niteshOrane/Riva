@@ -109,6 +109,7 @@ const tagManagerArgs = {
 TagManager.initialize(tagManagerArgs)
 
 export default function DetailTabs({
+  translate,
   paymentMode,
   cartPaymentInfo,
   store,
@@ -150,6 +151,7 @@ export default function DetailTabs({
               value: 10
           }
         });
+        debugger
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
@@ -162,7 +164,7 @@ export default function DetailTabs({
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
       method: "get",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+      url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
       silent: true,
     };
     await axios(configTap).then((res) => {
@@ -172,7 +174,7 @@ export default function DetailTabs({
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
       method: "post",
-      url: `http://65.0.141.49/shop/index.php/rest/V1/webapi/gethyperpayid?method=${
+      url: `${process.env.REACT_APP_DEV}/webapi/gethyperpayid?method=${
         paymentMode[fnValue].code
       }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
@@ -308,7 +310,7 @@ export default function DetailTabs({
     <>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <h5 className={styles.payWith}>Pay With</h5>
+          <h5 className={styles.payWith}>{translate?.deliveryAddress?.PAY}</h5>
           <div
             value={value}
             className={styles.reGrid}
@@ -341,7 +343,7 @@ export default function DetailTabs({
 
         <div className={classes.tabContent}>
           <TabPanel className={styles.goSellWrap} value={value} index={0}>
-            <GoSellTap />
+            <GoSellTap translate={translate} />
           </TabPanel>
           <TabPanel value={value} index={2}>
             {codInfo && <Cod codInfo={codInfo} />}
@@ -370,7 +372,7 @@ export default function DetailTabs({
           </TabPanel>
         </div>
       </Box>
-      <PaymentFooter />
+      <PaymentFooter translate={translate} />
     </>
   );
 }
