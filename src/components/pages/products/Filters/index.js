@@ -7,6 +7,7 @@ import Dropdown from "../../../common/Dropdowns/Dropdown/Dropdown";
 import CheckBoxComponent from "./CheckBoxComponent";
 import RangeSlider from "./RangeSlider";
 import style from "./filters.module.scss";
+import "../../../common/LazyImage/lazyImage.css"
 import { getFiltersList } from "../../../../services/product/product.service";
 
 import {
@@ -244,6 +245,7 @@ function Filters(props) {
                   src="https://cdn.zeplin.io/60a3c6b611da9729d2c0e7c2/assets/a8e77c1a-7c54-4098-bf97-816226eea3f0.svg"
                   width="20px"
                   alt="filter"
+                  className="fltrImg"
                 />
               </div>
             </span>

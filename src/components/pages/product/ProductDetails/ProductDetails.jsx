@@ -2,34 +2,29 @@ import React, { useState, useEffect } from "react";
 
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import Star from "@material-ui/icons/StarBorderOutlined";
+import Rating from "@material-ui/lab/Rating";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import ReactPixel from "react-facebook-pixel";
+import { Link, useHistory } from "react-router-dom";
 import Image from "../../../common/LazyImage/Image";
 import styles from "./productDetails.module.scss";
 import { addToCart } from "../../../../store/actions/cart";
 import SizeCard from "./components/SizeCard/SizeCard";
-import ImageDropdown from "./components/ImageDropdown/ImageDropdown";
-import SizeGuide from "./components/SizeGuide/SizeGuide";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
 import {
   getReviewList,
   outOfStockCheck,
 } from "../../../../services/product/product.service";
-import SearchInStorePopup from "./SearchInStorePopup";
-import SubscribeModel from "./SubscribeModel";
 import { URL } from "../../../../util";
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
 import ReviewModal from "./ReviewPopUp";
 import ShareIcons from "./ShareIcons";
-import Rating from "@material-ui/lab/Rating";
-import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import SizeChart from "./SizeChart";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
-import { Link, useHistory } from "react-router-dom";
+
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
-import ReactPixel from "react-facebook-pixel";
+import ImageCarousel from "./ImageCarousel";
 
 const ProductDetails = (props) => {
   const {
@@ -39,6 +34,7 @@ const ProductDetails = (props) => {
     colorImage,
     currency_symbol,
     language,
+    items,
   } = props;
   const history = useHistory();
   const { translate } = useArabic();
@@ -49,6 +45,7 @@ const ProductDetails = (props) => {
   const [value, setValue] = React.useState(0);
   const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
+  const [showThumb, setShowThumb] = useState(false);
 
   useEffect(() => {
     if (colorImage.databind !== undefined) {
@@ -62,6 +59,7 @@ const ProductDetails = (props) => {
     }
   }, []);
   const colorImageAction = (data) => {
+    setShowThumb(false);
     setColorImg(data?.file);
     setColorSize({
       ...product?.selected,
@@ -198,12 +196,12 @@ const ProductDetails = (props) => {
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
     <div style={{ marginTop: "25px" }}>
-      <SizeCard
+      {/* <SizeCard
         imageSelected={colorImg || product?.image}
         open={sizeCardOpen}
         handleClose={() => setSizeCardOpen(false)}
         language={language}
-      />
+      /> */}
       {/* <SizeGuide
         imageSelected={colorImg || product?.image}
         open={guideCardOpen}
@@ -229,9 +227,7 @@ const ProductDetails = (props) => {
               </span>
             </Breadcrumbs>
           </section>
-          <div
-            className={`${styles.slide} h-100 text-center d-flex-all-center flex-column`}
-          >
+          <div className={`${styles.slide}`}>
             <Image
               src={colorImg || product?.image}
               className="object-fit-fill h-100"
@@ -241,6 +237,12 @@ const ProductDetails = (props) => {
               type="product-details"
               isZoom
             />
+            {/* <ImageCarousel
+              items={items}
+              loadImg={colorImg || product?.image}
+              showThumb={showThumb}
+              setShowThumb={setShowThumb}
+            /> */}
             {/* <div className={styles.circlesContainer}>
               <CategoriesCircles />
             </div> */}
@@ -273,18 +275,18 @@ const ProductDetails = (props) => {
             <div className={styles.bestSeller}>{translate?.details?.BEST}</div>
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
-              <div className={`${styles.stars} d-flex-all-center`}>
+              {/* <div className={`${styles.stars} d-flex-all-center`}>
                 <Rating name="read-only" readOnly value={value} />
-              </div>
-              <div className={`${styles.rating} d-flex-all-center`}>
+              </div> */}
+              {/* <div className={`${styles.rating} d-flex-all-center`}>
                 {calculateAvgReview()} {translate?.details?.RATE}
-              </div>
+              </div> */}
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
                 <div className={styles.text}>{product?.sku}</div>
               </div>
             </div>
-            <div>
+            {/* <div>
               <ReviewModal
                 id={product?.id}
                 sku={product?.sku}
@@ -292,7 +294,7 @@ const ProductDetails = (props) => {
                 isTop
                 setReviewState={setReviewState}
               />
-            </div>
+            </div> */}
             <div className={`${styles.price} d-flex`}>
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
@@ -301,7 +303,8 @@ const ProductDetails = (props) => {
                 </div>
               ) : null}
               <div className={styles.now}>
-                {translate?.details?.NOW} {currency_symbol} {price}
+                {currency_symbol}
+                {price}
               </div>
               {/*
                 <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
@@ -425,7 +428,8 @@ const ProductDetails = (props) => {
                     </button>
                   </span>
                 </li>
-                <li className="nav-li">
+
+                {/* <li className="nav-li">
                   <span className="d-flex align-items-center">
                     <span className="material-icons-outlined font-light-black">
                       search
@@ -443,7 +447,7 @@ const ProductDetails = (props) => {
                       </span>
                     </button>
                   </span>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className={styles.w80}>
@@ -579,37 +583,37 @@ const ProductDetails = (props) => {
                       ),
                       icon: "/assets/images/delivery.png",
                     },
-                    {
-                      name: (
-                        <SearchInStorePopup
-                          image={colorImg || product?.image}
-                          sizes={product?.size}
-                          language={language}
-                          sku={product?.sku}
-                          translate={translate}
-                        />
-                        // <SubscribeModel />
-                      ),
-                      icon: "/assets/images/shop.png",
-                    },
+                    // {
+                    //   name: (
+                    //     <SearchInStorePopup
+                    //       image={colorImg || product?.image}
+                    //       sizes={product?.size}
+                    //       language={language}
+                    //       sku={product?.sku}
+                    //       translate={translate}
+                    //     />
+                    //     // <SubscribeModel />
+                    //   ),
+                    //   icon: "/assets/images/shop.png",
+                    // },
                     // {
                     //   name: <SubscribeModel language={language} productId={product.id} />,
                     //   icon: "/assets/images/tshirt.png",
                     // },
 
-                    {
-                      name: (
-                        <ReviewModal
-                          id={product?.id}
-                          sku={product?.sku}
-                          isDetail
-                          setReviewState={setReviewState}
-                          reviewState={reviewState}
-                          translate={translate}
-                        />
-                      ),
-                      icon: "/assets/images/review.png",
-                    },
+                    // {
+                    //   name: (
+                    //     <ReviewModal
+                    //       id={product?.id}
+                    //       sku={product?.sku}
+                    //       isDetail
+                    //       setReviewState={setReviewState}
+                    //       reviewState={reviewState}
+                    //       translate={translate}
+                    //     />
+                    //   ),
+                    //   icon: "/assets/images/review.png",
+                    // },
                     {
                       name: (
                         <ShareIcons
@@ -642,5 +646,3 @@ const ProductDetails = (props) => {
 };
 
 export default ProductDetails;
-
-

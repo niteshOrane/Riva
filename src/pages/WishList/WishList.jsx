@@ -6,23 +6,43 @@ import styles from "./Wishlist.module.scss";
 import { getWishlist, removeWishlist } from "../../store/actions/wishlist";
 import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import TagManager from "react-gtm-module";
+import { useLocation } from "react-router-dom";
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
   const { loading } = useSelector((state) => state.wishlist);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const removeFromWishlist = (data) => {
     dispatch(removeWishlist(data));
   };
   useEffect(() => {
     dispatch(getWishlist());
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-    TagManager.initialize(tagManagerArgs);
-  },[])
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "shopping_cart",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: data.length > 0 ? true : false },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          productsInWishlist: wishlist,
+        },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, [wishlist]);
 
   return (
     <div className="d-flex my-20px">
@@ -52,7 +72,7 @@ function WishList() {
                     sku={product?.sku}
                     currency_symbol={currency_symbol}
                     remove={() => removeFromWishlist(product)}
-                    loading = {loading}
+                    loading={loading}
                   />
                 );
               })}

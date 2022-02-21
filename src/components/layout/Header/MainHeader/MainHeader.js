@@ -18,7 +18,7 @@ function MainHeader({ mainHeader, disableMegicLink }) {
       <NavbarMain disableMegicLink={disableMegicLink} />
 
       {!disableMegicLink ? <MegaLinks language={language} links={selectedCategoryItem?.data} /> : <div className="container-with-circles">
-        <div className={styles.titleDoubleLine} />
+        {/* <div className={styles.titleDoubleLine} /> */}
         <div className={styles.titleDoubleLine_Second} />
       </div>}
     </header>
