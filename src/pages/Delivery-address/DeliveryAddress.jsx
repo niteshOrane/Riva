@@ -41,17 +41,11 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   });
   const location = useLocation();
   const { language } = useSelector((state) => state?.common?.store);
-  const { isAuthenticated } = useSelector(
-    (state) => state?.auth
-  );
-  const {data } = useSelector(
-    (state) => state?.cart
-  );
-  const { currency_symbol } = useSelector(
-    (state) => state?.common?.store
-  );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
-  const {translate} = useArabic()
+  const { translate } = useArabic();
   const handleChange = (event, index) => {
     setState({
       ...stateCheck,
@@ -67,10 +61,10 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length >0 ? true :false },
+        cart: { hasItems: data.length > 0 ? true : false },
         ecommerce: {
           currencyCode: currency_symbol,
-          products:data
+          products: data,
         },
       },
     });
@@ -80,6 +74,12 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
         url: location.pathname,
       },
     });
+    window.insider_object = {
+      page: {
+        type: "delivery_address",
+        url: location.pathname,
+      },
+    };
   }, []);
   const dispatch = useDispatch();
   const customerAddressList = useSelector(
@@ -96,7 +96,6 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     (state) => state.cart?.cartPaymentInfo || {}
   );
   useEffect(() => {
-
     setDataList(customerAddressList);
   }, [customerAddressList]);
   const [showList, setShowList] = useState(customerAddressList.length);
@@ -114,7 +113,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
       dispatch(getShippingMethodlist(defaultAddressIds.Shippingid));
     }
   }, [defaultAddressIds]);
-  useEffect(() => { }, [customerDeliverySpeed]);
+  useEffect(() => {}, [customerDeliverySpeed]);
   const handleOnEdit = (record) => {
     setrecordToEdit(record);
     setShowList(false);
@@ -147,7 +146,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     setShowList(false);
   };
   const setDefaultAddress = async (record, isBilling) => {
-    setLoading(true)
+    setLoading(true);
     const form = new FormData();
 
     form.append("customerid", getCustId());
@@ -162,9 +161,9 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
         checkedB: false,
         indexItem: null,
       });
-      setLoading(false)
+      setLoading(false);
     } else {
-      setLoading(false)
+      setLoading(false);
       dispatch(
         showSnackbar(
           res.data.message || "failed to add item to Address",
@@ -174,7 +173,13 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     }
   };
   return (
-    <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? '' : `container-90`}>
+    <div
+      className={
+        currentLocationPath?.pathname?.includes("manage-addresses")
+          ? ""
+          : `container-90`
+      }
+    >
       {!isManageScreen && (
         <div className={styles.header}>
           <div className={styles.breadCrumb}>
@@ -200,15 +205,22 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
           </div>
         </div>
       )}
-      {showList ? <button
-        className={styles.addAddressBtn}
-        type="button"
-        onClick={addNewAddressbtn}
+      {showList ? (
+        <button
+          className={styles.addAddressBtn}
+          type="button"
+          onClick={addNewAddressbtn}
+        >
+          {translate?.dash?.NEW}
+        </button>
+      ) : null}
+      <div
+        className={
+          currentLocationPath?.pathname?.includes("manage-addresses")
+            ? ""
+            : styles.container
+        }
       >
-        {translate?.dash?.NEW}
-      </button>
-        : null}
-      <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? '' : styles.container}>
         <div className={styles.columnLeft}>
           <section
             style={{
@@ -219,7 +231,6 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
           >
             {showList ? (
               <>
-
                 <AddressCard
                   className={styles.defualtAddressArea}
                   onEdit={handleOnEdit}
@@ -227,16 +238,16 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                        (e) => e.id === defaultAddressIds?.Shippingid
-                      )
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )
                       : {}
                   }
                   setDefaultAddress={setDefaultAddress}
                   isDefault={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                        (e) => e.id === defaultAddressIds?.Shippingid
-                      )?.Shippingid?.length > 0
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )?.Shippingid?.length > 0
                       : {}
                   }
                   isBillingDefault={false}
@@ -250,8 +261,8 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                        (e) => e.id === defaultAddressIds?.Billingid
-                      )
+                          (e) => e.id === defaultAddressIds?.Billingid
+                        )
                       : {}
                   }
                   setDefaultAddress={setDefaultAddress}
@@ -259,38 +270,41 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   isBillingDefault={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                        (e) => e.id === defaultAddressIds?.Billingid
-                      )?.Billingid?.length > 0
+                          (e) => e.id === defaultAddressIds?.Billingid
+                        )?.Billingid?.length > 0
                       : {}
                   }
                   isManageScreen={isManageScreen}
                 />
               </>
             ) : null}
-            {showList ?
-              dataList
-                .filter((e) => e.Billingid === "" && e.Shippingid === "")
-                .map((addr, index) => {
-                  return (
-                    <AddressCard
-                      onEdit={handleOnEdit}
-                      onDelete={handleOnDelete}
-                      addressItem={addr}
-                      setDefaultAddress={setDefaultAddress}
-                      isDefault={false}
-                      isBillingDefault={false}
-                      isManageScreen={isManageScreen}
-                      loading={loading}
-                    />
-                  );
-                }) : null}
+            {showList
+              ? dataList
+                  .filter((e) => e.Billingid === "" && e.Shippingid === "")
+                  .map((addr, index) => {
+                    return (
+                      <AddressCard
+                        onEdit={handleOnEdit}
+                        onDelete={handleOnDelete}
+                        addressItem={addr}
+                        setDefaultAddress={setDefaultAddress}
+                        isDefault={false}
+                        isBillingDefault={false}
+                        isManageScreen={isManageScreen}
+                        loading={loading}
+                      />
+                    );
+                  })
+              : null}
           </section>
-          {!showList || recordToEdit ?
-            <> <div className={styles.addAddress}>
-              <p className={styles.title}>
-                {recordToEdit ? "Edit your address" : "Add a new address"}
-              </p>
-            </div>
+          {!showList || recordToEdit ? (
+            <>
+              {" "}
+              <div className={styles.addAddress}>
+                <p className={styles.title}>
+                  {recordToEdit ? "Edit your address" : "Add a new address"}
+                </p>
+              </div>
               <DeliveryAddressForm
                 customerData={recordToEdit}
                 onAfterSaveEdit={() => {
@@ -298,13 +312,17 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   setrecordToEdit(null);
                   recordUpdated();
                 }}
-              /></> : null}
+              />
+            </>
+          ) : null}
           {!isManageScreen && (
             <>
               <div className={styles.shippingMethod}>
-                <h3 className="font-weight-normal">{translate?.deliveryAddress?.SHIP}</h3>
+                <h3 className="font-weight-normal">
+                  {translate?.deliveryAddress?.SHIP}
+                </h3>
                 <p className={styles.greyText}>
-                {translate?.deliveryAddress?.PLEASE}
+                  {translate?.deliveryAddress?.PLEASE}
                 </p>
               </div>
 
@@ -319,7 +337,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                 </Link>
                 <Link to="/">
                   <button className={styles.continueBtn} type="button">
-                  {translate?.deliveryAddress?.CONT}
+                    {translate?.deliveryAddress?.CONT}
                   </button>
                 </Link>
               </div>
@@ -337,8 +355,8 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
                   addressItem={
                     dataList && dataList.length > 0
                       ? dataList?.find(
-                        (e) => e.id === defaultAddressIds?.Shippingid
-                      )
+                          (e) => e.id === defaultAddressIds?.Shippingid
+                        )
                       : {}
                   }
                   translate={translate}

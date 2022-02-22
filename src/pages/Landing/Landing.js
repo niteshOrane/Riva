@@ -49,6 +49,12 @@ function Landing() {
         url: location.pathname,
       },
     });
+    window.insider_object = {
+      page: {
+        type: "Category_landing",
+        url: location.pathname,
+      },
+    };
   }, []);
 
   useEffect(() => {

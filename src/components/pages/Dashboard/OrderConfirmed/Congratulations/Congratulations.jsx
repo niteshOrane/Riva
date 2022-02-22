@@ -1,19 +1,11 @@
 import React from "react";
 import * as icons from "../../../../common/Icons/Icons";
 import styles from "./Congratulations.module.scss";
-import TagManager from "react-gtm-module";
 import useArabic from "../../../../common/arabicDict/useArabic";
+
 function Congratulations({ displayOrderNumber, orderId }) {
+  const { translate } = useArabic();
 
-  const {translate} = useArabic();
-  const tagManagerArgs = {
-    gtmId: "GTM-K8HHCZF",
-    events: {
-      sendUserInfo: "order history",
-    },
-  };
-
-  TagManager.initialize(tagManagerArgs);
   return (
     <div className={styles.container}>
       <icons.Congratulations />

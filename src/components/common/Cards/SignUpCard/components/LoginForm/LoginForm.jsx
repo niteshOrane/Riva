@@ -49,7 +49,7 @@ const LoginForm = ({
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    mobile: ""
+    mobile: "",
   });
 
   const [showforgotPassword, setforgotPassword] = useState(false);
@@ -261,6 +261,15 @@ const LoginForm = ({
         handleSubmit();
         typeof res?.data?.data !== "string" &&
           dispatch(loginSuccess(res.data.data));
+        window.insider_object = {
+          user: {
+            type: "login",
+            gdpr_optin: true,
+            sms_optin: true,
+            whatsapp_optin: true,
+            custom: res.data.databind,
+          },
+        };
         toast.configure();
         toast(
           `Welcome ${res?.data?.success ? res?.data.data.firstname : " Guest"}`,

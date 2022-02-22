@@ -54,7 +54,7 @@ function OrderConfirmed(props) {
     window.dataLayer.push({
       transactionId: "",
       transactionAffiliation: "",
-      transactionTotal:  amount?.totalPaid,
+      transactionTotal: amount?.totalPaid,
       transactionShipping: "",
       transactionTax: "",
       transactionProducts: orderItems,
@@ -81,6 +81,20 @@ function OrderConfirmed(props) {
         url: location.pathname,
       },
     });
+    window.insider_object = {
+      transaction: {
+        order_id: orderId,
+        currency: currency_symbol,
+        total: amount?.totalPaid,
+        payment_type: "Mastercard Credit Card",
+
+        line_items: orderItems,
+      },
+      page: {
+        type: "Product_details",
+        url: location.pathname,
+      },
+    };
   }, [orderItems, amount]);
   return (
     <div className="d-flex py-20px">

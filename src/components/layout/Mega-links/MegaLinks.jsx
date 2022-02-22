@@ -33,7 +33,7 @@ const MegaLinks = ({ links, language }) => {
             <div
               key={i}
               className={style.link}
-              onFocus={() => handleMouseOver(link.url_key)}
+              onMouseOver={() => handleMouseOver(link.url_key)}
               onMouseLeave={() => setShowMegaMenue(null)}
             >
               <Link
