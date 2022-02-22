@@ -7,6 +7,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import * as icons from "../../../../Icons/Icons";
 import styles from "./Otp.module.scss";
 import PhoneInput from "react-phone-number-input";
+import AppleLogin from "react-apple-login";
 import "react-phone-number-input/style.css";
 
 import {
@@ -338,19 +339,13 @@ const OtpForm = ({
         <div className={styles.formLogin}>
           <p className={styles.or}>OR</p>
           <div>
-            <button
-              type="button"
-              className={
-                language === "Arabic"
-                  ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
-                  : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
-              }
-            >
-              <span className={styles.btnIcon}>
-                <icons.Apple />
-              </span>
-              <p>Connect with Apple</p>
-            </button>
+          <AppleLogin
+              clientId="com.react.apple.login"
+              redirectURI="https://redirectUrl.com"
+              usePopup={false}
+              designProp={{ height: 40, width: 360 }}
+              callback={(res) => console.log(res)}
+            />
             <button
               type="button"
               className={

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import CategoriesCircles from "../../common/CategoriesCircles/CategoriesCircles";
 import Image from "../../common/LazyImage/Image";
 import style from "./megalinks.module.scss";
 
@@ -16,11 +17,11 @@ const MegaLinks = ({ links, language }) => {
     setChildLinks(childLink ?? {});
   }, [showMegaMenue]);
   const onSelectCaegory = (link) => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    window.scrollTo({ top: 0, behavior: "smooth" });
     sessionStorage.setItem("selectedCategory", link);
   };
   const redirectPath = (link, id) => {
-    setShowMegaMenue(null)
+    setShowMegaMenue(null);
     history.push(`/products/${link}/${id}`);
   };
   return (
@@ -117,9 +118,8 @@ const MegaLinks = ({ links, language }) => {
                     </div>
                   </div>
                   <div className={style.megaImg}>
-                    <div  onClick={() => redirectPath(link.url_key, link.id)}>
+                    <div onClick={() => redirectPath(link.url_key, link.id)}>
                       <Image
-                       
                         src={link?.image?.replace("index.php", "")}
                         width="100%"
                         alt="change me"
