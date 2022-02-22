@@ -302,7 +302,7 @@ function Products(props) {
       </div>
       <div className="container-90 max-width-1600 mx-auto">
         <Slider
-          className="t"
+          className="t recomm-slider"
           recomended
           items={products}
           slidesToShow={4}
@@ -317,7 +317,7 @@ function Products(props) {
               isProduct={Boolean(true)}
             />
           )}
-        />
+        /> 
       </div>
       <div className="container-90 container-row max-width-1600 mx-auto">
         <div className="my-50px d-flex align-items-center justify-content-between">

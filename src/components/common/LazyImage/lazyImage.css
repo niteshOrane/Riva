@@ -1,7 +1,7 @@
 
 @media only screen and (max-width: 767px) {
 
-    /* Lazy Image CSS */
+     /*Lazy Image CSS*/
 
     .products_productsPage__25u4X .products_fullWidthCardInTwoCol__3CwHk
      {
@@ -11,19 +11,27 @@
      [dir='ltr'] .products_productsPage__25u4X 
       {
                     
-        display: inline-grid !important;
+        display:block !important;
       }
+
+
 
        /* Filter and Sort BY CSS */
 
-     .fltrImg
-       {
+       /* .d-flex.align-items-center.products_total__3CQpI {
+           display: block !important;
+           
+
+       } */
+
+        /* .fltrImg
+         {
         width:15px !important;
-       }
-       .filterDots{
+         }
+      .filterDots{
            
            width:2px !important;
-       }
+       } */
          /* .products_header__7pkiI {
         
         width: 50vh;
@@ -32,7 +40,7 @@
         margin: 0px 0px;
         } */
     
-        .products_catNumber__33t9A {
+        /* .products_catNumber__33t9A {
             display: flex;
             align-items: flex-end;
         }
@@ -63,24 +71,31 @@
     
         [dir='ltr'] .products_header__7pkiI .products_sortByText__z82dn span:nth-child(2) {
             margin-left: 2px;
-        }
+        } */
         
-        /* Recommendation   for you css */
 
-         .basicSlider.slick-slide {
+
+
+        /* Recommendation for you */
+                
+        .recomm-slider  .slick-slide {
+            width: 174px !important;
+        }
+
+        .container-90.container-row.max-width-1600.mx-auto {
             width: 100% !important;
-            flex: 0 0 1.6% !important;
         }
 
 
-        /* Size Chart CSS */
+
+        /* Size Chart */
 
         .size-menu ul {
             display: none !important;
         }
         
         div[class^="makeStyles-paper-"] {
-            width: 30% !important;
+            width: 35% !important;
             left: 10px !important;
             right: 0 !important;
             transform: none !important;
@@ -88,10 +103,11 @@
         }
 
 
-        /* Shopping Cart   Css  */
+        /* Shopping Cart */
+
         [dir='ltr'] .Products_products__2gvz8 {
             display: contents !important;
-            /* flex-wrap: wrap; */
+            
         }
        .Products_products__2gvz8 .Products_header__3qLHv {
             width: 100%;
@@ -99,16 +115,7 @@
         .Products_products__2gvz8 .Products_header__3qLHv .Products_headerDetails__22Xj7 {
             display: none !important;
         }
-        /* .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt {
-            width: 40% !important;
-                  
-        } */
-
-        /* .Products_products__2gvz8 .Products_continueBtn__1SW9i {
-            text-align: right !important ;
-             
-            
-        } */
+       
 
         .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt .Products_nameClrSize__raa7z .Products_clrSize__SXHsq div span:nth-child(1) {
           display: none;
@@ -118,19 +125,12 @@
             flex-direction: inherit;
         }
           
-       /* .color-grey .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productPricing__1q_TV {
-            position: absolute;
-            margin-top: 8rem;
-        }
-        .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_footer__2Htj- .Products_footerContent__1_-xP {
-            flex-direction: column;
-        }  */
-        /* ddddd */
-       
+           
         .Products_products__2gvz8 .Products_productList__3RMUv .Products_product__12_8M .Products_productDetails__3Lzmt {
             width: 100%;
             display: inline-flex;
         }
+
          
         /* Cart Payment CSS */
 
@@ -151,11 +151,21 @@
             max-width: initial !important;
            
         }
+        
         .Tab2Content_payFooter__wpz-F {
             
             width: 100% !important;
             margin-left: 0 !important;
             margin-bottom: 2.5rem !important;
+        }
+        
+        .makeStyles-tabContent-59 {
+           
+            display: contents !important;
+            
+        }
+        .MuiBox-root.css-8atqhb .Tab2Content_rePayment__1pfKz{
+            width: 100% !important;
         }
        
         
