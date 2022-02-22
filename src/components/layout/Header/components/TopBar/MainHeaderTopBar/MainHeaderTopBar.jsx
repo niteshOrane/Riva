@@ -4,25 +4,23 @@ import { setStore } from "../../../../../../store/actions/common";
 import style from "./MainHeaderTopBar.module.scss";
 import storeData from "../../../../../../store/index";
 import useArabic from "../../../../../common/arabicDict/useArabic";
+import CategoriesCircles from "../../../../../common/CategoriesCircles/CategoriesCircles";
 
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const {translate} = useArabic();
+  const { translate } = useArabic();
   const [showLanguageShowDropdown, setLanguageShowDropdown] = useState(false);
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const store = useSelector((state) => state.common.store);
   const header = useSelector((state) => state?.common?.header);
   const foundStore =
     header?.find(({ country_id }) => country_id === currentLocation) || {};
-  const [phone, setPhone] = useState(foundStore.phone || "+971 800 7482");
   const [languageItem, setLanguageItem] = useState("العربية");
   const [storeDropDown, setStoreDropDown] = useState([]);
   const dispatch = useDispatch();
   if (!store) dispatch(setStore(foundStore));
 
   const handleCurrencyChange = (event, head) => {
-    setPhone(head.phone || "+971 800 7482");
-
     let lanTochange = "";
     head.language === "Arabic"
       ? (lanTochange = "العربية")
@@ -59,7 +57,6 @@ const MainHeaderTopBar = ({ mainHeader }) => {
       ? (lanTochange = "العربية")
       : (lanTochange = data?.language);
     setLanguageItem(lanTochange);
-    setPhone(data.phone || "+971 800 7482");
     if (!store) dispatch(setStore(foundStore));
     setStoreDropDown(header.filter((e) => e.language === data.language));
   }, [header]);
@@ -69,8 +66,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
       <div
         className={`d-flex align-items-center justify-content-between max-width-1750 mx-auto ${style.topBarcontainer}`}
       >
-        <div className={style.topBarRight}>
-          <span className="font-size-normal material-icons-outlined font-white">
+        {/* <span className="font-size-normal material-icons-outlined font-white">
             phone
           </span>
           <p>
@@ -80,12 +76,15 @@ const MainHeaderTopBar = ({ mainHeader }) => {
             >
               &nbsp;{phone}
             </a>
-          </p>
-        </div>
+          </p> */}
+        <CategoriesCircles />
+
         <div className={style.topBarMsgWrapper}>
           <h4 className={`${style.topBarMsg} white-space-nowrap font-white`}>
-          {translate?.home?.NEW}:{" "}
-            <span className="color-text-primary">{translate?.home?.SPRING}</span>{" "}
+            {translate?.home?.NEW}:{" "}
+            <span className="color-text-primary">
+              {translate?.home?.SPRING}
+            </span>{" "}
             {translate?.home?.COL}
           </h4>
         </div>
@@ -114,7 +113,8 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                 }`}
               >
                 <div className={style.currencyDropdown}>
-                  {storeDropDown?.filter(li => li?.currency !== "OMR")
+                  {storeDropDown
+                    ?.filter((li) => li?.currency !== "OMR")
                     ?.map((head) => {
                       const { currency } = head;
                       return (

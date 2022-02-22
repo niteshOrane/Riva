@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ReactImageZoom from "react-image-zoom";
 import PropTypes from "prop-types";
@@ -43,6 +43,8 @@ const LazyImage = (props) => {
     zoomStyle: "z-index:10;right:-11px;border:1px solid black",
     zoomPosition: zoomPos,
   };
+
+
 
   if (isZoom) {
     return (

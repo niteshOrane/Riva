@@ -21,6 +21,8 @@ function Products(props) {
   const handleQuickView = () => {};
   const history = useHistory();
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
 
   const refContainer = useRef();
 
@@ -47,8 +49,6 @@ function Products(props) {
     serachTerm: parsed?.serachTerm,
   });
 
-
-
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
     setSortDirection(event.target.value.split("-")?.[1]);
@@ -63,7 +63,6 @@ function Products(props) {
   const handleBannerPush = (title, categories) => {
     history.push(`${`/products/${title}/${categories}`}`);
   };
- 
 
   const handleThreeColumns = () => setPageColumns(3);
   const handleTwoColumns = () => setPageColumns(2);
@@ -81,13 +80,31 @@ function Products(props) {
       sessionStorage.removeItem("selectedCategory");
     };
   });
-  // google tag manager
-  // useEffect(() => {
-  //   const tagManagerArgs = {
-  //     gtmId: process.env.REACT_APP_GTM,
-  //   };
-  //   TagManager.initialize(tagManagerArgs);
-  // }, []);
+
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "cart_payment",
+        list: "category",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: data.length > 0 ? true : false },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          serachTerm: parsed?.serachTerm,
+          category: match.params.category,
+        },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, [ match.params.category,parsed.serachTerm]);
   return (
     <div>
       <div className="container-90 max-width-1600">
@@ -100,9 +117,9 @@ function Products(props) {
         </div>
         <div className={styles.header}>
           <div className={styles.catNumber}>
-            <div className={styles.circlesContainer}>
+            {/* <div className={styles.circlesContainer}>
               <CategoriesCircles />
-            </div>
+            </div> */}
             <div className={`d-flex align-items-center ${styles.total}`}>
               <span className="color-grey">
                 {products.length ? (

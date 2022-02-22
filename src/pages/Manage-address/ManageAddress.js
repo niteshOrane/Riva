@@ -40,9 +40,9 @@ function ManageAddress() {
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
-        <div className="cat-circle">
+        {/* <div className="cat-circle">
           <CategoriesCircles />
-        </div>
+        </div> */}
         <div className="d-flex h-100">
           <Sidebar />
           <div className={currentLocationPath?.pathname?.includes('manage-addresses') ? 'w-100' : `w-50`}>

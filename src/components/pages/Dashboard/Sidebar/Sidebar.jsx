@@ -6,7 +6,6 @@ import * as icons from "../../../common/Icons/Icons";
 import useArabic from "../../../common/arabicDict/useArabic"
 import { logoutUser } from '../../../../services/auth/auth.service';
 import { logout, emptyCart } from '../../../../store/actions/auth';
-import CategoriesCircles from '../../../common/CategoriesCircles/CategoriesCircles';
 
 
 function Sidebar() {
@@ -14,9 +13,9 @@ function Sidebar() {
   const {translate} = useArabic();
   return (
     <>
-      <div className={styles.circlesContainer}>
+      {/* <div className={styles.circlesContainer}>
         <CategoriesCircles />
-      </div>
+      </div> */}
       <div className={styles.sidebar}>
         <div className={styles.header}>
           <h2>{translate?.dash?.MY}</h2>

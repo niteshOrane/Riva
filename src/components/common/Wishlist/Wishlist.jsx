@@ -16,7 +16,9 @@ import { URL } from "../../../util";
 import ReviewModal from "../../pages/product/ProductDetails/ReviewPopUp";
 import { getReviewList } from "../../../services/product/product.service";
 import { Rating } from "@material-ui/lab";
-import ReactPixel from 'react-facebook-pixel';
+import ReactPixel from "react-facebook-pixel";
+import TagManager from "react-gtm-module";
+import { useLocation } from "react-router-dom";
 
 function Wishlist() {
   const [selectedColor, setSelectedColor] = React.useState({
@@ -33,7 +35,9 @@ function Wishlist() {
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
   );
+  const { isAuthenticated } = useSelector((state) => state?.auth);
   const { auth } = useSelector((state) => state);
+  const { data: cartItem } = useSelector((state) => state?.cart);
 
   const dispatch = useDispatch();
 
@@ -71,10 +75,30 @@ function Wishlist() {
         content_name: "Added To Wishlist",
         content_category: "Success",
         content_ids: data?.id,
-        currency:currency_symbol, 
-        value:data?.price
+        currency: currency_symbol,
+        value: data?.price,
       };
       ReactPixel.track("AddToWishlist", wishData);
+      TagManager.dataLayer({
+        dataLayer: {
+          pageType: "Wishlist",
+          list: "wishlist",
+          customer: { isLoggedIn: isAuthenticated },
+          category: {
+            id: JSON.parse(localStorage.getItem("preferredCategory")),
+          },
+          cart: { hasItems: cartItem.length > 0 ? true : false },
+          ecommerce: {
+            currencyCode: currency_symbol,
+            product: {
+              name: data.name,
+              price: data.price,
+              sku: data.sku,
+              id: data.id,
+            },
+          },
+        },
+      });
     }
     handleClose();
   };

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import TagManager from "react-gtm-module";
 import useLanding from "./LandingHooks";
-import { URL } from "../../util";
+
 import HeroGrid from "../../components/pages/landing/Hero-grid/HeroGrid";
-import HeroGrid2 from "../../components/pages/landing/Hero-grid/HomeHeroGrid";
 import Slider from "../../components/common/Sliders/Slider";
 import ExtraordinaryEssentials from "../../components/pages/landing/ExtraordinaryEssentials";
 import BestSellingProducts from "../../components/pages/landing/BestSellingProducts/BestSellingProducts";
@@ -15,15 +16,15 @@ import CardLayout from "../../components/pages/landing/CardLayout";
 import VideoPlayer from "../../components/pages/landing/VideoPlayer/VideoPlayer";
 import Instagram from "../../components/pages/landing/Instagram/Instagram";
 import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks";
-import { Link } from "react-router-dom";
+
 import { getInstagramBanners } from "../../services/layout/Layout.service";
 import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
-import TagManager from "react-gtm-module";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
-  // console.log({middleBanner})
+  const location = useLocation();
+
   const { btfLeft, btfRight, videoBanner, loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
     (state) => state.common.selectedCategoryItem
@@ -41,14 +42,15 @@ function Landing() {
     }
   };
 
-  // useEffect(() => {
-  //   getIgBanners();
-  //   const tagManagerArgs = {
-  //     gtmId: process.env.REACT_APP_GTM,
-  //   };
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, []);
 
-  //   TagManager.initialize(tagManagerArgs);
-  // }, []);
   useEffect(() => {
     const items = selectedCategoryItem?.data
       ?.find(
@@ -59,6 +61,7 @@ function Landing() {
       ?.children_data.find((e) => e.url_key === "accessories")?.children_data;
 
     setSelectedCategory(items);
+    getIgBanners();
   }, [selectedCategoryItem]);
   return (
     <>

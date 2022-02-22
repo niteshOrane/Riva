@@ -5,21 +5,43 @@ import Products from "../../components/pages/ShoppingCart/Products/Products";
 import Summary from "../../components/pages/ShoppingCart/Summary/Summary";
 import style from "./ShoppingCart.module.scss";
 import { StylesContext } from "@material-ui/styles";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
 
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector(
+    (state) => state?.auth
+  );
+  const {data } = useSelector(
+    (state) => state?.cart
+  );
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(toggleCart(false));
-    const tagManagerArgs = {
-      gtmId: process.env.REACT_APP_GTM,
-    };
-
-    TagManager.initialize(tagManagerArgs);
+    TagManager.dataLayer({
+      dataLayer: {
+        pageType: "shopping_cart",
+        customer: { isLoggedIn: isAuthenticated },
+        category: {
+          id: JSON.parse(localStorage.getItem("preferredCategory")),
+        },
+        cart: { hasItems: data.length >0 ? true :false },
+        ecommerce: {
+          currencyCode: currency_symbol,
+          products:data
+        },
+      },
+    });
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
   }, []);
   const handleContinueShopping = () => {
     window.location.href = "/";

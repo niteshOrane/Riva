@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
@@ -15,21 +15,16 @@ import TagManager from "react-gtm-module";
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
+  const location = useLocation();
   // useAnalytics();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
   const [orderCurrency, setOrderCurrency] = useState(null);
   const [amount, setAmount] = useState(null);
   const [orderItems, setOrderItems] = useState(null);
-  const { currency_symbol } = useSelector(
-    (state) => state?.common?.store
-  );
-  const { isAuthenticated } = useSelector(
-    (state) => state?.auth
-  );
-  const {data } = useSelector(
-    (state) => state?.cart
-  );
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const { isAuthenticated } = useSelector((state) => state?.auth);
+  const { data } = useSelector((state) => state?.cart);
   const getOrderDetails = async (val) => {
     const res = await orderConfirmed(val);
     if (res.status === 200 && res?.data && !res?.data?.error) {
@@ -56,23 +51,37 @@ function OrderConfirmed(props) {
   }, [orderId]);
   // google tag manager
   useEffect(() => {
+    window.dataLayer.push({
+      transactionId: "",
+      transactionAffiliation: "",
+      transactionTotal:  amount?.totalPaid,
+      transactionShipping: "",
+      transactionTax: "",
+      transactionProducts: orderItems,
+    });
     TagManager.dataLayer({
       dataLayer: {
-        pageType: "catalog_category_view",
+        pageType: "order_confirmed",
         list: "category",
         customer: { isLoggedIn: isAuthenticated },
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length >0 ? true :false },
+        cart: { hasItems: data.length > 0 ? true : false },
         ecommerce: {
           currencyCode: currency_symbol,
-          orderValue:amount?.totalPaid,
-          products:orderItems
+          orderValue: amount?.totalPaid,
+          products: orderItems,
         },
       },
     });
-  }, [orderItems,amount]);
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "page_view",
+        url: location.pathname,
+      },
+    });
+  }, [orderItems, amount]);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
