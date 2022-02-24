@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import TagManager from "react-gtm-module";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import Congratulations from "../../components/pages/Dashboard/OrderConfirmed/Congratulations/Congratulations";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
@@ -11,7 +11,6 @@ import { emptyCart, emptyCartItem } from "../../store/actions/auth";
 import { orderConfirmed } from "../../services/order/order.services";
 
 import { showSnackbar } from "../../store/actions/common";
-import TagManager from "react-gtm-module";
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
@@ -41,6 +40,7 @@ function OrderConfirmed(props) {
     } else {
       return dispatch(showSnackbar(res?.data?.error, "error"));
     }
+    return null;
   };
   useEffect(() => {
     if (orderId) {
@@ -67,7 +67,7 @@ function OrderConfirmed(props) {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 ? true : false },
+        cart: { hasItems: data.length > 0 },
         ecommerce: {
           currencyCode: currency_symbol,
           orderValue: amount?.totalPaid,
@@ -96,6 +96,8 @@ function OrderConfirmed(props) {
       },
     };
   }, [orderItems, amount]);
+  const { match } = props;
+  const { params } = match;
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -104,7 +106,7 @@ function OrderConfirmed(props) {
           <div className={styles.contentConatiner}>
             <h2 className={styles.title}>Order Confirmed</h2>
             <div className="py-20px d-flex w-100 justify-content-between">
-              <Congratulations {...props?.match?.params} />
+              <Congratulations {...params} />
               <div className={styles.confirmCard}>
                 {orderItems?.map((li) => (
                   <ProductCard

@@ -15,6 +15,7 @@ import {
 } from "../../services/product/product.service";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
+import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 
 import styles from "./product.module.scss";
 
@@ -182,7 +183,7 @@ const Product = (props) => {
         language={language}
         items={mediaImage}
       />
-      {/* <div className="max-width-1750 mx-auto">
+      <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
@@ -194,7 +195,7 @@ const Product = (props) => {
             />
           )}
         />
-      </div> */}
+      </div>
       <DescriptionComposition
         product={product}
         prodDiscr={product}

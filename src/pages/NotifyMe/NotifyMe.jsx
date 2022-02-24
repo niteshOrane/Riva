@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import * as icons from "../../components/common/Icons/Icons";
 import {
   deleteNotification,
@@ -12,12 +12,12 @@ import { showSnackbar } from "../../store/actions/common";
 import useNotifyMeList from "./useNotifyMeList";
 import styles from "./NotifyMe.module.scss";
 import { getProductColor } from "../../services/product/product.service";
-import { useHistory } from "react-router-dom";
+
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function NotifyMe() {
   const { notifyList } = useNotifyMeList();
-  const {translate} = useArabic();
+  const { translate } = useArabic();
   const [notifyItems, setNotifyItems] = React.useState();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -39,11 +39,9 @@ function NotifyMe() {
       const res = await deleteNotification(id);
       if (res.status === 200 && res?.data) {
         dispatch(showSnackbar("Notification Deleted", "Success"));
-        await getNotification()
-          .then((response) => {
-            setNotifyItems(response.data);
-          })
-          .catch((error) => console.log(error));
+        await getNotification().then((response) => {
+          setNotifyItems(response.data);
+        });
       }
     }
   };
@@ -55,7 +53,7 @@ function NotifyMe() {
           <div className="w-100">
             <h2>{translate?.dash?.NOTIFY}</h2>
             {notifyItems && notifyItems?.data.length ? (
-              notifyItems?.data?.map((card, i) => (
+              notifyItems?.data?.map((card) => (
                 <div className={styles.card}>
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
@@ -64,7 +62,7 @@ function NotifyMe() {
                       </div>
                       <div>
                         <h4 className="font-weight-normal">
-                         {card.productname}
+                          {card.productname}
                         </h4>
                         <span className="greyText font-size-small">
                           {moment().format("DD MMM, YYYY")}
@@ -83,7 +81,7 @@ function NotifyMe() {
                         onClick={(e) => {
                           handleSubmit(e, card.productId);
                         }}
-                        role="button"
+                        type="button"
                         aria-label="Delete Notifictaion"
                         className="bg-transparent no-border c-pointer"
                         id={styles.closeBtn}

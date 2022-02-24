@@ -1,11 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import ChangePasswordForm from "../../components/pages/Dashboard/Accounts/ChangePasswordForm/ChangePasswordForm";
 import { showSnackbar } from "../../store/actions/common";
-import { useDispatch, useSelector } from "react-redux";
+
 import { changePassword } from "../../services/auth/auth.service";
-import styles from "./ChangePassword.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ChangePassword() {
@@ -17,8 +16,7 @@ function ChangePassword() {
   });
 
   const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
+    const { value, name } = e.target;
     setValues({
       ...values,
       [name]: value,
@@ -26,18 +24,19 @@ function ChangePassword() {
   };
 
   const dispatch = useDispatch();
-  const {translate} = useArabic();
+  const { translate } = useArabic();
 
   const auth = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { currentPassword, newPassword, retypePassword, otp } = values;
+    const { currentPassword, newPassword, retypePassword } = values;
 
     if (newPassword !== retypePassword)
       return dispatch(showSnackbar("Passwords not match", "error"));
 
-    let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+    const re =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
 
     if (!re.test(newPassword))
       return dispatch(
@@ -63,7 +62,7 @@ function ChangePassword() {
         retypePassword: "",
         otp: "",
       });
-      if(res?.data?.message){
+      if (res?.data?.message) {
         return dispatch(showSnackbar(res.data.message, "warning"));
       }
       return dispatch(showSnackbar(res.data.data, "success"));
