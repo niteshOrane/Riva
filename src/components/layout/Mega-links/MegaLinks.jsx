@@ -162,7 +162,9 @@ const MegaLinks = ({ links, language }) => {
         style={{ display: menuType ? "block" : "none" }}
         className={style.mobileNavBar}
       >
-        <div onClick={() => setMenuType(false)} className="close-Btn">X</div>
+        <div onClick={() => setMenuType(false)} className="close-Btn">
+          X
+        </div>
         <CategoriesCircles />
 
         {links &&
