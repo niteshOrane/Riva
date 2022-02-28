@@ -1,5 +1,4 @@
 import React from "react";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import "./profileInformation.scss";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import ProfileInfoForm from "./ProfileInfoForm";

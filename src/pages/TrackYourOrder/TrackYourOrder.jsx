@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
+
 import TrackYourOrderCard from "../../components/pages/Dashboard/MyOrders/TrackYourOrderCard/TrackYourOrderCard";
 import { orderConfirmed } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
-import { useDispatch } from "react-redux";
+
 import { showSnackbar } from "../../store/actions/common";
 
 function TrackYourOrder() {
@@ -29,6 +30,7 @@ function TrackYourOrder() {
         return dispatch(showSnackbar(res?.data?.error, "error"));
       }
     }
+    return null;
   };
   return (
     <div className="d-flex py-20px">

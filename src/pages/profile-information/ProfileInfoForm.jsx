@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./profileInformation.scss";
-import * as icons from "../../components/common/Icons/Icons";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Dialog from "@material-ui/core/Dialog";
+import PhoneInput from "react-phone-number-input";
+import * as icons from "../../components/common/Icons/Icons";
+
 import OTPForm from "../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm";
 import styles from "../../components/common/Cards/SignUpCard/SignUpCard.module.scss";
 import { profileUpdate } from "../../services/dashboard/dashboard.service";
@@ -18,13 +20,12 @@ import {
   loginCustomerOTP,
 } from "../../services/auth/auth.service";
 import { getCustId, getStoreId } from "../../util";
-import PhoneInput from "react-phone-number-input";
+
 import "react-phone-number-input/style.css";
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
-  console.log({customer});
   const {translate} = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const { language } = useSelector((state) => state?.common?.store);
@@ -67,9 +68,6 @@ function ProfileInfoForm() {
       const { value, name } = event.target;
       setValues({ ...values, [name]: value });
     }
-  };
-  const handleChangeMobile = (event) => {
-    setMobileNumber(event.target.value);
   };
   const [isOpen, setIsOpen] = useState(false);
 
@@ -153,6 +151,7 @@ function ProfileInfoForm() {
     } else {
       return dispatch(showSnackbar("Something went wrong", "error"));
     }
+    return null;
   };
   return (
     <>
@@ -161,11 +160,12 @@ function ProfileInfoForm() {
           <article className="inner-form-wrapper">
             <section>
               <div className="boxProfileInfo">
-                <label className="profile-label">First Name</label>
+                <label htmlFor="firstName"  className="profile-label">First Name</label>
                 <input
                   value={values?.firstname}
                   name="firstname"
                   onChange={handleChange}
+                  id="firstName"
                 />
               </div>
               <div className="boxProfileInfo" style={{ marginLeft: "2rem" }}>
@@ -190,7 +190,7 @@ function ProfileInfoForm() {
               </div>
               <div className="isdInfoBox" style={{ marginLeft: "2rem" }}>
                 <label className="profile-label-mobile">Mobile Number</label>
-                <div className={`inpContainer positionWrap`}>
+                <div className="inpContainer positionWrap">
                   {/* <input
                     name="mobile_number"
                     readOnly={!isEdit}

@@ -54,7 +54,7 @@ export const editCartService = (id, qty) => {
 };
 
 export const deleteCartItem = (id) => {
-  if (getCartId() != 0) {
+  if (getCartId() !== 0) {
     const config = {
       method: "delete",
       url: `${API_URL}/carts/${getCartId()}/items/${id}`,
