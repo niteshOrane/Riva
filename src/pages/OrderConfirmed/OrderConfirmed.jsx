@@ -11,11 +11,12 @@ import { emptyCart, emptyCartItem } from "../../store/actions/auth";
 import { orderConfirmed } from "../../services/order/order.services";
 
 import { showSnackbar } from "../../store/actions/common";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
   const location = useLocation();
-  // useAnalytics();
+  useAnalytics();
   const { orderId, displayOrderNumber } = useParams();
   const [deliveryAddress, setDeliveryAddress] = useState(null);
   const [orderCurrency, setOrderCurrency] = useState(null);

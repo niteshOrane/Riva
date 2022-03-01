@@ -11,11 +11,13 @@ import styles from "./Delivered.module.scss";
 
 import Pagination from "./Pagination";
 import { showSnackbar } from "../../store/actions/common";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
   const dispatch = useDispatch();
+  useAnalytics();
   const { language } = useSelector((state) => state?.common?.store);
 
   const [orderList, setOrderList] = React.useState([]);

@@ -3,9 +3,11 @@ import { useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import DashboardData from "../../components/pages/Dashboard/DashboardData/DashboardData";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function Dashboard() {
   const location = useLocation();
+  useAnalytics()
 
   useEffect(() => {
     TagManager.dataLayer({

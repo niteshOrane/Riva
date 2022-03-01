@@ -6,9 +6,11 @@ import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import Card from "../../components/pages/Wishlist/Card/Card";
 import styles from "./Wishlist.module.scss";
 import { getWishlist, removeWishlist } from "../../store/actions/wishlist";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
+  useAnalytics();
   const { loading } = useSelector((state) => state.wishlist);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);

@@ -22,9 +22,10 @@ import {
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
-  // useAnalytics();
+  useAnalytics();
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,

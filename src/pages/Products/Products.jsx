@@ -12,12 +12,14 @@ import Slider from "../../components/common/Sliders/Slider";
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import "react-loading-skeleton/dist/skeleton.css";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function Products(props) {
   const handleQuickView = () => {};
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);
+  useAnalytics()
 
   const refContainer = useRef();
 
@@ -43,6 +45,7 @@ function Products(props) {
     onScreen,
     serachTerm: parsed?.serachTerm,
   });
+  // console.log({products})
 
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
