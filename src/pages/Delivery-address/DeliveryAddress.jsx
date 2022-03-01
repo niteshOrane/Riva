@@ -1,38 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import * as icons from "../../components/common/Icons/Icons";
 import { Link, useLocation } from "react-router-dom";
+import swal from "sweetalert";
+import TagManager from "react-gtm-module";
+import * as icons from "../../components/common/Icons/Icons";
 import { getCustId } from "../../util";
-import SelectDeliveryAddress from "../../components/pages/DeliveryAddress/SelectDeliveryAddress/SelectDeliveryAddress";
-
 import DeliveryAddressForm from "../../components/pages/DeliveryAddress/DeliveryAddressForm/DeliveryAddressForm";
 import OrderReview from "../../components/pages/DeliveryAddress/OrderReview/OrderReview";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import styles from "./DeliveryAddress.module.scss";
-import swal from "sweetalert";
-
 import {
   getCustomerAddressList,
   setCustomerAddresDefault,
 } from "../../store/actions/customerAddress";
 import { getCustomerCartPayments } from "../../store/actions/cart";
-
 import { getShippingMethodlist } from "../../store/actions/payment";
-import { useEffect } from "react";
-import AddressItem from "../../components/pages/DeliveryAddress/AddressItem/AddressItem";
 import {
   setDefaultAddressCustomer,
   deleteAddress,
 } from "../../services/address/address.service";
-import { useState } from "react";
 import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 import useArabic from "../../components/common/arabicDict/useArabic";
-import TagManager from "react-gtm-module";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
-  // useAnalytics();
+  useAnalytics();
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,
@@ -46,13 +39,6 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
   const { translate } = useArabic();
-  const handleChange = (event, index) => {
-    setState({
-      ...stateCheck,
-      [event.target.name]: event.target.checked,
-      indexItem: index,
-    });
-  };
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
@@ -61,7 +47,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 ? true : false },
+        cart: { hasItems: data.length > 0 },
         ecommerce: {
           currencyCode: currency_symbol,
           products: data,
@@ -198,7 +184,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
             </div>
             <Link to="/shopping-cart">
               <div className={styles.backBtn}>
-                <span class="material-icons-outlined">arrow_back_ios</span>
+                <span className="material-icons-outlined">arrow_back_ios</span>
                 Back
               </div>
             </Link>
@@ -281,20 +267,18 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
             {showList
               ? dataList
                   .filter((e) => e.Billingid === "" && e.Shippingid === "")
-                  .map((addr, index) => {
-                    return (
-                      <AddressCard
-                        onEdit={handleOnEdit}
-                        onDelete={handleOnDelete}
-                        addressItem={addr}
-                        setDefaultAddress={setDefaultAddress}
-                        isDefault={false}
-                        isBillingDefault={false}
-                        isManageScreen={isManageScreen}
-                        loading={loading}
-                      />
-                    );
-                  })
+                  .map((addr) => (
+                    <AddressCard
+                      onEdit={handleOnEdit}
+                      onDelete={handleOnDelete}
+                      addressItem={addr}
+                      setDefaultAddress={setDefaultAddress}
+                      isDefault={false}
+                      isBillingDefault={false}
+                      isManageScreen={isManageScreen}
+                      loading={loading}
+                    />
+                  ))
               : null}
           </section>
           {!showList || recordToEdit ? (

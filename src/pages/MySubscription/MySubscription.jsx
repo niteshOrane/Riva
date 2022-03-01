@@ -1,8 +1,7 @@
 import React from "react";
-import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
-import Switch from "@material-ui/core/Switch";
 import { withStyles } from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
+import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 const IOSSwitch = withStyles((theme) => ({
@@ -45,29 +44,27 @@ const IOSSwitch = withStyles((theme) => ({
   },
   checked: {},
   focusVisible: {},
-}))(({ classes, ...props }) => {
-  return (
-    <Switch
-      focusVisibleClassName={classes.focusVisible}
-      disableRipple
-      classes={{
-        root: classes.root,
-        switchBase: classes.switchBase,
-        thumb: classes.thumb,
-        track: classes.track,
-        checked: classes.checked,
-      }}
-      {...props}
-    />
-  );
-});
+}))(({ classes, ...props }) => (
+  <Switch
+    focusVisibleClassName={classes.focusVisible}
+    disableRipple
+    classes={{
+      root: classes.root,
+      switchBase: classes.switchBase,
+      thumb: classes.thumb,
+      track: classes.track,
+      checked: classes.checked,
+    }}
+    {...props}
+  />
+));
 
 function MySubscription() {
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: false,
   });
-  const {translate} = useArabic();
+  const { translate } = useArabic();
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };

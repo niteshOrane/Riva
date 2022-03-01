@@ -20,10 +20,12 @@ import useHeroGrid from "../../components/pages/landing/Hero-grid/HeroGridHooks"
 import { getInstagramBanners } from "../../services/layout/Layout.service";
 import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
   const location = useLocation();
+  useAnalytics()
 
   const { btfLeft, btfRight, videoBanner, loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(
@@ -55,6 +57,7 @@ function Landing() {
         url: location.pathname,
       },
     };
+
   }, []);
 
   useEffect(() => {

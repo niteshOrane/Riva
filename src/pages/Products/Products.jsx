@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import queryString from "query-string";
-import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TagManager from "react-gtm-module";
+import Skeleton from "react-loading-skeleton";
 import useProducts from "./useProducts";
 import useOnScreen from "./useOnScreen";
 import Filters from "../../components/pages/products/Filters";
@@ -10,19 +11,15 @@ import Image from "../../components/common/LazyImage/Image";
 import Slider from "../../components/common/Sliders/Slider";
 import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import TagManager from "react-gtm-module";
-
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
-import { extractColorSize } from "../../util";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function Products(props) {
   const handleQuickView = () => {};
-  const history = useHistory();
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);
+  useAnalytics()
 
   const refContainer = useRef();
 
@@ -34,10 +31,10 @@ function Products(props) {
   const { location, match } = props;
   const parsed = queryString.parse(location?.search);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize] = useState(20);
   const [sortField, setSortField] = useState("entity_id");
   const [sortDirection, setSortDirection] = useState("desc");
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData] = useState([]);
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({
     categoryId: match.params.categoryId,
@@ -48,6 +45,7 @@ function Products(props) {
     onScreen,
     serachTerm: parsed?.serachTerm,
   });
+  // console.log({products})
 
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
@@ -60,9 +58,6 @@ function Products(props) {
       setCurrentPage(currentPage + 1);
     }
   }, [onScreen]);
-  const handleBannerPush = (title, categories) => {
-    history.push(`${`/products/${title}/${categories}`}`);
-  };
 
   const handleThreeColumns = () => setPageColumns(3);
   const handleTwoColumns = () => setPageColumns(2);
@@ -74,6 +69,7 @@ function Products(props) {
         return styles.fullWidthCardInTwoCol;
       }
     }
+    return null
   };
   useEffect(() => {
     return () => {
@@ -90,7 +86,7 @@ function Products(props) {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 ? true : false },
+        cart: { hasItems: data.length > 0 },
         ecommerce: {
           currencyCode: currency_symbol,
           serachTerm: parsed?.serachTerm,
@@ -114,7 +110,6 @@ function Products(props) {
       },
     };
   }, [match.params.category, parsed.serachTerm,products]);
-  console.log("me",window.insider_object)
   return (
     <div>
       <div className="container-90 max-width-1600">

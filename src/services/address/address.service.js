@@ -1,5 +1,6 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
+
 export const getCustomerAddress = (customerid) => {
   const customerData = new FormData();
   customerData.append("customerid", customerid);

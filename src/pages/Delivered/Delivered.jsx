@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import TagManager from "react-gtm-module";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import DeliveredOrders from "../../components/pages/Dashboard/MyOrders/DeliveredOrders/DeliveredOrders";
-import { useSelector } from "react-redux";
+
 import { cancelOrder, getOrderList } from "../../services/order/order.services";
 import styles from "./Delivered.module.scss";
-import { useParams } from "react-router-dom";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Pagination from "./Pagination";
 import { showSnackbar } from "../../store/actions/common";
-import { useDispatch } from "react-redux";
-import useArabic from "../../components/common/arabicDict/useArabic";
-import { useEffect } from "react";
-import TagManager from "react-gtm-module";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
-function Delivered({ title = "Delivered" }) {
+function Delivered() {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
   const dispatch = useDispatch();
-  const {translate}  = useArabic();
+  useAnalytics();
   const { language } = useSelector((state) => state?.common?.store);
 
   const [orderList, setOrderList] = React.useState([]);
@@ -33,7 +31,7 @@ function Delivered({ title = "Delivered" }) {
       const temp = res?.data?.items?.map((li) => ({
         increment_id: li?.increment_id,
         currency_code: li?.base_currency_code,
-        order_currency_code:li?.order_currency_code,
+        order_currency_code: li?.order_currency_code,
         status: li.status,
         list: li?.items?.filter((a) => a.product_type === "simple"),
       }));
@@ -47,12 +45,12 @@ function Delivered({ title = "Delivered" }) {
       dispatch(showSnackbar("Order Cancelled successfully", "success"));
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     const tagManagerArgs = {
       gtmId: process.env.REACT_APP_GTM,
     };
     TagManager.initialize(tagManagerArgs);
-  },[])
+  }, []);
   React.useEffect(() => {
     getOrders(customer?.customerID);
   }, [orderType]);
@@ -65,7 +63,7 @@ function Delivered({ title = "Delivered" }) {
             status: pro?.status,
             increment_id: pro?.increment_id,
             currency_code: pro?.currency_code,
-            order_currency_code:pro?.order_currency_code,
+            order_currency_code: pro?.order_currency_code,
           }));
           return [...acc, ...data2];
         } else {
@@ -81,7 +79,7 @@ function Delivered({ title = "Delivered" }) {
           const data2 = pro?.list?.map((a) => ({
             ...a,
             status: pro?.status,
-            order_currency_code:pro?.order_currency_code,
+            order_currency_code: pro?.order_currency_code,
             increment_id: pro?.increment_id,
             currency_code: pro?.currency_code,
           }));
@@ -97,7 +95,9 @@ function Delivered({ title = "Delivered" }) {
   }, [orderType, orderList]);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = finalList?.sort((a,b) => new Date(b.created_at) - new Date(a.created_at))?.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = finalList
+    ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    ?.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
@@ -109,8 +109,6 @@ function Delivered({ title = "Delivered" }) {
             <h2 className="font-weight-normal">
               {orderType?.[0]?.toUpperCase() + orderType.slice(1)}
             </h2>
-
-            {/* {orderList.length>0  &&  <DeliveredOrders products = {orderList}  />} */}
             {currentPosts.length > 0 ? (
               currentPosts?.map((li) => (
                 <DeliveredOrders

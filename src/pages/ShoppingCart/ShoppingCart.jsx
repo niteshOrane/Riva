@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import TagManager from "react-gtm-module";
 import { toggleCart } from "../../store/actions/cart";
+
 import Products from "../../components/pages/ShoppingCart/Products/Products";
 import Summary from "../../components/pages/ShoppingCart/Summary/Summary";
 import style from "./ShoppingCart.module.scss";
-import { StylesContext } from "@material-ui/styles";
-import { Link, useLocation } from "react-router-dom";
-import TagManager from "react-gtm-module";
 
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
@@ -24,7 +24,7 @@ const ShoppingCart = () => {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: items.length > 0 ? true : false },
+        cart: { hasItems: items.length > 0},
         ecommerce: {
           currencyCode: currency_symbol,
           products: items,

@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import { Link } from "react-router-dom";
+import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
+
 import Invitations from "../../components/pages/Dashboard/MyStuff/ReferAndEarn/Invitations/Invitations";
 import InvitationForm from "../../components/pages/Dashboard/MyStuff/ReferAndEarn/InvitationForm/InvitationForm";
 import InvitesAndCredits from "../../components/pages/Dashboard/MyStuff/ReferAndEarn/InvitesAndCredits/InvitesAndCredits";

@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from "react";
-import { Redirect, Route, Switch, HashRouter } from "react-router-dom";
+import { Redirect, Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
@@ -65,7 +65,7 @@ const ManageAddress = React.lazy(() =>
 const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
 const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"))
 
-//order info
+// order info
 
 const OrderInformation = React.lazy(() => import("../components/pages/OrderInformation/InformationGrid"))
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -14,8 +14,6 @@ import {
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import styles from "./TrackOrders.module.scss";
 import { showSnackbar } from "../../store/actions/common";
-import InformationGrid from "../../components/pages/OrderInformation/InformationGrid";
-import InformationTable from "../../components/pages/OrderInformation/InformationTable";
 
 function TrackOrders(props) {
   const { customer } = useSelector((state) => state.auth);
@@ -27,7 +25,6 @@ function TrackOrders(props) {
     product: null,
     status: null,
   });
-  const [orderInfo, setOrderInfo] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [cancelLoading, setCancelLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -95,6 +92,7 @@ function TrackOrders(props) {
         setOrderItems([]);
       }
     }
+    return null;
   };
   const cancelOrderfn = async (e, id) => {
     e.preventDefault();

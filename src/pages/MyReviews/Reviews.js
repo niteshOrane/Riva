@@ -9,7 +9,6 @@ import {
 } from "../../services/product/product.service";
 import { showSnackbar } from "../../store/actions/common";
 import Pagination from "../Delivered/Pagination";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function Reviews() {
@@ -19,7 +18,7 @@ function Reviews() {
   const [status, setStatus] = useState(null);
   const [postsPerPage] = useState(3);
   const dispatch = useDispatch();
-  const {translate} = useArabic();
+  const { translate } = useArabic();
 
   const getMyReview = async () => {
     const res = await getMyReviewList();
@@ -32,6 +31,7 @@ function Reviews() {
       results?.map((li) => {
         const obj = { ...li?.value?.data };
         newArr.push(obj);
+        return null;
       });
       setImageAndName(newArr);
       setMyReviewList(res?.data?.items);

@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
 import CouponCard from "../../components/pages/Dashboard/MyStuff/CouponCard/CouponCard";
 
 function Coupons() {

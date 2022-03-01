@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import TagManager from "react-gtm-module";
+import { useLocation } from "react-router-dom";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import Card from "../../components/pages/Wishlist/Card/Card";
 import styles from "./Wishlist.module.scss";
 import { getWishlist, removeWishlist } from "../../store/actions/wishlist";
-import CategoriesCircles from "../../components/common/CategoriesCircles/CategoriesCircles";
-import TagManager from "react-gtm-module";
-import { useLocation } from "react-router-dom";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
+  useAnalytics();
   const { loading } = useSelector((state) => state.wishlist);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
-  const { data } = useSelector((state) => state?.cart);
+  const { data: items } = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -29,7 +30,7 @@ function WishList() {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 ? true : false },
+        cart: { hasItems: items.length > 0},
         ecommerce: {
           currencyCode: currency_symbol,
           productsInWishlist: wishlist,
@@ -62,20 +63,18 @@ function WishList() {
               className="d-flex gap-12px f1"
               style={{ flexWrap: "wrap", marginTop: "18px" }}
             >
-              {wishlist?.map((product) => {
-                return (
-                  <Card
-                    name={product?.name}
-                    src={product?.image}
-                    priceWas={product?.price}
-                    priceIs={product?.special}
-                    sku={product?.sku}
-                    currency_symbol={currency_symbol}
-                    remove={() => removeFromWishlist(product)}
-                    loading={loading}
-                  />
-                );
-              })}
+              {wishlist?.map((product) => (
+                <Card
+                  name={product?.name}
+                  src={product?.image}
+                  priceWas={product?.price}
+                  priceIs={product?.special}
+                  sku={product?.sku}
+                  currency_symbol={currency_symbol}
+                  remove={() => removeFromWishlist(product)}
+                  loading={loading}
+                />
+              ))}
             </div>
           </div>
         </div>
