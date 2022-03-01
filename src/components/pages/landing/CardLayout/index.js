@@ -20,7 +20,7 @@ function Index() {
   useEffect(() => {
     init();
   }, [selectedCategoryItem?.id]);
-
+  console.log({data})
   return (
     <div className={`container-with-circles ${style.container}`}>
       {data?.map((item) => (

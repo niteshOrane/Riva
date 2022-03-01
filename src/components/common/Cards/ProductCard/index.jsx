@@ -234,6 +234,7 @@ const ProductCard = ({
 
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
+    console.log({productItem})
   return (
     <>
       <div
