@@ -385,6 +385,19 @@ margin: 20px !important;
 }
 
 @media only screen and (max-width: 767px) {
+  .registration-form-wrapper, .inner-form-wrapper , .user-sign-in-form, .user-sign-in-form input{
+    width: 100% !important;
+}
+.user-sign-in-form section{
+  display: block;
+}
+.isdInfoBox {
+  margin: 0 !important;
+}
+.boxProfileInfo {
+  display: block !important;
+  margin: 0 !important;
+}
   .dashboard .d-flex.h-100 {
     display: block !important;
   }
