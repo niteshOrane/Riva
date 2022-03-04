@@ -85,6 +85,16 @@ export const getCountryList = () => {
 };
 
 
+// get state list
+export const getStateList = (state) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/directory/countries/${state}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
 // get address by geo location
 
 export const getAddressByLocation = (lat,lng) => {

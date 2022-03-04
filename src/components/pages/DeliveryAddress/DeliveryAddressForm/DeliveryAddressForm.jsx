@@ -12,6 +12,7 @@ import {
   updateCustomerAddress,
   getCountryList,
   getAddressByLocation,
+  getStateList,
 } from "../../../../services/address/address.service";
 import {
   toggleAddresslist,
@@ -68,7 +69,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.status === 200) {
       setUserAddress(
         res?.data?.data?.find((li) => li?.postal_code !== null) ||
-        res?.data?.data[0]
+          res?.data?.data[0]
       );
     }
   };
@@ -105,12 +106,15 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
       });
     }
   }, [userAddress]);
+  const getCountryState = async (cnt) => {
+    const res = await getStateList(cnt);
+    if (res.status === 200) {
+      setStateList(res?.data?.available_regions);
+    }
+  };
   useEffect(() => {
-    if (countryList) {
-      const temp = countryList?.find(
-        (li) => li.id === formData.country
-      )?.available_regions;
-      setStateList(temp);
+    if (countryList.length > 0) {
+      getCountryState(formData.country);
     }
   }, [formData.country]);
   const clearAll = () => {
@@ -173,7 +177,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     formData.houseName = customerData?.house_name_number;
     formData.street = customerData?.street?.split(" ")?.[1];
     formData.country = customerData?.country;
-    formData.defaultAddress =  customerData?.Shippingid !== "";
+    formData.defaultAddress = customerData?.Shippingid !== "";
     formData.billingAddress = customerData?.Billingid !== "";
     formData.judda = customerData?.judda;
     formData.buildingName = customerData?.building_name_number;
@@ -268,7 +272,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     form.append("customerAddress[pincode]", pincode);
     form.append("customerAddress[city]", city);
     form.append("customerAddress[state]", state);
-    form.append("customerAddress[telephone]", phoneValue);
+    form.append("customerAddress[mobile_number]", phoneValue);
     form.append("customerAddress[street]", `${block} ${houseName}`);
     form.append("customerAddress[street1]", street);
     form.append("customerAddress[country]", country);
@@ -517,10 +521,13 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             id="defaultAddress"
             onChange={handleChange}
           />
-          <label htmlFor="default" aria-controls="defaultAddress" className={styles.useDefaultText}>
+          <label
+            htmlFor="default"
+            aria-controls="defaultAddress"
+            className={styles.useDefaultText}
+          >
             Use as my default address.
-          </label>
-          {' '}
+          </label>{" "}
           <input
             type="checkbox"
             checked={billingAddress}
@@ -528,7 +535,11 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
             id="billingAddress"
             onChange={handleChange}
           />
-          <label htmlFor="default" aria-controls="billingAddress"   className={styles.useDefaultText}>
+          <label
+            htmlFor="default"
+            aria-controls="billingAddress"
+            className={styles.useDefaultText}
+          >
             Use as Billing address.
           </label>
         </div>

@@ -24,8 +24,9 @@ export const getCustomerCartPayments = () => async (dispatch) => {
   if (!id) return;
 
   const res = await getCartPaymentInfo(id);
+  console.log(res)
 
-  if (res.data && res.statusText == "OK") {
+  if (res.data && res.status ===200) {
     dispatch(getCartPaymentInfo_action(res.data));
   } else dispatch(getCartPaymentInfo_action([]));
 };

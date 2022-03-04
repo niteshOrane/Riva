@@ -21,6 +21,7 @@ function OrderReview({
   translate,
 }) {
   const history = useHistory();
+  // console.log({cartPayment})
 
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store

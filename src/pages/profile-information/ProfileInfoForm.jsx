@@ -26,13 +26,14 @@ import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
+  console.log({customer})
   const {translate} = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const { language } = useSelector((state) => state?.common?.store);
   const [phoneValue, setPhoneValue] = useState(`${customer?.mobile || customer?.mobile_number}`);
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState("");
+  const [mobileNumber, setMobileNumber] = useState(customer?.mobile);
   const [values, setValues] = useState({
     firstname: customer?.firstname,
     lastname: customer?.lastname,
@@ -200,7 +201,7 @@ function ProfileInfoForm() {
                   <PhoneInput
                     placeholder="Enter Mobile Number"
                     value={isEdit ? mobileNumber : phoneValue}
-                    readOnly={isEdit}
+                    readOnly={!isEdit}
                     defaultCountry={currentLocation.country_code.toUpperCase()}
                     onChange={setPhoneValue}
                     width="100%"
