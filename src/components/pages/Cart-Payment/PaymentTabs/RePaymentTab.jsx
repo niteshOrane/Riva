@@ -27,7 +27,7 @@ import {
 } from "../../../../services/payment/payment.service";
 import { getCustomerCartPayments } from "../../../../store/actions/cart";
 import Cod from "./components/Cod";
-import TagManager from 'react-gtm-module'
+import TagManager from "react-gtm-module";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,11 +102,10 @@ function a11yProps(index) {
   };
 }
 
-
 const tagManagerArgs = {
-  gtmId: 'GTM-K8HHCZF'
-}
-TagManager.initialize(tagManagerArgs)
+  gtmId: "GTM-K8HHCZF",
+};
+TagManager.initialize(tagManagerArgs);
 
 export default function DetailTabs({
   translate,
@@ -115,11 +114,15 @@ export default function DetailTabs({
   store,
   loading,
   setLoading,
+  customObj,
 }) {
   // const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
-  const [name, setName] = React.useState("Tap");
+  const [name, setName] = React.useState({
+    title: "Tap",
+    code: "tap",
+  });
   const history = useHistory();
   const dispatch = useDispatch();
   const [checkoutId, setCheckoutId] = React.useState(0);
@@ -127,6 +130,8 @@ export default function DetailTabs({
   const classes = useStyles();
   const [paymentMethod, setPaymentMethod] = useState([]);
   const [codInfo, setCodInfo] = useState(null);
+  const [renderTab, setRenderTab] = useState(null);
+
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
@@ -143,15 +148,14 @@ export default function DetailTabs({
           payload: [],
         });
         window.dataLayer.push({
-          event: 'event',
+          event: "event",
           eventProps: {
-              category: "purchase",
-              action: "purchase",
-              label: "buy",
-              value: 10
-          }
+            category: "purchase",
+            action: "purchase",
+            label: "buy",
+            value: 10,
+          },
         });
-        debugger
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
@@ -161,15 +165,26 @@ export default function DetailTabs({
       }
     }
   };
+  useEffect(() => {
+    const obj = {
+      tap: <GoSellTap translate={translate} />,
+      checkoutcom_card_payment: paymentType ? (
+        <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+      ) : null,
+    };
+    setRenderTab(obj);
+  }, [customObj, paymentType]);
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
       method: "get",
-      url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+      url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${fnValue}`,
       silent: true,
     };
-    await axios(configTap).then((res) => {
-      setPaymentType(res?.data[0]?.checkoutcom_card_payment?.active_pk);
-    });
+    await axios(configTap)
+      .then((res) => {
+        setPaymentType(res?.data[0]?.checkoutcom_card_payment?.active_pk);
+      })
+      .catch((err) => console.log(err));
   };
   const getPaymentForHyperPay = async (fnValue) => {
     const config = {
@@ -179,9 +194,11 @@ export default function DetailTabs({
       }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
       silent: true,
     };
-    await axios(config).then((res) => {
-      setCheckoutId(JSON.parse(res.data).id);
-    });
+    await axios(config)
+      .then((res) => {
+        setCheckoutId(JSON.parse(res?.data)?.id);
+      })
+      .catch((err) => console.log(err));
   };
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
@@ -247,7 +264,7 @@ export default function DetailTabs({
       if (res?.status === 200) {
         const processedCod = await processCodPaymentFurther();
         if (processedCod.status === 200) {
-          setCodInfo(processedCod?.data);         
+          setCodInfo(processedCod?.data);
         }
       }
     }
@@ -255,16 +272,24 @@ export default function DetailTabs({
 
   const handleChange = async (newValue) => {
     switch (newValue) {
-      case 0:
+      case "tap":
         dispatch(getCustomerCartPayments());
-        setValue(newValue);
+        // getPaymentForHyperPay(newValue);
+        // setValue(newValue);
+        setName({
+          ...name,
+          code: newValue,
+        });
         break;
-      case 1:
+      case "checkoutcom_card_payment":
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
         dispatch(getCustomerCartPayments());
-        setValue(newValue);
         getPaymentForTapCheckout(newValue);
+        setName({
+          ...name,
+          code: newValue,
+        });
         break;
       case 2:
         // setValue(newValue);
@@ -295,16 +320,12 @@ export default function DetailTabs({
         break;
     }
   };
-  if (loading)
-    return (
-      <div className={styles.tapLoader}>
-        <Loader />
-      </div>
-    );
-
-  const changeStyle = (fn, newValue) => {
-    handleChange(newValue);
-    setName(fn);
+  const changeStyle = (fn, newValue, code) => {
+    handleChange(code);
+    setName({
+      title: fn,
+      code,
+    });
   };
   return (
     <>
@@ -321,12 +342,12 @@ export default function DetailTabs({
           >
             {paymentMethod?.map((li, idx) => (
               <div
-                onClick={() => changeStyle(li?.title, idx)}
+                onClick={() => changeStyle(li?.title, idx, li?.code)}
                 className={styles.rePayment}
                 label={li?.title}
                 style={{
-                  background: li?.title === name ? "#676666" : null,
-                  color: li?.title === name ? "#ffffff" : "#000000",
+                  background: li?.title === name.title ? "#676666" : null,
+                  color: li?.title === name.title ? "#ffffff" : "#000000",
                   marginBottom: "0.5rem",
                   marginRight: "10px",
                   borderRadius: "4px",
@@ -342,10 +363,14 @@ export default function DetailTabs({
         </Box>
 
         <div className={classes.tabContent}>
-          <TabPanel className={styles.goSellWrap} value={value} index={0}>
+          {/* <TabPanel className={styles.goSellWrap} value={value} index={0}>
             <GoSellTap translate={translate} />
+           
           </TabPanel>
           <TabPanel value={value} index={2}>
+          {paymentType && (
+              <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
+            )}
             {codInfo && <Cod codInfo={codInfo} />}
           </TabPanel>
           <TabPanel value={value} index={1}>
@@ -369,7 +394,9 @@ export default function DetailTabs({
           </TabPanel>
           <TabPanel value={value} index={6}>
             <ApplePay />
-          </TabPanel>
+          </TabPanel> */}
+          {renderTab && renderTab[name.code]}
+          {loading && <span>Please wait processing you payment...</span>}
         </div>
       </Box>
       <PaymentFooter translate={translate} />

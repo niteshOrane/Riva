@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import TagManager from "react-gtm-module";
 import * as icons from "../../components/common/Icons/Icons";
@@ -13,7 +13,7 @@ import {
   getCustomerAddressList,
   setCustomerAddresDefault,
 } from "../../store/actions/customerAddress";
-import { getCustomerCartPayments } from "../../store/actions/cart";
+import { getCart, getCustomerCartPayments } from "../../store/actions/cart";
 import { getShippingMethodlist } from "../../store/actions/payment";
 import {
   setDefaultAddressCustomer,
@@ -33,6 +33,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     indexItem: null,
   });
   const location = useLocation();
+  const history = useHistory();
   const { language } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);
@@ -89,8 +90,22 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   const [recordToEdit, setrecordToEdit] = useState(null);
   useEffect(() => {
     dispatch(getCustomerAddressList());
-    dispatch(getCustomerCartPayments());
+    dispatch(getCart());
   }, []);
+  useEffect(() => {
+    if (data?.length === 0) {
+      swal("There is no product in cart for this store", {
+        buttons: {
+          catch: {
+            text: "Continue Shopping",
+            value: "catch",
+          },
+        },
+      }).then((value) => {
+         history.push("/type/1241")
+      });
+    }
+  }, [data]);
   const callBackAfterApplyCoupan = () => {
     dispatch(getCustomerCartPayments());
   };

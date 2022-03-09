@@ -1,0 +1,59 @@
+.wrap {
+  border: 1px solid lightgray;
+  margin-bottom: 20px;
+  header {
+    display: flex;
+    background-color: gray;
+    align-items: center;
+    margin: 3px;
+    span {
+      color: lightgray;
+      background-color: white;
+      padding: 10px;
+      color: black;
+      font-weight: bold;
+      margin: 3px;
+      border-radius: 10px;
+    }
+    p {
+      color: white;
+      padding-left: 1rem;
+    }
+  }
+  .formSec {
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+      padding-left: 1rem;
+      margin-top: 1rem;
+      .cmtLabel {
+        color: gray;
+      }
+      select {
+        padding: 10px 0px;
+        margin: 10px 0px;
+        cursor: pointer;
+      }
+      textarea{
+          margin-bottom: 1rem;
+          height: 7rem;
+          border: 2px solid gray;
+          outline: none;
+      }
+      small{
+          margin: 5px 0px;
+      }
+      button{
+        padding: 10px 0px;
+        color: white;
+        background-color: black; 
+        outline: none;
+        border: none;
+        cursor: pointer;
+        width: 30%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

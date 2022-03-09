@@ -199,7 +199,7 @@
   border: 1px solid lightgrey;
   padding: 1.5rem;
   width: 30rem;
-  margin-left: 1.8rem;
+  margin-top: 1rem;
   .text {
     font-size: 12px;
     color: #5d5c5c;
@@ -250,5 +250,13 @@
     font-size: 14px;
     color: gray;
     padding-top: 5px;
+  }
+}
+.tapLoader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  section{
+    font-size: 2rem;
   }
 }

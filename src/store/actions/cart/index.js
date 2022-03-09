@@ -19,14 +19,13 @@ export const getCartPaymentInfo_action = (data) => ({
   payload: { ...data },
 });
 
-export const getCustomerCartPayments = () => async (dispatch) => {
+export const getCustomerCartPayments = (carId) => async (dispatch) => {
   const id = getCustId();
   if (!id) return;
+  console.log({carId})
+  const res = await getCartPaymentInfo(carId);
 
-  const res = await getCartPaymentInfo(id);
-  console.log(res)
-
-  if (res.data && res.status ===200) {
+  if (res.data && res.status === 200) {
     dispatch(getCartPaymentInfo_action(res.data));
   } else dispatch(getCartPaymentInfo_action([]));
 };
@@ -44,49 +43,51 @@ export const getCart = () => async (dispatch) => {
   //if (getCartId() && getCartId() !== '0') {
 
   const res = await getCartService();
+  if (!res?.data?.cart?.hasOwnProperty("success")) {
+    if (res && res?.data && res?.data?.cart?.length > 0) {
+      const productIdPromises = res.data?.cart?.map((r) =>
+        getProductIdBySku(r.sku)
+      );
+      const productIds = await Promise.allSettled(productIdPromises);
+      const products = res?.data?.cart?.map((r, i) => ({
+        ...r,
+        id: productIds?.[i]?.value?.data?.data?.product_id
+          ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
+          : 0,
+        src: r?.extension_attributes?.image.replace("index.php", ""),
+      }));
 
-  if (res && res?.data && res?.data?.cart?.length) {
-    const productIdPromises = res.data?.cart?.map((r) =>
-      getProductIdBySku(r.sku)
-    );
-    const productIds = await Promise.allSettled(productIdPromises);
-    const products = res?.data?.cart?.map((r, i) => ({
-      ...r,
-      id: productIds?.[i]?.value?.data?.data?.product_id
-        ? parseInt(productIds?.[i]?.value?.data?.data?.product_id || 0)
-        : 0,
-      src: r?.extension_attributes?.image.replace("index.php", ""),
-    }));
-
-    dispatch({
-      type: DATA_TYPES.CART_EXTRA_INFO,
-      payload: {
-        secure: res?.data?.["100_secure"],
-        hear: res?.data?.["letus-hear"],
-        we_offer: res?.data?.["we_offer"],
-      },
-    });
-    dispatch({
-      type: DATA_TYPES.SET_CART_ID,
-      payload: { cart_id: res?.data?.custom_data?.cart_id },
-    });
-    dispatch(calculateFreeShipping());
-    dispatch({
-      type: DATA_TYPES.SET_BULK_CART,
-      payload: products,
-    });
-  } else if (res?.data?.custom_data) {
-    if (res?.data?.custom_data?.cart_id === 0) {
-      dispatch(emptyCart());
-      dispatch(emptyCartItem());
-    } else {
+      dispatch({
+        type: DATA_TYPES.CART_EXTRA_INFO,
+        payload: {
+          secure: res?.data?.["100_secure"],
+          hear: res?.data?.["letus-hear"],
+          we_offer: res?.data?.["we_offer"],
+        },
+      });
       dispatch({
         type: DATA_TYPES.SET_CART_ID,
         payload: { cart_id: res?.data?.custom_data?.cart_id },
       });
+      dispatch(getCustomerCartPayments(res?.data?.custom_data?.cart_id));
+      dispatch(calculateFreeShipping());
+      dispatch({
+        type: DATA_TYPES.SET_BULK_CART,
+        payload: products,
+      });
+    } else if (res?.data?.custom_data) {
+      if (res?.data?.custom_data?.cart_id === 0) {
+        dispatch(emptyCartItem());
+      } else {
+        dispatch({
+          type: DATA_TYPES.SET_CART_ID,
+          payload: { cart_id: res?.data?.custom_data?.cart_id },
+        });
+      }
+    } else {
+      dispatch(emptyCartItem());
     }
-  } else {
-    dispatch(emptyCart());
+  } else if (res?.data?.cart?.success === false) {
     dispatch(emptyCartItem());
   }
   // }

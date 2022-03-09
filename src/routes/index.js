@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from "react";
-import { Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import Loader from "../components/common/Loader";
 import MainLayout from "../Layouts/MainLayout";
@@ -13,7 +13,9 @@ const Product = React.lazy(() => import("../pages/Product/Product"));
 const Products = React.lazy(() => import("../pages/Products/Products"));
 const WishList = React.lazy(() => import("../pages/WishList/WishList"));
 
-const CreatePassword = React.lazy(() => import("../components/common/Cards/SignUpCard/CreatePassword/CreatePassword"));
+const CreatePassword = React.lazy(() =>
+  import("../components/common/Cards/SignUpCard/CreatePassword/CreatePassword")
+);
 
 const DeliveryAddress = React.lazy(() =>
   import("../pages/Delivery-address/DeliveryAddress")
@@ -25,7 +27,6 @@ const CancelledOrders = React.lazy(() =>
 const TrackYourOrder = React.lazy(() =>
   import("../pages/TrackYourOrder/TrackYourOrder")
 );
-
 
 const ChangePassword = React.lazy(() =>
   import("../pages/ChangePassword/ChangePassword")
@@ -63,12 +64,14 @@ const ManageAddress = React.lazy(() =>
   import("../pages/Manage-address/ManageAddress")
 );
 const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
-const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"))
+const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"));
+const Returned = React.lazy(() => import("../pages/Returned/Returned"));
 
 // order info
 
-const OrderInformation = React.lazy(() => import("../components/pages/OrderInformation/InformationGrid"))
-
+const OrderInformation = React.lazy(() =>
+  import("../components/pages/OrderInformation/InformationGrid")
+);
 
 class AppRoutes extends Component {
   constructor(props) {
@@ -162,6 +165,14 @@ class AppRoutes extends Component {
       {
         path: "/wishlist",
         component: WishList,
+        exact: true,
+        name: "Wishlist",
+        layout: MainLayout,
+        index: 5,
+      },
+      {
+        path: "/retur-order",
+        component: Returned,
         exact: true,
         name: "Wishlist",
         layout: MainLayout,
@@ -310,7 +321,7 @@ class AppRoutes extends Component {
         exact: true,
         name: "Manage Address",
         layout: MainLayout,
-        index: 15
+        index: 15,
       },
       {
         path: "/order-details/:number",
@@ -318,7 +329,7 @@ class AppRoutes extends Component {
         exact: true,
         name: "Order Information",
         layout: MainLayout,
-        index: 15
+        index: 15,
       },
     ];
   }

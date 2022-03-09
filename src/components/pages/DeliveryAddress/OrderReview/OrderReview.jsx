@@ -223,7 +223,7 @@ function OrderReview({
           </button>
         )}
       </div>
-      <div className={styles.loyaltyCash}>
+      {/* <div className={styles.loyaltyCash}>
         <div className="d-flex align-items-center">
           <span style={{ marginLeft: language === "Arabic" ? "10px" : "0px" }}>
             <icons.Loyalty />
@@ -233,7 +233,7 @@ function OrderReview({
         <p className={`${styles.greyText} ${styles.smallText}`}>
           {translate?.deliveryAddress?.YOU}
         </p>
-      </div>
+      </div> */}
       <h4 className="font-weight-normal mt-12px">
         {translate?.deliveryAddress?.CHOOSE}
       </h4>

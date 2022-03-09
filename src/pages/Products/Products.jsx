@@ -32,8 +32,8 @@ function Products(props) {
   const parsed = queryString.parse(location?.search);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(20);
-  const [sortField, setSortField] = useState("entity_id");
-  const [sortDirection, setSortDirection] = useState("desc");
+  const [sortField, setSortField] = useState("position");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [filteredData] = useState([]);
   const [pageColumns, setPageColumns] = useState(2);
   const { products, loading, totalCount } = useProducts({

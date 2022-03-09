@@ -31,7 +31,7 @@ function Products({ products, currency_symbol, language,translate }) {
       {products?.map((product) => (
         <div className={styles.grid}>
           <div className={styles.col1}>
-            <div className="d-flex">
+            <div className={styles.wrap}>
               <div className={styles.image}>
                 <Image
                   src={product.src}

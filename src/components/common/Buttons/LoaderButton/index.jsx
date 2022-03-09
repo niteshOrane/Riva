@@ -15,14 +15,15 @@ const LoadingButton = (props) => {
   const [parentSize, setParentSize] = useState(0);
   const parentRef = useRef(null);
   useEffect(() => {
-    const { clientHeight = 30, clientWidth = 20 } = parentRef.current;
+    // const { clientHeight = 30, clientWidth = 20 } = parentRef.current;
 
-    setParentSize(Math.min(clientHeight, clientWidth));
+    // setParentSize(Math.min(clientHeight, clientWidth));
   }, []);
   const { classes, loading, className, ...other } = props;
   return (<>
     <Button disabled={loading} ref={parentRef} className={`${className}`} {...other} />
-    {loading ? <Loader/> : null} </>
+    {loading ? <Loader/> : null} 
+    </>
   );
 }
 

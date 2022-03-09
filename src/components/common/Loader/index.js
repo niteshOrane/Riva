@@ -5,7 +5,7 @@ import './loader.css';
 function Loader({ isLanding = false }) {
   return (
     <>
-      {!isLanding ? <div className="loading">Loading&#8230;</div > :
+      {!isLanding ? <div></div > :
         <div className="loadingLanding">
           <p>Please wait</p>
           <span>

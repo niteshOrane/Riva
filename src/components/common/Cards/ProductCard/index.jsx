@@ -48,7 +48,7 @@ const ProductCard = ({
     origprice = 0,
     origpriceWithoutCurrency,
     priceWithoutCurrency,
-    price = 0,
+    price ,
   } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
