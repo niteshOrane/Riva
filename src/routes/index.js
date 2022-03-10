@@ -66,6 +66,9 @@ const ManageAddress = React.lazy(() =>
 const ContactUs = React.lazy(() => import("../pages/ContactUs/ContactUs"));
 const Reviews = React.lazy(() => import("../pages/MyReviews/Reviews"));
 const Returned = React.lazy(() => import("../pages/Returned/Returned"));
+const ReturnedList = React.lazy(() =>
+  import("../pages/ReturnList/ReturnedList")
+);
 
 // order info
 
@@ -173,6 +176,14 @@ class AppRoutes extends Component {
       {
         path: "/retur-order",
         component: Returned,
+        exact: true,
+        name: "Wishlist",
+        layout: MainLayout,
+        index: 5,
+      },
+      {
+        path: "/returned-orders",
+        component: ReturnedList,
         exact: true,
         name: "Wishlist",
         layout: MainLayout,

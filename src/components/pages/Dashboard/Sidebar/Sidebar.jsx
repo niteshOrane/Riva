@@ -53,7 +53,7 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; Cancelled
               </Link> */}
-              <Link to="/retur-order" className={styles.child}>
+              <Link to="/returned-orders" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.RETURN}
               </Link>

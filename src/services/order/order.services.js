@@ -4,8 +4,9 @@ import { getCustId } from "../../util";
 export const orderConfirmed = (id) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV
-      }/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
+    url: `${
+      process.env.REACT_APP_DEV
+    }/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
     silent: true,
   };
   return axios(config);
@@ -19,6 +20,17 @@ export const getOrderList = (id) => {
   };
   return axios(config);
 };
+
+export const getReturnedList = () => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/returns?searchCriteria[current_page]=1&searchCriteria[page_size]=5`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+
 export const cancelOrder = (id) => {
   const orderData = new FormData();
   orderData.append("orderId", id);
@@ -93,3 +105,7 @@ export const getYourOrderDetails = (id) => {
   };
   return axios(config);
 };
+
+// Returned list
+
+
