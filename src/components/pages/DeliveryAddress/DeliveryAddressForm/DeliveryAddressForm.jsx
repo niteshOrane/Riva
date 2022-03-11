@@ -143,12 +143,12 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (res.status === 200) {
       if (res?.data) {
         if (currency === "USD") {
-          setCountryList(res?.data);
+          setCountryList(res?.data?.data);
         } else {
-          const specificCountry = res?.data?.find(
+          const specificCountry = res?.data?.data?.find(
             (li) => li?.id === country_id
           );
-          setCountryList(res?.data);
+          setCountryList(res?.data?.data);
           setFormData({
             ...formData,
             country: specificCountry?.id,

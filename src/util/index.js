@@ -13,7 +13,7 @@ export const ALERT = {
 export const URL = {
   baseUrl: process.env.REACT_APP_IMAGE_URL,
   baseUrlColorSwitcher: process.env.REACT_APP_MEDIA,
-  baseUrlProduct: process.env.REACT_APP_MEDIA, //https://www.rivafashion.com/media/catalog/product
+  baseUrlProduct: process.env.REACT_APP_CATALOG,
 };
 
 export const defaultStore = {

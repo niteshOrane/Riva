@@ -1,14 +1,55 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./return.module.scss";
-import Image from "../../common/LazyImage/Image";
-import moment from "moment";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { extractColorSize } from "../../../util";
 
-function ReturnCard({ product }) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: "20rem",
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
+
+export default function ReturnCard({ product }) {
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
-      options.map((o) => ({
+      options?.map((o) => ({
         label: o.option_id === "92" ? "Color" : "Size",
         values: [{ value_index: o.option_value }],
         attribute_id: o.option_id,
@@ -21,65 +62,45 @@ function ReturnCard({ product }) {
     product?.parent_item?.product_option.extension_attributes
       ?.configurable_item_options
   );
-  return (
-    <div className={styles.card}>
-      <div className={styles.incrementWrap}>
-        <span className="greyText">Order Number: #{product?.increment_id}</span>
-      </div>
-      <div className={styles.carItem}>
-        <div className={styles.col1}>
-          <Link to={`/order-details/${product?.increment_id}`}>
-            <div className={styles.img}>
-              {product?.extension_attributes?.product_thumbnail_image ? (
-                <Image
-                  src={product?.extension_attributes?.product_thumbnail_image}
-                  width="100%"
-                />
-              ) : (
-                <span
-                  className={
-                    product?.status === "processing"
-                      ? styles.processIcon
-                      : styles.deliveredIcon
-                  }
-                >
-                  {" "}
-                  {product?.status}{" "}
-                </span>
-              )}{" "}
-              <div className={styles.orderDate}>
-                {moment(product?.created_at).format("MMMM DD YYYY")}
-              </div>
-            </div>
-          </Link>
 
+  return (
+    <Card className={classes.root}>
+      <CardMedia
+        className={classes.media}
+        image={product?.extension_attributes?.product_thumbnail_image}
+      />
+      <CardContent>
+        <section>
+          <strong style={{fontSize:"1.3rem",paddingBottom:"15px"}}>{product?.name}</strong><br />
+          {`${product?.currency}${product?.parent_item?.price}`}
+        </section>
+        <div className="mt-12px">
           <div>
-            <h3 className="font-weight-normal">{product?.name}</h3>
-            <div className="mt-12px">
-              <div className={styles.colorSize}>
-                <span>Color: </span>
-                <span className={styles.greyText}>
-                  {colorSize?.colors?.[0]?.label}
-                </span>
-              </div>
-              <div className={styles.colorSize}>
-                <span>Size: </span>
-                <span className={styles.greyText}>
-                  {colorSize.size?.[0]?.label}
-                </span>
-              </div>
-            </div>
+            <span>Color: </span>
+            <span>{colorSize?.colors?.[0]?.label}</span>
+          </div>
+          <div>
+            <span>Size: </span>
+            <span>{colorSize.size?.[0]?.label}</span>
           </div>
         </div>
-        <div className="text-center">
-          <strong>
-            {product?.order_currency_code}
-            {product?.parent_item?.price}
-          </strong>
-        </div>
-      </div>
-    </div>
+      </CardContent>
+      <CardActions>
+        <Typography>Select a reason of return</Typography>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        reason1
+      </Collapse>
+    </Card>
   );
 }
-
-export default ReturnCard;

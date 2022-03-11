@@ -61,7 +61,7 @@ const DeliveredOrders = ({
   };
 
   const getColorSize = (options) => {
-    console.log({options})
+    console.log({ options });
     const { colors, size } = extractColorSize(
       options?.map((o) => ({
         label: o.option_id === "92" ? "Color" : "Size",
@@ -94,7 +94,12 @@ const DeliveredOrders = ({
                 {check && (
                   <input
                     type="checkbox"
-                    onChange={(e) => handleReturn(e.target.checked, product)}
+                    onChange={(e) =>
+                      handleReturn(e.target.checked, {
+                        ...product,
+                        currency: order_currency_code,
+                      })
+                    }
                   />
                 )}
                 <Image

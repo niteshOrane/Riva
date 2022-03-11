@@ -58,6 +58,7 @@ const ProductDetails = (props) => {
       });
     }
   }, []);
+  console.log("iiii",{colorImg});
   const colorImageAction = (data) => {
     setShowThumb(false);
     setColorImg(data?.file);
@@ -120,7 +121,6 @@ const ProductDetails = (props) => {
   useEffect(() => {
     getOutOfStock();
   }, [product, colorImg]);
-
 
   let {
     origprice = 0,
@@ -229,8 +229,8 @@ const ProductDetails = (props) => {
             </Breadcrumbs>
           </section>
           <div className={`${styles.slide}`}>
-            <Image
-              src={colorImg || product?.image}
+            <img
+              src={`${colorImg ? `${colorImg}` : `${process.env.REACT_APP_CATALOG}/${product?.image}`}`}
               className="object-fit-fill h-100"
               width="100%"
               alt={product?.name}

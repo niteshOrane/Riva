@@ -9,3 +9,8 @@ export const addToReturn = (data) => ({
   type: DATA_TYPES.ADD_RETURN_LIST,
   payload: data,
 });
+
+export const clearReturnList = () => ({
+  type: DATA_TYPES.CLEAR_RETURN_LIST,
+  payload: [],
+});

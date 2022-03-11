@@ -19,6 +19,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Alert from "@material-ui/lab/Alert";
+import { addToReturn } from "../../store/actions/stats";
 
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
@@ -69,6 +70,9 @@ function Delivered() {
         return prev?.filter((li) => li?.sku !== item?.sku);
       });
     }
+  };
+  const dispatchList = () => {
+    dispatch(addToReturn(returnedProduct));
   };
   useEffect(() => {
     const tagManagerArgs = {
@@ -190,7 +194,9 @@ function Delivered() {
                     )}
                     {returnedProduct?.length > 0 && (
                       <Link to="/retur-order">
-                        <button type="button">Continue to return</button>
+                        <button onClick={dispatchList} type="button">
+                          Continue to return
+                        </button>
                       </Link>
                     )}
                   </section>

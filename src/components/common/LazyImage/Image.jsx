@@ -35,28 +35,28 @@ const LazyImage = (props) => {
   const onImageError = () => {
     setError(true);
   };
-  const propsImg = {
-    width: 660,
-    height: 874,
-    img: srcImage ? srcImage : defaultImage,
+  // console.log({srcImage})
+  // const propsImg = {
+  //   width: 660,
+  //   height: 874,
+  //   img: srcImage ? srcImage : defaultImage,
 
-    zoomStyle: "z-index:10;right:-11px;border:1px solid black",
-    zoomPosition: zoomPos,
-  };
+  //   zoomStyle: "z-index:10;right:-11px;border:1px solid black",
+  //   zoomPosition: zoomPos,
+  // };
 
 
 
-  if (isZoom) {
-    return (
-      <div>
-        <ReactImageZoom {...propsImg} />
-      </div>
-    );
-  }
+  // if (isZoom) {
+  //   return (
+  //     <div>
+  //       <ReactImageZoom {...propsImg} />
+  //     </div>
+  //   );
+  // }
   if (loading) {
     <Skeleton />;
   }
-
   return (
     <img
       src={

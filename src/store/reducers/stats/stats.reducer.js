@@ -26,6 +26,11 @@ export default function stats(state = initialState, action) {
         ...state,
         list: action.payload,
       };
+    case DATA_TYPES.CLEAR_RETURN_LIST:
+      return {
+        ...state,
+        list: action.payload,
+      };
 
     default:
       return state;
