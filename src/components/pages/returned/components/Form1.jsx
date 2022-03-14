@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../return.module.scss";
 
-function Form1() {
+function Form1({ handleCommentChange }) {
   return (
     <div className={styles.wrap}>
       <header>
@@ -10,13 +10,9 @@ function Form1() {
       </header>
       <section className={styles.formSec}>
         <form>
-          <lable>Reason for return</lable>
-          <select>
-            <option>reason1</option>
-          </select>
           <label className={styles.cmtLabel}>Comments</label>
           <small>Please specify comments(if any) here</small>
-          <textarea />
+          <textarea onChange={handleCommentChange} />
           <button type="submit">Continue</button>
         </form>
       </section>

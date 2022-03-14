@@ -1,21 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { extractColorSize } from "../../../util";
+import { CardActions, CardContent } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,18 +23,14 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
+  select: {
+    border: "none",
+    borderBottom: "1px solid black",
   },
 }));
 
-export default function ReturnCard({ product }) {
+export default function ReturnCard({ product, reasonList, createRmaItems }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
@@ -71,7 +56,10 @@ export default function ReturnCard({ product }) {
       />
       <CardContent>
         <section>
-          <strong style={{fontSize:"1.3rem",paddingBottom:"15px"}}>{product?.name}</strong><br />
+          <strong style={{ fontSize: "1.3rem", paddingBottom: "15px" }}>
+            {product?.name}
+          </strong>
+          <br />
           {`${product?.currency}${product?.parent_item?.price}`}
         </section>
         <div className="mt-12px">
@@ -86,21 +74,22 @@ export default function ReturnCard({ product }) {
         </div>
       </CardContent>
       <CardActions>
-        <Typography>Select a reason of return</Typography>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        <Typography>Select a reason of return:</Typography>
+        <form>
+          <select
+            className={classes.select}
+            onChange={(e) => createRmaItems(e, product)}
+            required
+          >
+            {reasonList &&
+              Object.entries(reasonList)?.map(([id, reason]) => (
+                <>
+                  <option value={id}>{reason}</option>
+                </>
+              ))}
+          </select>
+        </form>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        reason1
-      </Collapse>
     </Card>
   );
 }

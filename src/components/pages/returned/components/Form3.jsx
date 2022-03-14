@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../return.module.scss";
 
-function Form3() {
+function Form3({requestReturn}) {
   return (
     <div className={styles.wrap}>
       <header>
@@ -9,12 +9,12 @@ function Form3() {
         <p>RETURN ACTION</p>
       </header>
       <section className={styles.formSec}>
-        <form>
+        <form onSubmit={requestReturn}>
           <lable>Reason for return</lable>
           <select>
             <option>reason1</option>
           </select>
-          <button type="submit">Request Return</button>
+          <button  type="submit">Request Return</button>
         </form>
       </section>
     </div>

@@ -35,24 +35,26 @@ function Delivered() {
   const [postsPerPage] = useState(6);
   const [expanded, setExpanded] = React.useState(false);
   const [showCheck, setShowCheck] = useState(false);
+  const [finalList, setFinalList] = useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setShowCheck(false);
     setExpanded(isExpanded ? panel : false);
   };
   const getOrders = async (id) => {
+    setStatus(null);
     const res = await getOrderList(id);
     if (res?.status === 200 && res?.data) {
-      // const temp = res?.data?.items?.map((li) => ({
-      //   increment_id: li?.increment_id,
-      //   currency_code: li?.base_currency_code,
-      //   order_currency_code: li?.order_currency_code,
-      //   status: li.status,
-      //   list: li?.items?.filter((a) => a.product_type === "simple"),
-      // }));
-      setOrderList(res?.data?.items);
+      if (orderType === "delivered") {
+        setOrderList(
+          res?.data?.items?.filter((li) => li?.status === "delivered")
+        );
+        setStatus(res?.status);
+      } else {
+        setOrderList(res?.data?.items);
+        setStatus(res?.status);
+      }
     }
-    setStatus(res?.status);
   };
   const cancelOrderOnTap = async (id) => {
     const res = await cancelOrder(id);
@@ -83,48 +85,30 @@ function Delivered() {
   React.useEffect(() => {
     getOrders(customer?.customerID);
   }, [orderType]);
-  // React.useEffect(() => {
-  //   if (orderType === "orders") {
-  //     const data = orderList?.reduce((acc, pro) => {
-  //       if (pro.status !== "canceled") {
-  //         const data2 = pro?.list?.map((a) => ({
-  //           ...a,
-  //           status: pro?.status,
-  //           increment_id: pro?.increment_id,
-  //           currency_code: pro?.currency_code,
-  //           order_currency_code: pro?.order_currency_code,
-  //         }));
-  //         return [...acc, ...data2];
-  //       } else {
-  //         return acc;
-  //       }
-  //     }, []);
-  //     if (data) {
-  //       setFinalList(data);
-  //     }
-  //   } else if (orderType === "delivered") {
-  //     const data = orderList?.reduce((acc, pro) => {
-  //       if (pro.status === "delivered") {
-  //         const data2 = pro?.list?.map((a) => ({
-  //           ...a,
-  //           status: pro?.status,
-  //           order_currency_code: pro?.order_currency_code,
-  //           increment_id: pro?.increment_id,
-  //           currency_code: pro?.currency_code,
-  //         }));
-  //         return [...acc, ...data2];
-  //       } else {
-  //         return acc;
-  //       }
-  //     }, []);
-  //     if (data) {
-  //       setFinalList(data);
-  //     }
-  //   }
-  // }, [orderType, orderList]);
+  React.useEffect(() => {
+    if (orderType === "orders") {
+      const data = orderList?.filter((pro) => {
+        if (pro.status !== "canceled") {
+          return pro;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
+      }
+    } else if (orderType === "delivered") {
+      const data = orderList?.filter((pro) => {
+        if (pro.status === "delivered") {
+          return pro;
+        }
+      }, []);
+      if (data) {
+        setFinalList(data);
+      }
+    }
+  }, [orderType, orderList]);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = orderList
+  const currentPosts = finalList
     ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     ?.slice(indexOfFirstPost, indexOfLastPost);
 
@@ -138,7 +122,7 @@ function Delivered() {
             <h2 className="font-weight-normal">
               {orderType?.[0]?.toUpperCase() + orderType.slice(1)}
             </h2>
-            {currentPosts.length > 0 ? (
+            {finalList.length > 0 ? (
               currentPosts?.map((li) => (
                 <Accordion
                   expanded={expanded === li?.increment_id}
@@ -179,6 +163,7 @@ function Delivered() {
                             status={li?.status}
                             check={showCheck}
                             handleReturn={handleReturn}
+                            increment_id={li?.increment_id}
                           />
                         </div>
                       ))}
@@ -209,12 +194,14 @@ function Delivered() {
             ) : (
               <div className={styles.progress}>No record</div>
             )}
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={orderList?.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
+            {finalList?.length > 0 && (
+              <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={finalList?.length}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
+            )}
           </div>
         </div>
       </div>

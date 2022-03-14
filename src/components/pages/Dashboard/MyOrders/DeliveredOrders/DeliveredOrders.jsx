@@ -26,6 +26,7 @@ const DeliveredOrders = ({
   status,
   check,
   handleReturn,
+  increment_id
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -61,7 +62,6 @@ const DeliveredOrders = ({
   };
 
   const getColorSize = (options) => {
-    console.log({ options });
     const { colors, size } = extractColorSize(
       options?.map((o) => ({
         label: o.option_id === "92" ? "Color" : "Size",
@@ -98,6 +98,8 @@ const DeliveredOrders = ({
                       handleReturn(e.target.checked, {
                         ...product,
                         currency: order_currency_code,
+                        status,
+                        increment_id
                       })
                     }
                   />

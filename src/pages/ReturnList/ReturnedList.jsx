@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import ListCard from "../../components/pages/returned/ListCard";
-import ReturnCard from "../../components/pages/returned/ReturnCard";
 import { getReturnedList } from "../../services/order/order.services";
 
 function ReturnedList() {
