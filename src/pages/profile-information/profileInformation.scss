@@ -1,6 +1,6 @@
 .user-sign-in-form {
   width: 10rem;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 .user-sign-in-form {
   .boxProfileInfo {
@@ -10,46 +10,46 @@
   input {
     height: 2.5rem;
     width: 24rem;
-    margin:0.51rem 0rem;
+    margin: 0.51rem 0rem;
     padding-left: 5px;
   }
   section {
     display: flex;
-  
+
     justify-content: space-between;
   }
-  label{
-      color: gray;
+  label {
+    color: gray;
   }
 }
-.profile-label-mobile{
+.profile-label-mobile {
   margin-left: 2.5rem;
-  color: black !important
+  color: black !important;
 }
 // .isdInfoBox{
 //   display: flex !important;
 //   flex-direction: row !important;
 // }
-.registration-form-wrapper{
-    // border: 1px solid black; 
-    width: 35rem;
-    // margin: auto;
-    // padding: 1rem 1rem;
+.registration-form-wrapper {
+  // border: 1px solid black;
+  width: 35rem;
+  // margin: auto;
+  // padding: 1rem 1rem;
 }
-.registration-submit-btn-wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0rem;
+.registration-submit-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0rem;
 }
 .registration-btn {
-    width: 154px;
-    height: 41px;
-    padding: 3px 3px;
-    background-color: black;
-    border: none;
-    color:#fff;
-    font-size: 15px;
+  width: 154px;
+  height: 41px;
+  padding: 3px 3px;
+  background-color: black;
+  border: none;
+  color: #fff;
+  font-size: 15px;
 }
 .cat-circle {
   margin-left: 3px;
@@ -62,45 +62,45 @@
     cursor: pointer;
   }
 }
-.inner-form-wrapper{
+.inner-form-wrapper {
   border: 1px solid black;
   width: 55rem;
   padding: 1rem 1rem;
 }
-.profile-label{
+.profile-label {
   color: black !important;
 }
-.inputCalender{
-  width:24px;
-  height:24px;
-  position:absolute;
-  top:48%;
-  right:3%;
+.inputCalender {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 48%;
+  right: 3%;
 }
 
-.closeIcon{
-  width:12px;
-  height:12px;
+.closeIcon {
+  width: 12px;
+  height: 12px;
 }
 
-.positionWrap{
+.positionWrap {
   position: relative;
 }
-.edit-position-check{
+.edit-position-check {
   position: absolute;
-    top: 35%;
+  top: 57%;
+  left: 92%;
+  margin-left: -25px;
+}
+.edit-position-close {
+  position: absolute;
+  top: 57%;
+  left: 92%;
+}
+.edit-position-pencil {
+  position: absolute;
+  top: 57%;
     left: 92%;
-    margin-left: -25px;
-}
-.edit-position-close{
-  position: absolute;
-  top: 35%;
-  left: 92%;
-}
-.edit-position-pencil{
-  position: absolute;
-  top: 35%;
-  left: 92%;
   margin-right: 5px;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -111,4 +111,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 20px;
   height: 20px;
   border-width: thin;
+}
+.phoneInp {
+  .PhoneInput {
+    position: relative !important;
+    width: 80% !important;
+    border: 1px solid black;
+    margin-left: 3rem !important;
+    padding-left: 5px !important;
+    margin-top: 10px;
+  }
+  input {
+    border: none;
+    outline: none;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }

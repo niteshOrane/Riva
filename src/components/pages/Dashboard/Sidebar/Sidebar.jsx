@@ -82,18 +82,18 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.PROFILE}
               </Link>
-              <Link to="/manage-addresses" className={styles.child}>
+              {/* <Link to="/manage-addresses" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.MANAGE}
-              </Link>
+              </Link> */}
               <Link to="/change-password" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.CHANGE}
               </Link>
-              <Link to="/my-reviews" className={styles.child}>
+              {/* <Link to="/my-reviews" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.REVIEW}
-              </Link>
+              </Link> */}
               <Link to="/my-subscription" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.SUBS}

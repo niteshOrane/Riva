@@ -336,9 +336,9 @@ const SignUpForm = ({ handleSubmit, language }) => {
           setError={setError}
         />
 
-        <p className={styles.or}>OR</p>
+        {/* <p className={styles.or}>OR</p> */}
 
-        <div>
+        {/* <div>
           <a
             className={`d-flex align-items-center c-pointer`}
             style={{ justifyContent: "center", textDecoration: "underline" }}
@@ -410,7 +410,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
               onFailure={(response) => console.log(response)}
             />
           </button>
-        </div>
+        </div> */}
       </div>
     </form>
   );

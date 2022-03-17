@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getCustomerAddress } from "../../../../services/address/address.service";
 import { getCustId } from "../../../../util";
 import styles from "../return.module.scss";

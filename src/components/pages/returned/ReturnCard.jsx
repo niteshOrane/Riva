@@ -2,30 +2,23 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
+import { CardActions, CardContent } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { extractColorSize } from "../../../util";
-import { CardActions, CardContent } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 345,
   },
   media: {
     height: "20rem",
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
+
   select: {
     border: "none",
     borderBottom: "1px solid black",
+    outline: "none",
+    cursor: "pointer",
   },
 }));
 
@@ -81,6 +74,9 @@ export default function ReturnCard({ product, reasonList, createRmaItems }) {
             onChange={(e) => createRmaItems(e, product)}
             required
           >
+            <option value="" selected>
+              Select reason
+            </option>
             {reasonList &&
               Object.entries(reasonList)?.map(([id, reason]) => (
                 <>

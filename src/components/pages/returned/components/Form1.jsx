@@ -13,7 +13,9 @@ function Form1({ handleCommentChange }) {
           <label className={styles.cmtLabel}>Comments</label>
           <small>Please specify comments(if any) here</small>
           <textarea onChange={handleCommentChange} />
-          <button type="submit">Continue</button>
+          <a href="#continue" >
+            <button type="submit">Continue</button>
+          </a>
         </form>
       </section>
     </div>

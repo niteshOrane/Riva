@@ -46,6 +46,7 @@ const ProductDetails = (props) => {
   const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
   const [showThumb, setShowThumb] = useState(false);
+  const [discountPercentage, setDiscountPercentage] = useState(null);
 
   useEffect(() => {
     if (colorImage.databind !== undefined) {
@@ -58,7 +59,7 @@ const ProductDetails = (props) => {
       });
     }
   }, []);
-  console.log("iiii",{colorImg});
+  console.log("iiii", { product });
   const colorImageAction = (data) => {
     setShowThumb(false);
     setColorImg(data?.file);
@@ -128,6 +129,12 @@ const ProductDetails = (props) => {
     priceWithoutCurrency = 0,
   } = product;
   const { price, visibility = 0, custom_attributes } = product;
+  useEffect(() => {
+    if (Number(origprice) > Number(price)) {
+      const decrease = origprice - price;
+      setDiscountPercentage(decrease / (origprice * 100));
+    }
+  }, [product]);
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
       (e) => e?.attribute_code === "special_price"
@@ -197,18 +204,6 @@ const ProductDetails = (props) => {
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
     <div style={{ marginTop: "25px" }}>
-      {/* <SizeCard
-        imageSelected={colorImg || product?.image}
-        open={sizeCardOpen}
-        handleClose={() => setSizeCardOpen(false)}
-        language={language}
-      /> */}
-      {/* <SizeGuide
-        imageSelected={colorImg || product?.image}
-        open={guideCardOpen}
-        handleClose={() => setGuideCardOpen(false)}
-        language={language}
-      /> */}
       <div
         className={`${styles.product} gap-12px my-10px max-width-1750 mx-auto`}
       >
@@ -229,8 +224,8 @@ const ProductDetails = (props) => {
             </Breadcrumbs>
           </section>
           <div className={`${styles.slide}`}>
-            <img
-              src={`${colorImg ? `${colorImg}` : `${process.env.REACT_APP_CATALOG}/${product?.image}`}`}
+            <Image
+              src={colorImg || product?.image}
               className="object-fit-fill h-100"
               width="100%"
               alt={product?.name}
@@ -307,10 +302,12 @@ const ProductDetails = (props) => {
                 {currency_symbol}
                 {price}
               </div>
-              {/*
-                <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
-              */}
+              <br />
             </div>
+            {discountPercentage && discountPercentage !== 0 && (
+              <span>{discountPercentage}% discount</span>
+            )}
+
             <div className={`${styles.color} d-flex`}>
               <div className={styles.title}>
                 {translate?.details?.COLOR}:{" "}

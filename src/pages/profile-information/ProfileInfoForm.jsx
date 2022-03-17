@@ -191,13 +191,7 @@ function ProfileInfoForm() {
               </div>
               <div className="isdInfoBox" style={{ marginLeft: "2rem" }}>
                 <label className="profile-label-mobile">Mobile Number</label>
-                <div className="inpContainer positionWrap">
-                  {/* <input
-                    name="mobile_number"
-                    readOnly={!isEdit}
-                    value={isEdit ? mobileNumber : values?.mobile_number}
-                    onChange={handleChangeMobile}
-                  /> */}
+                <div className="inpContainer phoneInp">
                   <PhoneInput
                     placeholder="Enter Mobile Number"
                     value={isEdit ? mobileNumber : phoneValue}

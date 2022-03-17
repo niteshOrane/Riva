@@ -321,9 +321,6 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     if (!phoneValue) {
       return dispatch(showSnackbar("mobile Require", "error"));
     }
-    if (!judda) {
-      return dispatch(showSnackbar("judda is required", "error"));
-    }
     if (!floorNumber) {
       return dispatch(showSnackbar("Floor Number is required", "error"));
     }
@@ -501,7 +498,7 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         <div className={styles.inpContainer}>
           <div className="w-100">
             <p className={styles.inpLable}>
-              Judda<span className={styles.star}>*</span>
+              Judda
             </p>
             <input
               type="text"

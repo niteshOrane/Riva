@@ -13,11 +13,11 @@ import { getCustId, getStoreId } from "../../util";
 
 function Returned() {
   const { list } = useSelector((state) => state.stats);
+  console.log({list})
   const [reasonList, setReasonList] = useState(null);
   const [returnedItem, setReturnedItem] = useState([]);
   const [userComment, setUserComment] = useState("");
   const dispatch = useDispatch();
-  console.log({ list });
   const getAllReasons = async () => {
     const res = await getReasonForReturn();
     if (res?.status === 200) {
@@ -36,31 +36,35 @@ function Returned() {
   };
 
   const createRmaItems = (e, item) => {
-    const obj = {
-      order_item_id: item?.item_id,
-      qty_requested: item?.qty_ordered,
-      qty_authorized: null,
-      qty_approved: null,
-      qty_returned: null,
-      reason: `${e.target.value}`,
-      condition: `${e.target.value}`,
-      resolution: `${e.target.value}`,
-      status: item?.status,
-    };
-    setReturnedItem((prev) => [...prev, obj]);
+    if (e.target.value) {
+      const obj = {
+        order_item_id: item?.item_id,
+        qty_requested: item?.qty_ordered,
+        qty_authorized: null,
+        qty_approved: null,
+        qty_returned: null,
+        reason: `${e.target.value}`,
+        condition: "4158",
+        resolution: "4160",
+        status: item?.status,
+      };
+      setReturnedItem((prev) => [...prev, obj]);
+    }
   };
 
   const requestReturn = async (e) => {
     e.preventDefault();
     if (returnedItem?.length !== list?.length) {
-      return dispatch(showSnackbar("Select a return reason on items", "error"));
+      return dispatch(
+        showSnackbar("Select a return reason on all items", "error")
+      );
     }
     const rmaData = {
       rmaDataObject: {
         order_id: list?.[0]?.order_id,
         order_increment_id: list?.[0]?.increment_id,
-        store_id: getStoreId(),
-        customer_id: getCustId(),
+        store_id: Number(getStoreId()),
+        customer_id: Number(getCustId()),
         date_requested: new Date(),
         customer_custom_email: null,
         items: returnedItem,
@@ -70,6 +74,9 @@ function Returned() {
       },
     };
     const res = await createRmaRequest(rmaData);
+    if (!res?.data?.success) {
+      return dispatch(showSnackbar(`${res?.data?.message}`, "warning"));
+    }
     if (res?.status === 200) {
       return dispatch(showSnackbar("Return request created", "success"));
     }

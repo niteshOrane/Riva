@@ -47,19 +47,6 @@ const DeliveredOrders = ({
     }
   };
 
-  const cancelOrderMyOrder = async (id) => {
-    swal({
-      title: "Are you sure?",
-      text: "You want to cancel order.",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then(async (result) => {
-      if (result) {
-        cancelOrderOnTap(id);
-      }
-    });
-  };
 
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
@@ -69,13 +56,14 @@ const DeliveredOrders = ({
         attribute_id: o.option_id,
       }))
     );
-
+    console.log({colors,size})
     return { colors, size };
   };
   const colorSize = getColorSize(
     product?.parent_item?.product_option.extension_attributes
       ?.configurable_item_options
   );
+  console.log({colorSize})
 
   return (
     <div className={styles.card}>

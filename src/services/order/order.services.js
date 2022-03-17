@@ -24,12 +24,13 @@ export const getOrderList = (id) => {
 export const getReturnedList = () => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/returns?searchCriteria[current_page]=1&searchCriteria[page_size]=5`,
+    url: `${
+      process.env.REACT_APP_DEV
+    }/returns?searchCriteria[filter_groups][0][filters][0][field]=customer_id&searchCriteria[filter_groups][0][filters][0][value]=${getCustId()}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq`,
     silent: true,
   };
   return axios(config);
 };
-
 
 export const cancelOrder = (id) => {
   const orderData = new FormData();
@@ -107,5 +108,3 @@ export const getYourOrderDetails = (id) => {
 };
 
 // Returned list
-
-

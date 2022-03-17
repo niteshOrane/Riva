@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Carousel } from "react-responsive-carousel";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Image from "../../LazyImage/Image";
-import { addWishlist, toggleWishlist } from "../../../../store/actions/wishlist";
-import { toggleQuickView } from "../../../../store/actions/common";
+import {
+  addWishlist,
+  toggleWishlist,
+} from "../../../../store/actions/wishlist";
+import {
+  toggleQuickView,
+  toggleSignUpCard,
+} from "../../../../store/actions/common";
 import { extractColorSize, getColorsForHomePage, URL } from "../../../../util";
 import { colorRegexFilter } from "../../colorRegex/colorRegex";
 
@@ -40,6 +46,9 @@ const ProductCard = ({
 }) => {
   const { custom_attributes, id, image, name } = product;
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  let location = useLocation();
   const [loading, setLoading] = useState({
     quickView: false,
     wishlist: false,
@@ -48,7 +57,7 @@ const ProductCard = ({
     origprice = 0,
     origpriceWithoutCurrency,
     priceWithoutCurrency,
-    price ,
+    price,
   } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
@@ -59,6 +68,9 @@ const ProductCard = ({
     price = `${parseFloat(price).toFixed(2)}`;
   }
   const wishList = useSelector((state) => state.wishlist.data);
+  const openSignUpCard = (redirectTo) => {
+    dispatch(toggleSignUpCard({ redirectTo }));
+  };
   const [attributes, setattributes] = useState({ colors: [], size: [] });
   const [productItem, setProductItem] = useState({});
   const [colorImg, setColorImg] = useState(null);
@@ -88,7 +100,6 @@ const ProductCard = ({
 
     setProductItem(product);
   }, [product]);
-  const dispatch = useDispatch();
 
   const handleWishList = async () => {
     setLoading({ ...loading, wishlist: true });
@@ -125,6 +136,10 @@ const ProductCard = ({
     // dispatch(toggleWishlist(p));
     dispatch(addWishlist(p));
   };
+  const handleUnAuthAdd = () => {
+    openSignUpCard(location.pathname);
+  };
+  
 
   const loadColorImages = async (pro, colorSelected) => {
     setColorImg("");
@@ -234,7 +249,7 @@ const ProductCard = ({
 
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
-    console.log({productItem})
+  const isAuth = auth.isAuthenticated;
   return (
     <>
       <div
@@ -252,7 +267,7 @@ const ProductCard = ({
             interval={2000}
           >
             {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <TempLink product={productItem} >
+              <TempLink product={productItem}>
                 <div className={styles.legendWrapper} key={indexitem}>
                   <Image
                     src={
@@ -313,7 +328,9 @@ const ProductCard = ({
               <button
                 type="button"
                 className="no-border bg-transparent c-pointer"
-                onClick={handleWishList}
+                onClick={() => {
+                  isAuth ? handleWishList() : handleUnAuthAdd();
+                }}
               >
                 <span
                   className="material-icons-outlined"

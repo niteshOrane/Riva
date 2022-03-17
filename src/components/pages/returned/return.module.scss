@@ -35,19 +35,19 @@
         margin: 10px 0px;
         cursor: pointer;
       }
-      textarea{
-          margin-bottom: 1rem;
-          height: 7rem;
-          border: 2px solid gray;
-          outline: none;
+      textarea {
+        margin-bottom: 1rem;
+        height: 7rem;
+        border: 2px solid gray;
+        outline: none;
       }
-      small{
-          margin: 5px 0px;
+      small {
+        margin: 5px 0px;
       }
-      button{
+      button {
         padding: 10px 0px;
         color: white;
-        background-color: black; 
+        background-color: black;
         outline: none;
         border: none;
         cursor: pointer;
@@ -57,90 +57,10 @@
     }
   }
 }
-.addBlk{
+.addBlk {
   padding: 10px;
   font-size: 14px;
   line-height: 20px;
   color: gray;
-}
-.card {
-  padding: 12px;
-  border: 1px solid #ddd;
-  margin: 20px 0;
-  width: 55%;
-  .carItem {
-    margin-top: 12px;
-    display: flex;
-
-    .col1 {
-      display: flex;
-      margin-right: 30px;
-      .img {
-        @include right('margin', 20px);
-        width: 10rem;
-      }
-      .colorSize {
-        display: flex;
-        margin-top: 5px;
-        span {
-          font-size: 14px;
-          &:nth-child(1) {
-            width: 50px;
-            display: inline-block;
-          }
-        }
-      }
-    }
-    .deliveredIcon {
-      width: 100px;
-      height: 100px;
-      font-size: 1rem;
-      display: table-cell;
-      text-align: center;
-      vertical-align: middle;
-      color:#fff;
-      border: solid 2px #26a541;
-      background-color: #26a541;
-    }
-    .processIcon {
-      width: 100px;
-      height: 100px;
-      font-size: 1rem;
-      display: table-cell;
-      text-align: center;
-      vertical-align: middle;
-      color:#fff;
-      border: solid 2px orange;
-      background-color: orange;
-    }
-  }
-  
-  .icon {
-    @include right('margin', 12px);
-  }
-}
-.incrementWrap{
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.5rem;
-  .statusText{
-    margin-right: 10rem;
-  }
-}
-.reorder{
-  text-decoration: underline;
-  cursor: pointer;
-  color: blue;
-}
-.orderDate{
-  padding-top: 0.5rem;
-  width: 10rem;
-  color: gray;
-}
-
-.listCardWrap{
-  .orderId{
-    display: flex;
-  }
 }
 
