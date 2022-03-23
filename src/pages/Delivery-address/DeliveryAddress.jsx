@@ -34,6 +34,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   });
   const location = useLocation();
   const history = useHistory();
+  console.log({ location });
   const { language } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);
@@ -90,10 +91,10 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   const [recordToEdit, setrecordToEdit] = useState(null);
   useEffect(() => {
     dispatch(getCustomerAddressList());
-    dispatch(getCart());
+    dispatch(getCustomerCartPayments());
   }, []);
   useEffect(() => {
-    if (data?.length === 0) {
+    if (data?.length === 0 && location.pathname !== "/manage-addresses") {
       swal("There is no product in cart for this store", {
         buttons: {
           catch: {
@@ -102,7 +103,7 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
           },
         },
       }).then((value) => {
-         history.push("/type/1241")
+        history.push("/type/1241");
       });
     }
   }, [data]);

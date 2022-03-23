@@ -7,9 +7,9 @@ import { getCustId } from "../../../util";
 import * as DATA_TYPES from "../../types";
 import { showSnackbar } from "../common";
 
-export const toggleWishlist = (data) => ({
+export const toggleWishlist = (data,isCart=false,cartData={}) => ({
   type: DATA_TYPES.TOGGLE_WISHLIST,
-  payload: { data },
+  payload: { data,isCart,cartData },
 });
 
 export const getWishlist_action = (data) => ({

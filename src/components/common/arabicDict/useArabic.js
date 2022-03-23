@@ -18,6 +18,7 @@ function useArabic() {
       COL: language === "Arabic" ? "مجموعة" : "COLLECTION",
       SHOP: language === "Arabic" ? "تسوق حسب" : "SHOP BY",
       CAT: language === "Arabic" ? "الفئة" : "Category",
+      SHOP_NOW: language === "Arabic" ? "تسوق الآن" : "Shop Now",
     },
     footer: {
       TOUCH: language === "Arabic" ? "ابقوا على تواصل،" : "STAY IN TOUCH",
@@ -95,7 +96,7 @@ function useArabic() {
       ACCOUNT: language === "Arabic" ? "الحسابات" : "Account",
       PROFILE:
         language === "Arabic" ? "البيانات الشخصية" : "Profile Information",
-      MANAGE: language === "Arabic" ? "تعديل العناوين" : "Manage Subscription",
+      MANAGE: language === "Arabic" ? "تعديل العناوين" : "Manage Address",
       CHANGE: language === "Arabic" ? "تغيير كلمة المرور" : "Change Password",
       REVIEW: language === "Arabic" ? "آرائي" : "My Reviews",
       SUBS: language === "Arabic" ? "تعديل الاشتراك" : "Manage Subscription",

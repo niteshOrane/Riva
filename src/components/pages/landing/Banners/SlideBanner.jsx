@@ -3,9 +3,9 @@ import style from './slideBanner.module.scss';
 import ButtonWithArrows from '../../../common/Buttons/ButtonWithArrows/ButtonWithArrows';
 import Slider from '../../../common/Sliders/Slider';
 import Image from '../../../common/LazyImage/Image';
+import useArabic from '../../../common/arabicDict/useArabic';
 
 const SlideBanner = ({ banners = [] }) => {
-  console.log(banners)
   return (
     <div className={style.slider}>
       <Slider

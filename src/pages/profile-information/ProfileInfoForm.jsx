@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Dialog from "@material-ui/core/Dialog";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import * as icons from "../../components/common/Icons/Icons";
 
 import OTPForm from "../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm";
@@ -21,19 +22,21 @@ import {
 } from "../../services/auth/auth.service";
 import { getCustId, getStoreId } from "../../util";
 
-import "react-phone-number-input/style.css";
 import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
-  console.log({customer})
-  const {translate} = useArabic();
+  console.log({ customer });
+  const { translate } = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
+  console.log({ currentLocation });
   const { language } = useSelector((state) => state?.common?.store);
-  const [phoneValue, setPhoneValue] = useState(`${customer?.mobile || customer?.mobile_number}`);
+  const [phoneValue, setPhoneValue] = useState(
+    `${customer?.mobile || customer?.mobile_number || currentLocation.country_calling_code}`
+  );
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState(customer?.mobile);
+  const [mobileNumber, setMobileNumber] = useState(customer?.mobile || "");
   const [values, setValues] = useState({
     firstname: customer?.firstname,
     lastname: customer?.lastname,
@@ -53,14 +56,14 @@ function ProfileInfoForm() {
       const date = new Date(event.target.value);
       const selectedDate = date.getTime();
       if (selectedDate > new Date().getTime()) {
-        const ele = document.querySelector('#dob-date');
+        const ele = document.querySelector("#dob-date");
         ele.value = "";
-       return  dispatch(
+        return dispatch(
           showSnackbar(
             "Enter a valid DOB, Future Date cannot be added",
             "error"
           )
-        )
+        );
       } else {
         const { value, name } = event.target;
         setValues({ ...values, [name]: value });
@@ -161,7 +164,9 @@ function ProfileInfoForm() {
           <article className="inner-form-wrapper">
             <section>
               <div className="boxProfileInfo">
-                <label htmlFor="firstName"  className="profile-label">First Name</label>
+                <label htmlFor="firstName" className="profile-label">
+                  First Name
+                </label>
                 <input
                   value={values?.firstname}
                   name="firstname"
@@ -195,10 +200,12 @@ function ProfileInfoForm() {
                   <PhoneInput
                     placeholder="Enter Mobile Number"
                     value={isEdit ? mobileNumber : phoneValue}
-                    readOnly={!isEdit}
-                    defaultCountry={currentLocation.country_code.toUpperCase()}
-                    onChange={setPhoneValue}
                     width="100%"
+                    defaultCountry={
+                      currentLocation.country_code.toUpperCase() || "US"
+                    }
+                    onChange={setPhoneValue}
+                    readOnly={!isEdit}
                   />
                   {isEdit ? (
                     <>
@@ -293,7 +300,7 @@ function ProfileInfoForm() {
           </article>
           <section className="registration-submit-btn-wrapper">
             <button type="submit" className="registration-btn">
-             {translate?.dash?.DETAILS}
+              {translate?.dash?.DETAILS}
             </button>
           </section>
         </form>

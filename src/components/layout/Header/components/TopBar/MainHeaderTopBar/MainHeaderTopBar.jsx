@@ -5,6 +5,7 @@ import style from "./MainHeaderTopBar.module.scss";
 import storeData from "../../../../../../store/index";
 import useArabic from "../../../../../common/arabicDict/useArabic";
 import CategoriesCircles from "../../../../../common/CategoriesCircles/CategoriesCircles";
+import swal from "sweetalert";
 
 const MainHeaderTopBar = ({ mainHeader }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -27,6 +28,22 @@ const MainHeaderTopBar = ({ mainHeader }) => {
       : (lanTochange = head?.language);
     setLanguageItem(lanTochange);
     dispatch(setStore(head));
+  };
+
+  const currencyAlert = (event, head) => {
+    swal({
+      title: "Are you sure?",
+      text: "Switching currency will refresh your cart, and you may loss the product in cart",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        handleCurrencyChange(event, head);
+      } else {
+        return null;
+      }
+    });
   };
 
   const handleLanguageChange = (event, languageChange) => {
@@ -125,7 +142,7 @@ const MainHeaderTopBar = ({ mainHeader }) => {
                               : style.dropdownItem
                           }
                           onClick={(e) => {
-                            handleCurrencyChange(e, head);
+                            currencyAlert(e, head);
                           }}
                         >
                           <img

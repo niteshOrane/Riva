@@ -275,7 +275,6 @@ const SignUpForm = ({ handleSubmit, language }) => {
         >
           <div className={styles.cntCode}>
             <PhoneInput
-     
               placeholder="Enter Mobile Number"
               value={phoneValue}
               width="10px"
@@ -335,82 +334,12 @@ const SignUpForm = ({ handleSubmit, language }) => {
           error={error}
           setError={setError}
         />
-
-        {/* <p className={styles.or}>OR</p> */}
-
-        {/* <div>
-          <a
-            className={`d-flex align-items-center c-pointer`}
-            style={{ justifyContent: "center", textDecoration: "underline" }}
-            onClick={() => setshowLoginForm()}
-          >
-            <p>Login </p>
-          </a>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.appleBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.appleBtn}`
-            }
-          >
-            <span className={styles.btnIcon}>
-              <icons.Apple />
-            </span>
-            <p>Connect with Apple</p>
-          </button>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.fbBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.fbBtn}`
-            }
-          >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
-              <icons.Facebook />
-            </span>
-            <FacebookLogin
-              appId="3898973050213783"
-              fields="name,email,picture"
-              // cssClass=  {styles.facebookAuthBtn}
-              render={(renderProps) => (
-                <p onClick={renderProps.onClick}>Connect with Facebook</p>
-              )}
-              // onClick={componentClicked}
-              textButton="Connect with Facebook"
-              callback={responseFacebook}
-            />
-          </button>
-          <button
-            type="button"
-            className={
-              language === "Arabic"
-                ? `d-flex align-items-center justify-content-between c-pointer ${styles.btn} ${styles.googleBtn}`
-                : `d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`
-            }
-          >
-            <span className={`material-icons-outlined ${styles.btnIcon}`}>
-              phone_iphone
-            </span>
-            <GoogleLogin
-              clientId="488711396287-7q699f85tm36dha5c5mml1dkpg9eibrr.apps.googleusercontent.com"
-              buttonText="Connect with Google"
-              render={(renderProps) => (
-                <button
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  className={styles.googleAuthBtn}
-                >
-                  Connect with Google
-                </button>
-              )}
-              className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
-              onSuccess={(response) => responseGoogle(response)}
-              onFailure={(response) => console.log(response)}
-            />
-          </button>
-        </div> */}
+        <hr/>
+        <div className={styles.signLog}>
+          <span onClick={() => dispatch(toggleSignUpCard({ isLogin: true }))}>
+            Log IN
+          </span>
+        </div>
       </div>
     </form>
   );

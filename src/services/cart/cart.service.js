@@ -15,10 +15,10 @@ export const addToCartService = (id, color, size, qty) => {
   return axios(config);
 };
 
-export const getCartPaymentInfo = (id) => {
+export const getCartPaymentInfo = () => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/quoteInfo?quoteId=${id !== 0 && id !==undefined ? id : getCartId()}`,
+    url: `${API_URL}/webapi/quoteInfo?quoteId=${getCartId()}`,
     silent: true,
   };
   return axios(config);

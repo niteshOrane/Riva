@@ -5,6 +5,8 @@ const INITIAL_STATE = {
   data: [],
   isOpen: false,
   loading: false,
+  isCart: false,
+  cartData:{}
 };
 
 const wishlist = (state = INITIAL_STATE, action) => {
@@ -14,6 +16,8 @@ const wishlist = (state = INITIAL_STATE, action) => {
         ...state,
         isOpen: !state.isOpen,
         modalData: action.payload.data,
+        isCart: action.payload.isCart,
+        cartData:action.payload.cartData
       };
     case DATA_TYPES.GET_WISHLIST:
       return {

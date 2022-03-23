@@ -9,6 +9,7 @@ import {
   toggleWishlist,
 } from "../../../../store/actions/wishlist";
 import {
+  showSnackbar,
   toggleQuickView,
   toggleSignUpCard,
 } from "../../../../store/actions/common";
@@ -133,13 +134,13 @@ const ProductCard = ({
       },
     };
     setLoading({ ...loading, wishlist: false });
-    // dispatch(toggleWishlist(p));
-    dispatch(addWishlist(p));
+    dispatch(toggleWishlist(p, false));
+    // dispatch(addWishlist(p));
   };
-  const handleUnAuthAdd = () => {
+  const handleUnAuthAdd = (item) => {
     openSignUpCard(location.pathname);
+    localStorage.setItem("toWishlist", JSON.stringify(item));
   };
-  
 
   const loadColorImages = async (pro, colorSelected) => {
     setColorImg("");
@@ -329,7 +330,7 @@ const ProductCard = ({
                 type="button"
                 className="no-border bg-transparent c-pointer"
                 onClick={() => {
-                  isAuth ? handleWishList() : handleUnAuthAdd();
+                  isAuth ? handleWishList() : handleUnAuthAdd(productItem);
                 }}
               >
                 <span

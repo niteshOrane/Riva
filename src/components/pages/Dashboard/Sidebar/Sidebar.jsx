@@ -82,10 +82,10 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.PROFILE}
               </Link>
-              {/* <Link to="/manage-addresses" className={styles.child}>
+              <Link to="/manage-addresses" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.MANAGE}
-              </Link> */}
+              </Link>
               <Link to="/change-password" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.CHANGE}

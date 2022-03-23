@@ -9,11 +9,12 @@ import { selectedCategory } from "../../../../store/actions/common";
 import Image from "../../../common/LazyImage/Image";
 
 import "./heroGridTwo.css";
-
+import useArabic from "../../../common/arabicDict/useArabic";
 
 const HomeHeroGrid = (props) => {
   const { items, srcPath = "/assets/images/banner", isHomePage } = props;
   const links = useSelector((state) => state.common.category)[0];
+  const { translate } = useArabic();
   const [defaultCategory, setCategory] = useState([]);
   const [itemsImage, setItemsImage] = useState([]);
   useEffect(() => {
@@ -25,31 +26,46 @@ const HomeHeroGrid = (props) => {
   const history = useHistory();
   const onCategorySelect = (id) => {
     const selectItem = links?.children_data?.filter((e) => e?.id === id) ?? [];
-    sessionStorage.setItem("preferredCategory",JSON.stringify(id));
+    sessionStorage.setItem("preferredCategory", JSON.stringify(id));
     if (selectItem.length) {
       dispatch(selectedCategory(selectItem[0]?.children_data, id));
       history.push(`/type/${id}`);
     }
   };
 
-
   return (
-    <div className="landing-two-wrapper">   
+    <div className="landing-two-wrapper">
       {/* <CategoriesCircles isHomePage={isHomePage} /> */}
       {itemsImage?.length ? (
         <div>
-          <section className="banner-grid-wrapper"
-          >
-            <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory?.find(e => e?.name?.toLowerCase() === itemsImage?.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>
-              {itemsImage.length ? <Image
-                src={`${process.env.REACT_APP_IMAGE_URL}/${itemsImage?.find(e => e.position === '1').image || ''}`}
-                alt={items?.[0]?.title} />
-                : null}
+          <section className="banner-grid-wrapper">
+            <div
+              className="base-image-wrapper c-pointer"
+              onClick={() => {
+                onCategorySelect(
+                  defaultCategory?.find(
+                    (e) =>
+                      e?.name?.toLowerCase() ===
+                      itemsImage
+                        ?.find((m) => m.position === "1")
+                        ?.title?.toLowerCase()
+                  )?.id ?? "1241"
+                );
+              }}
+            >
+              {itemsImage.length ? (
+                <Image
+                  src={`${process.env.REACT_APP_IMAGE_URL}/${
+                    itemsImage?.find((e) => e.position === "1").image || ""
+                  }`}
+                  alt={items?.[0]?.title}
+                />
+              ) : null}
               <div className="banner-wrapper-text">
                 <h3>{items?.[0]?.title ?? "WOMEN"}</h3>
                 <ButtonWithArrows
                   btnClass="bg-black color-white mx-auto"
-                  text="Shop Now"
+                  text={translate?.home?.SHOP_NOW}
                   isFestiveCard
                 />
               </div>
@@ -79,7 +95,7 @@ const HomeHeroGrid = (props) => {
                   <h3>{items?.[1]?.title ?? "TEENS"}</h3>
                   <ButtonWithArrows
                     btnClass="bg-black color-white mx-auto"
-                    text="Shop Now"
+                    text={translate?.home?.SHOP_NOW}
                     isFestiveCard
                   />
                 </div>
@@ -103,13 +119,13 @@ const HomeHeroGrid = (props) => {
                     itemsImage.find((e) => e.position === "3")?.image
                   }`}
                   alt=""
-                  style={{paddingTop:"8px"}}
+                  style={{ paddingTop: "8px" }}
                 />
                 <div className="banner-wrapper-text">
                   <h3>{items?.[2]?.title ?? "KIDS"}</h3>
                   <ButtonWithArrows
                     btnClass="bg-black color-white mx-auto"
-                    text="Shop Now"
+                    text={translate?.home?.SHOP_NOW}
                     isFestiveCard
                   />
                 </div>
@@ -130,7 +146,7 @@ const HomeHeroGrid = (props) => {
               );
             }}
           >
-            <section className = "some-space-bootom">
+            <section className="some-space-bootom">
               <img
                 src={`${process.env.REACT_APP_IMAGE_URL}/${
                   itemsImage.find((e) => e.position === "4")?.image
@@ -141,25 +157,36 @@ const HomeHeroGrid = (props) => {
           </div>
         </div>
       ) : (
-        <div style={{ margin: "0% auto",paddingBottom:"2rem" }}>
-          <section className="banner-grid-wrapper"
-          >
-            <div className="base-image-wrapper c-pointer" onClick={() => { onCategorySelect(defaultCategory.find(e => e?.name?.toLowerCase() === itemsImage.find(m => m.position === '1')?.title?.toLowerCase())?.id ?? '1241') }}>
+        <div style={{ margin: "0% auto", paddingBottom: "2rem" }}>
+          <section className="banner-grid-wrapper">
+            <div
+              className="base-image-wrapper c-pointer"
+              onClick={() => {
+                onCategorySelect(
+                  defaultCategory.find(
+                    (e) =>
+                      e?.name?.toLowerCase() ===
+                      itemsImage
+                        .find((m) => m.position === "1")
+                        ?.title?.toLowerCase()
+                  )?.id ?? "1241"
+                );
+              }}
+            >
               <Skeleton
                 count={1}
                 height="99%"
                 width="100%"
-                containerClassName='base-image-wrapper c-pointer'
+                containerClassName="base-image-wrapper c-pointer"
               />
             </div>
             <section>
-
-                <Skeleton
-                  count={2}
-                  height="33vh"
-                  width="100%"
-                  containerClassName='base-image-wrapper c-pointer'
-                />
+              <Skeleton
+                count={2}
+                height="33vh"
+                width="100%"
+                containerClassName="base-image-wrapper c-pointer"
+              />
             </section>
           </section>
         </div>

@@ -42,6 +42,7 @@ const ProductsData = ({ products, currency_symbol }) => {
     else {
       dispatch(addWishlist(product, true));
     }
+    dispatch(removeFromCart(product))
   };
   const removeProduct = useCallback((product) => {
     dispatch(removeFromCart(product));

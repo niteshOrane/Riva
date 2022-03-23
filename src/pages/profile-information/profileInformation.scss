@@ -116,7 +116,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .PhoneInput {
     position: relative !important;
     width: 80% !important;
-    border: 1px solid black;
+    border: 1px solid gray;
     margin-left: 3rem !important;
     padding-left: 5px !important;
     margin-top: 10px;
@@ -127,4 +127,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 0 !important;
     margin: 0 !important;
   }
+}
+.profile-label-mobile{
+  margin-left: 45px;
 }

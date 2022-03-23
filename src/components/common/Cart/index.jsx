@@ -12,6 +12,8 @@ import style from "./style.module.scss";
 import { extractColorSize, getSKuId } from "../../../util";
 import Image from "../LazyImage/Image";
 import { toggleSignUpCard } from "../../../store/actions/common";
+import { getProduct } from "../../../services/product/product.service";
+import { addWishlist, toggleWishlist } from "../../../store/actions/wishlist";
 
 const Cart = () => {
   const {
@@ -59,6 +61,42 @@ const Cart = () => {
 
     return { colors, size };
   };
+  const handleWishList = async (productItem) => {
+    const res = await getProduct(productItem.sku);
+
+    const { colors, size } = extractColorSize(
+      res?.data?.extension_attributes?.configurable_product_options || []
+    );
+
+    const p = {
+      ...productItem,
+      ...res?.data,
+      image: res?.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "image"
+      )?.value,
+      name: res.data.name,
+      price: res.data.price,
+      sale:
+        res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "show_sale_badge"
+        )?.value === "1",
+      description: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "description"
+      )?.value,
+      colors,
+      size,
+      currency_symbol,
+      selected: {
+        color: colors?.[0] || {},
+        size: size?.[0] || {},
+      },
+    };
+    dispatch(toggleWishlist(p, true, productItem));
+  };
+  const removeItemFromCart = (item) => {
+    handleWishList(item);
+  };
+
   return (
     <div key="cartlist" dir={language === "Arabic" ? "rtl" : "ltr"}>
       <Drawer
@@ -75,18 +113,7 @@ const Cart = () => {
               filter
             />
           </div>
-          <div className={style.sideMsg}>
-            {/* <div className="d-flex align-items-center bg-grey p-12px">
-              <span className="color-black material-icons-outlined">done</span>
-              <span className="font-weight-600">
-                THIS ITEM HAS BEEN ADDED TO YOUR CART
-              </span>
-            </div> */}
-          </div>
           <div className={style.sideBody}>
-            {/* {isSingle && (
-
-            )} */}
             {items && items.length > 0 ? (
               <>
                 <div className={style.items}>
@@ -200,7 +227,7 @@ const Cart = () => {
                               </div>
                               <div>
                                 <span
-                                  onClick={() => dispatch(removeFromCart(item))}
+                                  onClick={() => removeItemFromCart(item)}
                                   style={{ cursor: "pointer" }}
                                 >
                                   <span className="material-icons-outlined">
@@ -283,8 +310,12 @@ const Cart = () => {
               </>
             ) : (
               <section className={style.emptySec}>
-                <div className = {`d-flex justify-content-center align-items-center ${style.emptyWrap}`}>
-                  <span className={`material-icons ${style.emptyCart}`}>add_shopping_cart</span>
+                <div
+                  className={`d-flex justify-content-center align-items-center ${style.emptyWrap}`}
+                >
+                  <span className={`material-icons ${style.emptyCart}`}>
+                    add_shopping_cart
+                  </span>
                 </div>
                 <div className="text-center">
                   {" "}

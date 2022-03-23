@@ -19,11 +19,10 @@ export const getCartPaymentInfo_action = (data) => ({
   payload: { ...data },
 });
 
-export const getCustomerCartPayments = (carId) => async (dispatch) => {
+export const getCustomerCartPayments = () => async (dispatch) => {
   const id = getCustId();
   if (!id) return;
-  console.log({carId})
-  const res = await getCartPaymentInfo(carId);
+  const res = await getCartPaymentInfo();
 
   if (res.data && res.status === 200) {
     dispatch(getCartPaymentInfo_action(res.data));
@@ -69,7 +68,6 @@ export const getCart = () => async (dispatch) => {
         type: DATA_TYPES.SET_CART_ID,
         payload: { cart_id: res?.data?.custom_data?.cart_id },
       });
-      dispatch(getCustomerCartPayments(res?.data?.custom_data?.cart_id));
       dispatch(calculateFreeShipping());
       dispatch({
         type: DATA_TYPES.SET_BULK_CART,

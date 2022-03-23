@@ -43,7 +43,7 @@ function WishList() {
         url: location.pathname,
       },
     });
-  }, [wishlist]);
+  }, []);
 
   return (
     <div className="d-flex my-20px">

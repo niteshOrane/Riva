@@ -25,6 +25,7 @@ import SizeChart from "./SizeChart";
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
 import ImageCarousel from "./ImageCarousel";
+import { showSnackbar } from "../../../../store/actions/common";
 
 const ProductDetails = (props) => {
   const {
@@ -176,6 +177,14 @@ const ProductDetails = (props) => {
   };
 
   const addToCardHandler = () => {
+    if (Number(productQuantity) > 20) {
+      return dispatch(
+        showSnackbar(
+          "You can only order less then 20 items of this product",
+          "error"
+        )
+      );
+    }
     dispatch(
       addToCart({
         ...product,

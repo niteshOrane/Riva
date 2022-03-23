@@ -25,9 +25,11 @@ import {
   loginSuccess,
   setSocialLogin,
 } from "../../../../../../store/actions/auth";
-import { getCartId } from "../../../../../../util";
+import { extractColorSize, getCartId } from "../../../../../../util";
 import * as icons from "../../../../Icons/Icons";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
+import { getProduct } from "../../../../../../services/product/product.service";
+import { addWishlist } from "../../../../../../store/actions/wishlist";
 
 const LoginForm = ({
   handleSubmit,
@@ -45,6 +47,7 @@ const LoginForm = ({
     (state) => state.common.signUpCard?.redirectTo
   );
   const newEmail = useSelector((state) => state.common.newUser);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -92,6 +95,10 @@ const LoginForm = ({
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleGoogleError = (res) => {
+    console.log(error)
+  };
   const responseFacebook = async (response) => {
     if (response) {
       const firstName = response?.name?.split(" ")[0];
@@ -101,7 +108,7 @@ const LoginForm = ({
       customer.append("email", userEmail);
       customer.append("firstname", firstName || "");
       customer.append("lastname", lName || "");
-      customer.append("password", "hello@123");
+      customer.append("password", "");
       customer.append("resource", "Facebook");
       const res = await createCustomerSocial(customer);
 
@@ -115,9 +122,9 @@ const LoginForm = ({
             // dispatch(getCart());
           }
           handleSubmit();
+          dispatch(setSocialLogin(res?.data?.data));
           typeof res?.data?.data !== "string" &&
             dispatch(loginSuccess(res.data.data));
-          toast.configure();
           toast(
             `Welcome ${
               res?.data?.success ? res?.data.data.firstname : " Guest"
@@ -146,9 +153,19 @@ const LoginForm = ({
           );
         }
       }
-      return dispatch(showSnackbar("Something went wrong", "error"));
+      return dispatch(
+        showSnackbar(
+          "Something went wrong,May be you are not registered, please register wuth us first",
+          "error"
+        )
+      );
     } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
+      return dispatch(
+        showSnackbar(
+          "May be you are not registered, please register wuth us first",
+          "error"
+        )
+      );
     }
   };
 
@@ -161,7 +178,7 @@ const LoginForm = ({
       customer.append("email", userEmail);
       customer.append("lastname", lname || "");
       customer.append("firstname", firstName || "");
-      customer.append("password", "hello@123");
+      customer.append("password", "");
       customer.append("resource", "Google");
       const res = await createCustomerSocial(customer);
       if (res.status === 200) {
@@ -177,8 +194,6 @@ const LoginForm = ({
           dispatch(setSocialLogin(res?.data?.data));
           typeof res?.data?.data !== "string" &&
             dispatch(loginSuccess(res.data.data));
-
-          toast.configure();
           toast(
             `Welcome ${
               res?.data?.success ? res?.data.data.firstname : " Guest"
@@ -207,9 +222,19 @@ const LoginForm = ({
           );
         }
       }
-      return dispatch(showSnackbar("Something went wrong", "error"));
+      return dispatch(
+        showSnackbar(
+          "Something went wrong,May be you are not registered, please register wuth us first",
+          "error"
+        )
+      );
     } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
+      return dispatch(
+        showSnackbar(
+          "Something went wrong,May be you are not registered, please register wuth us first",
+          "error"
+        )
+      );
     }
   };
   const validate = (value) => {
@@ -237,6 +262,41 @@ const LoginForm = ({
     setIsSubmit(true);
   };
 
+  const handleUnAuthWish = async (productItem) => {
+    const res = await getProduct(productItem.sku);
+
+    const { colors, size } = extractColorSize(
+      res?.data?.extension_attributes?.configurable_product_options || []
+    );
+
+    const p = {
+      ...productItem,
+      ...res?.data,
+      image: res?.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "image"
+      )?.value,
+      name: res.data.name,
+      price: res.data.price,
+      sale:
+        res.data?.custom_attributes.find(
+          (attr) => attr.attribute_code === "show_sale_badge"
+        )?.value === "1",
+      description: res.data?.custom_attributes.find(
+        (attr) => attr.attribute_code === "description"
+      )?.value,
+      colors,
+      size,
+      currency_symbol,
+      selected: {
+        color: colors?.[0] || {},
+        size: size?.[0] || {},
+      },
+    };
+    setLoading({ ...loading, wishlist: false });
+    dispatch(addWishlist(p));
+    localStorage.removeItem("toWishlist")
+  };
+
   const userCreateHandler = async (e) => {
     setLoading(true);
     const customer = new FormData();
@@ -262,6 +322,10 @@ const LoginForm = ({
         handleSubmit();
         typeof res?.data?.data !== "string" &&
           dispatch(loginSuccess(res.data.data));
+        const pro = JSON.parse(localStorage?.getItem("toWishlist"));
+        if (pro) {
+          handleUnAuthWish(pro);
+        }
         window.insider_object = {
           user: {
             type: "login",
@@ -412,7 +476,7 @@ const LoginForm = ({
             </div>
             <div>
               <p onClick={() => toggleForgotPassword()} className={styles.fyp}>
-                Forgot Your Password
+                Forgot Password
               </p>
             </div>
           </div>
@@ -494,7 +558,7 @@ const LoginForm = ({
                 )}
                 className={`d-flex align-items-center c-pointer ${styles.btn} ${styles.googleBtn}`}
                 onSuccess={(response) => responseGoogle(response)}
-                onFailure={(response) => console.log(response)}
+                onFailure={(response) => handleGoogleError(response)}
               />
             </button>
           </div>

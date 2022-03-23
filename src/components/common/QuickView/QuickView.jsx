@@ -260,45 +260,17 @@ function QuickView() {
           <div className={styles.bestSeller}>BEST SELLER</div>
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
-            <div className={`${styles.stars} d-flex-all-center`}>
-              <Rating name="read-only" readOnly value={value} size="small" />
-            </div>
-            <div className={`${styles.rating} d-flex-all-center`}>
-              {calculateAvgReview()} Rating <br />
-            </div>
-            <br />
-            <br />
             <div className={`${styles.sku} d-flex`}>
               <div className={styles.title}>SKU:&nbsp;</div>
               <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
-          <div>
-            <ReviewModal id={data?.id} sku={data?.sku} language={language} />
-          </div>
           <div className={`${styles.price} d-flex`}>
             <div className={styles.now}>
               Now {currency_symbol} {price}
             </div>
-            {/* <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
-             */}
           </div>
           <div className={`${styles.color} d-flex`}>
-            {/* <div className={styles.title}>Color:&nbsp;</div> */}
-            {/* {attributes.colors?.map((c) => (
-              <div
-                onClick={() => colorImageAction(c)}
-                className={`c-pointer ${styles.text}`}
-              >
-                {c.label}{" "}
-              </div>
-            ))} */}
-            {/* <div className={styles.text}>Black</div>
-            <div className={`${styles.options} d-flex-all-center`}>
-              <div className={`${styles.option} ${styles.option_red}`} />
-              <div className={`${styles.option} ${styles.option_oranage}`} />
-              <div className={`${styles.option} ${styles.option_blue}`} />
-            </div> */}
             <div className={styles.title}>Color:&nbsp;</div>
             <span>
               {data?.selected?.color?.label === false

@@ -19,6 +19,7 @@ import { Rating } from "@material-ui/lab";
 import ReactPixel from "react-facebook-pixel";
 import TagManager from "react-gtm-module";
 import { useLocation } from "react-router-dom";
+import { removeFromCart } from "../../../store/actions/cart";
 
 function Wishlist() {
   const [selectedColor, setSelectedColor] = React.useState({
@@ -30,7 +31,9 @@ function Wishlist() {
   const {
     isOpen,
     modalData: data = {},
+    isCart,
     data: wishlist = [],
+    cartData
   } = useSelector((state) => state.wishlist);
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
@@ -38,6 +41,7 @@ function Wishlist() {
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { auth } = useSelector((state) => state);
   const { data: cartItem } = useSelector((state) => state?.cart);
+  console.log({ isCart });
 
   const dispatch = useDispatch();
 
@@ -59,6 +63,7 @@ function Wishlist() {
         };
 
   const handleClose = () => {
+    isCart && dispatch(removeFromCart(cartData));
     dispatch(toggleWishlist(null));
   };
   const handleWishlist = () => {
@@ -100,6 +105,9 @@ function Wishlist() {
         },
       });
     }
+
+    isCart && dispatch(removeFromCart(cartData));
+
     handleClose();
   };
   const getReviewListForProduct = async (val) => {
@@ -183,12 +191,12 @@ function Wishlist() {
           <div className={styles.bestSeller}>BEST SELLER</div>
           <div className={styles.name}>{data?.name} </div>
           <div className="d-flex">
-            <div className={`${styles.stars} d-flex-all-center`}>
+            {/* <div className={`${styles.stars} d-flex-all-center`}>
               <Rating name="read-only" readOnly value={value} size="small" />
             </div>
             <div className={`${styles.rating} d-flex-all-center`}>
               {calculateAvgReview()} rating
-            </div>
+            </div> */}
             <div
               style={{ marginRight: language === "Arabic" ? "1.5rem" : "0rem" }}
               className={`${styles.sku} d-flex`}
@@ -219,92 +227,94 @@ function Wishlist() {
               <div className={styles.text}>{c.label} </div>
             ))}
           </div> */}
-          <div>
-            <div className={`${styles.color} d-flex`}>
-              <div className={styles.title}>Color:&nbsp;</div>
-              <span>
-                {selectedColor?.color?.label === false
-                  ? "WHITE"
-                  : selectedColor?.color?.label}
-              </span>
-              {data?.colors?.length > 0 &&
-                data?.colors?.map((item) => (
-                  <div
-                    // key={`color${index}`}
-                    title={item?.label}
-                    className={`${styles.option}  c-pointer `}
-                    onClick={() => {
-                      setColorSize(item, "color");
-                    }}
-                    style={{
-                      transform:
-                        selectedColor?.color?.value === item?.value
-                          ? "scale(1)"
-                          : "scale(.9)",
-                    }}
-                  >
-                    {typeof item?.label === "string" ? (
-                      <>
-                        <img
-                          src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
-                            item?.label
-                          )
-                            ?.toLowerCase()
-                            .trim()}.png`}
-                          className={`${styles.colorItem} ${
-                            data?.selected?.color?.value === item?.value
-                              ? styles.active
-                              : ""
-                          }`}
-                          alt={item?.label}
-                        />
-                      </>
-                    ) : (
+          {!isCart && (
+            <section>
+              <div>
+                <div className={`${styles.color} d-flex`}>
+                  <div className={styles.title}>Color:&nbsp;</div>
+                  <span>
+                    {selectedColor?.color?.label === false
+                      ? "WHITE"
+                      : selectedColor?.color?.label}
+                  </span>
+                  {data?.colors?.length > 0 &&
+                    data?.colors?.map((item) => (
                       <div
-                        src={item?.file}
-                        className={`${styles.colorItem} 
-                        ${
-                          data?.selected.color.value === item.value
-                            ? styles.active
-                            : ""
-                        }`}
+                        // key={`color${index}`}
                         title={item?.label}
-                      />
-                    )}
-                  </div>
-                ))}
-            </div>
-          </div>
-          <div className={`${styles.size} gap-12px d-flex align-items-center`}>
-            <div className={styles.title}>Size:</div>
-            <div
-              className={`${styles.options} gap-12px d-flex align-items-center`}
-            >
-              {data?.size?.length &&
-                data?.size?.map((size) => {
-                  return (
-                    <div
-                      style={{
-                        transform:
-                          selectedColor?.size?.value === size?.value
-                            ? "scale(1)"
-                            : "scale(.9)",
-                        background:
-                          selectedColor?.size?.value === size?.value &&
-                          "#EADEB8",
-                        border:
-                          selectedColor?.size?.value === size?.value &&
-                          "1px solid #EADEB8",
-                      }}
-                      onClick={() => setColorSize(size, "size")}
-                      className={`${styles.option} d-flex-all-center`}
-                    >
-                      <span className={styles.sizeLabel}>{size.label}</span>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+                        className={`${styles.option}  c-pointer `}
+                        onClick={() => {
+                          setColorSize(item, "color");
+                        }}
+                        style={{
+                          transform:
+                            selectedColor?.color?.value === item?.value
+                              ? "scale(1)"
+                              : "scale(.9)",
+                        }}
+                      >
+                        {typeof item?.label === "string" ? (
+                          <>
+                            <img
+                              src={`${
+                                URL.baseUrlColorSwitcher
+                              }/${colorRegexFilter(item?.label)
+                                ?.toLowerCase()
+                                .trim()}.png`}
+                              className={`${styles.colorItem} ${
+                                data?.selected?.color?.value === item?.value
+                                  ? styles.active
+                                  : ""
+                              }`}
+                              alt={item?.label}
+                            />
+                          </>
+                        ) : (
+                          <div
+                            src={item?.file}
+                            className={`${styles.colorItem} 
+             ${data?.selected.color.value === item.value ? styles.active : ""}`}
+                            title={item?.label}
+                          />
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div
+                className={`${styles.size} gap-12px d-flex align-items-center`}
+              >
+                <div className={styles.title}>Size:</div>
+                <div
+                  className={`${styles.options} gap-12px d-flex align-items-center`}
+                >
+                  {data?.size?.length &&
+                    data?.size?.map((size) => {
+                      return (
+                        <div
+                          style={{
+                            transform:
+                              selectedColor?.size?.value === size?.value
+                                ? "scale(1)"
+                                : "scale(.9)",
+                            background:
+                              selectedColor?.size?.value === size?.value &&
+                              "#EADEB8",
+                            border:
+                              selectedColor?.size?.value === size?.value &&
+                              "1px solid #EADEB8",
+                          }}
+                          onClick={() => setColorSize(size, "size")}
+                          className={`${styles.option} d-flex-all-center`}
+                        >
+                          <span className={styles.sizeLabel}>{size.label}</span>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            </section>
+          )}
 
           <div className={styles.actions}>
             <div className="d-flex w-100 align-items-center ">

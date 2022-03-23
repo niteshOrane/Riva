@@ -12,12 +12,7 @@ const HeroGrid = ({ btfLeft, btfRight, loading }) => {
   const { language } = useSelector((state) => state?.common?.store);
   return (
     <div className={`${style.grid} container-with-circles`}>
-      {/* <div
-        dir={language === "Arabic" ? "rtl" : "ltr"}
-        className={style.circlesContainer}
-      >
-        <CategoriesCircles />
-      </div> */}
+     
       {loading && (
         <div className={style.skeleton}>
           <div className={style.mainSkeleton}>
