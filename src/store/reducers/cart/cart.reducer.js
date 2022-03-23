@@ -1,4 +1,5 @@
 import * as DATA_TYPES from "../../types";
+
 const initialState = {
   info: {},
   data: [],
@@ -8,26 +9,27 @@ const initialState = {
   cartPaymentInfo: {},
   isSingle: null,
   freeShipping: {},
+  status: false,
 };
 
-const handleAddToCart = (state, itemToBeAdded) => {
-  let cart = [...state.data];
-  const exists = cart.find((c) => c.id === itemToBeAdded.id);
+// const handleAddToCart = (state, itemToBeAdded) => {
+//   let cart = [...state.data];
+//   const exists = cart.find((c) => c.id === itemToBeAdded.id);
 
-  if (exists) {
-    cart = cart.map((c) =>
-      c.id === itemToBeAdded.id ? { ...c, qty: c.qty + itemToBeAdded.qty } : c
-    );
-    return { ...state, data: cart };
-  }
+//   if (exists) {
+//     cart = cart.map((c) =>
+//       c.id === itemToBeAdded.id ? { ...c, qty: c.qty + itemToBeAdded.qty } : c
+//     );
+//     return { ...state, data: cart };
+//   }
 
-  return { ...state, data: [...cart, itemToBeAdded] };
-};
+//   return { ...state, data: [...cart, itemToBeAdded] };
+// };
 
 export default function Cart(state = initialState, action) {
   switch (action.type) {
     case DATA_TYPES.ADD_TO_CART:
-      return { ...handleAddToCart(state, action.payload), isOpen: true };
+      return { isOpen: true };
 
     case DATA_TYPES.REMOVE_FROM_CART:
       return {
@@ -83,6 +85,11 @@ export default function Cart(state = initialState, action) {
       return {
         ...state,
         freeShipping: action.payload,
+      };
+    case DATA_TYPES.CART_STATUS:
+      return {
+        ...state,
+        isOpen: action.payload,
       };
     default:
       return state;

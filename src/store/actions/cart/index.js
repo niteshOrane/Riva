@@ -39,8 +39,6 @@ export const calculateFreeShipping = () => async (dispatch) => {
   }
 };
 export const getCart = () => async (dispatch) => {
-  //if (getCartId() && getCartId() !== '0') {
-
   const res = await getCartService();
   if (!res?.data?.cart?.hasOwnProperty("success")) {
     if (res && res?.data && res?.data?.cart?.length > 0) {
@@ -91,6 +89,11 @@ export const getCart = () => async (dispatch) => {
   // }
 };
 
+export const cartStatus = (data) => ({
+  type: DATA_TYPES.CART_STATUS,
+  payload: data,
+});
+
 export const addToCart = (data) => async (dispatch) => {
   if (!data?.color?.value || !data?.size?.value) {
     dispatch(showSnackbar("please select one color and size", "error"));
@@ -107,22 +110,21 @@ export const addToCart = (data) => async (dispatch) => {
 
     if (res.status === 200 && !response?.error) {
       dispatch({
-        type: DATA_TYPES.ADD_TO_CART,
-        payload: { ...data },
-      });
-      dispatch({
         type: DATA_TYPES.SET_CART_ID,
         payload: { cart_id: response.cart_id },
       });
-      dispatch(showSnackbar("Added to cart", "success"));
       dispatch(getCart());
+      dispatch(showSnackbar("Added to cart", "success"));
       if (data?.isFromWishlist) {
         dispatch(removeWishlist(data, data?.isFromWishlist));
         setTimeout(() => {
           dispatch(getWishlist());
         }, 2000);
       }
-    } else dispatch(showSnackbar(response?.message || "", "error"));
+      dispatch(cartStatus(true));
+    } else {
+      dispatch(showSnackbar(response?.message || "", "error"));
+    }
   }
 };
 

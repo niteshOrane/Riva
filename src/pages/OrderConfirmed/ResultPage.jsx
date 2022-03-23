@@ -34,7 +34,6 @@ function ResultPage(props) {
         res?.data &&
         res.data?.[0]?.["order_id"]
       ) {
-
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
@@ -54,7 +53,11 @@ function ResultPage(props) {
         <div className="d-flex h-100">
           <Sidebar />
           <div className={styles.contentConatiner}>
-            <h2 className={styles.title}>{paymentErrorMsg !== null ? 'Order Confirmed' : 'Processing Order...'}</h2>
+            <h2 className={styles.title}>
+              {paymentErrorMsg !== null
+                ? "Order Confirmed"
+                : "Processing Order..."}
+            </h2>
             <div className="py-20px d-flex w-100 justify-content-between">
               {paymentErrorMsg !== null ? (
                 <div className={styles.payMsg}>{paymentErrorMsg}</div>

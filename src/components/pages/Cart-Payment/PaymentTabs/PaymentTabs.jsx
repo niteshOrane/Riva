@@ -169,7 +169,7 @@ const PaymentTabs = React.memo(
         script.async = true;
         document.body.appendChild(script);
         const form = document.createElement("form");
-        form.action = `${window.location.origin}/#/result/${paymentMode[value].code}`;
+        form.action = `${window.location.origin}/result/${paymentMode[value].code}`;
         form.setAttribute("class", "paymentWidgets");
         form.setAttribute(
           "data-brands",

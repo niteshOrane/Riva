@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Drawer } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -13,7 +13,8 @@ import { extractColorSize, getSKuId } from "../../../util";
 import Image from "../LazyImage/Image";
 import { toggleSignUpCard } from "../../../store/actions/common";
 import { getProduct } from "../../../services/product/product.service";
-import { addWishlist, toggleWishlist } from "../../../store/actions/wishlist";
+import { toggleWishlist } from "../../../store/actions/wishlist";
+import * as DATA_TYPES from "../../../store/types/index";
 
 const Cart = () => {
   const {
