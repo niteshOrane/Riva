@@ -138,7 +138,20 @@ function Filters(props) {
     setOpen(false);
   };
   const openDrawer = () => {
-    console.log("openDrawer: ", filterStoreAttr, filtersAttr )
+    console.log("openDrawer: ", filterStoreAttr, filtersAttr );
+    if (filterStoreAttr.status == true) {
+      for (let i = 0; i < filtersAttr.length; i++) {
+        for (let j = 0; j < filtersAttr[i].values.length; j++) {
+          for (let k = 0; k < filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code].length; k++) {
+            if (filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code][k].value == filtersAttr[i].values[j].value ) {
+              filtersAttr[i].values[j].checked = true;
+            }
+          }
+        }
+      }
+    }
+    
+    setFiltersAttr(filtersAttr);
     setOpen(true);
   };
 
