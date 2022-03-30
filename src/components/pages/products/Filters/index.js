@@ -77,9 +77,10 @@ function Filters(props) {
   const [searchValue, setSearchValue] = useState("");
   const [filtersAttr, setFiltersAttr] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [newfiltersAttr, setNewfiltersAttr] = useState({});
   // const [newList, setNewList] = useState([]);
-  const filterAttr = useSelector((state) => state?.common?.filtersParams);
-  console.log({filterAttr})
+  const filterStoreAttr = useSelector((state) => state?.common?.filtersParams);
+  // console.log({filterAttr});
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -91,7 +92,9 @@ function Filters(props) {
     setSelectedTags(temp);
   };
   const filterList = async (catId) => {
-    const list = await getFiltersList({ catId, serachTerm, filterAttr });
+    let obj = {};
+    const list = await getFiltersList({ catId, serachTerm, obj });
+    console.log("filterList: ",list, catId);
     setFiltersAttr(list?.data[0]?.filters);
   };
 
@@ -118,6 +121,7 @@ function Filters(props) {
           id: idx + 1,
           title: c.display,
           isItem: false,
+          isChecked: (c.checked) ? true : false,
           type: "checkbox",
           attr_code: el?.attr_code,
           value_code: c?.value
@@ -125,6 +129,7 @@ function Filters(props) {
       });
       newArr.push(obj);
       newList = [...newList, newArr];
+      
     });
   }
 
@@ -133,12 +138,26 @@ function Filters(props) {
     setOpen(false);
   };
   const openDrawer = () => {
+    console.log("openDrawer: ", filterStoreAttr, filtersAttr )
     setOpen(true);
   };
 
   const seeResultsAction = () => {
     if (categoryId && categoryId > 0) {
-      filterList(categoryId);
+      // let obj = {name: "orane", value: "416"}
+      let newPayloadArr = {};
+      for (let i = 0; i < filtersAttr.length; i++) {
+        newPayloadArr[filtersAttr[i].attr_code] = []
+        for (let j = 0; j < filtersAttr[i].values.length; j++) {
+          if (filtersAttr[i].values[j].checked == true) {
+            // newPayloadArr.push(filtersAttr[i].values[j]);
+            newPayloadArr[filtersAttr[i].attr_code].push(filtersAttr[i].values[j]);
+          }
+        }
+      }
+      dispatch(addFilterParams("newPayloadArr", newPayloadArr));
+      closeDrawer();
+      console.log("filterValue: ",filtersAttr, newPayloadArr);
     }
   };
 
@@ -157,27 +176,49 @@ function Filters(props) {
   };
   const resetFilters = () => {
     dispatch(removeFilterParams("all"));
-    window.location.reload();
+    
+    filterList(categoryId);
+    closeDrawer();
+    // window.location.reload();
   };
   const renderFilters = () => {
     const renderComponent = (item) => {
       const handleCheckboxChange = async (val, e) => {
+        // let filtersAttr = [...filtersAttr];
         handleCheck(val)
           ? ""
           : setSelectedTags([...selectedTags, { checked: true, val }]);
         if (e.target.checked) {
           if (val?.attr_code && val?.title) {
+            console.log("filtersAttr: ", filtersAttr, val);
 
-            dispatch(
-              addFilterParams(
-                val?.attr_code,
-                val?.value_code
-              )
-            );
+            // dispatch(
+            //   addFilterParams(
+            //     val?.attr_code,
+            //     val
+            //   )
+            // );
           }
         } else {
           null;
         }
+        for (let i = 0; i < filtersAttr.length; i++) {
+          if (filtersAttr[i].attr_code == val.attr_code) {
+            for (let j = 0; j < filtersAttr[i].values.length; j++) {
+              if (filtersAttr[i].values[j].value == val.value_code) {
+                filtersAttr[i].values[j].checked = e.target.checked;
+                filtersAttr[i].values[j].field = filtersAttr[i].attr_code;
+                if (filtersAttr[i].attr_code == "price") {
+                  let splitVal = filtersAttr[i].values[j].value.split('-');
+                  filtersAttr[i].values[j].splitVal = splitVal;
+                  // console.log("splitVal: ", splitVal)
+                }
+                setFiltersAttr(filtersAttr);
+              }
+            }
+          }
+        }
+
         let color =
           selectedTags.filter((li) => li?.val.label === "Color").length > 0 && true;
         // const list = await getFiltersList(categoryId, val,val,val);
@@ -216,7 +257,7 @@ function Filters(props) {
               style={
                 items?.children?.length > 10
                   ? {
-                    height: "25rem",
+                    height: "12rem",
                     overflowY: "scroll",
                     // paddingRight: "1rem",
                   }
@@ -285,10 +326,10 @@ function Filters(props) {
               filter
             />
             <div className={style.filtersGrid}>
-              {newList?.map(($item, i) => {
+              {newList?.map(($item, i) => {//console.log("$item: ", $item)
                 return (
                   $item?.[0]?.children?.length !== 0 && (
-                    <div key={i}>{$item?.map((item) => menu(item, 0))}</div>
+                    <div key={i}>{$item?.map((item) => menu(item, 1))}</div>
                   )
                 );
               })}

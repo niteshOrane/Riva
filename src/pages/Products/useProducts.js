@@ -11,6 +11,7 @@ const useProducts = ({
   sortDirection,
   onScreen,
   serachTerm = "",
+  filterAttr,
 }) => {
   const [products, setProducts] = useState([]);
   const [filters, setfilters] = useState({});
@@ -20,14 +21,45 @@ const useProducts = ({
   useEffect(() => {
     setloading(true);
     let currentPageGet = currentPage;
+    let filterStr = '';
     setfilters({});
     if (!onScreen) {
       setProducts([]);
       currentPageGet = 1;
     }
+    console.log("filterValue1: ",filterAttr);
+    if (filterAttr.status && (filterAttr.newPayloadArr.length > 0)) {
+        // filterList(categoryId);
+        const keyValue = Object.keys(filterAttr.newPayloadArr[0]);
+        const filterValue = [];
+        for (let i = 0; i < keyValue.length; i++) {
+          console.log("keyValue: ", keyValue[i]);
+          if (filterAttr.newPayloadArr[0][keyValue[i]].length > 0) {
+            if (keyValue[i] != "price") {
+              for (let j = 0; j < filterAttr.newPayloadArr[0][keyValue[i]].length; j++) {
+           
+                let str = `&searchCriteria[filterGroups][${i+4}][filters][${j}][field]=${keyValue[i]}&searchCriteria[filterGroups][${i+4}][filters][${j}][value]=${filterAttr.newPayloadArr[0][keyValue[i]][j].value}`;
+                filterValue.push(str);
+                filterStr += str;
+              } 
+            } else {
+                let field1 = `&searchCriteria[filterGroups][${i+4}][filters][0][field]=price` ;
+                let miniPrice = `&searchCriteria[filterGroups][${i+4}][filters][0][value]=${filterAttr.newPayloadArr[0][keyValue[i]][0].splitVal[0]}` ;
+                let compare1 = `&searchCriteria[filterGroups][${i+4}][filters][0][condition_type]=from`;
+                let field2 = `&searchCriteria[filterGroups][${i+40}][filters][0][field]=price` ;
+                let maxPrice = `&searchCriteria[filterGroups][${i+40}][filters][0][value]=${filterAttr.newPayloadArr[0][keyValue[i]][filterAttr.newPayloadArr[0][keyValue[i]].length - 1].splitVal[1]}` ;
+                let compare2 = `&searchCriteria[filterGroups][${i+40}][filters][0][condition_type]=to`;                                 
+                  let str = `${field1}${miniPrice}${compare1}${field2}${maxPrice}${compare2}`;
+                  filterStr += str;
+            }
+          }
+                   
+        }
+        console.log("filterValue: ",filterAttr, filterStr, keyValue, filterValue);
+    }
     let config = {
       method: "get",
-      url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}`,
+      url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}${filterStr}`,
       silent: true,
     };
     if (serachTerm) {
@@ -92,7 +124,7 @@ const useProducts = ({
       .catch((error) => {
         setloading(false);
       });
-  }, [serachTerm, categoryId, currentPage, pageSize, sortField, sortDirection]);
+  }, [serachTerm, categoryId, currentPage, pageSize, sortField, sortDirection, filterAttr]);
   return {
     products,
     filters,
