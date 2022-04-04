@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../../enviroments";
-import { getStoreId } from "../../util";
+import { getStoreData, getStoreId } from "../../util";
 
 const useProducts = ({
   categoryId,
@@ -27,13 +27,15 @@ const useProducts = ({
     }
     let config = {
       method: "get",
-      url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}`,
+      url: `${API_URL}/rest/${
+        getStoreData()?.store_code
+      }/V1/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}`,
       silent: true,
     };
     if (serachTerm) {
       config = {
         method: "post",
-        url: `${API_URL}/searchresult`,
+        url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/searchresult`,
         silent: true,
         data: {
           searchterms: serachTerm,
@@ -78,7 +80,6 @@ const useProducts = ({
               )?.value === "1",
           };
         });
-        console.log({dataItem})
 
         setTotalCount(response?.data?.total_count);
         if (onScreen) {

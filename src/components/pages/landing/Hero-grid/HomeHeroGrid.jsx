@@ -10,11 +10,13 @@ import Image from "../../../common/LazyImage/Image";
 
 import "./heroGridTwo.css";
 import useArabic from "../../../common/arabicDict/useArabic";
+import useDocumentTitle from "../../../common/PageTitle/useDocumentTitle";
 
 const HomeHeroGrid = (props) => {
   const { items, srcPath = "/assets/images/banner", isHomePage } = props;
   const links = useSelector((state) => state.common.category)[0];
   const { translate } = useArabic();
+  useDocumentTitle("Riva Fashion")
   const [defaultCategory, setCategory] = useState([]);
   const [itemsImage, setItemsImage] = useState([]);
   useEffect(() => {

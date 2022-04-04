@@ -25,12 +25,14 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 import { isdCodes } from "../ISDdummy/isdCodes";
 import { set } from "mobx";
+import useDocumentTitle from "../../../../PageTitle/useDocumentTitle";
 
 const SignUpForm = ({ handleSubmit, language }) => {
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const [phoneValue, setPhoneValue] = useState();
 
   const dispatch = useDispatch();
+  useDocumentTitle("Customer Register")
   const [error, setError] = React.useState({});
   const history = useHistory();
   const redirectTo = useSelector(

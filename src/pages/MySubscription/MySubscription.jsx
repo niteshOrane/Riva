@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 const IOSSwitch = withStyles((theme) => ({
   root: {
@@ -64,6 +65,7 @@ function MySubscription() {
     checkedA: true,
     checkedB: false,
   });
+  useDocumentTitle("Manage Subscription")
   const { translate } = useArabic();
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });

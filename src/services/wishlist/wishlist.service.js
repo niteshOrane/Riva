@@ -1,11 +1,11 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
-import { getStoreId } from "../../util";
+import { getStoreId,getStoreData } from "../../util";
 
 export const getWishlistItems = (customerid) => {
   const config = {
     method: "post",
-    url: `${API_URL}/wishlistDetail`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/wishlistDetail`,
     silent: true,
     data: { customerid, storeId: getStoreId() },
   };
@@ -15,7 +15,7 @@ export const getWishlistItems = (customerid) => {
 export const addWishListItem = (productid, customerid) => {
   const config = {
     method: "post",
-    url: `${API_URL}/addwishlist`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/addwishlist`,
     silent: true,
     data: { customerid, productid },
   };
@@ -25,7 +25,7 @@ export const addWishListItem = (productid, customerid) => {
 export const removeWishlistItem = (productid, customerid) => {
   const config = {
     method: "post",
-    url: `${API_URL}/wishlistRemove`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/wishlistRemove`,
     silent: true,
     data: { customerid, productid },
   };

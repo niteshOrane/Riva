@@ -26,7 +26,7 @@ const DeliveredOrders = ({
   status,
   check,
   handleReturn,
-  increment_id
+  increment_id,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -47,7 +47,6 @@ const DeliveredOrders = ({
     }
   };
 
-
   const getColorSize = (options) => {
     const { colors, size } = extractColorSize(
       options?.map((o) => ({
@@ -56,14 +55,14 @@ const DeliveredOrders = ({
         attribute_id: o.option_id,
       }))
     );
-    console.log({colors,size})
+    console.log({ colors, size });
     return { colors, size };
   };
   const colorSize = getColorSize(
     product?.parent_item?.product_option.extension_attributes
       ?.configurable_item_options
   );
-  console.log({colorSize})
+  console.log({ colorSize });
 
   return (
     <div className={styles.card}>
@@ -87,7 +86,7 @@ const DeliveredOrders = ({
                         ...product,
                         currency: order_currency_code,
                         status,
-                        increment_id
+                        increment_id,
                       })
                     }
                   />
@@ -129,6 +128,10 @@ const DeliveredOrders = ({
                   {colorSize.size?.[0]?.label}
                 </span>
               </div>
+              <div className={styles.colorSize}>
+                <span>Quantity: </span>
+                <span className={styles.greyTextQty}>{product?.qty_ordered}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -147,19 +150,6 @@ const DeliveredOrders = ({
             <h4 className="c-pointer font-weight-normal greyText">
               {status?.[0]?.toUpperCase() + status?.slice(1)}
             </h4>
-          </div>
-          <div className="d-flex align-items-center mt-12px">
-            <span className={styles.icon}>
-              <icons.Undo />
-            </span>
-            <Link
-              to={{
-                pathname: "/retur-order",
-                state: product,
-              }}
-            >
-              <h4 className="c-pointer font-weight-normal greyText">Return</h4>
-            </Link>
           </div>
           <div
             className="d-flex align-items-center mt-12px"

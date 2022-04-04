@@ -14,11 +14,13 @@ import {
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import styles from "./TrackOrders.module.scss";
 import { showSnackbar } from "../../store/actions/common";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function TrackOrders(props) {
   const { customer } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
+  useDocumentTitle("Track Order")
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState([]);
   const [orderDetails, setOrderDetails] = React.useState({

@@ -40,7 +40,7 @@ function ResultPage(props) {
       } else {
         setPaymentErrorMsg(res?.data?.[0]?.message);
       }
-    }
+    } 
   };
 
   useEffect(() => {

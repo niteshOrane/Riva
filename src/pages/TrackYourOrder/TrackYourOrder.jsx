@@ -7,9 +7,11 @@ import { orderConfirmed } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 
 import { showSnackbar } from "../../store/actions/common";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function TrackYourOrder() {
   const dispatch = useDispatch();
+  useDocumentTitle("Track Order")
   const [value, setValue] = useState("");
   const [orderItems, setOrderItems] = useState();
   const handleChange = (e) => {

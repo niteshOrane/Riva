@@ -23,6 +23,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { extractColorSize } from "../../util";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 const Product = (props) => {
   const { match } = props;
@@ -43,7 +44,6 @@ const Product = (props) => {
   const [howToWear, sethowToWear] = useState([]);
   const [mediaImage, setMediaImage] = useState([]);
   const [colorImage, setColorImage] = useState([]);
-
   const setUpHowToWear = async (id) => {
     const res = await getHowToWear(id);
 
@@ -152,6 +152,7 @@ const Product = (props) => {
         url: match.url,
       },
     };
+    document.title = product?.name || "Riva Fashion";
   }, [product]);
 
   useEffect(() => {

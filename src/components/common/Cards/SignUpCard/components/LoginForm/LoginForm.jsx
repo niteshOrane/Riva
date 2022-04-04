@@ -30,6 +30,7 @@ import * as icons from "../../../../Icons/Icons";
 import LoaderButton from "../../../../Buttons/LoaderButton/ControlledButton";
 import { getProduct } from "../../../../../../services/product/product.service";
 import { addWishlist } from "../../../../../../store/actions/wishlist";
+import useDocumentTitle from "../../../../PageTitle/useDocumentTitle";
 
 const LoginForm = ({
   handleSubmit,
@@ -39,6 +40,7 @@ const LoginForm = ({
   setIsForget,
 }) => {
   const dispatch = useDispatch();
+  useDocumentTitle("Customer Login")
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const [forgotError, setForgotError] = useState(false);

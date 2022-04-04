@@ -208,13 +208,15 @@ function QuickView() {
       return dispatch(
         toggleSignUpCard({ redirectTo: window.location.pathname })
       );
-    if (wishlist.find((w) => data?.id === w.id)) {
+    if (wishlist.find((w) => data?.id == w.id)) {
       dispatch(removeWishlist(data));
+      dispatch(toggleQuickView(null));
     } else {
       dispatch(addWishlist(data));
     }
   };
   const isAddedToWishlist = !!wishlist.find((w) => w.id == data?.id);
+
   return (
     <Dialog
       fullWidth
@@ -372,13 +374,11 @@ function QuickView() {
               </div>
             </div>
           ) : null}
-          <div className={`${styles.sizeHelp} d-flex align-items-center`}>
+          {/* <div className={`${styles.sizeHelp} d-flex align-items-center`}>
             <ul className="nav-list gap-12px d-flex align-items-center">
               <li className="nav-li">
                 <span className="d-flex align-items-center">
-                  {/* <span className="material-icons-outlined font-light-black">
-                    straighten
-                  </span> */}
+                
                   <img src="/assets/images/ruler (1).svg" alt="/" />
                   &nbsp; &nbsp;
                   <button
@@ -396,9 +396,7 @@ function QuickView() {
               </li>
               <li className="nav-li">
                 <span className="d-flex align-items-center">
-                  {/* <span className="material-icons-outlined font-light-black">
-                    search
-                  </span> */}
+                
                   <img src="/assets/images/search.svg" alt="/" />
                   &nbsp;
                   <button
@@ -415,7 +413,7 @@ function QuickView() {
                 </span>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           <div className={`${styles.stats} d-flex justify-content-between`}>
             <div

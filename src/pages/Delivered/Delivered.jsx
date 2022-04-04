@@ -20,12 +20,16 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Alert from "@material-ui/lab/Alert";
 import { addToReturn } from "../../store/actions/stats";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
+
+const excludeList = ["pending", "canceled", "closed"];
 
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
   const dispatch = useDispatch();
   useAnalytics();
+  useDocumentTitle(orderType);
   const { language } = useSelector((state) => state?.common?.store);
 
   const [orderList, setOrderList] = React.useState([]);
@@ -36,6 +40,8 @@ function Delivered() {
   const [expanded, setExpanded] = React.useState(false);
   const [showCheck, setShowCheck] = useState(false);
   const [finalList, setFinalList] = useState([]);
+  const [totalCount, setTotalCount] = useState(null);
+  const [isMore, setIsMore] = useState(0);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setShowCheck(false);
@@ -43,16 +49,18 @@ function Delivered() {
   };
   const getOrders = async (id) => {
     setStatus(null);
-    const res = await getOrderList(id);
+    const res = await getOrderList(id, currentPage);
     if (res?.status === 200 && res?.data) {
       if (orderType === "delivered") {
         setOrderList(
           res?.data?.items?.filter((li) => li?.status === "delivered")
         );
         setStatus(res?.status);
+        setTotalCount(res?.data?.total_count);
       } else {
         setOrderList(res?.data?.items);
         setStatus(res?.status);
+        setTotalCount(res?.data?.total_count);
       }
     }
   };
@@ -83,7 +91,10 @@ function Delivered() {
     TagManager.initialize(tagManagerArgs);
   }, []);
   React.useEffect(() => {
-    getOrders(customer?.customerID);
+    getOrders(customer?.customerID, currentPage);
+  }, [currentPage]);
+  React.useEffect(() => {
+    getOrders(customer?.customerID, currentPage);
   }, [orderType]);
   React.useEffect(() => {
     if (orderType === "orders") {
@@ -94,6 +105,7 @@ function Delivered() {
       }, []);
       if (data) {
         setFinalList(data);
+        setIsMore((prev) => prev + data?.length);
       }
     } else if (orderType === "delivered") {
       const data = orderList?.filter((pro) => {
@@ -103,16 +115,21 @@ function Delivered() {
       }, []);
       if (data) {
         setFinalList(data);
+        setIsMore((prev) => prev + data?.length);
       }
     }
   }, [orderType, orderList]);
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = finalList
-    ?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    ?.slice(indexOfFirstPost, indexOfLastPost);
+  const changePageFor = () => {
+    if (totalCount > finalList.length) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  const changePageBack = () => {
+    if (currentPage !== 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -123,7 +140,7 @@ function Delivered() {
               {orderType?.[0]?.toUpperCase() + orderType.slice(1)}
             </h2>
             {finalList.length > 0 ? (
-              currentPosts?.map((li) => (
+              finalList?.map((li) => (
                 <Accordion
                   expanded={expanded === li?.increment_id}
                   onChange={handleChange(li?.increment_id)}
@@ -168,23 +185,25 @@ function Delivered() {
                         </div>
                       ))}
                   </AccordionDetails>
-                  <section className={styles.reqBtn}>
-                    {returnedProduct?.length === 0 && (
-                      <button
-                        onClick={() => setShowCheck(!showCheck)}
-                        type="button"
-                      >
-                        Request Return
-                      </button>
-                    )}
-                    {returnedProduct?.length > 0 && (
-                      <Link to="/retur-order">
-                        <button onClick={dispatchList} type="button">
-                          Continue to return
+                  {!excludeList.includes(li?.status) && (
+                    <section className={styles.reqBtn}>
+                      {returnedProduct?.length === 0 && (
+                        <button
+                          onClick={() => setShowCheck(!showCheck)}
+                          type="button"
+                        >
+                          Request Return
                         </button>
-                      </Link>
-                    )}
-                  </section>
+                      )}
+                      {returnedProduct?.length > 0 && (
+                        <Link to="/retur-order">
+                          <button onClick={dispatchList} type="button">
+                            Continue to return
+                          </button>
+                        </Link>
+                      )}
+                    </section>
+                  )}
                 </Accordion>
               ))
             ) : !status ? (
@@ -194,14 +213,38 @@ function Delivered() {
             ) : (
               <div className={styles.progress}>No record</div>
             )}
-            {finalList?.length > 0 && (
-              <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={finalList?.length}
-                paginate={paginate}
-                currentPage={currentPage}
-              />
-            )}
+            <section className={styles.pageSec}>
+              <div>
+                <button
+                  className={styles.prevNextBtn}
+                  type="button"
+                  onClick={changePageBack}
+                  style={{
+                    backgroundColor: currentPage === 1 ? "gray" : "black",
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  }}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <button
+                  className={styles.prevNextBtn}
+                  type="button"
+                  onClick={changePageFor}
+                  disabled={finalList.length === 0}
+                  style={{
+                    backgroundColor: finalList.length === 0 ? "gray" : "black",
+                    cursor: finalList.length === 0 ? "not-allowed" : "pointer",
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+
+              <span>
+                current page: <strong>{currentPage}</strong>
+              </span>
+            </section>
           </div>
         </div>
       </div>

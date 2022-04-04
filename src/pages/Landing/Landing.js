@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import useLanding from "./LandingHooks";
 
@@ -21,11 +21,20 @@ import { getInstagramBanners } from "../../services/layout/Layout.service";
 import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
+
+const titleObj = {
+  1241:"Latest Women Fashion",
+  866:"Kids",
+  2539:"Riva Fashion"
+}
 
 function Landing() {
   const { middleBanner } = useLanding("topbrands");
   const location = useLocation();
-  useAnalytics()
+  const params = useParams();
+  useAnalytics();
+  useDocumentTitle(titleObj[params.mainCategoryId])
 
   const { btfLeft, btfRight, videoBanner, loading } = useHeroGrid();
   const selectedCategoryItem = useSelector(

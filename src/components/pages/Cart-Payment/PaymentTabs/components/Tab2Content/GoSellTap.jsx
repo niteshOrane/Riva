@@ -29,11 +29,12 @@ function GoSellTap({ translate }) {
       ) {
         window.location.href = res.data?.[0]?.redirect_url;
         setLoading(false);
-      } else if (res?.message) {
+      } else if (res?.data?.error && res?.data?.message) {
         dispatch(showSnackbar(`${res?.message}`, "error"));
         // window.location.reload();
         return setLoading(false);
       } else {
+        dispatch(showSnackbar(`something went wrong`, "error"));
         return setLoading(false);
       }
     }

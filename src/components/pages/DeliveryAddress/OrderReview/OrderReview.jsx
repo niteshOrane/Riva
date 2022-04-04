@@ -9,9 +9,10 @@ import { showSnackbar } from "../../../../store/actions/common";
 import { toggleCart } from "../../../../store/actions/cart";
 import { deliveryCheck } from "../../../../services/address/address.service";
 import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
-import { getCartId } from "../../../../util";
+import { getCartId, getStoreData } from "../../../../util";
 import TagManager from "react-gtm-module";
 import ReactPixel from "react-facebook-pixel";
+import API_URL from "../../../../enviroments/index"
 
 function OrderReview({
   deliverySpeed,
@@ -49,7 +50,7 @@ function OrderReview({
       coupon.append("couponcode", couponCode);
       const config = {
         method: "post",
-        url: `${process.env.REACT_APP_DEV}/applyCoupon`,
+        url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/applyCoupon`,
         silent: true,
         data: coupon,
       };
@@ -94,12 +95,12 @@ function OrderReview({
   };
   useEffect(() => {
     dispatch(toggleCart(false));
-    const amount =
-      items.reduce(
-        (total, item) => parseFloat(total + item.price * item.qty),
-        0
-      ) || 0;
-    setTotalAmout(amount);
+    // const amount =
+    //   items.reduce(
+    //     (total, item) => parseFloat(total + item.price * item.qty),
+    //     0
+    //   ) || 0;
+    // setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
     // setPaymentFee(cartPayment?.)
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
@@ -120,7 +121,7 @@ function OrderReview({
       removeCoupon.append("customerid", customerid);
       const config = {
         method: "post",
-        url: `${process.env.REACT_APP_DEV}/removeCoupon`,
+        url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/removeCoupon`,
         silent: true,
         data: removeCoupon,
       };

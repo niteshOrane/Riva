@@ -6,6 +6,7 @@ import { showSnackbar } from "../../store/actions/common";
 
 import { changePassword } from "../../services/auth/auth.service";
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function ChangePassword() {
   const [values, setValues] = React.useState({
@@ -14,6 +15,7 @@ function ChangePassword() {
     retypePassword: "",
     otp: "",
   });
+  useDocumentTitle("Change Password");
 
   const handleChange = (e) => {
     const { value, name } = e.target;

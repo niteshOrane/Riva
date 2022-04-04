@@ -1,10 +1,11 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
+import { getStoreData } from "../../util/index";
 
 export const createCustomer = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/customerRegister`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/customerRegister`,
     silent: true,
     data: formData,
   };
@@ -14,7 +15,7 @@ export const createCustomer = (formData) => {
 export const createCustomerSocial = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/socialLogin`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/socialLogin`,
     silent: true,
     data: formData,
   };
@@ -24,7 +25,7 @@ export const createCustomerSocial = (formData) => {
 export const loginCustomer = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/customerLogin`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/customerLogin`,
     silent: true,
     data: formData,
   };
@@ -34,7 +35,7 @@ export const loginCustomer = (formData) => {
 export const loginCustomerOTP = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/sendOtp`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/sendOtp`,
     silent: true,
     data: formData,
   };
@@ -44,7 +45,7 @@ export const loginCustomerOTP = (formData) => {
 export const verifyUpdateProfileMobileOtp = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/verifyUpdateProfileMobileOtp`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/verifyUpdateProfileMobileOtp`,
     silent: true,
     data: formData,
   };
@@ -53,7 +54,7 @@ export const verifyUpdateProfileMobileOtp = (formData) => {
 export const customerVerifyOtp = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/otpVerify`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/otpVerify`,
     silent: true,
     data: formData,
   };
@@ -63,7 +64,7 @@ export const customerVerifyOtp = (formData) => {
 export const customerResendOtp = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/resendOtp`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/resendOtp`,
     silent: true,
     data: formData,
   };
@@ -73,7 +74,7 @@ export const customerResendOtp = (formData) => {
 export const mergeGuestCart = async (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/mergeGuestCart`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/mergeGuestCart`,
     silent: true,
     data: formData,
   };
@@ -84,7 +85,7 @@ export const mergeGuestCart = async (formData) => {
 export const forgotPassword = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/forgotPassword`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/forgotPassword`,
     silent: true,
     data: formData,
   };
@@ -93,7 +94,7 @@ export const forgotPassword = (formData) => {
 export const changePassword = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/changePassword`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/changePassword`,
     silent: true,
     data: formData,
   };
@@ -103,7 +104,7 @@ export const changePassword = (formData) => {
 export const resetForgotPassword = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/resetForgotPassword`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/resetForgotPassword`,
     silent: true,
     data: formData,
   };

@@ -20,11 +20,12 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
 
-import { getCartId, getCurrencyCode } from "../../../../util";
+import { getCartId, getCurrencyCode, getStoreData } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
 import RePaymentTab from "./RePaymentTab";
+import API_URL from "../../../../enviroments/index"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,7 +138,7 @@ const PaymentTabs = React.memo(
     const getPaymentForTapCheckout = async (fnValue) => {
       const configTap = {
         method: "get",
-        url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
+        url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/gettapinfo?method=${paymentMethod[fnValue]?.code}`,
         silent: true,
       };
       await axios(configTap).then((res) => {
@@ -147,7 +148,7 @@ const PaymentTabs = React.memo(
     const getPaymentForHyperPay = async (fnValue) => {
       const config = {
         method: "post",
-        url: `${process.env.REACT_APP_DEV}/webapi/gethyperpayid?method=${
+        url: `{API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/gethyperpayid?method=${
           paymentMode[fnValue].code
         }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
         silent: true,

@@ -1,21 +1,24 @@
 import axios from "axios";
-import { getCustId } from "../../util";
+import { getCustId, getStoreData } from "../../util";
+import API_URL from "../../enviroments/index";
 
 export const orderConfirmed = (id) => {
   const config = {
     method: "post",
-    url: `${
-      process.env.REACT_APP_DEV
-    }/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
     silent: true,
   };
   return axios(config);
 };
 
-export const getOrderList = (id) => {
+export const getOrderList = (id, page) => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}&searchCriteria[pageSize]=5&searchCriteria[currentPage]=${page}&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc`,
     silent: true,
   };
   return axios(config);
@@ -24,9 +27,9 @@ export const getOrderList = (id) => {
 export const getReturnedList = () => {
   const config = {
     method: "get",
-    url: `${
-      process.env.REACT_APP_DEV
-    }/returns?searchCriteria[filter_groups][0][filters][0][field]=customer_id&searchCriteria[filter_groups][0][filters][0][value]=${getCustId()}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/returns?searchCriteria[filter_groups][0][filters][0][field]=customer_id&searchCriteria[filter_groups][0][filters][0][value]=${getCustId()}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq`,
     silent: true,
   };
   return axios(config);
@@ -37,7 +40,7 @@ export const cancelOrder = (id) => {
   orderData.append("orderId", id);
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/orderCancel`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/orderCancel`,
     silent: true,
     data: orderData,
   };
@@ -47,7 +50,9 @@ export const cancelOrder = (id) => {
 export const buyAgainOrder = (id) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/webapi/reorder/${id}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/reorder/${id}`,
     silent: true,
   };
   return axios(config);
@@ -58,7 +63,9 @@ export const deleteNotification = (id) => {
   customer.append("productId", id);
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/productalertstock/delete`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/productalertstock/delete`,
     silent: true,
     data: customer,
   };
@@ -69,7 +76,9 @@ export const getNotification = () => {
   customer.append("customerId", getCustId());
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/productalertstock/customeralertlist`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/productalertstock/customeralertlist`,
     silent: true,
     data: customer,
   };
@@ -79,7 +88,9 @@ export const getNotification = () => {
 export const addAlertstock = (subscribe) => {
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_DEV}/productalertstock/add`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/productalertstock/add`,
     silent: true,
     data: subscribe,
   };
@@ -90,7 +101,9 @@ export const addAlertstock = (subscribe) => {
 export const getTrackYourOrder = (id) => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/webapi/trackorder/?orderId=${id}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/trackorder/?orderId=${id}`,
     silent: true,
   };
   return axios(config);
@@ -101,7 +114,7 @@ export const getTrackYourOrder = (id) => {
 export const getYourOrderDetails = (id) => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/orders/${id}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/orders/${id}`,
     silent: true,
   };
   return axios(config);

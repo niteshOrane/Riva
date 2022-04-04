@@ -39,9 +39,7 @@ const ProductDetails = (props) => {
   } = props;
   const history = useHistory();
   const { translate } = useArabic();
-  const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
-  const [reviewState, setReviewState] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
   const [value, setValue] = React.useState(0);
   const [reviewList, setReviewList] = useState([]);
@@ -60,7 +58,6 @@ const ProductDetails = (props) => {
       });
     }
   }, []);
-  console.log("iiii", { product });
   const colorImageAction = (data) => {
     setShowThumb(false);
     setColorImg(data?.file);
@@ -68,12 +65,6 @@ const ProductDetails = (props) => {
       ...product?.selected,
       color: { label: data?.color, value: data?.option_id },
     });
-  };
-  const getReviewListForProduct = async (val) => {
-    const res = await getReviewList(val);
-    if (res.status === 200 && res?.data) {
-      setReviewList(res?.data);
-    }
   };
   const calculateAvgReview = () => {
     const sum = reviewList?.reduce(
@@ -103,11 +94,7 @@ const ProductDetails = (props) => {
   };
   useEffect(() => {
     getOutOfStock();
-    getReviewListForProduct(product?.sku);
   }, [product]);
-  useEffect(() => {
-    getReviewListForProduct(product?.sku);
-  }, [reviewState]);
   useEffect(() => {
     const sum = reviewList?.reduce(
       (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
@@ -301,7 +288,8 @@ const ProductDetails = (props) => {
               />
             </div> */}
             <div className={`${styles.price} d-flex`}>
-              {origpriceWithoutCurrency > priceWithoutCurrency ? (
+              {Number(origpriceWithoutCurrency) >
+              Number(priceWithoutCurrency) ? (
                 <div className={styles.was}>
                   {translate?.details?.WAS} {currency_symbol}{" "}
                   {parseFloat(origprice)?.toFixed(2) || ""}

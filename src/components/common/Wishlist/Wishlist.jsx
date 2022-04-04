@@ -205,9 +205,9 @@ function Wishlist() {
               <div className={styles.text}>{data?.sku}</div>
             </div>
           </div>
-          <div>
+          {/* <div>
             <ReviewModal id={data?.id} sku={data?.sku} language={language} />
-          </div>
+          </div> */}
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
               <div className={styles.was}>

@@ -121,7 +121,9 @@ export const addToCart = (data) => async (dispatch) => {
           dispatch(getWishlist());
         }, 2000);
       }
-      dispatch(cartStatus(true));
+      setTimeout(() => {
+        dispatch(cartStatus(true));
+      }, 1600);
     } else {
       dispatch(showSnackbar(response?.message || "", "error"));
     }

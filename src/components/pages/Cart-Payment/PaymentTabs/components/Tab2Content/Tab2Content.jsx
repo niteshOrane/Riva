@@ -18,12 +18,6 @@ const Tab2Content = ({ onPayNow, paymentType }) => {
       setValidation(false)
     }
   }
-  const gtmDataLayer = () => {
-    const dataLayer = window.dataLayer || [];
-    dataLayer.push({
-      'bookTitle': 'Cien años de soledad',
-  });
-  }
   return (
     <div>
       <h3 className="my-20px">CREDIT/DEBIT CARD</h3>
@@ -66,7 +60,6 @@ const Tab2Content = ({ onPayNow, paymentType }) => {
           className={styles.payNowBtn}
           onClick={() => {
             Frames.submitCard();
-            gtmDataLayer();
           }}
         >
           PAY NOW

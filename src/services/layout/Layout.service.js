@@ -1,7 +1,8 @@
 import axios from "axios";
 import mockdata from "../../mockdata.json";
-import { getStoreId, getSelectedCategoryId, getLanguageName } from "../../util";
+import { getStoreId, getSelectedCategoryId, getLanguageName,getStoreData } from "../../util";
 import API_URL from "../../enviroments/index";
+
 
 export const getTopBrands = async () =>
   new Promise((resolve) => {
@@ -23,7 +24,7 @@ export const getCurrentLocation = async () => {
 export const getHeader = async () => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/getheader`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getheader`,
     silent: true,
   };
   const response = await axios(config);
@@ -32,7 +33,7 @@ export const getHeader = async () => {
 export const getHeaderCategory = async () => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/getnavigation?storeId=${getStoreId()}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getnavigation?storeId=${getStoreId()}`,
     silent: true,
   };
   const response = await axios(config);
@@ -42,7 +43,7 @@ export const getHeaderCategory = async () => {
 export const getFooter = async () => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/footercms?storeId=${getStoreId()}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/footercms?storeId=${getStoreId()}`,
   };
   const response = await axios(config);
   return response;
@@ -51,7 +52,7 @@ export const getFooter = async () => {
 export const getBanners = (typeName) => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/getbanners?type=${typeName}&storeId=${getStoreId()}&language=${getLanguageName()}&categoryId=${
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getbanners?type=${typeName}&storeId=${getStoreId()}&language=${getLanguageName()}&categoryId=${
       typeName === "landing" ? 0 : getSelectedCategoryId()
     }`,
     silent: true,
@@ -62,7 +63,7 @@ export const getBanners = (typeName) => {
 export const getProducts = (categoryId, limit) => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/categoryproducts?categoryId=${categoryId}_${getSelectedCategoryId()}&storeId=${getStoreId()}&start=0&limit=${limit}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/categoryproducts?categoryId=${categoryId}_${getSelectedCategoryId()}&storeId=${getStoreId()}&start=0&limit=${limit}`,
     silent: true,
   };
   return axios(config);
@@ -71,7 +72,7 @@ export const getProducts = (categoryId, limit) => {
 export const getPromoCategories = (categoryId) => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/getpromotionalcategories/?categoryId=${categoryId}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getpromotionalcategories/?categoryId=${categoryId}`,
     silent: true,
   };
   return axios(config);
@@ -80,7 +81,7 @@ export const getPromoCategories = (categoryId) => {
 export const searchProducts = (categoryId, limit) => {
   const config = {
     method: "get",
-    url: `${API_URL}/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=${getStoreId()}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/products?searchCriteria[page_size]=20&searchCriteria[current_page]=1&searchCriteria[sort_orders]=DESC&searchCriteria[page_size]=10&category_id=${categoryId}&store_id=${getStoreId()}`,
     silent: true,
   };
   return axios(config);
@@ -89,7 +90,7 @@ export const searchProducts = (categoryId, limit) => {
 export const getInstagramBanners = (formData) => {
   const config = {
     method: "post",
-    url: `${API_URL}/getInstagramFeed`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/getInstagramFeed`,
     data: formData,
     silent: true,
   };

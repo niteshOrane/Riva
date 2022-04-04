@@ -23,9 +23,11 @@ import { showSnackbar } from "../../store/actions/common";
 import AddressCard from "../../components/pages/DeliveryAddress/AddressCard/AddressCard";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   useAnalytics();
+  useDocumentTitle("Checkout")
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,
@@ -34,7 +36,6 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   });
   const location = useLocation();
   const history = useHistory();
-  console.log({ location });
   const { language } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);

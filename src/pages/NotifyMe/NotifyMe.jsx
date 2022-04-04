@@ -14,10 +14,12 @@ import styles from "./NotifyMe.module.scss";
 import { getProductColor } from "../../services/product/product.service";
 
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function NotifyMe() {
   const { notifyList } = useNotifyMeList();
   const { translate } = useArabic();
+  useDocumentTitle("Notify Me")
   const [notifyItems, setNotifyItems] = React.useState();
   const dispatch = useDispatch();
   const history = useHistory();

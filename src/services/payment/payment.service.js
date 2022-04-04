@@ -1,11 +1,12 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
-import { getCartId, getCustId } from "../../util";
+import { getCartId, getCustId, getStoreData } from "../../util";
+
 
 export const getPaymentMode = () => {
   const config = {
     method: "get",
-    url: `${API_URL}/carts/${getCartId()}/payment-methods`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/carts/${getCartId()}/payment-methods`,
     silent: true,
   };
   return axios(config);
@@ -14,7 +15,7 @@ export const getShippingMethod = (addressId) => {
   try {
     const config = {
       method: "post",
-      url: `${API_URL}/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,
+      url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/carts/${getCartId()}/estimate-shipping-methods-by-address-id`,
       silent: true,
       data: {
         addressId: addressId,
@@ -31,7 +32,7 @@ export const getShippingMethod = (addressId) => {
 export const processCodPayment = () => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/getcodfee?quoteId=${getCartId()}&paymentMethod=cashondelivery`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getcodfee?quoteId=${getCartId()}&paymentMethod=cashondelivery`,
     silent: true,
   };
   return axios(config);

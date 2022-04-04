@@ -4,10 +4,12 @@ import TagManager from "react-gtm-module";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import DashboardData from "../../components/pages/Dashboard/DashboardData/DashboardData";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function Dashboard() {
   const location = useLocation();
   useAnalytics()
+  useDocumentTitle("Dashboard")
 
   useEffect(() => {
     TagManager.dataLayer({

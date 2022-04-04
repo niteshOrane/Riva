@@ -14,12 +14,14 @@ import Loader from "../../components/common/Loader";
 
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function CartPayment() {
   const dispatch = useDispatch();
   const { translate } = useArabic();
 
   useAnalytics();
+  useDocumentTitle("Payments")
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
   const [customObj,setCustomObj] =  React.useState(null)

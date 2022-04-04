@@ -4,9 +4,11 @@ import "./manageAddress.scss";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import DeliveryAddress from "../Delivery-address/DeliveryAddress";
 import { getAddressByLocation } from "../../services/address/address.service";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function ManageAddress() {
   const currentLocationPath = useLocation();
+  useDocumentTitle("Manage Address")
   const [currentPosition] = useState({
     lat: "",
     lng: "",

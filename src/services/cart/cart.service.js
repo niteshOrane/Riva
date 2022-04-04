@@ -1,11 +1,13 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
-import { getCustId, getCartId, getStoreId } from "../../util";
+import { getCustId, getCartId, getStoreId, getStoreData } from "../../util";
 
 export const addToCartService = (id, color, size, qty) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/addproduct?productInfo[product_id]=${id}&productInfo[options][92]=${color}&productInfo[options][213]=${size}&productInfo[qty]=${qty}&productInfo[cart_id]=${
       getCartId() || 0
     }&productInfo[customer_id]=${
       getCustId() || 0
@@ -18,7 +20,9 @@ export const addToCartService = (id, color, size, qty) => {
 export const getCartPaymentInfo = () => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/quoteInfo?quoteId=${getCartId()}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/quoteInfo?quoteId=${getCartId()}`,
     silent: true,
   };
   return axios(config);
@@ -27,7 +31,7 @@ export const getCartPaymentInfo = () => {
 export const getCartService = () => {
   const config = {
     method: "post",
-    url: `${API_URL}/cartlisting`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/cartlisting`,
     silent: true,
     data: {
       storeId: getStoreId(),
@@ -46,7 +50,7 @@ export const editCartService = (id, qty) => {
   formData.append("itemValue[cart_id]", getCartId());
   const config = {
     method: "post",
-    url: `${API_URL}/updateCart`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/updateCart`,
     silent: true,
     data: formData,
   };
@@ -57,7 +61,9 @@ export const deleteCartItem = (id) => {
   if (getCartId() !== 0) {
     const config = {
       method: "delete",
-      url: `${API_URL}/carts/${getCartId()}/items/${id}`,
+      url: `${API_URL}/rest/${
+        getStoreData()?.store_code
+      }/V1/carts/${getCartId()}/items/${id}`,
       silent: true,
     };
     return axios(config);
@@ -67,7 +73,7 @@ export const deleteCartItem = (id) => {
 export const getProductIdBySku = (sku) => {
   const config = {
     method: "post",
-    url: `${API_URL}/productIdBySku`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/productIdBySku`,
     data: { sku },
     silent: true,
   };
@@ -77,9 +83,7 @@ export const getProductIdBySku = (sku) => {
 export const cartPaymentAction = (token, type) => {
   const config = {
     method: "post",
-    url: `${
-      process.env.REACT_APP_DEV
-    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=${type}&paymentInfo[transactionDetails]=${JSON.stringify(
       token
     )}`,
     silent: true,
@@ -89,7 +93,9 @@ export const cartPaymentAction = (token, type) => {
 export const Hypy_PaymentCart = (data, cardType) => {
   const config = {
     method: "get",
-    url: `${API_URL}/webapi/processhyperpay${data}&method=${cardType}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/processhyperpay${data}&method=${cardType}`,
     silent: true,
   };
   return axios(config);
@@ -98,9 +104,9 @@ export const Hypy_PaymentCart = (data, cardType) => {
 export const cartPaymentTapAction = (submethod) => {
   const config = {
     method: "post",
-    url: `${
-      process.env.REACT_APP_DEV
-    }/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/placeorder?quoteId=${getCartId()}&paymentInfo[method]=tap&paymentInfo[submethod]=${submethod}`,
     silent: true,
   };
   return axios(config);
@@ -109,7 +115,9 @@ export const cartPaymentTapAction = (submethod) => {
 export const finalCallTapAction = (id) => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/webapi/processtap?paymentData[tap_id]=${id}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/processtap?paymentData[tap_id]=${id}`,
     silent: true,
   };
   return axios(config);
@@ -117,7 +125,9 @@ export const finalCallTapAction = (id) => {
 export const getFreeShippingInfo = (cartId) => {
   const config = {
     method: "get",
-    url: `${process.env.REACT_APP_DEV}/webapi/getfreeshipping?quoteId=${cartId}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/getfreeshipping?quoteId=${cartId}`,
     silent: true,
   };
   return axios(config);
@@ -127,7 +137,9 @@ export const getFreeShippingInfo = (cartId) => {
 export const placeCodOrder = (type) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=${type}`,
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/placeorder?quoteId=${getCartId()}&shippingInfo[method]=flatrate_flatrate&paymentInfo[method]=${type}`,
     silent: true,
   };
   return axios(config);

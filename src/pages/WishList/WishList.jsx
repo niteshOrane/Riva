@@ -7,10 +7,12 @@ import Card from "../../components/pages/Wishlist/Card/Card";
 import styles from "./Wishlist.module.scss";
 import { getWishlist, removeWishlist } from "../../store/actions/wishlist";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function WishList() {
   const wishlist = useSelector((state) => state.wishlist.data);
   useAnalytics();
+  useDocumentTitle("Wishlist");
   const { loading } = useSelector((state) => state.wishlist);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);

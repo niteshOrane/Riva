@@ -7,6 +7,7 @@ import { toggleCart } from "../../store/actions/cart";
 import Products from "../../components/pages/ShoppingCart/Products/Products";
 import Summary from "../../components/pages/ShoppingCart/Summary/Summary";
 import style from "./ShoppingCart.module.scss";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 const ShoppingCart = () => {
   const { data: items = [] } = useSelector((state) => state.cart);
@@ -14,6 +15,7 @@ const ShoppingCart = () => {
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const location = useLocation();
+  useDocumentTitle("Shopping Cart")
 
   useEffect(() => {
     dispatch(toggleCart(false));

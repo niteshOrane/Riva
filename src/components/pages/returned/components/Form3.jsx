@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../return.module.scss";
 
-function Form3({ requestReturn, handleCommentChange }) {
+function Form3({ requestReturn, handleCommentChange, list }) {
   return (
     <>
       <div className={styles.wrap}>
@@ -18,7 +18,16 @@ function Form3({ requestReturn, handleCommentChange }) {
             </form>
           </section>
           <form onSubmit={requestReturn}>
-            <button type="submit">Request Return</button>
+            <button
+              disabled={list.length === 0}
+              style={{
+                backgroundColor: list.length === 0 ? "gray" : "black",
+                cursor: list.length === 0 ? "not-allowed" : "pointer",
+              }}
+              type="submit"
+            >
+              Request Return
+            </button>
           </form>
         </section>
       </div>

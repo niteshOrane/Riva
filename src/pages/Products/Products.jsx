@@ -13,13 +13,14 @@ import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import "react-loading-skeleton/dist/skeleton.css";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 
 function Products(props) {
   const handleQuickView = () => {};
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { data } = useSelector((state) => state?.cart);
-  useAnalytics()
+  useAnalytics();
 
   const refContainer = useRef();
 
@@ -46,6 +47,9 @@ function Products(props) {
     serachTerm: parsed?.serachTerm,
   });
   // console.log({products})
+  useDocumentTitle(
+    match.params.category?.[0]?.toUpperCase() + match.params.category?.slice(1)
+  );
 
   const handleSortChange = (event) => {
     setSortField(event.target.value.split("-")?.[0]);
@@ -69,7 +73,7 @@ function Products(props) {
         return styles.fullWidthCardInTwoCol;
       }
     }
-    return null
+    return null;
   };
   useEffect(() => {
     return () => {
@@ -109,7 +113,7 @@ function Products(props) {
         url: location.pathname,
       },
     };
-  }, [match.params.category, parsed.serachTerm,products]);
+  }, [match.params.category, parsed.serachTerm, products]);
   return (
     <div>
       <div className="container-90 max-width-1600">

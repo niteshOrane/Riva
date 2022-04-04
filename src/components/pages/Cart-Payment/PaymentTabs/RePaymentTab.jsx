@@ -16,7 +16,7 @@ import { cartPaymentAction } from "../../../../services/cart/cart.service";
 
 import * as DATA_TYPES from "../../../../store/types";
 import Loader from "../../../common/Loader";
-import { getCartId, getCurrencyCode } from "../../../../util";
+import { getCartId, getCurrencyCode, getStoreData } from "../../../../util";
 import GoSellTap from "./components/Tab2Content/GoSellTap";
 import GooglePay from "./components/GooglePay";
 import ApplePay from "./components/ApplePay";
@@ -28,6 +28,7 @@ import {
 import { getCustomerCartPayments } from "../../../../store/actions/cart";
 import Cod from "./components/Cod";
 import TagManager from "react-gtm-module";
+import API_URL from "../../../../enviroments/index";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,8 +113,6 @@ export default function DetailTabs({
   paymentMode,
   cartPaymentInfo,
   store,
-  loading,
-  setLoading,
   customObj,
 }) {
   // const classes = useStyles();
@@ -131,12 +130,17 @@ export default function DetailTabs({
   const [paymentMethod, setPaymentMethod] = useState([]);
   const [codInfo, setCodInfo] = useState(null);
   const [renderTab, setRenderTab] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onPayNow = async (e) => {
     if (e) {
       setLoading(true);
       const res = await cartPaymentAction(e, "checkoutcom_card_payment");
-      if (res.status === 200) {
+      if (
+        res.status === 200 &&
+        res.data?.[0]["order_id"] &&
+        res.data?.[0]["display_order_id"]
+      ) {
         setLoading(false);
         dispatch(showSnackbar("Payment success", "success"));
         dispatch({
@@ -147,37 +151,38 @@ export default function DetailTabs({
           type: DATA_TYPES.SET_BULK_CART,
           payload: [],
         });
-        window.dataLayer.push({
-          event: "event",
-          eventProps: {
-            category: "purchase",
-            action: "purchase",
-            label: "buy",
-            value: 10,
-          },
-        });
         history.push(
           `/order-confirmed/${res.data?.[0]["order_id"]}/${res.data?.[0]["display_order_id"]}`
         );
       } else {
         setLoading(false);
-        dispatch(showSnackbar("Payment Failed", "error"));
+        dispatch(
+          showSnackbar("Payment Failed, redirecting you to cart", "error")
+        );
+        setTimeout(() => {
+          history.push("/shopping-cart");
+        }, 1500);
       }
     }
   };
+
   useEffect(() => {
     const obj = {
       tap: <GoSellTap translate={translate} />,
       checkoutcom_card_payment: paymentType ? (
         <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
       ) : null,
+      cashondelivery: <Cod codInfo={codInfo && codInfo} />,
     };
     setRenderTab(obj);
   }, [customObj, paymentType]);
+
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
       method: "get",
-      url: `${process.env.REACT_APP_DEV}/webapi/gettapinfo?method=${fnValue}`,
+      url: `${API_URL}/rest/${
+        getStoreData()?.store_code
+      }/V1/webapi/gettapinfo?method=${fnValue}`,
       silent: true,
     };
     await axios(configTap)
@@ -186,78 +191,47 @@ export default function DetailTabs({
       })
       .catch((err) => console.log(err));
   };
-  const getPaymentForHyperPay = async (fnValue) => {
-    const config = {
-      method: "post",
-      url: `${process.env.REACT_APP_DEV}/webapi/gethyperpayid?method=${
-        paymentMode[fnValue].code
-      }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
-      silent: true,
-    };
-    await axios(config)
-      .then((res) => {
-        setCheckoutId(JSON.parse(res?.data)?.id);
-      })
-      .catch((err) => console.log(err));
-  };
+
+  // const getPaymentForHyperPay = async (fnValue) => {
+  //   const config = {
+  //     method: "post",
+  //     url: `${API_URL}/rest/${
+  //       getStoreData()?.store_code
+  //     }/V1/webapi/gethyperpayid?method=${
+  //       paymentMode[fnValue].code
+  //     }&quoteId=${getCartId()}&currency=${getCurrencyCode()}&paymentType=DB`,
+  //     silent: true,
+  //   };
+  //   await axios(config)
+  //     .then((res) => {
+  //       setCheckoutId(JSON.parse(res?.data)?.id);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
     }
   }, [paymentMode]);
 
-  const renderPaymentform = () => {
-    if (checkoutId) {
-      const script = document.createElement("script");
-      script.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutId}`;
-      script.async = true;
-      document.body.appendChild(script);
-      const form = document.createElement("form");
-      form.action = `${window.location.origin}/result/${paymentMode[value].code}`;
-      form.setAttribute("class", "paymentWidgets");
-      form.setAttribute(
-        "data-brands",
-        "VISA MASTER AMEX" || paymentMode[value].tbText
-      );
+  // useEffect(() => {
+  //   let tabName;
+  //   if (value === 1) {
+  //     tabName = "renderPaymentformOne";
+  //   } else if (value === 3) {
+  //     tabName = "renderPaymentformThree";
+  //   } else if (value === 5) {
+  //     tabName = "renderPaymentformFive";
+  //   }
+  //   const isEmpty = document.getElementById(tabName)?.innerHTML === "";
+  //   getPaymentForHyperPay(value);
+  //   if (isEmpty) {
+  //     const item = document.getElementById(tabName);
+  //     item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
+  //   }
+  // }, [value]);
 
-      let tabName;
-      if (value === 1) {
-        tabName = "renderPaymentformOne";
-      } else if (value === 3) {
-        tabName = "renderPaymentformThree";
-      } else if (value === 5) {
-        tabName = "renderPaymentformFive";
-      }
-      let menu = document.getElementById(tabName);
-
-      let child = menu?.lastElementChild;
-      while (child) {
-        menu?.removeChild(child);
-        child = menu?.lastElementChild;
-      }
-
-      if (menu && menu != null) {
-        menu.innerHTML = "";
-        menu = menu?.append(form);
-      }
-    }
-  };
-  useEffect(() => {
-    let tabName;
-    if (value === 1) {
-      tabName = "renderPaymentformOne";
-    } else if (value === 3) {
-      tabName = "renderPaymentformThree";
-    } else if (value === 5) {
-      tabName = "renderPaymentformFive";
-    }
-    const isEmpty = document.getElementById(tabName)?.innerHTML === "";
-    getPaymentForHyperPay(value);
-    if (isEmpty) {
-      const item = document.getElementById(tabName);
-      item.innerHTML = "<div><h4>Hang On!! loading your card...</h4><div>";
-    }
-  }, [value]);
   const processCod = async (fnValue) => {
     if (fnValue === "cashondelivery") {
       const res = await processCodPayment();
@@ -291,29 +265,15 @@ export default function DetailTabs({
           code: newValue,
         });
         break;
-      case 2:
+      case "cashondelivery":
         // setValue(newValue);
         // getPaymentForHyperPay(newValue);
         dispatch(getCustomerCartPayments());
-        setValue(newValue);
+        setName({
+          ...name,
+          code: newValue,
+        });
         processCod("cashondelivery");
-        break;
-      case 3:
-        // setValue(newValue);
-        dispatch(getCustomerCartPayments());
-        getPaymentForHyperPay(newValue);
-        setValue(newValue);
-        break;
-      case 4:
-        // getPaymentForHyperPay(newValue);
-        dispatch(getCustomerCartPayments());
-        setValue(newValue);
-        break;
-      case 5:
-        // setValue(newValue);
-        dispatch(getCustomerCartPayments());
-        getPaymentForHyperPay(newValue);
-        setValue(newValue);
         break;
       default:
         setValue(newValue);
@@ -396,7 +356,11 @@ export default function DetailTabs({
             <ApplePay />
           </TabPanel> */}
           {renderTab && renderTab[name.code]}
-          {loading && <span>Please wait processing you payment...</span>}
+          {loading && (
+            <div className={styles.checkLoading}>
+              <span>Please wait processing you payment...</span>
+            </div>
+          )}
         </div>
       </Box>
       <PaymentFooter translate={translate} />

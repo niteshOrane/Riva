@@ -68,6 +68,7 @@
   display: inline-block;
   width: 70%;
   color: #fff;
+  cursor: pointer;
 }
 
 .cardValidation {
@@ -259,4 +260,8 @@
   section{
     font-size: 2rem;
   }
+}
+.checkLoading{
+  padding-top: 20px;
+  font-size: 18px;
 }

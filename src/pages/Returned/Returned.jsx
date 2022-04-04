@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
 import ReturnCard from "../../components/pages/returned/ReturnCard";
 import ReturnForm from "../../components/pages/returned/ReturnForm";
@@ -10,13 +11,15 @@ import {
 import { showSnackbar } from "../../store/actions/common";
 import { clearReturnList } from "../../store/actions/stats";
 import { getCustId, getStoreId } from "../../util";
+import { Prompt, useHistory } from "react-router-dom";
 
 function Returned() {
   const { list } = useSelector((state) => state.stats);
-  console.log({list})
+  const history = useHistory();
   const [reasonList, setReasonList] = useState(null);
   const [returnedItem, setReturnedItem] = useState([]);
   const [userComment, setUserComment] = useState("");
+  const [isProm, setIsProm] = useState(true);
   const dispatch = useDispatch();
   const getAllReasons = async () => {
     const res = await getReasonForReturn();
@@ -74,44 +77,63 @@ function Returned() {
       },
     };
     const res = await createRmaRequest(rmaData);
-    if (!res?.data?.success) {
-      return dispatch(showSnackbar(`${res?.data?.message}`, "warning"));
-    }
     if (res?.status === 200) {
-      return dispatch(showSnackbar("Return request created", "success"));
+      setIsProm(false);
+      setTimeout(() => {
+        history.push("/returned-orders");
+      }, 2000);
+      return dispatch(
+        showSnackbar(
+          "Return request created, redirecting to returns",
+          "success"
+        )
+      );
     }
-    return dispatch(showSnackbar("something went wrong", "error"));
+    return dispatch(showSnackbar("something went wrong,Item is not returnable", "error"));
   };
   return (
-    <div className="d-flex py-20px">
-      <div className="container-with-circles">
-        <div className="d-flex h-100">
-          <Sidebar />
-          <div className="w-100">
-            <section
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                marginBottom: "1rem",
-              }}
-            >
-              {list?.length > 0 &&
-                list?.map((card) => (
-                  <ReturnCard
-                    product={card}
-                    reasonList={reasonList && reasonList}
-                    createRmaItems={createRmaItems}
-                  />
-                ))}
-            </section>
-            <ReturnForm
-              requestReturn={requestReturn}
-              handleCommentChange={handleCommentChange}
-            />
+    <>
+      {isProm && (
+        <Prompt message="Are you sure you want to leave? If you have any pending return request it will be discarded" />
+      )}
+      <div className="d-flex py-20px">
+        <div className="container-with-circles">
+          <div className="d-flex h-100">
+            <Sidebar />
+            <div className="w-100">
+              {list.length === 0 && (
+                <Alert severity="info">
+                  <AlertTitle>No Product to return</AlertTitle>
+                  There is no product to return, Go to your orders and request a
+                  return.
+                </Alert>
+              )}
+              <section
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  marginBottom: "1rem",
+                }}
+              >
+                {list?.length > 0 &&
+                  list?.map((card) => (
+                    <ReturnCard
+                      product={card}
+                      reasonList={reasonList && reasonList}
+                      createRmaItems={createRmaItems}
+                    />
+                  ))}
+              </section>
+              <ReturnForm
+                list={list}
+                requestReturn={requestReturn}
+                handleCommentChange={handleCommentChange}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

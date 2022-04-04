@@ -9,15 +9,15 @@
     cursor: pointer;
   }
 }
-.progress{
+.progress {
   margin-top: 20px;
 }
-.pageLi{
+.pageLi {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   overflow: auto;
-  li{
+  li {
     list-style: none;
     display: flex;
     justify-content: center;
@@ -29,16 +29,30 @@
     margin-top: 5px;
     cursor: pointer;
     margin-right: 0.5rem;
-
   }
 }
-.reqBtn{
+.reqBtn {
   float: right;
   padding: 10px;
   cursor: pointer;
-  button{
+  button {
     padding: 5px;
     background-color: black;
     color: white;
   }
+}
+
+.pageSec {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.prevNextBtn {
+  padding: 4px;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin: 10px 3px;
 }
