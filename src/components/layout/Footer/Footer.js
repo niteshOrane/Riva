@@ -37,7 +37,7 @@ function Footer() {
       <div className={style.footerGrid}>
         {footer?.footer_links?.map((section) => (
           <div className={style.footerCol}>
-            <h4 className={style.title}>{section.section.toUpperCase()}</h4>
+            <h4 className={style.title}>{section.section?.toUpperCase()}</h4>
             <ul className={style.ul}>
               {section.data.map((link, i) => (
                 <>

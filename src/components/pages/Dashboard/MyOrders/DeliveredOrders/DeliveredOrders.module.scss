@@ -11,6 +11,12 @@
       .img {
         @include right('margin', 20px);
         width: 10rem;
+        position: relative;
+        input {
+          position: absolute;
+          width: 1.2rem;
+          height: 1.2rem;
+        }
       }
       .colorSize {
         display: flex;

@@ -20,6 +20,7 @@ function CategoriesCircles({ isHomePage }) {
   const onCategorySelect = (id) => {
     if (id) {
       setCategory(id);
+      localStorage.setItem("selectedCategory", JSON.stringify(id));
       setTimeout(() => {
         const items = links?.children_data?.filter((e) => e?.id === id) ?? [];
         if (items.length) {
@@ -50,7 +51,15 @@ function CategoriesCircles({ isHomePage }) {
           item.is_active == 1 && (
             <div
               style={{
-                border: selectedTab === item.id ? "1px solid black" : null,
+                background:
+                  JSON.parse(localStorage.getItem("selectedCategory")) !==
+                  item.id
+                    ? "black"
+                    : null,
+                    color: JSON.parse(localStorage.getItem("selectedCategory")) !==
+                    item.id
+                      ? "white"
+                      : "black"
               }}
               onClick={() => {
                 onCategorySelect(item?.id);

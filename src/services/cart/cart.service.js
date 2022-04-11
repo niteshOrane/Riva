@@ -15,10 +15,10 @@ export const addToCartService = (id, color, size, qty) => {
   return axios(config);
 };
 
-export const getCartPaymentInfo = () => {
+export const getCartPaymentInfo = (id) => {
   const config = {
     method: "post",
-    url: `${API_URL}/webapi/quoteInfo?quoteId=${getCartId()}`,
+    url: `${API_URL}/webapi/quoteInfo?quoteId=${id !== 0 && id !==undefined ? id : getCartId()}`,
     silent: true,
   };
   return axios(config);
@@ -54,7 +54,7 @@ export const editCartService = (id, qty) => {
 };
 
 export const deleteCartItem = (id) => {
-  if (getCartId() != 0) {
+  if (getCartId() !== 0) {
     const config = {
       method: "delete",
       url: `${API_URL}/carts/${getCartId()}/items/${id}`,

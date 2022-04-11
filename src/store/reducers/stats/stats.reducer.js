@@ -1,7 +1,8 @@
-import * as DATA_TYPES from '../../types';
+import * as DATA_TYPES from "../../types";
 
 const initialState = {
   data: [],
+  list: [],
 };
 
 const handleAddRecentlyView = (data, payload) => {
@@ -19,6 +20,11 @@ export default function stats(state = initialState, action) {
           0,
           8
         ),
+      };
+    case DATA_TYPES.ADD_RETURN_LIST:
+      return {
+        ...state,
+        list: action.payload,
       };
 
     default:

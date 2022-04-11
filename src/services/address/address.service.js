@@ -1,5 +1,6 @@
 import axios from "axios";
 import API_URL from "../../enviroments/index";
+
 export const getCustomerAddress = (customerid) => {
   const customerData = new FormData();
   customerData.append("customerid", customerid);
@@ -83,6 +84,16 @@ export const getCountryList = () => {
   return axios(config);
 };
 
+
+// get state list
+export const getStateList = (state) => {
+  const config = {
+    method: "get",
+    url: `${process.env.REACT_APP_DEV}/directory/countries/${state}`,
+    silent: true,
+  };
+  return axios(config);
+};
 
 // get address by geo location
 

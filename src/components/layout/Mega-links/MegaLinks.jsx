@@ -66,7 +66,7 @@ const MegaLinks = ({ links, language }) => {
                 } position-absolute px-75px pl-100px`}
               >
                 <div className={style.titleDoubleLineFilter} />
-                <div className={style.titleDoubleLine_SecondFilter} />
+                {/* <div className={style.titleDoubleLine_SecondFilter} /> */}
                 <div className="d-flex justify-content-between text-left">
                   <div className={style.allProductsCard}>
                     <div

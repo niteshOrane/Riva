@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   avatar: {
     backgroundColor: colors.red[500],
-    marginLeft:8
+    marginLeft: 8,
   },
 });
 
@@ -44,13 +44,13 @@ function AddressCard({
   isBillingDefault,
   setDefaultAddress,
   isManageScreen,
-  loading
+  loading,
 }) {
   const classes = useStyles();
   return addressItem ? (
     <Card
       style={{
-        width: isManageScreen ? "27rem" : "30rem",
+        width: isManageScreen ? "27rem" : "27rem",
         boxShadow:
           isDefault || isBillingDefault
             ? "rgba(50, 50, 93, 0.25) 0px 20px 40px -10px inset, rgba(0, 0, 0, 0.3) 0px 10px 30px -15px inset"
@@ -105,7 +105,34 @@ function AddressCard({
           >
             Remove
           </span>
-        
+          {!isDefault && !isBillingDefault && (
+            <>
+              {" "}
+              |{" "}
+              <span
+                onClick={() => {
+                  setDefaultAddress(addressItem, false);
+                }}
+                className={style.delete}
+              >
+                Set Default Address
+              </span>
+            </>
+          )}
+          {!isBillingDefault && !isDefault && (
+            <>
+              {" "}
+              |{" "}
+              <span
+                onClick={() => {
+                  setDefaultAddress(addressItem, true);
+                }}
+                className={style.delete}
+              >
+                Set Default Billing Address
+              </span>
+            </>
+          )}
         </div>
       </CardActions>
     </Card>

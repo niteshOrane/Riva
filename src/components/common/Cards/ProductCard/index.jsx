@@ -48,7 +48,7 @@ const ProductCard = ({
     origprice = 0,
     origpriceWithoutCurrency,
     priceWithoutCurrency,
-    price = 0,
+    price ,
   } = product;
   if (custom_attributes) {
     origpriceWithoutCurrency = custom_attributes?.find(
@@ -234,6 +234,7 @@ const ProductCard = ({
 
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;
+    console.log({productItem})
   return (
     <>
       <div

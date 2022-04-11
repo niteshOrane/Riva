@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./megalinks.module.scss";
+
 const MegaLinks = ({ links }) => {
   return (
     <div className="d-flex-all-center bg-black flex-wrap">

@@ -78,6 +78,7 @@ const useProducts = ({
               )?.value === "1",
           };
         });
+        console.log({dataItem})
 
         setTotalCount(response?.data?.total_count);
         if (onScreen) {

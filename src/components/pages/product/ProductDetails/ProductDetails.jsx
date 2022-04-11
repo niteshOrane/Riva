@@ -101,7 +101,7 @@ const ProductDetails = (props) => {
   useEffect(() => {
     getOutOfStock();
     getReviewListForProduct(product?.sku);
-  }, []);
+  }, [product]);
   useEffect(() => {
     getReviewListForProduct(product?.sku);
   }, [reviewState]);
@@ -120,6 +120,7 @@ const ProductDetails = (props) => {
   useEffect(() => {
     getOutOfStock();
   }, [product, colorImg]);
+
 
   let {
     origprice = 0,

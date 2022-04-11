@@ -15,17 +15,20 @@ import {
 } from "../../services/product/product.service";
 import ProductCard from "../../components/common/Cards/ProductCard";
 import ShopTheWholeOutfit from "../../components/pages/product/ShopTheWholeOutfit/ShopTheWholeOutfit";
+import ImageCard from "../../components/common/Cards/ImageCard/ImageCard";
 
 import styles from "./product.module.scss";
 
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { extractColorSize } from "../../util";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 const Product = (props) => {
   const { match } = props;
   const refContainer = useRef();
   const dispatch = useDispatch();
+  useAnalytics();
 
   const selectedProductId = match.params.categoryId;
 
@@ -182,7 +185,7 @@ const Product = (props) => {
         language={language}
         items={mediaImage}
       />
-      {/* <div className="max-width-1750 mx-auto">
+      <div className="max-width-1750 mx-auto">
         <Slider
           className={`simpleGreyArrow ${styles.simpleCardGap}`}
           items={mediaImage}
@@ -194,7 +197,7 @@ const Product = (props) => {
             />
           )}
         />
-      </div> */}
+      </div>
       <DescriptionComposition
         product={product}
         prodDiscr={product}

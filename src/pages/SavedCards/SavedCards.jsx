@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import Sidebar from '../../components/pages/Dashboard/Sidebar/Sidebar';
-import CategoriesCircles from '../../components/common/CategoriesCircles/CategoriesCircles';
-import NewCard from '../../components/pages/Dashboard/Payments/NewCard/NewCard';
-import ManageSavedCard from '../../components/pages/Dashboard/Payments/ManageSavedCard/ManageSavedCard';
+import React, { useState } from "react";
+import Sidebar from "../../components/pages/Dashboard/Sidebar/Sidebar";
+import NewCard from "../../components/pages/Dashboard/Payments/NewCard/NewCard";
+import ManageSavedCard from "../../components/pages/Dashboard/Payments/ManageSavedCard/ManageSavedCard";
+
 function SavedCards() {
   const [addingNewCard, setAddingNewCard] = useState(false);
   const [values, setValues] = useState({
-    cardNumber: '',
-    nameOnCard: '',
+    cardNumber: "",
+    nameOnCard: "",
   });
   const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
+    const { value, name } = e.target;
     setValues({
       ...values,
       [name]: value,

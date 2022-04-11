@@ -13,14 +13,16 @@ import { toggleCart } from "../../store/actions/cart";
 import Loader from "../../components/common/Loader";
 
 import useArabic from "../../components/common/arabicDict/useArabic";
+import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 
 function CartPayment() {
   const dispatch = useDispatch();
   const { translate } = useArabic();
 
-  // useAnalytics();
+  useAnalytics();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
+  const [customObj,setCustomObj] =  React.useState(null)
   const [loading, setLoading] = React.useState(false);
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
@@ -41,6 +43,16 @@ function CartPayment() {
 
   useEffect(() => {
     setPaymentOption(paymentMode);
+    const obj = paymentMode?.data?.reduce((acc,item) =>{
+      if(!acc[item]){
+       acc[item.code] = item
+       return acc
+      }
+      return acc
+    },{})
+    if(obj){
+      setCustomObj(obj)
+    }
   }, [paymentMode]);
   useEffect(() => {
     TagManager.dataLayer({
@@ -122,6 +134,7 @@ function CartPayment() {
                 paymentMode={paymentOption?.data}
                 loading={loading}
                 setLoading={setLoading}
+                customObj = {customObj}
               />
             </>
           ) : null}

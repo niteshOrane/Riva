@@ -46,13 +46,13 @@ const HorizontalProductCard = ({
   };
 
   const colors =
-    product?.options && product?.options.length
+    product?.options && product?.options?.length > 0
       ? Object.keys(
           product?.options?.filter((e) => e.label === "Color")?.[0]?.values
         )
       : [];
   const sizes =
-    product?.options && product?.options.length
+    product?.options && product?.options?.length > 0
       ? Object.keys(
           product?.options?.filter((e) => e.label === "Size")?.[0]?.values
         )
@@ -66,6 +66,7 @@ const HorizontalProductCard = ({
       )?.[0]?.label
     );
   }, []);
+  console.log({colors})
   return (
     <div className={`${styles.horizontalProductCard} d-flex gap-12px`}>
       <div>
@@ -85,7 +86,7 @@ const HorizontalProductCard = ({
             className="gap-12px d-flex align-items-center"
           >
             <span className={styles.title}>Color:</span>
-            {colors.map((color, index) => {
+            {colors.length > 0 && colors.map((color, index) => {
               const colorItem = product?.options.filter(
                 (e) => e.label === "Color"
               )?.[0]?.values[color];
@@ -126,15 +127,15 @@ const HorizontalProductCard = ({
           </div>
           <div className="gap-12px d-flex align-items-center">
             <span className={styles.title}>Size:</span>
-          <span>{product?.options.filter(
+          <span>{product?.options?.filter(
                 (e) => e.label === "Size"
               )[0].values[sizes[sizeIndex]]?.label}</span>
           </div>
           <div
             className={`${styles.options} gap-12px d-flex align-items-center`}
           >
-            {sizes?.map((color) => {
-              const sizeItem = product?.options.filter(
+            {sizes.length > 0 && sizes?.map((color) => {
+              const sizeItem = product?.options?.filter(
                 (e) => e.label === "Size"
               )[0].values[color];
               return (

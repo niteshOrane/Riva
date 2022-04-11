@@ -12,11 +12,21 @@ import ReviewModal from "../../../product/ProductDetails/ReviewPopUp";
 import { extractColorSize } from "../../../../../util";
 import { addCartId } from "../../../../../store/actions/auth";
 import { getCart } from "../../../../../store/actions/cart";
-import { buyAgainOrder, cancelOrder } from "../../../../../services/order/order.services";
+import {
+  buyAgainOrder,
+  cancelOrder,
+} from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
 
-
-const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
+const DeliveredOrders = ({
+  product,
+  language,
+  cancelOrderOnTap,
+  order_currency_code,
+  status,
+  check,
+  handleReturn,
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const reOrder = async (orderId) => {
@@ -51,8 +61,9 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
   };
 
   const getColorSize = (options) => {
+    console.log({options})
     const { colors, size } = extractColorSize(
-      options.map((o) => ({
+      options?.map((o) => ({
         label: o.option_id === "92" ? "Color" : "Size",
         values: [{ value_index: o.option_value }],
         attribute_id: o.option_id,
@@ -68,33 +79,45 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
 
   return (
     <div className={styles.card}>
-      <div className={styles.incrementWrap}>
+      {/* <div className={styles.incrementWrap}>
         <Link to={`/order-details/${product?.increment_id}`}>
           <span className="greyText">
             Order Number: #{product?.increment_id}
           </span>
         </Link>
-      </div>
+      </div> */}
       <div className={styles.carItem}>
         <div className={styles.col1}>
-          <Link to={`/order-details/${product?.increment_id}`}>
-            <div className={styles.img}>
-              {product?.extension_attributes?.product_thumbnail_image ?
-                 <Image src={product?.extension_attributes?.product_thumbnail_image} width="100%" /> : <span
-                  className={
-                    product?.status === "processing"
-                      ? styles.processIcon
-                      : styles.deliveredIcon
-                  }
-                >
-                  {" "}
-                  {product?.status}{" "}
-                </span>}{" "}
-              <div className={styles.orderDate}>
-                {moment(product?.created_at).format("MMMM DD YYYY")}
-              </div>
+          <div className={styles.img}>
+            {product?.extension_attributes?.product_thumbnail_image ? (
+              <>
+                {check && (
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleReturn(e.target.checked, product)}
+                  />
+                )}
+                <Image
+                  src={product?.extension_attributes?.product_thumbnail_image}
+                  width="100%"
+                />
+              </>
+            ) : (
+              <span
+                className={
+                  product?.status === "processing"
+                    ? styles.processIcon
+                    : styles.deliveredIcon
+                }
+              >
+                {" "}
+                {product?.status}{" "}
+              </span>
+            )}{" "}
+            <div className={styles.orderDate}>
+              {moment(product?.created_at).format("MMMM DD YYYY")}
             </div>
-          </Link>
+          </div>
 
           <div>
             <h3 className="font-weight-normal">{product?.name}</h3>
@@ -116,7 +139,7 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
         </div>
         <div className="text-center">
           <strong>
-            {product?.order_currency_code}
+            {order_currency_code}
             {product?.parent_item?.price}
           </strong>
         </div>
@@ -127,26 +150,21 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
               update
             </span>
             <h4 className="c-pointer font-weight-normal greyText">
-              {product?.status?.[0]?.toUpperCase() + product?.status?.slice(1)}
-            </h4>
-          </div>
-          <div className="d-flex align-items-center mt-12px">
-            <span className={styles.icon}>
-              <icons.Star />
-            </span>
-            <h4 className="underline underline-hovered c-pointer font-weight-normal greyText">
-              <ReviewModal
-                id={product?.product_id}
-                sku={product?.sku}
-                language={language}
-              />
+              {status?.[0]?.toUpperCase() + status?.slice(1)}
             </h4>
           </div>
           <div className="d-flex align-items-center mt-12px">
             <span className={styles.icon}>
               <icons.Undo />
             </span>
-            <h4 className="c-pointer font-weight-normal greyText">Return</h4>
+            <Link
+              to={{
+                pathname: "/retur-order",
+                state: product,
+              }}
+            >
+              <h4 className="c-pointer font-weight-normal greyText">Return</h4>
+            </Link>
           </div>
           <div
             className="d-flex align-items-center mt-12px"
@@ -159,22 +177,6 @@ const DeliveredOrders = ({ product, language, cancelOrderOnTap }) => {
             </span>
             <span className={styles.reorder}>Reorder</span>
           </div>
-          {/* {product?.status === "pending" &&  (
-            <div
-              className="d-flex align-items-center mt-12px"
-              onClick={() => {
-                cancelOrderMyOrder(product?.increment_id);
-              }}
-            >
-              <span
-                style={{ fontSize: "18px" }}
-                className={`material-icons ${styles.icon}`}
-              >
-                not_interested
-              </span>
-              <span className={styles.reorder}>Cancel Order</span>
-            </div>
-          )} */}
         </div>
       </div>
     </div>

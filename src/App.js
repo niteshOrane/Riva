@@ -32,6 +32,7 @@ class AppRoot extends React.Component {
     TagManager.initialize(tagManagerArgs);
     ReactPixel.init(process.env.REACT_APP_FACEBOOK);
     ReactPixel.pageView();
+    ReactGA.initialize("UA-80127534-1");
   }
 
   topFunction() {
