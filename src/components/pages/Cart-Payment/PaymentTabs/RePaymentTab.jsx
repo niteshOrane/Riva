@@ -24,6 +24,7 @@ import PaymentFooter from "./components/PaymentFooter";
 import {
   processCodPayment,
   processCodPaymentFurther,
+  processGpayPaymentFurther,
 } from "../../../../services/payment/payment.service";
 import { getCustomerCartPayments } from "../../../../store/actions/cart";
 import Cod from "./components/Cod";
@@ -131,6 +132,7 @@ export default function DetailTabs({
   const [codInfo, setCodInfo] = useState(null);
   const [renderTab, setRenderTab] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [gPayData, setGPayData] = useState(null);
 
   const onPayNow = async (e) => {
     if (e) {
@@ -156,9 +158,7 @@ export default function DetailTabs({
         );
       } else {
         setLoading(false);
-        dispatch(
-          showSnackbar("Payment Failed, redirecting you to cart", "error")
-        );
+        dispatch(showSnackbar("Payment Failed, redirecting to cart", "error"));
         setTimeout(() => {
           history.push("/shopping-cart");
         }, 1500);
@@ -172,10 +172,18 @@ export default function DetailTabs({
       checkoutcom_card_payment: paymentType ? (
         <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
       ) : null,
+      checkoutcom_google_pay: gPayData ? (
+        <GooglePay
+          cartPaymentInfo={cartPaymentInfo}
+          store={store}
+          styles={styles}
+          gPayData={gPayData}
+        />
+      ) : null,
       cashondelivery: <Cod codInfo={codInfo && codInfo} />,
     };
     setRenderTab(obj);
-  }, [customObj, paymentType]);
+  }, [customObj, paymentType,gPayData]);
 
   const getPaymentForTapCheckout = async (fnValue) => {
     const configTap = {
@@ -209,12 +217,6 @@ export default function DetailTabs({
   //     .catch((err) => console.log(err));
   // };
 
-  useEffect(() => {
-    if (paymentMode && paymentMode.length > 0) {
-      setPaymentMethod(paymentMode);
-    }
-  }, [paymentMode]);
-
   // useEffect(() => {
   //   let tabName;
   //   if (value === 1) {
@@ -244,20 +246,38 @@ export default function DetailTabs({
     }
   };
 
+  const processGPay = async (fnValue) => {
+    const configTap = {
+      method: "get",
+      url: `${API_URL}/rest/${
+        getStoreData()?.store_code
+      }/V1/webapi/gettapinfo?method=${fnValue}`,
+      silent: true,
+    };
+    await axios(configTap)
+      .then((res) => {
+        setGPayData(res?.data[0]);
+      })
+      .catch((err) => console.log(err));
+  };
+  console.log(gPayData);
+  useEffect(() => {
+    if (paymentMode && paymentMode.length > 0) {
+      setPaymentMethod(paymentMode);
+    
+    }
+  }, [paymentMode]);
+
   const handleChange = async (newValue) => {
     switch (newValue) {
       case "tap":
         dispatch(getCustomerCartPayments());
-        // getPaymentForHyperPay(newValue);
-        // setValue(newValue);
         setName({
           ...name,
           code: newValue,
         });
         break;
       case "checkoutcom_card_payment":
-        // setValue(newValue);
-        // getPaymentForHyperPay(newValue);
         dispatch(getCustomerCartPayments());
         getPaymentForTapCheckout(newValue);
         setName({
@@ -266,14 +286,20 @@ export default function DetailTabs({
         });
         break;
       case "cashondelivery":
-        // setValue(newValue);
-        // getPaymentForHyperPay(newValue);
         dispatch(getCustomerCartPayments());
         setName({
           ...name,
           code: newValue,
         });
         processCod("cashondelivery");
+        break;
+      case "checkoutcom_google_pay":
+        dispatch(getCustomerCartPayments());
+        setName({
+          ...name,
+          code: newValue,
+        });
+        processGPay("checkoutcom_google_pay");
         break;
       default:
         setValue(newValue);
@@ -323,38 +349,6 @@ export default function DetailTabs({
         </Box>
 
         <div className={classes.tabContent}>
-          {/* <TabPanel className={styles.goSellWrap} value={value} index={0}>
-            <GoSellTap translate={translate} />
-           
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-          {paymentType && (
-              <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
-            )}
-            {codInfo && <Cod codInfo={codInfo} />}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            {paymentType && (
-              <Tab2Content onPayNow={onPayNow} paymentType={paymentType} />
-            )}
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <div id="renderPaymentformThree">{renderPaymentform()}</div>
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            <GooglePay
-              style={styles}
-              id="renderPaymentformFour"
-              cartPaymentInfo={cartPaymentInfo}
-              store={store}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={5}>
-            <div id="renderPaymentformFive">{renderPaymentform()}</div>
-          </TabPanel>
-          <TabPanel value={value} index={6}>
-            <ApplePay />
-          </TabPanel> */}
           {renderTab && renderTab[name.code]}
           {loading && (
             <div className={styles.checkLoading}>

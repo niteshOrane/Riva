@@ -24,12 +24,12 @@ export const getOrderList = (id, page) => {
   return axios(config);
 };
 
-export const getReturnedList = () => {
+export const getReturnedList = (page) => {
   const config = {
     method: "get",
     url: `${API_URL}/rest/${
       getStoreData()?.store_code
-    }/V1/returns?searchCriteria[filter_groups][0][filters][0][field]=customer_id&searchCriteria[filter_groups][0][filters][0][value]=${getCustId()}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq`,
+    }/V1/webapi/getrma?rmaInfo[customer_id]=${getCustId()}&rmaInfo[pageSize]=2&rmaInfo[page]=${page}`,
     silent: true,
   };
   return axios(config);

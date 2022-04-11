@@ -19,8 +19,10 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Alert from "@material-ui/lab/Alert";
+import Card from "@material-ui/core/Card";
 import { addToReturn } from "../../store/actions/stats";
 import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
+import { Divider } from "@material-ui/core";
 
 const excludeList = ["pending", "canceled", "closed"];
 
@@ -185,6 +187,70 @@ function Delivered() {
                         </div>
                       ))}
                   </AccordionDetails>
+                  <section className={styles.detailCard}>
+                    <Card className={styles.detailSubCard}>
+                      <div>
+                        <span>Order Total: </span>
+                        <strong>
+                          {li?.order_currency_code}{" "}
+                          {li?.grand_total}
+                        </strong>
+                      </div>
+                      <Divider />
+                      <div>
+                        <span>Shipping Discription: </span>
+                        <strong>{li?.shipping_description}</strong>
+                      </div>
+                      <Divider />
+                      <div>
+                        <span>Shipping Amount: </span>
+                        <strong>
+                          {li?.order_currency_code}{" "}
+                          {li?.shipping_amount}
+                        </strong>
+                      </div>
+                      <Divider />
+                      <div>
+                        <span>Shipping Inclusive Tax: </span>
+                        <strong>
+                          {li?.order_currency_code}{" "}
+                          {li?.shipping_incl_tax}
+                        </strong>
+                      </div>
+                      <Divider />
+                      <div>
+                        <span>Discount: </span>
+                        <strong>
+                          {li?.order_currency_code}{" "}
+                          {li?.base_discount_amount}
+                        </strong>
+                      </div>
+                      <Divider />
+                      <div>
+                        <span>Shipping Address: </span>
+                        <strong>
+                          {li?.extension_attributes?.shipping_address
+                            ?.extension_attributes?.building_name_number ??
+                            li?.extension_attributes?.shipping_address
+                              ?.street?.[0]}
+                          ,{" "}
+                          {li?.extension_attributes?.shipping_address
+                            ?.extension_attributes?.house_name_number ??
+                            li?.extension_attributes?.shipping_address
+                              ?.street?.[1]}
+                          ,{" "}
+                          {li?.extension_attributes?.shipping_address
+                            ?.extension_attributes?.block ??
+                            li?.extension_attributes?.shipping_address?.city}
+                          ,{" "}
+                          {li?.extension_attributes?.shipping_address?.region ??
+                            li?.extension_attributes?.shipping_address?.city}
+                          , {li?.extension_attributes?.shipping_address?.city},{" "}
+                          {li?.extension_attributes?.shipping_address?.postcode}
+                        </strong>
+                      </div>
+                    </Card>
+                  </section>
                   {!excludeList.includes(li?.status) && (
                     <section className={styles.reqBtn}>
                       {returnedProduct?.length === 0 && (

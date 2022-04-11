@@ -1,6 +1,6 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -9,12 +9,12 @@ import {
   FacebookIcon,
   WhatsappIcon,
   LinkedinIcon,
-  TwitterIcon
+  TwitterIcon,
 } from "react-share";
 
 function getModalStyle() {
-  const top = 50
-  const left = 50
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -25,18 +25,17 @@ function getModalStyle() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: 'absolute',
-    width: '25%',
+    position: "absolute",
+    width: "25%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
   },
   heading: {
-    textAlign: 'center'
+    textAlign: "center",
   },
-
 }));
 
-export default function ShareIcons({ styles, product, language,translate }) {
+export default function ShareIcons({ styles, product, language, translate }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -51,13 +50,16 @@ export default function ShareIcons({ styles, product, language,translate }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-
       <div>
         <h1 className={classes.heading}>RIVA</h1>
         <h5 className={classes.heading}>Share your favourite products</h5>
         <h5 className={classes.heading}>
           <FacebookShareButton
-            url={window.location.href}
+            url={
+              product?.custom_attributes?.find(
+                (pro) => pro?.attribute_code === "deeplink"
+              )?.value
+            }
             quote={product?.name}
             className={styles.socialMediaPopper}
             hashtag="#rivaapp"
@@ -65,7 +67,11 @@ export default function ShareIcons({ styles, product, language,translate }) {
             <FacebookIcon size={36} />
           </FacebookShareButton>
           <TwitterShareButton
-            url={window.location.href}
+            url={
+              product?.custom_attributes?.find(
+                (pro) => pro?.attribute_code === "deeplink"
+              )?.value
+            }
             title={product?.name}
             className={styles.socialMediaPopper}
             hashtag="#rivaapp"
@@ -73,7 +79,11 @@ export default function ShareIcons({ styles, product, language,translate }) {
             <TwitterIcon size={36} />
           </TwitterShareButton>
           <LinkedinShareButton
-            url={window.location.href}
+            url={
+              product?.custom_attributes?.find(
+                (pro) => pro?.attribute_code === "deeplink"
+              )?.value
+            }
             title={product?.name}
             className={styles.socialMediaPopper}
             hashtag="#rivaapp"
@@ -81,7 +91,11 @@ export default function ShareIcons({ styles, product, language,translate }) {
             <LinkedinIcon size={36} />
           </LinkedinShareButton>
           <WhatsappShareButton
-            url={window.location.href}
+            url={
+              product?.custom_attributes?.find(
+                (pro) => pro?.attribute_code === "deeplink"
+              )?.value
+            }
             className={styles.socialMediaPopper}
             title={product?.name}
             separator=":: "
@@ -91,16 +105,13 @@ export default function ShareIcons({ styles, product, language,translate }) {
         </h5>
       </div>
     </div>
-
   );
 
   return (
-    <div dir={language === 'Arabic' ? 'rtl' : 'ltr'}>
-      <span onClick={handleOpen}>
-        {translate?.details?.SHARE}
-      </span>
+    <div dir={language === "Arabic" ? "rtl" : "ltr"}>
+      <span onClick={handleOpen}>{translate?.details?.SHARE}</span>
       <Modal
-        dir={language === 'Arabic' ? 'rtl' : 'ltr'}
+        dir={language === "Arabic" ? "rtl" : "ltr"}
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"

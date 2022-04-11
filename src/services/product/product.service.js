@@ -102,7 +102,7 @@ export const outOfStockCheck = (productId = 0, color = "", size = "") => {
       : "";
     const config = {
       method: "post",
-      url: `${API_URL}/rest/${getStoreData()?.store_code}/productalertstock/productStock?productId=${productId}${sizeStock}${colorStock}`,
+      url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/productalertstock/productStock?productId=${productId}${sizeStock}${colorStock}`,
       silent: true,
     };
     return axios(config);

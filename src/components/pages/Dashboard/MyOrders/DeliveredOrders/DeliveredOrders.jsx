@@ -55,14 +55,12 @@ const DeliveredOrders = ({
         attribute_id: o.option_id,
       }))
     );
-    console.log({ colors, size });
     return { colors, size };
   };
   const colorSize = getColorSize(
     product?.parent_item?.product_option.extension_attributes
       ?.configurable_item_options
   );
-  console.log({ colorSize });
 
   return (
     <div className={styles.card}>

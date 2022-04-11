@@ -63,7 +63,7 @@ const Cart = () => {
     return { colors, size };
   };
   const handleWishList = async (productItem) => {
-    const res = await getProduct(productItem.sku);
+    const res = await getProduct(productItem.parent_sku);
 
     const { colors, size } = extractColorSize(
       res?.data?.extension_attributes?.configurable_product_options || []
@@ -124,13 +124,13 @@ const Cart = () => {
                         id={style.bdrBtm}
                         className="d-flex align-items-center"
                       >
-                        <Link
-                          to={`product/${getSKuId(item?.sku)}`}
-                          onClick={() => {
-                            handleClose();
-                          }}
-                        >
-                          <div className={style.itemImg}>
+                      
+                          <div
+                            className={style.itemImg}
+                            onClick = {() => {
+                              handleClose();
+                              history.push(`/product/${item?.parent_sku}`)}}
+                          >
                             <Image
                               src={item.src}
                               width="100%"
@@ -138,7 +138,7 @@ const Cart = () => {
                               type="product-details"
                             />
                           </div>
-                        </Link>
+                        
                         <div className={style.itemDetails}>
                           <p
                             title="Name"

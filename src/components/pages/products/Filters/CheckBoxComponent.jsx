@@ -9,6 +9,7 @@ const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
         type="checkbox"
         id={item.id}
         onChange={(e) => handleCheckboxChange(item,e)}
+        checked={item.isChecked}
       />
       <label
         className="c-pointer w-100"

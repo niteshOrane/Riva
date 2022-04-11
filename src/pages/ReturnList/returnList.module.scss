@@ -1,0 +1,14 @@
+.pageSec {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.prevNextBtn {
+  padding: 4px;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin: 10px 3px;
+}

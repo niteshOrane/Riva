@@ -56,3 +56,16 @@
   cursor: pointer;
   margin: 10px 3px;
 }
+.detailCard {
+  padding: 10px 10px;
+  .detailSubCard {
+    padding: 5px 5px;
+    div{
+      display: flex;
+      line-height: 32px;
+      span{
+        width: 15rem;
+      }
+    }
+  }
+}

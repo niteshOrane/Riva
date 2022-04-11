@@ -77,11 +77,12 @@ function Returned() {
       },
     };
     const res = await createRmaRequest(rmaData);
-    if (res?.status === 200) {
+    console.log({ res });
+    if (res?.status === 200 && !res?.data?.hasOwn("success")) {
       setIsProm(false);
-      setTimeout(() => {
-        history.push("/returned-orders");
-      }, 2000);
+      // setTimeout(() => {
+      //   history.push("/returned-orders");
+      // }, 2000);
       return dispatch(
         showSnackbar(
           "Return request created, redirecting to returns",
@@ -89,7 +90,9 @@ function Returned() {
         )
       );
     }
-    return dispatch(showSnackbar("something went wrong,Item is not returnable", "error"));
+    return dispatch(
+      showSnackbar("something went wrong,Item is not returnable", "error")
+    );
   };
   return (
     <>

@@ -43,8 +43,6 @@ function QuickView() {
   const [sizeCardOpen, setSizeCardOpen] = useState(false);
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
-  const [reviewList, setReviewList] = useState([]);
-  const [value, setValue] = React.useState(0);
 
   const handleIncrementProduct = () => {
     setProductQuantity((prevState) => prevState + 1);
@@ -56,30 +54,6 @@ function QuickView() {
   const handleClose = () => {
     dispatch(toggleQuickView(null));
   };
-
-  const getReviewListForProduct = async (val) => {
-    if (val) {
-      const res = await getReviewList(val);
-      if (res.status === 200 && res?.data) {
-        setReviewList(res?.data);
-      }
-    }
-  };
-  const calculateAvgReview = () => {
-    let sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
-    return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
-      ? 0
-      : parseFloat(sum / reviewList?.length)?.toFixed(1);
-  };
-
-  useEffect(() => {
-    const sum = reviewList?.reduce((acc, li) => acc + li?.ratings[0]?.value, 0);
-    setValue(
-      isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
-        ? 0
-        : parseFloat(sum / reviewList?.length)?.toFixed(1)
-    );
-  }, [reviewList]);
 
   const { isOpen = false, data = {} } = useSelector(
     (state) => state.common.quickView || {}
@@ -177,7 +151,6 @@ function QuickView() {
   };
   useEffect(() => {
     getOutOfStock();
-    getReviewListForProduct(data?.sku);
     setSelectedProduct(data);
   }, [data]);
   const srcImage =
@@ -188,7 +161,6 @@ function QuickView() {
   useEffect(() => {
     setSelectedProduct(data);
     getOutOfStock();
-    getReviewListForProduct(data?.sku);
   }, []);
   useEffect(() => {
     if (data?.extension_attributes?.configurable_product_options) {
@@ -374,46 +346,6 @@ function QuickView() {
               </div>
             </div>
           ) : null}
-          {/* <div className={`${styles.sizeHelp} d-flex align-items-center`}>
-            <ul className="nav-list gap-12px d-flex align-items-center">
-              <li className="nav-li">
-                <span className="d-flex align-items-center">
-                
-                  <img src="/assets/images/ruler (1).svg" alt="/" />
-                  &nbsp; &nbsp;
-                  <button
-                    type="button"
-                    className="bg-transparent no-border c-pointer"
-                    onClick={() => setGuideCardOpen(true)}
-                  >
-                    <span
-                      className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}
-                    >
-                      Size Guide
-                    </span>
-                  </button>
-                </span>
-              </li>
-              <li className="nav-li">
-                <span className="d-flex align-items-center">
-                
-                  <img src="/assets/images/search.svg" alt="/" />
-                  &nbsp;
-                  <button
-                    type="button"
-                    className="bg-transparent no-border c-pointer"
-                    onClick={() => setSizeCardOpen(true)}
-                  >
-                    <span
-                      className={`${styles.sizeGuideDecoration} align-self-end font-light-black`}
-                    >
-                      Find your size
-                    </span>
-                  </button>
-                </span>
-              </li>
-            </ul>
-          </div> */}
 
           <div className={`${styles.stats} d-flex justify-content-between`}>
             <div

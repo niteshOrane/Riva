@@ -2,14 +2,15 @@ import React from "react";
 import GooglePayButton from "@google-pay/button-react";
 import { cartPaymentAction } from "../../../../../services/cart/cart.service";
 
-function GooglePay({ cartPaymentInfo, store, style }) {
+function GooglePay({ cartPaymentInfo, store, styles, gPayData }) {
   const { currency, country_id } = store;
   const payWithGoogle = async (type) => {
+    console.log({ type });
     const res = await cartPaymentAction(type, "checkoutcom_google_pay");
-    console.log(res)
+    console.log(res);
   };
   return (
-    <section className={style.gPay}>
+    <section className={styles.gPay}>
       <GooglePayButton
         environment="TEST"
         paymentRequest={{
@@ -20,20 +21,28 @@ function GooglePay({ cartPaymentInfo, store, style }) {
               type: "CARD",
               parameters: {
                 allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                allowedCardNetworks: ["MASTERCARD", "VISA"],
+                allowedCardNetworks: [
+                  "AMEX",
+                  "DISCOVER",
+                  "INTERAC",
+                  "JCB",
+                  "MASTERCARD",
+                  "VISA",
+                ],
               },
               tokenizationSpecification: {
                 type: "PAYMENT_GATEWAY",
                 parameters: {
-                  gateway: "example",
-                  gatewayMerchantId: "exampleGatewayMerchantId",
+                  gateway: "checkoutltd",
+                  gatewayMerchantId:
+                    gPayData?.checkoutcom_google_pay?.active_pk,
                 },
               },
             },
           ],
           merchantInfo: {
-            merchantId: "12345678901234567890", // merchand id
-            merchantName: "Demo Merchant",
+            merchantId: gPayData?.checkoutcom_google_pay?.merchant_id, // merchand id
+            merchantName: "Riva Fashion",
           },
           transactionInfo: {
             totalPriceStatus: "FINAL",

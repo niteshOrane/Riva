@@ -123,7 +123,11 @@
 .gPay {
   display: flex;
   justify-content: center;
+  padding: 1rem;
+  border: 1px ridge lightgray;
+  width: 25rem;
   overflow-x: auto;
+  margin-top: 20px;
 }
 .arabicIcon {
   margin-left: 10px !important;

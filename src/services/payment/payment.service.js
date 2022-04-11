@@ -45,3 +45,13 @@ export const processCodPaymentFurther = () => {
   };
   return axios(config);
 };
+
+
+export const processGpayPaymentFurther = () => {
+  const config = {
+    method: "get",
+    url: `https://m2dev.rivafashion.com/shop/index.php/rest/kuwait_en/V1/webapi/gettapinfo?method=checkoutcom_google_pay`,
+    silent: true,
+  };
+  return axios(config);
+};

@@ -170,7 +170,7 @@ const Product = (props) => {
         <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
-        <div className={styles.load}>
+       <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
       </div>
@@ -185,6 +185,7 @@ const Product = (props) => {
         currency_symbol={currency_symbol}
         language={language}
         items={mediaImage}
+        loading={loading}
       />
       <div className="max-width-1750 mx-auto">
         <Slider
@@ -227,10 +228,6 @@ const Product = (props) => {
           </div>
         </div>
       ) : null}
-      {/* <div className="d-flex-all-center gap-12px mx-50px gap-12px">
-        <OneImageBanner img="./assets/images/categSlider-bg.png" />
-        <OneImageBanner img="./assets/images/bagDiscountBanner.png" />
-      </div> */}
     </div>
   );
 };

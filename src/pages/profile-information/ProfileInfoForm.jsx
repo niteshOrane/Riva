@@ -26,13 +26,15 @@ import useArabic from "../../components/common/arabicDict/useArabic";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
-  console.log({ customer });
   const { translate } = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
-  console.log({ currentLocation });
   const { language } = useSelector((state) => state?.common?.store);
   const [phoneValue, setPhoneValue] = useState(
-    `${customer?.mobile || customer?.mobile_number || currentLocation.country_calling_code}`
+    `${
+      customer?.mobile ||
+      customer?.mobile_number ||
+      currentLocation.country_calling_code
+    }`
   );
   const dispatch = useDispatch();
   const [isEdit, setIsEdit] = useState(false);
@@ -96,7 +98,7 @@ function ProfileInfoForm() {
     if (res.status === 200) {
       dispatch(
         setCustomer({
-          ...values,
+          ...res?.data,
         })
       );
       return dispatch(showSnackbar(res?.data?.message, "success"));
@@ -264,7 +266,7 @@ function ProfileInfoForm() {
                     }}
                   >
                     <FormControlLabel
-                      value="Male"
+                      value="0"
                       control={<Radio color="primary" />}
                       label="Male"
                       labelPlacement="start"
@@ -272,7 +274,7 @@ function ProfileInfoForm() {
                       style={{ color: "black" }}
                     />
                     <FormControlLabel
-                      value="Female"
+                      value="1"
                       control={<Radio color="primary" />}
                       label="Female"
                       labelPlacement="start"

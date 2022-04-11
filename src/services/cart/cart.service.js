@@ -36,7 +36,7 @@ export const getCartService = () => {
     data: {
       storeId: getStoreId(),
       customerId: getCustId(),
-      quoteId: getCartId(),
+      quoteId: getCartId() || 0,
     },
   };
   return axios(config);

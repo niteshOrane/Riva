@@ -12,41 +12,33 @@ import { addToCart } from "../../../../store/actions/cart";
 import SizeCard from "./components/SizeCard/SizeCard";
 import { toggleWishlist } from "../../../../store/actions/wishlist";
 import OutOfStock from "./outOfStock/OutOfStock";
-import {
-  getReviewList,
-  outOfStockCheck,
-} from "../../../../services/product/product.service";
+import { outOfStockCheck } from "../../../../services/product/product.service";
 import { URL } from "../../../../util";
 import { colorRegexFilter } from "../../../common/colorRegex/colorRegex";
-import ReviewModal from "./ReviewPopUp";
 import ShareIcons from "./ShareIcons";
 import SizeChart from "./SizeChart";
 
 import DeliveryReturn from "./DeliveryReturn";
 import useArabic from "../../../common/arabicDict/useArabic";
-import ImageCarousel from "./ImageCarousel";
 import { showSnackbar } from "../../../../store/actions/common";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProductDetails = (props) => {
   const {
     product,
     setColorSize,
-    mediaImage,
     colorImage,
     currency_symbol,
     language,
-    items,
+    loading,
   } = props;
   const history = useHistory();
   const { translate } = useArabic();
   const [guideCardOpen, setGuideCardOpen] = useState(false);
   const [productColorList, setProductColorList] = useState([]);
-  const [value, setValue] = React.useState(0);
-  const [reviewList, setReviewList] = useState([]);
   const [colorImg, setColorImg] = useState(null);
   const [showThumb, setShowThumb] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(null);
-
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -65,16 +57,6 @@ const ProductDetails = (props) => {
       ...product?.selected,
       color: { label: data?.color, value: data?.option_id },
     });
-  };
-  const calculateAvgReview = () => {
-    const sum = reviewList?.reduce(
-      (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
-      0
-    );
-
-    return isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
-      ? 0
-      : parseFloat(sum / reviewList?.length)?.toFixed(1);
   };
   const [outOfStock, setOutOfStock] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
@@ -95,18 +77,7 @@ const ProductDetails = (props) => {
   useEffect(() => {
     getOutOfStock();
   }, [product]);
-  useEffect(() => {
-    const sum = reviewList?.reduce(
-      (acc, li) => (li?.ratings?.length ? acc + li?.ratings[0]?.value : null),
-      0
-    );
-    setValue(
-      isNaN(parseFloat(sum / reviewList?.length)?.toFixed(1))
-        ? 0
-        : parseFloat(sum / reviewList?.length)?.toFixed(1)
-    );
-    calculateAvgReview();
-  }, [reviewList]);
+
   useEffect(() => {
     getOutOfStock();
   }, [product, colorImg]);
@@ -220,7 +191,7 @@ const ProductDetails = (props) => {
             </Breadcrumbs>
           </section>
           <div className={`${styles.slide}`}>
-            <Image
+            <img
               src={colorImg || product?.image}
               className="object-fit-fill h-100"
               width="100%"
@@ -229,37 +200,10 @@ const ProductDetails = (props) => {
               type="product-details"
               isZoom
             />
-            {/* <ImageCarousel
-              items={items}
-              loadImg={colorImg || product?.image}
-              showThumb={showThumb}
-              setShowThumb={setShowThumb}
-            /> */}
-            {/* <div className={styles.circlesContainer}>
-              <CategoriesCircles />
-            </div> */}
-            {/*<ImageDropdown />*/}
 
-            {/* <div className={styles.actionContainerTopRight}>
-              <div onClick={handleWishList}>
-                <span
-                  className="material-icons-outlined font-light-black"
-                  style={{ color: isAddedToWishlist ? "red" : "black" }}
-                >
-                  {isAddedToWishlist ? "favorite" : "favorite_border"}
-                </span>
-              </div>
-            </div> */}
             <div className={styles.actionContainerTopLeft}>
               {calculateOnSale()}
             </div>
-            {/* <div className={styles.actionContainerBottomRight}>
-              <div>
-                <span className="material-icons-outlined font-light-black">
-                  open_with
-                </span>
-              </div>
-            </div> */}
           </div>
         </div>
         <div className={styles.details}>
@@ -267,26 +211,12 @@ const ProductDetails = (props) => {
             <div className={styles.bestSeller}>{translate?.details?.BEST}</div>
             <div className={styles.name}>{product?.name}</div>
             <div className="d-flex">
-              {/* <div className={`${styles.stars} d-flex-all-center`}>
-                <Rating name="read-only" readOnly value={value} />
-              </div> */}
-              {/* <div className={`${styles.rating} d-flex-all-center`}>
-                {calculateAvgReview()} {translate?.details?.RATE}
-              </div> */}
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
                 <div className={styles.text}>{product?.sku}</div>
               </div>
             </div>
-            {/* <div>
-              <ReviewModal
-                id={product?.id}
-                sku={product?.sku}
-                language={language}
-                isTop
-                setReviewState={setReviewState}
-              />
-            </div> */}
+
             <div className={`${styles.price} d-flex`}>
               {Number(origpriceWithoutCurrency) >
               Number(priceWithoutCurrency) ? (
@@ -423,26 +353,6 @@ const ProductDetails = (props) => {
                     </button>
                   </span>
                 </li>
-
-                {/* <li className="nav-li">
-                  <span className="d-flex align-items-center">
-                    <span className="material-icons-outlined font-light-black">
-                      search
-                    </span>
-                    &nbsp;
-                    <button
-                      type="button"
-                      className="bg-transparent no-border c-pointer"
-                      onClick={() => setSizeCardOpen(true)}
-                    >
-                      <span
-                        className={`${styles.sizeGuide} align-self-end font-light-black`}
-                      >
-                        {translate?.details?.FIND}
-                      </span>
-                    </button>
-                  </span>
-                </li> */}
               </ul>
             </div>
             <div className={styles.w80}>
@@ -578,37 +488,6 @@ const ProductDetails = (props) => {
                       ),
                       icon: "/assets/images/delivery.png",
                     },
-                    // {
-                    //   name: (
-                    //     <SearchInStorePopup
-                    //       image={colorImg || product?.image}
-                    //       sizes={product?.size}
-                    //       language={language}
-                    //       sku={product?.sku}
-                    //       translate={translate}
-                    //     />
-                    //     // <SubscribeModel />
-                    //   ),
-                    //   icon: "/assets/images/shop.png",
-                    // },
-                    // {
-                    //   name: <SubscribeModel language={language} productId={product.id} />,
-                    //   icon: "/assets/images/tshirt.png",
-                    // },
-
-                    // {
-                    //   name: (
-                    //     <ReviewModal
-                    //       id={product?.id}
-                    //       sku={product?.sku}
-                    //       isDetail
-                    //       setReviewState={setReviewState}
-                    //       reviewState={reviewState}
-                    //       translate={translate}
-                    //     />
-                    //   ),
-                    //   icon: "/assets/images/review.png",
-                    // },
                     {
                       name: (
                         <ShareIcons

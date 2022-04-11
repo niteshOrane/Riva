@@ -85,7 +85,9 @@ const ProductCard = ({
       product["selected"] = { color: colors[0], size: size[0] };
     }
     if (isComplete) {
-      const colors = Object.values(product?.options?.[0]?.values);
+      const colors =
+        product?.options?.length !== 0 &&
+        Object.values(product?.options?.[0]?.values);
 
       setattributes({ colors });
     }
@@ -279,7 +281,7 @@ const ProductCard = ({
                           : ""
                       }/${item?.file}`
                     }
-                    defaultImage="https://via.placeholder.com/560x793?text=Image+Not+Available"
+                    defaultImage="https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg"
                     width="100%"
                     loading={Imgloading}
                   />

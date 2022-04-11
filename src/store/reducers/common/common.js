@@ -127,7 +127,7 @@ export default function common(state = initialState, action) {
           ...state.filtersParams,
           status: true,
           [action?.payload?.name]: [
-            ...state.filtersParams[action.payload.name],
+            // ...state.filtersParams[action.payload.name],
             action.payload.param,
           ],
         },

@@ -6,7 +6,7 @@ import { URL } from "../../../util";
 import styles from "./lazyImage.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import "./lazyImage.css"
+import "./lazyImage.css";
 
 const LazyImage = (props) => {
   const {
@@ -35,25 +35,7 @@ const LazyImage = (props) => {
   const onImageError = () => {
     setError(true);
   };
-  // console.log({srcImage})
-  // const propsImg = {
-  //   width: 660,
-  //   height: 874,
-  //   img: srcImage ? srcImage : defaultImage,
 
-  //   zoomStyle: "z-index:10;right:-11px;border:1px solid black",
-  //   zoomPosition: zoomPos,
-  // };
-
-
-
-  // if (isZoom) {
-  //   return (
-  //     <div>
-  //       <ReactImageZoom {...propsImg} />
-  //     </div>
-  //   );
-  // }
   if (loading) {
     <Skeleton />;
   }
@@ -64,7 +46,7 @@ const LazyImage = (props) => {
           ? srcImage
           : defaultImage
           ? defaultImage
-          : "https://via.placeholder.com/295x295?text=Image+Not+Available"
+          : "https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg"
       }
       onError={onImageError}
       width={width}

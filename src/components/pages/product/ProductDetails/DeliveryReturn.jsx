@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import * as icons from "../../../../components/common/Icons/Icons";
@@ -16,12 +16,12 @@ function getModalStyle() {
   };
 }
 
-export default function DeliveryReturn({ language,translate }) {
+export default function DeliveryReturn({ language, translate }) {
   const useStyles = makeStyles((theme) => ({
     paper: {
       position: "absolute",
       height: "fit-content",
-      width: "fit-content",
+      width: 800,
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
@@ -50,17 +50,21 @@ export default function DeliveryReturn({ language,translate }) {
       fontSize: "2rem",
       color: "gray",
     },
+    btn: {
+      padding: "6px",
+      border: "none",
+      outline: "none",
+      backgroundColor: "black",
+      color: "white",
+      cursor: "pointer",
+      margin: "10px 3px",
+    },
   }));
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const [deliveryDetail, setDeliveryDetail] = useState();
-  const dispatch = useDispatch();
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const [deliveryDetail, setDeliveryDetail] = useState(null);
 
   const handleClose = () => {
     setOpen(false);
@@ -71,6 +75,11 @@ export default function DeliveryReturn({ language,translate }) {
       setDeliveryDetail(res?.data);
     }
   };
+  useEffect(() => {
+    if (deliveryDetail) {
+      setOpen(true);
+    }
+  }, [deliveryDetail]);
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <section className={classes.content}>
@@ -85,7 +94,28 @@ export default function DeliveryReturn({ language,translate }) {
             assignment_return
           </span>
         </div>
-        <p>{deliveryDetail?.["delivery-returns"]}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: deliveryDetail?.["delivery-returns"],
+          }}
+          style={{lineHeight:"30px"}}
+        ></div>
+        <section>
+          <button
+            onClick={() => setOpen(false)}
+            type="button"
+            className={classes.btn}
+          >
+            I Understand
+          </button>
+          <button
+            onClick={() => setOpen(false)}
+            type="button"
+            className={classes.btn}
+          >
+            Cancel
+          </button>
+        </section>
       </section>
     </div>
   );
@@ -94,7 +124,6 @@ export default function DeliveryReturn({ language,translate }) {
     <div>
       <span
         onClick={() => {
-          handleOpen();
           getDeliveryDetail();
         }}
       >
