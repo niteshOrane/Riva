@@ -185,12 +185,12 @@ export default function DetailTabs({
     setRenderTab(obj);
   }, [customObj, paymentType,gPayData]);
 
-  const getPaymentForTapCheckout = async (fnValue) => {
+  const getPaymentForTapCheckout = async (payValue) => {
     const configTap = {
       method: "get",
       url: `${API_URL}/rest/${
         getStoreData()?.store_code
-      }/V1/webapi/gettapinfo?method=${fnValue}`,
+      }/V1/webapi/gettapinfo?method=${payValue}`,
       silent: true,
     };
     await axios(configTap)
