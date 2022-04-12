@@ -24,7 +24,7 @@ function Dashboard() {
         paddingLeft: "3.5rem",
         paddingRight: "3.5rem",
       }}
-      className="py-20px px-20px"
+      className="py-20px px-20px dashboard"
     >
       <div className="d-flex h-100">
         <Sidebar />

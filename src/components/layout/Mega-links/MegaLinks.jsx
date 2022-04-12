@@ -160,9 +160,11 @@ const MegaLinks = ({ links, language }) => {
 
       <div
         style={{ display: menuType ? "block" : "none" }}
-        className={style.mobileNavBar}
+        className="mobileNavBar"
       >
-        <div onClick={() => setMenuType(false)} className="close-Btn">X</div>
+        <div onClick={() => setMenuType(false)} className="close-Btn">
+          X
+        </div>
         <CategoriesCircles />
 
         {links &&
