@@ -251,7 +251,7 @@ function Delivered() {
                       </div>
                     </Card>
                   </section>
-                  {!excludeList.includes(li?.status) && (
+                  {li?.status==="complete" && (
                     <section className={styles.reqBtn}>
                       {returnedProduct?.length === 0 && (
                         <button

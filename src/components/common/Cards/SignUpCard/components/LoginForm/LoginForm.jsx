@@ -40,7 +40,7 @@ const LoginForm = ({
   setIsForget,
 }) => {
   const dispatch = useDispatch();
-  useDocumentTitle("Customer Login")
+  useDocumentTitle("Customer Login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const [forgotError, setForgotError] = useState(false);
@@ -99,7 +99,7 @@ const LoginForm = ({
   };
 
   const handleGoogleError = (res) => {
-    console.log(error)
+    console.log(error);
   };
   const responseFacebook = async (response) => {
     if (response) {
@@ -296,7 +296,7 @@ const LoginForm = ({
     };
     setLoading({ ...loading, wishlist: false });
     dispatch(addWishlist(p));
-    localStorage.removeItem("toWishlist")
+    localStorage.removeItem("toWishlist");
   };
 
   const userCreateHandler = async (e) => {
@@ -375,6 +375,9 @@ const LoginForm = ({
       userCreateHandler();
     }
   }, [error]);
+  useEffect(() => {
+
+  },[])
 
   const [showPass, setShowPass] = useState(false);
 
@@ -483,17 +486,15 @@ const LoginForm = ({
             </div>
           </div>
           <div className={styles.signinWrapper}>
-            <LoaderButton
-              color="secondary"
+            <button
               onClick={handleSubmitLogin}
-              loading={loading}
-              loadingPosition="start"
+              onKeyDown={(e) => e.key === "Enter" && handleSubmitLogin()}
               // variant="contained"
-              value="SIGN IN"
+              type="button"
               className={styles.signUpBtn}
             >
               SIGN IN
-            </LoaderButton>
+            </button>
             <input
               value="SIGN IN WITH OTP"
               type="button"
@@ -551,9 +552,11 @@ const LoginForm = ({
                 buttonText="Connect with Google"
                 render={(renderProps) => (
                   <button
+                    type="button"
                     onClick={renderProps.onClick}
                     disabled={renderProps.disabled}
                     className={styles.googleAuthBtn}
+                    onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
                   >
                     Connect with Google
                   </button>

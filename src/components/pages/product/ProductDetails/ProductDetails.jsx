@@ -182,7 +182,7 @@ const ProductDetails = (props) => {
                 <Link
                   to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}
                 >
-                  {history?.location?.state?.category}
+                  {history?.location?.state?.category?.[0]?.toUpperCase() + history?.location?.state?.category?.slice(1)}
                 </Link>
               )}
               <span underline="hover" color="inherit">
@@ -394,7 +394,8 @@ const ProductDetails = (props) => {
 
               <div className={styles.actions}>
                 <div className="d-flex align-items-center justify-content-between my-20px">
-                  <div
+                 {!outOfStock && (
+                    <div
                     className={`${styles.qty} d-flex align-items-center justify-content-between`}
                   >
                     <div className={styles.title}>
@@ -424,6 +425,7 @@ const ProductDetails = (props) => {
                       </div>
                     </div>
                   </div>
+                 ) }
                   <div
                     className={`${styles.demand} d-flex gap-12px align-items-center`}
                   >

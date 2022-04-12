@@ -108,13 +108,6 @@ export default function DeliveryReturn({ language, translate }) {
           >
             I Understand
           </button>
-          <button
-            onClick={() => setOpen(false)}
-            type="button"
-            className={classes.btn}
-          >
-            Cancel
-          </button>
         </section>
       </section>
     </div>

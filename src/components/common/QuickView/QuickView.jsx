@@ -85,10 +85,7 @@ function QuickView() {
     visibility = 0,
     custom_attributes,
   } = data ?? {};
-  const setColorSize = (attr, type) => {
-    data.selected[type] = attr;
-    setSelectedProduct({ ...data });
-  };
+
   const addToCardHandler = () => {
     dispatch(
       addToCart({
@@ -148,6 +145,11 @@ function QuickView() {
         return setOutOfStock(true);
       }
     }
+  };
+  const setColorSize = (attr, type) => {
+    data.selected[type] = attr;
+    setSelectedProduct({ ...data });
+    getOutOfStock()
   };
   useEffect(() => {
     getOutOfStock();

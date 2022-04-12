@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./profileInformation.scss";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import Dialog from "@material-ui/core/Dialog";
+// import Dialog from "@material-ui/core/Dialog";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import * as icons from "../../components/common/Icons/Icons";
 
-import OTPForm from "../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm";
-import styles from "../../components/common/Cards/SignUpCard/SignUpCard.module.scss";
+// import OTPForm from "../../components/common/Cards/SignUpCard/components/OtpForm/OtpForm";
+// import styles from "../../components/common/Cards/SignUpCard/SignUpCard.module.scss";
 import { profileUpdate } from "../../services/dashboard/dashboard.service";
 import { showSnackbar } from "../../store/actions/common";
 import { setCustomer } from "../../store/actions/auth";
@@ -23,9 +22,11 @@ import {
 import { getCustId, getStoreId } from "../../util";
 
 import useArabic from "../../components/common/arabicDict/useArabic";
+import style from "./profileInformation.module.scss";
 
 function ProfileInfoForm() {
   const customer = useSelector((state) => state.auth.customer);
+  console.log({ customer });
   const { translate } = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const { language } = useSelector((state) => state?.common?.store);
@@ -105,111 +106,108 @@ function ProfileInfoForm() {
     }
     return dispatch(showSnackbar("Something went wrong", "error"));
   };
-  const verifyOTP = async (e, mobileOtp) => {
-    e.preventDefault();
-    if (!mobileOtp)
-      return dispatch(showSnackbar("Please enter OTP", "warning"));
-    const customerMobile = new FormData();
-    customerMobile.append("phone", mobileNumber);
-    customerMobile.append("otp", mobileOtp);
-    customerMobile.append("customerid", getCustId());
+  // const verifyOTP = async (e, mobileOtp) => {
+  //   e.preventDefault();
+  //   if (!mobileOtp)
+  //     return dispatch(showSnackbar("Please enter OTP", "warning"));
+  //   const customerMobile = new FormData();
+  //   customerMobile.append("phone", mobileNumber);
+  //   customerMobile.append("otp", mobileOtp);
+  //   customerMobile.append("customerid", getCustId());
 
-    const res = await verifyUpdateProfileMobileOtp(customerMobile);
-    if (res.status === 200) {
-      if (res?.data?.success) {
-        return dispatch(showSnackbar(res?.data.message, "success"));
-      } else {
-        return dispatch(showSnackbar(res?.data.message, "error"));
-      }
-    } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    }
-  };
+  //   const res = await verifyUpdateProfileMobileOtp(customerMobile);
+  //   if (res.status === 200) {
+  //     if (res?.data?.success) {
+  //       return dispatch(showSnackbar(res?.data.message, "success"));
+  //     } else {
+  //       return dispatch(showSnackbar(res?.data.message, "error"));
+  //     }
+  //   } else {
+  //     return dispatch(showSnackbar("Something went wrong", "error"));
+  //   }
+  // };
 
-  const [recivedOTPData, setRecivedOTPData] = useState("");
-  useEffect(() => {
-    if (recivedOTPData) {
-      setIsEdit(false);
-      setIsOpen(true);
-    }
-  }, [recivedOTPData]);
+  // const [recivedOTPData, setRecivedOTPData] = useState("");
+  // useEffect(() => {
+  //   if (recivedOTPData) {
+  //     setIsEdit(false);
+  //     setIsOpen(true);
+  //   }
+  // }, [recivedOTPData]);
 
-  const onSendOTP = async (e) => {
-    e.preventDefault();
-    if (!phoneValue)
-      return dispatch(showSnackbar("Mobile Number are required", "warning"));
-    const customerSendOTP = new FormData();
-    customerSendOTP.append("phone", phoneValue);
-    customerSendOTP.append("email", "");
-    customerSendOTP.append("name", values?.firstname);
+  // const onSendOTP = async (e) => {
+  //   e.preventDefault();
+  //   if (!phoneValue)
+  //     return dispatch(showSnackbar("Mobile Number are required", "warning"));
+  //   const customerSendOTP = new FormData();
+  //   customerSendOTP.append("phone", phoneValue);
+  //   customerSendOTP.append("email", "");
+  //   customerSendOTP.append("name", values?.firstname);
 
-    const res = await loginCustomerOTP(customerSendOTP);
+  //   const res = await loginCustomerOTP(customerSendOTP);
 
-    if (res.status === 200) {
-      if (res?.data?.success) {
-        setRecivedOTPData(res?.data.data);
-        return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
-      } else if (res?.data.message) {
-        return dispatch(showSnackbar(res?.data.message, "error"));
-      } else {
-        dispatch(showSnackbar("Something went wrong", "error"));
-      }
-    } else {
-      return dispatch(showSnackbar("Something went wrong", "error"));
-    }
-    return null;
-  };
+  //   if (res.status === 200) {
+  //     if (res?.data?.success) {
+  //       setRecivedOTPData(res?.data.data);
+  //       return dispatch(showSnackbar(`OTP Sent on ${mobileNumber}`, "success"));
+  //     } else if (res?.data.message) {
+  //       return dispatch(showSnackbar(res?.data.message, "error"));
+  //     } else {
+  //       dispatch(showSnackbar("Something went wrong", "error"));
+  //     }
+  //   } else {
+  //     return dispatch(showSnackbar("Something went wrong", "error"));
+  //   }
+  //   return null;
+  // };
   return (
     <>
-      <section className="registration-form-wrapper">
-        <form onSubmit={handleSubmit} className="user-sign-in-form">
-          <article className="inner-form-wrapper">
-            <section>
-              <div className="boxProfileInfo">
-                <label htmlFor="firstName" className="profile-label">
-                  First Name
-                </label>
-                <input
-                  value={values?.firstname}
-                  name="firstname"
-                  onChange={handleChange}
-                  id="firstName"
+      <section>
+        <form onSubmit={handleSubmit} className={style.userForm}>
+          <section>
+            <article>
+              <label htmlFor="firstName">First Name</label>
+              <input
+                value={values?.firstname}
+                name="firstname"
+                onChange={handleChange}
+                id="firstName"
+              />
+            </article>
+            <article style={{ marginLeft: "2rem" }}>
+              <label>Last Name</label>
+              <input
+                name="lastname"
+                value={values?.lastname}
+                onChange={handleChange}
+              />
+            </article>
+          </section>
+          <section>
+            <article>
+              <label>Email</label>
+              <input
+                readOnly
+                disabled
+                name="email"
+                value={values?.email}
+                onChange={handleChange}
+              />
+            </article>
+            <article style={{ marginLeft: "2rem" }}>
+              <label>Mobile Number</label>
+              <div className={style.phnInp}>
+                <PhoneInput
+                  placeholder="Enter Mobile Number"
+                  value={isEdit ? mobileNumber : phoneValue}
+                  width="100%"
+                  defaultCountry={
+                    currentLocation.country_code.toUpperCase() || "US"
+                  }
+                  onChange={setPhoneValue}
+                  // readOnly={!isEdit}
                 />
-              </div>
-              <div className="boxProfileInfo" style={{ marginLeft: "2rem" }}>
-                <label className="profile-label">Last Name</label>
-                <input
-                  name="lastname"
-                  value={values?.lastname}
-                  onChange={handleChange}
-                />
-              </div>
-            </section>
-            <section>
-              <div className="boxProfileInfo">
-                <label className="profile-label">Email</label>
-                <input
-                  readOnly
-                  disabled
-                  name="email"
-                  value={values?.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="isdInfoBox" style={{ marginLeft: "2rem" }}>
-                <label className="profile-label-mobile">Mobile Number</label>
-                <div className="inpContainer phoneInp">
-                  <PhoneInput
-                    placeholder="Enter Mobile Number"
-                    value={isEdit ? mobileNumber : phoneValue}
-                    width="100%"
-                    defaultCountry={
-                      currentLocation.country_code.toUpperCase() || "US"
-                    }
-                    onChange={setPhoneValue}
-                    readOnly={!isEdit}
-                  />
-                  {isEdit ? (
+                {/* {isEdit ? (
                     <>
                       {" "}
                       <span
@@ -242,72 +240,68 @@ function ProfileInfoForm() {
                     >
                       <icons.Pencil />
                     </span>
-                  )}
-                </div>
+                  )} */}
               </div>
-            </section>
-            <section>
-              <FormControl component="fieldset">
-                <FormLabel className="profile-label" component="legend">
-                  Your Gender
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="position"
-                  name="position"
-                  value={values.gender}
-                  onChange={(e) =>
-                    setValues({ ...values, gender: e.target.value })
-                  }
+            </article>
+          </section>
+          <section>
+            <FormControl component="fieldset">
+              <FormLabel className={style.genderLabel} component="legend">
+                Your Gender
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-label="position"
+                value={values.gender}
+                onChange={(e) =>
+                  setValues({ ...values, gender: e.target.value })
+                }
+              >
+                <section
+                  style={{
+                    paddingRight: language === "Arabic" ? "10px" : "0px",
+                  }}
                 >
-                  <section
-                    style={{
-                      paddingRight: language === "Arabic" ? "10px" : "0px",
-                    }}
-                  >
-                    <FormControlLabel
-                      value="0"
-                      control={<Radio color="primary" />}
-                      label="Male"
-                      labelPlacement="start"
-                      name="gender"
-                      style={{ color: "black" }}
-                    />
-                    <FormControlLabel
-                      value="1"
-                      control={<Radio color="primary" />}
-                      label="Female"
-                      labelPlacement="start"
-                      name="gender"
-                      style={{ color: "black" }}
-                    />
-                  </section>
-                </RadioGroup>
-              </FormControl>
-            </section>
-            <section>
-              <div className="boxProfileInfo" style={{ position: "relative" }}>
-                <label className="profile-label">Date of Birth</label>
-                <input
-                  type="date"
-                  id="dob-date"
-                  value={values.dob}
-                  placeholder="Select DOB"
-                  name="dob"
-                  onChange={handleChange}
-                />
-                {/* <img className="inputCalender" src="/assets/images/pfCalender.svg" /> */}
-              </div>
-            </section>
-          </article>
-          <section className="registration-submit-btn-wrapper">
-            <button type="submit" className="registration-btn">
-              {translate?.dash?.DETAILS}
-            </button>
+                  <FormControlLabel
+                    value="0"
+                    control={<Radio color="primary" />}
+                    label="Male"
+                    labelPlacement="start"
+                    name="gender"
+                    style={{ color: "black" }}
+                  />
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio color="primary" />}
+                    label="Female"
+                    labelPlacement="start"
+                    name="gender"
+                    style={{ color: "black" }}
+                  />
+                </section>
+              </RadioGroup>
+            </FormControl>
+          </section>
+          <section>
+            <article>
+              <label>Date of Birth</label>
+              <input
+                type="date"
+                id="dob-date"
+                value={values.dob}
+                placeholder="Select DOB"
+                name="dob"
+                onChange={handleChange}
+              />
+              {/* <img className="inputCalender" src="/assets/images/pfCalender.svg" /> */}
+            </article>
+          </section>
+          <section className={style.submitBtn}>
+            <button type="submit">{translate?.dash?.DETAILS}</button>
           </section>
         </form>
       </section>
-      <Dialog
+      {/* <Dialog
         disableBackdropClick
         disableEscapeKeyDown
         aria-labelledby="simple-dialog-title"
@@ -332,7 +326,7 @@ function ProfileInfoForm() {
             email={values?.email}
           />
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }
