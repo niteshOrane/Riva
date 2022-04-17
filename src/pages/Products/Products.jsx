@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import queryString from "query-string";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TagManager from "react-gtm-module";
 import Skeleton from "react-loading-skeleton";
 import useProducts from "./useProducts";
@@ -13,6 +13,9 @@ import styles from "./products.module.scss";
 import useLanding from "../Landing/LandingHooks";
 import "react-loading-skeleton/dist/skeleton.css";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
+import {
+  addFilterParams,
+} from "../../store/actions/common";
 
 function Products(props) {
   const handleQuickView = () => {};
@@ -25,6 +28,7 @@ function Products(props) {
   const refContainer = useRef();
 
   const refContainerLoad = useRef();
+  const dispatch = useDispatch();
   const onScreen = useOnScreen(refContainerLoad);
   const { middleBanner: categorypromotionbanner } = useLanding(
     "categorypromotionbanner"
@@ -38,6 +42,7 @@ function Products(props) {
   const [sortDirection, setSortDirection] = useState("asc");
   const [filteredData] = useState([]);
   const [pageColumns, setPageColumns] = useState(2);
+  const [filterAttrTags, setFilterAttrTags] = useState([]);
   
   const { products, loading, totalCount } = useProducts({
     categoryId: match.params.categoryId,
@@ -63,14 +68,33 @@ function Products(props) {
     }
   }, [onScreen]);
 
-  // useEffect(() => {
-  //   console.log("setfilterAttrObj:", filterAttr1);
-  //   if (onScreen && !loading && totalCount > products.length) {
-  //     setfilterAttrObj(filterAttr1);debugger
-  //   }
-  // }, [filterAttr1]);
+  useEffect(() => {
+    let arr = [];
+    if (filterAttr.status == true) {
+      for (let ele in filterAttr.newPayloadArr[0]) {
+        for (let i = 0; i < filterAttr.newPayloadArr[0][ele].length; i++) {
+          arr.push(filterAttr.newPayloadArr[0][ele][i]);
+        }
+      }
+    }
+    console.log("setfilterAttrObj:", arr, filterAttr);
+    setFilterAttrTags(arr);
+  }, [filterAttr]);
 
   const handleThreeColumns = () => setPageColumns(3);
+
+  const removeTag = (ele) => e => {
+    if (filterAttr.status) {
+      for (let i = 0; i < filterAttr.newPayloadArr[0][ele.field].length; i++) {
+        if (filterAttr.newPayloadArr[0][ele.field][i].display == ele.display) {
+          filterAttr.newPayloadArr[0][ele.field].splice(i,1);
+        }
+      }
+    }
+    console.log("removeTag:", ele, filterAttr.newPayloadArr[0]);
+    dispatch(addFilterParams("newPayloadArr", filterAttr.newPayloadArr[0]));
+  };
+  
   const handleTwoColumns = () => setPageColumns(2);
   const getClassOfBigCard = (index) => {
     if (index === 0 || index === 5) {
@@ -132,10 +156,18 @@ function Products(props) {
                 match.params.category?.slice(1))}
         </div>
         <div className={styles.header}>
-          <div className={styles.catNumber}>
+          <div >
             {/* <div className={styles.circlesContainer}>
               <CategoriesCircles />
             </div> */}
+            {filterAttrTags.length > 0 &&<div className={`${styles.tagsAlign} d-flex`} style={{flexWrap: "wrap"}}>
+              {filterAttrTags.map(ele => {
+               return <div className={`${styles.resultTags}`}>
+                        {ele.display} 
+                        <span className={`${styles.tagsClose}`}  onClick={removeTag(ele)}>x</span>
+                      </div>
+              })}
+            </div>}
             <div className={`d-flex align-items-center ${styles.total}`}>
               <span className="color-grey">
                 {products.length ? (

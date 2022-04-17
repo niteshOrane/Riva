@@ -142,6 +142,7 @@ function Filters(props) {
     if (filterStoreAttr.status == true) {
       for (let i = 0; i < filtersAttr.length; i++) {
         for (let j = 0; j < filtersAttr[i].values.length; j++) {
+          filtersAttr[i].values[j].checked = false;
           for (let k = 0; k < filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code].length; k++) {
             if (filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code][k].value == filtersAttr[i].values[j].value ) {
               filtersAttr[i].values[j].checked = true;
@@ -151,7 +152,7 @@ function Filters(props) {
       }
     }
     
-    setFiltersAttr(filtersAttr);
+    // setFiltersAttr(filtersAttr);
     setOpen(true);
   };
 
@@ -163,6 +164,7 @@ function Filters(props) {
         newPayloadArr[filtersAttr[i].attr_code] = []
         for (let j = 0; j < filtersAttr[i].values.length; j++) {
           if (filtersAttr[i].values[j].checked == true) {
+            filtersAttr[i].values[j].field = filtersAttr[i].attr_code;
             // newPayloadArr.push(filtersAttr[i].values[j]);
             newPayloadArr[filtersAttr[i].attr_code].push(filtersAttr[i].values[j]);
           }
