@@ -15,6 +15,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 import {
   addFilterParams,
+  removeFilterParams,
 } from "../../store/actions/common";
 
 function Products(props) {
@@ -61,6 +62,13 @@ function Products(props) {
     setSortDirection(event.target.value.split("-")?.[1]);
     setCurrentPage(1);
   };
+  
+  useEffect(() => {
+    if (location?.pathname != location?.state?.prevPath ) {
+      // alert("ok Clean");
+      dispatch(removeFilterParams("all"));
+    }
+  }, [location]);
 
   useEffect(() => {
     if (onScreen && !loading && totalCount > products.length) {

@@ -22,6 +22,8 @@ const useProducts = ({
     setloading(true);
     let currentPageGet = currentPage;
     let filterStr = '';
+    let filterValue = [];
+    let newCatIDParam = '';
     setfilters({});
     if (!onScreen) {
       setProducts([]);
@@ -31,7 +33,6 @@ const useProducts = ({
     if (filterAttr.status && (filterAttr.newPayloadArr.length > 0)) {
         // filterList(categoryId);
         const keyValue = Object.keys(filterAttr.newPayloadArr[0]);
-        const filterValue = [];
         for (let i = 0; i < keyValue.length; i++) {
           console.log("keyValue: ", keyValue[i]);
           if (filterAttr.newPayloadArr[0][keyValue[i]].length > 0) {
@@ -49,32 +50,38 @@ const useProducts = ({
         }
         // console.log("filterValue: ",filterAttr, filterStr, keyValue, filterValue);
     }
+    if (serachTerm) {
+      newCatIDParam = `&filterInfo[q]=${serachTerm}`;
+    } else {
+      newCatIDParam = `&filterInfo[category_id]=${categoryId}`;
+    }
     let config = {
       method: "get",
       // url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}${filterStr}`,
 
-      url: `${API_URL}/webapi/getfilterproducts?filterInfo[category_id]=${categoryId}&filterInfo[pageSize]=${pageSize}&filterInfo[page]=${currentPageGet}&filterInfo[sortOrderField]=position&filterInfo[sortOrder]=ASC&filterInfo[store_id]=${getStoreId()}${filterStr}`,
+      url: `${API_URL}/webapi/getfilterproducts?${newCatIDParam}&filterInfo[pageSize]=${pageSize}&filterInfo[page]=${currentPageGet}&filterInfo[sortOrderField]=position&filterInfo[sortOrder]=ASC&filterInfo[store_id]=${getStoreId()}${filterStr}`,
 
       // url: `${API_URL}/webapi/getfilterproducts?filterInfo[category_id]=1525&filterInfo[pageSize]=20&filterInfo[page]=1&filterInfo[sortOrderField]=position&filterInfo[sortOrder]=ASC&filterInfo[store_id]=1&filterInfo[filter][size]=117_231&filterInfo[filter][color_swatch]=1727_1722&filterInfo[filter][price]=0-50_50-100`,
       
       silent: true,
     };
-    if (serachTerm) {
-      config = {
-        method: "post",
-        url: `${API_URL}/searchresult`,
-        silent: true,
-        data: {
-          searchterms: serachTerm,
-          conditionType: "like",
-          sortOrders: sortField,
-          direction: sortDirection,
-          currentPage: currentPageGet,
-          pageSize,
-          store_id: getStoreId(),
-        },
-      };
-    }
+    // if (serachTerm) {
+    //   console.log("filterValue: ", filterValue);
+    //   config = {
+    //     method: "post",
+    //     url: `${API_URL}/searchresult`,
+    //     silent: true,
+    //     data: {
+    //       searchterms: serachTerm,
+    //       conditionType: "like",
+    //       sortOrders: sortField,
+    //       direction: sortDirection,
+    //       currentPage: currentPageGet,
+    //       pageSize,
+    //       store_id: getStoreId(),
+    //     },
+    //   };
+    // }
     // if (filterAttr) {
     //   config = {
     //     method: "get",

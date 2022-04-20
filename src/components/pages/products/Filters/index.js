@@ -93,6 +93,7 @@ function Filters(props) {
   };
   const filterList = async (catId) => {
     let obj = {};
+    // let newCatIDParam = `categoryData[categoryId]=${catId}`;
     const list = await getFiltersList({ catId, serachTerm, obj });
     console.log("filterList: ",list, catId);
     setFiltersAttr(list?.data[0]?.filters);
@@ -103,11 +104,12 @@ function Filters(props) {
       filterList(categoryId);
     }
   }, [categoryId]);
+
   useEffect(() => {
-    if (categoryId && categoryId > 0) {
+    // if (serachTerm) { 
       filterList(categoryId);
-    }
-  }, []);
+    // }
+  }, [serachTerm]);
 
   let newList = [];
   if (filtersAttr?.length) {
@@ -157,7 +159,7 @@ function Filters(props) {
   };
 
   const seeResultsAction = () => {
-    if (categoryId && categoryId > 0) {
+    // if (categoryId && categoryId > 0) {
       // let obj = {name: "orane", value: "416"}
       let newPayloadArr = {};
       for (let i = 0; i < filtersAttr.length; i++) {
@@ -173,7 +175,7 @@ function Filters(props) {
       dispatch(addFilterParams("newPayloadArr", newPayloadArr));
       closeDrawer();
       console.log("filterValue: ",filtersAttr, newPayloadArr);
-    }
+    // }
   };
 
   const removeSingleAttr = (label, value) => {

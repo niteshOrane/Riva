@@ -7,14 +7,14 @@ const CheckBoxComponent = ({ handleCheckboxChange, item, selectedTags }) => {
       <input
         className="c-pointer"
         type="checkbox"
-        id={item.id}
+        id={`${item?.value_code}_${item?.id}`}
         onChange={(e) => handleCheckboxChange(item,e)}
         checked={item.isChecked}
       />
       <label
         className="c-pointer w-100"
         style={{ marginLeft: "12px",paddingRight:"10px" }}
-        htmlFor={item.id}
+        htmlFor={`${item?.value_code}_${item?.id}`}
       >
         {item.title}
       </label>

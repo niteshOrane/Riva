@@ -1,14 +1,19 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import CategoriesCircles from "../../common/CategoriesCircles/CategoriesCircles";
 import Image from "../../common/LazyImage/Image";
+import {
+  removeFilterParams,
+} from "../../../store/actions/common";
 import style from "./megalinks.module.scss";
 
 const MegaLinks = ({ links, language }) => {
   const history = useHistory();
   const [showMegaMenue, setShowMegaMenue] = useState(null);
   const [childLinks, setChildLinks] = useState({});
+  const dispatch = useDispatch();
   const handleMouseOver = (link) => {
     setShowMegaMenue(link);
   };
@@ -17,6 +22,7 @@ const MegaLinks = ({ links, language }) => {
     setChildLinks(childLink ?? {});
   }, [showMegaMenue]);
   const onSelectCaegory = (link) => {
+    dispatch(removeFilterParams("all"));
     window.scrollTo({ top: 0, behavior: "smooth" });
     sessionStorage.setItem("selectedCategory", link);
   };
@@ -42,7 +48,8 @@ const MegaLinks = ({ links, language }) => {
                 onClick={() => {
                   onSelectCaegory(link.name);
                 }}
-                to={`/products/${link.url_key}/${link.id}`}
+                to={{pathname: `/products/${link.url_key}/${link.id}`, state: { prevPath: history.location.pathname }}}
+                // to={`/products/${link.url_key}/${link.id}`}
                 className={`${style.megaLink} p-12px d-block`}
               >
                 <span
@@ -79,7 +86,8 @@ const MegaLinks = ({ links, language }) => {
                               onClick={() => {
                                 onSelectCaegory(child.name);
                               }}
-                              to={`/products/${child.url_key}/${child.id}`}
+                              to={{pathname: `/products/${child.url_key}/${child.id}`, state: { prevPath: history.location.pathname }}}
+                              // to={`/products/${child.url_key}/${child.id}`}
                               className={`${style.megaLink} p-12px d-block`}
                             >
                               <p
@@ -100,7 +108,8 @@ const MegaLinks = ({ links, language }) => {
                                 onClick={() => {
                                   onSelectCaegory(childitem.name);
                                 }}
-                                to={`/products/${childitem.url_key}/${child.id}/${childitem.id}`}
+                                to={{pathname: `/products/${childitem.url_key}/${child.id}/${childitem.id}`, state: { prevPath: history.location.pathname }}}
+                                // to={`/products/${childitem.url_key}/${child.id}/${childitem.id}`}
                                 className={`${style.megaLink} p-12px d-block`}
                               >
                                 <p
@@ -128,7 +137,8 @@ const MegaLinks = ({ links, language }) => {
                       onClick={() => {
                         onSelectCaegory(link.name);
                       }}
-                      to={`/products/${link.url_key}/${link.id}`}
+                      to={{pathname: `/products/${link.url_key}/${link.id}`, state: { prevPath: history.location.pathname }}}
+                      // to={`/products/${link.url_key}/${link.id}`}
                       className={`${style.megaLink} p-12px d-block`}
                     >
                       <button
