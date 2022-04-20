@@ -290,36 +290,36 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
     const form = new FormData();
 
     if (!firstName) {
-      return dispatch(showSnackbar("First Name Require", "error"));
+      return dispatch(showSnackbar("First Name is Required", "error"));
     }
     if (!lastName) {
-      return dispatch(showSnackbar("Last Name Require", "error"));
+      return dispatch(showSnackbar("Last Name is Required", "error"));
     }
     if (!city) {
-      return dispatch(showSnackbar("City Require", "error"));
+      return dispatch(showSnackbar("City is Required", "error"));
     }
     if (!country) {
       return dispatch(showSnackbar("Country is Required", "error"));
     }
     if (!state) {
-      return dispatch(showSnackbar("State Require", "error"));
+      return dispatch(showSnackbar("State is Required", "error"));
     }
     if (!pincode) {
-      return dispatch(showSnackbar("pin code Require", "error"));
+      return dispatch(showSnackbar("pin code is Required", "error"));
     }
 
     if (!block) {
-      return dispatch(showSnackbar("block Require", "error"));
+      return dispatch(showSnackbar("block is Required", "error"));
     }
 
     if (!houseName) {
-      return dispatch(showSnackbar("houseName Require", "error"));
+      return dispatch(showSnackbar("houseName is Required", "error"));
     }
     if (!street) {
       return dispatch(showSnackbar("Street is Required", "error"));
     }
     if (!phoneValue) {
-      return dispatch(showSnackbar("mobile Require", "error"));
+      return dispatch(showSnackbar("mobile is Required", "error"));
     }
     if (!floorNumber) {
       return dispatch(showSnackbar("Floor Number is required", "error"));

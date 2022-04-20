@@ -114,7 +114,7 @@ const Product = (props) => {
     }
     setloading(false);
   };
-  console.log({product})
+
 
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });

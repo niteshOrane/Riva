@@ -23,6 +23,7 @@ import Card from "@material-ui/core/Card";
 import { addToReturn } from "../../store/actions/stats";
 import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
 import { Divider } from "@material-ui/core";
+import moment from "moment";
 
 const excludeList = ["pending", "canceled", "closed"];
 
@@ -49,6 +50,11 @@ function Delivered() {
     setShowCheck(false);
     setExpanded(isExpanded ? panel : false);
   };
+
+  function days_between(date1, date2) {
+    const result = moment(date1).diff(date2, "days");
+    return result;
+  }
   const getOrders = async (id) => {
     setStatus(null);
     const res = await getOrderList(id, currentPage);
@@ -101,7 +107,7 @@ function Delivered() {
   React.useEffect(() => {
     if (orderType === "orders") {
       const data = orderList?.filter((pro) => {
-        if (pro.status !== "canceled") {
+        if (pro.status !== "canceled" && pro.status !=="pending") {
           return pro;
         }
       }, []);
@@ -192,8 +198,7 @@ function Delivered() {
                       <div>
                         <span>Order Total: </span>
                         <strong>
-                          {li?.order_currency_code}{" "}
-                          {li?.grand_total}
+                          {li?.order_currency_code} {li?.grand_total}
                         </strong>
                       </div>
                       <Divider />
@@ -205,24 +210,21 @@ function Delivered() {
                       <div>
                         <span>Shipping Amount: </span>
                         <strong>
-                          {li?.order_currency_code}{" "}
-                          {li?.shipping_amount}
+                          {li?.order_currency_code} {li?.shipping_amount}
                         </strong>
                       </div>
                       <Divider />
                       <div>
                         <span>Shipping Inclusive Tax: </span>
                         <strong>
-                          {li?.order_currency_code}{" "}
-                          {li?.shipping_incl_tax}
+                          {li?.order_currency_code} {li?.shipping_incl_tax}
                         </strong>
                       </div>
                       <Divider />
                       <div>
                         <span>Discount: </span>
                         <strong>
-                          {li?.order_currency_code}{" "}
-                          {li?.base_discount_amount}
+                          {li?.order_currency_code} {li?.base_discount_amount}
                         </strong>
                       </div>
                       <Divider />
@@ -251,25 +253,32 @@ function Delivered() {
                       </div>
                     </Card>
                   </section>
-                  {li?.status==="complete" && (
-                    <section className={styles.reqBtn}>
-                      {returnedProduct?.length === 0 && (
-                        <button
-                          onClick={() => setShowCheck(!showCheck)}
-                          type="button"
-                        >
-                          Request Return
-                        </button>
-                      )}
-                      {returnedProduct?.length > 0 && (
-                        <Link to="/retur-order">
-                          <button onClick={dispatchList} type="button">
-                            Continue to return
+                 
+                  {li?.status === "complete" &&
+                    Number(
+                      days_between(
+                        new Date().toISOString(),
+                        li?.created_at
+                      ).toString()
+                    ) <=14 && (
+                      <section className={styles.reqBtn}>
+                        {returnedProduct?.length === 0 && (
+                          <button
+                            onClick={() => setShowCheck(!showCheck)}
+                            type="button"
+                          >
+                            Request Return
                           </button>
-                        </Link>
-                      )}
-                    </section>
-                  )}
+                        )}
+                        {returnedProduct?.length > 0 && (
+                          <Link to="/retur-order">
+                            <button onClick={dispatchList} type="button">
+                              Continue to return
+                            </button>
+                          </Link>
+                        )}
+                      </section>
+                    )}
                 </Accordion>
               ))
             ) : !status ? (

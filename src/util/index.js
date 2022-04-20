@@ -122,3 +122,10 @@ export const getColorsForHomePage = (options) => {
   ))
   return colorLabel
 }
+
+
+// sleep
+
+export  function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

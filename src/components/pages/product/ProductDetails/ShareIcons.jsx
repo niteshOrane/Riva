@@ -78,7 +78,7 @@ export default function ShareIcons({ styles, product, language, translate }) {
           >
             <TwitterIcon size={36} />
           </TwitterShareButton>
-          <LinkedinShareButton
+          {/* <LinkedinShareButton
             url={
               product?.custom_attributes?.find(
                 (pro) => pro?.attribute_code === "deeplink"
@@ -89,7 +89,7 @@ export default function ShareIcons({ styles, product, language, translate }) {
             hashtag="#rivaapp"
           >
             <LinkedinIcon size={36} />
-          </LinkedinShareButton>
+          </LinkedinShareButton> */}
           <WhatsappShareButton
             url={
               product?.custom_attributes?.find(

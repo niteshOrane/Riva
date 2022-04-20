@@ -28,7 +28,7 @@ const HomeHeroGrid = (props) => {
   const history = useHistory();
   const onCategorySelect = (id) => {
     const selectItem = links?.children_data?.filter((e) => e?.id === id) ?? [];
-    sessionStorage.setItem("preferredCategory", JSON.stringify(id));
+    localStorage.setItem("selectedCategory", JSON.stringify(id));
     if (selectItem.length) {
       dispatch(selectedCategory(selectItem[0]?.children_data, id));
       history.push(`/type/${id}`);
@@ -73,7 +73,7 @@ const HomeHeroGrid = (props) => {
               </div>
             </div>
             <section>
-              <div
+              {/* <div
                 className="base-image-two c-pointer "
                 onClick={() => {
                   onCategorySelect(
@@ -101,7 +101,7 @@ const HomeHeroGrid = (props) => {
                     isFestiveCard
                   />
                 </div>
-              </div>
+              </div> */}
               <div
                 className="base-image-two c-pointer "
                 onClick={() => {
@@ -121,7 +121,6 @@ const HomeHeroGrid = (props) => {
                     itemsImage.find((e) => e.position === "3")?.image
                   }`}
                   alt=""
-                  style={{ paddingTop: "8px" }}
                 />
                 <div className="banner-wrapper-text">
                   <h3>{items?.[2]?.title ?? "KIDS"}</h3>

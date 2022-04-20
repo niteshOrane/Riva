@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CopyRightSection from "./CopyRightSection/CopyRightSection";
 import * as icons from "../../common/Icons/Icons";
 import style from "./footer.module.scss";
-import { showSnackbar } from "../../../store/actions/common";
+import { showSnackbar, toggleSignUpCard } from "../../../store/actions/common";
 import { getStoreId } from "../../../util";
 import storeData from "../../../store/index";
 
 import { addSubscribeList } from "../../../store/actions/subscription/index";
 import useArabic from "../../common/arabicDict/useArabic";
 
-
 function Footer() {
   const dispatch = useDispatch();
-  const {translate} = useArabic()
+  const { translate } = useArabic();
+  const history = useHistory();
+  const auth = useSelector((state) => state.auth);
   const [phone, setPhone] = useState("+971 800 7482");
   const [value, setValue] = useState("");
   const handleChange = (e) => setValue(e.target.value);
@@ -31,7 +32,10 @@ function Footer() {
     const data = storeData?.getState()?.common.store;
     setPhone(data.phone || "+971 800 7482");
   }, [storeData]);
-
+  const openSignUpCard = (redirectTo) => {
+    dispatch(toggleSignUpCard({ redirectTo }));
+  }
+  const isAuth = auth.isAuthenticated;
   return (
     <footer className={`max-width-1750 mx-auto ${style.footer}`}>
       <div className={style.footerGrid}>
@@ -39,22 +43,58 @@ function Footer() {
           <div className={style.footerCol}>
             <h4 className={style.title}>{section.section?.toUpperCase()}</h4>
             <ul className={style.ul}>
-              {section.data.map((link, i) => (
-                <>
-                  <li
-                    key={i}
-                    className={`d-flex align-items-center ${style.link}`}
-                  >
-                    <Link
-                      to={`/${link.href.split("/").pop()?.toLowerCase() === "customer-service" ? "contact-us" : link.href.split("/").pop()}`}
-                      className={`w-100 ${style.footerLink}`}
+              {section.data
+                ?.filter((li) => li?.name !== "Return Form")
+                ?.map((link, i) =>
+                  link.name === "Track Your Order" ? (
+                    <li
+                      key={i}
+                      className={`d-flex align-items-center ${style.link}`}
                     >
-                      <img src="/assets/images/footerArr.svg" alt={link.name} />
-                      <span className={style.footerLinkIcon}>{link.name}</span>
-                    </Link>
-                  </li>
-                </>
-              ))}
+                      <span
+                         onClick={() => {
+                          isAuth
+                            ? history.push("/track-orders")
+                            : openSignUpCard("/track-orders");
+                        }}
+                        className={`w-100 ${style.footerLink}`}
+                      >
+                        <img
+                          src="/assets/images/footerArr.svg"
+                          alt={link.name}
+                        />
+                        <span className={style.footerLinkIcon}>
+                          {link.name}
+                        </span>
+                      </span>
+                    </li>
+                  ) : (
+                    <>
+                      <li
+                        key={i}
+                        className={`d-flex align-items-center ${style.link}`}
+                      >
+                        <Link
+                          to={`/${
+                            link.href.split("/").pop()?.toLowerCase() ===
+                            "customer-service"
+                              ? "contact-us"
+                              : link.href.split("/").pop()
+                          }`}
+                          className={`w-100 ${style.footerLink}`}
+                        >
+                          <img
+                            src="/assets/images/footerArr.svg"
+                            alt={link.name}
+                          />
+                          <span className={style.footerLinkIcon}>
+                            {link.name}
+                          </span>
+                        </Link>
+                      </li>
+                    </>
+                  )
+                )}
             </ul>
           </div>
         ))}
@@ -62,7 +102,7 @@ function Footer() {
           <h4 className={style.title}>{translate?.footer?.TOUCH}</h4>
           <div>
             <p className={style.thirdMsg}>
-            {translate?.footer?.DEALS}
+              {translate?.footer?.DEALS}
               ...
             </p>
           </div>
@@ -78,7 +118,7 @@ function Footer() {
           </div>
           <div className={style.sub}>
             <button onClick={(e) => handleOnSubmit(e)} type="button">
-            {translate?.footer?.SUBS}
+              {translate?.footer?.SUBS}
             </button>
           </div>
         </div>
@@ -134,7 +174,9 @@ function Footer() {
           <div className={style.m}>
             <img src="/assets/images/footerPhn.png" alt="" />
             <div className={style.text_alignmemt}>
-              <span className={style.clrGrey}>{translate?.footer?.CARE}:&nbsp;</span>
+              <span className={style.clrGrey}>
+                {translate?.footer?.CARE}:&nbsp;
+              </span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
               </a>
@@ -147,7 +189,7 @@ function Footer() {
             </span>
             <div className={style.text_alignmemt}>
               <span className={style.clrGrey}>
-              {translate?.footer?.WHATS}:&nbsp;
+                {translate?.footer?.WHATS}:&nbsp;
               </span>
               <a href={`tel: ${phone}`} className="color-white">
                 {phone}
@@ -155,11 +197,11 @@ function Footer() {
             </div>
           </div>
 
-          <div className={style.lm} >
+          <div className={style.lm}>
             <div className="font-weight-normal color-white">RIVA APP</div>
             <div>
               <a
-                href="https://apps.apple.com/us/app/apple-store/id375380948"
+                href="https://apps.apple.com/in/app/riva-fashion/id1373116819"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -173,7 +215,7 @@ function Footer() {
             </div>
             <div>
               <a
-                href="https://play.google.com/store"
+                href="https://play.google.com/store/apps/details?id=com.armada.riva"
                 target="_blank"
                 rel="noreferrer"
               >

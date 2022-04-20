@@ -171,6 +171,8 @@ const LoginForm = ({
     }
   };
 
+
+
   const responseGoogle = async (response) => {
     if (response.profileObj) {
       const firstName = response?.profileObj?.givenName;
@@ -375,9 +377,7 @@ const LoginForm = ({
       userCreateHandler();
     }
   }, [error]);
-  useEffect(() => {
-
-  },[])
+  useEffect(() => {}, []);
 
   const [showPass, setShowPass] = useState(false);
 
@@ -417,7 +417,7 @@ const LoginForm = ({
     );
   return (
     <>
-      <span className={styles.tagline}>Have an account? Sign In</span>
+      {/* <span className={styles.tagline}>Have an account? Sign In</span> */}
       <form className={styles.formLogin}>
         <div className={styles.container}>
           <p className={styles.inpTitle}>
@@ -488,7 +488,9 @@ const LoginForm = ({
           <div className={styles.signinWrapper}>
             <button
               onClick={handleSubmitLogin}
-              onKeyDown={(e) => e.key === "Enter" && handleSubmitLogin()}
+              onKeyDown={(e) => {
+                console.log(e)
+              }}
               // variant="contained"
               type="button"
               className={styles.signUpBtn}

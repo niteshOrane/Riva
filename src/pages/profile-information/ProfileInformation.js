@@ -15,12 +15,12 @@ function ProfileInformation() {
     const formData = new FormData();
     formData.append("customerid", getCustId());
     const res = await getProfileUpdate(formData);
-    if(res?.status===200){
-      console.log(res)
+    if (res?.status === 200) {
+      setCustomer(res?.data?.data);
     }
   };
   useEffect(() => {
-    updateProfile()
+    updateProfile();
   }, []);
 
   return (
@@ -30,7 +30,7 @@ function ProfileInformation() {
           <Sidebar />
           <div className="w-100">
             <h2 className="font-weight-normal"> {translate?.dash?.PROFILE}</h2>
-            <ProfileInfoForm />
+            <ProfileInfoForm customer={customer && customer} />
           </div>
         </div>
       </div>

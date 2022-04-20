@@ -149,7 +149,7 @@ function QuickView() {
   const setColorSize = (attr, type) => {
     data.selected[type] = attr;
     setSelectedProduct({ ...data });
-    getOutOfStock()
+    getOutOfStock();
   };
   useEffect(() => {
     getOutOfStock();
@@ -349,7 +349,7 @@ function QuickView() {
             </div>
           ) : null}
 
-          <div className={`${styles.stats} d-flex justify-content-between`}>
+          {/* <div className={`${styles.stats} d-flex justify-content-between`}>
             <div
               className={`${styles.visibility} d-flex gap-12px align-items-center`}
             >
@@ -359,38 +359,40 @@ function QuickView() {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className={styles.actions}>
             <div className="d-flex align-items-center justify-content-between flex-wrap my-20px">
-              <div
-                className={`${styles.qty} d-flex align-items-center justify-content-between`}
-              >
-                <div className={styles.title}>Qty:</div>
+              {!outOfStock && (
                 <div
-                  className={`${styles.counter} d-flex align-items-center justify-content-between`}
+                  className={`${styles.qty} d-flex align-items-center justify-content-between`}
                 >
-                  <div>
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={handleDecrementProduct}
-                      className="material-icons-outlined font-light-black"
-                    >
-                      remove
-                    </span>
-                  </div>
-                  <div>{productQuantity}</div>
-                  <div>
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={handleIncrementProduct}
-                      className="material-icons-outlined font-light-black"
-                    >
-                      add
-                    </span>
+                  <div className={styles.title}>Qty:</div>
+                  <div
+                    className={`${styles.counter} d-flex align-items-center justify-content-between`}
+                  >
+                    <div>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={handleDecrementProduct}
+                        className="material-icons-outlined font-light-black"
+                      >
+                        remove
+                      </span>
+                    </div>
+                    <div>{productQuantity}</div>
+                    <div>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={handleIncrementProduct}
+                        className="material-icons-outlined font-light-black"
+                      >
+                        add
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
               <div
                 className={`${styles.demand} d-flex gap-12px align-items-center`}
               >

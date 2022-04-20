@@ -39,7 +39,7 @@ function Products(props) {
   const [sortDirection, setSortDirection] = useState("asc");
   const [filteredData] = useState([]);
   const [pageColumns, setPageColumns] = useState(2);
-  
+
   const { products, loading, totalCount } = useProducts({
     categoryId: match.params.categoryId,
     currentPage,
@@ -48,7 +48,7 @@ function Products(props) {
     sortField,
     onScreen,
     serachTerm: parsed?.serachTerm,
-    filterAttr
+    filterAttr,
   });
   // console.log({products})
   useDocumentTitle(
@@ -159,38 +159,38 @@ function Products(props) {
                   >
                     <option
                       style={{ background: "#fff" }}
-                      value="entity_id-desc"
+                      value="position-asc"
                       id="desc"
                     >
-                      Newest
-                    </option>
-                    <option
-                      style={{ background: "#fff" }}
-                      value="position-desc"
-                      id="desc"
-                    >
-                      Relevance
+                      Position
                     </option>
                     <option
                       style={{ background: "#fff" }}
                       value="price-asc"
-                      id="asc"
+                      id="desc"
                     >
-                      Lowest price
+                      Lowest Price
                     </option>
                     <option
                       style={{ background: "#fff" }}
                       value="price-desc"
-                      id="desc"
+                      id="asc"
                     >
-                      Highest price
+                      Highest Price
                     </option>
                     <option
                       style={{ background: "#fff" }}
-                      value="created_at-desc"
+                      value="name-asc"
                       id="desc"
                     >
-                      Most Popular
+                      Name
+                    </option>
+                    <option
+                      style={{ background: "#fff" }}
+                      value="product_order-asc"
+                      id="desc"
+                    >
+                      Product Sort Order
                     </option>
                   </select>
                 </span>

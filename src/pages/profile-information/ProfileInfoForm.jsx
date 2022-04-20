@@ -24,8 +24,7 @@ import { getCustId, getStoreId } from "../../util";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import style from "./profileInformation.module.scss";
 
-function ProfileInfoForm() {
-  const customer = useSelector((state) => state.auth.customer);
+function ProfileInfoForm({ customer }) {
   console.log({ customer });
   const { translate } = useArabic();
   const currentLocation = useSelector((state) => state.common.currentLocation);
@@ -41,14 +40,28 @@ function ProfileInfoForm() {
   const [isEdit, setIsEdit] = useState(false);
   const [mobileNumber, setMobileNumber] = useState(customer?.mobile || "");
   const [values, setValues] = useState({
-    firstname: customer?.firstname,
-    lastname: customer?.lastname,
-    email: customer?.email,
-    mobile_number: customer?.mobile,
-    gender: customer.gender,
-    dob: customer.dob,
+    firstname: "",
+    lastname: "",
+    email: "",
+    mobile_number: "",
+    gender: "",
+    dob: "",
     profileImg: "",
   });
+  useEffect(() => {
+    setValues({
+      ...values,
+      firstname: customer?.firstname,
+      lastname: customer?.lastname,
+      email: customer?.email,
+      mobile_number: customer?.mobile,
+      gender: customer?.gender,
+      dob: customer?.dob,
+      profileImg: "",
+    });
+    setMobileNumber(customer?.mobile)
+    setPhoneValue(customer?.mobile)
+  }, [customer]);
   const handleChange = (event) => {
     if (event.target.type === "file") {
       setValues({
@@ -263,7 +276,7 @@ function ProfileInfoForm() {
                   }}
                 >
                   <FormControlLabel
-                    value="0"
+                    value="1"
                     control={<Radio color="primary" />}
                     label="Male"
                     labelPlacement="start"
@@ -271,7 +284,7 @@ function ProfileInfoForm() {
                     style={{ color: "black" }}
                   />
                   <FormControlLabel
-                    value="1"
+                    value="2"
                     control={<Radio color="primary" />}
                     label="Female"
                     labelPlacement="start"

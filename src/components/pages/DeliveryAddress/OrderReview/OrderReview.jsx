@@ -12,7 +12,7 @@ import { getFreeShippingInfo } from "../../../../services/cart/cart.service";
 import { getCartId, getStoreData } from "../../../../util";
 import TagManager from "react-gtm-module";
 import ReactPixel from "react-facebook-pixel";
-import API_URL from "../../../../enviroments/index"
+import API_URL from "../../../../enviroments/index";
 
 function OrderReview({
   deliverySpeed,
@@ -238,34 +238,41 @@ function OrderReview({
       <h4 className="font-weight-normal mt-12px">
         {translate?.deliveryAddress?.CHOOSE}
       </h4>
-      {deliverySpeed?.map((item) => {
-        return (
-          <div
-            onClick={() => onSpeedDeliveryRadio(item)}
-            className={styles.chooseShipping}
-          >
-            <div>
-              <input
-                type="radio"
-                checked={
-                  activeDelivery
-                    ? `${item?.carrier_code}_${item?.method_code}` ===
-                      activeDelivery
-                    : false
-                }
-                name={item.method_code}
-                id={item.method_code}
-              />
+      {deliverySpeed?.length !== 0 ? (
+        deliverySpeed?.map((item) => {
+          return (
+            <div
+              onClick={() => onSpeedDeliveryRadio(item)}
+              className={styles.chooseShipping}
+            >
+              <div>
+                <input
+                  type="radio"
+                  checked={
+                    activeDelivery
+                      ? `${item?.carrier_code}_${item?.method_code}` ===
+                        activeDelivery
+                      : false
+                  }
+                  name={item.method_code}
+                  id={item.method_code}
+                />
+              </div>
+              <label htmlFor="twoDays">
+                <h5>{item?.method_title}</h5>
+                <span className={styles.greyText}>
+                  {currency_symbol} {item.amount} - {item.carrier_title}
+                </span>
+              </label>
             </div>
-            <label htmlFor="twoDays">
-              <h5>{item?.method_title}</h5>
-              <span className={styles.greyText}>
-                {currency_symbol} {item.amount} - {item.carrier_title}
-              </span>
-            </label>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div className={styles.noShipImg}>
+          <img src="/assets/images/shop_no_real.jpg" alt="no-delivery" />
+          <span>Product is not deliverable to this address.</span>
+        </div>
+      )}
 
       <Products
         products={items}

@@ -124,21 +124,21 @@ const Cart = () => {
                         id={style.bdrBtm}
                         className="d-flex align-items-center"
                       >
-                      
-                          <div
-                            className={style.itemImg}
-                            onClick = {() => {
-                              handleClose();
-                              history.push(`/product/${item?.parent_sku}`)}}
-                          >
-                            <Image
-                              src={item.src}
-                              width="100%"
-                              alt={item.name}
-                              type="product-details"
-                            />
-                          </div>
-                        
+                        <div
+                          className={style.itemImg}
+                          onClick={() => {
+                            handleClose();
+                            history.push(`/product/${item?.parent_sku}`);
+                          }}
+                        >
+                          <Image
+                            src={item.src}
+                            width="100%"
+                            alt={item.name}
+                            type="product-details"
+                          />
+                        </div>
+
                         <div className={style.itemDetails}>
                           <p
                             title="Name"
@@ -176,26 +176,6 @@ const Cart = () => {
                                     ).size?.[0]?.label}
                                 </span>
                               </div>
-                              <div>
-                                {editableIndex == index ? (
-                                  <span
-                                    onClick={() => {
-                                      setEditableIndex(null);
-                                    }}
-                                    className="material-icons-outlined c-pointer"
-                                  >
-                                    close
-                                  </span>
-                                ) : null}
-                                <span
-                                  onClick={() => {
-                                    setEditableIndex(index);
-                                  }}
-                                  className="material-icons-outlined c-pointer"
-                                >
-                                  edit
-                                </span>
-                              </div>
                             </div>
                             <div className="d-flex align-items-center justify-content-between">
                               <div className="d-flex">
@@ -225,14 +205,35 @@ const Cart = () => {
                                     item.qty
                                   )}
                                 </span>
+                                <div className={style.qtyEdit}>
+                                  {editableIndex == index ? (
+                                    <span
+                                      onClick={() => {
+                                        setEditableIndex(null);
+                                      }}
+                                      className="material-icons-outlined c-pointer"
+                                    >
+                                      close
+                                    </span>
+                                  ) : null}
+                                  <span
+                                    onClick={() => {
+                                      setEditableIndex(index);
+                                    }}
+                                    className="material-icons-outlined c-pointer"
+                                  >
+                                    edit
+                                  </span>
+                                </div>
                               </div>
                               <div>
                                 <span
                                   onClick={() => removeItemFromCart(item)}
                                   style={{ cursor: "pointer" }}
+                                  title="remove from cart"
                                 >
                                   <span className="material-icons-outlined">
-                                    close
+                                    remove_shopping_cart
                                   </span>
                                 </span>
                               </div>
@@ -292,7 +293,7 @@ const Cart = () => {
                     onClick={() => {
                       isAuth
                         ? history.push("/delivery-address")
-                        : openSignUpCard("/delivery-address");
+                        : openSignUpCard("/shopping-cart");
                     }}
                     type="button"
                     className="bg-black color-white p-12px w-100 d-block c-pointer"

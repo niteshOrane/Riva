@@ -33,13 +33,14 @@ const MainHeaderTopBar = ({ mainHeader }) => {
   const currencyAlert = (event, head) => {
     swal({
       title: "Are you sure?",
-      text: "Switching currency will refresh your cart, and you may loss the product in cart",
+      text: "Switching currency will refresh your cart and you may loss the product in cart.",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
         handleCurrencyChange(event, head);
+        localStorage.removeItem("recentVieItem")
       } else {
         return null;
       }

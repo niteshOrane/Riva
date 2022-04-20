@@ -77,3 +77,18 @@
     opacity: 0.8;
   }
 }
+.noShipImg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  img {
+    width: 30%;
+    border-radius: 20px;
+  }
+  span{
+    text-align: center;
+    margin-top: 10px;
+  }
+}

@@ -339,7 +339,7 @@ const SignUpForm = ({ handleSubmit, language }) => {
         <hr/>
         <div className={styles.signLog}>
           <span onClick={() => dispatch(toggleSignUpCard({ isLogin: true }))}>
-            Log IN
+           Already have an account? Log in
           </span>
         </div>
       </div>

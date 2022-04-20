@@ -67,7 +67,7 @@ const ProductsData = ({ products, currency_symbol }) => {
               <div className="d-flex justify-content-between p-12px">
                 <div className={style.productDetails}>
                   <div className={style.productImg}>
-                    <Link to={`product/${getSKuId(product?.sku)}`}>
+                    <Link to={`product/${product.parent_sku}`}>
                       <Image
                         src={product.src}
                         width="200px"
@@ -169,7 +169,7 @@ const ProductsData = ({ products, currency_symbol }) => {
                           <span className="underline">{wishlist.find((w) => w.id === product.parent_product_id) ? 'Remove from Wishlist' : 'Move to Wishlist'}</span>
                         </div>
                         <Link
-                          to={`/product/${product.sku}`}
+                          to={`/product/${product.parent_sku}`}
                           className="font-light-black c-pointer d-flex"
                         >
                           <span className="material-icons-outlined">edit</span>

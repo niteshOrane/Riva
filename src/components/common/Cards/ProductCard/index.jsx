@@ -289,7 +289,7 @@ const ProductCard = ({
                   <div className={`legend ${styles.sizeWrap}`}>
                     <p>SIZE</p>
                     <div className={styles.sizeType}>
-                      {attributes?.size?.map((li) => (
+                      {attributes?.size?.sort((a,b) => a-b)?.map((li) => (
                         <span
                           className={
                             attributes?.size?.length === 1

@@ -40,7 +40,7 @@ export const calculateFreeShipping = () => async (dispatch) => {
 };
 export const getCart = () => async (dispatch) => {
   const res = await getCartService();
-  if (!res?.data?.cart?.hasOwnProperty("success")) {
+  if (Array.isArray(res?.data?.cart)) {
     if (res && res?.data && res?.data?.cart?.length > 0) {
       const productIdPromises = res.data?.cart?.map((r) =>
         getProductIdBySku(r.sku)
@@ -53,7 +53,6 @@ export const getCart = () => async (dispatch) => {
           : 0,
         src: r?.extension_attributes?.image.replace("index.php", ""),
       }));
-
       dispatch({
         type: DATA_TYPES.CART_EXTRA_INFO,
         payload: {

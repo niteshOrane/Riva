@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import TopBrandCard from './TopBrandCard';
-import Slider from '../../../common/Sliders/Slider';
-import ArrowButton from '../../../common/Buttons/Arrow';
-import style from './TopBrandCard.module.scss';
+/* eslint-disable no-nested-ternary */
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import TopBrandCard from "./TopBrandCard";
+import Slider from "../../../common/Sliders/Slider";
+import ArrowButton from "../../../common/Buttons/Arrow";
+import style from "./TopBrandCard.module.scss";
 
 const RecentlyViewedSlider = ({ currency_symbol }) => {
   const refContainer = useRef();
@@ -12,7 +13,8 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
   const { language } = useSelector((state) => state?.common?.store);
 
   useEffect(() => {
-    const cartValue = localStorage.getItem("recentVieItem") || JSON.stringify([]);
+    const cartValue =
+      localStorage.getItem("recentVieItem") || JSON.stringify([]);
     const cartObj = JSON.parse(cartValue);
     if (cartObj && cartObj.length) {
       setRecentlyViewed(cartObj?.reverse());
@@ -28,7 +30,9 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
         id={style.borderBotm}
         className="d-flex align-items-center justify-content-between"
       >
-        <h4 className={style.titelMrgn}>{language==="Arabic" ?"شوهد حديثًا،" : "Recently Viewed"}</h4>
+        <h4 className={style.titelMrgn}>
+          {language === "Arabic" ? "شوهد حديثًا،" : "Recently Viewed"}
+        </h4>
         <div className="d-flex align-items-center">
           <div onClick={previous} className={style.arrowBtn}>
             <ArrowButton direction="backward" />
@@ -39,7 +43,11 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
         </div>
       </div>
       <div className="">
-        {recentlyViewed.length < 3 ? (
+        {recentlyViewed?.length === 0 ? (
+          <div className={style.noProWrap}>
+            <img src="/assets/images/no_pro.png" alt="no-product" />
+          </div>
+        ) : recentlyViewed.length < 3 ? (
           <div className="d-flex">
             {recentlyViewed?.map((item) => (
               <TopBrandCard item={item} currency_symbol={currency_symbol} />
@@ -51,7 +59,9 @@ const RecentlyViewedSlider = ({ currency_symbol }) => {
             ref={refContainer}
             rows={2}
             slidesToShow={2}
-            render={(item) => <TopBrandCard item={item} currency_symbol={currency_symbol} />}
+            render={(item) => (
+              <TopBrandCard item={item} currency_symbol={currency_symbol} />
+            )}
           />
         )}
       </div>

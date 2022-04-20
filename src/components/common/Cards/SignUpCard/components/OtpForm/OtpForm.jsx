@@ -109,7 +109,7 @@ const OtpForm = ({
     e.preventDefault();
     if (!phoneValue)
       return dispatch(showSnackbar("Mobile Number are required", "warning"));
-      setMobileOtp("");
+    setMobileOtp("");
 
     const customer = new FormData();
     customer.append("phone", phoneValue);
@@ -119,7 +119,7 @@ const OtpForm = ({
     if (res.status === 200) {
       if (res?.data?.success) {
         setHideMobileBox(true);
-  
+
         setRecivedOTPData(res?.data.data);
         const divisor_for_minutes = res?.data.data.expiredtime % (60 * 60);
         const minutesTime = Math.floor(divisor_for_minutes / 60);
@@ -149,7 +149,7 @@ const OtpForm = ({
       customer.append("phone", phoneValue);
       customer.append("otp", mobileOtp);
       customer.append("customerInfo", "");
-      customer.append("cartId",getCartId())
+      customer.append("cartId", getCartId());
 
       const res = await customerVerifyOtp(customer);
       if (res.status === 200) {
@@ -339,7 +339,7 @@ const OtpForm = ({
         <div className={styles.formLogin}>
           <p className={styles.or}>OR</p>
           <div>
-          <AppleLogin
+            <AppleLogin
               clientId="com.react.apple.login"
               redirectURI="https://redirectUrl.com"
               usePopup={false}
@@ -399,9 +399,15 @@ const OtpForm = ({
             </button>
             <div className={styles.signInLink}>
               <p>
-                Create an account?{" "}
                 <strong className="c-pointer" onClick={() => setSignUpForm()}>
                   Sign Up
+                </strong>{" "}
+                or{" "}
+                <strong
+                  className="c-pointer"
+                  onClick={() => dispatch(toggleSignUpCard({ isLogin: true }))}
+                >
+                  log In
                 </strong>
               </p>
             </div>

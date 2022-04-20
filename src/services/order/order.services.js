@@ -18,7 +18,7 @@ export const getOrderList = (id, page) => {
     method: "get",
     url: `${API_URL}/rest/${
       getStoreData()?.store_code
-    }/V1/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}&searchCriteria[pageSize]=5&searchCriteria[currentPage]=${page}&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc`,
+    }/V1/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}&searchCriteria[pageSize]=8&searchCriteria[currentPage]=${page}&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc`,
     silent: true,
   };
   return axios(config);
