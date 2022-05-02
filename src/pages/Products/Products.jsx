@@ -300,7 +300,7 @@ function Products(props) {
                 },
               };
               return (
-                <div className={getClassOfBigCard(i)}>
+                <div>
                   <ProductCard
                     index={i}
                     pageColumns={pageColumns}
@@ -315,7 +315,7 @@ function Products(props) {
               );
             })
           : filteredData?.map((product, i) => (
-              <div className={getClassOfBigCard(i)}>
+              <div>
                 <ProductCard
                   index={i}
                   pageColumns={pageColumns}
