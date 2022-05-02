@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Image from "../../../common/LazyImage/Image";
-import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import SlideBanner from "../Banners/SlideBanner";
 import style from "./HeroGrid.module.scss";
 

@@ -4,7 +4,10 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "react-router";
 import moment from "moment";
-import { getOrderList } from "../../../services/order/order.services";
+import {
+  getOrderList,
+  getYourTrackDetails,
+} from "../../../services/order/order.services";
 import { showSnackbar } from "../../../store/actions/common";
 import Sidebar from "../Dashboard/Sidebar/Sidebar";
 import styles from "./Information.module.scss";
@@ -23,17 +26,16 @@ function InformationGrid() {
 
   const getOrderDetail = async () => {
     if (number) {
-      const res2 = await getOrderList(customer?.customerID);
-      if (res2.status === 200 && res2?.data?.items) {
-        const property = res2?.data?.items?.find(
-          (li) => li?.increment_id === number
-        );
+      const res2 = await getYourTrackDetails(number);
+      if (res2.status === 200 && res2?.data) {
+        const property = res2?.data;
         setOrderDetails({
           ...orderDetails,
-          product: property?.items?.find((li) => li.product_type === "simple"),
+          product: res2?.data?.items,
           status: property?.status,
           currency: property?.base_currency_code,
           orderCurrency: property?.order_currency_code,
+          placeDate:property?.created_at,
           paymentInfo: {
             price: property?.items?.find((li) => li.product_type === "simple")
               ?.price,
@@ -96,7 +98,7 @@ function InformationGrid() {
             <h4 className={styles.headInfo}>
               {" "}
               Order Place Date:{" "}
-              {moment(orderDetails?.product?.created_at).format("MMMM DD YYYY")}
+              {moment(orderDetails?.placeDate).format("MMMM DD YYYY")}
             </h4>
           </div>
           <hr />
@@ -149,7 +151,7 @@ function InformationGrid() {
           <div>
             <InformationTable orderDetails={orderDetails} />
           </div>
-          <div className = {styles.trackLink}>
+          <div className={styles.trackLink}>
             <Link
               to={{
                 pathname: "/track-orders",

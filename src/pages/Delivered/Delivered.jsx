@@ -25,7 +25,6 @@ import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle
 import { Divider } from "@material-ui/core";
 import moment from "moment";
 
-const excludeList = ["pending", "canceled", "closed"];
 
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
@@ -57,6 +56,7 @@ function Delivered() {
   }
   const getOrders = async (id) => {
     setStatus(null);
+    setFinalList([]);
     const res = await getOrderList(id, currentPage);
     if (res?.status === 200 && res?.data) {
       if (orderType === "delivered") {
@@ -107,7 +107,7 @@ function Delivered() {
   React.useEffect(() => {
     if (orderType === "orders") {
       const data = orderList?.filter((pro) => {
-        if (pro.status !== "canceled" && pro.status !=="pending") {
+        if (pro.status !== "canceled" && pro.status !== "pending") {
           return pro;
         }
       }, []);
@@ -161,9 +161,20 @@ function Delivered() {
                     id="panel1bh-header"
                     expandIcon={<ExpandMoreIcon />}
                   >
-                    <Typography>
-                      Order ID: <strong>#{li?.increment_id}</strong>
-                    </Typography>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <Typography>
+                        Order ID: <strong>#{li?.increment_id}</strong>
+                      </Typography>
+                      <Typography color="secondary">
+                        {moment(li?.created_at).format("MMMM DD YYYY")}
+                      </Typography>
+                    </div>
                   </AccordionSummary>
                   <AccordionDetails
                     style={{
@@ -173,7 +184,7 @@ function Delivered() {
                   >
                     {showCheck && (
                       <Alert severity="success">
-                        Select the product you want to return
+                        Select the product you want to return and click on continue return.
                       </Alert>
                     )}
                     {li?.items
@@ -253,14 +264,14 @@ function Delivered() {
                       </div>
                     </Card>
                   </section>
-                 
+
                   {li?.status === "complete" &&
                     Number(
                       days_between(
                         new Date().toISOString(),
                         li?.created_at
                       ).toString()
-                    ) <=14 && (
+                    ) <= 14 && (
                       <section className={styles.reqBtn}>
                         {returnedProduct?.length === 0 && (
                           <button

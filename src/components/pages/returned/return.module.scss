@@ -1,6 +1,7 @@
 .wrap {
   border: 1px solid lightgray;
   margin-bottom: 20px;
+  padding: 5px;
   header {
     display: flex;
     background-color: gray;
@@ -19,7 +20,11 @@
       color: white;
       padding-left: 1rem;
     }
+    .pick{
+      padding-bottom: 0.5em;
+    }
   }
+  
   .formSec {
     form {
       display: flex;
@@ -64,3 +69,29 @@
   color: gray;
 }
 
+.header {
+  display: flex;
+  background-color: gray;
+  align-items: center;
+  margin: 3px;
+  margin-bottom: 5px;
+  span {
+    color: lightgray;
+    background-color: white;
+    padding: 10px;
+    color: black;
+    font-weight: bold;
+    margin: 3px;
+    border-radius: 10px;
+  }
+  p {
+    color: white;
+    padding-left: 1rem;
+  }
+}
+.priceWrap{
+  line-height: 20px;
+  strong{
+    margin-bottom: 15px;
+  }
+}

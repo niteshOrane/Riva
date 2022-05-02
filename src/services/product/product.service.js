@@ -26,7 +26,7 @@ export const getProductMedia = (sku) => {
   return axios(config);
 };
 
-export const getFiltersList = ({ catId, qTerm = "", filterAttr = {} }) => {
+export const getFiltersList = ({ catId, serachTerm = "", filterAttr = {} }) => {
   const keyValue = Object.keys(filterAttr).filter((e) => e !== "status");
   const filterValue = [];
   let filterData = "";
@@ -40,10 +40,11 @@ export const getFiltersList = ({ catId, qTerm = "", filterAttr = {} }) => {
   // if (filterValue.length) {
   //   filterData = `&${filterValue.join('&')}`
   // }
-  const querySearch = qTerm ? `&categoryData[q] = ${qTerm}` : "";
+  const querySearch = serachTerm ? `&categoryData[q] = ${serachTerm}` : "";
+  const newCatIDParam = catId ? `&categoryData[categoryId] = ${catId}` : "";
   const config = {
     method: "get",
-    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getlayernavigation?categoryData[categoryId]=${catId}${filterValue}${querySearch}`,
+    url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/webapi/getlayernavigation?${newCatIDParam}${filterValue}${querySearch}`,
     silent: true,
   };
   return axios(config);

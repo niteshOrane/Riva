@@ -10,6 +10,8 @@ import {
   getTrackYourOrder,
   cancelOrder,
   getOrderList,
+  getYourOrderDetails,
+  getYourTrackDetails,
 } from "../../services/order/order.services";
 import ProductCard from "../../components/pages/Dashboard/OrderConfirmed/ProductCard/ProductCard";
 import styles from "./TrackOrders.module.scss";
@@ -20,7 +22,7 @@ function TrackOrders(props) {
   const { customer } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
-  useDocumentTitle("Track Order")
+  useDocumentTitle("Track Order");
   const [value, setValue] = React.useState("");
   const [orderItems, setOrderItems] = React.useState([]);
   const [orderDetails, setOrderDetails] = React.useState({
@@ -31,6 +33,12 @@ function TrackOrders(props) {
   const [cancelLoading, setCancelLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const handleChange = (e) => {
+    setOrderDetails({
+      product: null,
+      status: null,
+    });
+    setError(false);
+    setOrderItems([])
     setValue(e.target.value);
   };
 
@@ -41,32 +49,11 @@ function TrackOrders(props) {
   }, []);
   const getOrderDetail = async () => {
     if (value) {
-      const res2 = await getOrderList(customer?.customerID);
-      if (res2.status === 200 && res2?.data?.items) {
-        const property = res2?.data?.items?.find(
-          (li) => li?.increment_id === value
-        );
-        setOrderDetails({
-          ...orderDetails,
-          product: property?.items?.find((li) => li.product_type === "simple"),
-          status: property?.status,
-          currency: property?.base_currency_code,
-          paymentInfo: {
-            price: property?.items?.find((li) => li.product_type === "simple")
-              ?.price,
-            grandTotal: property?.grand_total,
-            shippingAmount: property?.shipping_amount,
-            subtotal: property?.subtotal,
-          },
-        });
-        // setOrderInfo({
-        //   shippingAddress: property?.billing_address,
-        //   shippingDescription: property?.shipping_description,
-        //   billingAddress: property?.billing_address,
-        //   payment: property?.payment,
-        // });
+      const res2 = await getYourTrackDetails(value);
+      if (res2.status === 200) {
+        setOrderDetails({ ...orderDetails, product: res2?.data });
       } else {
-        dispatch(showSnackbar("No product found"), "error");
+        dispatch(showSnackbar("No product found", "error"));
       }
     }
   };
@@ -129,7 +116,7 @@ function TrackOrders(props) {
             <div>
               <section className={styles.detailsWrap}>Order Details</section>
               <ProductCard
-                product={orderDetails?.product}
+                product={orderDetails?.product?.items?.[1]}
                 status={orderDetails?.status}
                 loading={cancelLoading}
                 cancelOrderFn={cancelOrderfn}
@@ -142,7 +129,7 @@ function TrackOrders(props) {
           {error && (
             <section className={styles.noRecord}>
               <div>
-                <p>{`NO RECORD FOUND FOR ORDER NUMBER ${value}`}</p>
+                <p>{`NO TRACKING RECORD FOUND FOR ORDER NUMBER ${value}`}</p>
               </div>
               <div>
                 <button onClick={() => setError(false)} type="button">

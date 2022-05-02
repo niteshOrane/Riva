@@ -98,13 +98,13 @@ function Card({
       <div className="my-12px">
         <p className={`font-size-600 ${styles.boldFont}`}>{name}</p>
       </div>
-      <div className="d-flex align-items-center">
+      <div className="d-flex">
         {priceWas !== priceIs && (
           <s className="color-grey">
             Was {currency_symbol} {parseFloat(priceWas)?.toFixed(2)}
           </s>
         )}
-        &nbsp; &nbsp;
+       
         <span>
           Now {currency_symbol}{" "}
           {isNaN(parseFloat(priceIs)?.toFixed(2))

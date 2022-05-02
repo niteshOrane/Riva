@@ -5,10 +5,7 @@ function Form3({ requestReturn, handleCommentChange, list }) {
   return (
     <>
       <div className={styles.wrap}>
-        <header>
-          <span>3</span>
-          <p>RETURN ACTION</p>
-        </header>
+        
         <section className={styles.formSec}>
           <section className={styles.formSec}>
             <form>

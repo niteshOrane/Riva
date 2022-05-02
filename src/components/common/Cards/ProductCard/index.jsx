@@ -73,12 +73,13 @@ const ProductCard = ({
     dispatch(toggleSignUpCard({ redirectTo }));
   };
   const [attributes, setattributes] = useState({ colors: [], size: [] });
-  const [productItem, setProductItem] = useState({});
+  const [productItem, setProductItem] = useState(null);
   const [colorImg, setColorImg] = useState(null);
   useEffect(() => {
-    if (product?.extension_attributes?.configurable_product_options) {
+    if (product?.configurable_product_options) {
+      
       const { colors, size } = extractColorSize(
-        product?.extension_attributes?.configurable_product_options || []
+        product?.configurable_product_options || []
       );
       setattributes({ colors, size });
 
@@ -269,42 +270,47 @@ const ProductCard = ({
             showIndicators={false}
             interval={2000}
           >
-            {productItem?.media_gallery_entries?.map((item, indexitem) => (
-              <TempLink product={productItem}>
-                <div className={styles.legendWrapper} key={indexitem}>
-                  <Image
-                    src={
-                      colorImg ||
-                      `${
-                        !productItem?.productColorImage
-                          ? URL.baseUrlProduct
-                          : ""
-                      }/${item?.file}`
-                    }
-                    defaultImage="https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg"
-                    width="100%"
-                    loading={Imgloading}
-                  />
+            {productItem &&
+              Object?.values(productItem?.media_gallery_entries)?.map(
+                (item, indexitem) => (
+                  <TempLink product={productItem}>
+                    <div className={styles.legendWrapper} key={indexitem}>
+                      <Image
+                        src={
+                          colorImg ||
+                          `${
+                            !productItem?.productColorImage
+                              ? URL.baseUrlProduct
+                              : ""
+                          }/${item?.file}`
+                        }
+                        defaultImage="https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg"
+                        width="100%"
+                        loading={Imgloading}
+                      />
 
-                  <div className={`legend ${styles.sizeWrap}`}>
-                    <p>SIZE</p>
-                    <div className={styles.sizeType}>
-                      {attributes?.size?.sort((a,b) => a-b)?.map((li) => (
-                        <span
-                          className={
-                            attributes?.size?.length === 1
-                              ? styles.single
-                              : null
-                          }
-                        >
-                          {li?.label}
-                        </span>
-                      ))}
+                      <div className={`legend ${styles.sizeWrap}`}>
+                        <p>SIZE</p>
+                        <div className={styles.sizeType}>
+                          {attributes?.size
+                            ?.sort((a, b) => a - b)
+                            ?.map((li) => (
+                              <span
+                                className={
+                                  attributes?.size?.length === 1
+                                    ? styles.single
+                                    : null
+                                }
+                              >
+                                {li?.label}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </TempLink>
-            ))}
+                  </TempLink>
+                )
+              )}
           </Carousel>
         )}
         {!isListing && (

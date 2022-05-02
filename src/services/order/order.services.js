@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCustId, getStoreData } from "../../util";
+import { getCustId, getStoreData, getStoreId } from "../../util";
 import API_URL from "../../enviroments/index";
 
 export const orderConfirmed = (id) => {
@@ -18,7 +18,7 @@ export const getOrderList = (id, page) => {
     method: "get",
     url: `${API_URL}/rest/${
       getStoreData()?.store_code
-    }/V1/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}&searchCriteria[pageSize]=8&searchCriteria[currentPage]=${page}&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc`,
+    }/V1/orders/?searchCriteria[filter_groups][4][filters][0][field]=customer_id&searchCriteria[filter_groups][4][filters][0][value]=${id}&searchCriteria[filter_groups][4][filters][0][field]=store_id&searchCriteria[filter_groups][4][filters][0][value]=${getStoreId()}&searchCriteria[pageSize]=8&searchCriteria[currentPage]=${page}&searchCriteria[sortOrders][0][field]=entity_id&searchCriteria[sortOrders][0][direction]=desc`,
     silent: true,
   };
   return axios(config);
@@ -29,7 +29,7 @@ export const getReturnedList = (page) => {
     method: "get",
     url: `${API_URL}/rest/${
       getStoreData()?.store_code
-    }/V1/webapi/getrma?rmaInfo[customer_id]=${getCustId()}&rmaInfo[pageSize]=2&rmaInfo[page]=${page}`,
+    }/V1/webapi/getrma?rmaInfo[customer_id]=${getCustId()}&rmaInfo[pageSize]=5&rmaInfo[page]=${page}`,
     silent: true,
   };
   return axios(config);
@@ -115,6 +115,18 @@ export const getYourOrderDetails = (id) => {
   const config = {
     method: "get",
     url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/orders/${id}`,
+    silent: true,
+  };
+  return axios(config);
+};
+
+// order detials by custoemr id
+export const getYourTrackDetails = (id) => {
+  const config = {
+    method: "post",
+    url: `${API_URL}/rest/${
+      getStoreData()?.store_code
+    }/V1/webapi/orderInfo?orderId=${id}&customerId=${getCustId()}`,
     silent: true,
   };
   return axios(config);

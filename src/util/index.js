@@ -78,8 +78,8 @@ export const hardReload = () =>
 export const extractColorSize = (attributes = []) => {
   const { size = [], color = [] } = store.getState()?.common?.attributes || {};
 
-  const color_attr = attributes?.find((e) => e?.attribute_id === '92')?.values || [];
-  const size_attr = attributes?.find((e) => e?.attribute_id === '213')?.values || [];
+  const color_attr = attributes?.find((e) => e?.attribute_id == '92')?.values || [];
+  const size_attr = attributes?.find((e) => e?.attribute_id == '213')?.values || [];
   let colorData = [];
   if (color_attr?.filter((c) => c.value_index === null).length) {
     colorData.push({ label: false, value: null })

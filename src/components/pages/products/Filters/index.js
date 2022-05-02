@@ -93,8 +93,8 @@ function Filters(props) {
   };
   const filterList = async (catId) => {
     let obj = {};
+    // let newCatIDParam = `categoryData[categoryId]=${catId}`;
     const list = await getFiltersList({ catId, serachTerm, obj });
-    console.log("filterList: ",list, catId);
     setFiltersAttr(list?.data[0]?.filters);
   };
 
@@ -103,11 +103,12 @@ function Filters(props) {
       filterList(categoryId);
     }
   }, [categoryId]);
+
   useEffect(() => {
-    if (categoryId && categoryId > 0) {
+    // if (serachTerm) { 
       filterList(categoryId);
-    }
-  }, []);
+    // }
+  }, [serachTerm]);
 
   let newList = [];
   if (filtersAttr?.length) {
@@ -138,10 +139,10 @@ function Filters(props) {
     setOpen(false);
   };
   const openDrawer = () => {
-    console.log("openDrawer: ", filterStoreAttr, filtersAttr );
     if (filterStoreAttr.status == true) {
       for (let i = 0; i < filtersAttr.length; i++) {
         for (let j = 0; j < filtersAttr[i].values.length; j++) {
+          filtersAttr[i].values[j].checked = false;
           for (let k = 0; k < filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code].length; k++) {
             if (filterStoreAttr.newPayloadArr[0][filtersAttr[i].attr_code][k].value == filtersAttr[i].values[j].value ) {
               filtersAttr[i].values[j].checked = true;
@@ -151,18 +152,19 @@ function Filters(props) {
       }
     }
     
-    setFiltersAttr(filtersAttr);
+    // setFiltersAttr(filtersAttr);
     setOpen(true);
   };
 
   const seeResultsAction = () => {
-    if (categoryId && categoryId > 0) {
+    // if (categoryId && categoryId > 0) {
       // let obj = {name: "orane", value: "416"}
       let newPayloadArr = {};
       for (let i = 0; i < filtersAttr.length; i++) {
         newPayloadArr[filtersAttr[i].attr_code] = []
         for (let j = 0; j < filtersAttr[i].values.length; j++) {
           if (filtersAttr[i].values[j].checked == true) {
+            filtersAttr[i].values[j].field = filtersAttr[i].attr_code;
             // newPayloadArr.push(filtersAttr[i].values[j]);
             newPayloadArr[filtersAttr[i].attr_code].push(filtersAttr[i].values[j]);
           }
@@ -171,7 +173,7 @@ function Filters(props) {
       dispatch(addFilterParams("newPayloadArr", newPayloadArr));
       closeDrawer();
       console.log("filterValue: ",filtersAttr, newPayloadArr);
-    }
+    // }
   };
 
   const removeSingleAttr = (label, value) => {

@@ -94,6 +94,13 @@ export const clearSingleFilterValue = (name, value) => ({
   payload: { name, value },
 });
 
+export const changeSortField = (name, value) => {
+  return {
+    type: DATA_TYPES.SET_SORT_FIELD,
+    payload: { name, value },
+  };
+};
+
 // export const loadingTrue = () => {
 //   {
 //     type:

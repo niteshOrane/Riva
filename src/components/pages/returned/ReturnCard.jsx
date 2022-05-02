@@ -2,13 +2,15 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import { CardActions, CardContent } from "@material-ui/core";
+import { CardActions, CardContent, Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { extractColorSize } from "../../../util";
+import styles from "./return.module.scss";
 
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 345,
+    marginBottom: 10,
   },
   media: {
     height: "20rem",
@@ -22,7 +24,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ReturnCard({ product, reasonList, createRmaItems }) {
+export default function ReturnCard({
+  product,
+  reasonList,
+  resolutionList,
+  conditionList,
+  createRmaItems,
+}) {
   const classes = useStyles();
 
   const getColorSize = (options) => {
@@ -48,12 +56,13 @@ export default function ReturnCard({ product, reasonList, createRmaItems }) {
         image={product?.extension_attributes?.product_thumbnail_image}
       />
       <CardContent>
-        <section>
+        <section className={styles.priceWrap}>
           <strong style={{ fontSize: "1.3rem", paddingBottom: "15px" }}>
             {product?.name}
           </strong>
           <br />
-          {`${product?.currency}${product?.parent_item?.price}`}
+
+          {`${product?.currency} ${product?.parent_item?.price}`}
         </section>
         <div className="mt-12px">
           <div>
@@ -67,24 +76,92 @@ export default function ReturnCard({ product, reasonList, createRmaItems }) {
         </div>
       </CardContent>
       <CardActions>
-        <Typography>Select a reason of return:</Typography>
-        <form>
-          <select
-            className={classes.select}
-            onChange={(e) => createRmaItems(e, product)}
-            required
+        <section
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+            }}
           >
-            <option value="" selected>
-              Select reason
-            </option>
-            {reasonList &&
-              Object.entries(reasonList)?.map(([id, reason]) => (
-                <>
-                  <option value={id}>{reason}</option>
-                </>
-              ))}
-          </select>
-        </form>
+            <Typography>Select Reason:</Typography>
+            <form>
+              <select
+                className={classes.select}
+                onChange={(e) => createRmaItems(e, product, "reason")}
+                required
+                style={{width:"7rem"}}
+              >
+                <option value="" selected disabled>
+                  Select Reason
+                </option>
+                {reasonList &&
+                  Object.entries(reasonList)?.map(([id, reason]) => (
+                    <>
+                      <option value={id}>{reason}</option>
+                    </>
+                  ))}
+              </select>
+            </form>
+          </div>
+          <Divider />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+            }}
+          >
+            <Typography>Select Condition:</Typography>
+            <form>
+              <select
+                className={classes.select}
+                onChange={(e) => createRmaItems(e, product, "condition")}
+                required
+                
+              >
+                <option value="" selected disabled>
+                  Select Condition
+                </option>
+                {conditionList &&
+                  Object.entries(conditionList)?.map(([id, reason]) => (
+                    <>
+                      <option value={id}>{reason}</option>
+                    </>
+                  ))}
+              </select>
+            </form>
+          </div>
+          <Divider />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+            }}
+          >
+            <Typography>Select Resolution:</Typography>
+            <form>
+              <select
+                className={classes.select}
+                onChange={(e) => createRmaItems(e, product, "resolution")}
+                required
+              >
+                <option value="" selected disabled>
+                  Select Resolution
+                </option>
+                {resolutionList &&
+                  Object.entries(resolutionList)?.map(([id, reason]) => (
+                    <>
+                      <option value={id}>{reason}</option>
+                    </>
+                  ))}
+              </select>
+            </form>
+          </div>
+        </section>
       </CardActions>
     </Card>
   );

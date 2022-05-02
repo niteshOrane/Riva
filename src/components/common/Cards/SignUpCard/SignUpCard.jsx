@@ -7,7 +7,10 @@ import SignUpForm from "./components/SignUpForm/SignUpForm";
 import LoginForm from "./components/LoginForm/LoginForm";
 import OtpForm from "./components/OtpForm/OtpForm";
 import styles from "./SignUpCard.module.scss";
-import { newUserEmailCheck, toggleSignUpCard } from "../../../../store/actions/common";
+import {
+  newUserEmailCheck,
+  toggleSignUpCard,
+} from "../../../../store/actions/common";
 
 const SignUpCard = () => {
   const {
@@ -20,7 +23,7 @@ const SignUpCard = () => {
   const [isForget, setIsForget] = useState(false);
   const [isLoginWithOtp, setLoginWithOtp] = useState(false);
   const { language } = useSelector((state) => state?.common?.store);
-
+  const [heading, setHeading] = useState("SIGN IN");
 
   const dispatch = useDispatch();
 
@@ -28,8 +31,7 @@ const SignUpCard = () => {
     dispatch(toggleSignUpCard({ isOpen: false }));
     // setIsForget(false);
     setLoginWithOtp(false);
-    dispatch(newUserEmailCheck(""))
-  
+    dispatch(newUserEmailCheck(""));
   };
   useEffect(() => {
     if (isOpen) {
@@ -64,16 +66,10 @@ const SignUpCard = () => {
         >
           <icons.Close />
         </button>
-        {isForget ? (
-          <h2 className={styles.title}>RESET PASSWORD</h2>
-        ) : isLoginWithOtp ? (
-          <h2 className={styles.title}>SIGNIN WITH OTP</h2>
-        ) : (
-          <h2 className={styles.title}>{isLogin ? "SIGN IN" : "SIGN UP"} </h2>
-        )}
+        <h2 className={styles.title}>{heading}</h2>
 
         {!isLogin && <p className="text-center">Create your account on RIVA</p>}
-      
+
         {!isOtp ? (
           isLogin ? (
             <LoginForm
@@ -82,15 +78,21 @@ const SignUpCard = () => {
               handleSubmit={handleClose}
               language={language}
               setIsForget={setIsForget}
+              setHeading={setHeading}
             />
           ) : (
-            <SignUpForm handleSubmit={handleSubmit} language={language} />
+            <SignUpForm
+              handleSubmit={handleSubmit}
+              language={language}
+              setHeading={setHeading}
+            />
           )
         ) : (
           <OtpForm
             handleSubmit={handleClose}
             language={language}
             setLoginWithOtp={setLoginWithOtp}
+            setHeading={setHeading}
           />
         )}
       </div>

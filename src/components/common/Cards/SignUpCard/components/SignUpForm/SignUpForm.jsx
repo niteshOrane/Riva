@@ -27,12 +27,12 @@ import { isdCodes } from "../ISDdummy/isdCodes";
 import { set } from "mobx";
 import useDocumentTitle from "../../../../PageTitle/useDocumentTitle";
 
-const SignUpForm = ({ handleSubmit, language }) => {
+const SignUpForm = ({ handleSubmit, language, setHeading }) => {
   const currentLocation = useSelector((state) => state.common.currentLocation);
   const [phoneValue, setPhoneValue] = useState();
 
   const dispatch = useDispatch();
-  useDocumentTitle("Customer Register")
+  useDocumentTitle("Customer Register");
   const [error, setError] = React.useState({});
   const history = useHistory();
   const redirectTo = useSelector(
@@ -336,10 +336,15 @@ const SignUpForm = ({ handleSubmit, language }) => {
           error={error}
           setError={setError}
         />
-        <hr/>
+        <hr />
         <div className={styles.signLog}>
-          <span onClick={() => dispatch(toggleSignUpCard({ isLogin: true }))}>
-           Already have an account? Log in
+          <span
+            onClick={() => {
+              dispatch(toggleSignUpCard({ isLogin: true }));
+              setHeading("SIGN IN");
+            }}
+          >
+            Already have an account? Log in
           </span>
         </div>
       </div>

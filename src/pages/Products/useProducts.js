@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../../enviroments";
 import { getStoreData, getStoreId } from "../../util";
+import { useSelector } from "react-redux";
 
 const useProducts = ({
   categoryId,
   currentPage = 1,
-  pageSize = 20,
-  sortField,
-  sortDirection,
+  pageSize = 20, 
   onScreen,
   serachTerm = "",
   filterAttr,
@@ -18,19 +17,22 @@ const useProducts = ({
 
   const [loading, setloading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+  const { sortField, sortDirection } = useSelector(
+    (state) => state?.common?.sortAttr
+  );
   useEffect(() => {
     setloading(true);
     let currentPageGet = currentPage;
     let filterStr = "";
+    const filterValue = [];
+    let newCatIDParam = "";
     setfilters({});
     if (!onScreen) {
       setProducts([]);
       currentPageGet = 1;
     }
     if (filterAttr.status && filterAttr.newPayloadArr.length > 0) {
-      // filterList(categoryId);
       const keyValue = Object.keys(filterAttr.newPayloadArr[0]);
-      const filterValue = [];
       for (let i = 0; i < keyValue.length; i++) {
         if (filterAttr.newPayloadArr[0][keyValue[i]].length > 0) {
           let str = `&filterInfo[filter][${keyValue[i]}]=`;
@@ -49,66 +51,33 @@ const useProducts = ({
           filterStr += str;
         }
       }
-      // console.log("filterValue: ",filterAttr, filterStr, keyValue, filterValue);
     }
-    let config = {
-      method: "get",
-      // url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}${filterStr}`,
 
+    if (serachTerm) {
+      newCatIDParam = `&filterInfo[q]=${serachTerm}`;
+    } else {
+      newCatIDParam = `&filterInfo[category_id]=${categoryId}`;
+    }
+    const config = {
+      method: "get",
       url: `${API_URL}/rest/${
         getStoreData()?.store_code
-      }/V1/webapi/getfilterproducts?filterInfo[category_id]=${categoryId}&filterInfo[pageSize]=${pageSize}&filterInfo[page]=${currentPageGet}&filterInfo[sortOrderField]=${sortField}&filterInfo[sortOrder]=${sortDirection}&filterInfo[store_id]=${getStoreId()}${filterStr}`,
-
-      // url: `${API_URL}/webapi/getfilterproducts?filterInfo[category_id]=1525&filterInfo[pageSize]=20&filterInfo[page]=1&filterInfo[sortOrderField]=position&filterInfo[sortOrder]=ASC&filterInfo[store_id]=1&filterInfo[filter][size]=117_231&filterInfo[filter][color_swatch]=1727_1722&filterInfo[filter][price]=0-50_50-100`,
-
+      }/V1/webapi/getfilterproducts?${newCatIDParam}&filterInfo[pageSize]=${pageSize}&filterInfo[page]=${currentPageGet}&filterInfo[sortOrderField]=${sortField}&filterInfo[sortOrder]=${sortDirection}&filterInfo[store_id]=${getStoreId()}${filterStr}`,
       silent: true,
     };
-    if (serachTerm) {
-      config = {
-        method: "post",
-        url: `${API_URL}/rest/${getStoreData()?.store_code}/V1/searchresult`,
-        silent: true,
-        data: {
-          searchterms: serachTerm,
-          conditionType: "like",
-          sortOrders: sortField,
-          direction: sortDirection,
-          currentPage: currentPageGet,
-          pageSize,
-          store_id: getStoreId(),
-        },
-      };
-    }
-    // if (filterAttr) {
-    //   config = {
-    //     method: "get",
-    //     url: `${API_URL}/products?searchCriteria[filterGroups][0][filters][0][field]=category_id&searchCriteria[filterGroups][1][filters][0][field]=visibility&searchCriteria[filterGroups][1][filters][0][value]=2&searchCriteria[filterGroups][1][filters][1][field]=visibility&searchCriteria[filterGroups][1][filters][1][value]=4&searchCriteria[filterGroups][2][filters][0][field]=status&searchCriteria[filterGroups][2][filters][0][value]=1&searchCriteria[filterGroups][0][filters][0][value]=${categoryId}&searchCriteria[filterGroups][0][filters][0][conditionType]=eq&searchCriteria[sortOrders][0][field]=${sortField}&searchCriteria[sortOrders][0][direction]=${sortDirection}&searchCriteria[pageSize]=${pageSize}&searchCriteria[currentPage]=${currentPageGet}&searchCriteria[filterGroups][3][filters][0][field]=store_id&searchCriteria[filterGroups][3][filters][0][value]=${getStoreId()}`,
-    //     silent: true,
-    //     data: {
-    //       filter_groups: filterAttr,
-    //     },
-    //   };
-    // }
     axios(config)
       .then((response) => {
         const dataItem =
           response?.data && response?.data?.items ? response?.data?.items : [];
+
         const productsList = dataItem?.map((product) => {
           return {
             ...product,
-            id: product.id,
-            image:
-              product?.media_gallery_entries.find((attr) => attr.position === 0)
-                ?.file ||
-              product?.custom_attributes.find(
-                (attr) => attr.attribute_code === "image"
-              )?.value,
-            name: product.name,
-            price: product.price,
-            sale:
-              product?.custom_attributes.find(
-                (attr) => attr.attribute_code === "show_sale_badge"
-              )?.value === "1",
+            id: product.entity_id,
+            image: product?.image,
+            name: product?.name,
+            price: product?.final_price,
+            sale: product?.show_sale_badge ? null : product?.sale_img,
           };
         });
 
@@ -126,13 +95,15 @@ const useProducts = ({
       });
   }, [
     serachTerm,
-    categoryId,
+    // categoryId,
     currentPage,
-    pageSize,
+    // pageSize,
     sortField,
     sortDirection,
+ 
     filterAttr,
   ]);
+ 
   return {
     products,
     filters,

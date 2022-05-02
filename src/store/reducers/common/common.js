@@ -7,6 +7,11 @@ const initialState = {
     status: false,
   },
   forgetPasswordEmail: "",
+  
+  sortAttr: {
+    sortField: "position",
+    sortDirection: "asc",
+  },
   header: [],
   footer: [],
   topBrands: [],
@@ -117,9 +122,8 @@ export default function common(state = initialState, action) {
         },
       };
     case DATA_TYPES.FILTER_PARAMS:
-
-      if(!state.filtersParams?.[action.payload.name]){
-         state.filtersParams[action.payload.name] = []        
+      if (!state.filtersParams?.[action.payload.name]) {
+        state.filtersParams[action.payload.name] = [];
       }
       return {
         ...state,
@@ -161,6 +165,14 @@ export default function common(state = initialState, action) {
       return {
         ...state,
         forgetPasswordEmail: action.payload,
+      };
+    case DATA_TYPES.SET_SORT_FIELD:
+      return {
+        ...state,
+        sortAttr: {
+          sortField: action.payload.name,
+          sortDirection: action.payload.value,
+        },
       };
     default:
       return state;

@@ -1,28 +1,29 @@
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/stable';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import store, { persistor } from './store';
-import { history } from './util';
-import App from './App';
-import NetworkInterceptor from './services/interceptors/interceptor';
-import * as serviceWorker from './serviceWorker';
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import store, { persistor } from "./store";
+import { history } from "./util";
+import App from "./App";
+import NetworkInterceptor from "./services/interceptors/interceptor";
+import * as serviceWorker from "./serviceWorker";
+import ScrollToTop from "./components/common/ScrollToTop/ScrollToTop";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 NetworkInterceptor.setupInterceptors(store);
-
-
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router history={history}>
-        <App />
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
       </Router>
     </PersistGate>
   </Provider>,

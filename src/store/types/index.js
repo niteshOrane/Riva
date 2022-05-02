@@ -55,3 +55,7 @@ export const CART_STATUS = "CART_STATUS";
 export const FILTER_PARAMS = "FILTER_PARAMS";
 export const CLEAR_FILTER_PARAMS = "CLEAR_FILTER_PARAMS";
 export const CLEAR_SINGLE_VALUE = "CLEAR_SINGLE_VALUE";
+
+
+// sorts
+export const SET_SORT_FIELD = "SET_SORT_FIELD"

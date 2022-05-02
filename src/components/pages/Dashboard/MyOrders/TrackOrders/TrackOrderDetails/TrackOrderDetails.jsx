@@ -6,9 +6,9 @@ function TrackOrderDetails({ order,value }) {
   return (
     <div className="w-100 mt-5">
       <Table order={order} value={value}/>
-      <div className="mt-50px">
+      {/* <div className="mt-50px">
         <Stepper />
-      </div>
+      </div> */}
     </div>
   );
 }

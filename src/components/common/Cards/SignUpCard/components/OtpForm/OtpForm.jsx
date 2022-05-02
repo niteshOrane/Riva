@@ -36,6 +36,7 @@ const OtpForm = ({
   otpData = "",
   language,
   setLoginWithOtp,
+  setHeading
 }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
@@ -221,7 +222,7 @@ const OtpForm = ({
   }, []);
   return (
     <>
-      <span className={styles.tagline}>Have an account? Sign In</span>
+  
       {hideMobileBox ? (
         <form>
           <div className="d-flex justify-content-between align-items-end">
@@ -295,22 +296,7 @@ const OtpForm = ({
             style={{ border: error ? "1px solid red" : null }}
             className={`d-flex align-items-center ${styles.inpContainer}`}
           >
-            {/* <div className = "d-flex align-items-center">
-              <select className = {styles.isdSelect} value={isdState} onChange={(e) => setIsdState(e.target.value)}>
-                {isdCodes?.map(li => (
-                  <option value={li?.isd}>{li?.isd}{" "}{li?.countryCode}</option>
-                ))}
-              </select>
-            </div> */}
-            {/* <input
-              placeholder="Enter Mobile Number"
-              type="text"
-              name="mobileNumber"
-              value={mobileNumber}
-              id="mobileNumber"
-              maxLength={20}
-              onChange={handleChange}
-            /> */}
+           
             <PhoneInput
               placeholder="Enter Mobile Number"
               value={phoneValue}
@@ -339,13 +325,13 @@ const OtpForm = ({
         <div className={styles.formLogin}>
           <p className={styles.or}>OR</p>
           <div>
-            <AppleLogin
+            {/* <AppleLogin
               clientId="com.react.apple.login"
               redirectURI="https://redirectUrl.com"
               usePopup={false}
               designProp={{ height: 40, width: 360 }}
               callback={(res) => console.log(res)}
-            />
+            /> */}
             <button
               type="button"
               className={
@@ -360,13 +346,13 @@ const OtpForm = ({
               <FacebookLogin
                 appId="3898973050213783"
                 fields="name,email,picture"
-                // cssClass=  {styles.facebookAuthBtn}
+               
                 render={(renderProps) => (
                   <p onClick={renderProps.onClick}>Connect with Facebook</p>
                 )}
-                // onClick={componentClicked}
+             
                 textButton="Connect with Facebook"
-                // callback={responseFacebook}
+            
               />
             </button>
             <button
@@ -399,13 +385,19 @@ const OtpForm = ({
             </button>
             <div className={styles.signInLink}>
               <p>
-                <strong className="c-pointer" onClick={() => setSignUpForm()}>
+                <strong className="c-pointer" onClick={() => {
+                  setSignUpForm();
+                  setHeading("SIGN UP")
+                  }}>
                   Sign Up
                 </strong>{" "}
                 or{" "}
                 <strong
                   className="c-pointer"
-                  onClick={() => dispatch(toggleSignUpCard({ isLogin: true }))}
+                  onClick={() => {
+                    dispatch(toggleSignUpCard({ isLogin: true }));
+                    setHeading("SIGN IN")
+                  }}
                 >
                   log In
                 </strong>

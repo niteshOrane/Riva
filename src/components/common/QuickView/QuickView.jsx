@@ -243,7 +243,7 @@ function QuickView() {
           </div>
           <div className={`${styles.price} d-flex`}>
             <div className={styles.now}>
-              Now {currency_symbol} {price}
+              Now {currency_symbol} {parseFloat(price)?.toFixed(2)}
             </div>
           </div>
           <div className={`${styles.color} d-flex`}>

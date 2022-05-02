@@ -37,10 +37,10 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.ORDERS}
               </Link>
-              <Link to={`/myOrder/${"delivered"}`} className={styles.child}>
+              {/* <Link to={`/myOrder/${"delivered"}`} className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.DELIVERED}
-              </Link>
+              </Link> */}
               <Link to="/track-orders" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.TRACK}
@@ -94,10 +94,10 @@ function Sidebar() {
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.REVIEW}
               </Link> */}
-              <Link to="/my-subscription" className={styles.child}>
+              {/* <Link to="/my-subscription" className={styles.child}>
                 <icons.AngleRight />
                 &nbsp; {translate?.dash?.SUBS}
-              </Link>
+              </Link> */}
             </div>
           </div>
           {/* <div className="d-flex" id={styles.sec}>

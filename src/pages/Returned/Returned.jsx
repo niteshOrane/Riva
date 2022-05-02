@@ -6,25 +6,77 @@ import ReturnCard from "../../components/pages/returned/ReturnCard";
 import ReturnForm from "../../components/pages/returned/ReturnForm";
 import {
   createRmaRequest,
+  getConditionForReturn,
   getReasonForReturn,
+  getResolutionForReturn,
 } from "../../services/return/return.service";
 import { showSnackbar } from "../../store/actions/common";
 import { clearReturnList } from "../../store/actions/stats";
 import { getCustId, getStoreId } from "../../util";
 import { Prompt, useHistory } from "react-router-dom";
+import Modal from "@material-ui/core/Modal";
+import AlertModal from "./AlertModal";
 
 function Returned() {
   const { list } = useSelector((state) => state.stats);
+  console.log({ list });
   const history = useHistory();
   const [reasonList, setReasonList] = useState(null);
-  const [returnedItem, setReturnedItem] = useState([]);
+  const [conditionList, setConditionList] = useState(null);
+  const [resolutionList, setResolutionList] = useState(null);
   const [userComment, setUserComment] = useState("");
   const [isProm, setIsProm] = useState(true);
+  const [proList, setProList] = useState([]);
+  const [fieldObj, setFieldObj] = useState([]);
+
+  const [open, setOpen] = React.useState(false);
+  const [alertUser, setAlertUser] = useState({
+    keys: [],
+    name: "",
+  });
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (list?.length > 0) {
+      const items = list?.map((pro) => {
+        setFieldObj((prev) => [
+          ...prev,
+          { id: pro?.item_id, reason: "", resolution: "", condition: "" },
+        ]);
+        return {
+          order_item_id: pro?.item_id,
+          qty_requested: pro?.qty_ordered,
+          qty_authorized: null,
+          qty_approved: null,
+          qty_returned: null,
+          reason: ``,
+          condition: "",
+          resolution: "",
+          status: pro?.status,
+        };
+      });
+      setProList(items);
+    }
+  }, [list]);
   const getAllReasons = async () => {
-    const res = await getReasonForReturn();
-    if (res?.status === 200) {
-      setReasonList(res?.data);
+    const val = await Promise.all([
+      getReasonForReturn(),
+      getConditionForReturn(),
+      getResolutionForReturn(),
+    ]);
+
+    if (val.length === 3) {
+      setReasonList(val?.[0]?.data);
+      setConditionList(val?.[1]?.data);
+      setResolutionList(val?.[2]?.data);
     }
   };
   useEffect(() => {
@@ -38,30 +90,69 @@ function Returned() {
     setUserComment(e.target.value);
   };
 
-  const createRmaItems = (e, item) => {
-    if (e.target.value) {
-      const obj = {
-        order_item_id: item?.item_id,
-        qty_requested: item?.qty_ordered,
-        qty_authorized: null,
-        qty_approved: null,
-        qty_returned: null,
-        reason: `${e.target.value}`,
-        condition: "4158",
-        resolution: "4160",
-        status: item?.status,
-      };
-      setReturnedItem((prev) => [...prev, obj]);
+  const createRmaItems = (e, item, type) => {
+    e.persist();
+    if (e.target?.value && item && type) {
+      setFieldObj((prev) => {
+        return prev?.map((li) => {
+          if (li?.id === item?.item_id) {
+            return { ...li, [type]: e.target?.value };
+          }
+          return li;
+        });
+      });
     }
   };
 
+  const checkAllField = () => {
+    let isValid = false;
+    let emptyItem = {};
+    const val = fieldObj?.map((li) => {
+      if (Object.values(li).some((a) => a === "")) {
+        isValid = true;
+        emptyItem = li;
+      }
+    });
+    let emptyKeys = [];
+    if (emptyItem) {
+      emptyKeys = Object.entries(emptyItem)?.filter(([key, value]) =>
+        emptyItem[key] === "" ? key : null
+      );
+      setAlertUser({
+        ...alertUser,
+        keys: emptyKeys,
+        name: list?.find((li) => li?.item_id === emptyItem?.id)?.name,
+      });
+    }
+    return {
+      isValid,
+      emptyItem,
+      emptyKeys,
+    };
+  };
+
+  useEffect(() => {
+    if (alertUser.keys.length > 0) {
+      setOpen(true);
+    }
+  }, [alertUser]);
+
   const requestReturn = async (e) => {
     e.preventDefault();
-    if (returnedItem?.length !== list?.length) {
-      return dispatch(
-        showSnackbar("Select a return reason on all items", "error")
-      );
+    const { isValid } = checkAllField();
+    if (isValid) {
+      return;
     }
+    const returnedItem = proList?.map((li) => {
+      return {
+        ...li,
+        reason: fieldObj?.find((q) => q?.id === li?.order_item_id)?.reason,
+        condition: fieldObj?.find((q) => q?.id === li?.order_item_id)
+          ?.condition,
+        resolution: fieldObj?.find((q) => q?.id === li?.order_item_id)
+          ?.resolution,
+      };
+    });
     const rmaData = {
       rmaDataObject: {
         order_id: list?.[0]?.order_id,
@@ -77,12 +168,11 @@ function Returned() {
       },
     };
     const res = await createRmaRequest(rmaData);
-    console.log({ res });
-    if (res?.status === 200 && !res?.data?.hasOwn("success")) {
+    if (res?.status === 200 && "success" in res?.data === false) {
       setIsProm(false);
-      // setTimeout(() => {
-      //   history.push("/returned-orders");
-      // }, 2000);
+      setTimeout(() => {
+        history.push("/returned-orders");
+      }, 2000);
       return dispatch(
         showSnackbar(
           "Return request created, redirecting to returns",
@@ -118,11 +208,14 @@ function Returned() {
                   marginBottom: "1rem",
                 }}
               >
+              
                 {list?.length > 0 &&
                   list?.map((card) => (
                     <ReturnCard
                       product={card}
                       reasonList={reasonList && reasonList}
+                      resolutionList={resolutionList && resolutionList}
+                      conditionList={conditionList && conditionList}
                       createRmaItems={createRmaItems}
                     />
                   ))}
@@ -131,6 +224,12 @@ function Returned() {
                 list={list}
                 requestReturn={requestReturn}
                 handleCommentChange={handleCommentChange}
+              />
+              <AlertModal
+                open={open}
+                handleOpen={handleOpen}
+                handleClose={handleClose}
+                data={alertUser}
               />
             </div>
           </div>

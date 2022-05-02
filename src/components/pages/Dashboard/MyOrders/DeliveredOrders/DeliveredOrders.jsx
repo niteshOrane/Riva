@@ -17,6 +17,7 @@ import {
   cancelOrder,
 } from "../../../../../services/order/order.services";
 import { showSnackbar } from "../../../../../store/actions/common";
+import { number } from "prop-types";
 
 const DeliveredOrders = ({
   product,
@@ -57,6 +58,10 @@ const DeliveredOrders = ({
     );
     return { colors, size };
   };
+
+  const handleOrderDetails = (number) => {
+    history.push(`/order-details/${number}`);
+  };
   const colorSize = getColorSize(
     product?.parent_item?.product_option.extension_attributes
       ?.configurable_item_options
@@ -76,23 +81,32 @@ const DeliveredOrders = ({
           <div className={styles.img}>
             {product?.extension_attributes?.product_thumbnail_image ? (
               <>
-                {check && (
-                  <input
-                    type="checkbox"
-                    onChange={(e) =>
-                      handleReturn(e.target.checked, {
-                        ...product,
-                        currency: order_currency_code,
-                        status,
-                        increment_id,
-                      })
-                    }
+                {check &&
+                  product?.qty_ordered > product?.qty_returned &&
+                  product?.qty_ordered > product?.qty_refunded &&
+                  product?.qty_ordered >
+                    Number(product?.extension_attributes?.qty_requested) && (
+                    <input
+                      type="checkbox"
+                      onChange={(e) =>
+                        handleReturn(e.target.checked, {
+                          ...product,
+                          currency: order_currency_code,
+                          status,
+                          increment_id,
+                        })
+                      }
+                    />
+                  )}
+                <div
+                  onClick={() => handleOrderDetails(increment_id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <Image
+                    src={product?.extension_attributes?.product_thumbnail_image}
+                    width="100%"
                   />
-                )}
-                <Image
-                  src={product?.extension_attributes?.product_thumbnail_image}
-                  width="100%"
-                />
+                </div>
               </>
             ) : (
               <span
@@ -128,7 +142,9 @@ const DeliveredOrders = ({
               </div>
               <div className={styles.colorSize}>
                 <span>Quantity: </span>
-                <span className={styles.greyTextQty}>{product?.qty_ordered}</span>
+                <span className={styles.greyTextQty}>
+                  {product?.qty_ordered}
+                </span>
               </div>
             </div>
           </div>
@@ -149,6 +165,16 @@ const DeliveredOrders = ({
               {status?.[0]?.toUpperCase() + status?.slice(1)}
             </h4>
           </div>
+          {Number(product?.extension_attributes?.qty_requested) !== 0 && (
+            <div className="d-flex align-items-center mt-12px">
+              <span className={`material-icons-outlined ${styles.returnIcon}`}>
+                assignment_return
+              </span>
+              <h4 className="c-pointer font-weight-normal greyText">
+                RMA created
+              </h4>
+            </div>
+          )}
           <div
             className="d-flex align-items-center mt-12px"
             onClick={() => {

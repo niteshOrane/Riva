@@ -38,6 +38,7 @@ const LoginForm = ({
   setForgetPassStyle,
   language,
   setIsForget,
+  setHeading,
 }) => {
   const dispatch = useDispatch();
   useDocumentTitle("Customer Login");
@@ -170,8 +171,6 @@ const LoginForm = ({
       );
     }
   };
-
-
 
   const responseGoogle = async (response) => {
     if (response.profileObj) {
@@ -480,7 +479,13 @@ const LoginForm = ({
               <span style={{ color: "#6a6565" }}>Remember me</span>
             </div>
             <div>
-              <p onClick={() => toggleForgotPassword()} className={styles.fyp}>
+              <p
+                onClick={() => {
+                  toggleForgotPassword();
+                  setHeading("FORGET PASSWORD");
+                }}
+                className={styles.fyp}
+              >
                 Forgot Password
               </p>
             </div>
@@ -489,31 +494,44 @@ const LoginForm = ({
             <button
               onClick={handleSubmitLogin}
               onKeyDown={(e) => {
-                console.log(e)
+                console.log(e);
               }}
               // variant="contained"
               type="button"
               className={styles.signUpBtn}
+              disabled={loading}
             >
-              SIGN IN
+              {!loading ? (
+                "SIGN IN"
+              ) : (
+                <span
+                  style={{ fontSize: "1rem" }}
+                  className="material-icons-outlined"
+                >
+                  hourglass_top
+                </span>
+              )}
             </button>
             <input
               value="SIGN IN WITH OTP"
               type="button"
-              onClick={handleOtpForm}
+              onClick={() => {
+                handleOtpForm();
+                setHeading("SIGN IN WITH OTP");
+              }}
               className={styles.signUpBtn}
             />
           </div>
 
           <p className={styles.or}>OR</p>
           <div>
-            <AppleLogin
+            {/* <AppleLogin
               clientId="com.react.apple.login"
               redirectURI="https://redirectUrl.com"
               usePopup={false}
               designProp={{ height: 40, width: 360 }}
               callback={(res) => console.log(res)}
-            />
+            /> */}
 
             <button
               type="button"
@@ -572,7 +590,13 @@ const LoginForm = ({
           <div className={styles.signInLink}>
             <p>
               Create an account?{" "}
-              <strong className="c-pointer" onClick={() => setSignUpForm()}>
+              <strong
+                className="c-pointer"
+                onClick={() => {
+                  setSignUpForm();
+                  setHeading("SIGN UP");
+                }}
+              >
                 Sign Up
               </strong>
             </p>

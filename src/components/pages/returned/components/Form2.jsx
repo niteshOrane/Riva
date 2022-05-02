@@ -1,3 +1,4 @@
+import { Divider } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { getCustomerAddress } from "../../../../services/address/address.service";
 import { getCustId } from "../../../../util";
@@ -23,20 +24,25 @@ function Form2() {
   }, []);
   return (
     <div className={styles.wrap}>
-      <header>
-        <span>2</span>
-        <p>PICKUP ADDRESS</p>
-      </header>
+      <div className={styles.pick}>
+        <strong>Pickup address:</strong>
+      </div>
+
+      <Divider style={{marginTop:"0.5em"}} />
       <section>
         {address && (
           <div className={styles.addBlk}>
-            {address?.name}<br/>
-            {address?.street}{" "},{address?.street1}<br />
-            {address?.house_name_number}{" "},{address?.building_name_number}<br />
-            {address?.city},{" "}{address.state},{" "}{address.country},{" "}{address?.postcode}
+            {address?.name}
+            <br />
+            {address?.street} ,{address?.street1}
+            <br />
+            {address?.house_name_number} ,{address?.building_name_number}
+            <br />
+            {address?.city}, {address.state}, {address.country},{" "}
+            {address?.postcode}
           </div>
         )}
-        </section>
+      </section>
     </div>
   );
 }

@@ -58,6 +58,10 @@
     @include right('margin', 12px);
   }
 }
+.returnIcon{
+  color: orange;
+  @include right('margin', 12px);
+}
 .incrementWrap{
   display: flex;
   justify-content: space-between;

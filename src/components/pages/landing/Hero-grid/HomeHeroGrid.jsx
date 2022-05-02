@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ButtonWithArrows from "../../../common/Buttons/ButtonWithArrows/ButtonWithArrows";
-import CategoriesCircles from "../../../common/CategoriesCircles/CategoriesCircles";
 import { selectedCategory } from "../../../../store/actions/common";
 import Image from "../../../common/LazyImage/Image";
 
@@ -13,10 +12,10 @@ import useArabic from "../../../common/arabicDict/useArabic";
 import useDocumentTitle from "../../../common/PageTitle/useDocumentTitle";
 
 const HomeHeroGrid = (props) => {
-  const { items, srcPath = "/assets/images/banner", isHomePage } = props;
+  const { items } = props;
   const links = useSelector((state) => state.common.category)[0];
   const { translate } = useArabic();
-  useDocumentTitle("Riva Fashion")
+  useDocumentTitle("Riva Fashion");
   const [defaultCategory, setCategory] = useState([]);
   const [itemsImage, setItemsImage] = useState([]);
   useEffect(() => {
@@ -37,7 +36,6 @@ const HomeHeroGrid = (props) => {
 
   return (
     <div className="landing-two-wrapper">
-      {/* <CategoriesCircles isHomePage={isHomePage} /> */}
       {itemsImage?.length ? (
         <div>
           <section className="banner-grid-wrapper">
@@ -73,35 +71,6 @@ const HomeHeroGrid = (props) => {
               </div>
             </div>
             <section>
-              {/* <div
-                className="base-image-two c-pointer "
-                onClick={() => {
-                  onCategorySelect(
-                    defaultCategory.find(
-                      (e) =>
-                        e?.name?.toLowerCase() ===
-                        itemsImage
-                          .find((m) => m.position === "2")
-                          ?.title?.toLowerCase()
-                    )?.id
-                  );
-                }}
-              >
-                <img
-                  src={`${process.env.REACT_APP_IMAGE_URL}/${
-                    itemsImage.find((e) => e.position === "2")?.image
-                  }`}
-                  alt=""
-                />
-                <div className="banner-wrapper-text">
-                  <h3>{items?.[1]?.title ?? "TEENS"}</h3>
-                  <ButtonWithArrows
-                    btnClass="bg-black color-white mx-auto"
-                    text={translate?.home?.SHOP_NOW}
-                    isFestiveCard
-                  />
-                </div>
-              </div> */}
               <div
                 className="base-image-two c-pointer "
                 onClick={() => {
@@ -183,8 +152,8 @@ const HomeHeroGrid = (props) => {
             </div>
             <section>
               <Skeleton
-                count={2}
-                height="33vh"
+                count={1}
+                height="70vh"
                 width="100%"
                 containerClassName="base-image-wrapper c-pointer"
               />

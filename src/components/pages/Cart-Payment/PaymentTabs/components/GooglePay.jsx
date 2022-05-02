@@ -18,7 +18,7 @@ function GooglePay({ cartPaymentInfo, store, styles, gPayData }) {
           apiVersionMinor: 0,
           allowedPaymentMethods: [
             {
-              type: "CARD",
+              type: 'CARD',
               parameters: {
                 allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
                 allowedCardNetworks: [

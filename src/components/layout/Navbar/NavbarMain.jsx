@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactPixel from "react-facebook-pixel";
 import NavLinks from "./NavLinks";
@@ -7,32 +7,25 @@ import styles from "./navbar.module.scss";
 import { searchQuery } from "../../../services/layout/Layout.service";
 
 const NavbarMain = () => {
-  const [searchValue, setSearchValue] = useState("");
   const [items, setItems] = useState();
+  const [searchStr, setSearchStr] = useState("");
 
   const history = useHistory();
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
 
   const handleOnSearch = async (string) => {
     if (string) {
       const res = await searchQuery(string);
+      setSearchStr(string);
+      let list=[{title:string}]
       if (res?.status === 200 && res?.data?.length !== 0) {
-        const list = res?.data;
+        list = [{ title: string }, ...res?.data];
+
         setItems(list);
       }
+      setItems(list)
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      if (searchValue && searchValue.trim().length > 0) {
-        sessionStorage.removeItem("selectedCategory");
-        history.push(`/products/all-product/0?serachTerm=${searchValue}`);
-      }
-    }
-  };
   const handlePush = () => {
     const category = JSON.parse(localStorage.getItem("selectedCategory"));
     if (category) {
