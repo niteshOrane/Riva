@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     lineHeight:1.5
   },
+  list:{
+    "&::first-letter":{
+      textTransform:"capitalize"
+    }
+  }
 }));
 
 export default function AlertModal({ open, handleClose, data }) {
@@ -40,7 +45,7 @@ export default function AlertModal({ open, handleClose, data }) {
       <p id="simple-modal-description">
         <ul>
           {data?.keys?.map((li) => (
-            <li>{li}</li>
+            <li className={classes.list}>{li}</li>
           ))}
         </ul>
       </p>

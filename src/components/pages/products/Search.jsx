@@ -15,7 +15,7 @@ const Search = ({ onSearch, items, handleSelect }) => {
         }}
         onSelect={handleSelect}
         placeholder="Search..."
-        inputDebounce={50}
+        inputDebounce={150}
         fuseOptions={{ keys: ["title"] }}
         resultStringKeyName="title"
         on

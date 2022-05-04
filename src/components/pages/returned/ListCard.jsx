@@ -4,6 +4,19 @@ import styles from "../Dashboard/MyOrders/DeliveredOrders/DeliveredOrders.module
 import Image from "../../../components/common/LazyImage/Image";
 import { useSelector } from "react-redux";
 
+
+const statusColor = {
+  pending:"orange",
+  authorized:"green",
+  denied:"#FF1818"
+
+}
+const statusIcon = {
+  pending:"hourglass_top",
+  authorized:"task_alt",
+  denied:"do_not_disturb_off"
+}
+
 const DeliveredOrders = ({ product }) => {
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   return (
@@ -50,10 +63,10 @@ const DeliveredOrders = ({ product }) => {
         </div>
         <div>
           <div className="d-flex align-items-center mt-12px">
-            <span className={`material-icons-outlined ${styles.icon}`}>
-              update
+            <span style={{color:statusColor[product?.itemstatus]}} className={`material-icons-outlined ${styles.icon}`}>
+              {statusIcon[product?.itemstatus]}
             </span>
-            <h4 className="c-pointer font-weight-normal greyText">
+            <h4 style={{color:statusColor[product?.itemstatus]}} className="c-pointer font-weight-normal greyText">
               {product?.itemstatus?.[0]?.toUpperCase()+product?.itemstatus?.slice(1)}
             </h4>
           </div>

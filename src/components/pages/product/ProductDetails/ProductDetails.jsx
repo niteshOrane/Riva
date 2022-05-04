@@ -168,6 +168,10 @@ const ProductDetails = (props) => {
     dispatch(toggleWishlist(product));
   };
 
+  const displayPlaceHolder = () => {
+    setColorImg("https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg")
+  }
+
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
     <div style={{ marginTop: "25px" }}>
@@ -199,6 +203,7 @@ const ProductDetails = (props) => {
               zoomPos={language === "Arabic" ? "left" : "right"}
               type="product-details"
               isZoom
+              onError={displayPlaceHolder}
             />
 
             <div className={styles.actionContainerTopLeft}>
