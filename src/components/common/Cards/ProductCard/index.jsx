@@ -249,7 +249,8 @@ const ProductCard = ({
       </div>
     );
   }
-  const isAddedToWishlist = !!wishList.find((w) => w.id == product.id);
+  console.log({product,wishList})
+  const isAddedToWishlist = !!wishList.find((w) => w.sku == product.sku);
 
   const srcImage =
     image?.indexOf("http") > -1 ? image : `${URL.baseUrlProduct}/${image}`;

@@ -57,7 +57,8 @@ function WishList() {
 
             {!wishlist?.length && (
               <div className={styles.noWishlist}>
-                <span>No Products in your wishlist</span>
+                {/* <span>No Products in your wishlist</span> */}
+                <img src="/assets/images/noWish.png" alt="no products in wishlist" />
               </div>
             )}
 

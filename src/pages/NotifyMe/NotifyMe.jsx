@@ -72,13 +72,13 @@ function NotifyMe() {
                       </div>
                     </div>
                     <div className="d-flex justify-content-around">
-                      <button
+                      {/* <button
                         type="button"
                         onClick={() => redirectToDetails(card?.productId)}
                         className={styles.redirectBtn}
                       >
                         {translate?.dash?.VIEW}
-                      </button>
+                      </button> */}
                       <button
                         onClick={(e) => {
                           handleSubmit(e, card.productId);
