@@ -5,6 +5,7 @@ import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  showSnackbar,
   toggleQuickView,
   toggleSignUpCard,
 } from "../../../store/actions/common";
@@ -45,6 +46,10 @@ function QuickView() {
   const [selectedProduct, setSelectedProduct] = useState({});
 
   const handleIncrementProduct = () => {
+    if (productQuantity === 5){
+      dispatch(showSnackbar("You can only add 5 products", "error"));
+      return
+    }
     setProductQuantity((prevState) => prevState + 1);
   };
   const handleDecrementProduct = () => {

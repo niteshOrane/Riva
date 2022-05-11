@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import * as icons from "../../../../components/common/Icons/Icons";
 import { useDispatch } from "react-redux";
 import { deliveryAndReturnService } from "../../../../services/product/product.service";
+import { height } from "@mui/system";
 
 function getModalStyle() {
   const top = 50;
@@ -41,6 +42,7 @@ export default function DeliveryReturn({ language, translate }) {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
+     
     },
     deliveryIcon: {
       fontSize: "4rem",
@@ -59,6 +61,14 @@ export default function DeliveryReturn({ language, translate }) {
       cursor: "pointer",
       margin: "10px 3px",
     },
+    imgCont:{
+      width:"8rem",
+      height:"8rem"
+    },
+    img : {
+      width:"100%",
+      height:"100%"
+    }
   }));
 
   const classes = useStyles();
@@ -83,16 +93,8 @@ export default function DeliveryReturn({ language, translate }) {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <section className={classes.content}>
-        <div className="d-flex justify-content-center align-items-center">
-          <span className={`material-icons-outlined ${classes.deliveryIcon}`}>
-            local_shipping
-          </span>
-          <span className={`material-icons-outlined ${classes.medium}`}>
-            compare_arrows
-          </span>
-          <span className={`material-icons-outlined ${classes.deliveryIcon}`}>
-            assignment_return
-          </span>
+        <div className={classes.imgCont}>
+         <img className={classes.img} src="/assets/images/dandR.jpg" alt="delivery and return" />
         </div>
         <div
           dangerouslySetInnerHTML={{

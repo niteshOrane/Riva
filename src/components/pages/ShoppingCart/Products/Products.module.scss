@@ -66,12 +66,15 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid $color-grey;
           padding: 8px;
           flex: 1;
           text-align: center;
-          span {
-            margin: 0 4px;
+          select{
+            width: 100%;
+            border: none !important;
+            border-bottom: 1px solid gray !important;
+            cursor: pointer;
+            outline: none;
           }
         }
       }

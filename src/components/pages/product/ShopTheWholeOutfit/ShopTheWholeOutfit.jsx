@@ -16,6 +16,7 @@ import { showSnackbar } from "../../../../store/actions/common";
 const ShopTheWholeoutfit = ({ mainProd, data }) => {
   const [selected, setSelected] = useState([]);
   const [dataItems, setDataItems] = useState(data || []);
+  const { currency_symbol } = useSelector((state) => state?.common?.store);
 
   const { data: items = [] } = useSelector((state) => state.cart);
   const [selectedColorSize, setSelectedColorSize] = useState({
@@ -202,7 +203,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
               className={`${styles.discount} d-flex p-12px justify-content-between`}
             >
               <div className={styles.name}>{discount.name}</div>
-              <div className={styles.total}>USD {discount.amount}</div>
+              <div className={styles.total}>
+                {currency_symbol} {discount.amount}
+              </div>
             </div>
           ))}
           <hr />
@@ -213,7 +216,10 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
               {selected.length} items | Subtotal
             </div>
             <div className={styles.total}>
-              USD {selected.reduce((t, s) => s.priceWithoutCurrency + t, 0)}
+              {currency_symbol}{" "}
+              {parseFloat(
+                selected.reduce((t, s) => s.priceWithoutCurrency + t, 0)
+              )?.toFixed(2)}
             </div>
           </div>
           <div className={styles.addToCart} onClick={() => addToCardHandler()}>

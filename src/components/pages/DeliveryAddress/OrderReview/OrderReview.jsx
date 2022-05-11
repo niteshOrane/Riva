@@ -261,7 +261,7 @@ function OrderReview({
               <label htmlFor="twoDays">
                 <h5>{item?.method_title}</h5>
                 <span className={styles.greyText}>
-                  {currency_symbol} {item.amount} - {item.carrier_title}
+                  {currency_symbol} {parseFloat(item.amount)?.toFixed(2)} - {item.carrier_title}
                 </span>
               </label>
             </div>

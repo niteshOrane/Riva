@@ -154,7 +154,7 @@ function useArabic() {
       CHOOSE:
         language === "Arabic" ? "اختيار سرعة الشحن" : "CHOOSE A DELIVERY SPEED",
       SUB: language === "Arabic" ? "المجموع الإجمالي" : "SUBTOTAL",
-      DEL: language === "Arabic" ? "مصاريف التوصيل" : "DELIVERY CHARGES",
+      DEL: language === "Arabic" ? "مصاريف التوصيل" : "SHIPPPING CHARGES",
       TAX: language === "Arabic" ? "الضرائب" : "TAX",
       COUPON: language === "Arabic" ? "تم تطبيق القسيمة" : "Coupon Applied",
       GRAND: language === "Arabic" ? "المجموع الكامل" : "GRAND TOTAL ",

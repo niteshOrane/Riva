@@ -27,7 +27,7 @@ import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle
 
 function DeliveryAddress({ isManageScreen, currentLocationPath }) {
   useAnalytics();
-  useDocumentTitle("Checkout")
+  useDocumentTitle("Checkout");
 
   const [stateCheck, setState] = React.useState({
     checkedA: false,
@@ -94,6 +94,9 @@ function DeliveryAddress({ isManageScreen, currentLocationPath }) {
     dispatch(getCustomerAddressList());
     dispatch(getCustomerCartPayments());
   }, []);
+  useEffect(() => {
+    setShowList(customerAddressList.length);
+  }, [customerAddressList]);
   useEffect(() => {
     if (data?.length === 0 && location.pathname !== "/manage-addresses") {
       swal("There is no product in cart for this store", {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -29,18 +29,16 @@ const Cart = () => {
     (state) => state?.common?.store
   );
   const [editableIndex, setEditableIndex] = React.useState(null);
+
   const dispatch = useDispatch();
   const openSignUpCard = (redirectTo) => {
     dispatch(toggleSignUpCard({ redirectTo }));
   };
-  const handleIncrementProduct = (product) => {
-    product.qty = product.qty + 1;
+
+  const handleQtyChange = (e, product) => {
+    product.qty = e.target.value;
     dispatch(editItemQntCart(product));
-  };
-  const handleDecrementProduct = (product) => {
-    if (product.qty === 1) return;
-    product.qty = product.qty - 1;
-    dispatch(editItemQntCart(product));
+    setEditableIndex(null)
   };
   const handleClose = () => {
     dispatch(toggleCart());
@@ -183,23 +181,18 @@ const Cart = () => {
                                 <span className="color-grey">
                                   {editableIndex == index ? (
                                     <div className={style.counter}>
-                                      <span
-                                        className="c-pointer material-icons-outlined"
-                                        onClick={() => {
-                                          handleDecrementProduct(item);
-                                        }}
+                                      <select
+                                        onChange={(e) =>
+                                          handleQtyChange(e, item)
+                                        }
+                                        value={item?.qty}
                                       >
-                                        remove
-                                      </span>
-                                      <span>{item.qty}</span>
-                                      <span
-                                        className="c-pointer material-icons-outlined"
-                                        onClick={() => {
-                                          handleIncrementProduct(item);
-                                        }}
-                                      >
-                                        add
-                                      </span>
+                                        {[1, 2, 3, 4, 5]?.map((num) => (
+                                          <option key={num} value={num}>
+                                            {num}
+                                          </option>
+                                        ))}
+                                      </select>
                                     </div>
                                   ) : (
                                     item.qty

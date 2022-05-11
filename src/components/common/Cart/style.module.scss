@@ -13,11 +13,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid $color-grey;
+
     text-align: center;
     margin-left: 10px;
     span {
       margin: 0 4px;
+    }
+    select{
+      border: none !important;
+      border-bottom: 1px solid gray  !important;
+      outline: none;
+      cursor: pointer;
     }
   }
   .sideBody {

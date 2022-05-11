@@ -618,14 +618,15 @@ function DeliveryAddressForm({ customerData, onAfterSaveEdit }) {
         </div>
       </form>
       <div className="text-right c-pointer">
-        <LoaderButton
+        <button
           onClick={addAddressHandler}
+          type="button"
           loading={loading}
           value={id ? "UPDATE ADDRESS" : "ADD ADDRESS"}
           className={styles.addAddressBtn}
         >
           {id ? "UPDATE" : "ADD"} ADDRESS
-        </LoaderButton>
+        </button>
         <button
           className={styles.clrAddressBtn}
           type="button"

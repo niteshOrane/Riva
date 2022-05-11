@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactPixel from "react-facebook-pixel";
 import NavLinks from "./NavLinks";
@@ -16,13 +16,13 @@ const NavbarMain = () => {
     if (string) {
       const res = await searchQuery(string);
       setSearchStr(string);
-      let list=[{title:string}]
+      let list = [{ title: string }];
       if (res?.status === 200 && res?.data?.length !== 0) {
         list = [{ title: string }, ...res?.data];
 
         setItems(list);
       }
-      setItems(list)
+      setItems(list);
     }
   };
 

@@ -7,7 +7,7 @@ const Search = ({ onSearch, items, handleSelect }) => {
   return (
     <div id="mySearch" style={{ width: 200 }}>
       <ReactSearchAutocomplete
-        items={items}
+        items={items || [{title:"Please wait..."}]}
         onSearch={onSearch}
         styling={{
           zIndex: 1000,
@@ -15,10 +15,10 @@ const Search = ({ onSearch, items, handleSelect }) => {
         }}
         onSelect={handleSelect}
         placeholder="Search..."
-        inputDebounce={150}
+        inputDebounce={100}
         fuseOptions={{ keys: ["title"] }}
         resultStringKeyName="title"
-        on
+        
       />
     </div>
   );

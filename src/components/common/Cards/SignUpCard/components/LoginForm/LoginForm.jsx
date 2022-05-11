@@ -158,14 +158,14 @@ const LoginForm = ({
       }
       return dispatch(
         showSnackbar(
-          "Something went wrong,May be you are not registered, please register wuth us first",
+          "Failed! Registration unsuccessful",
           "error"
         )
       );
     } else {
       return dispatch(
         showSnackbar(
-          "May be you are not registered, please register wuth us first",
+          "Failed! Registration unsuccessful",
           "error"
         )
       );
@@ -227,14 +227,14 @@ const LoginForm = ({
       }
       return dispatch(
         showSnackbar(
-          "Something went wrong,May be you are not registered, please register wuth us first",
+          "Failed! Registration unsuccessful",
           "error"
         )
       );
     } else {
       return dispatch(
         showSnackbar(
-          "Something went wrong,May be you are not registered, please register wuth us first",
+          "Failed! Registration unsuccessful",
           "error"
         )
       );

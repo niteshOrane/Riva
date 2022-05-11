@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import RePaymentTab from "../../components/pages/Cart-Payment/PaymentTabs/RePaymentTab";
 import * as icons from "../../components/common/Icons/Icons";
@@ -15,16 +15,18 @@ import Loader from "../../components/common/Loader";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
+import swal from "sweetalert";
 
 function CartPayment() {
   const dispatch = useDispatch();
   const { translate } = useArabic();
 
   useAnalytics();
-  useDocumentTitle("Payments")
+  useDocumentTitle("Payments");
+  const history = useHistory();
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
-  const [customObj,setCustomObj] =  React.useState(null)
+  const [customObj, setCustomObj] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
@@ -42,18 +44,32 @@ function CartPayment() {
     dispatch(getPaymentMethodlist());
     dispatch(toggleCart(false));
   }, [customerid]);
+  useEffect(() => {
+    if (items?.length === 0) {
+      swal("There is no product in cart", {
+        buttons: {
+          catch: {
+            text: "Continue Shopping",
+            value: "catch",
+          },
+        },
+      }).then((value) => {
+        history.push("/type/1241");
+      });
+    }
+  }, [items]);
 
   useEffect(() => {
     setPaymentOption(paymentMode);
-    const obj = paymentMode?.data?.reduce((acc,item) =>{
-      if(!acc[item]){
-       acc[item.code] = item
-       return acc
+    const obj = paymentMode?.data?.reduce((acc, item) => {
+      if (!acc[item]) {
+        acc[item.code] = item;
+        return acc;
       }
-      return acc
-    },{})
-    if(obj){
-      setCustomObj(obj)
+      return acc;
+    }, {});
+    if (obj) {
+      setCustomObj(obj);
     }
   }, [paymentMode]);
   useEffect(() => {
@@ -136,7 +152,7 @@ function CartPayment() {
                 paymentMode={paymentOption?.data}
                 loading={loading}
                 setLoading={setLoading}
-                customObj = {customObj}
+                customObj={customObj}
               />
             </>
           ) : null}

@@ -14,6 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 function GoSellTap({ translate }) {
   const { store_name } = useSelector((state) => state?.common?.store);
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const callbackFunc = async (e) => {
@@ -31,10 +32,13 @@ function GoSellTap({ translate }) {
         setLoading(false);
       } else if (res?.data?.error && res?.data?.message) {
         dispatch(showSnackbar(`${res?.message}`, "error"));
-        // window.location.reload();
         return setLoading(false);
       } else {
-        dispatch(showSnackbar(`something went wrong`, "error"));
+        setTimeout(() => {
+          history.push("/shopping-cart");
+        }, 1500);
+        dispatch(showSnackbar(`something went wrong,redirectig to cart`, "error"));
+       
         return setLoading(false);
       }
     }

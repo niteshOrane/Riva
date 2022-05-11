@@ -79,13 +79,13 @@ const HorizontalProductCard = ({
           {was < now && (
             <div className={styles.was}>
               Was {currency_symbol}
-              {was}
+              {parseFloat(was)?.toFixed(2)}
             </div>
           )}
 
           <div className={styles.now}>
             Now {currency_symbol}
-            {now}
+            {parseFloat(now)?.toFixed(2)}
           </div>
         </div>
         <div className={styles.size}>

@@ -13,21 +13,26 @@ function Cod({ codInfo }) {
   const history = useHistory();
   const { currency_symbol } = useSelector((state) => state?.common?.store);
   const [loading, setLoading] = useState(false);
-  const [title,setTitle] = useState();
-  const [value,setValue] = useState();
+  const [title, setTitle] = useState();
+  const [value, setValue] = useState();
   useEffect(() => {
     const name =
-    codInfo?.total_segments?.find((li) => li?.code === "fee")?.title ||
-    "Delivery Charges";
+      codInfo?.total_segments?.find((li) => li?.code === "fee")?.title ||
+      "Delivery Charges";
     setTitle(name);
-  const pay =
-    codInfo?.total_segments?.find((li) => li?.code === "payment_fee")?.value || 0;
-    setValue(pay)
-  },[codInfo])
+    const pay =
+      codInfo?.total_segments?.find((li) => li?.code === "payment_fee")
+        ?.value || 0;
+    setValue(pay);
+  }, [codInfo]);
   const placeCodOrderConfirm = async () => {
     setLoading(true);
     const res = await placeCodOrder("cashondelivery");
-    if (res.status === 200) {
+    if (
+      res.status === 200 &&
+      res.data?.[0]["order_id"] &&
+      res.data?.[0]["display_order_id"]
+    ) {
       dispatch({
         type: DATA_TYPES.SET_CART_ID,
         payload: { cart_id: 0 },
@@ -45,6 +50,9 @@ function Cod({ codInfo }) {
       setLoading(false);
     } else {
       dispatch(showSnackbar("Something went wrong", "error"));
+      setTimeout(() => {
+        history.push("/shopping-cart");
+      }, 1500);
       setLoading(false);
     }
   };
@@ -52,7 +60,7 @@ function Cod({ codInfo }) {
     <div className={styles.codWrapper}>
       <section className="d-flex">
         <span className={`material-icons ${styles.icon}`}>payments</span>
-        <span>{title}:</span>
+        <span>COD CHARGES:</span>
         <span className={styles.codCharge}>
           {currency_symbol}
           {value}

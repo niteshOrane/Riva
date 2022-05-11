@@ -105,6 +105,11 @@ const ProductDetails = (props) => {
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
 
   const handleIncrementProduct = () => {
+    if (productQuantity === 5){
+      dispatch(showSnackbar("You can only add 5 products", "error"));
+      return
+    }
+      
     setProductQuantity((prevState) => prevState + 1);
   };
   const handleDecrementProduct = () => {
@@ -169,8 +174,10 @@ const ProductDetails = (props) => {
   };
 
   const displayPlaceHolder = () => {
-    setColorImg("https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg")
-  }
+    setColorImg(
+      "https://www.rivafashion.com/media/catalog/product/placeholder/default/placeholder_1.jpg"
+    );
+  };
 
   const isAddedToWishlist = !!wishlist.find((w) => w.id == product.id);
   return (
@@ -186,7 +193,8 @@ const ProductDetails = (props) => {
                 <Link
                   to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}
                 >
-                  {history?.location?.state?.category?.[0]?.toUpperCase() + history?.location?.state?.category?.slice(1)}
+                  {history?.location?.state?.category?.[0]?.toUpperCase() +
+                    history?.location?.state?.category?.slice(1)}
                 </Link>
               )}
               <span underline="hover" color="inherit">
@@ -399,38 +407,38 @@ const ProductDetails = (props) => {
 
               <div className={styles.actions}>
                 <div className="d-flex align-items-center justify-content-between my-20px">
-                 {!outOfStock && (
+                  {!outOfStock && (
                     <div
-                    className={`${styles.qty} d-flex align-items-center justify-content-between`}
-                  >
-                    <div className={styles.title}>
-                      {translate?.details?.QUANT}:
-                    </div>
-                    <div
-                      className={`${styles.counter} d-flex align-items-center justify-content-between`}
+                      className={`${styles.qty} d-flex align-items-center justify-content-between`}
                     >
-                      <div>
-                        <span
-                          onClick={handleDecrementProduct}
-                          className="material-icons-outlined font-light-black"
-                          style={{ cursor: "pointer" }}
-                        >
-                          remove
-                        </span>
+                      <div className={styles.title}>
+                        {translate?.details?.QUANT}:
                       </div>
-                      <div>{productQuantity}</div>
-                      <div>
-                        <span
-                          onClick={handleIncrementProduct}
-                          className="material-icons-outlined font-light-black"
-                          style={{ cursor: "pointer" }}
-                        >
-                          add
-                        </span>
+                      <div
+                        className={`${styles.counter} d-flex align-items-center justify-content-between`}
+                      >
+                        <div>
+                          <span
+                            onClick={handleDecrementProduct}
+                            className="material-icons-outlined font-light-black"
+                            style={{ cursor: "pointer" }}
+                          >
+                            remove
+                          </span>
+                        </div>
+                        <div>{productQuantity}</div>
+                        <div>
+                          <span
+                            onClick={handleIncrementProduct}
+                            className="material-icons-outlined font-light-black"
+                            style={{ cursor: "pointer" }}
+                          >
+                            add
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                 ) }
+                  )}
                   <div
                     className={`${styles.demand} d-flex gap-12px align-items-center`}
                   >

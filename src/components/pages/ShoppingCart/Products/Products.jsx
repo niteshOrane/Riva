@@ -3,7 +3,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extractColorSize, getSKuId } from "../../../../util";
-import { addWishlist, removeWishlist } from "../../../../store/actions/wishlist/index"
+import {
+  addWishlist,
+  removeWishlist,
+} from "../../../../store/actions/wishlist/index";
 import style from "./Products.module.scss";
 import Image from "../../../common/LazyImage/Image";
 import {
@@ -13,15 +16,10 @@ import {
 
 const ProductsData = ({ products, currency_symbol }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
-  const handleIncrementProduct = (product) => {
-    product.qty = product.qty + 1;
-    dispatch(editItemQntCart(product));
-  };
-  const handleDecrementProduct = (product) => {
-    if (product.qty === 1) return;
-    product.qty = product.qty - 1;
+
+  const handleQtyChange = (e, product) => {
+    product.qty = e.target.value;
     dispatch(editItemQntCart(product));
   };
   const getColorSize = (options) => {
@@ -37,12 +35,11 @@ const ProductsData = ({ products, currency_symbol }) => {
 
   const handleWishList = (product, isExist) => {
     if (isExist) {
-      dispatch(removeWishlist(product, false, true))
-    }
-    else {
+      dispatch(removeWishlist(product, false, true));
+    } else {
       dispatch(addWishlist(product, true));
     }
-    dispatch(removeFromCart(product))
+    dispatch(removeFromCart(product));
   };
   const removeProduct = useCallback((product) => {
     dispatch(removeFromCart(product));
@@ -116,27 +113,16 @@ const ProductsData = ({ products, currency_symbol }) => {
                             {parseFloat(product.price)?.toFixed(2)}
                           </strong>
                           <div className={style.counter}>
-                            <span
-                              className="c-pointer material-icons-outlined"
-                              onClick={() => {
-                                handleDecrementProduct(product);
-                              }}
+                            <select
+                              onChange={(e) => handleQtyChange(e, product)}
+                              value={product?.qty}
                             >
-                              remove
-                            </span>
-                            <span>{product.qty}</span>
-                            {!loading ? (
-                              <span
-                                className="c-pointer material-icons-outlined"
-                                onClick={() => {
-                                  handleIncrementProduct(product);
-                                }}
-                              >
-                                add
-                              </span>
-                            ) : (
-                              <CircularProgress size={10} />
-                            )}
+                              {[1, 2, 3, 4, 5]?.map((num) => (
+                                <option key={num} value={num}>
+                                  {num}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                           <strong className="f1 text-center">
                             {currency_symbol}
@@ -145,16 +131,24 @@ const ProductsData = ({ products, currency_symbol }) => {
                             )}
                           </strong>
                         </div>
-                    
                       </div>
                     </div>
                     <div className={style.footer}>
                       <div className={style.footerContent}>
                         <div
                           className="font-light-black c-pointer d-flex justify-content-center"
-                          onClick={() => handleWishList(product, wishlist.find((w) => w.id === product.parent_product_id))}
+                          onClick={() =>
+                            handleWishList(
+                              product,
+                              wishlist.find(
+                                (w) => w.id === product.parent_product_id
+                              )
+                            )
+                          }
                           style={{
-                            color: wishlist.find((w) => w.id === product.parent_product_id)
+                            color: wishlist.find(
+                              (w) => w.id === product.parent_product_id
+                            )
                               ? "red"
                               : "black",
                           }}
@@ -162,11 +156,19 @@ const ProductsData = ({ products, currency_symbol }) => {
                           <span
                             className={`material-icons-outlined ${style.closeHeart}`}
                           >
-                            {wishlist.find((w) => w.id === product.parent_product_id)
+                            {wishlist.find(
+                              (w) => w.id === product.parent_product_id
+                            )
                               ? "favorite"
                               : "favorite_border"}
                           </span>
-                          <span className="underline">{wishlist.find((w) => w.id === product.parent_product_id) ? 'Remove from Wishlist' : 'Move to Wishlist'}</span>
+                          <span className="underline">
+                            {wishlist.find(
+                              (w) => w.id === product.parent_product_id
+                            )
+                              ? "Remove from Wishlist"
+                              : "Move to Wishlist"}
+                          </span>
                         </div>
                         <Link
                           to={`/product/${product.parent_sku}`}

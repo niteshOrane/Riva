@@ -77,7 +77,6 @@ const ProductCard = ({
   const [colorImg, setColorImg] = useState(null);
   useEffect(() => {
     if (product?.configurable_product_options) {
-      
       const { colors, size } = extractColorSize(
         product?.configurable_product_options || []
       );
@@ -249,7 +248,7 @@ const ProductCard = ({
       </div>
     );
   }
-  console.log({product,wishList})
+  console.log({ product, wishList });
   const isAddedToWishlist = !!wishList.find((w) => w.sku == product.sku);
 
   const srcImage =
@@ -395,12 +394,12 @@ const ProductCard = ({
               {origpriceWithoutCurrency > priceWithoutCurrency ? (
                 <div className={styles.was}>
                   Was {currency_symbol}
-                  {origprice || ""}
+                  {parseFloat(origprice)?.toFixed(2) || ""}
                 </div>
               ) : null}
               <div className={styles.now}>
                 {origpriceWithoutCurrency > priceWithoutCurrency ? "Now" : ""}{" "}
-                {currency_symbol} {price}
+                {currency_symbol} {parseFloat(price)?.toFixed(2)}
               </div>
             </div>
           </TempLink>

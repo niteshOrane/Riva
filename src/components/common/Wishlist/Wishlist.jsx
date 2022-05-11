@@ -211,11 +211,11 @@ function Wishlist() {
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
               <div className={styles.was}>
-                Was {currency_symbol} {origprice || ""}
+                Was {currency_symbol} {parseFloat(origprice)?.toFixed(2) || ""}
               </div>
             ) : null}
             <div className={styles.now}>
-              Now {currency_symbol} {data?.price}
+              Now {currency_symbol} {parseFloat(data?.price)?.toFixed(2)}
             </div>
             {/*
             <div className={styles.loyalty}>Earn Loyalty Points: 1*?</div>
