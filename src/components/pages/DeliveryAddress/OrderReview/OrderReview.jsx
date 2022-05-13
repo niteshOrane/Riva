@@ -44,6 +44,7 @@ function OrderReview({
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
   const [isFreeDelivery, setIsFreeDelivery] = useState(false);
+  const [deliveryInfo, setDeliveryInfo] = useState(null);
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -95,6 +96,9 @@ function OrderReview({
       setFreeShippingInfo(res?.data?.[0]?.message);
       if (!res?.data?.[0]?.error && res?.data?.[0]?.remaining_amount == 0) {
         setIsFreeDelivery(true);
+        setDeliveryInfo(
+          deliverySpeed?.find((speed) => speed?.method_code === "freeshipping")
+        );
       }
     }
   };
@@ -270,30 +274,14 @@ function OrderReview({
             );
           })
       ) : (
-        <div
-          onClick={() =>
-            onSpeedDeliveryRadio(
-              deliverySpeed?.find(
-                (speed) => speed?.method_code === "freeshipping"
-              )
-            )
-          }
-          className={styles.chooseShipping}
-        >
+        <div className={styles.chooseShipping}>
           <div>
             <input
               type="radio"
               checked={
                 activeDelivery
-                  ? `${
-                      deliverySpeed?.find(
-                        (speed) => speed?.method_code === "freeshipping"
-                      )?.carrier_code
-                    }_${
-                      deliverySpeed?.find(
-                        (speed) => speed?.method_code === "freeshipping"
-                      )?.method_code
-                    }` === activeDelivery
+                  ? `${deliveryInfo?.carrier_code}_${deliveryInfo?.method_code}` ===
+                    activeDelivery
                   : false
               }
               name={
@@ -305,6 +293,13 @@ function OrderReview({
                 deliverySpeed?.find(
                   (speed) => speed?.method_code === "freeshipping"
                 )?.method_code
+              }
+              onChange={() =>
+                onSpeedDeliveryRadio(
+                  deliverySpeed?.find(
+                    (speed) => speed?.method_code === "freeshipping"
+                  )
+                )
               }
             />
           </div>

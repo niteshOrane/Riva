@@ -41,8 +41,6 @@ const PriceDetails = ({
           {currency_symbol}{" "}
           {cartItem?.length === 0
             ? "0.00"
-            : isFreeDelivery
-            ? "0.00"
             : parseFloat(
                 cartPaymentInfo?.total_segments?.find(
                   (e) => e.code === "shipping"
