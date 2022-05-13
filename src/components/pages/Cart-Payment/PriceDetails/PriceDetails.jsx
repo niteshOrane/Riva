@@ -1,7 +1,14 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import * as icons from "../../../common/Icons/Icons";
 import styles from "./PriceDetails.module.scss";
-const PriceDetails = ({ translate, cartItem, cartPaymentInfo, store }) => {
+const PriceDetails = ({
+  translate,
+  cartItem,
+  cartPaymentInfo,
+  store,
+  isFreeDelivery,
+}) => {
   const { currency_symbol } = store;
 
   return (
@@ -33,6 +40,8 @@ const PriceDetails = ({ translate, cartItem, cartPaymentInfo, store }) => {
         <strong>
           {currency_symbol}{" "}
           {cartItem?.length === 0
+            ? "0.00"
+            : isFreeDelivery
             ? "0.00"
             : parseFloat(
                 cartPaymentInfo?.total_segments?.find(

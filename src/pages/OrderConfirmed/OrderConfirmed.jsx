@@ -17,6 +17,7 @@ import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle
 function OrderConfirmed(props) {
   const dispatch = useDispatch();
   const location = useLocation();
+  console.log({location})
   useAnalytics();
   useDocumentTitle("Order Confirmed");
   const { orderId, displayOrderNumber } = useParams();

@@ -39,6 +39,7 @@ const ProductDetails = (props) => {
   const [colorImg, setColorImg] = useState(null);
   const [showThumb, setShowThumb] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(null);
+  const [productSku,setProductSku] = useState();
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -67,20 +68,20 @@ const ProductDetails = (props) => {
     const res = await outOfStockCheck(id, color, size);
     if (res && res.status === 200) {
       if (res?.data?.data?.Stock) {
+        setProductSku(res?.data?.data?.sku)
         return setOutOfStock(false);
       }
       if (res?.data?.data?.Stock === 0) {
+        setProductSku(res?.data?.data?.sku)
         return setOutOfStock(true);
       }
     }
   };
   useEffect(() => {
     getOutOfStock();
-  }, [product]);
+  }, [product,colorImg]);
 
-  useEffect(() => {
-    getOutOfStock();
-  }, [product, colorImg]);
+
 
   let {
     origprice = 0,
@@ -226,7 +227,7 @@ const ProductDetails = (props) => {
             <div className="d-flex">
               <div className={`${styles.sku} d-flex`}>
                 <div className={styles.title}>SKU:&nbsp;</div>
-                <div className={styles.text}>{product?.sku}</div>
+                <div className={styles.text}>{productSku}</div>
               </div>
             </div>
 

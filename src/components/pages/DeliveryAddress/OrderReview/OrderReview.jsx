@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +43,7 @@ function OrderReview({
   const [freeShippingInfo, setFreeShippingInfo] = useState("");
   const [totalDC, setTotalDC] = useState(0);
   const [totalTax, setTotalTax] = useState(0);
+  const [isFreeDelivery, setIsFreeDelivery] = useState(false);
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     if (customerid && couponCode !== "") {
@@ -91,18 +93,14 @@ function OrderReview({
       res?.data?.[0]
     ) {
       setFreeShippingInfo(res?.data?.[0]?.message);
+      if (!res?.data?.[0]?.error && res?.data?.[0]?.remaining_amount == 0) {
+        setIsFreeDelivery(true);
+      }
     }
   };
   useEffect(() => {
     dispatch(toggleCart(false));
-    // const amount =
-    //   items.reduce(
-    //     (total, item) => parseFloat(total + item.price * item.qty),
-    //     0
-    //   ) || 0;
-    // setTotalAmout(amount);
     setCouponCode(cartPayment?.coupon_code || "");
-    // setPaymentFee(cartPayment?.)
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
     setTotalDC(
@@ -139,7 +137,7 @@ function OrderReview({
   const onSpeedDeliveryRadio = async (val) => {
     if (addressItem?.name) {
       const code = `${val?.carrier_code}_${val?.method_code}`;
-      const price = val?.amount || 0;
+      const price = isFreeDelivery ? 0 : val?.amount;
       const firstName = addressItem?.name?.split(" ")[0] || "";
       const lastName = addressItem?.name?.split(" ")[1] || "";
       const street = addressItem?.street || "";
@@ -238,42 +236,103 @@ function OrderReview({
       <h4 className="font-weight-normal mt-12px">
         {translate?.deliveryAddress?.CHOOSE}
       </h4>
-      {deliverySpeed?.length !== 0 ? (
-        deliverySpeed?.map((item) => {
-          return (
-            <div
-              onClick={() => onSpeedDeliveryRadio(item)}
-              className={styles.chooseShipping}
-            >
-              <div>
-                <input
-                  type="radio"
-                  checked={
-                    activeDelivery
-                      ? `${item?.carrier_code}_${item?.method_code}` ===
-                        activeDelivery
-                      : false
-                  }
-                  name={item.method_code}
-                  id={item.method_code}
-                />
+
+      {!isFreeDelivery ? (
+        deliverySpeed
+          ?.filter((speed) => speed?.method_code !== "freeshipping")
+          ?.map((item) => {
+            return (
+              <div
+                onClick={() => onSpeedDeliveryRadio(item)}
+                className={styles.chooseShipping}
+              >
+                <div>
+                  <input
+                    type="radio"
+                    checked={
+                      activeDelivery
+                        ? `${item?.carrier_code}_${item?.method_code}` ===
+                          activeDelivery
+                        : false
+                    }
+                    name={item.method_code}
+                    id={item.method_code}
+                  />
+                </div>
+                <label htmlFor="twoDays">
+                  <h5>{item?.method_title}</h5>
+                  <span className={styles.greyText}>
+                    {currency_symbol} {parseFloat(item.amount)?.toFixed(2)} -{" "}
+                    {item.carrier_title}
+                  </span>
+                </label>
               </div>
-              <label htmlFor="twoDays">
-                <h5>{item?.method_title}</h5>
-                <span className={styles.greyText}>
-                  {currency_symbol} {parseFloat(item.amount)?.toFixed(2)} - {item.carrier_title}
-                </span>
-              </label>
-            </div>
-          );
-        })
+            );
+          })
       ) : (
-        <div className={styles.noShipImg}>
-          <img src="/assets/images/shop_no_real.jpg" alt="no-delivery" />
-          <span>Product is not deliverable to this address.</span>
+        <div
+          onClick={() =>
+            onSpeedDeliveryRadio(
+              deliverySpeed?.find(
+                (speed) => speed?.method_code === "freeshipping"
+              )
+            )
+          }
+          className={styles.chooseShipping}
+        >
+          <div>
+            <input
+              type="radio"
+              checked={
+                activeDelivery
+                  ? `${
+                      deliverySpeed?.find(
+                        (speed) => speed?.method_code === "freeshipping"
+                      )?.carrier_code
+                    }_${
+                      deliverySpeed?.find(
+                        (speed) => speed?.method_code === "freeshipping"
+                      )?.method_code
+                    }` === activeDelivery
+                  : false
+              }
+              name={
+                deliverySpeed?.find(
+                  (speed) => speed?.method_code === "freeshipping"
+                )?.method_code
+              }
+              id={
+                deliverySpeed?.find(
+                  (speed) => speed?.method_code === "freeshipping"
+                )?.method_code
+              }
+            />
+          </div>
+          <label htmlFor="twoDays">
+            <h5>
+              {
+                deliverySpeed?.find(
+                  (speed) => speed?.method_code === "freeshipping"
+                )?.method_title
+              }
+            </h5>
+            <span className={styles.greyText}>
+              {currency_symbol}{" "}
+              {parseFloat(
+                deliverySpeed?.find(
+                  (speed) => speed?.method_code === "freeshipping"
+                ).amount
+              )?.toFixed(2)}{" "}
+              -{" "}
+              {
+                deliverySpeed?.find(
+                  (speed) => speed?.method_code === "freeshipping"
+                ).carrier_title
+              }
+            </span>
+          </label>
         </div>
       )}
-
       <Products
         products={items}
         currency_symbol={currency_symbol}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import useLanding from "./LandingHooks";
@@ -22,6 +22,7 @@ import styles from "./Landing.module.scss";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
+import { showSnackbar } from "../../store/actions/common";
 
 const titleObj = {
   1241:"Latest Women Fashion",
@@ -33,6 +34,7 @@ function Landing() {
   const { middleBanner } = useLanding("topbrands");
   const location = useLocation();
   const params = useParams();
+
   useAnalytics();
   useDocumentTitle(titleObj[params.mainCategoryId])
 
@@ -68,6 +70,7 @@ function Landing() {
     };
 
   }, []);
+ 
 
   useEffect(() => {
     const items = selectedCategoryItem?.data

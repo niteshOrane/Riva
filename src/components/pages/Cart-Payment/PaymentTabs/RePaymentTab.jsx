@@ -115,6 +115,8 @@ export default function DetailTabs({
   cartPaymentInfo,
   store,
   customObj,
+  getFreeDeliveryInfo,
+  
 }) {
   // const classes = useStyles();
 
@@ -260,7 +262,7 @@ export default function DetailTabs({
       })
       .catch((err) => console.log(err));
   };
-  console.log(gPayData);
+ 
   useEffect(() => {
     if (paymentMode && paymentMode.length > 0) {
       setPaymentMethod(paymentMode);
@@ -272,6 +274,7 @@ export default function DetailTabs({
     switch (newValue) {
       case "tap":
         dispatch(getCustomerCartPayments());
+        getFreeDeliveryInfo()
         setName({
           ...name,
           code: newValue,
@@ -279,6 +282,7 @@ export default function DetailTabs({
         break;
       case "checkoutcom_card_payment":
         dispatch(getCustomerCartPayments());
+        getFreeDeliveryInfo()
         getPaymentForTapCheckout(newValue);
         setName({
           ...name,
@@ -287,6 +291,7 @@ export default function DetailTabs({
         break;
       case "cashondelivery":
         dispatch(getCustomerCartPayments());
+        getFreeDeliveryInfo()
         setName({
           ...name,
           code: newValue,
@@ -295,6 +300,7 @@ export default function DetailTabs({
         break;
       case "checkoutcom_google_pay":
         dispatch(getCustomerCartPayments());
+        getFreeDeliveryInfo()
         setName({
           ...name,
           code: newValue,

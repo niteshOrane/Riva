@@ -141,8 +141,17 @@ export const removeFromCart = (data) => async (dispatch) => {
 export const editItemQntCart = (data) => async (dispatch) => {
   const res = await editCartService(data.item_id, data.qty);
 
-  if (res.status === 200 && res.data) dispatch(getCart());
-  else dispatch(showSnackbar("something went wrong", "error"));
+  if (res.status === 200 && res.data && res?.data?.success) dispatch(getCart());
+  else{
+    dispatch(
+      showSnackbar(
+        `${res?.data?.message ? res?.data?.message : "something went wrong"}`,
+        "error"
+      )
+    );
+    dispatch(getCart())
+  }
+  
 };
 export const incrementItemqty = (data) => ({
   type: DATA_TYPES.INCREMENT_ITEM,

@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import RePaymentTab from "../../components/pages/Cart-Payment/PaymentTabs/RePaymentTab";
 import * as icons from "../../components/common/Icons/Icons";
 import PriceDetails from "../../components/pages/Cart-Payment/PriceDetails/PriceDetails";
 import LetUsHear from "../../components/common/Cards/LetUsHear/LetUsHear";
 import { getPaymentMethodlist } from "../../store/actions/payment";
+import {getFreeShippingInfo} from "../../services/cart/cart.service"
 import styles from "./CartPayment.module.scss";
 
 import { toggleCart } from "../../store/actions/cart";
@@ -15,7 +16,8 @@ import Loader from "../../components/common/Loader";
 import useArabic from "../../components/common/arabicDict/useArabic";
 import useAnalytics from "../../components/common/GoogleAnalytics/useAnalytics";
 import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle";
-import swal from "sweetalert";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import { getCartId } from "../../util";
 
 function CartPayment() {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ function CartPayment() {
 
   useAnalytics();
   useDocumentTitle("Payments");
-  const history = useHistory();
+
   const { data: items = [] } = useSelector((state) => state.cart);
   const [paymentOption, setPaymentOption] = React.useState([]);
   const [customObj, setCustomObj] = React.useState(null);
@@ -31,33 +33,27 @@ function CartPayment() {
   const customer = useSelector((state) => state.auth.customer);
   const paymentMode = useSelector((state) => state.payment);
   const customerid = customer.customerID;
+  const [isFreeDelivery, setIsFreeDelivery] = useState(false);
 
   const store = useSelector((state) => state?.common?.store);
-  const { data } = useSelector((state) => state?.cart);
   const location = useLocation();
   const cartPaymentInfo = useSelector(
     (state) => state.cart?.cartPaymentInfo || {}
   );
   const { isAuthenticated } = useSelector((state) => state?.auth);
   const { currency_symbol } = useSelector((state) => state?.common?.store);
+
+  const getFreeDeliveryInfo = async () => {
+    const res = await getFreeShippingInfo(getCartId());
+    if (!res?.data?.[0]?.error && res?.data?.[0]?.remaining_amount == 0) {
+      setIsFreeDelivery(true);
+    }
+  }
   useEffect(() => {
     dispatch(getPaymentMethodlist());
     dispatch(toggleCart(false));
+    getFreeDeliveryInfo()
   }, [customerid]);
-  useEffect(() => {
-    if (items?.length === 0) {
-      swal("There is no product in cart", {
-        buttons: {
-          catch: {
-            text: "Continue Shopping",
-            value: "catch",
-          },
-        },
-      }).then((value) => {
-        history.push("/type/1241");
-      });
-    }
-  }, [items]);
 
   useEffect(() => {
     setPaymentOption(paymentMode);
@@ -72,6 +68,7 @@ function CartPayment() {
       setCustomObj(obj);
     }
   }, [paymentMode]);
+
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
@@ -81,7 +78,7 @@ function CartPayment() {
         category: {
           id: JSON.parse(localStorage.getItem("preferredCategory")),
         },
-        cart: { hasItems: data.length > 0 },
+        cart: { hasItems: items.length > 0 },
         ecommerce: {
           currencyCode: currency_symbol,
           orderValue: parseFloat(
@@ -134,6 +131,24 @@ function CartPayment() {
           </div>
         </div>
       </div>
+      {items?.length === 0 && (
+        <div style={{ width: "55%" }}>
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Your Cart has discarded due to payment was unsuccessful{" "}
+            <strong>
+              <Link
+                to={`/type/${JSON.parse(
+                  localStorage.getItem("selectedCategory")
+                )}`}
+              >
+                CONTINUE SHOPPING
+              </Link>
+            </strong>
+          </Alert>
+        </div>
+      )}
+
       <div className={styles.container}>
         <div className={styles.col1}>
           {paymentOption &&
@@ -153,6 +168,8 @@ function CartPayment() {
                 loading={loading}
                 setLoading={setLoading}
                 customObj={customObj}
+                getFreeDeliveryInfo={getFreeDeliveryInfo}
+                isFreeDelivery={isFreeDelivery}
               />
             </>
           ) : null}
@@ -165,6 +182,7 @@ function CartPayment() {
             store={store}
             customerID={customerid}
             cartPaymentInfo={cartPaymentInfo}
+            isFreeDelivery={isFreeDelivery}
           />
           <LetUsHear />
         </div>
