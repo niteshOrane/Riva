@@ -71,3 +71,18 @@
     }
   }
 }
+.hoverCopy{
+  display: none;
+  z-index: 1000;
+}
+.orderCopy{
+  &:hover{
+    .hoverCopy{
+      display: block;
+      padding-left: 10px;
+      z-index: 100000;
+      color: lightgray
+      ;
+    }
+  }
+}

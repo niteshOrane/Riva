@@ -25,7 +25,6 @@ import useDocumentTitle from "../../components/common/PageTitle/useDocumentTitle
 import { Divider } from "@material-ui/core";
 import moment from "moment";
 
-
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
@@ -137,6 +136,10 @@ function Delivered() {
       setCurrentPage((prev) => prev - 1);
     }
   };
+  const copyOrderNumber = (num) => {
+    navigator.clipboard.writeText(num);
+    dispatch(showSnackbar("Order number copied to clipboard!!", "success"));
+  };
 
   return (
     <div className="d-flex py-20px">
@@ -160,6 +163,7 @@ function Delivered() {
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                     expandIcon={<ExpandMoreIcon />}
+                    className={styles.orderCopy}
                   >
                     <div
                       style={{
@@ -168,9 +172,25 @@ function Delivered() {
                         width: "100%",
                       }}
                     >
-                      <Typography>
-                        Order ID: <strong>#{li?.increment_id}</strong>
-                      </Typography>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <Typography>
+                          Order ID: <strong>#{li?.increment_id}</strong>
+                        </Typography>
+                        <div className={styles.hoverCopy}>
+                          <span
+                            title="Copy Order Number"
+                            onClick={() => copyOrderNumber(li?.increment_id)}
+                            className="material-icons-outlined"
+                          >
+                            content_copy
+                          </span>
+                        </div>
+                      </div>
+
                       <Typography color="secondary">
                         {moment(li?.created_at).format("MMMM DD YYYY")}
                       </Typography>
@@ -184,7 +204,8 @@ function Delivered() {
                   >
                     {showCheck && (
                       <Alert severity="success">
-                        Select the product you want to return and click on continue return.
+                        Select the product you want to return and click on
+                        continue return.
                       </Alert>
                     )}
                     {li?.items

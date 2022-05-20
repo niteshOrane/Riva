@@ -39,7 +39,7 @@ const ProductDetails = (props) => {
   const [colorImg, setColorImg] = useState(null);
   const [showThumb, setShowThumb] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(null);
-  const [productSku,setProductSku] = useState();
+  const [productSku, setProductSku] = useState();
   useEffect(() => {
     if (colorImage.databind !== undefined) {
       const temp = colorImage?.databind;
@@ -68,20 +68,18 @@ const ProductDetails = (props) => {
     const res = await outOfStockCheck(id, color, size);
     if (res && res.status === 200) {
       if (res?.data?.data?.Stock) {
-        setProductSku(res?.data?.data?.sku)
+        setProductSku(res?.data?.data?.sku);
         return setOutOfStock(false);
       }
       if (res?.data?.data?.Stock === 0) {
-        setProductSku(res?.data?.data?.sku)
+        setProductSku(res?.data?.data?.sku);
         return setOutOfStock(true);
       }
     }
   };
   useEffect(() => {
     getOutOfStock();
-  }, [product,colorImg]);
-
-
+  }, [product, colorImg]);
 
   let {
     origprice = 0,
@@ -106,11 +104,11 @@ const ProductDetails = (props) => {
   const { data: wishlist = [] } = useSelector((state) => state.wishlist);
 
   const handleIncrementProduct = () => {
-    if (productQuantity === 5){
+    if (productQuantity === 5) {
       dispatch(showSnackbar("You can only add 5 products", "error"));
-      return
+      return;
     }
-      
+
     setProductQuantity((prevState) => prevState + 1);
   };
   const handleDecrementProduct = () => {
@@ -189,7 +187,13 @@ const ProductDetails = (props) => {
         <div className={styles.mainImage}>
           <section className={styles.bread}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link to="/">{translate?.details?.HOME}</Link>
+              <Link
+                to={`/type/${JSON.parse(
+                  localStorage.getItem("selectedCategory")
+                )}`}
+              >
+                {translate?.details?.HOME}
+              </Link>
               {history?.location?.state && (
                 <Link
                   to={`/products/${history?.location?.state?.category}/${history?.location?.state?.categoryId}`}
