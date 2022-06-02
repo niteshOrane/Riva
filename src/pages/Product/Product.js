@@ -115,7 +115,6 @@ const Product = (props) => {
     setloading(false);
   };
 
-
   const setColorSize = (attr) => {
     setproduct({ ...product, selected: attr });
   };
@@ -171,7 +170,7 @@ const Product = (props) => {
         <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
-       <div className={styles.load}>
+        <div className={styles.load}>
           <Skeleton height="40rem" width="40rem" />
         </div>
       </div>
@@ -195,6 +194,7 @@ const Product = (props) => {
           slidesToShow={3}
           render={(item) => (
             <ImageCard
+            isDetail
               product={{ src: item?.file }}
               count={mediaImage.length}
             />
@@ -206,7 +206,7 @@ const Product = (props) => {
         prodDiscr={product}
         compositioncare={compositioncare?.data}
       />
-      {howToWear.length > 0 ? (
+      {!(howToWear?.length <= 2) ? (
         <div id="complete-your-look">
           <div className="max-width-1750 mx-auto my-20px">
             <div>
@@ -214,21 +214,41 @@ const Product = (props) => {
                 Complete Your Look
               </p>
             </div>
+
             <Slider
               className="simpleGreyArrow"
               items={howToWear}
-              slidesToShow={4}
+              slidesToShow={howToWear.length <= 2 ? 4 : 4}
               arrows
               ref={refContainer}
               render={(item) => <ProductCard isComplete product={item} />}
             />
           </div>
-          <hr style={{ marginTop: "100px", marginBottom: "60px" }} />
+         
+        </div>
+      ) : (
+        <div>
+          <div >
+            <div>
+              <p className="section-title text-center my-20px">
+                Complete Your Look
+              </p>
+            </div>
+            <div className={styles.completeCard}>
+              {howToWear?.map((item) => (
+                <div style={{width:"100%"}}>
+                  <ProductCard isComplete product={item} />
+                </div>
+              ))}
+            </div>
+          </div>
+      
+        </div>
+      )}
+       <hr style={{ marginTop: "100px", marginBottom: "60px" }} />
           <div className="container-90 max-width-1750 mx-auto my-20px">
             <ShopTheWholeOutfit data={howToWear} mainProd={product} />
           </div>
-        </div>
-      ) : null}
     </div>
   );
 };

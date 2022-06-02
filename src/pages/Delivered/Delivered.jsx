@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -28,6 +28,7 @@ import moment from "moment";
 function Delivered() {
   const { customer } = useSelector((state) => state.auth);
   const { orderType } = useParams();
+
   const dispatch = useDispatch();
   useAnalytics();
   useDocumentTitle(orderType);
@@ -141,6 +142,11 @@ function Delivered() {
     dispatch(showSnackbar("Order number copied to clipboard!!", "success"));
   };
 
+  const handleRequestReturn = () => {
+    setShowCheck(!showCheck);
+
+  };
+
   return (
     <div className="d-flex py-20px">
       <div className="container-with-circles">
@@ -203,10 +209,12 @@ function Delivered() {
                     }}
                   >
                     {showCheck && (
-                      <Alert severity="success">
-                        Select the product you want to return and click on
-                        continue return.
-                      </Alert>
+                      <div id="returnTitle">
+                        <Alert severity="success">
+                          Select the product you want to return and click on
+                          continue return.
+                        </Alert>
+                      </div>
                     )}
                     {li?.items
                       ?.filter((value, idx) => idx % 2)
@@ -295,12 +303,16 @@ function Delivered() {
                     ) <= 14 && (
                       <section className={styles.reqBtn}>
                         {returnedProduct?.length === 0 && (
-                          <button
-                            onClick={() => setShowCheck(!showCheck)}
+                          <a href="#returnTitle">
+                             <button
+                            onClick={() => handleRequestReturn()}
                             type="button"
                           >
                             Request Return
                           </button>
+
+                          </a>
+                         
                         )}
                         {returnedProduct?.length > 0 && (
                           <Link to="/retur-order">

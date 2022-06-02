@@ -33,7 +33,7 @@ function Wishlist() {
     modalData: data = {},
     isCart,
     data: wishlist = [],
-    cartData
+    cartData,
   } = useSelector((state) => state.wishlist);
   const { currency_symbol, language } = useSelector(
     (state) => state?.common?.store
@@ -210,8 +210,16 @@ function Wishlist() {
           </div> */}
           <div className={`${styles.price} d-flex`}>
             {origpriceWithoutCurrency < priceWithoutCurrency ? (
-              <div className={styles.was}>
-                Was {currency_symbol} {parseFloat(origprice)?.toFixed(2) || ""}
+              <div
+                className={styles.was}
+                style={{ marginRight: isNaN(origprice) ? "0px" : "25px" }}
+              >
+                {isNaN(origprice) ? null : (
+                  <span>
+                    Was {currency_symbol}{" "}
+                    {parseFloat(origprice)?.toFixed(2) || ""}
+                  </span>
+                )}
               </div>
             ) : null}
             <div className={styles.now}>

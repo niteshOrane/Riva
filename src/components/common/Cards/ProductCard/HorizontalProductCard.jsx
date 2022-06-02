@@ -187,12 +187,12 @@ const HorizontalProductCard = ({
                 );
               })}
           </div>
-          <div className={`${styles.otherOptions} d-flex`}>
+          {/* <div className={`${styles.otherOptions} d-flex`}>
             Other similar options
             <span className="material-icons-outlined font-light-black">
               chevron_right
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

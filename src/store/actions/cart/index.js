@@ -11,7 +11,7 @@ import {
 import { emptyCartItem, emptyCart } from "../auth";
 
 import { getCartId, getCustId } from "../../../util";
-import { showSnackbar } from "../common";
+import { showSnackbar, toggleQuickView } from "../common";
 import { getWishlist, removeWishlist } from "../wishlist";
 
 export const getCartPaymentInfo_action = (data) => ({
@@ -93,6 +93,11 @@ export const cartStatus = (data) => ({
   payload: data,
 });
 
+export const cartAddStatus = (data) => ({
+  type: DATA_TYPES.CART_ADD_STATUS,
+  payload: data,
+});
+
 export const addToCart = (data) => async (dispatch) => {
   if (!data?.color?.value || !data?.size?.value) {
     dispatch(showSnackbar("please select one color and size", "error"));
@@ -114,6 +119,8 @@ export const addToCart = (data) => async (dispatch) => {
       });
       dispatch(getCart());
       dispatch(showSnackbar("Added to cart", "success"));
+      dispatch(cartAddStatus(true))
+      dispatch(toggleQuickView(null));
       if (data?.isFromWishlist) {
         dispatch(removeWishlist(data, data?.isFromWishlist));
         setTimeout(() => {
@@ -125,6 +132,7 @@ export const addToCart = (data) => async (dispatch) => {
       }, 1600);
     } else {
       dispatch(showSnackbar(response?.message || "", "error"));
+      dispatch(cartAddStatus(false))
     }
   }
 };

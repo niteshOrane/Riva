@@ -132,8 +132,11 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
           </div>
           {/* <div className={styles.description}>{data.mainCard.description}</div> */}
         </div>
-        <div className={styles.checkboxWrap}>
-          {dataItems.map((product, index) => (
+        <div
+          style={{ overflowY: dataItems?.length <= 3 ? "hidden" : "scroll" }}
+          className={styles.checkboxWrap}
+        >
+          {dataItems?.map((product, index) => (
             <div style={{ position: "relative" }}>
               <div
                 onClick={() => handleRemoveFromCart(product)}
@@ -171,9 +174,9 @@ const ShopTheWholeoutfit = ({ mainProd, data }) => {
           ))}
         </div>
         <div className={styles.cart}>
-          <div className={styles.header}>
+          {/* <div className={styles.header}>
             Get 10% discount - select all products
-          </div>
+          </div> */}
           <div>
             <div className={styles.pie}>
               <PieChart

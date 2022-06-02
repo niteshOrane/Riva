@@ -36,7 +36,7 @@ function QuickView() {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
   const { isAuthenticated } = useSelector((state) => state?.auth);
-  const { data: cartItem } = useSelector((state) => state?.cart);
+  const { data: cartItem,isAddedSuccess } = useSelector((state) => state?.cart);
 
   const [outOfStock, setOutOfStock] = React.useState(false);
   const [productQuantity, setProductQuantity] = React.useState(1);
@@ -107,7 +107,7 @@ function QuickView() {
       })
     );
     setProductQuantity(1);
-    dispatch(toggleQuickView(null));
+   
     ReactPixel.init(process.env.REACT_APP_FACEBOOK);
     const wishData = {
       content_name: "Added To Cart",
@@ -178,6 +178,7 @@ function QuickView() {
       setattributes({ colors, size });
     }
   }, [data]);
+
   // const handleWishList = () => {
   //   dispatch(toggleWishlist(data));
   // };

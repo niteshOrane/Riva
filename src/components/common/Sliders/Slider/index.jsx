@@ -24,6 +24,7 @@ const Slider = React.forwardRef((props, ref) => {
       slidesToShow,
       swipeToSlide: true,
       rows,
+      
     },
   } = props;
 

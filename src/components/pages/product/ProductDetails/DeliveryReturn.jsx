@@ -42,7 +42,6 @@ export default function DeliveryReturn({ language, translate }) {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-     
     },
     deliveryIcon: {
       fontSize: "4rem",
@@ -61,14 +60,14 @@ export default function DeliveryReturn({ language, translate }) {
       cursor: "pointer",
       margin: "10px 3px",
     },
-    imgCont:{
-      width:"8rem",
-      height:"8rem"
+    imgCont: {
+      width: "8rem",
+      height: "8rem",
     },
-    img : {
-      width:"100%",
-      height:"100%"
-    }
+    img: {
+      width: "100%",
+      height: "100%",
+    },
   }));
 
   const classes = useStyles();
@@ -94,13 +93,17 @@ export default function DeliveryReturn({ language, translate }) {
     <div style={modalStyle} className={classes.paper}>
       <section className={classes.content}>
         <div className={classes.imgCont}>
-         <img className={classes.img} src="/assets/images/dandR.jpg" alt="delivery and return" />
+          <img
+            className={classes.img}
+            src="/assets/images/dandR.jpg"
+            alt="delivery and return"
+          />
         </div>
         <div
           dangerouslySetInnerHTML={{
             __html: deliveryDetail?.["delivery-returns"],
           }}
-          style={{lineHeight:"30px"}}
+          style={{ lineHeight: "30px" }}
         ></div>
         <section>
           <button
@@ -108,7 +111,7 @@ export default function DeliveryReturn({ language, translate }) {
             type="button"
             className={classes.btn}
           >
-            I Understand
+            OK
           </button>
         </section>
       </section>

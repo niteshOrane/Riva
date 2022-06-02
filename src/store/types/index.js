@@ -49,6 +49,7 @@ export const FORGET_PASSOWORD_EMAIL = "FORGET_PASSOWORD_EMAIL";
 export const ADD_RETURN_LIST = "ADD_RETURN_LIST";
 export const CLEAR_RETURN_LIST = "CLEAR_RETURN_LIST";
 export const CART_STATUS = "CART_STATUS";
+export const CART_ADD_STATUS = "CART_ADD_STATUS";
 
 // filters
 

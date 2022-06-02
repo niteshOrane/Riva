@@ -37,65 +37,79 @@ const PriceDetails = ({
         <span className={styles.greyText}>
           {translate?.deliveryAddress?.DEL}
         </span>
-        <strong>
-          {currency_symbol}{" "}
-          {cartItem?.length === 0
-            ? "0.00"
-            : parseFloat(
-                cartPaymentInfo?.total_segments?.find(
-                  (e) => e.code === "shipping"
-                )?.value || 0
-              )?.toFixed(2)}
-        </strong>
+        {cartPaymentInfo?.total_segments?.find((e) => e.code === "shipping")
+          ?.value == 0 ? (
+          <strong>FREE</strong>
+        ) : (
+          <strong>
+            {currency_symbol}{" "}
+            {cartItem?.length === 0
+              ? "0.00"
+              : parseFloat(
+                  cartPaymentInfo?.total_segments?.find(
+                    (e) => e.code === "shipping"
+                  )?.value || 0
+                )?.toFixed(2)}
+          </strong>
+        )}
       </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>
-          {translate?.deliveryAddress?.TAX}
-        </span>
-        <strong>
-          {currency_symbol}{" "}
-          {cartItem?.length === 0
-            ? "0.00"
-            : parseFloat(cartPaymentInfo?.tax_amount || 0)?.toFixed(2)}
-        </strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>COD CHARGES</span>
-        <strong>
-          {currency_symbol}{" "}
-          {cartItem?.length === 0
-            ? "0.00"
-            : parseFloat(
-                cartPaymentInfo?.total_segments?.find(
-                  (e) => e.code === "payment_fee"
-                )?.value || 0
-              )?.toFixed(2)}
-        </strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>
-          {translate?.deliveryAddress?.COUPON}
-        </span>
-        <strong>
-          {currency_symbol}{" "}
-          {cartItem?.length === 0
-            ? "0.00"
-            : parseFloat(
-                cartPaymentInfo?.total_segments?.find(
-                  (e) => e.code === "discount"
-                )?.value || 0
-              )?.toFixed(2)}
-        </strong>
-      </div>
+      {cartPaymentInfo?.tax_amount != 0 && (
+        <div
+          id={styles.calculatinRow}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <span className={styles.greyText}>
+            {translate?.deliveryAddress?.TAX}
+          </span>
+          <strong>
+            {currency_symbol}{" "}
+            {cartItem?.length === 0
+              ? "0.00"
+              : parseFloat(cartPaymentInfo?.tax_amount || 0)?.toFixed(2)}
+          </strong>
+        </div>
+      )}
+      {cartPaymentInfo?.total_segments?.find((e) => e.code === "payment_fee")
+        ?.value != 0 && (
+        <div
+          id={styles.calculatinRow}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <span className={styles.greyText}>COD CHARGES</span>
+          <strong>
+            {currency_symbol}{" "}
+            {cartItem?.length === 0
+              ? "0.00"
+              : parseFloat(
+                  cartPaymentInfo?.total_segments?.find(
+                    (e) => e.code === "payment_fee"
+                  )?.value || 0
+                )?.toFixed(2)}
+          </strong>
+        </div>
+      )}
+      {cartPaymentInfo?.total_segments?.find((e) => e.code === "discount") &&
+        cartPaymentInfo?.total_segments?.find((e) => e.code === "discount")
+          ?.value != 0 && (
+          <div
+            id={styles.calculatinRow}
+            className="d-flex align-items-center justify-content-between"
+          >
+            <span className={styles.greyText}>
+              {translate?.deliveryAddress?.COUPON}
+            </span>
+            <strong>
+              {currency_symbol}{" "}
+              {cartItem?.length === 0
+                ? "0.00"
+                : parseFloat(
+                    cartPaymentInfo?.total_segments?.find(
+                      (e) => e.code === "discount"
+                    )?.value || 0
+                  )?.toFixed(2)}
+            </strong>
+          </div>
+        )}
 
       <div
         id={styles.calculatinRow}

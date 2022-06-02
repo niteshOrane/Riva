@@ -253,62 +253,76 @@ const ProductDetails = (props) => {
               <span>{discountPercentage}% discount</span>
             )}
 
-            <div className={`${styles.color} d-flex`}>
+            <div className={`${styles.color}`}>
               <div className={styles.title}>
                 {translate?.details?.COLOR}:{" "}
                 {typeof productColorList?.find(
                   (item) => product.selected.color.value === item.option_id
                 )?.color === "string"
-                  ? productColorList?.find(
-                      (item) => product.selected.color.value === item.option_id
-                    )?.color
+                  ? productColorList
+                      ?.find(
+                        (item) =>
+                          product.selected.color.value === item.option_id
+                      )
+                      ?.color?.toLowerCase()?.[0]
+                      ?.toUpperCase() +
+                    productColorList
+                      ?.find(
+                        (item) =>
+                          product.selected.color.value === item.option_id
+                      )
+                      ?.color?.toLowerCase()
+                      ?.slice(1)
                   : "White"}
                 {"  "}
               </div>
-              {productColorList.length > 0 &&
-                productColorList?.map((item, index) => (
-                  <div
-                    title={item?.color}
-                    key={`color${index}`}
-                    className={`${styles.option}  c-pointer `}
-                    onClick={() => colorImageAction(item)}
-                    style={{
-                      transform:
-                        product.selected.color.value === item.option_id
-                          ? "scale(1)"
-                          : "scale(.9)",
-                    }}
-                  >
-                    {typeof item?.color === "string" ? (
-                      <img
-                        src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
-                          item?.color
-                        )?.toLowerCase()}.png`}
-                        className={`${styles.colorItem} ${
+              <br />
+              <div className="d-flex">
+                {productColorList.length > 0 &&
+                  productColorList?.map((item, index) => (
+                    <div
+                      title={item?.color}
+                      key={`color${index}`}
+                      className={`${styles.option}  c-pointer `}
+                      onClick={() => colorImageAction(item)}
+                      style={{
+                        transform:
                           product.selected.color.value === item.option_id
-                            ? styles.active
-                            : ""
-                        }`}
-                        alt={item?.color}
-                        style={{
-                          border:
-                            product.selected.color.value === item.option_id &&
-                            `1px solid ${item?.color}`,
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={item?.file}
-                        className={`${styles.colorItem} ${
-                          product.selected.color.value === item.option_id
-                            ? styles.active
-                            : ""
-                        }`}
-                        alt={item?.color}
-                      />
-                    )}
-                  </div>
-                ))}
+                            ? "scale(1)"
+                            : "scale(.9)",
+                      }}
+                    >
+                      {typeof item?.color === "string" ? (
+                        <img
+                          src={`${URL.baseUrlColorSwitcher}/${colorRegexFilter(
+                            item?.color
+                          )?.toLowerCase()}.png`}
+                          className={`${styles.colorItem} ${
+                            product.selected.color.value === item.option_id
+                              ? styles.active
+                              : ""
+                          }`}
+                          alt=""
+                          style={{
+                            border:
+                              product.selected.color.value === item.option_id &&
+                              `1px solid ${item?.color}`,
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={item?.file}
+                          className={`${styles.colorItem} ${
+                            product.selected.color.value === item.option_id
+                              ? styles.active
+                              : ""
+                          }`}
+                          alt=""
+                        />
+                      )}
+                    </div>
+                  ))}
+              </div>
             </div>
             <div
               className={`${styles.size} gap-12px d-flex align-items-center`}

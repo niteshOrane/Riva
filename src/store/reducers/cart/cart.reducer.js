@@ -10,6 +10,7 @@ const initialState = {
   isSingle: null,
   freeShipping: {},
   status: false,
+  isAddedSuccess: true,
 };
 
 // const handleAddToCart = (state, itemToBeAdded) => {
@@ -90,6 +91,11 @@ export default function Cart(state = initialState, action) {
       return {
         ...state,
         isOpen: action.payload,
+      };
+    case DATA_TYPES.CART_ADD_STATUS:
+      return {
+        ...state,
+        isAddedSuccess: action.payload,
       };
     default:
       return state;

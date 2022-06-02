@@ -108,7 +108,7 @@ function OrderReview({
     setCouponDiscount(Boolean(cartPayment?.coupon_code));
     setDiscount(cartPayment?.discount_amount || 0);
     setTotalDC(
-      cartPayment?.total_segments?.find((e) => e.code === "shipping")?.value
+      cartPayment?.total_segments?.find((li) => li?.code === "shipping")?.value
     );
     setTotalTax(cartPayment?.tax_amount);
     setTotalAmout(
@@ -316,13 +316,13 @@ function OrderReview({
               {parseFloat(
                 deliverySpeed?.find(
                   (speed) => speed?.method_code === "freeshipping"
-                ).amount
+                )?.amount
               )?.toFixed(2)}{" "}
               -{" "}
               {
                 deliverySpeed?.find(
                   (speed) => speed?.method_code === "freeshipping"
-                ).carrier_title
+                )?.carrier_title
               }
             </span>
           </label>
@@ -347,42 +347,57 @@ function OrderReview({
           {currency_symbol} {parseFloat(totalAmout || 0)?.toFixed(2)}
         </strong>
       </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>
-          {translate?.deliveryAddress?.DEL}
-        </span>
-        <strong>
-          {" "}
-          {currency_symbol} {parseFloat(totalDC || 0)?.toFixed(2)}
-        </strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>
-          {translate?.deliveryAddress?.TAX}
-        </span>
-        <strong>
-          {" "}
-          {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
-        </strong>
-      </div>
-      <div
-        id={styles.calculatinRow}
-        className="d-flex align-items-center justify-content-between"
-      >
-        <span className={styles.greyText}>
-          {translate?.deliveryAddress?.COUPON}
-        </span>
-        <strong>
-          {" "}
-          {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
-        </strong>
-      </div>
+      {activeDelivery && (
+        <div
+          id={styles.calculatinRow}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <span className={styles.greyText}>
+            {translate?.deliveryAddress?.DEL}
+          </span>
+          <strong>
+            {" "}
+            {totalDC == 0 ? (
+              "FREE"
+            ) : (
+              <div>
+                <span>{currency_symbol}</span>
+                <span>{parseFloat(totalDC || 0)?.toFixed(2)}</span>
+              </div>
+            )}
+          </strong>
+        </div>
+      )}
+      {totalTax != 0 && (
+        <div
+          id={styles.calculatinRow}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <span className={styles.greyText}>
+            {translate?.deliveryAddress?.TAX}
+          </span>
+          <strong>
+            {" "}
+            {currency_symbol} {parseFloat(totalTax || 0)?.toFixed(2)}
+          </strong>
+        </div>
+      )}
+
+      {discount != 0 && (
+        <div
+          id={styles.calculatinRow}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <span className={styles.greyText}>
+            {translate?.deliveryAddress?.COUPON}
+          </span>
+          <strong>
+            {" "}
+            {currency_symbol} {parseFloat(discount || 0)?.toFixed(2)}
+          </strong>
+        </div>
+      )}
+
       <div
         id={styles.calculatinRow}
         className="d-flex align-items-center justify-content-between"
